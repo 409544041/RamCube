@@ -13,78 +13,64 @@ public class SwipeDetector : MonoBehaviour
 	Vector2 fingerDownPos;
 	Vector2 fingerUpPos;
 
-	public static event Action<SwipeData> onSwipe;
-
-	public struct SwipeData
-	{
-		public Vector2 startPosition;
-		public Vector2 endPosition;
-		public SwipeDirection swipeDirection;
-	}
+	public static event Action<SwipeDirection> onSwipe;
+	public static event Action onTap;
 
 	public enum SwipeDirection { up, down, left, right }
 
 	void Update()
 	{
-		foreach (Touch touch in Input.touches)
+		if(Input.touchCount > 0) DetectTouches();
+	}
+
+	private void DetectTouches()
+	{
+		Touch touch = Input.GetTouch(0);
+		if (touch.phase == TouchPhase.Began)
 		{
-			if(touch.phase == TouchPhase.Began)
-			{
-				fingerUpPos = touch.position;
-				fingerDownPos = touch.position;
-			}
+			fingerUpPos = touch.position;
+			fingerDownPos = touch.position;
+		}
 
-			if(DetectBeforeRelease && touch.phase == TouchPhase.Moved)
-			{
-				fingerDownPos = touch.position;
-				DetectSwipe();
-			}
+		if (DetectBeforeRelease && touch.phase == TouchPhase.Moved)
+		{
+			fingerDownPos = touch.position;
+			DetectSwipeOrTap();
+		}
 
-			if(touch.phase == TouchPhase.Ended)
-			{
-				fingerDownPos = touch.position;
-				DetectSwipe();
-			}
+		if (touch.phase == TouchPhase.Ended)
+		{
+			fingerDownPos = touch.position;
+			DetectSwipeOrTap();
 		}
 	}
 
-	private void DetectSwipe()
+	private void DetectSwipeOrTap()
 	{
 		if(SwipeDistanceCheck())
 		{
 			if(IsUpSwipe())
 			{
 				var direction = SwipeDirection.up;
-				SendSwipe(direction);
+				onSwipe(direction);
 			}
 			if (IsDownSwipe())
 			{
 				var direction = SwipeDirection.down;
-				SendSwipe(direction);
+				onSwipe(direction);
 			}
 			if (IsLeftSwipe())
 			{
 				var direction = SwipeDirection.left;
-				SendSwipe(direction);
+				onSwipe(direction);
 			}
 			if (IsRightSwipe())
 			{
 				var direction = SwipeDirection.right;
-				SendSwipe(direction);
+				onSwipe(direction);
 			}
 		}
-	}
-
-	private void SendSwipe(SwipeDirection direction)
-	{
-		SwipeData swipeData = new SwipeData()
-		{
-			swipeDirection = direction, 
-			startPosition = fingerDownPos,
-			endPosition = fingerUpPos
-		};
-
-		onSwipe(swipeData);
+		else onTap();
 	}
 
 	private bool SwipeDistanceCheck()

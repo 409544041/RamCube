@@ -38,7 +38,8 @@ public class CubeMovement : MonoBehaviour
 	}
 	private void OnEnable() 
 	{
-		SwipeDetector.onSwipe += HandleTouchInput;
+		SwipeDetector.onSwipe += HandleSwipeInput;
+		SwipeDetector.onTap += HandleTapInput;
 	}
 
 	private void Start() 
@@ -51,20 +52,29 @@ public class CubeMovement : MonoBehaviour
 		HandleKeyInput();
 	}
 
-	private void HandleTouchInput(SwipeDetector.SwipeData data)
+	private void HandleSwipeInput(SwipeDetector.SwipeDirection direction)
 	{
 		if(!input) return;
-		if(data.swipeDirection == SwipeDetector.SwipeDirection.up && onRaycast(Vector3.forward))
+
+		if(direction == SwipeDetector.SwipeDirection.up && onRaycast(Vector3.forward))
 			StartCoroutine(Move(up, Vector3.right));
 
-		if (data.swipeDirection == SwipeDetector.SwipeDirection.down && onRaycast(Vector3.back))
+		if (direction == SwipeDetector.SwipeDirection.down && onRaycast(Vector3.back))
 			StartCoroutine(Move(down, Vector3.left));
 
-		if (data.swipeDirection == SwipeDetector.SwipeDirection.left && onRaycast(Vector3.left))
+		if (direction == SwipeDetector.SwipeDirection.left && onRaycast(Vector3.left))
 			StartCoroutine(Move(left, Vector3.forward));
 
-		if (data.swipeDirection == SwipeDetector.SwipeDirection.right && onRaycast(Vector3.right))
+		if (direction == SwipeDetector.SwipeDirection.right && onRaycast(Vector3.right))
 			StartCoroutine(Move(right, Vector3.back));
+	}
+
+	private void HandleTapInput()
+	{
+		if(!input) return;
+		
+		if(isInBoostPos && !isBoosting && FireRamRaycast())
+			StartCoroutine(Boost());
 	}
 
 	private void HandleKeyInput()
@@ -165,6 +175,7 @@ public class CubeMovement : MonoBehaviour
 
 	private void OnDisable() 
 	{
-		SwipeDetector.onSwipe -= HandleTouchInput;
+		SwipeDetector.onSwipe -= HandleSwipeInput;
+		SwipeDetector.onTap -= HandleTapInput;
 	}
 }
