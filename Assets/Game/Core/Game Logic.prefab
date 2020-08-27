@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8573582724643509015}
   - component: {fileID: 8573582724643509014}
+  - component: {fileID: 1532914687393087819}
+  - component: {fileID: 6248336114107074890}
   m_Layer: 0
   m_Name: Game Logic
   m_TagString: Untagged
@@ -41,5 +43,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ca97898e6317a64aac7e6f5c86145a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1532914687393087819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573582724643509009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb5d7ccdf2c13a04aa31173fe026b346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DetectBeforeRelease: 0
+  minSwipeDistance: 20
+--- !u!114 &6248336114107074890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573582724643509009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c940d43535917e244a08e52ad0eb6cee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

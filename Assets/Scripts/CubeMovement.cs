@@ -80,25 +80,6 @@ public class CubeMovement : MonoBehaviour
 		}
 	}
 
-	private IEnumerator Boost()
-	{
-		while(isBoosting)
-		{
-			transform.position += transform.forward * boostSpeed * Time.deltaTime;
-			yield return null;
-		}
-
-		transform.position = new Vector3(Mathf.RoundToInt(transform.position.x), 
-			0.5f, Mathf.RoundToInt(transform.position.z));
-
-		UpdatePositions();
-
-		isBoosting = false;
-		rb.isKinematic = false;
-
-		CheckFloorInNewPos();			
-	}
-
 	private IEnumerator Move(Transform side, Vector3 turnAxis)
 	{
 		var tileToDrop = FetchCubeGridPos();
@@ -113,6 +94,29 @@ public class CubeMovement : MonoBehaviour
 
 		dropper.DropTile(tileToDrop);
 
+		rb.isKinematic = false;
+
+		CheckFloorInNewPos();
+	}
+
+	private IEnumerator Boost()
+	{
+		var tileToDrop = FetchCubeGridPos();
+
+		while (isBoosting)
+		{
+			transform.position += transform.forward * boostSpeed * Time.deltaTime;
+			yield return null;
+		}
+
+		transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
+			0.5f, Mathf.RoundToInt(transform.position.z));
+
+		UpdatePositions();
+
+		dropper.DropTile(tileToDrop);
+
+		isBoosting = false;
 		rb.isKinematic = false;
 
 		CheckFloorInNewPos();

@@ -25,6 +25,7 @@ public class TileDropper : MonoBehaviour
 
 	public void DropTile(Vector2Int tileToDrop)
 	{
+		if(tileGrid[tileToDrop].FetchIsStatic()) return;
 		tileGrid[tileToDrop].GetComponent<Rigidbody>().isKinematic = false;
 		tileGrid[tileToDrop].GetComponent<FloorTile>().hasFallen = true;
 	}
