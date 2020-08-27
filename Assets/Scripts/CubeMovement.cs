@@ -36,6 +36,10 @@ public class CubeMovement : MonoBehaviour
 		rb = GetComponent<Rigidbody>();	
 		dropper = FindObjectOfType<TileDropper>();
 	}
+	private void OnEnable() 
+	{
+		SwipeDetector.onSwipe += HandleTouchInput;
+	}
 
 	private void Start() 
 	{
@@ -44,44 +48,50 @@ public class CubeMovement : MonoBehaviour
 
 	void Update()
 	{
-		if(input == true)
-		{
-			if(Input.GetKeyDown(KeyCode.W) && onRaycast(Vector3.forward))
-			{
-				StartCoroutine(Move(up, Vector3.right));
-				input = false;
-				rb.isKinematic = true;
-			}
-			if (Input.GetKeyDown(KeyCode.S) && onRaycast(Vector3.back))
-			{
-				StartCoroutine(Move(down, Vector3.left));
-				input = false;
-				rb.isKinematic = true;
-			}
-			if (Input.GetKeyDown(KeyCode.A) && onRaycast(Vector3.left))
-			{
-				StartCoroutine(Move(left, Vector3.forward));
-				input = false;
-				rb.isKinematic = true;
-			}
-			if (Input.GetKeyDown(KeyCode.D) && onRaycast(Vector3.right))
-			{
-				StartCoroutine(Move(right, Vector3.back));
-				input = false;
-				rb.isKinematic = true;
-			}
-			if(Input.GetKeyDown(KeyCode.Space) && isInBoostPos && !isBoosting && FireRamRaycast())
-			{
-				input = false;
-				rb.isKinematic = true;
-				isBoosting = true;
-				StartCoroutine(Boost());
-			}
-		}
+		HandleKeyInput();
+	}
+
+	private void HandleTouchInput(SwipeDetector.SwipeData data)
+	{
+		if(!input) return;
+		if(data.swipeDirection == SwipeDetector.SwipeDirection.up && onRaycast(Vector3.forward))
+			StartCoroutine(Move(up, Vector3.right));
+
+		if (data.swipeDirection == SwipeDetector.SwipeDirection.down && onRaycast(Vector3.back))
+			StartCoroutine(Move(down, Vector3.left));
+
+		if (data.swipeDirection == SwipeDetector.SwipeDirection.left && onRaycast(Vector3.left))
+			StartCoroutine(Move(left, Vector3.forward));
+
+		if (data.swipeDirection == SwipeDetector.SwipeDirection.right && onRaycast(Vector3.right))
+			StartCoroutine(Move(right, Vector3.back));
+	}
+
+	private void HandleKeyInput()
+	{
+		if (!input) return;
+
+		if (Input.GetKeyDown(KeyCode.W) && onRaycast(Vector3.forward))
+			StartCoroutine(Move(up, Vector3.right));
+
+		if (Input.GetKeyDown(KeyCode.S) && onRaycast(Vector3.back))
+			StartCoroutine(Move(down, Vector3.left));
+
+		if (Input.GetKeyDown(KeyCode.A) && onRaycast(Vector3.left))
+			StartCoroutine(Move(left, Vector3.forward));
+
+		if (Input.GetKeyDown(KeyCode.D) && onRaycast(Vector3.right))
+			StartCoroutine(Move(right, Vector3.back));
+
+		if (Input.GetKeyDown(KeyCode.Space) && isInBoostPos && !isBoosting && FireRamRaycast())
+			StartCoroutine(Boost());
 	}
 
 	private IEnumerator Move(Transform side, Vector3 turnAxis)
 	{
+		input = false;
+		rb.isKinematic = true;
+
 		var tileToDrop = FetchCubeGridPos();
 
 		for (int i = 0; i < (90 / turnStep); i++)
@@ -101,6 +111,10 @@ public class CubeMovement : MonoBehaviour
 
 	private IEnumerator Boost()
 	{
+		input = false;
+		rb.isKinematic = true;
+		isBoosting = true;
+
 		var tileToDrop = FetchCubeGridPos();
 
 		while (isBoosting)
@@ -147,5 +161,10 @@ public class CubeMovement : MonoBehaviour
 	{
 		return new Vector2Int
 			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
+	}
+
+	private void OnDisable() 
+	{
+		SwipeDetector.onSwipe -= HandleTouchInput;
 	}
 }
