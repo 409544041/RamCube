@@ -5,16 +5,16 @@ using UnityEngine;
 public class ShieldCollider : MonoBehaviour
 {
 	//Cache
-	GameObject cube;
+	CubeMovement cubeMover;
 
 	private void Awake()
 	{
-		cube = GameObject.FindGameObjectWithTag("Player");
+		cubeMover = GameObject.FindGameObjectWithTag("Player").GetComponent<CubeMovement>();
 	}
 
 	private void OnTriggerEnter(Collider other) 
 	{
 		if(other.gameObject.tag == "Environment") 
-			cube.GetComponent<CubeMovement>().isBoosting = false;
+			cubeMover.isBoosting = false;
 	}
 }
