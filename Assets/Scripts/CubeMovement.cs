@@ -20,7 +20,7 @@ public class CubeMovement : MonoBehaviour
 
 	//States
 	public bool isInBoostPos { get; set; } = true;
-	bool input = true;
+	public bool input { get; private set;} = true;
 	public bool isBoosting { get; set; } = false;
 	public bool canMoveUp { get; set; } = true;
 	public bool canMoveDown { get; set; } = true;

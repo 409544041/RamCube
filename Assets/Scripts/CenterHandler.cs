@@ -20,7 +20,8 @@ public class CenterHandler : MonoBehaviour
 	public bool FireRaycast(Vector3 direction)
 	{
 		RaycastHit hit;
-		if (Physics.Raycast(transform.position, transform.TransformDirection(direction), out hit, 1, 1 << 8))
+		if (Physics.Raycast(transform.position, 
+			transform.TransformDirection(direction), out hit, 1, 1 << 8))
 			return false;
 		else return true;
 	}
