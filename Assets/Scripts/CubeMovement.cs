@@ -157,7 +157,7 @@ public class CubeMovement : MonoBehaviour
 	public bool FireRamRaycast()
 	{
 		RaycastHit hit;
-		if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 1, 1 << 8))
+		if (Physics.BoxCast(transform.position, transform.localScale * .25f, transform.TransformDirection(Vector3.forward), out hit, transform.rotation, 1, 1 << 8))
 			return false;
 		else return true;
 	}
