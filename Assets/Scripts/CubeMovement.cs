@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CubeMovement : MonoBehaviour
 {
@@ -95,6 +96,10 @@ public class CubeMovement : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Space) && isInBoostPos && !isBoosting && FireRamRaycast())
 			StartCoroutine(Boost());
+
+		//TO DO: Remove and place in a sceneloader script once it's made
+		if(Input.GetKeyDown(KeyCode.R)) 
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	private IEnumerator Move(Transform side, Vector3 turnAxis)
@@ -110,6 +115,7 @@ public class CubeMovement : MonoBehaviour
 			yield return null;
 		}
 
+		RoundPosition();
 		UpdatePositions();
 
 		dropper.DropTile(tileToDrop);
@@ -133,9 +139,7 @@ public class CubeMovement : MonoBehaviour
 			yield return null;
 		}
 
-		transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
-			0.5f, Mathf.RoundToInt(transform.position.z));
-
+		RoundPosition();
 		UpdatePositions();
 
 		dropper.DropTile(tileToDrop);
@@ -144,6 +148,15 @@ public class CubeMovement : MonoBehaviour
 		rb.isKinematic = false;
 
 		CheckFloorInNewPos();
+	}
+
+	private void RoundPosition()
+	{
+		transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
+			0.5f, Mathf.RoundToInt(transform.position.z));
+		
+		Quaternion rotation = Quaternion.Euler(Mathf.RoundToInt(transform.rotation.x), 
+			Mathf.RoundToInt(transform.rotation.y), Mathf.RoundToInt(transform.rotation.z));
 	}
 
 	private void CheckFloorInNewPos()
