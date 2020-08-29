@@ -32,19 +32,18 @@ public class Laser : MonoBehaviour
 
 	private void FireLaserCast()
 	{
-		if(!cubeMover.input) return;
+		if(cubeMover.input || cubeMover.isBoosting) 
+		{
+			RaycastHit[] hits = SortedRaycasts();
 
-		RaycastHit[] hits = SortedRaycasts();
+			if (hits.Length == 0) return;
 
-		print(Mathf.Approximately(Vector3.Dot(cubeMover.transform.forward, transform.forward), -1));
+			if (Mathf.Approximately(Vector3.Dot(cubeMover.transform.forward,
+				transform.forward), -1)) Debug.Log("Shielded");
 
-		if(hits.Length == 0) return;
-
-		if(Mathf.Approximately(Vector3.Dot(cubeMover.transform.forward, 
-			transform.forward), -1)) Debug.Log("Shielded");
-
-		else if(hits[0].transform.gameObject.tag == "Player")
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			else if (hits[0].transform.gameObject.tag == "Player")
+				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		}
 	}
 
 	private RaycastHit[] SortedRaycasts()

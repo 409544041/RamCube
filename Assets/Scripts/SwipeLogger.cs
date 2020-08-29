@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SwipeLogger : MonoBehaviour
 {
@@ -9,6 +10,13 @@ public class SwipeLogger : MonoBehaviour
 	{
 		SwipeDetector.onSwipe += SwipeLog;
 		SwipeDetector.onTap += TapLog;
+	}
+
+	private void Update() 
+	{
+		//TO DO: Remove and place in a sceneloader script once it's made
+		if (Input.GetKeyDown(KeyCode.R))
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);	
 	}
 
 	private void SwipeLog(SwipeDetector.SwipeDirection direction)

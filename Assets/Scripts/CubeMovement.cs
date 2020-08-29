@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CubeMovement : MonoBehaviour
 {
@@ -96,10 +95,6 @@ public class CubeMovement : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Space) && isInBoostPos && !isBoosting && FireRamRaycast())
 			StartCoroutine(Boost());
-
-		//TO DO: Remove and place in a sceneloader script once it's made
-		if(Input.GetKeyDown(KeyCode.R)) 
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	private IEnumerator Move(Transform side, Vector3 turnAxis)
@@ -138,7 +133,8 @@ public class CubeMovement : MonoBehaviour
 			transform.position += transform.forward * boostSpeed * Time.deltaTime;
 			yield return null;
 		}
-
+		
+		print("done boosting");
 		RoundPosition();
 		UpdatePositions();
 
