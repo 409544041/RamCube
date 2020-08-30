@@ -41,15 +41,14 @@ public class Laser : MonoBehaviour
 			if (Mathf.Approximately(Vector3.Dot(cubeMover.transform.forward,
 				transform.forward), -1)) Debug.Log("Shielded");
 
-			else if (hits[0].transform.gameObject.tag == "Player")
-				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			else SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 	}
 
 	private RaycastHit[] SortedRaycasts()
 	{
-		RaycastHit[] hits = Physics.RaycastAll(laserOrigin.position, 
-			transform.TransformDirection(Vector3.forward), distance);
+		RaycastHit[] hits = Physics.RaycastAll(laserOrigin.position,
+			transform.TransformDirection(Vector3.forward), distance, 1 << 9, QueryTriggerInteraction.Ignore);
 
 		Debug.DrawRay(laserOrigin.position, 
 			transform.TransformDirection(Vector3.forward), Color.red, distance);
