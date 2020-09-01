@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TileHandler : MonoBehaviour
 {
-	Dictionary<Vector2Int, FloorTile> tileGrid = new Dictionary<Vector2Int, FloorTile>();
+	public Dictionary<Vector2Int, FloorTile> tileGrid = new Dictionary<Vector2Int, FloorTile>();
 
 	private void Start() 
 	{
@@ -27,7 +27,8 @@ public class TileHandler : MonoBehaviour
 	{
 		if(tileGrid[tileToDrop].FetchType() == TileTypes.Static) return;
 		tileGrid[tileToDrop].GetComponent<Rigidbody>().isKinematic = false;
-		tileGrid[tileToDrop].GetComponent<FloorTile>().hasFallen = true;
+		//tileGrid[tileToDrop].GetComponent<FloorTile>().hasFallen = true;
+		tileGrid.Remove(tileToDrop);
 	}
 
 	public FloorTile FetchTile(Vector2Int tile)

@@ -39,9 +39,9 @@ public class BoostTile : MonoBehaviour
 
 		mover.isBoosting = false;
 		cube.GetComponent<Rigidbody>().isKinematic = false;
-
+		
 		mover.CheckFloorInNewPos();
-
+		mover.input = true;
 	}
 
 }

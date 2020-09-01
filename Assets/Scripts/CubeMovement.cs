@@ -28,10 +28,6 @@ public class CubeMovement : MonoBehaviour
 	Vector2Int tileLeftPos = new Vector2Int(-1, 0);
 	Vector2Int tileRightPos = new Vector2Int(1, 0);
 
-	public delegate bool RayCastDelegate(Vector3 direction);
-	public RayCastDelegate onRaycast;
-
-
 	private void Awake() 
 	{
 		rb = GetComponent<Rigidbody>();	
@@ -57,19 +53,19 @@ public class CubeMovement : MonoBehaviour
 		if(!input) return;
 
 		if(direction == SwipeDetector.SwipeDirection.up && 
-			handler.FetchTile(FetchCubeGridPos() + tileAbovePos).GetComponent<FloorTile>())
+			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileAbovePos))
 			StartCoroutine(Move(up, Vector3.right));
 
-		if (direction == SwipeDetector.SwipeDirection.down && 
-			handler.FetchTile(FetchCubeGridPos() + tileBelowPos).GetComponent<FloorTile>())
+		if (direction == SwipeDetector.SwipeDirection.down &&
+			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileBelowPos))
 			StartCoroutine(Move(down, Vector3.left));
 
-		if (direction == SwipeDetector.SwipeDirection.left && 
-			handler.FetchTile(FetchCubeGridPos() + tileLeftPos).GetComponent<FloorTile>())
+		if (direction == SwipeDetector.SwipeDirection.left &&
+			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileLeftPos))
 			StartCoroutine(Move(left, Vector3.forward));
 
-		if (direction == SwipeDetector.SwipeDirection.right && 
-			handler.FetchTile(FetchCubeGridPos() + tileRightPos).GetComponent<FloorTile>())
+		if (direction == SwipeDetector.SwipeDirection.right &&
+			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileRightPos))
 			StartCoroutine(Move(right, Vector3.back));
 	}
 
@@ -77,20 +73,20 @@ public class CubeMovement : MonoBehaviour
 	{
 		if (!input) return;
 
-		if (Input.GetKeyDown(KeyCode.W) && 
-			handler.FetchTile(FetchCubeGridPos() + tileAbovePos))
+		if (Input.GetKeyDown(KeyCode.W) &&
+			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileAbovePos))
 			StartCoroutine(Move(up, Vector3.right));
 
-		if (Input.GetKeyDown(KeyCode.S) && 
-			handler.FetchTile(FetchCubeGridPos() + tileBelowPos))
+		if (Input.GetKeyDown(KeyCode.S) &&
+			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileBelowPos))
 			StartCoroutine(Move(down, Vector3.left));
 
-		if (Input.GetKeyDown(KeyCode.A) && 
-			handler.FetchTile(FetchCubeGridPos() + tileLeftPos))
+		if (Input.GetKeyDown(KeyCode.A) &&
+			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileLeftPos))
 			StartCoroutine(Move(left, Vector3.forward));
 
-		if (Input.GetKeyDown(KeyCode.D) && 
-			handler.FetchTile(FetchCubeGridPos() + tileRightPos))
+		if (Input.GetKeyDown(KeyCode.D) &&
+			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileRightPos))
 			StartCoroutine(Move(right, Vector3.back));
 	}
 
@@ -115,6 +111,8 @@ public class CubeMovement : MonoBehaviour
 		rb.isKinematic = false;
 
 		CheckFloorInNewPos();
+
+		input = true;
 	}
 
 	public void RoundPosition()
@@ -128,17 +126,10 @@ public class CubeMovement : MonoBehaviour
 
 	public void CheckFloorInNewPos()
 	{
-		FloorTile currentTile = handler.FetchTile(FetchCubeGridPos());
-
-		if (!currentTile.hasFallen)
-		{
-			input = true;
-		}
+		var currentTile = handler.FetchTile(FetchCubeGridPos());
 
 		if(currentTile.FetchType() == TileTypes.Boosting)
-		{
 			currentTile.GetComponent<BoostTile>().PrepareBoost(this.gameObject);
-		}
 	}
 
 	public void UpdatePositions()
