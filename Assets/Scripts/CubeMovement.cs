@@ -20,12 +20,8 @@ public class CubeMovement : MonoBehaviour
 
 	//States
 	public bool isInBoostPos { get; set; } = true;
-	public bool input { get; private set;} = true;
+	public bool input { get; set;} = true;
 	public bool isBoosting { get; set; } = false;
-	public bool canMoveUp { get; set; } = true;
-	public bool canMoveDown { get; set; } = true;
-	public bool canMoveLeft { get; set; } = true;
-	public bool canMoveRight { get; set; } = true;
 
 	Vector2Int tileAbovePos = new Vector2Int(0, 1);
 	Vector2Int tileBelowPos = new Vector2Int(0, -1);
@@ -96,15 +92,6 @@ public class CubeMovement : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.D) && 
 			handler.FetchTile(FetchCubeGridPos() + tileRightPos))
 			StartCoroutine(Move(right, Vector3.back));
-		
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			Vector2Int currentPos = FetchCubeGridPos();
-			Vector2Int tileAbovePos = new Vector2Int(currentPos.x, currentPos.y + 1);
-			print(tileAbovePos);
-			if(handler.FetchTile(tileAbovePos))
-			print("can move");
-		}
 	}
 
 	private IEnumerator Move(Transform side, Vector3 turnAxis)
@@ -130,32 +117,7 @@ public class CubeMovement : MonoBehaviour
 		CheckFloorInNewPos();
 	}
 
-	private IEnumerator Boost(Vector3 boostDirection)
-	{
-		input = false;
-		rb.isKinematic = true;
-		isBoosting = true;
-
-		var tileToDrop = FetchCubeGridPos();
-
-		while (isBoosting)
-		{
-			transform.position += boostDirection * boostSpeed * Time.deltaTime;
-			yield return null;
-		}
-		
-		RoundPosition();
-		UpdatePositions();
-
-		handler.DropTile(tileToDrop);
-
-		isBoosting = false;
-		rb.isKinematic = false;
-
-		CheckFloorInNewPos();
-	}
-
-	private void RoundPosition()
+	public void RoundPosition()
 	{
 		transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
 			0.5f, Mathf.RoundToInt(transform.position.z));
@@ -164,7 +126,7 @@ public class CubeMovement : MonoBehaviour
 			Mathf.RoundToInt(transform.rotation.y), Mathf.RoundToInt(transform.rotation.z));
 	}
 
-	private void CheckFloorInNewPos()
+	public void CheckFloorInNewPos()
 	{
 		FloorTile currentTile = handler.FetchTile(FetchCubeGridPos());
 
@@ -175,12 +137,11 @@ public class CubeMovement : MonoBehaviour
 
 		if(currentTile.FetchType() == TileTypes.Boosting)
 		{
-			currentTile.GetComponent<BoostTile>().AttachBoostCollider(this.gameObject);
-			StartCoroutine(Boost(handler.FetchTile(FetchCubeGridPos()).transform.forward));
+			currentTile.GetComponent<BoostTile>().PrepareBoost(this.gameObject);
 		}
 	}
 
-	private void UpdatePositions()
+	public void UpdatePositions()
 	{
 		center.position = transform.position;
 	}
