@@ -30,17 +30,6 @@ public class TileHandler : MonoBehaviour
 		tileGrid[tileToDrop].GetComponent<FloorTile>().hasFallen = true;
 	}
 
-	public bool FetchTileFallen(Vector2Int tile)
-	{	
-		if(!tileGrid[tile]) return true;
-		return tileGrid[tile].hasFallen;
-	}
-
-	public TileTypes FetchTileType(Vector2Int tile)
-	{
-		return tileGrid[tile].FetchType();
-	}
-
 	public FloorTile FetchTile(Vector2Int tile)
 	{
 		return tileGrid[tile];

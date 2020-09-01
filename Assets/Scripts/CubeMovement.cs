@@ -82,19 +82,19 @@ public class CubeMovement : MonoBehaviour
 		if (!input) return;
 
 		if (Input.GetKeyDown(KeyCode.W) && 
-			handler.FetchTile(FetchCubeGridPos() + tileAbovePos).GetComponent<FloorTile>())
+			handler.FetchTile(FetchCubeGridPos() + tileAbovePos))
 			StartCoroutine(Move(up, Vector3.right));
 
 		if (Input.GetKeyDown(KeyCode.S) && 
-			handler.FetchTile(FetchCubeGridPos() + tileBelowPos).GetComponent<FloorTile>())
+			handler.FetchTile(FetchCubeGridPos() + tileBelowPos))
 			StartCoroutine(Move(down, Vector3.left));
 
 		if (Input.GetKeyDown(KeyCode.A) && 
-			handler.FetchTile(FetchCubeGridPos() + tileLeftPos).GetComponent<FloorTile>())
+			handler.FetchTile(FetchCubeGridPos() + tileLeftPos))
 			StartCoroutine(Move(left, Vector3.forward));
 
 		if (Input.GetKeyDown(KeyCode.D) && 
-			handler.FetchTile(FetchCubeGridPos() + tileRightPos).GetComponent<FloorTile>())
+			handler.FetchTile(FetchCubeGridPos() + tileRightPos))
 			StartCoroutine(Move(right, Vector3.back));
 		
 		if(Input.GetKeyDown(KeyCode.Space))
