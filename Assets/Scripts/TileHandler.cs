@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileDropper : MonoBehaviour
+public class TileHandler : MonoBehaviour
 {
 	Dictionary<Vector2Int, FloorTile> tileGrid = new Dictionary<Vector2Int, FloorTile>();
 
@@ -25,7 +25,7 @@ public class TileDropper : MonoBehaviour
 
 	public void DropTile(Vector2Int tileToDrop)
 	{
-		if(tileGrid[tileToDrop].FetchIsStatic()) return;
+		if(tileGrid[tileToDrop].FetchType() == TileTypes.Static) return;
 		tileGrid[tileToDrop].GetComponent<Rigidbody>().isKinematic = false;
 		tileGrid[tileToDrop].GetComponent<FloorTile>().hasFallen = true;
 	}
@@ -34,5 +34,15 @@ public class TileDropper : MonoBehaviour
 	{	
 		if(!tileGrid[tile]) return true;
 		return tileGrid[tile].hasFallen;
+	}
+
+	public TileTypes FetchTileType(Vector2Int tile)
+	{
+		return tileGrid[tile].FetchType();
+	}
+
+	public FloorTile FetchTile(Vector2Int tile)
+	{
+		return tileGrid[tile];
 	}
 }

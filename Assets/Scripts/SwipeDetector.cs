@@ -14,7 +14,6 @@ public class SwipeDetector : MonoBehaviour
 	Vector2 fingerUpPos;
 
 	public static event Action<SwipeDirection> onSwipe;
-	public static event Action onTap;
 
 	public enum SwipeDirection { up, down, left, right }
 
@@ -35,17 +34,17 @@ public class SwipeDetector : MonoBehaviour
 		if (DetectBeforeRelease && touch.phase == TouchPhase.Moved)
 		{
 			fingerDownPos = touch.position;
-			DetectSwipeOrTap();
+			DetectSwipes();
 		}
 
 		if (touch.phase == TouchPhase.Ended)
 		{
 			fingerDownPos = touch.position;
-			DetectSwipeOrTap();
+			DetectSwipes();
 		}
 	}
 
-	private void DetectSwipeOrTap()
+	private void DetectSwipes()
 	{
 		if(SwipeDistanceCheck())
 		{
@@ -70,7 +69,6 @@ public class SwipeDetector : MonoBehaviour
 				onSwipe(direction);
 			}
 		}
-		else onTap();
 	}
 
 	private bool SwipeDistanceCheck()

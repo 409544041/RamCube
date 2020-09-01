@@ -15,6 +15,9 @@ public class ShieldCollider : MonoBehaviour
 	private void OnTriggerEnter(Collider other) 
 	{
 		if(other.gameObject.tag == "Environment") 
+		{
 			cubeMover.isBoosting = false;
+			Destroy(gameObject);
+		}
 	}
 }

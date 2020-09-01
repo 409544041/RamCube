@@ -16,7 +16,7 @@ public class CubeMovement : MonoBehaviour
 
 	//Cache
 	Rigidbody rb;
-	TileDropper dropper;
+	TileHandler handler;
 
 	//States
 	public bool isInBoostPos { get; set; } = true;
@@ -27,6 +27,11 @@ public class CubeMovement : MonoBehaviour
 	public bool canMoveLeft { get; set; } = true;
 	public bool canMoveRight { get; set; } = true;
 
+	Vector2Int tileAbovePos = new Vector2Int(0, 1);
+	Vector2Int tileBelowPos = new Vector2Int(0, -1);
+	Vector2Int tileLeftPos = new Vector2Int(-1, 0);
+	Vector2Int tileRightPos = new Vector2Int(1, 0);
+
 	public delegate bool RayCastDelegate(Vector3 direction);
 	public RayCastDelegate onRaycast;
 
@@ -34,12 +39,11 @@ public class CubeMovement : MonoBehaviour
 	private void Awake() 
 	{
 		rb = GetComponent<Rigidbody>();	
-		dropper = FindObjectOfType<TileDropper>();
+		handler = FindObjectOfType<TileHandler>();
 	}
 	private void OnEnable() 
 	{
 		SwipeDetector.onSwipe += HandleSwipeInput;
-		SwipeDetector.onTap += HandleTapInput;
 	}
 
 	private void Start() 
@@ -56,45 +60,51 @@ public class CubeMovement : MonoBehaviour
 	{
 		if(!input) return;
 
-		if(direction == SwipeDetector.SwipeDirection.up && onRaycast(Vector3.forward))
+		if(direction == SwipeDetector.SwipeDirection.up && 
+			handler.FetchTile(FetchCubeGridPos() + tileAbovePos).GetComponent<FloorTile>())
 			StartCoroutine(Move(up, Vector3.right));
 
-		if (direction == SwipeDetector.SwipeDirection.down && onRaycast(Vector3.back))
+		if (direction == SwipeDetector.SwipeDirection.down && 
+			handler.FetchTile(FetchCubeGridPos() + tileBelowPos).GetComponent<FloorTile>())
 			StartCoroutine(Move(down, Vector3.left));
 
-		if (direction == SwipeDetector.SwipeDirection.left && onRaycast(Vector3.left))
+		if (direction == SwipeDetector.SwipeDirection.left && 
+			handler.FetchTile(FetchCubeGridPos() + tileLeftPos).GetComponent<FloorTile>())
 			StartCoroutine(Move(left, Vector3.forward));
 
-		if (direction == SwipeDetector.SwipeDirection.right && onRaycast(Vector3.right))
+		if (direction == SwipeDetector.SwipeDirection.right && 
+			handler.FetchTile(FetchCubeGridPos() + tileRightPos).GetComponent<FloorTile>())
 			StartCoroutine(Move(right, Vector3.back));
-	}
-
-	private void HandleTapInput()
-	{
-		if(!input) return;
-		
-		if(isInBoostPos && !isBoosting && FireRamRaycast())
-			StartCoroutine(Boost());
 	}
 
 	private void HandleKeyInput()
 	{
 		if (!input) return;
 
-		if (Input.GetKeyDown(KeyCode.W) && onRaycast(Vector3.forward))
+		if (Input.GetKeyDown(KeyCode.W) && 
+			handler.FetchTile(FetchCubeGridPos() + tileAbovePos).GetComponent<FloorTile>())
 			StartCoroutine(Move(up, Vector3.right));
 
-		if (Input.GetKeyDown(KeyCode.S) && onRaycast(Vector3.back))
+		if (Input.GetKeyDown(KeyCode.S) && 
+			handler.FetchTile(FetchCubeGridPos() + tileBelowPos).GetComponent<FloorTile>())
 			StartCoroutine(Move(down, Vector3.left));
 
-		if (Input.GetKeyDown(KeyCode.A) && onRaycast(Vector3.left))
+		if (Input.GetKeyDown(KeyCode.A) && 
+			handler.FetchTile(FetchCubeGridPos() + tileLeftPos).GetComponent<FloorTile>())
 			StartCoroutine(Move(left, Vector3.forward));
 
-		if (Input.GetKeyDown(KeyCode.D) && onRaycast(Vector3.right))
+		if (Input.GetKeyDown(KeyCode.D) && 
+			handler.FetchTile(FetchCubeGridPos() + tileRightPos).GetComponent<FloorTile>())
 			StartCoroutine(Move(right, Vector3.back));
-
-		if (Input.GetKeyDown(KeyCode.Space) && isInBoostPos && !isBoosting && FireRamRaycast())
-			StartCoroutine(Boost());
+		
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			Vector2Int currentPos = FetchCubeGridPos();
+			Vector2Int tileAbovePos = new Vector2Int(currentPos.x, currentPos.y + 1);
+			print(tileAbovePos);
+			if(handler.FetchTile(tileAbovePos))
+			print("can move");
+		}
 	}
 
 	private IEnumerator Move(Transform side, Vector3 turnAxis)
@@ -113,14 +123,14 @@ public class CubeMovement : MonoBehaviour
 		RoundPosition();
 		UpdatePositions();
 
-		dropper.DropTile(tileToDrop);
+		handler.DropTile(tileToDrop);
 
 		rb.isKinematic = false;
 
 		CheckFloorInNewPos();
 	}
 
-	private IEnumerator Boost()
+	private IEnumerator Boost(Vector3 boostDirection)
 	{
 		input = false;
 		rb.isKinematic = true;
@@ -130,15 +140,14 @@ public class CubeMovement : MonoBehaviour
 
 		while (isBoosting)
 		{
-			transform.position += transform.forward * boostSpeed * Time.deltaTime;
+			transform.position += boostDirection * boostSpeed * Time.deltaTime;
 			yield return null;
 		}
 		
-		print("done boosting");
 		RoundPosition();
 		UpdatePositions();
 
-		dropper.DropTile(tileToDrop);
+		handler.DropTile(tileToDrop);
 
 		isBoosting = false;
 		rb.isKinematic = false;
@@ -157,18 +166,18 @@ public class CubeMovement : MonoBehaviour
 
 	private void CheckFloorInNewPos()
 	{
-		if (!dropper.FetchTileFallen(FetchCubeGridPos()))
+		FloorTile currentTile = handler.FetchTile(FetchCubeGridPos());
+
+		if (!currentTile.hasFallen)
 		{
 			input = true;
 		}
-	}
 
-	public bool FireRamRaycast()
-	{
-		RaycastHit hit;
-		if (Physics.BoxCast(transform.position, transform.localScale * .25f, transform.TransformDirection(Vector3.forward), out hit, transform.rotation, 1, 1 << 8))
-			return false;
-		else return true;
+		if(currentTile.FetchType() == TileTypes.Boosting)
+		{
+			currentTile.GetComponent<BoostTile>().AttachBoostCollider(this.gameObject);
+			StartCoroutine(Boost(handler.FetchTile(FetchCubeGridPos()).transform.forward));
+		}
 	}
 
 	private void UpdatePositions()
@@ -185,6 +194,5 @@ public class CubeMovement : MonoBehaviour
 	private void OnDisable() 
 	{
 		SwipeDetector.onSwipe -= HandleSwipeInput;
-		SwipeDetector.onTap -= HandleTapInput;
 	}
 }

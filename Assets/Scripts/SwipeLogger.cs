@@ -9,7 +9,6 @@ public class SwipeLogger : MonoBehaviour
 	private void OnEnable() 
 	{
 		SwipeDetector.onSwipe += SwipeLog;
-		SwipeDetector.onTap += TapLog;
 	}
 
 	private void Update() 
@@ -32,6 +31,5 @@ public class SwipeLogger : MonoBehaviour
 	private void OnDisable()
 	{
 		SwipeDetector.onSwipe -= SwipeLog;
-		SwipeDetector.onTap -= TapLog;
 	}
 }
