@@ -17,7 +17,6 @@ public class BoostTile : MonoBehaviour
 		spawnedCollider.transform.parent = cube.transform;
 		spawnedCollider.GetComponent<Collider>().enabled = true;
 		
-
 		StartCoroutine(Boost(cube));
 	}
 
@@ -46,7 +45,6 @@ public class BoostTile : MonoBehaviour
 		cube.GetComponent<Rigidbody>().isKinematic = false;
 		
 		mover.CheckFloorInNewPos();
-		mover.input = true;
 	}
 
 }

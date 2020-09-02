@@ -111,8 +111,6 @@ public class CubeMovement : MonoBehaviour
 		rb.isKinematic = false;
 
 		CheckFloorInNewPos();
-
-		input = true;
 	}
 
 	public void RoundPosition()
@@ -126,10 +124,13 @@ public class CubeMovement : MonoBehaviour
 
 	public void CheckFloorInNewPos()
 	{
+		if(!handler.tileGrid.ContainsKey(FetchCubeGridPos())) return;
+
 		var currentTile = handler.FetchTile(FetchCubeGridPos());
 
 		if(currentTile.FetchType() == TileTypes.Boosting)
 			currentTile.GetComponent<BoostTile>().PrepareBoost(this.gameObject);
+		else input = true;
 	}
 
 	public void UpdatePositions()
