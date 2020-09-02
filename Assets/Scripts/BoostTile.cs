@@ -5,13 +5,18 @@ using UnityEngine;
 public class BoostTile : MonoBehaviour
 {
 	//Config parameters
-	[SerializeField] Collider boostCollider;
 	[SerializeField] float boostSpeed = 30f;
+	[SerializeField] GameObject boostCollider;
+	[SerializeField] Transform colliderSpawnPos;
 
 	public void PrepareBoost(GameObject cube)
 	{
-		boostCollider.enabled = true;
-		boostCollider.transform.parent = cube.transform;
+		GameObject spawnedCollider = Instantiate(boostCollider, 
+			colliderSpawnPos.position, transform.localRotation);
+
+		spawnedCollider.transform.parent = cube.transform;
+		spawnedCollider.GetComponent<Collider>().enabled = true;
+		
 
 		StartCoroutine(Boost(cube));
 	}
