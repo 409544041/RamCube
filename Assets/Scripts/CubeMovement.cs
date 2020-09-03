@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,6 +28,8 @@ public class CubeMovement : MonoBehaviour
 	Vector2Int tileRightPos = new Vector2Int(1, 0);
 
 	FloorTile currentTile = null;
+
+	public event Action onLand;
 
 	private void Awake() 
 	{
@@ -124,6 +127,8 @@ public class CubeMovement : MonoBehaviour
 
 	public void CheckFloorInNewPos()
 	{
+		
+
 		FloorTile previousTile = null;
 
 		if(!handler.tileGrid.ContainsKey(FetchCubeGridPos())) return;
@@ -131,6 +136,8 @@ public class CubeMovement : MonoBehaviour
 		if(currentTile != null) previousTile = currentTile;
 		
 		currentTile = handler.FetchTile(FetchCubeGridPos());
+
+		if(currentTile != previousTile) onLand();
 		
 		if(currentTile.FetchType() == TileTypes.Boosting)
 			currentTile.GetComponent<BoostTile>().PrepareBoost(this.gameObject);

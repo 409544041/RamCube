@@ -13,6 +13,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnStep: 9
+--- !u!114 &5085209593952042674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2165958213977974356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f4058d4f3695e64995086597959dfcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 7
 --- !u!1001 &3304080187261210767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20,6 +33,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1277888886894061340, guid: 4522972c159f54f438b475e05905d32d,
+        type: 3}
+      propertyPath: m_SelectedFaces.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277888886894061340, guid: 4522972c159f54f438b475e05905d32d,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277888886894061340, guid: 4522972c159f54f438b475e05905d32d,
+        type: 3}
+      propertyPath: m_SelectedVertices.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1277888886894061340, guid: 4522972c159f54f438b475e05905d32d,
         type: 3}
       propertyPath: m_Colors.Array.data[0].g
@@ -1086,6 +1114,12 @@ PrefabInstance:
 --- !u!1 &5160520858460330150 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7658275567881013289, guid: 4522972c159f54f438b475e05905d32d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3304080187261210767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2165958213977974356 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3735020013160199899, guid: 4522972c159f54f438b475e05905d32d,
     type: 3}
   m_PrefabInstance: {fileID: 3304080187261210767}
   m_PrefabAsset: {fileID: 0}

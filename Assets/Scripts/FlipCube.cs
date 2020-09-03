@@ -21,7 +21,7 @@ public class FlipCube : MonoBehaviour
 
 		var tileToDrop = mover.FetchCubeGridPos();
 
-		var axis = transform.TransformDirection(Vector3.back);
+		var axis = transform.TransformDirection(Vector3.forward);
 
 		for (int i = 0; i < (90 / turnStep); i++)
 		{
