@@ -20,7 +20,7 @@ public class BoostTile : MonoBehaviour
 		StartCoroutine(Boost(cube));
 	}
 
-	public IEnumerator Boost(GameObject cube)
+	private IEnumerator Boost(GameObject cube)
 	{
 		var mover = cube.GetComponent<CubeMovement>();
 

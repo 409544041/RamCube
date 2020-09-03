@@ -25,11 +25,11 @@ public class TileHandler : MonoBehaviour
 
 	public void DropTile(Vector2Int tileToDrop)
 	{
-		if(tileGrid[tileToDrop].FetchType() == TileTypes.Static || 
-			tileGrid[tileToDrop].FetchType() == TileTypes.Boosting) return;
-
-		tileGrid[tileToDrop].GetComponent<Rigidbody>().isKinematic = false;
-		tileGrid.Remove(tileToDrop);
+		if(tileGrid[tileToDrop].FetchType() == TileTypes.Falling )
+		{
+			tileGrid[tileToDrop].GetComponent<Rigidbody>().isKinematic = false;
+			tileGrid.Remove(tileToDrop);
+		} 
 	}
 
 	public FloorTile FetchTile(Vector2Int tile)

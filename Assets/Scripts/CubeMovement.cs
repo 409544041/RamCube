@@ -11,8 +11,6 @@ public class CubeMovement : MonoBehaviour
 	[SerializeField] Transform left;
 	[SerializeField] Transform right;
 	[SerializeField] int turnStep = 9;
-	[SerializeField] Transform thruster;
-	[SerializeField] float boostSpeed = .3f;
 
 	//Cache
 	Rigidbody rb;
@@ -27,6 +25,8 @@ public class CubeMovement : MonoBehaviour
 	Vector2Int tileBelowPos = new Vector2Int(0, -1);
 	Vector2Int tileLeftPos = new Vector2Int(-1, 0);
 	Vector2Int tileRightPos = new Vector2Int(1, 0);
+
+	FloorTile currentTile = null;
 
 	private void Awake() 
 	{
@@ -124,12 +124,21 @@ public class CubeMovement : MonoBehaviour
 
 	public void CheckFloorInNewPos()
 	{
+		FloorTile previousTile = null;
+
 		if(!handler.tileGrid.ContainsKey(FetchCubeGridPos())) return;
 
-		var currentTile = handler.FetchTile(FetchCubeGridPos());
-
+		if(currentTile != null) previousTile = currentTile;
+		
+		currentTile = handler.FetchTile(FetchCubeGridPos());
+		
 		if(currentTile.FetchType() == TileTypes.Boosting)
 			currentTile.GetComponent<BoostTile>().PrepareBoost(this.gameObject);
+
+		else if (currentTile.FetchType() == TileTypes.Flipping
+			&& currentTile != previousTile)
+			currentTile.GetComponent<FlipCube>().StartFlip(this.gameObject);
+
 		else input = true;
 	}
 
