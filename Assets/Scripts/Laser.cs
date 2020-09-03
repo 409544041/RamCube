@@ -21,8 +21,8 @@ public class Laser : MonoBehaviour
 
 	private void Start() 
 	{
-		laserBeam.transform.localScale = new Vector3(1, distance, 1);
-		laserBeam.transform.localPosition = new Vector3(0, 0, .5f * distance);
+		laserBeam.transform.localScale = new Vector3(1, 1, distance);
+		laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
 	}
 
 	void FixedUpdate()
@@ -51,7 +51,7 @@ public class Laser : MonoBehaviour
 			transform.TransformDirection(Vector3.forward), distance, 1 << 9, QueryTriggerInteraction.Ignore);
 
 		Debug.DrawRay(laserOrigin.position, 
-			transform.TransformDirection(Vector3.forward), Color.red, distance);
+			transform.TransformDirection(Vector3.forward * distance), Color.red, distance);
 
 		float[] hitDistances = new float[hits.Length];
 
