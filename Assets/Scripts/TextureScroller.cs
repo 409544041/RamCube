@@ -9,7 +9,7 @@ public class TextureScroller : MonoBehaviour
 	[SerializeField] Vector2 maxOffset = new Vector2(1, 0);
 
 	//Cache
-	CubeMovement mover;
+	PlayerCubeMover mover;
 
 	//States
 	Vector2 offSet;
@@ -17,7 +17,7 @@ public class TextureScroller : MonoBehaviour
 
 	private void Awake() 
 	{
-		mover = FindObjectOfType<CubeMovement>();
+		mover = FindObjectOfType<PlayerCubeMover>();
 		myMaterial = GetComponent<Renderer>().material;
 	}
 

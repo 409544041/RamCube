@@ -1,4 +1,4 @@
-﻿public enum TileTypes 
+﻿public enum CubeTypes 
 {
 	Falling,
 	Static,

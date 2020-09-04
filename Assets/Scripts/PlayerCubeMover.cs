@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeMovement : MonoBehaviour
+public class PlayerCubeMover : MonoBehaviour
 {
 	//Config parameters
 	[SerializeField] Transform center;
@@ -15,7 +15,7 @@ public class CubeMovement : MonoBehaviour
 
 	//Cache
 	Rigidbody rb;
-	TileHandler handler;
+	CubeHandler handler;
 
 	//States
 	public bool isInBoostPos { get; set; } = true;
@@ -27,14 +27,14 @@ public class CubeMovement : MonoBehaviour
 	Vector2Int tileLeftPos = new Vector2Int(-1, 0);
 	Vector2Int tileRightPos = new Vector2Int(1, 0);
 
-	FloorTile currentTile = null;
+	FloorCube currentCube = null;
 
 	public event Action onLand;
 
 	private void Awake() 
 	{
 		rb = GetComponent<Rigidbody>();	
-		handler = FindObjectOfType<TileHandler>();
+		handler = FindObjectOfType<CubeHandler>();
 	}
 	private void OnEnable() 
 	{
@@ -44,6 +44,7 @@ public class CubeMovement : MonoBehaviour
 	private void Start() 
 	{
 		UpdatePositions();
+		CheckFloorInNewPos();
 	}
 
 	void Update()
@@ -127,24 +128,24 @@ public class CubeMovement : MonoBehaviour
 
 	public void CheckFloorInNewPos()
 	{
-		
-
-		FloorTile previousTile = null;
+		FloorCube previousCube = null;
 
 		if(!handler.tileGrid.ContainsKey(FetchCubeGridPos())) return;
 
-		if(currentTile != null) previousTile = currentTile;
+		previousCube = currentCube;
+		print("previous cube is " + previousCube);
 		
-		currentTile = handler.FetchTile(FetchCubeGridPos());
+		currentCube = handler.FetchTile(FetchCubeGridPos());
+		print("current cube is " + currentCube);
 
-		if(currentTile != previousTile) onLand();
+		if(currentCube != previousCube && onLand != null) onLand();
 		
-		if(currentTile.FetchType() == TileTypes.Boosting)
-			currentTile.GetComponent<BoostTile>().PrepareBoost(this.gameObject);
+		if(currentCube.FetchType() == CubeTypes.Boosting)
+			currentCube.GetComponent<BoostCube>().PrepareBoost(this.gameObject);
 
-		else if (currentTile.FetchType() == TileTypes.Flipping
-			&& currentTile != previousTile)
-			currentTile.GetComponent<FlipCube>().StartFlip(this.gameObject);
+		else if (currentCube.FetchType() == CubeTypes.Flipping
+			&& currentCube != previousCube)
+			currentCube.GetComponent<FlipCube>().StartFlip(this.gameObject);
 
 		else input = true;
 	}

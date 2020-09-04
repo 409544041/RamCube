@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoostTile : MonoBehaviour
+public class BoostCube : MonoBehaviour
 {
 	//Config parameters
 	[SerializeField] float boostSpeed = 30f;
@@ -22,7 +22,7 @@ public class BoostTile : MonoBehaviour
 
 	private IEnumerator Boost(GameObject cube)
 	{
-		var mover = cube.GetComponent<CubeMovement>();
+		var mover = cube.GetComponent<PlayerCubeMover>();
 
 		mover.input = false;
 		cube.GetComponent<Rigidbody>().isKinematic = true;
@@ -39,7 +39,7 @@ public class BoostTile : MonoBehaviour
 		mover.RoundPosition();
 		mover.UpdatePositions();
 
-		FindObjectOfType<TileHandler>().DropTile(tileToDrop);
+		FindObjectOfType<CubeHandler>().DropTile(tileToDrop);
 
 		mover.isBoosting = false;
 		cube.GetComponent<Rigidbody>().isKinematic = false;

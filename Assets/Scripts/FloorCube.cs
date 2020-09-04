@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FloorTile : MonoBehaviour
+public class FloorCube : MonoBehaviour
 {
 	//Config parameters
-	[SerializeField] TileTypes type;
+	[SerializeField] CubeTypes type;
 
 	//States
 	public bool hasFallen { get; set; } = false;
@@ -16,7 +16,7 @@ public class FloorTile : MonoBehaviour
 			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
 	}
 
-	public TileTypes FetchType()
+	public CubeTypes FetchType()
 	{
 		return type;
 	}

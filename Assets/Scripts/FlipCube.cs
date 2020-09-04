@@ -14,7 +14,7 @@ public class FlipCube : MonoBehaviour
 
 	private IEnumerator Flip(GameObject cube)
 	{
-		CubeMovement mover = cube.GetComponent<CubeMovement>();
+		PlayerCubeMover mover = cube.GetComponent<PlayerCubeMover>();
 
 		mover.input = false;
 		cube.GetComponent<Rigidbody>().isKinematic = true;

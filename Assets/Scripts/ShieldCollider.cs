@@ -5,11 +5,11 @@ using UnityEngine;
 public class ShieldCollider : MonoBehaviour
 {
 	//Cache
-	CubeMovement cubeMover;
+	PlayerCubeMover cubeMover;
 
 	private void Awake()
 	{
-		cubeMover = GameObject.FindGameObjectWithTag("Player").GetComponent<CubeMovement>();
+		cubeMover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();
 	}
 
 	private void OnTriggerEnter(Collider other) 

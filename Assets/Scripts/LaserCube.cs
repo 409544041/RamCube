@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Laser : MonoBehaviour
+public class LaserCube : MonoBehaviour
 {
 	//Config parameters
 	[SerializeField] float distance = 1;
@@ -12,11 +12,11 @@ public class Laser : MonoBehaviour
 	[SerializeField] Transform laserOrigin = null;
 
 	//Cache
-	CubeMovement cubeMover;
+	PlayerCubeMover cubeMover;
 
 	private void Awake() 
 	{
-		cubeMover = GameObject.FindGameObjectWithTag("Player").GetComponent<CubeMovement>();	
+		cubeMover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();	
 	}
 
 	private void Start() 
