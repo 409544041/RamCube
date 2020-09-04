@@ -36,35 +36,16 @@ public class PlayerCubeMover : MonoBehaviour
 		rb = GetComponent<Rigidbody>();	
 		handler = FindObjectOfType<CubeHandler>();
 	}
-	private void OnEnable() 
-	{
-		SwipeDetector.onSwipe += HandleSwipeInput;
-	}
 
 	private void Start() 
 	{
 		UpdatePositions();
 	}
 
-	private void HandleSwipeInput(SwipeDetector.SwipeDirection direction)
+	public void HandleSwipeInput(Transform rotateAroundAxis, Vector3 direction)
 	{
 		if(!input) return;
-
-		if(direction == SwipeDetector.SwipeDirection.up && 
-			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileAbovePos))
-			StartCoroutine(Move(up, Vector3.right));
-
-		if (direction == SwipeDetector.SwipeDirection.down &&
-			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileBelowPos))
-			StartCoroutine(Move(down, Vector3.left));
-
-		if (direction == SwipeDetector.SwipeDirection.left &&
-			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileLeftPos))
-			StartCoroutine(Move(left, Vector3.forward));
-
-		if (direction == SwipeDetector.SwipeDirection.right &&
-			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileRightPos))
-			StartCoroutine(Move(right, Vector3.back));
+		StartCoroutine(Move(rotateAroundAxis, direction));
 	}
 
 	public void HandleKeyInput(Transform side, Vector3 turnAxis)
@@ -138,10 +119,5 @@ public class PlayerCubeMover : MonoBehaviour
 	{
 		return new Vector2Int
 			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
-	}
-
-	private void OnDisable() 
-	{
-		SwipeDetector.onSwipe -= HandleSwipeInput;
 	}
 }

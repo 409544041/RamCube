@@ -9,6 +9,10 @@ public class SwipeDetector : MonoBehaviour
 	[SerializeField] bool DetectBeforeRelease = false;
 	[SerializeField] float minSwipeDistance = 20f;
 
+	//Cache
+	CubeHandler handler;
+	PlayerCubeMover mover;
+
 	//States
 	Vector2 fingerDownPos;
 	Vector2 fingerUpPos;
@@ -16,6 +20,12 @@ public class SwipeDetector : MonoBehaviour
 	public static event Action<SwipeDirection> onSwipe;
 
 	public enum SwipeDirection { up, down, left, right }
+
+	private void Awake() 
+	{
+		handler = FindObjectOfType<CubeHandler>();
+		mover = FindObjectOfType<PlayerCubeMover>();
+	}
 
 	void Update()
 	{
@@ -48,26 +58,21 @@ public class SwipeDetector : MonoBehaviour
 	{
 		if(SwipeDistanceCheck())
 		{
-			if(IsUpSwipe())
-			{
-				var direction = SwipeDirection.up;
-				onSwipe(direction);
-			}
-			if (IsDownSwipe())
-			{
-				var direction = SwipeDirection.down;
-				onSwipe(direction);
-			}
-			if (IsLeftSwipe())
-			{
-				var direction = SwipeDirection.left;
-				onSwipe(direction);
-			}
-			if (IsRightSwipe())
-			{
-				var direction = SwipeDirection.right;
-				onSwipe(direction);
-			}
+			if(IsUpSwipe() &&
+				handler.tileGrid.ContainsKey(mover.FetchCubeGridPos() + mover.tileAbovePos))
+				mover.HandleSwipeInput(mover.up, Vector3.right);
+
+			if (IsDownSwipe() &&
+				handler.tileGrid.ContainsKey(mover.FetchCubeGridPos() + mover.tileBelowPos))
+				mover.HandleSwipeInput(mover.down, Vector3.left);
+
+			if (IsLeftSwipe() &&
+				handler.tileGrid.ContainsKey(mover.FetchCubeGridPos() + mover.tileLeftPos))
+				mover.HandleSwipeInput(mover.left, Vector3.forward);
+
+			if (IsRightSwipe() &&
+				handler.tileGrid.ContainsKey(mover.FetchCubeGridPos() + mover.tileRightPos))
+				mover.HandleSwipeInput(mover.right, Vector3.back);
 		}
 	}
 

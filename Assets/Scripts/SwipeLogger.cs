@@ -6,11 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class SwipeLogger : MonoBehaviour
 {
-	private void OnEnable() 
-	{
-		SwipeDetector.onSwipe += SwipeLog;
-	}
-
 	private void Update() 
 	{
 		//TO DO: Remove and place in a sceneloader script once it's made
@@ -26,10 +21,5 @@ public class SwipeLogger : MonoBehaviour
 	private void TapLog()
 	{
 		Debug.Log("Tapped");
-	}
-
-	private void OnDisable()
-	{
-		SwipeDetector.onSwipe -= SwipeLog;
 	}
 }
