@@ -92,22 +92,20 @@ public class PlayerCubeMover : MonoBehaviour
 
 		if(!handler.tileGrid.ContainsKey(FetchCubeGridPos())) return;
 
-		previousCube = currentCube;
-		//print("previous cube is " + previousCube);
-		
+		previousCube = currentCube;		
 		currentCube = handler.FetchTile(FetchCubeGridPos());
-		//print("current cube is " + currentCube);
+
+		bool differentCubes = currentCube != previousCube;
 
 		if(currentCube.FetchType() == CubeTypes.Boosting)
 			currentCube.GetComponent<BoostCube>().PrepareBoost(this.gameObject);
 
-		else if (currentCube.FetchType() == CubeTypes.Flipping
-			&& currentCube != previousCube)
+		else if (currentCube.FetchType() == CubeTypes.Flipping && differentCubes)
 			currentCube.GetComponent<FlipCube>().StartFlip(this.gameObject);
 
 		else
 		{
-			if (currentCube != previousCube && onLand != null) onLand();
+			if (differentCubes && onLand != null) onLand();
 			input = true;
 		} 
 	}
