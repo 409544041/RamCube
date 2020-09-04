@@ -7,11 +7,11 @@ public class PlayerCubeMover : MonoBehaviour
 {
 	//Config parameters
 	[SerializeField] Transform center;
-	[SerializeField] Transform up;
-	[SerializeField] Transform down;
-	[SerializeField] Transform left;
-	[SerializeField] Transform right;
-	[SerializeField] int turnStep = 9;
+	public Transform up;
+	public Transform down;
+	public Transform left;
+	public Transform right;
+	public int turnStep = 9;
 
 	//Cache
 	Rigidbody rb;
@@ -22,10 +22,10 @@ public class PlayerCubeMover : MonoBehaviour
 	public bool input { get; set;} = true;
 	public bool isBoosting { get; set; } = false;
 
-	Vector2Int tileAbovePos = new Vector2Int(0, 1);
-	Vector2Int tileBelowPos = new Vector2Int(0, -1);
-	Vector2Int tileLeftPos = new Vector2Int(-1, 0);
-	Vector2Int tileRightPos = new Vector2Int(1, 0);
+	public Vector2Int tileAbovePos { get; private set; } = new Vector2Int(0, 1);
+	public Vector2Int tileBelowPos { get; private set; } = new Vector2Int(0, -1);
+	public Vector2Int tileLeftPos { get; private set; } = new Vector2Int(-1, 0);
+	public Vector2Int tileRightPos { get; private set; } = new Vector2Int(1, 0);
 
 	FloorCube currentCube = null;
 
@@ -44,12 +44,6 @@ public class PlayerCubeMover : MonoBehaviour
 	private void Start() 
 	{
 		UpdatePositions();
-		CheckFloorInNewPos();
-	}
-
-	void Update()
-	{
-		HandleKeyInput();
 	}
 
 	private void HandleSwipeInput(SwipeDetector.SwipeDirection direction)
@@ -73,25 +67,10 @@ public class PlayerCubeMover : MonoBehaviour
 			StartCoroutine(Move(right, Vector3.back));
 	}
 
-	private void HandleKeyInput()
+	public void HandleKeyInput(Transform side, Vector3 turnAxis)
 	{
 		if (!input) return;
-
-		if (Input.GetKeyDown(KeyCode.W) &&
-			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileAbovePos))
-			StartCoroutine(Move(up, Vector3.right));
-
-		if (Input.GetKeyDown(KeyCode.S) &&
-			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileBelowPos))
-			StartCoroutine(Move(down, Vector3.left));
-
-		if (Input.GetKeyDown(KeyCode.A) &&
-			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileLeftPos))
-			StartCoroutine(Move(left, Vector3.forward));
-
-		if (Input.GetKeyDown(KeyCode.D) &&
-			handler.tileGrid.ContainsKey(FetchCubeGridPos() + tileRightPos))
-			StartCoroutine(Move(right, Vector3.back));
+		StartCoroutine(Move(side, turnAxis));
 	}
 
 	private IEnumerator Move(Transform side, Vector3 turnAxis)
@@ -133,10 +112,10 @@ public class PlayerCubeMover : MonoBehaviour
 		if(!handler.tileGrid.ContainsKey(FetchCubeGridPos())) return;
 
 		previousCube = currentCube;
-		print("previous cube is " + previousCube);
+		//print("previous cube is " + previousCube);
 		
 		currentCube = handler.FetchTile(FetchCubeGridPos());
-		print("current cube is " + currentCube);
+		//print("current cube is " + currentCube);
 
 		if(currentCube != previousCube && onLand != null) onLand();
 		
