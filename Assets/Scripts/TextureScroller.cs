@@ -28,7 +28,7 @@ public class TextureScroller : MonoBehaviour
 
 	void Start()
 	{
-		offSet = new Vector2(-scrollSpeed, 0);
+		offSet = new Vector2(0, -scrollSpeed);
 	}
 
 	private void InitiateScroll()
@@ -38,9 +38,8 @@ public class TextureScroller : MonoBehaviour
 
 	private IEnumerator ScrollTexture() //Used in action
 	{
-		while(Mathf.Abs(myMaterial.mainTextureOffset.x) < maxOffset.x)
+		while(Mathf.Abs(myMaterial.mainTextureOffset.y) < maxOffset.y)
 		{
-			print(myMaterial.mainTextureOffset.x);
 			myMaterial.mainTextureOffset += offSet * Time.deltaTime;
 			yield return null;
 		}
