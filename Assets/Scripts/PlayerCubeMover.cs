@@ -98,8 +98,6 @@ public class PlayerCubeMover : MonoBehaviour
 		currentCube = handler.FetchTile(FetchCubeGridPos());
 		//print("current cube is " + currentCube);
 
-		if(currentCube != previousCube && onLand != null) onLand();
-		
 		if(currentCube.FetchType() == CubeTypes.Boosting)
 			currentCube.GetComponent<BoostCube>().PrepareBoost(this.gameObject);
 
@@ -107,7 +105,11 @@ public class PlayerCubeMover : MonoBehaviour
 			&& currentCube != previousCube)
 			currentCube.GetComponent<FlipCube>().StartFlip(this.gameObject);
 
-		else input = true;
+		else
+		{
+			if (currentCube != previousCube && onLand != null) onLand();
+			input = true;
+		} 
 	}
 
 	public void UpdatePositions()
