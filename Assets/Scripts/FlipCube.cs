@@ -6,6 +6,7 @@ public class FlipCube : MonoBehaviour
 {
 	//Config parameters
 	[SerializeField] int turnStep = 9;
+	[SerializeField] GameObject seeThroughCube;
 
 	PlayerCubeMover mover;
 
@@ -21,10 +22,10 @@ public class FlipCube : MonoBehaviour
 
 	public void StartFlip(GameObject cube)
 	{
-		StartCoroutine(Flip(cube));
+		StartCoroutine(FlipPlayerCube(cube));
 	}
 
-	private IEnumerator Flip(GameObject cube)
+	private IEnumerator FlipPlayerCube(GameObject cube)
 	{
 		mover.input = false;
 		cube.GetComponent<Rigidbody>().isKinematic = true;
@@ -49,16 +50,17 @@ public class FlipCube : MonoBehaviour
 
 	private void StartSelfFlip()
 	{
-		StartCoroutine(FlipSelf());
+		StartCoroutine(FlipSelf(Vector3.right, this.gameObject));
+		StartCoroutine(FlipSelf(Vector3.left, seeThroughCube));
 	}
 
-	private IEnumerator FlipSelf()
+	private IEnumerator FlipSelf(Vector3 direction, GameObject objectToFlip)
 	{
-		var axis = transform.TransformDirection(Vector3.right);
+		var axis = transform.TransformDirection(direction);
 
 		for (int i = 0; i < (90 / turnStep); i++)
 		{
-			transform.Rotate(axis, turnStep, Space.World);
+			objectToFlip.transform.Rotate(axis, turnStep, Space.World);
 			yield return null;
 		}
 	}

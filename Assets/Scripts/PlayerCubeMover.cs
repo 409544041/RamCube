@@ -101,8 +101,11 @@ public class PlayerCubeMover : MonoBehaviour
 			currentCube.GetComponent<BoostCube>().PrepareBoost(this.gameObject);
 
 		else if (currentCube.FetchType() == CubeTypes.Flipping && differentCubes)
+		{
+			if (onLand != null) onLand();
 			currentCube.GetComponent<FlipCube>().StartFlip(this.gameObject);
-
+		}
+			
 		else
 		{
 			if (differentCubes && onLand != null) onLand();

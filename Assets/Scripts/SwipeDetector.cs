@@ -17,8 +17,6 @@ public class SwipeDetector : MonoBehaviour
 	Vector2 fingerDownPos;
 	Vector2 fingerUpPos;
 
-	public static event Action<SwipeDirection> onSwipe;
-
 	public enum SwipeDirection { up, down, left, right }
 
 	private void Awake() 
