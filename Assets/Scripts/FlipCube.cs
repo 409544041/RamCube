@@ -6,7 +6,6 @@ public class FlipCube : MonoBehaviour
 {
 	//Config parameters
 	[SerializeField] int turnStep = 9;
-	[SerializeField] GameObject floorCube;
 	[SerializeField] GameObject seeThroughCube;
 
 	//Cache
@@ -64,7 +63,6 @@ public class FlipCube : MonoBehaviour
 
 	private void StartSelfFlip()
 	{
-		StartCoroutine(FlipSelf(Vector3.right, floorCube));
 		StartCoroutine(FlipSelf(Vector3.left, seeThroughCube));
 	}
 

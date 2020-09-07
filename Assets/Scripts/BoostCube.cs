@@ -17,7 +17,8 @@ public class BoostCube : MonoBehaviour
 		spawnedCollider.transform.parent = cube.transform;
 		spawnedCollider.GetComponent<Collider>().enabled = true;
 		
-		StartCoroutine(Boost(cube));
+		if(cube.GetComponent<PlayerCubeMover>()) StartCoroutine(Boost(cube));
+		else if (cube.GetComponent<FeedForwardCube>()) StartCoroutine(BoostFF(cube));
 	}
 
 	private IEnumerator Boost(GameObject cube)
@@ -32,7 +33,8 @@ public class BoostCube : MonoBehaviour
 
 		while(mover.isBoosting)
 		{
-			cube.transform.position += transform.TransformDirection(Vector3.forward) * boostSpeed * Time.deltaTime;
+			cube.transform.position += 
+				transform.TransformDirection(Vector3.forward) * boostSpeed * Time.deltaTime;
 			yield return null;
 		}
 
@@ -45,6 +47,23 @@ public class BoostCube : MonoBehaviour
 		cube.GetComponent<Rigidbody>().isKinematic = false;
 		
 		mover.CheckFloorInNewPos();
+	}
+
+	private IEnumerator BoostFF(GameObject ffCube)
+	{
+		var ff = ffCube.GetComponent<FeedForwardCube>();
+
+		ff.isBoosting = true;
+
+		while(ff.isBoosting)
+		{
+			ffCube.transform.position +=
+				transform.TransformDirection(Vector3.forward) * boostSpeed * Time.deltaTime;
+			yield return null;
+		}
+
+		ff.RoundPosition();
+		ff.isBoosting = false;
 	}
 
 }
