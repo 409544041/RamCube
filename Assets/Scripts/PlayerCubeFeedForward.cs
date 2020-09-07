@@ -33,6 +33,8 @@ public class PlayerCubeFeedForward : MonoBehaviour
 
 		turnAxis = new Vector3[]
 			{ Vector3.right, Vector3.left, Vector3.forward, Vector3.back };
+
+		ShowFeedForward();
 	}
 
 	private void Update() 
