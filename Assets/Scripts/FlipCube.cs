@@ -6,18 +6,32 @@ public class FlipCube : MonoBehaviour
 {
 	//Config parameters
 	[SerializeField] int turnStep = 9;
+	[SerializeField] GameObject floorCube;
 	[SerializeField] GameObject seeThroughCube;
 
+	//Cache
 	PlayerCubeMover mover;
+	CubeHandler handler;
+
+	//States
+	Vector2Int myPosition;
 
 	private void Awake() 
 	{
 		mover = FindObjectOfType<PlayerCubeMover>();
+		handler = FindObjectOfType<CubeHandler>();
 	}
 
 	private void OnEnable() 
 	{
 		if(mover != null) mover.onLand += StartSelfFlip;
+		if (mover != null) mover.onLand += DisableSeeThrough;
+	}
+
+	private void Start() 
+	{
+		myPosition = new Vector2Int
+			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
 	}
 
 	public void StartFlip(GameObject cube)
@@ -50,7 +64,7 @@ public class FlipCube : MonoBehaviour
 
 	private void StartSelfFlip()
 	{
-		StartCoroutine(FlipSelf(Vector3.right, this.gameObject));
+		StartCoroutine(FlipSelf(Vector3.right, floorCube));
 		StartCoroutine(FlipSelf(Vector3.left, seeThroughCube));
 	}
 
@@ -65,8 +79,16 @@ public class FlipCube : MonoBehaviour
 		}
 	}
 
+	private void DisableSeeThrough()
+	{
+		if(handler.FetchTile(myPosition) == handler.FetchTile(mover.FetchCubeGridPos()))
+			seeThroughCube.SetActive(false);
+		else seeThroughCube.SetActive(true);
+	}
+
 	private void OnDisable()
 	{
 		if (mover != null) mover.onLand -= StartSelfFlip;
+		if (mover != null) mover.onLand -= DisableSeeThrough;
 	}
 }
