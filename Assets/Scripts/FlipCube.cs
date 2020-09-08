@@ -106,7 +106,9 @@ public class FlipCube : MonoBehaviour
 
 		foreach (FeedForwardCube ffCube in ffCubes)
 		{
-			if(!handler.tileGrid.ContainsKey(ffCube.FetchCubeGridPos())) return;
+			if(!handler.tileGrid.ContainsKey(ffCube.FetchCubeGridPos())) continue;
+
+			print(ffCube.FetchCubeGridPos());
 			
 			if (handler.FetchTile(myPosition) == handler.FetchTile(ffCube.FetchCubeGridPos()))
 			{

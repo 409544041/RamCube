@@ -111,8 +111,8 @@ public class PlayerCubeMover : MonoBehaviour
 		{
 			if (differentCubes && onLand != null && onLandShowFF != null)
 			{
-				onLand();
 				onLandShowFF();
+				onLand();
 			} 
 			else if(onLandShowFF != null) onLandShowFF();
 
