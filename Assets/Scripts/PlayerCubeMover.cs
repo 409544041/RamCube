@@ -30,6 +30,7 @@ public class PlayerCubeMover : MonoBehaviour
 	FloorCube currentCube = null;
 
 	public event Action onLand;
+	public event Action onLandShowFF;
 
 	private void Awake() 
 	{
@@ -108,7 +109,13 @@ public class PlayerCubeMover : MonoBehaviour
 			
 		else
 		{
-			if (differentCubes && onLand != null) onLand();
+			if (differentCubes && onLand != null && onLandShowFF != null)
+			{
+				onLand();
+				onLandShowFF();
+			} 
+			else if(onLandShowFF != null) onLandShowFF();
+
 			input = true;
 		} 
 	}

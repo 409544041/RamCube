@@ -24,7 +24,7 @@ public class PlayerCubeFeedForward : MonoBehaviour
 
 	private void OnEnable() 
 	{
-		if(mover != null) mover.onLand += ShowFeedForward;
+		if(mover != null) mover.onLandShowFF += ShowFeedForward;
 	}
 
 	private void Start() 
@@ -83,7 +83,7 @@ public class PlayerCubeFeedForward : MonoBehaviour
 
 	private void OnDisable()
 	{
-		if (mover != null) mover.onLand -= ShowFeedForward;
+		if (mover != null) mover.onLandShowFF -= ShowFeedForward;
 	}
 
 }
