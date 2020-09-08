@@ -7,7 +7,7 @@ public class CubeHandler : MonoBehaviour
 {
 	public Dictionary<Vector2Int, FloorCube> tileGrid = new Dictionary<Vector2Int, FloorCube>();
 
-	private void Start() 
+	private void Awake() 
 	{
 		LoadDictionary();
 	}
