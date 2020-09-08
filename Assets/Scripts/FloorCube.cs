@@ -12,8 +12,10 @@ public class FloorCube : MonoBehaviour
 
 	public Vector2Int FetchTileGridPos()
 	{
-		return new Vector2Int
+		Vector2Int roundedPos = new Vector2Int
 			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
+
+		return roundedPos;
 	}
 
 	public CubeTypes FetchType()

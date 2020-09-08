@@ -120,7 +120,9 @@ public class PlayerCubeMover : MonoBehaviour
 
 	public Vector2Int FetchCubeGridPos()
 	{
-		return new Vector2Int
+		Vector2Int roundedPos = new Vector2Int
 			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
+
+		return roundedPos;
 	}
 }
