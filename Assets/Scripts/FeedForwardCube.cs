@@ -28,7 +28,7 @@ public class FeedForwardCube : MonoBehaviour
 		}
 	}
 
-	private Vector2Int FetchCubeGridPos()
+	public Vector2Int FetchCubeGridPos()
 	{
 		return new Vector2Int
 			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));

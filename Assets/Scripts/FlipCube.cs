@@ -11,6 +11,8 @@ public class FlipCube : MonoBehaviour
 	//Cache
 	PlayerCubeMover mover;
 	CubeHandler handler;
+	FeedForwardCube[] ffCubes;
+	PlayerCubeFeedForward cubeFeedForward;
 
 	//States
 	Vector2Int myPosition;
@@ -19,6 +21,8 @@ public class FlipCube : MonoBehaviour
 	{
 		mover = FindObjectOfType<PlayerCubeMover>();
 		handler = FindObjectOfType<CubeHandler>();
+		cubeFeedForward = FindObjectOfType<PlayerCubeFeedForward>();
+		ffCubes = cubeFeedForward.FetchFFCubes();
 	}
 
 	private void OnEnable() 
@@ -35,7 +39,8 @@ public class FlipCube : MonoBehaviour
 
 	public void StartFlip(GameObject cube)
 	{
-		StartCoroutine(FlipPlayerCube(cube));
+		if(cube.GetComponent<PlayerCubeMover>()) StartCoroutine(FlipPlayerCube(cube));
+		else if(cube.GetComponent<FeedForwardCube>()) StartCoroutine(FlipFF(cube));
 	}
 
 	private IEnumerator FlipPlayerCube(GameObject cube)
@@ -61,6 +66,20 @@ public class FlipCube : MonoBehaviour
 		mover.CheckFloorInNewPos();
 	}
 
+	private IEnumerator FlipFF(GameObject ffCube)
+	{
+		var ff = ffCube.GetComponent<FeedForwardCube>();
+		var axis = transform.TransformDirection(Vector3.left);
+
+		for (int i = 0; i < (90 / turnStep); i++)
+		{
+			ffCube.transform.Rotate(axis, turnStep, Space.World);
+			yield return null;
+		}
+
+		ff.RoundPosition();
+	}
+
 	private void StartSelfFlip()
 	{
 		StartCoroutine(FlipSelf(Vector3.left, seeThroughCube));
@@ -80,8 +99,21 @@ public class FlipCube : MonoBehaviour
 	private void DisableSeeThrough()
 	{
 		if(handler.FetchTile(myPosition) == handler.FetchTile(mover.FetchCubeGridPos()))
+		{
 			seeThroughCube.SetActive(false);
-		else seeThroughCube.SetActive(true);
+			return;
+		}
+
+		foreach (FeedForwardCube ffCube in ffCubes)
+		{
+			if (handler.FetchTile(myPosition) == handler.FetchTile(ffCube.FetchCubeGridPos()))
+			{
+				seeThroughCube.SetActive(false);
+				return;
+			}
+		}
+			
+		seeThroughCube.SetActive(true);
 	}
 
 	private void OnDisable()

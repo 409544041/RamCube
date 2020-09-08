@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCubeFeedForward : MonoBehaviour
 {
 	//Config parameters
-	[SerializeField] GameObject[] feedForwardCubes;
+	[SerializeField] FeedForwardCube[] feedForwardCubes;
 
 	//Cache
 	PlayerCubeMover mover;
@@ -46,9 +47,9 @@ public class PlayerCubeFeedForward : MonoBehaviour
 	{
 		if (mover.input == false)
 		{
-			foreach (GameObject ffCube in feedForwardCubes)
+			foreach (FeedForwardCube ffCube in feedForwardCubes)
 			{
-				ffCube.SetActive(false);
+				ffCube.gameObject.SetActive(false);
 			}
 		}
 	}
@@ -64,15 +65,20 @@ public class PlayerCubeFeedForward : MonoBehaviour
 
 			if (handler.tileGrid.ContainsKey(onePosAhead))
 			{
-				ffCube.SetActive(true);
+				ffCube.gameObject.SetActive(true);
 				ffCube.transform.position = new Vector3 
 					(onePosAhead.x, transform.position.y, onePosAhead.y);
 				ffCube.transform.Rotate(turnAxis[ffIndex], 90, Space.World); 
 
 				ffCube.GetComponent<FeedForwardCube>().CheckFloorInNewPos();
 			}	
-			else ffCube.SetActive(false);
+			else ffCube.gameObject.SetActive(false);
 		}
+	}
+
+	public FeedForwardCube[] FetchFFCubes()
+	{
+		return feedForwardCubes;
 	}
 
 	private void OnDisable()
