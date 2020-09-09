@@ -27,7 +27,6 @@ public class FlipCube : MonoBehaviour
 
 	private void OnEnable() 
 	{
-		if(mover != null) mover.onLand += StartSelfFlip;
 		if (mover != null) mover.onLand += DisableSeeThrough;
 	}
 
@@ -35,6 +34,11 @@ public class FlipCube : MonoBehaviour
 	{
 		myPosition = new Vector2Int
 			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
+	}
+
+	private void Update() 
+	{
+		FlipSelf(Vector3.left, seeThroughCube);
 	}
 
 	public void StartFlip(GameObject cube)
@@ -80,20 +84,10 @@ public class FlipCube : MonoBehaviour
 		ff.RoundPosition();
 	}
 
-	private void StartSelfFlip()
-	{
-		StartCoroutine(FlipSelf(Vector3.left, seeThroughCube));
-	}
-
-	private IEnumerator FlipSelf(Vector3 direction, GameObject objectToFlip)
+	private void FlipSelf(Vector3 direction, GameObject objectToFlip)
 	{
 		var axis = transform.TransformDirection(direction);
-
-		for (int i = 0; i < (90 / turnStep); i++)
-		{
-			objectToFlip.transform.Rotate(axis, turnStep, Space.World);
-			yield return null;
-		}
+		objectToFlip.transform.Rotate(axis, turnStep, Space.World);
 	}
 
 	private void DisableSeeThrough()
@@ -103,24 +97,12 @@ public class FlipCube : MonoBehaviour
 			seeThroughCube.SetActive(false);
 			return;
 		}
-
-		foreach (FeedForwardCube ffCube in ffCubes)
-		{
-			if(!handler.tileGrid.ContainsKey(ffCube.FetchCubeGridPos())) continue;
-			
-			if (handler.FetchTile(myPosition) == handler.FetchTile(ffCube.FetchCubeGridPos()))
-			{
-				seeThroughCube.SetActive(false);
-				return;
-			}
-		}
 			
 		seeThroughCube.SetActive(true);
 	}
 
 	private void OnDisable()
 	{
-		if (mover != null) mover.onLand -= StartSelfFlip;
 		if (mover != null) mover.onLand -= DisableSeeThrough;
 	}
 }
