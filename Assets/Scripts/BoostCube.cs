@@ -64,6 +64,8 @@ public class BoostCube : MonoBehaviour
 
 		ff.RoundPosition();
 		ff.isBoosting = false;
+
+		ff.CheckFloorInNewPos();
 	}
 
 }
