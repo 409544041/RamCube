@@ -12,11 +12,11 @@ public class LaserCube : MonoBehaviour
 	[SerializeField] Transform laserOrigin = null;
 
 	//Cache
-	PlayerCubeMover cubeMover;
+	PlayerCubeMover mover;
 
 	private void Awake() 
 	{
-		cubeMover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();	
+		mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();	
 	}
 
 	private void Start() 
@@ -32,14 +32,14 @@ public class LaserCube : MonoBehaviour
 
 	private void FireLaserCast()
 	{
-		if(cubeMover.input || cubeMover.isBoosting) 
+		if(mover.input || mover.isBoosting) 
 		{
 			RaycastHit[] hits = SortedRaycasts();
 
 			if (hits.Length == 0) return;
 
-			if (Mathf.Approximately(Vector3.Dot(cubeMover.transform.forward,
-				transform.forward), -1)) Debug.Log("Shielded");
+			if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
+				transform.forward), -1)) return;
 
 			else SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
