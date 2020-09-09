@@ -54,6 +54,8 @@ public class SwipeDetector : MonoBehaviour
 
 	private void DetectSwipes()
 	{
+		if(!SwipeDistanceCheck()) return;
+
 		if(SwipeDistanceCheck())
 		{
 			if(IsUpSwipe() &&
@@ -75,7 +77,9 @@ public class SwipeDetector : MonoBehaviour
 	}
 
 	private bool SwipeDistanceCheck()
-	{
+	{	print(Mathf.Abs(VerticalMoveDistance()) > minSwipeDistance
+			|| Mathf.Abs(HorizontalMoveDistance()) > minSwipeDistance);
+			
 		return Mathf.Abs(VerticalMoveDistance()) > minSwipeDistance 
 			|| Mathf.Abs(HorizontalMoveDistance()) > minSwipeDistance;
 	}

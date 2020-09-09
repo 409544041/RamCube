@@ -21,7 +21,6 @@ public class SceneHandler : MonoBehaviour
 
 	public void RestartLevel()
 	{
-		print("HERE");
 		SceneManager.LoadScene(currentSceneName);
 	}
 }
