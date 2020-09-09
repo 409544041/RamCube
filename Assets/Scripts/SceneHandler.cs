@@ -23,4 +23,18 @@ public class SceneHandler : MonoBehaviour
 	{
 		SceneManager.LoadScene(currentSceneName);
 	}
+
+	public void PreviousLevel()
+	{
+		var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+		if (currentSceneIndex == 0) return;
+		SceneManager.LoadSceneAsync(currentSceneIndex - 1);
+	}
+
+	public void NextLevel()
+	{
+		var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+		if(currentSceneIndex == SceneManager.sceneCountInBuildSettings -1) return;
+		SceneManager.LoadSceneAsync(currentSceneIndex + 1);
+	}
 }
