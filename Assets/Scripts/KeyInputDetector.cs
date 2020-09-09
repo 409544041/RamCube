@@ -7,11 +7,13 @@ public class KeyInputDetector : MonoBehaviour
 	//Cache
 	CubeHandler handler;
 	PlayerCubeMover mover;
+	SceneHandler loader;
 
 	private void Awake() 
 	{
-		handler = FindObjectOfType<CubeHandler>();
+		handler = GetComponent<CubeHandler>();
 		mover = FindObjectOfType<PlayerCubeMover>();
+		loader = GetComponent<SceneHandler>();
 	}
 
 	void Update()
@@ -31,5 +33,8 @@ public class KeyInputDetector : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.D) &&
 			handler.tileGrid.ContainsKey(mover.FetchCubeGridPos() + mover.tileRightPos))
 			mover.HandleKeyInput(mover.right, Vector3.back);
+
+		if (Input.GetKeyDown(KeyCode.R))
+			loader.RestartLevel();
 	}
 }
