@@ -7,6 +7,7 @@ public class FinishCube : MonoBehaviour
 	//Cache
 	PlayerCubeMover mover;
 	CubeHandler handler;
+	SceneHandler loader;
 
 	//States
 	Vector2Int myPosition;
@@ -15,6 +16,7 @@ public class FinishCube : MonoBehaviour
 	{
 		mover = FindObjectOfType<PlayerCubeMover>();
 		handler = FindObjectOfType<CubeHandler>();
+		loader = FindObjectOfType<SceneHandler>();
 	}
 
 	private void OnEnable() 
@@ -33,8 +35,8 @@ public class FinishCube : MonoBehaviour
 		if (handler.FetchTile(myPosition) == handler.FetchTile(mover.FetchCubeGridPos()))
 		{
 			if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
-				transform.forward), -1)) print("SUCCESS");
-			else print("LOSE");
+				transform.forward), -1)) loader.NextLevel();
+			else loader.RestartLevel();
 		}
 	}
 

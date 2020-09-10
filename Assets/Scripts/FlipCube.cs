@@ -6,6 +6,7 @@ public class FlipCube : MonoBehaviour
 {
 	//Config parameters
 	[SerializeField] int turnStep = 9;
+	[SerializeField] float timeStep = 0.01f;
 	[SerializeField] GameObject seeThroughCube;
 
 	//Cache
@@ -59,7 +60,7 @@ public class FlipCube : MonoBehaviour
 		for (int i = 0; i < (90 / turnStep); i++)
 		{
 			cube.transform.Rotate(axis, turnStep, Space.World);
-			yield return null;
+			yield return new WaitForSeconds(timeStep);
 		}
 
 		mover.RoundPosition();

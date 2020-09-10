@@ -11,7 +11,9 @@ public class PlayerCubeMover : MonoBehaviour
 	public Transform down;
 	public Transform left;
 	public Transform right;
-	public int turnStep = 9;
+	[SerializeField] int turnStep = 9;
+	[SerializeField] float timeStep = 0.01f;
+	
 
 	//Cache
 	Rigidbody rb;
@@ -65,7 +67,7 @@ public class PlayerCubeMover : MonoBehaviour
 		for (int i = 0; i < (90 / turnStep); i++)
 		{
 			transform.RotateAround(side.position, turnAxis, turnStep);
-			yield return null;
+			yield return new WaitForSeconds(timeStep);
 		}
 
 		RoundPosition();
