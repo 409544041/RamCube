@@ -62,10 +62,13 @@ public class BoostCube : MonoBehaviour
 			yield return null;
 		}
 
-		ff.RoundPosition();
-		ff.isBoosting = false;
+		if(ff.gameObject.activeSelf)
+		{
+			ff.RoundPosition();
+			ff.isBoosting = false;
 
-		ff.CheckFloorInNewPos();
+			ff.CheckFloorInNewPos();
+		}
 	}
 
 }

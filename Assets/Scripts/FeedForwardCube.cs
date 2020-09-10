@@ -44,4 +44,9 @@ public class FeedForwardCube : MonoBehaviour
 		Quaternion rotation = Quaternion.Euler(Mathf.RoundToInt(transform.rotation.x),
 			Mathf.RoundToInt(transform.rotation.y), Mathf.RoundToInt(transform.rotation.z));
 	}
+
+	private void OnDisable() 
+	{
+		isBoosting = false;	
+	}
 }

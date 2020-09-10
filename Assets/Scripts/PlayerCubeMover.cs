@@ -11,7 +11,7 @@ public class PlayerCubeMover : MonoBehaviour
 	public Transform down;
 	public Transform left;
 	public Transform right;
-	[SerializeField] int turnStep = 9;
+	[SerializeField] int turnStep = 18;
 	[SerializeField] float timeStep = 0.01f;
 	
 
