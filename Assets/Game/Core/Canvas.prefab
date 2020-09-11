@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 1888424772225302648}
   - component: {fileID: 6278309967574183232}
   - component: {fileID: 1689304272108603175}
+  - component: {fileID: 7812361685577552156}
   m_Layer: 5
   m_Name: Level Text
   m_TagString: Untagged
@@ -352,6 +353,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
+--- !u!114 &7812361685577552156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033256492980185547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e11c6c1b7d798942aa2547f537cf22b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5059731524183414795
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +376,7 @@ GameObject:
   - component: {fileID: 501939994911674142}
   - component: {fileID: 8048597923071610071}
   - component: {fileID: 5699098725277831067}
+  - component: {fileID: 4647264142795557745}
   m_Layer: 5
   m_Name: Steps Text
   m_TagString: Untagged
@@ -429,6 +443,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
+--- !u!114 &4647264142795557745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5059731524183414795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027a19ed97a1645429dc14df69a0b58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stepText: {fileID: 0}
+  minSteps: 0
 --- !u!1 &5122534402970408550
 GameObject:
   m_ObjectHideFlags: 0
