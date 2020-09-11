@@ -1,35 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using Qbism.Core;
-using Qbism.Cubes;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
 {
 	public class FeedForwardCube : MonoBehaviour
 	{
-		//Cache
-		CubeHandler handler;
 
 		//States
 		public bool isBoosting { get; set; } = false;
 
-		private void Awake()
+		public event Action<Vector2Int, GameObject> onFeedForwardFloorCheck;
+
+		private void Start() 
 		{
-			handler = FindObjectOfType<CubeHandler>();
+			this.gameObject.SetActive(false);	
 		}
 
 		public void CheckFloorInNewPos()
 		{
-			var currentCube = handler.FetchCube(FetchGridPos());
-
-			if (currentCube.FetchType() == CubeTypes.Boosting)
-				currentCube.GetComponent<BoostCube>().PrepareBoost(this.gameObject);
-
-			else if (currentCube.FetchType() == CubeTypes.Flipping)
-			{
-				currentCube.GetComponent<FlipCube>().StartFlip(this.gameObject);
-			}
+			onFeedForwardFloorCheck(FetchGridPos(), this.gameObject);
 		}
 
 		public Vector2Int FetchGridPos()

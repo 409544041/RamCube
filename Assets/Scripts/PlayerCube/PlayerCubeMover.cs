@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Qbism.Core;
-using Qbism.Cubes;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
@@ -21,22 +19,20 @@ namespace Qbism.PlayerCube
 
 		//Cache
 		Rigidbody rb;
-		CubeHandler handler;
 
 		//States
 		public bool isInBoostPos { get; set; } = true;
 		public bool input { get; set; } = true;
 		public bool isBoosting { get; set; } = false;
 
-		FloorCube currentCube = null;
-
 		public event Action onLand;
 		public event Action onLandShowFF;
+		public event Action<Vector2Int> onCubeDrop;
+		public event Action<Vector2Int, GameObject> onFloorCheck;
 
 		private void Awake()
 		{
 			rb = GetComponent<Rigidbody>();
-			handler = FindObjectOfType<CubeHandler>();
 		}
 
 		private void Start()
@@ -61,7 +57,7 @@ namespace Qbism.PlayerCube
 			input = false;
 			rb.isKinematic = true;
 
-			var tileToDrop = FetchGridPos();
+			var cubeToDrop = FetchGridPos();
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
@@ -72,7 +68,7 @@ namespace Qbism.PlayerCube
 			RoundPosition();
 			UpdatePositions();
 
-			handler.DropTile(tileToDrop);
+			onCubeDrop(cubeToDrop);
 
 			rb.isKinematic = false;
 
@@ -90,35 +86,7 @@ namespace Qbism.PlayerCube
 
 		public void CheckFloorInNewPos()
 		{
-			FloorCube previousCube = null;
-
-			if (!handler.floorCubeGrid.ContainsKey(FetchGridPos())) return;
-
-			previousCube = currentCube;
-			currentCube = handler.FetchCube(FetchGridPos());
-
-			bool differentCubes = currentCube != previousCube;
-
-			if (currentCube.FetchType() == CubeTypes.Boosting)
-				currentCube.GetComponent<BoostCube>().PrepareBoost(this.gameObject);
-
-			else if (currentCube.FetchType() == CubeTypes.Flipping && differentCubes)
-			{
-				if (onLand != null) onLand();
-				currentCube.GetComponent<FlipCube>().StartFlip(this.gameObject);
-			}
-
-			else
-			{
-				if (differentCubes && onLand != null && onLandShowFF != null)
-				{
-					onLandShowFF();
-					onLand();
-				}
-				else if (onLandShowFF != null) onLandShowFF();
-
-				input = true;
-			}
+			onFloorCheck(FetchGridPos(), this.gameObject);
 		}
 
 		public void UpdatePositions()

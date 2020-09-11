@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Qbism.Core
+namespace Qbism.Performance
 {
 	public class TargetFramerate : MonoBehaviour
 	{

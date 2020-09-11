@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Qbism.PlayerCube;
+using Qbism.Cubes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +12,7 @@ namespace Qbism.UI
 		[SerializeField] int minSteps = 0;
 
 		//Cache
-		PlayerCubeMover mover;
+		CubeHandler handler;
 		Text stepText;
 
 		//States
@@ -20,13 +20,13 @@ namespace Qbism.UI
 
 		private void Awake()
 		{
-			mover = FindObjectOfType<PlayerCubeMover>();
+			handler = FindObjectOfType<CubeHandler>();
 			stepText = GetComponent<Text>();
 		}
 
 		private void OnEnable()
 		{
-			if (mover != null) mover.onLand += addToStepCounter;
+			if (handler != null) handler.onLand += addToStepCounter;
 		}
 
 		private void Update()
@@ -41,7 +41,7 @@ namespace Qbism.UI
 
 		private void OnDisable()
 		{
-			if (mover != null) mover.onLand -= addToStepCounter;
+			if (handler != null) handler.onLand -= addToStepCounter;
 		}
 	}
 }

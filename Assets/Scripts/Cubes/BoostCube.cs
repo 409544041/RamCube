@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Qbism.Core;
 using Qbism.PlayerCube;
 using UnityEngine;
 
@@ -45,7 +44,7 @@ namespace Qbism.Cubes
 			mover.RoundPosition();
 			mover.UpdatePositions();
 
-			FindObjectOfType<CubeHandler>().DropTile(tileToDrop);
+			FindObjectOfType<CubeHandler>().DropCube(tileToDrop);
 
 			mover.isBoosting = false;
 			cube.GetComponent<Rigidbody>().isKinematic = false;

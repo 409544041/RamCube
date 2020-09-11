@@ -12,7 +12,7 @@ namespace Qbism.Cubes
 		[SerializeField] Vector2 maxOffset = new Vector2(1, 0);
 
 		//Cache
-		PlayerCubeMover mover;
+		CubeHandler handler;
 
 		//States
 		Vector2 offSet;
@@ -20,13 +20,13 @@ namespace Qbism.Cubes
 
 		private void Awake()
 		{
-			mover = FindObjectOfType<PlayerCubeMover>();
+			handler = FindObjectOfType<CubeHandler>();
 			myMaterial = GetComponent<Renderer>().material;
 		}
 
 		private void OnEnable()
 		{
-			if (mover != null) mover.onLand += InitiateScroll;
+			if (handler != null) handler.onLand += InitiateScroll;
 		}
 
 		void Start()
@@ -52,7 +52,7 @@ namespace Qbism.Cubes
 
 		private void OnDisable()
 		{
-			if (mover != null) mover.onLand -= InitiateScroll;
+			if (handler != null) handler.onLand -= InitiateScroll;
 		}
 	}
 }

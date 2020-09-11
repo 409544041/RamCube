@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Qbism.Core;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
@@ -13,21 +12,17 @@ namespace Qbism.PlayerCube
 
 		//Cache
 		PlayerCubeMover mover;
-		CubeHandler handler;
 
 		//States
 		Vector2Int[] neighbourDirs;
 		Vector3[] turnAxis;
 
+		public delegate bool KeyCheckDelegate(Vector2Int pos);
+		public KeyCheckDelegate onKeyCheck;
+
 		private void Awake()
 		{
-			mover = GetComponent<PlayerCubeMover>();
-			handler = FindObjectOfType<CubeHandler>();
-		}
-
-		private void OnEnable()
-		{
-			if (mover != null) mover.onLandShowFF += ShowFeedForward;
+			mover = FindObjectOfType<PlayerCubeMover>();
 		}
 
 		private void Start()
@@ -57,7 +52,7 @@ namespace Qbism.PlayerCube
 			}
 		}
 
-		private void ShowFeedForward()
+		public void ShowFeedForward()
 		{
 			for (int ffIndex = 0; ffIndex < feedForwardCubes.Length; ffIndex++)
 			{
@@ -66,7 +61,7 @@ namespace Qbism.PlayerCube
 
 				var onePosAhead = mover.FetchGridPos() + neighbourDirs[ffIndex];
 
-				if (handler.floorCubeGrid.ContainsKey(onePosAhead))
+				if (onKeyCheck(onePosAhead))
 				{
 					ffCube.gameObject.SetActive(true);
 					ffCube.transform.position = new Vector3
@@ -82,11 +77,6 @@ namespace Qbism.PlayerCube
 		public FeedForwardCube[] FetchFFCubes()
 		{
 			return feedForwardCubes;
-		}
-
-		private void OnDisable()
-		{
-			if (mover != null) mover.onLandShowFF -= ShowFeedForward;
 		}
 	}
 }

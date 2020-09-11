@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Qbism.Core;
+using Qbism.Cubes;
 using Qbism.PlayerCube;
 using Qbism.SceneTransition;
 using UnityEngine;

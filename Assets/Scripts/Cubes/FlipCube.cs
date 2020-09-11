@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Qbism.Core;
 using Qbism.PlayerCube;
 using UnityEngine;
 
@@ -32,7 +31,7 @@ namespace Qbism.Cubes
 
 		private void OnEnable()
 		{
-			if (mover != null) mover.onLand += DisableSeeThrough;
+			if (handler != null) handler.onLand += DisableSeeThrough;
 		}
 
 		private void Start()
@@ -108,7 +107,7 @@ namespace Qbism.Cubes
 
 		private void OnDisable()
 		{
-			if (mover != null) mover.onLand -= DisableSeeThrough;
+			if (handler != null) handler.onLand -= DisableSeeThrough;
 		}
 	}
 

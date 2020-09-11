@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Qbism.Core;
 using Qbism.PlayerCube;
 using Qbism.SceneTransition;
 using UnityEngine;
@@ -26,7 +25,7 @@ namespace Qbism.Cubes
 
 		private void OnEnable()
 		{
-			if (mover != null) mover.onLand += CheckForFinish;
+			if (handler != null) handler.onLand += CheckForFinish;
 		}
 
 		private void Start()
@@ -47,7 +46,7 @@ namespace Qbism.Cubes
 
 		private void OnDisable()
 		{
-			if (mover != null) mover.onLand -= CheckForFinish;
+			if (handler != null) handler.onLand -= CheckForFinish;
 		}
 	}
 
