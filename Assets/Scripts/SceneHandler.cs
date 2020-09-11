@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class SceneHandler : MonoBehaviour
 {
 	//Config parameters
-	[SerializeField] float loadDelay;
-	[SerializeField] Text levelText;
+	[SerializeField] Text levelText = null;
 
 	//States
 	string currentSceneName;

@@ -6,8 +6,8 @@ public class BoostCube : MonoBehaviour
 {
 	//Config parameters
 	[SerializeField] float boostSpeed = 30f;
-	[SerializeField] GameObject boostCollider;
-	[SerializeField] Transform colliderSpawnPos;
+	[SerializeField] GameObject boostCollider = null;
+	[SerializeField] Transform colliderSpawnPos = null;
 
 	public void PrepareBoost(GameObject cube)
 	{

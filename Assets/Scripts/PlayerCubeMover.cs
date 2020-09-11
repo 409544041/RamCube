@@ -6,11 +6,11 @@ using UnityEngine;
 public class PlayerCubeMover : MonoBehaviour
 {
 	//Config parameters
-	[SerializeField] Transform center;
-	public Transform up;
-	public Transform down;
-	public Transform left;
-	public Transform right;
+	[SerializeField] Transform center = null;
+	public Transform up = null;
+	public Transform down = null;
+	public Transform left = null;
+	public Transform right = null;
 	[SerializeField] int turnStep = 18;
 	[SerializeField] float timeStep = 0.01f;
 	

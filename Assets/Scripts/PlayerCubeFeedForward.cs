@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerCubeFeedForward : MonoBehaviour
 {
 	//Config parameters
-	[SerializeField] FeedForwardCube[] feedForwardCubes;
+	[SerializeField] FeedForwardCube[] feedForwardCubes = null;
 
 	//Cache
 	PlayerCubeMover mover;

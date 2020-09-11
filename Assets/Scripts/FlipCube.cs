@@ -7,7 +7,7 @@ public class FlipCube : MonoBehaviour
 	//Config parameters
 	[SerializeField] int turnStep = 9;
 	[SerializeField] float timeStep = 0.01f;
-	[SerializeField] GameObject seeThroughCube;
+	[SerializeField] GameObject seeThroughCube = null;
 
 	//Cache
 	PlayerCubeMover mover;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FloorCube : MonoBehaviour
 {
 	//Config parameters
-	[SerializeField] CubeTypes type;
+	[SerializeField] CubeTypes type = CubeTypes.Falling;
 
 	//States
 	public bool hasFallen { get; set; } = false;
