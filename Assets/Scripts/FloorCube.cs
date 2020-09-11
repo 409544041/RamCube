@@ -10,7 +10,7 @@ public class FloorCube : MonoBehaviour
 	//States
 	public bool hasFallen { get; set; } = false;
 
-	public Vector2Int FetchTileGridPos()
+	public Vector2Int FetchGridPos()
 	{
 		Vector2Int roundedPos = new Vector2Int
 			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));

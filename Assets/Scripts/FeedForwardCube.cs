@@ -17,7 +17,7 @@ public class FeedForwardCube : MonoBehaviour
 
 	public void CheckFloorInNewPos()
 	{
-		var currentCube = handler.FetchTile(FetchCubeGridPos());
+		var currentCube = handler.FetchTile(FetchGridPos());
 
 		if (currentCube.FetchType() == CubeTypes.Boosting)
 			currentCube.GetComponent<BoostCube>().PrepareBoost(this.gameObject);
@@ -28,7 +28,7 @@ public class FeedForwardCube : MonoBehaviour
 		}
 	}
 
-	public Vector2Int FetchCubeGridPos()
+	public Vector2Int FetchGridPos()
 	{
 		Vector2Int roundedPos = new Vector2Int
 			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));

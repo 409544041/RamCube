@@ -32,7 +32,7 @@ public class FinishCube : MonoBehaviour
 
 	private void CheckForFinish()
 	{
-		if (handler.FetchTile(myPosition) == handler.FetchTile(mover.FetchCubeGridPos()))
+		if (handler.FetchTile(myPosition) == handler.FetchTile(mover.FetchGridPos()))
 		{
 			if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
 				transform.forward), -1)) loader.NextLevel();

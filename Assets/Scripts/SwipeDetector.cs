@@ -59,19 +59,19 @@ public class SwipeDetector : MonoBehaviour
 		if(SwipeDistanceCheck())
 		{
 			if(IsUpSwipe() &&
-				handler.tileGrid.ContainsKey(mover.FetchCubeGridPos() + mover.tileAbovePos))
+				handler.floorCubeGrid.ContainsKey(mover.FetchGridPos() + mover.tileAbovePos))
 				mover.HandleSwipeInput(mover.up, Vector3.right);
 
 			if (IsDownSwipe() &&
-				handler.tileGrid.ContainsKey(mover.FetchCubeGridPos() + mover.tileBelowPos))
+				handler.floorCubeGrid.ContainsKey(mover.FetchGridPos() + mover.tileBelowPos))
 				mover.HandleSwipeInput(mover.down, Vector3.left);
 
 			if (IsLeftSwipe() &&
-				handler.tileGrid.ContainsKey(mover.FetchCubeGridPos() + mover.tileLeftPos))
+				handler.floorCubeGrid.ContainsKey(mover.FetchGridPos() + mover.tileLeftPos))
 				mover.HandleSwipeInput(mover.left, Vector3.forward);
 
 			if (IsRightSwipe() &&
-				handler.tileGrid.ContainsKey(mover.FetchCubeGridPos() + mover.tileRightPos))
+				handler.floorCubeGrid.ContainsKey(mover.FetchGridPos() + mover.tileRightPos))
 				mover.HandleSwipeInput(mover.right, Vector3.back);
 		}
 	}

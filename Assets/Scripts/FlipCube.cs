@@ -53,7 +53,7 @@ public class FlipCube : MonoBehaviour
 		mover.input = false;
 		cube.GetComponent<Rigidbody>().isKinematic = true;
 
-		var tileToDrop = mover.FetchCubeGridPos();
+		var tileToDrop = mover.FetchGridPos();
 
 		var axis = transform.TransformDirection(Vector3.left);
 
@@ -93,7 +93,7 @@ public class FlipCube : MonoBehaviour
 
 	private void DisableSeeThrough()
 	{
-		if(handler.FetchTile(myPosition) == handler.FetchTile(mover.FetchCubeGridPos()))
+		if(handler.FetchTile(myPosition) == handler.FetchTile(mover.FetchGridPos()))
 		{
 			seeThroughCube.SetActive(false);
 			return;

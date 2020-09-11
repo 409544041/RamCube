@@ -62,7 +62,7 @@ public class PlayerCubeMover : MonoBehaviour
 		input = false;
 		rb.isKinematic = true;
 
-		var tileToDrop = FetchCubeGridPos();
+		var tileToDrop = FetchGridPos();
 
 		for (int i = 0; i < (90 / turnStep); i++)
 		{
@@ -93,10 +93,10 @@ public class PlayerCubeMover : MonoBehaviour
 	{
 		FloorCube previousCube = null;
 
-		if(!handler.tileGrid.ContainsKey(FetchCubeGridPos())) return;
+		if(!handler.floorCubeGrid.ContainsKey(FetchGridPos())) return;
 
 		previousCube = currentCube;		
-		currentCube = handler.FetchTile(FetchCubeGridPos());
+		currentCube = handler.FetchTile(FetchGridPos());
 
 		bool differentCubes = currentCube != previousCube;
 
@@ -127,7 +127,7 @@ public class PlayerCubeMover : MonoBehaviour
 		center.position = transform.position;
 	}
 
-	public Vector2Int FetchCubeGridPos()
+	public Vector2Int FetchGridPos()
 	{
 		Vector2Int roundedPos = new Vector2Int
 			(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CubeHandler : MonoBehaviour
 {
-	public Dictionary<Vector2Int, FloorCube> tileGrid = new Dictionary<Vector2Int, FloorCube>();
+	public Dictionary<Vector2Int, FloorCube> floorCubeGrid = new Dictionary<Vector2Int, FloorCube>();
 
 	private void Awake() 
 	{
@@ -17,23 +17,23 @@ public class CubeHandler : MonoBehaviour
 		var tiles = FindObjectsOfType<FloorCube>();
 		foreach (FloorCube tile in tiles)
 		{
-			if(tileGrid.ContainsKey(tile.FetchTileGridPos()))
+			if(floorCubeGrid.ContainsKey(tile.FetchGridPos()))
 				print("Overlapping tile " + tile);
-			else tileGrid.Add(tile.FetchTileGridPos(), tile);
+			else floorCubeGrid.Add(tile.FetchGridPos(), tile);
 		}
 	}
 
 	public void DropTile(Vector2Int tileToDrop)
 	{
-		if(tileGrid[tileToDrop].FetchType() == CubeTypes.Falling )
+		if(floorCubeGrid[tileToDrop].FetchType() == CubeTypes.Falling )
 		{
-			tileGrid[tileToDrop].GetComponent<Rigidbody>().isKinematic = false;
-			tileGrid.Remove(tileToDrop);
+			floorCubeGrid[tileToDrop].GetComponent<Rigidbody>().isKinematic = false;
+			floorCubeGrid.Remove(tileToDrop);
 		} 
 	}
 
 	public FloorCube FetchTile(Vector2Int tile)
 	{
-		return tileGrid[tile];
+		return floorCubeGrid[tile];
 	}
 }

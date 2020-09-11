@@ -29,7 +29,7 @@ public class BoostCube : MonoBehaviour
 		cube.GetComponent<Rigidbody>().isKinematic = true;
 		mover.isBoosting = true;
 
-		var tileToDrop = mover.FetchCubeGridPos();
+		var tileToDrop = mover.FetchGridPos();
 
 		while(mover.isBoosting)
 		{

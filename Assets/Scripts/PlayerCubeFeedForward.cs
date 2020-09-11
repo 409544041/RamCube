@@ -61,9 +61,9 @@ public class PlayerCubeFeedForward : MonoBehaviour
 			var ffCube = feedForwardCubes[ffIndex];
 			ffCube.transform.rotation = transform.rotation;
 
-			var onePosAhead = mover.FetchCubeGridPos() + surroundingPos[ffIndex];
+			var onePosAhead = mover.FetchGridPos() + surroundingPos[ffIndex];
 
-			if (handler.tileGrid.ContainsKey(onePosAhead))
+			if (handler.floorCubeGrid.ContainsKey(onePosAhead))
 			{
 				ffCube.gameObject.SetActive(true);
 				ffCube.transform.position = new Vector3 
