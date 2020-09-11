@@ -24,11 +24,6 @@ public class PlayerCubeMover : MonoBehaviour
 	public bool input { get; set;} = true;
 	public bool isBoosting { get; set; } = false;
 
-	public Vector2Int tileAbovePos { get; private set; } = new Vector2Int(0, 1);
-	public Vector2Int tileBelowPos { get; private set; } = new Vector2Int(0, -1);
-	public Vector2Int tileLeftPos { get; private set; } = new Vector2Int(-1, 0);
-	public Vector2Int tileRightPos { get; private set; } = new Vector2Int(1, 0);
-
 	FloorCube currentCube = null;
 
 	public event Action onLand;

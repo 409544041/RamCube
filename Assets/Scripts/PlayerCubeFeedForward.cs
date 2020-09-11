@@ -13,7 +13,7 @@ public class PlayerCubeFeedForward : MonoBehaviour
 	CubeHandler handler;
 
 	//States
-	Vector2Int[] surroundingPos;
+	Vector2Int[] neighbourDirs;
 	Vector3[] turnAxis;
 
 	private void Awake() 
@@ -29,8 +29,8 @@ public class PlayerCubeFeedForward : MonoBehaviour
 
 	private void Start() 
 	{
-		surroundingPos = new Vector2Int[]
-			{ mover.tileAbovePos, mover.tileBelowPos, mover.tileLeftPos, mover.tileRightPos };
+		neighbourDirs = new Vector2Int[]
+			{ Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
 		turnAxis = new Vector3[]
 			{ Vector3.right, Vector3.left, Vector3.forward, Vector3.back };
@@ -61,7 +61,7 @@ public class PlayerCubeFeedForward : MonoBehaviour
 			var ffCube = feedForwardCubes[ffIndex];
 			ffCube.transform.rotation = transform.rotation;
 
-			var onePosAhead = mover.FetchGridPos() + surroundingPos[ffIndex];
+			var onePosAhead = mover.FetchGridPos() + neighbourDirs[ffIndex];
 
 			if (handler.floorCubeGrid.ContainsKey(onePosAhead))
 			{
