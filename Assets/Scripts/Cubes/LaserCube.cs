@@ -41,7 +41,7 @@ namespace Qbism.Cubes
 
 		void FixedUpdate()
 		{
-			if(isFiring) FireLaserCast();
+			FireLaserCast();
 		}
 
 		private void FireLaserCast()
@@ -50,11 +50,19 @@ namespace Qbism.Cubes
 			{
 				RaycastHit[] hits = SortedRaycasts();
 
-				if (hits.Length == 0) return;
+				if (hits.Length == 0) 
+				{
+					isFiring = true;
+					return;
+				}
+				
+				if(!isFiring) return;
+				
 
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
 					transform.forward), -1))
 					{
+						isFiring = false;
 						source.clip = passClip;
 						onLaserPassEvent.Invoke();
 					}
