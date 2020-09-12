@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Qbism.PlayerCube
 {
@@ -15,24 +16,25 @@ namespace Qbism.PlayerCube
 		public Transform right = null;
 		[SerializeField] int turnStep = 18;
 		[SerializeField] float timeStep = 0.01f;
+		[SerializeField] AudioClip landClip;
 
 
 		//Cache
 		Rigidbody rb;
+		AudioSource source;
 
 		//States
 		public bool isInBoostPos { get; set; } = true;
 		public bool input { get; set; } = true;
 		public bool isBoosting { get; set; } = false;
 
-		public event Action onLand;
-		public event Action onLandShowFF;
 		public event Action<Vector2Int> onCubeDrop;
 		public event Action<Vector2Int, GameObject> onFloorCheck;
 
 		private void Awake()
 		{
 			rb = GetComponent<Rigidbody>();
+			source = GetComponentInChildren<AudioSource>();
 		}
 
 		private void Start()
@@ -100,6 +102,11 @@ namespace Qbism.PlayerCube
 				(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
 
 			return roundedPos;
+		}
+
+		public void PlayLandClip()
+		{
+			AudioSource.PlayClipAtPoint(landClip, Camera.main.transform.position, .05f);
 		}
 	}
 }

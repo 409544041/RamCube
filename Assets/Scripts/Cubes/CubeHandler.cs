@@ -94,6 +94,7 @@ namespace Qbism.Cubes
 				{
 					cubeFF.ShowFeedForward();
 					onLand();
+					mover.PlayLandClip();
 				}
 				else cubeFF.ShowFeedForward();
 

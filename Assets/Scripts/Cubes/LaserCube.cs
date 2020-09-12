@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.PlayerCube;
+using Qbism.SceneTransition;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace Qbism.Cubes
 {
@@ -13,13 +14,23 @@ namespace Qbism.Cubes
 		[SerializeField] float distance = 1;
 		[SerializeField] GameObject laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
+		[SerializeField] AudioClip passClip, denyClip;
 
 		//Cache
 		PlayerCubeMover mover;
+		AudioSource source;
+		SceneHandler loader;
+
+		//States
+		bool isFiring = true;
+
+		public UnityEvent onLaserPassEvent = new UnityEvent();
 
 		private void Awake()
 		{
 			mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();
+			loader = FindObjectOfType<SceneHandler>();
+			source = GetComponentInChildren<AudioSource>();
 		}
 
 		private void Start()
@@ -30,7 +41,7 @@ namespace Qbism.Cubes
 
 		void FixedUpdate()
 		{
-			FireLaserCast();
+			if(isFiring) FireLaserCast();
 		}
 
 		private void FireLaserCast()
@@ -42,9 +53,16 @@ namespace Qbism.Cubes
 				if (hits.Length == 0) return;
 
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
-					transform.forward), -1)) return;
+					transform.forward), -1))
+					{
+						source.clip = passClip;
+						onLaserPassEvent.Invoke();
+					}
 
-				else SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+				else 
+				{
+					StartCoroutine(RestartLevelTransition());
+				}
 			}
 		}
 
@@ -66,6 +84,16 @@ namespace Qbism.Cubes
 			Array.Sort(hitDistances, hits);
 
 			return hits;
+		}
+
+		private IEnumerator RestartLevelTransition()
+		{
+			isFiring = false;
+			mover.input = false;
+			source.clip = denyClip;
+			onLaserPassEvent.Invoke();
+			yield return new WaitWhile(() => source.isPlaying);
+			loader.RestartLevel();
 		}
 	}
 }

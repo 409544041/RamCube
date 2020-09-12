@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Qbism.PlayerCube;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Qbism.Cubes
 {
@@ -11,6 +12,8 @@ namespace Qbism.Cubes
 		[SerializeField] float boostSpeed = 30f;
 		[SerializeField] GameObject boostCollider = null;
 		[SerializeField] Transform colliderSpawnPos = null;
+
+		public UnityEvent onBoostEvent = new UnityEvent();
 
 		public void PrepareBoost(GameObject cube)
 		{
@@ -33,6 +36,8 @@ namespace Qbism.Cubes
 			mover.isBoosting = true;
 
 			var tileToDrop = mover.FetchGridPos();
+
+			onBoostEvent.Invoke();
 
 			while (mover.isBoosting)
 			{

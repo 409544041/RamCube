@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Qbism.PlayerCube;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Qbism.Cubes
 {
@@ -20,6 +21,8 @@ namespace Qbism.Cubes
 
 		//States
 		Vector2Int myPosition;
+
+		public UnityEvent onFlipEvent = new UnityEvent();
 
 		private void Awake()
 		{
@@ -59,6 +62,8 @@ namespace Qbism.Cubes
 			var tileToDrop = mover.FetchGridPos();
 
 			var axis = transform.TransformDirection(Vector3.left);
+
+			onFlipEvent.Invoke();
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
