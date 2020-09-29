@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Qbism.Cubes
+namespace Qbism.General
 {
 	public class Shredder : MonoBehaviour
 	{

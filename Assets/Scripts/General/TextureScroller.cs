@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Qbism.Cubes;
 using Qbism.PlayerCube;
 using UnityEngine;
 
-namespace Qbism.Cubes
+namespace Qbism.General
 {
 	public class TextureScroller : MonoBehaviour
 	{

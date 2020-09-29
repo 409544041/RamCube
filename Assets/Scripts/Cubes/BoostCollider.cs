@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Qbism.Cubes
 {
-	public class ShieldCollider : MonoBehaviour
+	public class BoostCollider : MonoBehaviour
 	{
 		//Cache
 		PlayerCubeMover cubeMover;
