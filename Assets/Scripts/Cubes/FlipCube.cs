@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace Qbism.Cubes
 {
-	public class FlipCube : MonoBehaviour
+	public class FlipCube : MonoBehaviour, ICubeInfluencer
 	{
 		//Config parameters
 		[SerializeField] int turnStep = 9;
@@ -48,13 +48,13 @@ namespace Qbism.Cubes
 			FlipSelf(Vector3.left, seeThroughCube);
 		}
 
-		public void StartFlip(GameObject cube)
+		public void PrepareAction(GameObject cube)
 		{
-			if (cube.GetComponent<PlayerCubeMover>()) StartCoroutine(FlipPlayerCube(cube));
-			else if (cube.GetComponent<FeedForwardCube>()) StartCoroutine(FlipFF(cube));
+			if (cube.GetComponent<PlayerCubeMover>()) StartCoroutine(ExecuteActionOnPlayer(cube));
+			else if (cube.GetComponent<FeedForwardCube>()) StartCoroutine(ExecuteActionOnFF(cube));
 		}
 
-		private IEnumerator FlipPlayerCube(GameObject cube)
+		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
 			mover.input = false;
 			cube.GetComponent<Rigidbody>().isKinematic = true;
@@ -79,7 +79,7 @@ namespace Qbism.Cubes
 			mover.CheckFloorInNewPos();
 		}
 
-		private IEnumerator FlipFF(GameObject ffCube)
+		public IEnumerator ExecuteActionOnFF(GameObject ffCube)
 		{
 			var ff = ffCube.GetComponent<FeedForwardCube>();
 			var axis = transform.TransformDirection(Vector3.left);

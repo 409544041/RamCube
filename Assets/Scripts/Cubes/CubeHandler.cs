@@ -80,12 +80,12 @@ namespace Qbism.Cubes
 			bool differentCubes = currentCube != previousCube;
 
 			if (currentCube.FetchType() == CubeTypes.Boosting)
-				currentCube.GetComponent<BoostCube>().PrepareBoost(cube);
+				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 
 			else if (currentCube.FetchType() == CubeTypes.Flipping && differentCubes)
 			{
 				if (onLand != null) onLand();
-				currentCube.GetComponent<FlipCube>().StartFlip(cube);
+				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 			}
 
 			else
@@ -107,10 +107,10 @@ namespace Qbism.Cubes
 			var currentCube = FetchCube(cubePos);
 
 			if(currentCube.FetchType() == CubeTypes.Boosting)
-				currentCube.GetComponent<BoostCube>().PrepareBoost(cube);
+				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 			
 			else if(currentCube.FetchType() == CubeTypes.Flipping)
-				currentCube.GetComponent<FlipCube>().StartFlip(cube);
+				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 		}
 
 		private bool CheckIfContainsKey(Vector2Int cubePos)

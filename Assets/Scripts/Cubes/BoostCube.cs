@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace Qbism.Cubes
 {
-	public class BoostCube : MonoBehaviour
+	public class BoostCube : MonoBehaviour, ICubeInfluencer
 	{
 		//Config parameters
 		[SerializeField] float boostSpeed = 30f;
@@ -15,7 +15,7 @@ namespace Qbism.Cubes
 
 		public UnityEvent onBoostEvent = new UnityEvent();
 
-		public void PrepareBoost(GameObject cube)
+		public void PrepareAction(GameObject cube)
 		{
 			GameObject spawnedCollider = Instantiate(boostCollider,
 				colliderSpawnPos.position, transform.localRotation);
@@ -23,11 +23,11 @@ namespace Qbism.Cubes
 			spawnedCollider.transform.parent = cube.transform;
 			spawnedCollider.GetComponent<Collider>().enabled = true;
 
-			if (cube.GetComponent<PlayerCubeMover>()) StartCoroutine(Boost(cube));
-			else if (cube.GetComponent<FeedForwardCube>()) StartCoroutine(BoostFF(cube));
+			if (cube.GetComponent<PlayerCubeMover>()) StartCoroutine(ExecuteActionOnPlayer(cube));
+			else if (cube.GetComponent<FeedForwardCube>()) StartCoroutine(ExecuteActionOnFF(cube));
 		}
 
-		private IEnumerator Boost(GameObject cube)
+		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
 			var mover = cube.GetComponent<PlayerCubeMover>();
 
@@ -57,7 +57,7 @@ namespace Qbism.Cubes
 			mover.CheckFloorInNewPos();
 		}
 
-		private IEnumerator BoostFF(GameObject ffCube)
+		public IEnumerator ExecuteActionOnFF(GameObject ffCube)
 		{
 			var ff = ffCube.GetComponent<FeedForwardCube>();
 
