@@ -82,9 +82,6 @@ namespace Qbism.Control
 
 		private bool SwipeDistanceCheck()
 		{
-			print(Mathf.Abs(VerticalMoveDistance()) > minSwipeDistance
-				|| Mathf.Abs(HorizontalMoveDistance()) > minSwipeDistance);
-
 			return Mathf.Abs(VerticalMoveDistance()) > minSwipeDistance
 				|| Mathf.Abs(HorizontalMoveDistance()) > minSwipeDistance;
 		}
