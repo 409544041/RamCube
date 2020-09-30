@@ -7,7 +7,7 @@ namespace Qbism.Cubes
 	public class FloorCube : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] CubeTypes type = CubeTypes.Falling;
+		public CubeTypes type = CubeTypes.Falling;
 
 		//States
 		public bool hasFallen { get; set; } = false;

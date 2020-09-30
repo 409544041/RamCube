@@ -70,7 +70,7 @@ namespace Qbism.Cubes
 
 		private void CheckFloorType(Vector2Int cubePos, GameObject cube)
 		{
-			FloorCube previousCube = null;
+			FloorCube previousCube;
 
 			if (!floorCubeGrid.ContainsKey(cubePos)) return;
 
@@ -78,6 +78,9 @@ namespace Qbism.Cubes
 			currentCube = FetchCube(cubePos);
 
 			bool differentCubes = currentCube != previousCube;
+
+			if(previousCube.FetchType() == CubeTypes.Static)
+				previousCube.GetComponent<StaticCube>().BecomeFallingCube(cube);
 
 			if (currentCube.FetchType() == CubeTypes.Boosting)
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
