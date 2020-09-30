@@ -35,8 +35,6 @@ namespace Qbism.Cubes
 			cube.GetComponent<Rigidbody>().isKinematic = true;
 			mover.isBoosting = true;
 
-			var tileToDrop = mover.FetchGridPos();
-
 			onBoostEvent.Invoke();
 
 			while (mover.isBoosting)
@@ -48,8 +46,6 @@ namespace Qbism.Cubes
 
 			mover.RoundPosition();
 			mover.UpdatePositions();
-
-			FindObjectOfType<CubeHandler>().DropCube(tileToDrop);
 
 			mover.isBoosting = false;
 			cube.GetComponent<Rigidbody>().isKinematic = false;
