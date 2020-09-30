@@ -13,11 +13,6 @@ namespace Qbism.PlayerCube
 
 		public event Action<Vector2Int, GameObject> onFeedForwardFloorCheck;
 
-		private void Start() 
-		{
-			this.gameObject.SetActive(false);	
-		}
-
 		public void CheckFloorInNewPos()
 		{
 			onFeedForwardFloorCheck(FetchGridPos(), this.gameObject);
