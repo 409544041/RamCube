@@ -72,7 +72,7 @@ namespace Qbism.Cubes
 			}
 
 			mover.RoundPosition();
-			mover.UpdatePositions();
+			mover.UpdateCenterPosition();
 
 			cube.GetComponent<Rigidbody>().isKinematic = false;
 

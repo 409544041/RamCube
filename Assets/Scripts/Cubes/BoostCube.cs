@@ -45,7 +45,7 @@ namespace Qbism.Cubes
 			}
 
 			mover.RoundPosition();
-			mover.UpdatePositions();
+			mover.UpdateCenterPosition();
 
 			mover.isBoosting = false;
 			cube.GetComponent<Rigidbody>().isKinematic = false;
