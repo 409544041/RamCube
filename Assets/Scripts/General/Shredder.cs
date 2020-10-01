@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Qbism.SceneTransition;
 using UnityEngine;
 
 namespace Qbism.General
@@ -8,7 +9,16 @@ namespace Qbism.General
 	{
 		private void OnTriggerEnter(Collider other)
 		{
-			Destroy(other.gameObject);
+			if(other.tag == "Player") 
+				FindObjectOfType<SceneHandler>().RestartLevel();
+
+			else if (other.tag == "Environment")
+			{
+				other.GetComponent<MeshRenderer>().enabled = false;
+				other.GetComponent<BoxCollider>().enabled = false;
+				other.GetComponent<Rigidbody>().isKinematic = true;
+			}
+
 		}
 	}
 }
