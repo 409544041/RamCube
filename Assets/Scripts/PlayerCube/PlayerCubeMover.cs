@@ -38,7 +38,7 @@ namespace Qbism.PlayerCube
 
 		private void Start()
 		{
-			UpdatePositions();
+			UpdateCenterPosition();
 		}
 
 		public void HandleSwipeInput(Transform rotateAroundAxis, Vector3 direction)
@@ -67,7 +67,7 @@ namespace Qbism.PlayerCube
 			}
 
 			RoundPosition();
-			UpdatePositions();
+			UpdateCenterPosition();
 
 			onCubeDrop(cubeToDrop);
 
@@ -90,7 +90,7 @@ namespace Qbism.PlayerCube
 			onFloorCheck(FetchGridPos(), this.gameObject);
 		}
 
-		public void UpdatePositions()
+		public void UpdateCenterPosition()
 		{
 			center.position = transform.position;
 		}

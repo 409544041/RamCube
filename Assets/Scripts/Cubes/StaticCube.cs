@@ -7,6 +7,7 @@ namespace Qbism.Cubes
 {
 	public class StaticCube : MonoBehaviour
 	{
+		//Config parameters
 		[SerializeField] Material fallingCubeMat;
 
 		public void BecomeFallingCube(GameObject cube)
