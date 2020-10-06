@@ -36,6 +36,7 @@ namespace Qbism.Rewind
 
 		private void FixedUpdate() 
 		{
+			if(rewindAmount == 0) return;
 			if(isRewinding) Rewind();
 			if(isRecording) Record();
 		}
@@ -85,6 +86,7 @@ namespace Qbism.Rewind
 			else
 			{
 				isRewinding = false;
+				rewindAmount--;
 				if (gameObject.tag == "Player")
 				{
 					mover.input = true;
