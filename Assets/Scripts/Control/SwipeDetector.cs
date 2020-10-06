@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.Cubes;
 using Qbism.PlayerCube;
+using Qbism.Rewind;
 using UnityEngine;
 
 namespace Qbism.Control
@@ -16,6 +17,7 @@ namespace Qbism.Control
 		//Cache
 		CubeHandler handler;
 		PlayerCubeMover mover;
+		RewindHandler rewinder;
 
 		//States
 		Vector2 fingerDownPos;
@@ -27,6 +29,7 @@ namespace Qbism.Control
 		{
 			handler = FindObjectOfType<CubeHandler>();
 			mover = FindObjectOfType<PlayerCubeMover>();
+			rewinder = FindObjectOfType<RewindHandler>();
 		}
 
 		void Update()
@@ -58,7 +61,7 @@ namespace Qbism.Control
 
 		private void DetectSwipes()
 		{
-			if (!SwipeDistanceCheck()) return;
+			//if (!SwipeDistanceCheck()) return;
 
 			if (SwipeDistanceCheck())
 			{
@@ -78,6 +81,7 @@ namespace Qbism.Control
 					handler.floorCubeGrid.ContainsKey(mover.FetchGridPos() + Vector2Int.right))
 					mover.HandleSwipeInput(mover.right, Vector3.back);
 			}
+			else rewinder.StartRewinding();
 		}
 
 		private bool SwipeDistanceCheck()
