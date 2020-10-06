@@ -9,7 +9,7 @@ namespace Qbism.Rewind
 	public class RewindHandler : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] int rewindsAmount;
+		public int rewindsAmount;
 
 		//Cache
 		TimeBody[] timeBodies = null;
@@ -63,6 +63,7 @@ namespace Qbism.Rewind
 			}
 
 			timesRewindUsed++;
+			if(rewindsAmount > 0) rewindsAmount--;
 		}
 
 		private void ShiftLists()
