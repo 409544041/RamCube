@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Qbism.Cubes;
 using Qbism.PlayerCube;
+using Qbism.Rewind;
 using Qbism.SceneTransition;
 using UnityEngine;
 
@@ -13,12 +14,14 @@ namespace Qbism.Control
 		CubeHandler handler;
 		PlayerCubeMover mover;
 		SceneHandler loader;
+		RewindHandler rewinder;
 
 		private void Awake()
 		{
 			handler = GetComponent<CubeHandler>();
 			mover = FindObjectOfType<PlayerCubeMover>();
 			loader = GetComponent<SceneHandler>();
+			rewinder = GetComponent<RewindHandler>();
 		}
 
 		void Update()
@@ -41,6 +44,10 @@ namespace Qbism.Control
 
 			if (Input.GetKeyDown(KeyCode.R))
 				loader.RestartLevel();
+
+			if (Input.GetKeyDown(KeyCode.Return))
+				rewinder.StartRewinding();
+
 		}
 	}
 }

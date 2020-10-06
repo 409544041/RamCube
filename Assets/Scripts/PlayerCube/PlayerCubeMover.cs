@@ -27,8 +27,10 @@ namespace Qbism.PlayerCube
 		public bool input { get; set; } = true;
 		public bool isBoosting { get; set; } = false;
 
-		public event Action<Vector2Int> onCubeDrop;
+		public event Action<Vector2Int> onCubeShrink;
 		public event Action<Vector2Int, GameObject> onFloorCheck;
+		public event Action onRecordStart;
+		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
 
 		private void Awake()
 		{
@@ -55,6 +57,11 @@ namespace Qbism.PlayerCube
 
 		private IEnumerator Move(Transform side, Vector3 turnAxis)
 		{
+			var cubeToShrink = FetchGridPos();
+
+			onInitialRecord(transform.position, transform.rotation, transform.localScale);
+			onRecordStart();
+
 			input = false;
 			rb.isKinematic = true;
 
@@ -69,7 +76,7 @@ namespace Qbism.PlayerCube
 			RoundPosition();
 			UpdateCenterPosition();
 
-			onCubeDrop(cubeToDrop);
+			onCubeShrink(cubeToShrink);
 
 			rb.isKinematic = false;
 

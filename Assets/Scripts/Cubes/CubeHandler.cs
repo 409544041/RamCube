@@ -19,6 +19,7 @@ namespace Qbism.Cubes
 		public Dictionary<Vector2Int, FloorCube> floorCubeGrid = new Dictionary<Vector2Int, FloorCube>();
 
 		public event Action onLand;
+		public event Action onRecordStop;
 
 		private void Awake()
 		{
@@ -31,7 +32,7 @@ namespace Qbism.Cubes
 		private void OnEnable() 
 		{
 			if (mover != null) mover.onFloorCheck += CheckFloorType;
-			if (mover != null) mover.onCubeDrop += DropCube;
+			if (mover != null) mover.onCubeShrink += ShrinkCube;
 			if (cubeFF != null) cubeFF.onKeyCheck += CheckIfContainsKey;
 			if (ffCubes != null)
 			{
@@ -44,27 +45,26 @@ namespace Qbism.Cubes
 
 		private void Start() 
 		{
-
 			currentCube = FetchCube(mover.FetchGridPos());
 		}
 
 		private void LoadDictionary()
 		{
-			var tiles = FindObjectsOfType<FloorCube>();
-			foreach (FloorCube tile in tiles)
+			var cubes = FindObjectsOfType<FloorCube>();
+			foreach (FloorCube cube in cubes)
 			{
-				if (floorCubeGrid.ContainsKey(tile.FetchGridPos()))
-					print("Overlapping tile " + tile);
-				else floorCubeGrid.Add(tile.FetchGridPos(), tile);
+				if (floorCubeGrid.ContainsKey(cube.FetchGridPos()))
+					print("Overlapping tile " + cube);
+				else floorCubeGrid.Add(cube.FetchGridPos(), cube);
 			}
 		}
 
-		public void DropCube(Vector2Int tileToDrop)
+		public void ShrinkCube(Vector2Int cubeToShrink)
 		{
-			if (floorCubeGrid[tileToDrop].FetchType() == CubeTypes.Falling)
+			if (floorCubeGrid[cubeToShrink].FetchType() == CubeTypes.Falling)
 			{
-				floorCubeGrid[tileToDrop].GetComponent<Rigidbody>().isKinematic = false;
-				floorCubeGrid.Remove(tileToDrop);
+				floorCubeGrid[cubeToShrink].StartShrinking();
+				floorCubeGrid.Remove(cubeToShrink);
 			}
 		}
 
@@ -80,8 +80,11 @@ namespace Qbism.Cubes
 			bool differentCubes = currentCube != previousCube;
 
 			if(previousCube.FetchType() == CubeTypes.Static)
+			{
 				previousCube.GetComponent<StaticCube>().BecomeFallingCube(cube);
-
+				onRecordStop();
+			}
+				
 			if (currentCube.FetchType() == CubeTypes.Boosting)
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 
@@ -97,9 +100,14 @@ namespace Qbism.Cubes
 				{
 					cubeFF.ShowFeedForward();
 					onLand();
+					onRecordStop();
 					mover.PlayLandClip();
 				}
-				else cubeFF.ShowFeedForward();
+				else
+				{
+					onRecordStop();
+					cubeFF.ShowFeedForward();
+				} 
 
 				mover.input = true;
 			}
@@ -116,7 +124,7 @@ namespace Qbism.Cubes
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 		}
 
-		private bool CheckIfContainsKey(Vector2Int cubePos)
+		public bool CheckIfContainsKey(Vector2Int cubePos)
 		{
 			if(floorCubeGrid.ContainsKey(cubePos)) return true;
 			else return false;
