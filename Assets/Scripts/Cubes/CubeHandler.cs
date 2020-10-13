@@ -20,6 +20,7 @@ namespace Qbism.Cubes
 
 		public event Action onLand;
 		public event Action onRecordStop;
+		public event Action onFloorRecord;
 
 		private void Awake()
 		{
@@ -84,6 +85,9 @@ namespace Qbism.Cubes
 				previousCube.GetComponent<StaticCube>().BecomeFallingCube(cube);
 				onRecordStop();
 			}
+
+			if(previousCube.FetchType() == CubeTypes.Flipping && differentCubes)
+				onFloorRecord();
 				
 			if (currentCube.FetchType() == CubeTypes.Boosting)
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);

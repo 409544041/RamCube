@@ -40,7 +40,12 @@ namespace Qbism.Rewind
 				mover.onRecordStart += StartRecordingPlayer;
 				mover.onRecordStart += ResetTimesRewinded;
 			} 
-			if(handler != null) handler.onRecordStop += StopRecordingPlayer;
+			if(handler != null)
+			{
+				handler.onRecordStop += StopRecordingPlayer;
+				handler.onFloorRecord += ShiftLists;
+				handler.onFloorRecord += StartRecordingCubes;
+			} 
 
 			if(floorCubes != null)
 			{
@@ -56,6 +61,8 @@ namespace Qbism.Rewind
 
 		public void StartRewinding()
 		{
+			if(mover.input == false) return; 
+
 			foreach (TimeBody timeBody in timeBodies)
 			{
 				timeBody.timesRewinded = timesRewindUsed;
@@ -131,7 +138,12 @@ namespace Qbism.Rewind
 				mover.onRecordStart -= ResetTimesRewinded;
 			} 
 
-			if (handler != null) handler.onRecordStop -= StopRecordingPlayer;
+			if (handler != null)
+			{
+				handler.onRecordStop -= StopRecordingPlayer;
+				handler.onFloorRecord -= ShiftLists;
+				handler.onFloorRecord -= StartRecordingCubes;
+			} 
 
 			if (floorCubes != null)
 			{
