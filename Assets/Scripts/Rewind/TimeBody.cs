@@ -18,7 +18,8 @@ namespace Qbism.Rewind
 		Rigidbody rb = null;
 		PlayerCubeMover mover;
 
-		public Dictionary<int, List<PointInTime>> listDictionary = new Dictionary<int, List<PointInTime>> ();
+		public Dictionary<int, List<PointInTime>> listDictionary = new Dictionary<int, List<PointInTime>>();
+		public List<Vector2Int> firstPosList = new List<Vector2Int>();
 
 		private void Awake() 
 		{
@@ -47,6 +48,9 @@ namespace Qbism.Rewind
 			{
 				if (listDictionary[i - 1].Count > 0)
 					listDictionary[i] = listDictionary[i - 1];
+
+				if(this.tag == "Player" && firstPosList.Count > i)
+					firstPosList[i] = firstPosList[i - 1];
 			}
 
 			if (listDictionary[0].Count > 0)
@@ -58,6 +62,12 @@ namespace Qbism.Rewind
 		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale)
 		{
 			listDictionary[0].Insert(0, new PointInTime(pos, rot, scale));
+
+			if(this.tag == "Player")
+			{
+				Vector2Int firstPos = new Vector2Int(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z));
+				firstPosList.Insert(0, firstPos);
+			}
 		}
 
 		public void Record()
@@ -74,7 +84,6 @@ namespace Qbism.Rewind
 
 		private void Rewind()
 		{
-			
 			if(listDictionary[timesRewinded].Count > 0)
 			{
 				if(gameObject.tag == "Player") mover.input = false;
@@ -106,7 +115,9 @@ namespace Qbism.Rewind
 			FloorCube cube = GetComponent<FloorCube>();
 			Vector2Int cubePos = cube.FetchGridPos();
 
-			if (cube.hasShrunk == true && cubePos == mover.FetchGridPos())
+			bool samePos = cubePos == mover.GetComponent<TimeBody>().firstPosList[timesRewinded];
+	
+			if (cube.hasShrunk == true && samePos)
 			{
 				CubeHandler handler = FindObjectOfType<CubeHandler>();
 				if(!handler.CheckIfContainsKey(cubePos))

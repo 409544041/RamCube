@@ -65,8 +65,6 @@ namespace Qbism.PlayerCube
 			input = false;
 			rb.isKinematic = true;
 
-			var cubeToDrop = FetchGridPos();
-
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
 				transform.RotateAround(side.position, turnAxis, turnStep);
