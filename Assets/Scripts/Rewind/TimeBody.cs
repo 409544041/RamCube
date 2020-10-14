@@ -96,17 +96,20 @@ namespace Qbism.Rewind
 			{
 				isRewinding = false;
 				rewindAmount--;
+
+				if (gameObject.tag == "Environment")
+					AddBackToDictionary();
+
 				if (gameObject.tag == "Player")
 				{
 					mover.input = true;
 					mover.UpdateCenterPosition();
 					mover.RoundPosition();
+					mover.GetComponent<PlayerCubeFeedForward>().ShowFeedForward();
+
+					CubeHandler handler = FindObjectOfType<CubeHandler>();
+					handler.currentCube = handler.FetchCube(mover.FetchGridPos());
 				}
-				if (gameObject.tag == "Environment") 
-				{
-					AddBackToDictionary();
-				}
-				
 			} 
 		}
 

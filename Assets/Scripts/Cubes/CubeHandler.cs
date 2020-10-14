@@ -14,7 +14,7 @@ namespace Qbism.Cubes
 		PlayerCubeMover mover;
 
 		//States
-		FloorCube currentCube = null;
+		public FloorCube currentCube { get; set; } = null;
 		
 		public Dictionary<Vector2Int, FloorCube> floorCubeGrid = new Dictionary<Vector2Int, FloorCube>();
 
