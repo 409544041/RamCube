@@ -20,6 +20,9 @@ namespace Qbism.PlayerCube
 		public delegate bool KeyCheckDelegate(Vector2Int pos);
 		public KeyCheckDelegate onKeyCheck;
 
+		public delegate bool ShrunkCheckDelegate(Vector2Int pos);
+		public ShrunkCheckDelegate onShrunkCheck;
+
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
@@ -61,7 +64,7 @@ namespace Qbism.PlayerCube
 
 				var onePosAhead = mover.FetchGridPos() + neighbourDirs[ffIndex];
 
-				if (onKeyCheck(onePosAhead))
+				if (onKeyCheck(onePosAhead) && onShrunkCheck(onePosAhead) == false)
 				{
 					ffCube.gameObject.SetActive(true);
 					ffCube.transform.position = new Vector3

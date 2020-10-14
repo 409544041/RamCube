@@ -62,7 +62,7 @@ namespace Qbism.Rewind
 		public void StartRewinding()
 		{
 			if(mover.input == false) return; 
-
+			
 			foreach (TimeBody timeBody in timeBodies)
 			{
 				timeBody.timesRewinded = timesRewindUsed;

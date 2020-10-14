@@ -37,7 +37,6 @@ namespace Qbism.Rewind
 
 		private void FixedUpdate() 
 		{
-			if(rewindAmount == 0) return;
 			if(isRewinding) Rewind();
 			if(isRecording) Record();
 		}
@@ -80,13 +79,14 @@ namespace Qbism.Rewind
 		{
 			isRewinding = true;
 			rb.isKinematic = true;
+			if (gameObject.tag == "Player") mover.input = false;
+			if (gameObject.tag == "Environment") RewindShrunkStatus();
 		}
 
 		private void Rewind()
 		{
 			if(listDictionary[timesRewinded].Count > 0)
 			{
-				if(gameObject.tag == "Player") mover.input = false;
 				transform.position = listDictionary[timesRewinded][0].position;
 				transform.rotation = listDictionary[timesRewinded][0].rotation;
 				transform.localScale = listDictionary[timesRewinded][0].scale;
@@ -96,9 +96,6 @@ namespace Qbism.Rewind
 			{
 				isRewinding = false;
 				rewindAmount--;
-
-				if (gameObject.tag == "Environment")
-					AddBackToDictionary();
 
 				if (gameObject.tag == "Player")
 				{
@@ -113,18 +110,16 @@ namespace Qbism.Rewind
 			} 
 		}
 
-		private void AddBackToDictionary()
+		private void RewindShrunkStatus()
 		{	
 			FloorCube cube = GetComponent<FloorCube>();
 			Vector2Int cubePos = cube.FetchGridPos();
 
-			bool samePos = cubePos == mover.GetComponent<TimeBody>().firstPosList[timesRewinded];
+			bool samePos = 
+				cubePos == mover.GetComponent<TimeBody>().firstPosList[timesRewinded];
 	
 			if (cube.hasShrunk == true && samePos)
 			{
-				CubeHandler handler = FindObjectOfType<CubeHandler>();
-				if(!handler.CheckIfContainsKey(cubePos))
-					handler.floorCubeGrid.Add(cubePos, cube);
 				cube.hasShrunk = false;
 			}
 		}

@@ -34,7 +34,11 @@ namespace Qbism.Cubes
 		{
 			if (mover != null) mover.onFloorCheck += CheckFloorType;
 			if (mover != null) mover.onCubeShrink += ShrinkCube;
-			if (cubeFF != null) cubeFF.onKeyCheck += CheckIfContainsKey;
+			if (cubeFF != null)
+			{
+				cubeFF.onKeyCheck += CheckIfContainsKey;
+				cubeFF.onShrunkCheck += FetchShrunkStatus;
+			} 
 			if (ffCubes != null)
 			{
 				foreach (FeedForwardCube ffCube in ffCubes)
@@ -65,15 +69,12 @@ namespace Qbism.Cubes
 			if (floorCubeGrid[cubeToShrink].FetchType() == CubeTypes.Falling)
 			{
 				floorCubeGrid[cubeToShrink].StartShrinking();
-				floorCubeGrid.Remove(cubeToShrink);
 			}
 		}
 
 		private void CheckFloorType(Vector2Int cubePos, GameObject cube)
 		{
 			FloorCube previousCube;
-
-			if (!floorCubeGrid.ContainsKey(cubePos)) return;
 
 			previousCube = currentCube;
 			currentCube = FetchCube(cubePos);
@@ -137,6 +138,31 @@ namespace Qbism.Cubes
 		public FloorCube FetchCube(Vector2Int cubePos)
 		{
 			return floorCubeGrid[cubePos];
+		}
+
+		public bool FetchShrunkStatus(Vector2Int cubePos)
+		{
+			FloorCube cube = FetchCube(cubePos);
+			if (cube.hasShrunk) return true;
+			else return false;
+		}
+
+		private void OnDisable()
+		{
+			if (mover != null) mover.onFloorCheck -= CheckFloorType;
+			if (mover != null) mover.onCubeShrink -= ShrinkCube;
+			if (cubeFF != null)
+			{
+				cubeFF.onKeyCheck -= CheckIfContainsKey;
+				cubeFF.onShrunkCheck -= FetchShrunkStatus;
+			}
+			if (ffCubes != null)
+			{
+				foreach (FeedForwardCube ffCube in ffCubes)
+				{
+					ffCube.onFeedForwardFloorCheck -= CheckFloorTypeForFF;
+				}
+			}
 		}
 	}
 }
