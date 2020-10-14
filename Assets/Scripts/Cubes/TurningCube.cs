@@ -2,46 +2,33 @@
 using System.Collections.Generic;
 using Qbism.PlayerCube;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Qbism.Cubes
 {
-	public class FlipCube : MonoBehaviour, ICubeInfluencer
+	public class TurningCube : MonoBehaviour, ICubeInfluencer
 	{
 		//Config parameters
 		[SerializeField] int turnStep = 9;
 		[SerializeField] float timeStep = 0.01f;
-		[SerializeField] GameObject seeThroughCube = null;
+		[SerializeField] bool isLeftTurning = false;
+		[SerializeField] GameObject topPlane = null;
 
 		//Cache
 		PlayerCubeMover mover;
-		CubeHandler handler;
 
 		//States
-		Vector2Int myPosition;
-
-		public UnityEvent onFlipEvent = new UnityEvent();
+		Vector3 turnAxis = new Vector3(0, 0, 0);
 
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
-			handler = FindObjectOfType<CubeHandler>();
-		}
 
-		private void OnEnable()
-		{
-			if (handler != null) handler.onLand += DisableSeeThrough;
-		}
-
-		private void Start()
-		{
-			myPosition = new Vector2Int
-				(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
-		}
-
-		private void Update()
-		{
-			FlipSelf(Vector3.left, seeThroughCube);
+			if(isLeftTurning)
+			{
+				topPlane.transform.localScale = new Vector3 (-1, 1, 1);
+				turnAxis = Vector3.down;
+			} 
+			else turnAxis = Vector3.up;
 		}
 
 		public void PrepareAction(GameObject cube)
@@ -55,9 +42,9 @@ namespace Qbism.Cubes
 			mover.input = false;
 			cube.GetComponent<Rigidbody>().isKinematic = true;
 
-			var axis = transform.TransformDirection(Vector3.left);
+			var axis = transform.TransformDirection(turnAxis);
 
-			onFlipEvent.Invoke();
+			//onFlipEvent.Invoke();
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
@@ -77,7 +64,7 @@ namespace Qbism.Cubes
 		{
 			var ff = ffCube.GetComponent<FeedForwardCube>();
 
-			var axis = transform.TransformDirection(Vector3.left);
+			var axis = transform.TransformDirection(turnAxis);
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
@@ -87,28 +74,5 @@ namespace Qbism.Cubes
 
 			ff.RoundPosition();
 		}
-
-		private void FlipSelf(Vector3 direction, GameObject objectToFlip)
-		{
-			var axis = transform.TransformDirection(direction);
-			objectToFlip.transform.Rotate(axis, turnStep, Space.World);
-		}
-
-		private void DisableSeeThrough()
-		{
-			if (handler.FetchCube(myPosition) == handler.FetchCube(mover.FetchGridPos()))
-			{
-				seeThroughCube.SetActive(false);
-				return;
-			}
-
-			seeThroughCube.SetActive(true);
-		}
-
-		private void OnDisable()
-		{
-			if (handler != null) handler.onLand -= DisableSeeThrough;
-		}
 	}
-
 }

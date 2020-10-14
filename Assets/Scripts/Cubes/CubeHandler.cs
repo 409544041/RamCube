@@ -99,6 +99,12 @@ namespace Qbism.Cubes
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 			}
 
+			else if (currentCube.FetchType() == CubeTypes.Turning && differentCubes)
+			{
+				if (onLand != null) onLand();
+				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+			}
+
 			else
 			{
 				if (differentCubes && onLand != null)

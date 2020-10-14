@@ -5,7 +5,8 @@
 		Falling,
 		Static,
 		Boosting,
-		Flipping
+		Flipping,
+		Turning
 	}
 }
 
