@@ -8,7 +8,7 @@ namespace Qbism.Cubes
 	public class FloorCube : MonoBehaviour
 	{
 		//Config parameters
-		public CubeTypes type = CubeTypes.Falling;
+		public CubeTypes type = CubeTypes.Shrinking;
 		[SerializeField] float shrinkStep;
 		[SerializeField] float timeStep;
 
@@ -60,7 +60,7 @@ namespace Qbism.Cubes
 
 		private void DisableVisuals()
 		{
-			if(type != CubeTypes.Falling) return;
+			if(type != CubeTypes.Shrinking) return;
 
 			if(transform.localScale.x < .05f) 
 				GetComponent<MeshRenderer>().enabled = false;

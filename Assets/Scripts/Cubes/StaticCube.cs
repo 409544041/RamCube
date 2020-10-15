@@ -13,7 +13,7 @@ namespace Qbism.Cubes
 		public void BecomeFallingCube(GameObject cube)
 		{
 			GetComponent<MeshRenderer>().material = fallingCubeMat;
-			GetComponent<FloorCube>().type = CubeTypes.Falling;
+			GetComponent<FloorCube>().type = CubeTypes.Shrinking;
 		}
 
 	}

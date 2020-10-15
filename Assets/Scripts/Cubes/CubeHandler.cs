@@ -66,7 +66,7 @@ namespace Qbism.Cubes
 
 		public void ShrinkCube(Vector2Int cubeToShrink)
 		{
-			if (floorCubeGrid[cubeToShrink].FetchType() == CubeTypes.Falling)
+			if (floorCubeGrid[cubeToShrink].FetchType() == CubeTypes.Shrinking)
 			{
 				floorCubeGrid[cubeToShrink].StartShrinking();
 			}
@@ -87,19 +87,15 @@ namespace Qbism.Cubes
 				onRecordStop();
 			}
 
-			if(previousCube.FetchType() == CubeTypes.Flipping && differentCubes)
+			if((previousCube.FetchType() == CubeTypes.Flipping
+				|| previousCube.FetchType() == CubeTypes.Turning) && differentCubes)
 				onFloorRecord();
 				
 			if (currentCube.FetchType() == CubeTypes.Boosting)
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 
-			else if (currentCube.FetchType() == CubeTypes.Flipping && differentCubes)
-			{
-				if (onLand != null) onLand();
-				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-			}
-
-			else if (currentCube.FetchType() == CubeTypes.Turning && differentCubes)
+			else if ((currentCube.FetchType() == CubeTypes.Flipping ||
+				currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
 			{
 				if (onLand != null) onLand();
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
@@ -128,10 +124,9 @@ namespace Qbism.Cubes
 		{
 			var currentCube = FetchCube(cubePos);
 
-			if(currentCube.FetchType() == CubeTypes.Boosting)
-				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-			
-			else if(currentCube.FetchType() == CubeTypes.Flipping)
+			if(currentCube.FetchType() == CubeTypes.Boosting ||
+				currentCube.FetchType() == CubeTypes.Flipping ||
+				currentCube.FetchType() == CubeTypes.Turning)
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 		}
 

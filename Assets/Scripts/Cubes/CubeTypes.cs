@@ -2,7 +2,7 @@
 {
 	public enum CubeTypes
 	{
-		Falling,
+		Shrinking,
 		Static,
 		Boosting,
 		Flipping,
