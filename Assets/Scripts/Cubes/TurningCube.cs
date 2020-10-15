@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Qbism.PlayerCube;
 using UnityEngine;
+using UnityEngine.Events;
+using Qbism.PlayerCube;
 
 namespace Qbism.Cubes
 {
@@ -18,6 +19,8 @@ namespace Qbism.Cubes
 
 		//States
 		Vector3 turnAxis = new Vector3(0, 0, 0);
+
+		public UnityEvent onTurnEvent = new UnityEvent();
 
 		private void Awake()
 		{
@@ -44,7 +47,7 @@ namespace Qbism.Cubes
 
 			var axis = transform.TransformDirection(turnAxis);
 
-			//onFlipEvent.Invoke();
+			onTurnEvent.Invoke();
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
