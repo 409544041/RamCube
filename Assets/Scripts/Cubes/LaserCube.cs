@@ -14,7 +14,7 @@ namespace Qbism.Cubes
 		[SerializeField] float distance = 1;
 		[SerializeField] GameObject laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
-		[SerializeField] AudioClip passClip, denyClip;
+		[SerializeField] AudioClip passClip = null, denyClip = null;
 
 		//Cache
 		PlayerCubeMover mover;

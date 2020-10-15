@@ -32,7 +32,7 @@ namespace Qbism.Control
 
 				if(handler.floorCubeGrid.ContainsKey(posAhead)
 					&& handler.FetchShrunkStatus(posAhead) == false)
-					mover.HandleKeyInput(mover.up, Vector3.right);
+					mover.HandleKeyInput(mover.up, Vector3.right, posAhead);
 			}
 
 			if (Input.GetKeyDown(KeyCode.S))
@@ -41,7 +41,7 @@ namespace Qbism.Control
 
 				if (handler.floorCubeGrid.ContainsKey(posAhead)
 					&& handler.FetchShrunkStatus(posAhead) == false)
-					mover.HandleKeyInput(mover.down, Vector3.left);
+					mover.HandleKeyInput(mover.down, Vector3.left, posAhead);
 			}
 
 			if (Input.GetKeyDown(KeyCode.A))
@@ -50,7 +50,7 @@ namespace Qbism.Control
 
 				if (handler.floorCubeGrid.ContainsKey(posAhead)
 					&& handler.FetchShrunkStatus(posAhead) == false)
-					mover.HandleKeyInput(mover.left, Vector3.forward);
+					mover.HandleKeyInput(mover.left, Vector3.forward, posAhead);
 			}
 
 			if (Input.GetKeyDown(KeyCode.D))
@@ -59,7 +59,7 @@ namespace Qbism.Control
 
 				if (handler.floorCubeGrid.ContainsKey(posAhead)
 					&& handler.FetchShrunkStatus(posAhead) == false)
-					mover.HandleKeyInput(mover.right, Vector3.back);
+					mover.HandleKeyInput(mover.right, Vector3.back, posAhead);
 			}
 
 			if (Input.GetKeyDown(KeyCode.R))

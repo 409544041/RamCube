@@ -9,8 +9,8 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		public CubeTypes type = CubeTypes.Shrinking;
-		[SerializeField] float shrinkStep;
-		[SerializeField] float timeStep;
+		[SerializeField] float shrinkStep = 0f;
+		[SerializeField] float timeStep = 0f;
 
 		public event Action onListShift;
 		public event Action onRecordStart;

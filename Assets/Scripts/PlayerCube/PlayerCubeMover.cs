@@ -15,7 +15,7 @@ namespace Qbism.PlayerCube
 		public Transform right = null;
 		[SerializeField] int turnStep = 18;
 		[SerializeField] float timeStep = 0.01f;
-		[SerializeField] AudioClip landClip;
+		[SerializeField] AudioClip landClip = null;
 
 
 		//Cache
@@ -43,19 +43,19 @@ namespace Qbism.PlayerCube
 			UpdateCenterPosition();
 		}
 
-		public void HandleSwipeInput(Transform rotateAroundAxis, Vector3 direction)
+		public void HandleSwipeInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			if (!input) return;
-			StartCoroutine(Move(rotateAroundAxis, direction));
+			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
 
-		public void HandleKeyInput(Transform side, Vector3 turnAxis)
+		public void HandleKeyInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			if (!input) return;
-			StartCoroutine(Move(side, turnAxis));
+			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
 
-		private IEnumerator Move(Transform side, Vector3 turnAxis)
+		private IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			var cubeToShrink = FetchGridPos();
 
