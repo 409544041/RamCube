@@ -30,7 +30,7 @@ namespace Qbism.PlayerCube
 		public void RoundPosition()
 		{
 			transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
-				0.5f, Mathf.RoundToInt(transform.position.z));
+				Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z));
 
 			Quaternion rotation = Quaternion.Euler(Mathf.RoundToInt(transform.rotation.x),
 				Mathf.RoundToInt(transform.rotation.y), Mathf.RoundToInt(transform.rotation.z));
