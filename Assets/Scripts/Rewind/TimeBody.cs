@@ -19,7 +19,7 @@ namespace Qbism.Rewind
 		PlayerCubeMover mover;
 
 		public Dictionary<int, List<PointInTime>> listDictionary = new Dictionary<int, List<PointInTime>>();
-		public List<Vector2Int> firstPosList = new List<Vector2Int>();
+		public List<Vector2Int> firstPosList { get; set; } = new List<Vector2Int>();
 
 		private void Awake() 
 		{

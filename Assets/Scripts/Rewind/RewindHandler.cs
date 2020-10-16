@@ -15,7 +15,7 @@ namespace Qbism.Rewind
 		TimeBody[] timeBodies = null;
 		PlayerCubeMover mover;
 		CubeHandler handler;
-		FloorCube[] floorCubes;
+		List<FloorCube> floorCubes = new List<FloorCube>();
 
 		//States
 		int timesRewindUsed = 0;
@@ -27,9 +27,15 @@ namespace Qbism.Rewind
 			{
 				timebody.rewindAmount = rewindsAmount;
 			}
+
 			mover = FindObjectOfType<PlayerCubeMover>();
 			handler = GetComponent<CubeHandler>();
-			floorCubes = FindObjectsOfType<FloorCube>();
+
+			FloorCube[] floorCubesAtStart = FindObjectsOfType<FloorCube>();
+			foreach (FloorCube cube in floorCubesAtStart)
+			{
+				floorCubes.Add(cube);
+			}
 		}
 
 		private void OnEnable() 
@@ -39,7 +45,9 @@ namespace Qbism.Rewind
 				mover.onInitialRecord += AddInitialPlayerRecording;
 				mover.onRecordStart += StartRecordingPlayer;
 				mover.onRecordStart += ResetTimesRewinded;
+				mover.onCheckForNewFloor += CheckForNewFloor;
 			} 
+
 			if(handler != null)
 			{
 				handler.onRecordStop += StopRecordingPlayer;
@@ -124,6 +132,22 @@ namespace Qbism.Rewind
 			}
 		}
 
+		private void CheckForNewFloor()
+		{
+			FloorCube[] floorCubesAtCheck = FindObjectsOfType<FloorCube>();
+			foreach (FloorCube cube in floorCubesAtCheck)
+			{
+				if(!floorCubes.Contains(cube))
+				{
+					floorCubes.Add(cube);
+					cube.onListShift += ShiftLists;
+					cube.onInitialRecord += AddInitialCubeRecording;
+					cube.onRecordStart += StartRecordingCubes;
+					cube.onRecordStop += StopRecordingCubes;
+				}
+			}
+		}
+
 		private void ResetTimesRewinded()
 		{
 			timesRewindUsed = 0;
@@ -136,6 +160,7 @@ namespace Qbism.Rewind
 				mover.onInitialRecord -= AddInitialPlayerRecording;
 				mover.onRecordStart -= StartRecordingPlayer;
 				mover.onRecordStart -= ResetTimesRewinded;
+				mover.onCheckForNewFloor += CheckForNewFloor;
 			} 
 
 			if (handler != null)

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.MoveableCubes;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
 {
-	public class FeedForwardCube : MonoBehaviour
+	public class FeedForwardCube : MonoBehaviour, IActiveCube
 	{
 
 		//States

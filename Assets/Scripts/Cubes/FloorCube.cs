@@ -9,8 +9,8 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		public CubeTypes type = CubeTypes.Shrinking;
-		[SerializeField] float shrinkStep = 0f;
-		[SerializeField] float timeStep = 0f;
+		public float shrinkStep = 0f;
+		public float timeStep = 0f;
 
 		public event Action onListShift;
 		public event Action onRecordStart;
@@ -30,7 +30,7 @@ namespace Qbism.Cubes
 
 		private void Update() 
 		{
-			DisableVisuals();
+			CheckForVisualDisabling();
 		}
 
 		public void StartShrinking()
@@ -58,7 +58,7 @@ namespace Qbism.Cubes
 			onRecordStop();
 		}
 
-		private void DisableVisuals()
+		private void CheckForVisualDisabling()
 		{
 			if(type != CubeTypes.Shrinking) return;
 

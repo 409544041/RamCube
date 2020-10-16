@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
 using UnityEngine;
 
@@ -9,15 +10,17 @@ namespace Qbism.Cubes
 	public class CubeHandler : MonoBehaviour
 	{
 		//Cache
-		FeedForwardCube[] ffCubes;
-		PlayerCubeFeedForward cubeFF;
-		PlayerCubeMover mover;
+		FeedForwardCube[] ffCubes = null;
+		PlayerCubeFeedForward cubeFF = null;
+		PlayerCubeMover mover = null;
+		MoveableCube[] moveableCubes = null;
 
 		//States
 		public FloorCube currentCube { get; set; } = null;
 		
-		public Dictionary<Vector2Int, FloorCube> floorCubeGrid = new Dictionary<Vector2Int, FloorCube>();
-
+		public Dictionary<Vector2Int, FloorCube> floorCubeDic = 
+			new Dictionary<Vector2Int, FloorCube>();
+		
 		public event Action onLand;
 		public event Action onRecordStop;
 		public event Action onFloorRecord;
@@ -27,23 +30,39 @@ namespace Qbism.Cubes
 			mover = FindObjectOfType<PlayerCubeMover>();
 			ffCubes = FindObjectsOfType<FeedForwardCube>();
 			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
-			LoadDictionary();
+			moveableCubes = FindObjectsOfType<MoveableCube>();
+
+			LoadFloorCubeDictionary();
 		}
 
 		private void OnEnable() 
 		{
-			if (mover != null) mover.onFloorCheck += CheckFloorType;
-			if (mover != null) mover.onCubeShrink += ShrinkCube;
+			if (mover != null)
+			{
+				mover.onFloorCheck += CheckFloorType;
+				mover.onCubeShrink += ShrinkCube;
+			} 
+
 			if (cubeFF != null)
 			{
-				cubeFF.onKeyCheck += CheckIfContainsKey;
+				cubeFF.onKeyCheck += CheckFloorCubeDicKey;
 				cubeFF.onShrunkCheck += FetchShrunkStatus;
 			} 
+
 			if (ffCubes != null)
 			{
 				foreach (FeedForwardCube ffCube in ffCubes)
 				{
 					ffCube.onFeedForwardFloorCheck += CheckFloorTypeForFF;
+				}
+			}
+
+			if (moveableCubes != null)
+			{
+				foreach (MoveableCube cube in moveableCubes)
+				{
+					cube.onFloorKeyCheck += CheckFloorCubeDicKey;
+					cube.onComponentAdd += onComponentAdd;
 				}
 			}
 		}
@@ -53,22 +72,22 @@ namespace Qbism.Cubes
 			currentCube = FetchCube(mover.FetchGridPos());
 		}
 
-		private void LoadDictionary()
+		private void LoadFloorCubeDictionary()
 		{
-			var cubes = FindObjectsOfType<FloorCube>();
+			FloorCube[] cubes = FindObjectsOfType<FloorCube>();
 			foreach (FloorCube cube in cubes)
 			{
-				if (floorCubeGrid.ContainsKey(cube.FetchGridPos()))
-					print("Overlapping tile " + cube);
-				else floorCubeGrid.Add(cube.FetchGridPos(), cube);
+				if (floorCubeDic.ContainsKey(cube.FetchGridPos()))
+					print("Overlapping cube " + cube);
+				else floorCubeDic.Add(cube.FetchGridPos(), cube);
 			}
 		}
 
 		public void ShrinkCube(Vector2Int cubeToShrink)
 		{
-			if (floorCubeGrid[cubeToShrink].FetchType() == CubeTypes.Shrinking)
+			if (floorCubeDic[cubeToShrink].FetchType() == CubeTypes.Shrinking)
 			{
-				floorCubeGrid[cubeToShrink].StartShrinking();
+				floorCubeDic[cubeToShrink].StartShrinking();
 			}
 		}
 
@@ -130,15 +149,30 @@ namespace Qbism.Cubes
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 		}
 
-		public bool CheckIfContainsKey(Vector2Int cubePos)
+		private bool CheckFloorCubeDicKey(Vector2Int cubePos)
 		{
-			if(floorCubeGrid.ContainsKey(cubePos)) return true;
+			if(floorCubeDic.ContainsKey(cubePos)) return true;
 			else return false;
+		}
+
+		private void onComponentAdd(Vector2Int cubePos, GameObject cube, float shrinkStep, float shrinkTimeStep)
+		{
+			FloorCube newFloor = cube.AddComponent<FloorCube>();
+			FloorCube existingFloor = FindObjectOfType<FloorCube>();
+			newFloor.shrinkStep = shrinkStep;
+			newFloor.timeStep = shrinkTimeStep;
+
+			AddToDictionary(cubePos, newFloor);
+		}
+
+		private void AddToDictionary(Vector2Int cubePos, FloorCube cube)
+		{
+			floorCubeDic.Add(cubePos, cube);
 		}
 
 		public FloorCube FetchCube(Vector2Int cubePos)
 		{
-			return floorCubeGrid[cubePos];
+			return floorCubeDic[cubePos];
 		}
 
 		public bool FetchShrunkStatus(Vector2Int cubePos)
@@ -150,18 +184,32 @@ namespace Qbism.Cubes
 
 		private void OnDisable()
 		{
-			if (mover != null) mover.onFloorCheck -= CheckFloorType;
-			if (mover != null) mover.onCubeShrink -= ShrinkCube;
+			if (mover != null)
+			{
+				mover.onFloorCheck -= CheckFloorType;
+				mover.onCubeShrink -= ShrinkCube;
+			}
+
 			if (cubeFF != null)
 			{
-				cubeFF.onKeyCheck -= CheckIfContainsKey;
+				cubeFF.onKeyCheck -= CheckFloorCubeDicKey;
 				cubeFF.onShrunkCheck -= FetchShrunkStatus;
 			}
+
 			if (ffCubes != null)
 			{
 				foreach (FeedForwardCube ffCube in ffCubes)
 				{
 					ffCube.onFeedForwardFloorCheck -= CheckFloorTypeForFF;
+				}
+			}
+
+			if (moveableCubes != null)
+			{
+				foreach (MoveableCube cube in moveableCubes)
+				{
+					cube.onFloorKeyCheck -= CheckFloorCubeDicKey;
+					cube.onComponentAdd -= onComponentAdd;
 				}
 			}
 		}
