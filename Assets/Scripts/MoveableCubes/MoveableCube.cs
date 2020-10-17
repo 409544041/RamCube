@@ -34,6 +34,7 @@ namespace Qbism.MoveableCubes
 
 		public event Action<Vector2Int, GameObject, float, float> onComponentAdd;
 		public event Action<Vector2Int> onDictionaryRemove;
+		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int> onFloorCheck;
 
 		private void Start()
 		{
@@ -66,14 +67,12 @@ namespace Qbism.MoveableCubes
 				RoundPosition();
 				UpdateCenterPosition();
 
-				Vector2Int newPosAhead = new Vector2Int(0, 0);
+				if (side == up) posAhead = posAhead + Vector2Int.up;
+				else if (side == down) posAhead = posAhead + Vector2Int.down;
+				else if (side == left) posAhead = posAhead + Vector2Int.left;
+				else if (side == right) posAhead = posAhead + Vector2Int.right;
 
-				if (side == up) newPosAhead = posAhead + Vector2Int.up;
-				else if (side == down) newPosAhead = posAhead + Vector2Int.down;
-				else if (side == left) newPosAhead = posAhead + Vector2Int.left;
-				else if (side == right) newPosAhead = posAhead + Vector2Int.right;
-				
-				InitiateMove(side, turnAxis, newPosAhead);
+				onFloorCheck(side, turnAxis, posAhead, this, FetchGridPos());
 			}
 
 			else if(!onFloorKeyCheck(posAhead))

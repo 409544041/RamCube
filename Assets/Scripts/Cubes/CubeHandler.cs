@@ -62,7 +62,8 @@ namespace Qbism.Cubes
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onFloorKeyCheck += CheckFloorCubeDicKey;
-					cube.onComponentAdd += onComponentAdd;
+					cube.onComponentAdd += AddComponent;
+					cube.onFloorCheck += CheckFloorTypeForMoveable;
 				}
 			}
 		}
@@ -141,12 +142,28 @@ namespace Qbism.Cubes
 
 		private void CheckFloorTypeForFF(Vector2Int cubePos, GameObject cube)
 		{
-			var currentCube = FetchCube(cubePos);
+			FloorCube currentCube = FetchCube(cubePos);
 
 			if(currentCube.FetchType() == CubeTypes.Boosting ||
 				currentCube.FetchType() == CubeTypes.Flipping ||
 				currentCube.FetchType() == CubeTypes.Turning)
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+		}
+
+		private void CheckFloorTypeForMoveable(Transform side, Vector3 turnAxis, 
+			Vector2Int posAhead, MoveableCube cube, Vector2Int cubePos)
+		{
+			FloorCube currentCube = FetchCube(cubePos);
+
+			if (currentCube.FetchType() == CubeTypes.Boosting ||
+				currentCube.FetchType() == CubeTypes.Flipping ||
+				currentCube.FetchType() == CubeTypes.Turning)
+				currentCube.GetComponent<ICubeInfluencer>().
+				PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject);
+
+			else if(currentCube.FetchType() == CubeTypes.Shrinking ||
+				currentCube.FetchType() == CubeTypes.Static)
+				cube.InitiateMove(side, turnAxis, posAhead);
 		}
 
 		private bool CheckFloorCubeDicKey(Vector2Int cubePos)
@@ -155,7 +172,7 @@ namespace Qbism.Cubes
 			else return false;
 		}
 
-		private void onComponentAdd(Vector2Int cubePos, GameObject cube, float shrinkStep, float shrinkTimeStep)
+		private void AddComponent(Vector2Int cubePos, GameObject cube, float shrinkStep, float shrinkTimeStep)
 		{
 			FloorCube newFloor = cube.AddComponent<FloorCube>();
 			FloorCube existingFloor = FindObjectOfType<FloorCube>();
@@ -209,7 +226,8 @@ namespace Qbism.Cubes
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onFloorKeyCheck -= CheckFloorCubeDicKey;
-					cube.onComponentAdd -= onComponentAdd;
+					cube.onComponentAdd -= AddComponent;
+					cube.onFloorCheck -= CheckFloorTypeForMoveable;
 				}
 			}
 		}

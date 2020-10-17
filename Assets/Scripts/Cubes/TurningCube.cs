@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Qbism.PlayerCube;
+using Qbism.MoveableCubes;
 
 namespace Qbism.Cubes
 {
@@ -38,6 +39,12 @@ namespace Qbism.Cubes
 		{
 			if (cube.GetComponent<PlayerCubeMover>()) StartCoroutine(ExecuteActionOnPlayer(cube));
 			else if (cube.GetComponent<FeedForwardCube>()) StartCoroutine(ExecuteActionOnFF(cube));
+		}
+
+		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, 
+			Vector2Int posAhead, GameObject cube)
+		{
+			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube));
 		}
 
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
@@ -76,6 +83,84 @@ namespace Qbism.Cubes
 			}
 
 			ff.RoundPosition();
+		}
+
+		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 movingTurnAxis,
+		Vector2Int posAhead, GameObject cube)
+		{
+			var moveable = cube.GetComponent<MoveableCube>();
+			var cubePos = moveable.FetchGridPos();
+
+			var axis = transform.TransformDirection(turnAxis);
+
+			onTurnEvent.Invoke();
+
+			for (int i = 0; i < (90 / turnStep); i++)
+			{
+				cube.transform.Rotate(axis, turnStep, Space.World);
+				yield return new WaitForSeconds(timeStep);
+			}
+
+			moveable.RoundPosition();
+			moveable.UpdateCenterPosition();
+
+			if(isLeftTurning)
+			{
+				if (side == moveable.up)
+				{
+					side = moveable.left;
+					movingTurnAxis = Vector3.forward;
+					posAhead = cubePos + Vector2Int.left;
+				}
+				else if (side == moveable.down)
+				{
+					side = moveable.right;
+					movingTurnAxis = Vector3.back;
+					posAhead = cubePos + Vector2Int.right;
+				}
+				else if (side == moveable.left)
+				{
+					side = moveable.down;
+					movingTurnAxis = Vector3.left;
+					posAhead = cubePos + Vector2Int.down;
+				}
+				else if (side == moveable.right)
+				{
+					side = moveable.up;
+					movingTurnAxis = Vector3.right;
+					posAhead = cubePos + Vector2Int.up;
+				}
+			}
+			else
+			{
+				if (side == moveable.up)
+				{
+					side = moveable.right;
+					movingTurnAxis = Vector3.back;
+					posAhead = cubePos + Vector2Int.right;
+					print("making it here");
+				}
+				else if (side == moveable.down)
+				{
+					side = moveable.left;
+					movingTurnAxis = Vector3.forward;
+					posAhead = cubePos + Vector2Int.left;
+				}
+				else if (side == moveable.left)
+				{
+					side = moveable.up;
+					movingTurnAxis = Vector3.right;
+					posAhead = cubePos + Vector2Int.up;
+				}
+				else if (side == moveable.right)
+				{
+					side = moveable.down;
+					movingTurnAxis = Vector3.left;
+					posAhead = cubePos + Vector2Int.down;
+				}
+			}
+
+			moveable.InitiateMove(side, movingTurnAxis, posAhead);
 		}
 	}
 }
