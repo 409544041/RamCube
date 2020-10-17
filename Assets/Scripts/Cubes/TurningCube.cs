@@ -42,9 +42,9 @@ namespace Qbism.Cubes
 		}
 
 		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, GameObject cube)
+			Vector2Int posAhead, GameObject cube, FloorCube prevCube)
 		{
-			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube));
+			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, prevCube));
 		}
 
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
@@ -86,7 +86,7 @@ namespace Qbism.Cubes
 		}
 
 		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 movingTurnAxis,
-		Vector2Int posAhead, GameObject cube)
+		Vector2Int posAhead, GameObject cube, FloorCube prevCube)
 		{
 			var moveable = cube.GetComponent<MoveableCube>();
 			var cubePos = moveable.FetchGridPos();
@@ -160,7 +160,8 @@ namespace Qbism.Cubes
 				}
 			}
 
-			moveable.InitiateMove(side, movingTurnAxis, posAhead);
+			if (prevCube.FetchType() != CubeTypes.Boosting)
+				moveable.InitiateMove(side, movingTurnAxis, posAhead);
 		}
 	}
 }

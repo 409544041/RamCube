@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,14 +18,26 @@ namespace Qbism.Cubes
 
 		public void PrepareAction(GameObject cube)
 		{
-			GameObject spawnedCollider = Instantiate(boostCollider,
-				colliderSpawnPos.position, transform.localRotation);
-
-			spawnedCollider.transform.parent = cube.transform;
-			spawnedCollider.GetComponent<Collider>().enabled = true;
+			CreateSpawnCollider(cube);
 
 			if (cube.GetComponent<PlayerCubeMover>()) StartCoroutine(ExecuteActionOnPlayer(cube));
 			else if (cube.GetComponent<FeedForwardCube>()) StartCoroutine(ExecuteActionOnFF(cube));
+		}
+
+		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, 
+			Vector2Int posAhead, GameObject cube, FloorCube prevCube)
+		{
+			CreateSpawnCollider(cube);
+			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, prevCube));
+		}
+
+		private void CreateSpawnCollider(GameObject cube)
+		{
+			GameObject spawnedCollider = Instantiate(boostCollider,
+							colliderSpawnPos.position, transform.localRotation);
+
+			spawnedCollider.transform.parent = cube.transform;
+			spawnedCollider.GetComponent<Collider>().enabled = true;
 		}
 
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
@@ -47,7 +60,6 @@ namespace Qbism.Cubes
 			mover.RoundPosition();
 			mover.UpdateCenterPosition();
 
-			mover.isBoosting = false;
 			cube.GetComponent<Rigidbody>().isKinematic = false;
 
 			mover.CheckFloorInNewPos();
@@ -75,14 +87,53 @@ namespace Qbism.Cubes
 			}
 		}
 
-		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead, GameObject cube)
+		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, 
+			Vector2Int posAhead, GameObject cube, FloorCube prevCube)
 		{
-			throw new System.NotImplementedException();
-		}
+			var moveable = cube.GetComponent<MoveableCube>();
+			Vector2Int launchPos = moveable.FetchGridPos();
+			
+			moveable.isBoosting = true;
 
-		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead, GameObject cube)
-		{
-			throw new System.NotImplementedException();
+			while (moveable.isBoosting)
+			{
+				moveable.transform.position +=
+					transform.TransformDirection(Vector3.forward) * boostSpeed * Time.deltaTime;
+				yield return null;
+			}
+			moveable.RoundPosition();
+			moveable.UpdateCenterPosition();
+
+			Vector2Int cubePos = moveable.FetchGridPos();
+
+			MoveableCubeHandler moveHandler = FindObjectOfType<MoveableCubeHandler>();
+			
+			if(moveHandler.CheckDeltaY(cubePos, launchPos) > 0)
+			{
+				side = moveable.up;
+				turnAxis = Vector3.right;
+				posAhead = cubePos + Vector2Int.up;
+			}
+			else if(moveHandler.CheckDeltaY(cubePos, launchPos) < 0)
+			{
+				side = moveable.down;
+				turnAxis = Vector3.left;
+				posAhead = cubePos + Vector2Int.down;
+			}
+			else if(moveHandler.CheckDeltaX(cubePos, launchPos) < 0)
+			{
+				side = moveable.left;
+				turnAxis = Vector3.forward;
+				posAhead = cubePos + Vector2Int.left;
+			}
+			else if(moveHandler.CheckDeltaX(cubePos, launchPos) > 0)
+			{
+				side = moveable.right;
+				turnAxis = Vector3.back;
+				posAhead = cubePos + Vector2Int.right;
+			}
+
+			moveable.CheckFloorInNewPos(side, turnAxis, posAhead, moveable, cubePos, launchPos);
 		}
 	}
 }

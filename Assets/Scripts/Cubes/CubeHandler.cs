@@ -145,21 +145,20 @@ namespace Qbism.Cubes
 			FloorCube currentCube = FetchCube(cubePos);
 
 			if(currentCube.FetchType() == CubeTypes.Boosting ||
-				currentCube.FetchType() == CubeTypes.Flipping ||
 				currentCube.FetchType() == CubeTypes.Turning)
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 		}
 
 		private void CheckFloorTypeForMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, MoveableCube cube, Vector2Int cubePos)
+			Vector2Int posAhead, MoveableCube cube, Vector2Int cubePos, Vector2Int prevPos)
 		{
 			FloorCube currentCube = FetchCube(cubePos);
+			FloorCube prevCube = FetchCube(prevPos);
 
 			if (currentCube.FetchType() == CubeTypes.Boosting ||
-				currentCube.FetchType() == CubeTypes.Flipping ||
-				currentCube.FetchType() == CubeTypes.Turning)
+				(currentCube.FetchType() == CubeTypes.Turning))
 				currentCube.GetComponent<ICubeInfluencer>().
-				PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject);
+				PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, prevCube);
 
 			else if(currentCube.FetchType() == CubeTypes.Shrinking ||
 				currentCube.FetchType() == CubeTypes.Static)

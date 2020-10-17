@@ -91,14 +91,14 @@ namespace Qbism.MoveableCubes
 			if (cube.canMove) cube.InitiateMove(side, turnAxis, posAhead);
 		}
 
-		private int CheckDeltaX(Vector2Int cubePos, Vector2Int playerPos)
+		public int CheckDeltaX(Vector2Int posA, Vector2Int posB)
 		{
-			return cubePos.x - playerPos.x;
+			return posA.x - posB.x;
 		}
 
-		private int CheckDeltaY(Vector2Int cubePos, Vector2Int playerPos)
+		public int CheckDeltaY(Vector2Int posA, Vector2Int posB)
 		{
-			return cubePos.y - playerPos.y;
+			return posA.y - posB.y;
 		}
 
 		public bool CheckMoveableCubeDicKey(Vector2Int cubePos)

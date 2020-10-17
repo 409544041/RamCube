@@ -7,7 +7,6 @@ namespace Qbism.MoveableCubes
 	public interface IActiveCube 
 	{
 		void RoundPosition();
-		void CheckFloorInNewPos();
 		Vector2Int FetchGridPos();
 	}
 }

@@ -24,7 +24,8 @@ namespace Qbism.MoveableCubes
 		//States
 		public bool canMove { get; set;} = true;
 		public bool isMoving { get; set;} = false;
-		private float yPos = .5f;
+		private float yPos = 1f;
+		public bool isBoosting { get; set; } = false;
 
 		public delegate bool KeyCheckDelegate(Vector3Int pos);
 		public KeyCheckDelegate onWallKeyCheck;
@@ -34,7 +35,7 @@ namespace Qbism.MoveableCubes
 
 		public event Action<Vector2Int, GameObject, float, float> onComponentAdd;
 		public event Action<Vector2Int> onDictionaryRemove;
-		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int> onFloorCheck;
+		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int> onFloorCheck;
 
 		private void Start()
 		{
@@ -55,6 +56,7 @@ namespace Qbism.MoveableCubes
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			isMoving = true;
+			Vector2Int prevPos = FetchGridPos();
 
 			if(onFloorKeyCheck(posAhead))
 			{
@@ -72,7 +74,7 @@ namespace Qbism.MoveableCubes
 				else if (side == left) posAhead = posAhead + Vector2Int.left;
 				else if (side == right) posAhead = posAhead + Vector2Int.right;
 
-				onFloorCheck(side, turnAxis, posAhead, this, FetchGridPos());
+				CheckFloorInNewPos(side, turnAxis, posAhead, this, FetchGridPos(), prevPos);
 			}
 
 			else if(!onFloorKeyCheck(posAhead))
@@ -105,9 +107,10 @@ namespace Qbism.MoveableCubes
 			center.position = transform.position;
 		}
 
-		public void CheckFloorInNewPos()
+		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis,
+			Vector2Int posAhead, MoveableCube cube, Vector2Int cubePos, Vector2Int prevPos)
 		{
-			throw new System.NotImplementedException();
+			onFloorCheck(side, turnAxis, posAhead, this, FetchGridPos(), prevPos);
 		}
 
 		public Vector2Int FetchGridPos()
