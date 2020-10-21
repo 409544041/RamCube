@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Qbism.MoveableCubes
 {
-	public class MoveableCube : MonoBehaviour, IActiveCube, IMovingCube
+	public class MoveableCube : MonoBehaviour, IActiveCube
 	{
 		//Config parameters
 		[SerializeField] CubeTypes type = CubeTypes.Shrinking;
@@ -35,7 +35,9 @@ namespace Qbism.MoveableCubes
 
 		public event Action<Vector2Int, GameObject, float, float> onComponentAdd;
 		public event Action<Vector2Int> onDictionaryRemove;
+		public event Action<Vector2Int, MoveableCube> onDictionaryAdd;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int> onFloorCheck;
+		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialRecord;
 
 		private void Start()
 		{
@@ -43,20 +45,24 @@ namespace Qbism.MoveableCubes
 			yPos = transform.position.y;
 		}
 
-		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead)
+		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
 		{
 			if (CheckForWallAhead(posAhead))
 			{
 				isMoving = false;
+				onDictionaryRemove(originPos);
+				onDictionaryAdd(FetchGridPos(), this);
 				return;
 			}
-			StartCoroutine(Move(side, turnAxis, posAhead));
+
+			StartCoroutine(Move(side, turnAxis, posAhead, originPos));
 		}
 
-		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
+		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
 		{
-			isMoving = true;
-			Vector2Int prevPos = FetchGridPos();
+			onInitialRecord(this, transform.position, transform.rotation, transform.localScale);
+			
+			isMoving = true;			
 
 			if(onFloorKeyCheck(posAhead))
 			{
@@ -74,7 +80,7 @@ namespace Qbism.MoveableCubes
 				else if (side == left) posAhead = posAhead + Vector2Int.left;
 				else if (side == right) posAhead = posAhead + Vector2Int.right;
 
-				CheckFloorInNewPos(side, turnAxis, posAhead, this, FetchGridPos(), prevPos);
+				CheckFloorInNewPos(side, turnAxis, posAhead, this, FetchGridPos(), originPos);
 			}
 
 			else if(!onFloorKeyCheck(posAhead))
@@ -89,8 +95,7 @@ namespace Qbism.MoveableCubes
 				isMoving = false;
 
 				onComponentAdd(posAhead, this.gameObject, shrinkStep, shrinkTimeStep);
-				onDictionaryRemove(FetchGridPos());
-
+				onDictionaryRemove(originPos);
 			}
 		}
 
@@ -108,9 +113,9 @@ namespace Qbism.MoveableCubes
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis,
-			Vector2Int posAhead, MoveableCube cube, Vector2Int cubePos, Vector2Int prevPos)
+			Vector2Int posAhead, MoveableCube cube, Vector2Int cubePos, Vector2Int originPos)
 		{
-			onFloorCheck(side, turnAxis, posAhead, this, FetchGridPos(), prevPos);
+			onFloorCheck(side, turnAxis, posAhead, this, FetchGridPos(), originPos);
 		}
 
 		public Vector2Int FetchGridPos()

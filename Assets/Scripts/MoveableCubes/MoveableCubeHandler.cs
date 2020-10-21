@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ namespace Qbism.MoveableCubes
 {
 	public class MoveableCubeHandler : MonoBehaviour
 	{
+		//States
+		public bool isRecording { get; set; }= false;
+
 		//Cache
 		MoveableCube[] moveableCubes = null;
 
@@ -14,6 +18,10 @@ namespace Qbism.MoveableCubes
 
 		public Dictionary<Vector3Int, GameObject> wallCubeDic =
 			new Dictionary<Vector3Int, GameObject>();
+
+		public event Action onRecordStart;
+		public event Action onRecordStop;
+		public event Action<bool> onSetPlayerInput;
 
 		private void Awake() 
 		{
@@ -30,9 +38,16 @@ namespace Qbism.MoveableCubes
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onWallKeyCheck += CheckWallCubeDicKey;
-					cube.onDictionaryRemove += RemoveFromDictionary;
+					cube.onDictionaryRemove += RemoveFromMoveableDic;
+					cube.onDictionaryAdd += AddToMoveableDic;
 				}
 			}
+		}
+
+		private void Update()
+		{
+			CheckForRecording();
+			print(isRecording);
 		}
 
 		private void LoadMoveableCubeDictionary()
@@ -61,11 +76,43 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
+		private void CheckForRecording()
+		{
+			if (moveableCubeDic.Count == 0) return;
+
+			int amountNotMoving = 0;
+			
+			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
+			{
+				var cube = pair.Value;
+				if (cube.isMoving && isRecording == false)
+				{
+					isRecording = true;
+					onRecordStart();
+					return;
+				}
+				else if (!cube.isMoving)
+				{
+					amountNotMoving++;
+				}
+			}
+			print("Amount not moving = " + amountNotMoving);
+			print("Dic count = " + moveableCubeDic.Count);
+
+			if (amountNotMoving == moveableCubeDic.Count && isRecording == true)
+			{
+				isRecording = false;
+				onSetPlayerInput(true);
+				onRecordStop();
+			}
+		}
+
 		public void ActivateMoveableCube(Vector2Int cubePos, Vector3 turnAxis, Vector2Int playerPos)
 		{
 			var cube = FetchMoveableCube(cubePos);
 			Transform side = null;
 			Vector2Int posAhead = new Vector2Int(0, 0);
+			Vector2Int originPos = cubePos;
 
 			if (CheckDeltaY(cubePos, playerPos) > 0)
 			{
@@ -88,7 +135,7 @@ namespace Qbism.MoveableCubes
 				posAhead = cubePos + Vector2Int.right;
 			} 
 
-			if (cube.canMove) cube.InitiateMove(side, turnAxis, posAhead);
+			if (cube.canMove) cube.InitiateMove(side, turnAxis, posAhead, originPos);
 		}
 
 		public int CheckDeltaX(Vector2Int posA, Vector2Int posB)
@@ -118,7 +165,12 @@ namespace Qbism.MoveableCubes
 			return moveableCubeDic[cubePos];
 		}
 
-		private void RemoveFromDictionary(Vector2Int pos)
+		public void AddToMoveableDic(Vector2Int pos, MoveableCube cube)
+		{
+			moveableCubeDic.Add(pos, cube);
+		}
+
+		public void RemoveFromMoveableDic(Vector2Int pos)
 		{
 			moveableCubeDic.Remove(pos);
 		}
@@ -130,7 +182,8 @@ namespace Qbism.MoveableCubes
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onWallKeyCheck -= CheckWallCubeDicKey;
-					cube.onDictionaryRemove -= RemoveFromDictionary;
+					cube.onDictionaryRemove -= RemoveFromMoveableDic;
+					cube.onDictionaryAdd -= AddToMoveableDic;
 				}
 			}
 		}

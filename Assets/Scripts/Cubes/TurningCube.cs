@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Qbism.PlayerCube;
 using Qbism.MoveableCubes;
+using System;
 
 namespace Qbism.Cubes
 {
@@ -42,9 +43,9 @@ namespace Qbism.Cubes
 		}
 
 		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, GameObject cube, FloorCube prevCube)
+			Vector2Int posAhead, GameObject cube, Vector2Int originPos)
 		{
-			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, prevCube));
+			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, originPos));
 		}
 
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
@@ -86,7 +87,7 @@ namespace Qbism.Cubes
 		}
 
 		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 movingTurnAxis,
-		Vector2Int posAhead, GameObject cube, FloorCube prevCube)
+		Vector2Int posAhead, GameObject cube, Vector2Int originPos)
 		{
 			var moveable = cube.GetComponent<MoveableCube>();
 			var cubePos = moveable.FetchGridPos();
@@ -138,7 +139,6 @@ namespace Qbism.Cubes
 					side = moveable.right;
 					movingTurnAxis = Vector3.back;
 					posAhead = cubePos + Vector2Int.right;
-					print("making it here");
 				}
 				else if (side == moveable.down)
 				{
@@ -160,8 +160,10 @@ namespace Qbism.Cubes
 				}
 			}
 
-			if (prevCube.FetchType() != CubeTypes.Boosting)
-				moveable.InitiateMove(side, movingTurnAxis, posAhead);
+			if (cube.GetComponent<FloorCube>().FetchType() != CubeTypes.Boosting)
+			{
+				moveable.InitiateMove(side, movingTurnAxis, posAhead, originPos);
+			}				
 		}
 	}
 }

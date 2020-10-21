@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Qbism.PlayerCube
 {
-	public class PlayerCubeMover : MonoBehaviour, IActiveCube, IMovingCube
+	public class PlayerCubeMover : MonoBehaviour, IActiveCube
 	{
 		//Config parameters
 		[SerializeField] Transform center = null;
@@ -34,13 +34,19 @@ namespace Qbism.PlayerCube
 		public event Action onRecordStart;
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action<Vector2Int> onActivateMoveableCube;
-		public event Action onCheckForNewFloor;
+		public event Action onCheckForNewFloorCubes;
+		public event Action onMoveableListShift;
 
 		private void Awake()
 		{
 			rb = GetComponent<Rigidbody>();
 			source = GetComponentInChildren<AudioSource>();
 			moveHandler = FindObjectOfType<MoveableCubeHandler>();
+		}
+
+		private void OnEnable() 
+		{
+			if(moveHandler != null) moveHandler.onSetPlayerInput += SetPlayerInput;
 		}
 
 		private void Start()
@@ -62,7 +68,7 @@ namespace Qbism.PlayerCube
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			onCheckForNewFloor();
+			onCheckForNewFloorCubes();
 			var cubeToShrink = FetchGridPos();
 
 			onInitialRecord(transform.position, transform.rotation, transform.localScale);
@@ -101,7 +107,10 @@ namespace Qbism.PlayerCube
 		private void CheckPosAhead(Vector2Int posAhead, Vector3 turnAxis)
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
+			{
+				onMoveableListShift();
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, FetchGridPos());
+			}
 		}
 
 		public void CheckFloorInNewPos()
@@ -122,9 +131,19 @@ namespace Qbism.PlayerCube
 			return roundedPos;
 		}
 
+		private void SetPlayerInput(bool value)
+		{
+			input = value;
+		}
+
 		public void PlayLandClip()
 		{
 			AudioSource.PlayClipAtPoint(landClip, Camera.main.transform.position, .05f);
+		}
+
+		private void OnDisable()
+		{
+			if (moveHandler != null) moveHandler.onSetPlayerInput -= SetPlayerInput;
 		}
 	}
 }

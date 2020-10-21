@@ -14,6 +14,7 @@ namespace Qbism.Cubes
 		PlayerCubeFeedForward cubeFF = null;
 		PlayerCubeMover mover = null;
 		MoveableCube[] moveableCubes = null;
+		MoveableCubeHandler moveHandler;
 
 		//States
 		public FloorCube currentCube { get; set; } = null;
@@ -31,6 +32,7 @@ namespace Qbism.Cubes
 			ffCubes = FindObjectsOfType<FeedForwardCube>();
 			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();
+			moveHandler = GetComponent<MoveableCubeHandler>();
 
 			LoadFloorCubeDictionary();
 		}
@@ -136,7 +138,7 @@ namespace Qbism.Cubes
 					cubeFF.ShowFeedForward();
 				} 
 
-				mover.input = true;
+				if(moveHandler.isRecording == false) mover.input = true;
 			}
 		}
 
@@ -150,19 +152,18 @@ namespace Qbism.Cubes
 		}
 
 		private void CheckFloorTypeForMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, MoveableCube cube, Vector2Int cubePos, Vector2Int prevPos)
+			Vector2Int posAhead, MoveableCube cube, Vector2Int cubePos, Vector2Int originPos)
 		{
 			FloorCube currentCube = FetchCube(cubePos);
-			FloorCube prevCube = FetchCube(prevPos);
 
 			if (currentCube.FetchType() == CubeTypes.Boosting ||
 				(currentCube.FetchType() == CubeTypes.Turning))
 				currentCube.GetComponent<ICubeInfluencer>().
-				PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, prevCube);
+				PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, originPos);
 
 			else if(currentCube.FetchType() == CubeTypes.Shrinking ||
 				currentCube.FetchType() == CubeTypes.Static)
-				cube.InitiateMove(side, turnAxis, posAhead);
+				cube.InitiateMove(side, turnAxis, posAhead, originPos);
 		}
 
 		private bool CheckFloorCubeDicKey(Vector2Int cubePos)
@@ -174,9 +175,9 @@ namespace Qbism.Cubes
 		private void AddComponent(Vector2Int cubePos, GameObject cube, float shrinkStep, float shrinkTimeStep)
 		{
 			FloorCube newFloor = cube.AddComponent<FloorCube>();
-			FloorCube existingFloor = FindObjectOfType<FloorCube>();
 			newFloor.shrinkStep = shrinkStep;
 			newFloor.timeStep = shrinkTimeStep;
+			newFloor.tag = "Environment";
 
 			AddToDictionary(cubePos, newFloor);
 		}

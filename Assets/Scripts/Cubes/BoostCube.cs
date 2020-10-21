@@ -25,10 +25,10 @@ namespace Qbism.Cubes
 		}
 
 		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, GameObject cube, FloorCube prevCube)
+			Vector2Int posAhead, GameObject cube, Vector2Int originPos)
 		{
 			CreateSpawnCollider(cube);
-			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, prevCube));
+			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, originPos));
 		}
 
 		private void CreateSpawnCollider(GameObject cube)
@@ -88,7 +88,7 @@ namespace Qbism.Cubes
 		}
 
 		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, GameObject cube, FloorCube prevCube)
+			Vector2Int posAhead, GameObject cube, Vector2Int originPos)
 		{
 			var moveable = cube.GetComponent<MoveableCube>();
 			Vector2Int launchPos = moveable.FetchGridPos();
@@ -133,7 +133,7 @@ namespace Qbism.Cubes
 				posAhead = cubePos + Vector2Int.right;
 			}
 
-			moveable.CheckFloorInNewPos(side, turnAxis, posAhead, moveable, cubePos, launchPos);
+			moveable.CheckFloorInNewPos(side, turnAxis, posAhead, moveable, cubePos, originPos);
 		}
 	}
 }
