@@ -10,7 +10,7 @@ namespace Qbism.Cubes
 	{
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.gameObject.tag == "Environment" || other.gameObject.tag == "Wall")
+			if (other.gameObject.tag == "Environment" || other.gameObject.tag == "Wall" || other.gameObject.tag == "Moveable")
 			{
 				var cubeMover = transform.parent.GetComponent<PlayerCubeMover>();
 				var ffCube = transform.parent.GetComponent<FeedForwardCube>();
