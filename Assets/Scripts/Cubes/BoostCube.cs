@@ -25,10 +25,10 @@ namespace Qbism.Cubes
 		}
 
 		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, GameObject cube, Vector2Int originPos)
+			Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
 			CreateSpawnCollider(cube);
-			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, originPos));
+			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, originPos, prevCube));
 		}
 
 		private void CreateSpawnCollider(GameObject cube)
@@ -88,11 +88,11 @@ namespace Qbism.Cubes
 		}
 
 		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, GameObject cube, Vector2Int originPos)
+			Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
 			var moveable = cube.GetComponent<MoveableCube>();
 			Vector2Int launchPos = moveable.FetchGridPos();
-			
+
 			moveable.isBoosting = true;
 
 			while (moveable.isBoosting)
@@ -107,33 +107,38 @@ namespace Qbism.Cubes
 			Vector2Int cubePos = moveable.FetchGridPos();
 
 			MoveableCubeHandler moveHandler = FindObjectOfType<MoveableCubeHandler>();
-			
-			if(moveHandler.CheckDeltaY(cubePos, launchPos) > 0)
+
+			CalculateSide(ref side, ref turnAxis, ref posAhead, moveable, launchPos, cubePos, moveHandler);
+
+			moveable.CheckFloorInNewPos(side, turnAxis, posAhead, moveable, cubePos, originPos, launchPos);
+		}
+
+		private static void CalculateSide(ref Transform side, ref Vector3 turnAxis, ref Vector2Int posAhead, MoveableCube moveable, Vector2Int launchPos, Vector2Int cubePos, MoveableCubeHandler moveHandler)
+		{
+			if (moveHandler.CheckDeltaY(cubePos, launchPos) > 0)
 			{
 				side = moveable.up;
 				turnAxis = Vector3.right;
 				posAhead = cubePos + Vector2Int.up;
 			}
-			else if(moveHandler.CheckDeltaY(cubePos, launchPos) < 0)
+			else if (moveHandler.CheckDeltaY(cubePos, launchPos) < 0)
 			{
 				side = moveable.down;
 				turnAxis = Vector3.left;
 				posAhead = cubePos + Vector2Int.down;
 			}
-			else if(moveHandler.CheckDeltaX(cubePos, launchPos) < 0)
+			else if (moveHandler.CheckDeltaX(cubePos, launchPos) < 0)
 			{
 				side = moveable.left;
 				turnAxis = Vector3.forward;
 				posAhead = cubePos + Vector2Int.left;
 			}
-			else if(moveHandler.CheckDeltaX(cubePos, launchPos) > 0)
+			else if (moveHandler.CheckDeltaX(cubePos, launchPos) > 0)
 			{
 				side = moveable.right;
 				turnAxis = Vector3.back;
 				posAhead = cubePos + Vector2Int.right;
 			}
-
-			moveable.CheckFloorInNewPos(side, turnAxis, posAhead, moveable, cubePos, originPos);
 		}
 	}
 }

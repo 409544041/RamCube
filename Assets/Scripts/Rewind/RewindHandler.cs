@@ -50,7 +50,6 @@ namespace Qbism.Rewind
 				mover.onInitialRecord += AddInitialPlayerRecording;
 				mover.onRecordStart += StartRecordingPlayer;
 				mover.onRecordStart += ResetTimesRewinded;
-				mover.onCheckForNewFloorCubes += CheckForNewFloorCubes;
 				mover.onMoveableListShift += ShiftListsForMoveables;
 			} 
 
@@ -83,6 +82,8 @@ namespace Qbism.Rewind
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onInitialRecord += AddInitialMoveableRecording;
+					cube.onCheckForNewFloorCubes += CheckForNewFloorCubes;
+					cube.onRecordStop += StopRecordingSpecificMoveable;
 				}
 			}
 
@@ -189,6 +190,11 @@ namespace Qbism.Rewind
 			}
 		}
 
+		private void StopRecordingSpecificMoveable(MoveableCube cube)
+		{
+			cube.GetComponent<TimeBody>().isRecording = false;
+		}
+
 		private bool CheckForRewinds()
 		{	
 			bool bodyRewinding = false;
@@ -231,7 +237,6 @@ namespace Qbism.Rewind
 				mover.onInitialRecord -= AddInitialPlayerRecording;
 				mover.onRecordStart -= StartRecordingPlayer;
 				mover.onRecordStart -= ResetTimesRewinded;
-				mover.onCheckForNewFloorCubes -= CheckForNewFloorCubes;
 				mover.onMoveableListShift -= ShiftListsForMoveables;
 			} 
 
@@ -264,6 +269,8 @@ namespace Qbism.Rewind
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onInitialRecord -= AddInitialMoveableRecording;
+					cube.onCheckForNewFloorCubes -= CheckForNewFloorCubes;
+					cube.onRecordStop -= StopRecordingSpecificMoveable;
 				}
 			}
 

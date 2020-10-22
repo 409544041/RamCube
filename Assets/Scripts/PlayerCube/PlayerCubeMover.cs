@@ -34,7 +34,7 @@ namespace Qbism.PlayerCube
 		public event Action onRecordStart;
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action<Vector2Int> onActivateMoveableCube;
-		public event Action onCheckForNewFloorCubes;
+
 		public event Action onMoveableListShift;
 
 		private void Awake()
@@ -68,7 +68,6 @@ namespace Qbism.PlayerCube
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			onCheckForNewFloorCubes();
 			var cubeToShrink = FetchGridPos();
 
 			onInitialRecord(transform.position, transform.rotation, transform.localScale);

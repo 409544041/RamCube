@@ -8,7 +8,7 @@ namespace Qbism.MoveableCubes
 	public class MoveableCubeHandler : MonoBehaviour
 	{
 		//States
-		public bool isRecording { get; set; }= false;
+		public bool isRecording { get; set; } = false;
 
 		//Cache
 		MoveableCube[] moveableCubes = null;
@@ -47,7 +47,6 @@ namespace Qbism.MoveableCubes
 		private void Update()
 		{
 			CheckForRecording();
-			print(isRecording);
 		}
 
 		private void LoadMoveableCubeDictionary()
@@ -78,8 +77,6 @@ namespace Qbism.MoveableCubes
 
 		private void CheckForRecording()
 		{
-			if (moveableCubeDic.Count == 0) return;
-
 			int amountNotMoving = 0;
 			
 			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
@@ -96,8 +93,6 @@ namespace Qbism.MoveableCubes
 					amountNotMoving++;
 				}
 			}
-			print("Amount not moving = " + amountNotMoving);
-			print("Dic count = " + moveableCubeDic.Count);
 
 			if (amountNotMoving == moveableCubeDic.Count && isRecording == true)
 			{

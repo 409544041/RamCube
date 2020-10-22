@@ -151,19 +151,27 @@ namespace Qbism.Cubes
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 		}
 
-		private void CheckFloorTypeForMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, MoveableCube cube, Vector2Int cubePos, Vector2Int originPos)
+		private void CheckFloorTypeForMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead,
+			MoveableCube cube, Vector2Int cubePos, Vector2Int originPos, Vector2Int prevPos)
 		{
-			FloorCube currentCube = FetchCube(cubePos);
+			if(floorCubeDic.ContainsKey(cubePos))
+			{
+				FloorCube currentCube = FetchCube(cubePos);
+				FloorCube prevCube = FetchCube(prevPos);
 
-			if (currentCube.FetchType() == CubeTypes.Boosting ||
-				(currentCube.FetchType() == CubeTypes.Turning))
-				currentCube.GetComponent<ICubeInfluencer>().
-				PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, originPos);
+				if (currentCube.FetchType() == CubeTypes.Boosting ||
+					(currentCube.FetchType() == CubeTypes.Turning))
+					currentCube.GetComponent<ICubeInfluencer>().
+					PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, originPos, prevCube);
 
-			else if(currentCube.FetchType() == CubeTypes.Shrinking ||
-				currentCube.FetchType() == CubeTypes.Static)
-				cube.InitiateMove(side, turnAxis, posAhead, originPos);
+				else if(currentCube.FetchType() == CubeTypes.Shrinking ||
+					currentCube.FetchType() == CubeTypes.Static)
+					cube.InitiateMove(side, turnAxis, posAhead, originPos);
+			}
+			else
+			{
+				cube.InitiateLowering(cubePos, originPos);
+			}
 		}
 
 		private bool CheckFloorCubeDicKey(Vector2Int cubePos)

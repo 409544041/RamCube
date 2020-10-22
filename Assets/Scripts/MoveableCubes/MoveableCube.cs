@@ -19,6 +19,7 @@ namespace Qbism.MoveableCubes
 		public Transform right = null;
 		[SerializeField] int turnStep = 18;
 		[SerializeField] float timeStep = 0.01f;
+		[SerializeField] float lowerStep = 0.5f;
 		[SerializeField] AudioClip landClip = null;
 
 		//States
@@ -36,8 +37,10 @@ namespace Qbism.MoveableCubes
 		public event Action<Vector2Int, GameObject, float, float> onComponentAdd;
 		public event Action<Vector2Int> onDictionaryRemove;
 		public event Action<Vector2Int, MoveableCube> onDictionaryAdd;
-		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int> onFloorCheck;
+		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
 		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialRecord;
+		public event Action<MoveableCube> onRecordStop;
+		public event Action onCheckForNewFloorCubes;
 
 		private void Start()
 		{
@@ -54,11 +57,12 @@ namespace Qbism.MoveableCubes
 				onDictionaryAdd(FetchGridPos(), this);
 				return;
 			}
-
-			StartCoroutine(Move(side, turnAxis, posAhead, originPos));
+			Vector2Int prevPos = FetchGridPos();
+			StartCoroutine(Move(side, turnAxis, posAhead, originPos, prevPos));
 		}
 
-		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
+		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead, 
+			Vector2Int originPos, Vector2Int prevPos)
 		{
 			onInitialRecord(this, transform.position, transform.rotation, transform.localScale);
 			
@@ -80,10 +84,10 @@ namespace Qbism.MoveableCubes
 				else if (side == left) posAhead = posAhead + Vector2Int.left;
 				else if (side == right) posAhead = posAhead + Vector2Int.right;
 
-				CheckFloorInNewPos(side, turnAxis, posAhead, this, FetchGridPos(), originPos);
+				CheckFloorInNewPos(side, turnAxis, posAhead, this, FetchGridPos(), originPos, prevPos);
 			}
 
-			else if(!onFloorKeyCheck(posAhead))
+			else if(!onFloorKeyCheck(posAhead)) //Become floorcube by moving
 			{
 				for (int i = 0; i < (180 / turnStep); i++)
 				{
@@ -96,7 +100,36 @@ namespace Qbism.MoveableCubes
 
 				onComponentAdd(posAhead, this.gameObject, shrinkStep, shrinkTimeStep);
 				onDictionaryRemove(originPos);
+				onCheckForNewFloorCubes();
+				onRecordStop(this);
 			}
+		}
+
+		public void InitiateLowering(Vector2Int cubePos, Vector2Int originPos)
+		{
+			Vector3 targetPos = new Vector3(transform.position.x,
+				transform.position.y - 1, transform.position.z);
+			float step = lowerStep * Time.deltaTime;
+
+			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos, originPos));
+		}
+
+		private IEnumerator BecomeFloorByLowering(Vector3 targetPos, float step, 
+			Vector2Int cubePos, Vector2Int originPos)
+		{
+			while(transform.position.y > targetPos.y)
+			{
+				transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
+				yield return timeStep;
+			}
+
+			RoundPosition();
+			isMoving = false;
+
+			onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep);
+			onDictionaryRemove(originPos);
+			onCheckForNewFloorCubes();
+			onRecordStop(this);
 		}
 
 		private bool CheckForWallAhead(Vector2Int pos)
@@ -112,10 +145,10 @@ namespace Qbism.MoveableCubes
 			center.position = transform.position;
 		}
 
-		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis,
-			Vector2Int posAhead, MoveableCube cube, Vector2Int cubePos, Vector2Int originPos)
+		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead,
+			MoveableCube cube, Vector2Int cubePos, Vector2Int originPos, Vector2Int prevPos)
 		{
-			onFloorCheck(side, turnAxis, posAhead, this, FetchGridPos(), originPos);
+			onFloorCheck(side, turnAxis, posAhead, this, FetchGridPos(), originPos, prevPos);
 		}
 
 		public Vector2Int FetchGridPos()

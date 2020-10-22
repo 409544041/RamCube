@@ -43,9 +43,9 @@ namespace Qbism.Cubes
 		}
 
 		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, GameObject cube, Vector2Int originPos)
+			Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
-			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, originPos));
+			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, originPos, prevCube));
 		}
 
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
@@ -87,7 +87,7 @@ namespace Qbism.Cubes
 		}
 
 		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 movingTurnAxis,
-		Vector2Int posAhead, GameObject cube, Vector2Int originPos)
+		Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
 			var moveable = cube.GetComponent<MoveableCube>();
 			var cubePos = moveable.FetchGridPos();
@@ -104,8 +104,16 @@ namespace Qbism.Cubes
 
 			moveable.RoundPosition();
 			moveable.UpdateCenterPosition();
+			CalculateSide(ref side, ref movingTurnAxis, ref posAhead, moveable, cubePos);
 
-			if(isLeftTurning)
+			if(prevCube.FetchType() != CubeTypes.Boosting)
+				moveable.InitiateMove(side, movingTurnAxis, posAhead, originPos);
+
+		}
+
+		private void CalculateSide(ref Transform side, ref Vector3 movingTurnAxis, ref Vector2Int posAhead, MoveableCube moveable, Vector2Int cubePos)
+		{
+			if (isLeftTurning)
 			{
 				if (side == moveable.up)
 				{
@@ -159,11 +167,6 @@ namespace Qbism.Cubes
 					posAhead = cubePos + Vector2Int.down;
 				}
 			}
-
-			if (cube.GetComponent<FloorCube>().FetchType() != CubeTypes.Boosting)
-			{
-				moveable.InitiateMove(side, movingTurnAxis, posAhead, originPos);
-			}				
 		}
 	}
 }

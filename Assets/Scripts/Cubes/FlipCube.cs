@@ -110,12 +110,12 @@ namespace Qbism.Cubes
 			if (handler != null) handler.onLand -= DisableSeeThrough;
 		}
 
-		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead, GameObject cube, Vector2Int originPos)
+		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead, GameObject cube, Vector2Int originPos)
+		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
 			throw new System.NotImplementedException();
 		}
