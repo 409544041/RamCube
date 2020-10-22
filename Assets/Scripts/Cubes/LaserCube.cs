@@ -15,6 +15,7 @@ namespace Qbism.Cubes
 		[SerializeField] GameObject laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
 		[SerializeField] AudioClip passClip = null, denyClip = null;
+		[SerializeField] LayerMask chosenLayers;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -46,38 +47,46 @@ namespace Qbism.Cubes
 
 		private void FireLaserCast()
 		{
-			if (mover.input || mover.isBoosting)
+			RaycastHit[] hits = SortedRaycasts();	
+
+			if(hits.Length > 0)
 			{
-				RaycastHit[] hits = SortedRaycasts();
+				laserBeam.transform.localScale = new Vector3(1, 1, hits[0].distance);
+				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * hits[0].distance) + 0.5f);
+			}	
+			else
+			{
+				laserBeam.transform.localScale = new Vector3(1, 1, distance);
+				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
+			}
 
-				if (hits.Length == 0) 
+			if (hits.Length == 0 || !mover.input || !mover.isBoosting) return;
+
+			if (hits[0].transform.gameObject.tag == "Player" && 
+				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
 				{
-					isFiring = true;
-					return;
+					source.clip = passClip;
+					onLaserPassEvent.Invoke();
 				}
-				
-				if(!isFiring) return;
-				
 
-				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
-					transform.forward), -1))
-					{
-						isFiring = false;
-						source.clip = passClip;
-						onLaserPassEvent.Invoke();
-					}
+			// else if (hits[0].transform.gameObject.tag != "Player")
+			// {
 
-				else 
-				{
-					StartCoroutine(RestartLevelTransition());
-				}
+			// 	laserBeam.transform.localScale = new Vector3(1, 1, hits[0].distance);
+			// 	laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * hits[0].distance) + 0.5f);
+			// }
+
+			else if (hits[0].transform.gameObject.tag == "Player" &&
+				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), 1))
+			{
+				StartCoroutine(RestartLevelTransition());
 			}
 		}
 
 		private RaycastHit[] SortedRaycasts()
 		{
 			RaycastHit[] hits = Physics.RaycastAll(laserOrigin.position,
-				transform.TransformDirection(Vector3.forward), distance, 1 << 9, QueryTriggerInteraction.Ignore);
+				transform.TransformDirection(Vector3.forward), distance, chosenLayers , QueryTriggerInteraction.Ignore);
 
 			Debug.DrawRay(laserOrigin.position,
 				transform.TransformDirection(Vector3.forward * distance), Color.red, distance);
