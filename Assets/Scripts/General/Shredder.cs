@@ -16,9 +16,7 @@ namespace Qbism.General
 			{
 				other.GetComponent<MeshRenderer>().enabled = false;
 				other.GetComponent<BoxCollider>().enabled = false;
-				//other.GetComponent<Rigidbody>().isKinematic = true;
 			}
-
 		}
 	}
 }
