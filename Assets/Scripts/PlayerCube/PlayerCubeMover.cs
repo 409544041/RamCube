@@ -32,7 +32,6 @@ namespace Qbism.PlayerCube
 		public event Action<Vector2Int, GameObject> onFloorCheck;
 		public event Action onRecordStart;
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
-		public event Action<Vector2Int> onActivateMoveableCube;
 
 		public event Action onMoveableListShift;
 

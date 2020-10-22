@@ -24,7 +24,6 @@ namespace Qbism.Rewind
 
 		public delegate bool RewindCheckDelegate();
 		public RewindCheckDelegate onRewindCheck;
-		public event Action<Vector2Int> onAddToMoveableDic;
 
 		public Dictionary<int, List<PointInTime>> listDictionary = new Dictionary<int, List<PointInTime>>();
 		public List<Vector2Int> firstPosList { get; set; } = new List<Vector2Int>();
