@@ -51,7 +51,6 @@ namespace Qbism.Cubes
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
 			mover.input = false;
-			cube.GetComponent<Rigidbody>().isKinematic = true;
 
 			var axis = transform.TransformDirection(turnAxis);
 
@@ -65,8 +64,6 @@ namespace Qbism.Cubes
 
 			mover.RoundPosition();
 			mover.UpdateCenterPosition();
-
-			cube.GetComponent<Rigidbody>().isKinematic = false;
 
 			mover.CheckFloorInNewPos();
 		}

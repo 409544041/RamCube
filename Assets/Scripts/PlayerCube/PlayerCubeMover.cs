@@ -20,7 +20,6 @@ namespace Qbism.PlayerCube
 
 
 		//Cache
-		Rigidbody rb;
 		AudioSource source;
 		MoveableCubeHandler moveHandler;
 
@@ -39,7 +38,6 @@ namespace Qbism.PlayerCube
 
 		private void Awake()
 		{
-			rb = GetComponent<Rigidbody>();
 			source = GetComponentInChildren<AudioSource>();
 			moveHandler = FindObjectOfType<MoveableCubeHandler>();
 		}
@@ -76,7 +74,6 @@ namespace Qbism.PlayerCube
 			CheckPosAhead(posAhead, turnAxis);
 
 			input = false;
-			rb.isKinematic = true;
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
@@ -88,8 +85,6 @@ namespace Qbism.PlayerCube
 			UpdateCenterPosition();
 
 			onCubeShrink(cubeToShrink);
-
-			rb.isKinematic = false;
 
 			CheckFloorInNewPos();
 		}

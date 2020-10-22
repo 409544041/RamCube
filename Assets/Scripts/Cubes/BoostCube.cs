@@ -45,7 +45,6 @@ namespace Qbism.Cubes
 			var mover = cube.GetComponent<PlayerCubeMover>();
 
 			mover.input = false;
-			cube.GetComponent<Rigidbody>().isKinematic = true;
 			mover.isBoosting = true;
 
 			onBoostEvent.Invoke();
@@ -59,8 +58,6 @@ namespace Qbism.Cubes
 
 			mover.RoundPosition();
 			mover.UpdateCenterPosition();
-
-			cube.GetComponent<Rigidbody>().isKinematic = false;
 
 			mover.CheckFloorInNewPos();
 		}

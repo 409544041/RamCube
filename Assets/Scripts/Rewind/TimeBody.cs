@@ -19,7 +19,6 @@ namespace Qbism.Rewind
 		Vector2Int rewindOriginPos = new Vector2Int(0,0);
 
 		//Cache
-		Rigidbody rb = null;
 		PlayerCubeMover mover;
 		MoveableCubeHandler moveHandler;
 
@@ -32,7 +31,6 @@ namespace Qbism.Rewind
 
 		private void Awake() 
 		{
-			rb = GetComponent<Rigidbody>();
 			mover = FindObjectOfType<PlayerCubeMover>();
 			moveHandler = FindObjectOfType<MoveableCubeHandler>();
 		}
@@ -88,7 +86,6 @@ namespace Qbism.Rewind
 		public void StartRewinding()
 		{
 			isRewinding = true;
-			rb.isKinematic = true;
 			if (this.tag == "Player" || this.tag == "Moveable") mover.input = false;
 			if (this.tag == "Environment") ResetShrunkStatus();
 			if (this.tag == "Moveable") originPosSaved = false;
