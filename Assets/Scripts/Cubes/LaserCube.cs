@@ -23,7 +23,7 @@ namespace Qbism.Cubes
 		SceneHandler loader;
 
 		//States
-		bool isFiring = true;
+		bool shouldMakeSound = true;
 
 		public UnityEvent onLaserPassEvent = new UnityEvent();
 
@@ -47,39 +47,43 @@ namespace Qbism.Cubes
 
 		private void FireLaserCast()
 		{
-			RaycastHit[] hits = SortedRaycasts();	
+			RaycastHit[] hits = SortedRaycasts();
 
-			if(hits.Length > 0)
+			AdjustBeamLength(hits);
+
+			if (hits.Length > 0 && (mover.input || mover.isBoosting))
+			{
+				if (hits[0].transform.gameObject.tag == "Player" &&
+				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
+				{
+					if(shouldMakeSound)
+					{
+						source.clip = passClip;
+						onLaserPassEvent.Invoke();
+						shouldMakeSound = false;
+					}
+				}
+
+				else if (hits[0].transform.gameObject.tag == "Player" &&
+					!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
+				{
+					StartCoroutine(RestartLevelTransition());
+				}
+			} 	
+		}
+
+		private void AdjustBeamLength(RaycastHit[] hits)
+		{
+			if (hits.Length > 0)
 			{
 				laserBeam.transform.localScale = new Vector3(1, 1, hits[0].distance);
 				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * hits[0].distance) + 0.5f);
-			}	
+			}
 			else
 			{
+				shouldMakeSound = true;
 				laserBeam.transform.localScale = new Vector3(1, 1, distance);
 				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
-			}
-
-			if (hits.Length == 0 || !mover.input || !mover.isBoosting) return;
-
-			if (hits[0].transform.gameObject.tag == "Player" && 
-				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
-				{
-					source.clip = passClip;
-					onLaserPassEvent.Invoke();
-				}
-
-			// else if (hits[0].transform.gameObject.tag != "Player")
-			// {
-
-			// 	laserBeam.transform.localScale = new Vector3(1, 1, hits[0].distance);
-			// 	laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * hits[0].distance) + 0.5f);
-			// }
-
-			else if (hits[0].transform.gameObject.tag == "Player" &&
-				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), 1))
-			{
-				StartCoroutine(RestartLevelTransition());
 			}
 		}
 
@@ -105,7 +109,7 @@ namespace Qbism.Cubes
 
 		private IEnumerator RestartLevelTransition()
 		{
-			isFiring = false;
+			shouldMakeSound = false;
 			mover.input = false;
 			source.clip = denyClip;
 			onLaserPassEvent.Invoke();
