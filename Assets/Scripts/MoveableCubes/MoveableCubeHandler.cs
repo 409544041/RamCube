@@ -40,6 +40,8 @@ namespace Qbism.MoveableCubes
 					cube.onWallKeyCheck += CheckWallCubeDicKey;
 					cube.onDictionaryRemove += RemoveFromMoveableDic;
 					cube.onDictionaryAdd += AddToMoveableDic;
+					cube.onMoveableKeyCheck += CheckMoveableCubeDicKey;
+					cube.onActivateOtherMoveable += ActivateMoveableCube;
 				}
 			}
 		}
@@ -47,6 +49,11 @@ namespace Qbism.MoveableCubes
 		private void Update()
 		{
 			CheckForRecording();
+
+			// foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
+			// {
+			// 	print(pair.Key);
+			// }
 		}
 
 		private void LoadMoveableCubeDictionary()
@@ -54,6 +61,8 @@ namespace Qbism.MoveableCubes
 			MoveableCube[] cubes = FindObjectsOfType<MoveableCube>();
 			foreach (MoveableCube cube in cubes)
 			{
+				if(cube.isDocked) continue;
+
 				if (moveableCubeDic.ContainsKey(cube.FetchGridPos()))
 					print("Overlapping cube " + cube);
 				else moveableCubeDic.Add(cube.FetchGridPos(), cube);
@@ -97,8 +106,10 @@ namespace Qbism.MoveableCubes
 			if (amountNotMoving == moveableCubeDic.Count && isRecording == true)
 			{
 				isRecording = false;
-				onSetPlayerInput(true);
+				moveableCubeDic.Clear();
+				LoadMoveableCubeDictionary();
 				onRecordStop();
+				onSetPlayerInput(true);
 			}
 		}
 
@@ -179,6 +190,8 @@ namespace Qbism.MoveableCubes
 					cube.onWallKeyCheck -= CheckWallCubeDicKey;
 					cube.onDictionaryRemove -= RemoveFromMoveableDic;
 					cube.onDictionaryAdd -= AddToMoveableDic;
+					cube.onMoveableKeyCheck -= CheckMoveableCubeDicKey;
+					cube.onActivateOtherMoveable -= ActivateMoveableCube;
 				}
 			}
 		}

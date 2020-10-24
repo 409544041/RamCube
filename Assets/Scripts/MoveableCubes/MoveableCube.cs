@@ -27,12 +27,17 @@ namespace Qbism.MoveableCubes
 		public bool isMoving { get; set;} = false;
 		private float yPos = 1f;
 		public bool isBoosting { get; set; } = false;
+		bool hasBumpedMoveable = false;
+		public bool isDocked { get; set; } = false;
 
 		public delegate bool KeyCheckDelegate(Vector3Int pos);
 		public KeyCheckDelegate onWallKeyCheck;
 
 		public delegate bool FloorKeyCheckDelegate(Vector2Int pos);
 		public FloorKeyCheckDelegate onFloorKeyCheck;
+
+		public delegate bool MoveKeyCheckDelegate(Vector2Int pos);
+		public MoveKeyCheckDelegate onMoveableKeyCheck;
 
 		public event Action<Vector2Int, GameObject, float, float> onComponentAdd;
 		public event Action<Vector2Int> onDictionaryRemove;
@@ -41,6 +46,7 @@ namespace Qbism.MoveableCubes
 		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action<MoveableCube> onRecordStop;
 		public event Action onCheckForNewFloorCubes;
+		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
 
 		private void Start()
 		{
@@ -50,13 +56,13 @@ namespace Qbism.MoveableCubes
 
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
 		{
-			if (CheckForWallAhead(posAhead))
+			if (CheckForWallAhead(posAhead) || hasBumpedMoveable)
 			{
 				isMoving = false;
-				onDictionaryRemove(originPos);
-				onDictionaryAdd(FetchGridPos(), this);
+				hasBumpedMoveable = false;
 				return;
 			}
+
 			Vector2Int prevPos = FetchGridPos();
 			StartCoroutine(Move(side, turnAxis, posAhead, originPos, prevPos));
 		}
@@ -66,7 +72,13 @@ namespace Qbism.MoveableCubes
 		{
 			onInitialRecord(this, transform.position, transform.rotation, transform.localScale);
 			
-			isMoving = true;			
+			isMoving = true;	
+
+			if(onMoveableKeyCheck(posAhead))
+			{
+				onActivateOtherMoveable(posAhead, turnAxis, FetchGridPos());
+				hasBumpedMoveable = true;
+			} 	
 
 			if(onFloorKeyCheck(posAhead))
 			{
@@ -97,9 +109,9 @@ namespace Qbism.MoveableCubes
 
 				RoundPosition();
 				isMoving = false;
+				isDocked = true;
 
 				onComponentAdd(posAhead, this.gameObject, shrinkStep, shrinkTimeStep);
-				onDictionaryRemove(originPos);
 				onCheckForNewFloorCubes();
 				onRecordStop(this);
 			}
@@ -125,9 +137,9 @@ namespace Qbism.MoveableCubes
 
 			RoundPosition();
 			isMoving = false;
+			isDocked = true;
 
 			onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep);
-			onDictionaryRemove(originPos);
 			onCheckForNewFloorCubes();
 			onRecordStop(this);
 		}
