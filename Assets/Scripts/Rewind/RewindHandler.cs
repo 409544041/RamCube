@@ -50,22 +50,18 @@ namespace Qbism.Rewind
 				mover.onInitialRecord += AddInitialPlayerRecording;
 				mover.onRecordStart += StartRecordingPlayer;
 				mover.onRecordStart += ResetTimesRewinded;
-				mover.onMoveableListShift += ShiftListsForMoveables;
 			} 
 
 			if(handler != null)
 			{
 				handler.onRecordStop += StopRecordingPlayer;
-				handler.onFloorRecord += ShiftListsForCubes;
-				handler.onFloorRecord += StartRecordingCubes;
+				handler.onInitialCubeRecording += AddInitialCubeRecording;
 			} 
 
 			if(floorCubes != null)
 			{
 				foreach (FloorCube floorCube in floorCubes)
 				{
-					floorCube.onListShift += ShiftListsForCubes;
-					floorCube.onInitialRecord += AddInitialCubeRecording;
 					floorCube.onRecordStart += StartRecordingCubes;
 					floorCube.onRecordStop += StopRecordingCubes;
 				}
@@ -75,13 +71,13 @@ namespace Qbism.Rewind
 			{
 				moveHandler.onRecordStart += StartRecordingMoveables;
 				moveHandler.onRecordStop += StopRecordingMoveables;
+				moveHandler.onInitialCubeRecording += AddInitialMoveableRecording;
 			}
 
 			if(moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
 				{
-					cube.onInitialRecord += AddInitialMoveableRecording;
 					cube.onCheckForNewFloorCubes += CheckForNewFloorCubes;
 					cube.onRecordStop += StopRecordingSpecificMoveable;
 				}
@@ -102,6 +98,7 @@ namespace Qbism.Rewind
 			
 			foreach (TimeBody timeBody in timeBodies)
 			{
+				moveHandler.moveableCubeDic.Clear();
 				timeBody.timesRewinded = timesRewindUsed;
 				timeBody.StartRewinding();
 			}
@@ -126,59 +123,43 @@ namespace Qbism.Rewind
 			mover.GetComponent<TimeBody>().isRecording = false;
 		}
 
-		private void ShiftListsForCubes()
-		{
-			foreach (TimeBody timeBody in timeBodies)
-			{
-				if (timeBody.tag == "Environment")
-					timeBody.ShiftLists();
-			}
-		}
-
 		private void AddInitialCubeRecording(FloorCube cube, Vector3 pos, Quaternion rot, Vector3 scale)
 		{
-			cube.GetComponent<TimeBody>().InitialRecord(pos, rot, scale);
-		}
+			var body = cube.GetComponent<TimeBody>();
 
-		private void StartRecordingCubes()
-		{
-			foreach (TimeBody timeBody in timeBodies)
+			if(body != null)
 			{
-				if (timeBody.tag == "Environment")
-					timeBody.isRecording = true;
+				cube.GetComponent<TimeBody>().ShiftLists();
+				cube.GetComponent<TimeBody>().InitialRecord(pos, rot, scale);
 			}
 		}
 
-		private void StopRecordingCubes()
+		private void StartRecordingCubes(FloorCube cube)
 		{
-			foreach (TimeBody timeBody in timeBodies)
-			{
-				if (timeBody.tag == "Environment")
-					timeBody.isRecording = false;
-			}
+			cube.GetComponent<TimeBody>().isRecording = true;
 		}
 
-		private void ShiftListsForMoveables()
+		private void StopRecordingCubes(FloorCube cube)
 		{
-			foreach (TimeBody timeBody in timeBodies)
-			{
-				if (timeBody.tag == "Moveable")
-					timeBody.ShiftLists();
-			}
+			cube.GetComponent<TimeBody>().isRecording = false;
 		}
 
 		private void AddInitialMoveableRecording(MoveableCube cube, Vector3 pos, Quaternion rot, Vector3 scale)
 		{
-			cube.GetComponent<TimeBody>().InitialRecord(pos, rot, scale);
+			var body = cube.GetComponent<TimeBody>();
+
+			if (body != null)
+			{
+				cube.GetComponent<TimeBody>().ShiftLists();
+				cube.GetComponent<TimeBody>().InitialRecord(pos, rot, scale);
+			}
 		}
 
-		private void StartRecordingMoveables()
+		private void StartRecordingMoveables(MoveableCube cube)
 		{
-			foreach (TimeBody timeBody in timeBodies)
-			{
-				if (timeBody.tag == "Moveable")
-					timeBody.isRecording = true;
-			}
+			var body = cube.GetComponent<TimeBody>();
+
+			if (body != null) body.isRecording = true;
 		}
 
 		private void StopRecordingMoveables()
@@ -217,8 +198,6 @@ namespace Qbism.Rewind
 				if(!floorCubes.Contains(cube))
 				{
 					floorCubes.Add(cube);
-					cube.onListShift += ShiftListsForCubes;
-					cube.onInitialRecord += AddInitialCubeRecording;
 					cube.onRecordStart += StartRecordingCubes;
 					cube.onRecordStop += StopRecordingCubes;
 				}
@@ -237,22 +216,18 @@ namespace Qbism.Rewind
 				mover.onInitialRecord -= AddInitialPlayerRecording;
 				mover.onRecordStart -= StartRecordingPlayer;
 				mover.onRecordStart -= ResetTimesRewinded;
-				mover.onMoveableListShift -= ShiftListsForMoveables;
 			} 
 
 			if (handler != null)
 			{
 				handler.onRecordStop -= StopRecordingPlayer;
-				handler.onFloorRecord -= ShiftListsForCubes;
-				handler.onFloorRecord -= StartRecordingCubes;
+				handler.onInitialCubeRecording -= AddInitialCubeRecording;
 			} 
 
 			if (floorCubes != null)
 			{
 				foreach (FloorCube floorCube in floorCubes)
 				{
-					floorCube.onListShift -= ShiftListsForCubes;
-					floorCube.onInitialRecord -= AddInitialCubeRecording;
 					floorCube.onRecordStart -= StartRecordingCubes;
 					floorCube.onRecordStop -= StopRecordingCubes;
 				}
@@ -262,13 +237,13 @@ namespace Qbism.Rewind
 			{
 				moveHandler.onRecordStart -= StartRecordingMoveables;
 				moveHandler.onRecordStop -= StopRecordingMoveables;
+				moveHandler.onInitialCubeRecording -= AddInitialMoveableRecording;
 			}
 
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
 				{
-					cube.onInitialRecord -= AddInitialMoveableRecording;
 					cube.onCheckForNewFloorCubes -= CheckForNewFloorCubes;
 					cube.onRecordStop -= StopRecordingSpecificMoveable;
 				}

@@ -17,6 +17,7 @@ namespace Qbism.Rewind
 		public int timesRewinded { get; set; } = 0;
 		bool originPosSaved = false;
 		Vector2Int rewindOriginPos = new Vector2Int(0,0);
+		Vector3 rewindOriginTransform;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -98,6 +99,9 @@ namespace Qbism.Rewind
 				{
 					rewindOriginPos = new Vector2Int(Mathf.RoundToInt(listDictionary[timesRewinded][0].position.x), 
 						Mathf.RoundToInt(listDictionary[timesRewinded][0].position.z));
+
+					rewindOriginTransform = listDictionary[timesRewinded][0].position;
+
 					originPosSaved = true;
 				}
 
@@ -111,7 +115,6 @@ namespace Qbism.Rewind
 				isRewinding = false;
 				rewindAmount--;
 				if(!onRewindCheck()) mover.input = true;
-				originPosSaved = false;
 
 				if (this.tag == "Player")
 				{
@@ -126,20 +129,25 @@ namespace Qbism.Rewind
 				if(GetComponent<MoveableCube>())
 				{
 					var moveable = GetComponent<MoveableCube>();
-					moveable.RoundPosition();
-					moveable.UpdateCenterPosition();
 
-					if(GetComponent<FloorCube>())
+					if (Mathf.Approximately(Mathf.Abs(rewindOriginTransform.y - transform.position.y), 0)
+						&& !GetComponent<FloorCube>())
 					{
+						moveable.RoundPosition();
+						moveable.UpdateCenterPosition();
+						moveHandler.AddToMoveableDic(moveable.FetchGridPos(), moveable);
+					}
+
+					else if(Mathf.Approximately(Mathf.Abs(rewindOriginTransform.y - transform.position.y), 1)
+						&& GetComponent<FloorCube>())
+					{
+						moveable.RoundPosition();
+						moveable.UpdateCenterPosition();
 						Destroy(GetComponent<FloorCube>());
 						CubeHandler handler = FindObjectOfType<CubeHandler>();
 						handler.floorCubeDic.Remove(rewindOriginPos); 
 						this.tag = "Moveable";
-						moveHandler.AddToMoveableDic(moveable.FetchGridPos(), moveable);
-					}
-					else
-					{
-						moveHandler.RemoveFromMoveableDic(rewindOriginPos);
+						moveable.isDocked = false;
 						moveHandler.AddToMoveableDic(moveable.FetchGridPos(), moveable);
 					}
 				}

@@ -32,8 +32,7 @@ namespace Qbism.PlayerCube
 		public event Action<Vector2Int, GameObject> onFloorCheck;
 		public event Action onRecordStart;
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
-
-		public event Action onMoveableListShift;
+		public event Action onInitialFloorCubeRecord;
 
 		private void Awake()
 		{
@@ -68,6 +67,8 @@ namespace Qbism.PlayerCube
 			var cubeToShrink = FetchGridPos();
 
 			onInitialRecord(transform.position, transform.rotation, transform.localScale);
+			onInitialFloorCubeRecord();
+			moveHandler.InitialRecordMoveables();
 			onRecordStart();
 
 			CheckPosAhead(posAhead, turnAxis);
@@ -101,7 +102,7 @@ namespace Qbism.PlayerCube
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
-				onMoveableListShift();
+				moveHandler.StartRecordingMoveables();
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, FetchGridPos());
 			}
 		}

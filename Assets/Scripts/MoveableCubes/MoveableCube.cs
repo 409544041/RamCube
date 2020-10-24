@@ -40,10 +40,7 @@ namespace Qbism.MoveableCubes
 		public MoveKeyCheckDelegate onMoveableKeyCheck;
 
 		public event Action<Vector2Int, GameObject, float, float> onComponentAdd;
-		public event Action<Vector2Int> onDictionaryRemove;
-		public event Action<Vector2Int, MoveableCube> onDictionaryAdd;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
-		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action<MoveableCube> onRecordStop;
 		public event Action onCheckForNewFloorCubes;
 		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
@@ -69,9 +66,7 @@ namespace Qbism.MoveableCubes
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead, 
 			Vector2Int originPos, Vector2Int prevPos)
-		{
-			onInitialRecord(this, transform.position, transform.rotation, transform.localScale);
-			
+		{			
 			isMoving = true;	
 
 			if(onMoveableKeyCheck(posAhead))
@@ -99,7 +94,7 @@ namespace Qbism.MoveableCubes
 				CheckFloorInNewPos(side, turnAxis, posAhead, this, FetchGridPos(), originPos, prevPos);
 			}
 
-			else if(!onFloorKeyCheck(posAhead)) //Become floorcube by moving
+			else if(!onFloorKeyCheck(posAhead)) 
 			{
 				for (int i = 0; i < (180 / turnStep); i++)
 				{

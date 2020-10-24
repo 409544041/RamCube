@@ -12,10 +12,8 @@ namespace Qbism.Cubes
 		public float shrinkStep = 0f;
 		public float timeStep = 0f;
 
-		public event Action onListShift;
-		public event Action onRecordStart;
-		public event Action onRecordStop;
-		public event Action<FloorCube, Vector3, Quaternion, Vector3> onInitialRecord;
+		public event Action<FloorCube> onRecordStart;
+		public event Action<FloorCube> onRecordStop;
 
 		//States
 		public bool hasShrunk { get; set; } = false;
@@ -40,13 +38,10 @@ namespace Qbism.Cubes
 
 		private IEnumerator Shrink()
 		{
-			onListShift();
-			onInitialRecord(this, transform.position, transform.rotation, transform.localScale);
-
 			hasShrunk = true;
 			Vector3 targetScale = new Vector3(0, 0, 0);
 
-			onRecordStart();
+			onRecordStart(this);
 
 			for (int i = 0; i < (2.5 / shrinkStep); i++)
 			{
@@ -55,7 +50,7 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(timeStep);
 			}
 
-			onRecordStop();
+			onRecordStop(this);
 		}
 
 		private void CheckForVisualDisabling()

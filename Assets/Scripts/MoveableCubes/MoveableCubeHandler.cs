@@ -19,9 +19,10 @@ namespace Qbism.MoveableCubes
 		public Dictionary<Vector3Int, GameObject> wallCubeDic =
 			new Dictionary<Vector3Int, GameObject>();
 
-		public event Action onRecordStart;
+		public event Action<MoveableCube> onRecordStart;
 		public event Action onRecordStop;
 		public event Action<bool> onSetPlayerInput;
+		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
 		private void Awake() 
 		{
@@ -38,8 +39,6 @@ namespace Qbism.MoveableCubes
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onWallKeyCheck += CheckWallCubeDicKey;
-					cube.onDictionaryRemove += RemoveFromMoveableDic;
-					cube.onDictionaryAdd += AddToMoveableDic;
 					cube.onMoveableKeyCheck += CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable += ActivateMoveableCube;
 				}
@@ -48,12 +47,7 @@ namespace Qbism.MoveableCubes
 
 		private void Update()
 		{
-			CheckForRecording();
-
-			// foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
-			// {
-			// 	print(pair.Key);
-			// }
+			CheckForMovement();
 		}
 
 		private void LoadMoveableCubeDictionary()
@@ -84,23 +78,15 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		private void CheckForRecording()
+		private void CheckForMovement()
 		{
 			int amountNotMoving = 0;
 			
 			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
 			{
 				var cube = pair.Value;
-				if (cube.isMoving && isRecording == false)
-				{
-					isRecording = true;
-					onRecordStart();
-					return;
-				}
-				else if (!cube.isMoving)
-				{
-					amountNotMoving++;
-				}
+
+				if (!cube.isMoving) amountNotMoving++;
 			}
 
 			if (amountNotMoving == moveableCubeDic.Count && isRecording == true)
@@ -142,6 +128,26 @@ namespace Qbism.MoveableCubes
 			} 
 
 			if (cube.canMove) cube.InitiateMove(side, turnAxis, posAhead, originPos);
+		}
+
+		public void InitialRecordMoveables()
+		{
+			foreach(KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
+			{
+				var cube = pair.Value;
+				onInitialCubeRecording(cube, cube.transform.position,
+					cube.transform.rotation, cube.transform.localScale);
+			}
+		}
+
+		public void StartRecordingMoveables()
+		{
+			isRecording = true;
+			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
+			{
+				var cube = pair.Value;
+				onRecordStart(cube);
+			}
 		}
 
 		public int CheckDeltaX(Vector2Int posA, Vector2Int posB)
@@ -188,8 +194,6 @@ namespace Qbism.MoveableCubes
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onWallKeyCheck -= CheckWallCubeDicKey;
-					cube.onDictionaryRemove -= RemoveFromMoveableDic;
-					cube.onDictionaryAdd -= AddToMoveableDic;
 					cube.onMoveableKeyCheck -= CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable -= ActivateMoveableCube;
 				}

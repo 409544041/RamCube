@@ -24,7 +24,7 @@ namespace Qbism.Cubes
 		
 		public event Action onLand;
 		public event Action onRecordStop;
-		public event Action onFloorRecord;
+		public event Action<FloorCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
 		private void Awake()
 		{
@@ -43,6 +43,7 @@ namespace Qbism.Cubes
 			{
 				mover.onFloorCheck += CheckFloorType;
 				mover.onCubeShrink += ShrinkCube;
+				mover.onInitialFloorCubeRecord += InitialRecordCubes;
 			} 
 
 			if (cubeFF != null)
@@ -108,10 +109,6 @@ namespace Qbism.Cubes
 				previousCube.GetComponent<StaticCube>().BecomeFallingCube(cube);
 				onRecordStop();
 			}
-
-			if((previousCube.FetchType() == CubeTypes.Flipping
-				|| previousCube.FetchType() == CubeTypes.Turning) && differentCubes)
-				onFloorRecord();
 				
 			if (currentCube.FetchType() == CubeTypes.Boosting)
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
@@ -174,6 +171,16 @@ namespace Qbism.Cubes
 			}
 		}
 
+		private void InitialRecordCubes()
+		{
+			foreach (KeyValuePair<Vector2Int, FloorCube> pair in floorCubeDic)
+			{
+				var cube = pair.Value;
+				onInitialCubeRecording(cube, cube.transform.position, 
+					cube.transform.rotation, cube.transform.localScale);
+			}
+		}
+
 		private bool CheckFloorCubeDicKey(Vector2Int cubePos)
 		{
 			if(floorCubeDic.ContainsKey(cubePos)) return true;
@@ -213,6 +220,7 @@ namespace Qbism.Cubes
 			{
 				mover.onFloorCheck -= CheckFloorType;
 				mover.onCubeShrink -= ShrinkCube;
+				mover.onInitialFloorCubeRecord -= InitialRecordCubes;
 			}
 
 			if (cubeFF != null)
