@@ -81,13 +81,14 @@ namespace Qbism.Rewind
 		{
 			listDictionary[0].Insert(0,
 				new PointInTime(transform.position, transform.rotation, transform.localScale));
+			if(GetComponent<StaticCube>())
+				print(this.gameObject.name + " " + listDictionary[0].Count);
 		}
 
 		public void StartRewinding()
 		{
 			isRewinding = true;
 			if (this.tag == "Player" || this.tag == "Moveable") mover.input = false;
-			if (this.tag == "Environment") ResetShrunkStatus();
 			if (this.tag == "Moveable") originPosSaved = false;
 		}
 
@@ -110,7 +111,8 @@ namespace Qbism.Rewind
 				transform.localScale = listDictionary[timesRewinded][0].scale;
 				listDictionary[timesRewinded].RemoveAt(0);				
 			}
-			else
+
+			else //at end of rewind
 			{
 				isRewinding = false;
 				rewindAmount--;
@@ -124,6 +126,12 @@ namespace Qbism.Rewind
 
 					CubeHandler handler = FindObjectOfType<CubeHandler>();
 					handler.currentCube = handler.FetchCube(mover.FetchGridPos());
+				}
+
+				if (this.tag == "Environment")
+				{
+					ResetStatic();
+					ResetShrunkStatus();
 				}
 
 				if(GetComponent<MoveableCube>())
@@ -155,17 +163,39 @@ namespace Qbism.Rewind
 		}
 
 		private void ResetShrunkStatus()
-		{	
-			FloorCube cube = GetComponent<FloorCube>();
+		{
+			FloorCube cube;
+			bool samePos;
+			CheckIfSamePos(out cube, out samePos);
+
+			if (cube.hasShrunk == true && samePos )
+				cube.hasShrunk = false;
+		}
+
+		private void ResetStatic()
+		{
+			FloorCube cube;
+			bool samePos;
+			CheckIfSamePos(out cube, out samePos);
+
+			if(cube.hasShrunk == false && samePos && 
+				GetComponent<StaticCube>() && cube.type == CubeTypes.Shrinking)
+			{
+				cube.type = CubeTypes.Static;
+				GetComponent<MeshRenderer>().material = 
+					GetComponent<StaticCube>().staticCubeMat;
+			}
+				
+		}
+
+		private void CheckIfSamePos(out FloorCube cube, out bool samePos)
+		{
+			cube = GetComponent<FloorCube>();
 			Vector2Int cubePos = cube.FetchGridPos();
 
-			bool samePos = 
-				cubePos == mover.GetComponent<TimeBody>().firstPosList[timesRewinded];
-	
-			if (cube.hasShrunk == true && samePos)
-			{
-				cube.hasShrunk = false;
-			}
+			samePos = cubePos == mover.GetComponent<TimeBody>().firstPosList[timesRewinded];
 		}
+
+		
 	}
 }

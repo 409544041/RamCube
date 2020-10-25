@@ -105,10 +105,8 @@ namespace Qbism.Cubes
 			bool differentCubes = currentCube != previousCube;
 
 			if(previousCube.FetchType() == CubeTypes.Static)
-			{
 				previousCube.GetComponent<StaticCube>().BecomeFallingCube(cube);
-				onRecordStop();
-			}
+
 				
 			if (currentCube.FetchType() == CubeTypes.Boosting)
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
