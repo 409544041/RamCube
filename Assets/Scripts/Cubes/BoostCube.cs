@@ -43,6 +43,7 @@ namespace Qbism.Cubes
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
 			var mover = cube.GetComponent<PlayerCubeMover>();
+			var launchPos = mover.FetchGridPos();
 
 			mover.input = false;
 			mover.isBoosting = true;
@@ -59,7 +60,43 @@ namespace Qbism.Cubes
 			mover.RoundPosition();
 			mover.UpdateCenterPosition();
 
-			mover.CheckFloorInNewPos();
+			var cubePos = mover.FetchGridPos();
+
+			Transform side = null;
+			Vector3 turnAxis = new Vector3(0, 0, 0);
+			Vector2Int posAhead = new Vector2Int(0, 0);
+			
+			CalculateSide(mover, launchPos, cubePos, ref side, ref turnAxis, ref posAhead);
+
+			mover.CheckFloorInNewPos(side, turnAxis, posAhead);
+		}
+
+		private static void CalculateSide(PlayerCubeMover mover, Vector2Int launchPos, Vector2Int cubePos, ref Transform side, ref Vector3 turnAxis, ref Vector2Int posAhead)
+		{
+			if (mover.CheckDeltaY(cubePos, launchPos) > 0)
+			{
+				side = mover.up;
+				turnAxis = Vector3.right;
+				posAhead = cubePos + Vector2Int.up;
+			}
+			else if (mover.CheckDeltaY(cubePos, launchPos) < 0)
+			{
+				side = mover.down;
+				turnAxis = Vector3.left;
+				posAhead = cubePos + Vector2Int.down;
+			}
+			else if (mover.CheckDeltaX(cubePos, launchPos) < 0)
+			{
+				side = mover.left;
+				turnAxis = Vector3.forward;
+				posAhead = cubePos + Vector2Int.left;
+			}
+			else if (mover.CheckDeltaX(cubePos, launchPos) > 0)
+			{
+				side = mover.right;
+				turnAxis = Vector3.back;
+				posAhead = cubePos + Vector2Int.right;
+			}
 		}
 
 		public IEnumerator ExecuteActionOnFF(GameObject ffCube)

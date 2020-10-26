@@ -67,7 +67,11 @@ namespace Qbism.Cubes
 			mover.RoundPosition();
 			mover.UpdateCenterPosition();
 
-			mover.CheckFloorInNewPos();
+			Transform side = null;
+			Vector3 turnAxis = new Vector3(0, 0, 0);
+			Vector2Int posAhead = new Vector2Int(0, 0);
+
+			mover.CheckFloorInNewPos(side, turnAxis, posAhead);
 		}
 
 		public IEnumerator ExecuteActionOnFF(GameObject ffCube)

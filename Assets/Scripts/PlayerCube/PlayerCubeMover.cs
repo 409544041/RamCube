@@ -29,7 +29,7 @@ namespace Qbism.PlayerCube
 		public bool isBoosting { get; set; } = false;
 
 		public event Action<Vector2Int> onCubeShrink;
-		public event Action<Vector2Int, GameObject> onFloorCheck;
+		public event Action<Vector2Int, GameObject, Transform, Vector3, Vector2Int> onFloorCheck;
 		public event Action onRecordStart;
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action onInitialFloorCubeRecord;
@@ -86,7 +86,7 @@ namespace Qbism.PlayerCube
 
 			onCubeShrink(cubeToShrink);
 
-			CheckFloorInNewPos();
+			CheckFloorInNewPos(side, turnAxis, posAhead);
 		}
 
 		public void RoundPosition()
@@ -107,9 +107,9 @@ namespace Qbism.PlayerCube
 			}
 		}
 
-		public void CheckFloorInNewPos()
+		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			onFloorCheck(FetchGridPos(), this.gameObject);
+			onFloorCheck(FetchGridPos(), this.gameObject, side, turnAxis, posAhead);
 		}
 
 		public void UpdateCenterPosition()
@@ -123,6 +123,16 @@ namespace Qbism.PlayerCube
 				(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
 
 			return roundedPos;
+		}
+
+		public int CheckDeltaX(Vector2Int posA, Vector2Int posB)
+		{
+			return posA.x - posB.x;
+		}
+
+		public int CheckDeltaY(Vector2Int posA, Vector2Int posB)
+		{
+			return posA.y - posB.y;
 		}
 
 		private void SetPlayerInput(bool value)

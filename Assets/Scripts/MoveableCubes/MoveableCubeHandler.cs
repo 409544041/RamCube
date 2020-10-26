@@ -106,6 +106,13 @@ namespace Qbism.MoveableCubes
 			Vector2Int posAhead = new Vector2Int(0, 0);
 			Vector2Int originPos = cubePos;
 
+			CalculateSide(cubePos, activatorPos, cube, ref side, ref posAhead);
+
+			if (cube.canMove) cube.InitiateMove(side, turnAxis, posAhead, originPos);
+		}
+
+		private void CalculateSide(Vector2Int cubePos, Vector2Int activatorPos, MoveableCube cube, ref Transform side, ref Vector2Int posAhead)
+		{
 			if (CheckDeltaY(cubePos, activatorPos) > 0)
 			{
 				side = cube.up;
@@ -120,14 +127,12 @@ namespace Qbism.MoveableCubes
 			{
 				side = cube.left;
 				posAhead = cubePos + Vector2Int.left;
-			} 
+			}
 			else if (CheckDeltaX(cubePos, activatorPos) > 0)
 			{
 				side = cube.right;
 				posAhead = cubePos + Vector2Int.right;
-			} 
-
-			if (cube.canMove) cube.InitiateMove(side, turnAxis, posAhead, originPos);
+			}
 		}
 
 		public void InitialRecordMoveables()
