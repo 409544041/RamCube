@@ -99,29 +99,29 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		public void ActivateMoveableCube(Vector2Int cubePos, Vector3 turnAxis, Vector2Int playerPos)
+		public void ActivateMoveableCube(Vector2Int cubePos, Vector3 turnAxis, Vector2Int activatorPos)
 		{
 			var cube = FetchMoveableCube(cubePos);
 			Transform side = null;
 			Vector2Int posAhead = new Vector2Int(0, 0);
 			Vector2Int originPos = cubePos;
 
-			if (CheckDeltaY(cubePos, playerPos) > 0)
+			if (CheckDeltaY(cubePos, activatorPos) > 0)
 			{
 				side = cube.up;
 				posAhead = cubePos + Vector2Int.up;
 			}
-			else if (CheckDeltaY(cubePos, playerPos) < 0)
+			else if (CheckDeltaY(cubePos, activatorPos) < 0)
 			{
 				side = cube.down;
 				posAhead = cubePos + Vector2Int.down;
 			}
-			else if (CheckDeltaX(cubePos, playerPos) < 0)
+			else if (CheckDeltaX(cubePos, activatorPos) < 0)
 			{
 				side = cube.left;
 				posAhead = cubePos + Vector2Int.left;
 			} 
-			else if (CheckDeltaX(cubePos, playerPos) > 0)
+			else if (CheckDeltaX(cubePos, activatorPos) > 0)
 			{
 				side = cube.right;
 				posAhead = cubePos + Vector2Int.right;

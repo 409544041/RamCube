@@ -161,7 +161,17 @@ namespace Qbism.Cubes
 
 				else if(currentCube.FetchType() == CubeTypes.Shrinking ||
 					currentCube.FetchType() == CubeTypes.Static)
-					cube.InitiateMove(side, turnAxis, posAhead, originPos);
+				{
+					if(prevCube.type == CubeTypes.Boosting && 
+						moveHandler.CheckMoveableCubeDicKey(posAhead))
+					{
+						moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
+						cube.hasBumpedMoveable = true;
+						cube.InitiateMove(side, turnAxis, posAhead, originPos);
+					}
+						
+					else cube.InitiateMove(side, turnAxis, posAhead, originPos);
+				}
 			}
 			else
 			{

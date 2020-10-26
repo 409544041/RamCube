@@ -27,7 +27,7 @@ namespace Qbism.MoveableCubes
 		public bool isMoving { get; set;} = false;
 		private float yPos = 1f;
 		public bool isBoosting { get; set; } = false;
-		bool hasBumpedMoveable = false;
+		public bool hasBumpedMoveable { get; set; } = false;
 		public bool isDocked { get; set; } = false;
 
 		public delegate bool KeyCheckDelegate(Vector3Int pos);
@@ -86,10 +86,10 @@ namespace Qbism.MoveableCubes
 				RoundPosition();
 				UpdateCenterPosition();
 
-				if (side == up) posAhead = posAhead + Vector2Int.up;
-				else if (side == down) posAhead = posAhead + Vector2Int.down;
-				else if (side == left) posAhead = posAhead + Vector2Int.left;
-				else if (side == right) posAhead = posAhead + Vector2Int.right;
+				if (side == up) posAhead += Vector2Int.up;
+				else if (side == down) posAhead += Vector2Int.down;
+				else if (side == left) posAhead += Vector2Int.left;
+				else if (side == right) posAhead += Vector2Int.right;
 
 				CheckFloorInNewPos(side, turnAxis, posAhead, this, FetchGridPos(), originPos, prevPos);
 			}
