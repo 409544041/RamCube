@@ -93,9 +93,28 @@ namespace Qbism.Rewind
 			}
 		}
 
-		private void Update() 
+		private void Update()
 		{
-			if(!CheckForRewinds() && !reloadInitiated)
+			CheckForMovement();
+			ReloadDics();
+		}
+
+		private void CheckForMovement()
+		{
+			if(!moveHandler.CheckForMovingMoveables() && (!mover.isMoving || !mover.isBoosting))
+			{
+				moveHandler.isRecording = false;
+				moveHandler.moveableCubeDic.Clear();
+				moveHandler.LoadMoveableCubeDictionary();
+				StopRecordingMoveables();
+				StopRecordingPlayer();
+				mover.input = true;
+			}
+		}
+
+		private void ReloadDics()
+		{
+			if (!CheckForRewinds() && !reloadInitiated)
 			{
 				handler.floorCubeDic.Clear();
 				handler.LoadFloorCubeDictionary();

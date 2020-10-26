@@ -117,8 +117,7 @@ namespace Qbism.Cubes
 			{
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
 				moveHandler.StartRecordingMoveables();
-			}
-				
+			}	
 	
 			if (currentCube.FetchType() == CubeTypes.Boosting)
 				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
@@ -136,12 +135,10 @@ namespace Qbism.Cubes
 				{
 					cubeFF.ShowFeedForward();
 					onLand();
-					onRecordStop();
 					mover.PlayLandClip();
 				}
 				else
 				{
-					onRecordStop();
 					cubeFF.ShowFeedForward();
 				} 
 

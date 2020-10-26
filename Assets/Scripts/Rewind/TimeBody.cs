@@ -136,7 +136,8 @@ namespace Qbism.Rewind
 					handler.currentCube = handler.FetchCube(mover.FetchGridPos());
 				}
 
-				if (this.tag == "Environment")
+				if (this.tag == "Environment") 
+				//TO DO: same as setfindable, but for shrunk. Instead of checking against player pos
 				{
 					ResetStatic();
 					ResetShrunkStatus();

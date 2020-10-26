@@ -48,7 +48,7 @@ namespace Qbism.MoveableCubes
 
 		private void Update()
 		{
-			CheckForMovement();
+			CheckForMovingMoveables();
 		}
 
 		public void LoadMoveableCubeDictionary()
@@ -79,7 +79,7 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		private void CheckForMovement()
+		public bool CheckForMovingMoveables()
 		{
 			int amountNotMoving = 0;
 			
@@ -92,12 +92,14 @@ namespace Qbism.MoveableCubes
 
 			if (amountNotMoving == moveableCubeDic.Count && isRecording == true)
 			{
-				isRecording = false;
-				moveableCubeDic.Clear();
-				LoadMoveableCubeDictionary();
-				onRecordStop();
-				onSetPlayerInput(true);
+				// isRecording = false;
+				// moveableCubeDic.Clear();
+				// LoadMoveableCubeDictionary();
+				// onRecordStop();
+				// onSetPlayerInput(true);
+				return false;
 			}
+			else return true;
 		}
 
 		public void ActivateMoveableCube(Vector2Int cubePos, Vector3 turnAxis, Vector2Int activatorPos)

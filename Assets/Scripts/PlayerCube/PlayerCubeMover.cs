@@ -29,6 +29,7 @@ namespace Qbism.PlayerCube
 		public bool input { get; set; } = true;
 		public bool isBoosting { get; set; } = false;
 		bool initiatedByPlayer = true;
+		public bool isMoving { get; set; } = false;
 
 		public event Action<Vector2Int> onCubeShrink;
 		public event Action<Vector2Int, GameObject, Transform, Vector3, Vector2Int> onFloorCheck;
@@ -78,26 +79,8 @@ namespace Qbism.PlayerCube
 
 		private void InitiateMoveFromOther(MoveableCube cube, Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			if (side == cube.up)
-			{
-				side = up;
-				posAhead += Vector2Int.up;
-			} 
-			if (side == cube.down)
-			{
-				side = down;
-				posAhead += Vector2Int.down;
-			} 
-			if (side == cube.left)
-			{
-				side = left;
-				posAhead += Vector2Int.left;
-			} 
-			if (side == cube.right)
-			{
-				side = right;
-				posAhead += Vector2Int.right;
-			}
+			SetSide(cube, ref side, ref posAhead);
+
 			initiatedByPlayer = false;
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
@@ -106,9 +89,15 @@ namespace Qbism.PlayerCube
 		{
 			var cubeToShrink = FetchGridPos();
 
-			onInitialRecord(transform.position, transform.rotation, transform.localScale);
-			onInitialFloorCubeRecord();
-			if(initiatedByPlayer) moveHandler.InitialRecordMoveables();
+			isMoving = true;
+
+			if (initiatedByPlayer)
+			{
+				onInitialRecord(transform.position, transform.rotation, transform.localScale);
+				onInitialFloorCubeRecord();
+				moveHandler.InitialRecordMoveables();
+			} 
+
 			onRecordStart();
 
 			CheckPosAhead(posAhead, turnAxis);
@@ -123,6 +112,7 @@ namespace Qbism.PlayerCube
 
 			RoundPosition();
 			UpdateCenterPosition();
+			isMoving = false;
 
 			onCubeShrink(cubeToShrink);
 
@@ -163,6 +153,30 @@ namespace Qbism.PlayerCube
 				(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
 
 			return roundedPos;
+		}
+
+		private void SetSide(MoveableCube cube, ref Transform side, ref Vector2Int posAhead)
+		{
+			if (side == cube.up)
+			{
+				side = up;
+				posAhead += Vector2Int.up;
+			}
+			if (side == cube.down)
+			{
+				side = down;
+				posAhead += Vector2Int.down;
+			}
+			if (side == cube.left)
+			{
+				side = left;
+				posAhead += Vector2Int.left;
+			}
+			if (side == cube.right)
+			{
+				side = right;
+				posAhead += Vector2Int.right;
+			}
 		}
 
 		public int CheckDeltaX(Vector2Int posA, Vector2Int posB)
