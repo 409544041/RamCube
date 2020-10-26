@@ -32,18 +32,20 @@ namespace Qbism.MoveableCubes
 
 		public delegate bool KeyCheckDelegate(Vector3Int pos);
 		public KeyCheckDelegate onWallKeyCheck;
-
 		public delegate bool FloorKeyCheckDelegate(Vector2Int pos);
 		public FloorKeyCheckDelegate onFloorKeyCheck;
-
 		public delegate bool MoveKeyCheckDelegate(Vector2Int pos);
 		public MoveKeyCheckDelegate onMoveableKeyCheck;
+		public delegate bool ShrunkCheckDelegate(Vector2Int pos);
+		public ShrunkCheckDelegate onShrunkCheck;
 
 		public event Action<Vector2Int, GameObject, float, float> onComponentAdd;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
 		public event Action<MoveableCube> onRecordStop;
 		public event Action onCheckForNewFloorCubes;
 		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
+		public event Action<Vector2Int, bool> onSetFindable;
+		public event Action<Vector2Int> onDicRemove;
 
 		private void Start()
 		{
@@ -75,7 +77,7 @@ namespace Qbism.MoveableCubes
 				hasBumpedMoveable = true;
 			} 	
 
-			if(onFloorKeyCheck(posAhead))
+			if(onFloorKeyCheck(posAhead) && !onShrunkCheck(posAhead))
 			{
 				for (int i = 0; i < (90 / turnStep); i++)
 				{
@@ -94,7 +96,7 @@ namespace Qbism.MoveableCubes
 				CheckFloorInNewPos(side, turnAxis, posAhead, this, FetchGridPos(), originPos, prevPos);
 			}
 
-			else if(!onFloorKeyCheck(posAhead)) 
+			else if(!onFloorKeyCheck(posAhead) || (onFloorKeyCheck(posAhead) && onShrunkCheck(posAhead))) 
 			{
 				for (int i = 0; i < (180 / turnStep); i++)
 				{
@@ -106,6 +108,12 @@ namespace Qbism.MoveableCubes
 				isMoving = false;
 				hasBumpedMoveable = false;
 				isDocked = true;
+
+				if(onFloorKeyCheck(posAhead))
+				{
+					onSetFindable(posAhead, false);
+					onDicRemove(posAhead);
+				} 
 
 				onComponentAdd(posAhead, this.gameObject, shrinkStep, shrinkTimeStep);
 				onCheckForNewFloorCubes();

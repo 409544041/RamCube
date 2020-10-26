@@ -50,7 +50,7 @@ namespace Qbism.MoveableCubes
 			CheckForMovement();
 		}
 
-		private void LoadMoveableCubeDictionary()
+		public void LoadMoveableCubeDictionary()
 		{
 			MoveableCube[] cubes = FindObjectsOfType<MoveableCube>();
 			foreach (MoveableCube cube in cubes)

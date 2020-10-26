@@ -22,6 +22,7 @@ namespace Qbism.Rewind
 
 		//States
 		int timesRewindUsed = 0;
+		bool reloadInitiated = false;
 
 		private void Awake() 
 		{
@@ -92,6 +93,18 @@ namespace Qbism.Rewind
 			}
 		}
 
+		private void Update() 
+		{
+			if(!CheckForRewinds() && !reloadInitiated)
+			{
+				handler.floorCubeDic.Clear();
+				handler.LoadFloorCubeDictionary();
+				moveHandler.moveableCubeDic.Clear();
+				moveHandler.LoadMoveableCubeDictionary();
+				reloadInitiated = true;
+			}
+		}
+
 		public void StartRewinding()
 		{
 			if(mover.input == false) return; 
@@ -105,6 +118,7 @@ namespace Qbism.Rewind
 
 			timesRewindUsed++;
 			if(rewindsAmount > 0) rewindsAmount--;
+			reloadInitiated = false;
 		}
 
 		private void AddInitialPlayerRecording(Vector3 pos, Quaternion rot, Vector3 scale)
@@ -195,7 +209,7 @@ namespace Qbism.Rewind
 			FloorCube[] floorCubesAtCheck = FindObjectsOfType<FloorCube>();
 			foreach (FloorCube cube in floorCubesAtCheck)
 			{
-				if(!floorCubes.Contains(cube))
+				if(!floorCubes.Contains(cube) && cube.isFindable)
 				{
 					floorCubes.Add(cube);
 					cube.onRecordStart += StartRecordingCubes;

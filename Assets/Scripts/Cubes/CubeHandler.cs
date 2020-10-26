@@ -67,6 +67,9 @@ namespace Qbism.Cubes
 					cube.onFloorKeyCheck += CheckFloorCubeDicKey;
 					cube.onComponentAdd += AddComponent;
 					cube.onFloorCheck += CheckFloorTypeForMoveable;
+					cube.onShrunkCheck += FetchShrunkStatus;
+					cube.onSetFindable += SetFindableStatus;
+					cube.onDicRemove += RemoveFromDictionary;
 				}
 			}
 		}
@@ -76,7 +79,7 @@ namespace Qbism.Cubes
 			currentCube = FetchCube(mover.FetchGridPos());
 		}
 
-		private void LoadFloorCubeDictionary()
+		public void LoadFloorCubeDictionary()
 		{
 			FloorCube[] cubes = FindObjectsOfType<FloorCube>();
 			foreach (FloorCube cube in cubes)
@@ -216,9 +219,14 @@ namespace Qbism.Cubes
 			AddToDictionary(cubePos, newFloor);
 		}
 
-		private void AddToDictionary(Vector2Int cubePos, FloorCube cube)
+		public void AddToDictionary(Vector2Int cubePos, FloorCube cube)
 		{
 			floorCubeDic.Add(cubePos, cube);
+		}
+
+		private void RemoveFromDictionary(Vector2Int cubePos)
+		{
+			floorCubeDic.Remove(cubePos);
 		}
 
 		public FloorCube FetchCube(Vector2Int cubePos)
@@ -231,6 +239,11 @@ namespace Qbism.Cubes
 			FloorCube cube = FetchCube(cubePos);
 			if (cube.hasShrunk) return true;
 			else return false;
+		}
+
+		private void SetFindableStatus(Vector2Int cubePos, bool value)
+		{
+			FetchCube(cubePos).isFindable = value;
 		}
 
 		private void OnDisable()
@@ -263,6 +276,9 @@ namespace Qbism.Cubes
 					cube.onFloorKeyCheck -= CheckFloorCubeDicKey;
 					cube.onComponentAdd -= AddComponent;
 					cube.onFloorCheck -= CheckFloorTypeForMoveable;
+					cube.onShrunkCheck -= FetchShrunkStatus;
+					cube.onSetFindable -= SetFindableStatus;
+					cube.onDicRemove -= RemoveFromDictionary;
 				}
 			}
 		}

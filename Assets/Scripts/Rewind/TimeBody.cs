@@ -22,17 +22,20 @@ namespace Qbism.Rewind
 		//Cache
 		PlayerCubeMover mover;
 		MoveableCubeHandler moveHandler;
+		CubeHandler handler;
 
 		public delegate bool RewindCheckDelegate();
 		public RewindCheckDelegate onRewindCheck;
 
 		public Dictionary<int, List<PointInTime>> listDictionary = new Dictionary<int, List<PointInTime>>();
 		public List<Vector2Int> firstPosList { get; set; } = new List<Vector2Int>();
+		private List<bool> isFindableList = new List<bool>();
 
 		private void Awake() 
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
 			moveHandler = FindObjectOfType<MoveableCubeHandler>();
+			handler = FindObjectOfType<CubeHandler>();
 		}
 
 		private void Start() 
@@ -58,6 +61,9 @@ namespace Qbism.Rewind
 
 				if(this.tag == "Player" && firstPosList.Count > i)
 					firstPosList[i] = firstPosList[i - 1];
+				
+				if(this.tag == "Environment" && isFindableList.Count > i)
+					isFindableList[i] = isFindableList[i -1];
 			}
 
 			if (listDictionary[0].Count > 0)
@@ -74,6 +80,12 @@ namespace Qbism.Rewind
 			{
 				Vector2Int firstPos = new Vector2Int(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z));
 				firstPosList.Insert(0, firstPos);
+			}
+
+			if(this.tag == "Environment")
+			{
+				if(GetComponent<FloorCube>().isFindable) isFindableList.Insert(0, true);
+				else isFindableList.Insert(0, false);
 			}
 		}
 
@@ -121,8 +133,6 @@ namespace Qbism.Rewind
 					mover.RoundPosition();
 					mover.UpdateCenterPosition();
 					mover.GetComponent<PlayerCubeFeedForward>().ShowFeedForward();
-
-					CubeHandler handler = FindObjectOfType<CubeHandler>();
 					handler.currentCube = handler.FetchCube(mover.FetchGridPos());
 				}
 
@@ -130,9 +140,10 @@ namespace Qbism.Rewind
 				{
 					ResetStatic();
 					ResetShrunkStatus();
+					SetIsFindable();
 				}
 
-				if(GetComponent<MoveableCube>())
+				if (GetComponent<MoveableCube>())
 				{
 					var moveable = GetComponent<MoveableCube>();
 
@@ -141,7 +152,6 @@ namespace Qbism.Rewind
 					{
 						moveable.RoundPosition();
 						moveable.UpdateCenterPosition();
-						moveHandler.AddToMoveableDic(moveable.FetchGridPos(), moveable);
 					}
 
 					else if(Mathf.Approximately(Mathf.Abs(rewindOriginTransform.y - transform.position.y), 1)
@@ -150,14 +160,22 @@ namespace Qbism.Rewind
 						moveable.RoundPosition();
 						moveable.UpdateCenterPosition();
 						Destroy(GetComponent<FloorCube>());
-						CubeHandler handler = FindObjectOfType<CubeHandler>();
-						handler.floorCubeDic.Remove(rewindOriginPos); 
 						this.tag = "Moveable";
 						moveable.isDocked = false;
-						moveHandler.AddToMoveableDic(moveable.FetchGridPos(), moveable);
 					}
 				}
 			} 
+		}
+
+		private void SetIsFindable()
+		{
+			var cube = GetComponent<FloorCube>();
+
+			if (isFindableList.Count > 0 && isFindableList[timesRewinded] == true && 
+				cube.isFindable == false)
+			{
+				cube.isFindable = true;
+			}
 		}
 
 		private void ResetShrunkStatus()
@@ -182,8 +200,7 @@ namespace Qbism.Rewind
 				cube.type = CubeTypes.Static;
 				GetComponent<MeshRenderer>().material = 
 					GetComponent<StaticCube>().staticCubeMat;
-			}
-				
+			}	
 		}
 
 		private void CheckIfSamePos(out FloorCube cube, out bool samePos)

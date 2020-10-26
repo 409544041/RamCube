@@ -17,6 +17,7 @@ namespace Qbism.Cubes
 
 		//States
 		public bool hasShrunk { get; set; } = false;
+		public bool isFindable { get; set; } = true;
 
 		public Vector2Int FetchGridPos()
 		{
