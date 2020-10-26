@@ -27,7 +27,7 @@ namespace Qbism.MoveableCubes
 		public bool isMoving { get; set;} = false;
 		private float yPos = 1f;
 		public bool isBoosting { get; set; } = false;
-		public bool hasBumpedMoveable { get; set; } = false;
+		public bool hasBumped { get; set; } = false;
 		public bool isDocked { get; set; } = false;
 
 		public delegate bool KeyCheckDelegate(Vector3Int pos);
@@ -38,6 +38,10 @@ namespace Qbism.MoveableCubes
 		public MoveKeyCheckDelegate onMoveableKeyCheck;
 		public delegate bool ShrunkCheckDelegate(Vector2Int pos);
 		public ShrunkCheckDelegate onShrunkCheck;
+		public delegate Vector2Int PlayerPosDelegate();
+		public PlayerPosDelegate onPlayerPosCheck;
+		public delegate bool MovingCheckDelegate(Vector2Int pos);
+		public MovingCheckDelegate onMovingCheck;
 
 		public event Action<Vector2Int, GameObject, float, float> onComponentAdd;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
@@ -46,6 +50,8 @@ namespace Qbism.MoveableCubes
 		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
 		public event Action<Vector2Int, bool> onSetFindable;
 		public event Action<Vector2Int> onDicRemove;
+		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
+		public event Action<Vector2Int, bool> onSetShrunk;
 
 		private void Start()
 		{
@@ -55,10 +61,10 @@ namespace Qbism.MoveableCubes
 
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
 		{
-			if (CheckForWallAhead(posAhead) || hasBumpedMoveable)
+			if (CheckForWallAhead(posAhead) || hasBumped)
 			{
 				isMoving = false;
-				hasBumpedMoveable = false;
+				hasBumped = false;
 				return;
 			}
 
@@ -68,14 +74,21 @@ namespace Qbism.MoveableCubes
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead, 
 			Vector2Int originPos, Vector2Int prevPos)
-		{			
+		{	
 			isMoving = true;	
 
-			if(onMoveableKeyCheck(posAhead))
+			if(onMoveableKeyCheck(posAhead) && !onMovingCheck(posAhead))
 			{
 				onActivateOtherMoveable(posAhead, turnAxis, FetchGridPos());
-				hasBumpedMoveable = true;
+				hasBumped = true;
 			} 	
+
+			if(posAhead == onPlayerPosCheck())	
+			{
+				onActivatePlayerMove(this, side, turnAxis, posAhead);
+				onSetShrunk(posAhead, true);
+				hasBumped = true;
+			}
 
 			if(onFloorKeyCheck(posAhead) && !onShrunkCheck(posAhead))
 			{
@@ -106,7 +119,7 @@ namespace Qbism.MoveableCubes
 
 				RoundPosition();
 				isMoving = false;
-				hasBumpedMoveable = false;
+				hasBumped = false;
 				isDocked = true;
 
 				if(onFloorKeyCheck(posAhead))

@@ -22,6 +22,7 @@ namespace Qbism.PlayerCube
 		//Cache
 		AudioSource source;
 		MoveableCubeHandler moveHandler;
+		MoveableCube[] moveableCubes = null;
 
 		//States
 		public bool isInBoostPos { get; set; } = true;
@@ -38,11 +39,21 @@ namespace Qbism.PlayerCube
 		{
 			source = GetComponentInChildren<AudioSource>();
 			moveHandler = FindObjectOfType<MoveableCubeHandler>();
+			moveableCubes = FindObjectsOfType<MoveableCube>();
 		}
 
 		private void OnEnable() 
 		{
 			if(moveHandler != null) moveHandler.onSetPlayerInput += SetPlayerInput;
+
+			if (moveableCubes != null)
+			{
+				foreach (MoveableCube cube in moveableCubes)
+				{
+					cube.onPlayerPosCheck += FetchGridPos;
+					cube.onActivatePlayerMove += InitiateMoveFromOther;
+				}
+			}
 		}
 
 		private void Start()
@@ -59,6 +70,32 @@ namespace Qbism.PlayerCube
 		public void HandleKeyInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			if (!input) return;
+			StartCoroutine(Move(side, turnAxis, posAhead));
+		}
+
+		private void InitiateMoveFromOther(MoveableCube cube, Transform side, Vector3 turnAxis, Vector2Int posAhead)
+		{
+			if (side == cube.up)
+			{
+				side = up;
+				posAhead += Vector2Int.up;
+			} 
+			if (side == cube.down)
+			{
+				side = down;
+				posAhead += Vector2Int.down;
+			} 
+			if (side == cube.left)
+			{
+				side = left;
+				posAhead += Vector2Int.left;
+			} 
+			if (side == cube.right)
+			{
+				side = right;
+				posAhead += Vector2Int.right;
+			} 
+
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
 
@@ -148,6 +185,15 @@ namespace Qbism.PlayerCube
 		private void OnDisable()
 		{
 			if (moveHandler != null) moveHandler.onSetPlayerInput -= SetPlayerInput;
+
+			if (moveableCubes != null)
+			{
+				foreach (MoveableCube cube in moveableCubes)
+				{
+					cube.onPlayerPosCheck -= FetchGridPos;
+					cube.onActivatePlayerMove -= InitiateMoveFromOther;
+				}
+			}
 		}
 	}
 }

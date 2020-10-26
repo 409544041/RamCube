@@ -41,6 +41,7 @@ namespace Qbism.MoveableCubes
 					cube.onWallKeyCheck += CheckWallCubeDicKey;
 					cube.onMoveableKeyCheck += CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable += ActivateMoveableCube;
+					cube.onMovingCheck += FetchMovingStatus;
 				}
 			}
 		}
@@ -192,6 +193,11 @@ namespace Qbism.MoveableCubes
 			moveableCubeDic.Remove(pos);
 		}
 
+		private bool FetchMovingStatus(Vector2Int cubePos)
+		{
+			return moveableCubeDic[cubePos].isMoving;
+		}
+
 		private void OnDisable()
 		{
 			if (moveableCubes != null)
@@ -201,6 +207,7 @@ namespace Qbism.MoveableCubes
 					cube.onWallKeyCheck -= CheckWallCubeDicKey;
 					cube.onMoveableKeyCheck -= CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable -= ActivateMoveableCube;
+					cube.onMovingCheck -= FetchMovingStatus;
 				}
 			}
 		}

@@ -70,6 +70,7 @@ namespace Qbism.Cubes
 					cube.onShrunkCheck += FetchShrunkStatus;
 					cube.onSetFindable += SetFindableStatus;
 					cube.onDicRemove += RemoveFromDictionary;
+					cube.onSetShrunk += SetShrunkStatus;
 				}
 			}
 		}
@@ -183,7 +184,7 @@ namespace Qbism.Cubes
 						moveHandler.CheckMoveableCubeDicKey(posAhead))
 					{
 						moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-						cube.hasBumpedMoveable = true;
+						cube.hasBumped = true;
 					}
 						
 					cube.InitiateMove(side, turnAxis, posAhead, originPos);
@@ -246,6 +247,11 @@ namespace Qbism.Cubes
 			FetchCube(cubePos).isFindable = value;
 		}
 
+		private void SetShrunkStatus(Vector2Int cubePos, bool value)
+		{
+			FetchCube(cubePos).hasShrunk = value;
+		}
+
 		private void OnDisable()
 		{
 			if (mover != null)
@@ -279,6 +285,7 @@ namespace Qbism.Cubes
 					cube.onShrunkCheck -= FetchShrunkStatus;
 					cube.onSetFindable -= SetFindableStatus;
 					cube.onDicRemove -= RemoveFromDictionary;
+					cube.onSetShrunk -= SetShrunkStatus;
 				}
 			}
 		}
