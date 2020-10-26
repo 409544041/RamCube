@@ -104,6 +104,7 @@ namespace Qbism.MoveableCubes
 
 				RoundPosition();
 				isMoving = false;
+				hasBumpedMoveable = false;
 				isDocked = true;
 
 				onComponentAdd(posAhead, this.gameObject, shrinkStep, shrinkTimeStep);
