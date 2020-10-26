@@ -81,8 +81,6 @@ namespace Qbism.Rewind
 		{
 			listDictionary[0].Insert(0,
 				new PointInTime(transform.position, transform.rotation, transform.localScale));
-			if(GetComponent<StaticCube>())
-				print(this.gameObject.name + " " + listDictionary[0].Count);
 		}
 
 		public void StartRewinding()
