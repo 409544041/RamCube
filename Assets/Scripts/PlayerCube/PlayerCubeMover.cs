@@ -28,6 +28,7 @@ namespace Qbism.PlayerCube
 		public bool isInBoostPos { get; set; } = true;
 		public bool input { get; set; } = true;
 		public bool isBoosting { get; set; } = false;
+		bool initiatedByPlayer = true;
 
 		public event Action<Vector2Int> onCubeShrink;
 		public event Action<Vector2Int, GameObject, Transform, Vector3, Vector2Int> onFloorCheck;
@@ -64,12 +65,14 @@ namespace Qbism.PlayerCube
 		public void HandleSwipeInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			if (!input) return;
+			initiatedByPlayer = true;
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
 
 		public void HandleKeyInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			if (!input) return;
+			initiatedByPlayer = true;
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
 
@@ -94,8 +97,8 @@ namespace Qbism.PlayerCube
 			{
 				side = right;
 				posAhead += Vector2Int.right;
-			} 
-
+			}
+			initiatedByPlayer = false;
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
 
@@ -105,7 +108,7 @@ namespace Qbism.PlayerCube
 
 			onInitialRecord(transform.position, transform.rotation, transform.localScale);
 			onInitialFloorCubeRecord();
-			moveHandler.InitialRecordMoveables();
+			if(initiatedByPlayer) moveHandler.InitialRecordMoveables();
 			onRecordStart();
 
 			CheckPosAhead(posAhead, turnAxis);
