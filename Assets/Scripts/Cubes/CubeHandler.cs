@@ -246,7 +246,8 @@ namespace Qbism.Cubes
 
 		private void SetShrunkStatus(Vector2Int cubePos, bool value)
 		{
-			FetchCube(cubePos).hasShrunk = value;
+			if(FetchCube(cubePos).type == CubeTypes.Shrinking)
+				FetchCube(cubePos).hasShrunk = value;
 		}
 
 		private void OnDisable()
