@@ -173,6 +173,7 @@ namespace Qbism.Rewind
 					{
 						moveable.RoundPosition();
 						moveable.UpdateCenterPosition();
+						moveable.transform.localScale = moveable.moveScale;
 						Destroy(GetComponent<FloorCube>());
 						this.tag = "Moveable";
 						moveable.isDocked = false;

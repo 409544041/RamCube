@@ -21,6 +21,7 @@ namespace Qbism.MoveableCubes
 		[SerializeField] float timeStep = 0.01f;
 		[SerializeField] float lowerStep = 0.5f;
 		[SerializeField] AudioClip landClip = null;
+		public Vector3 moveScale = new Vector3( .9f, .9f, .9f);
 
 		//States
 		public bool canMove { get; set;} = true;
@@ -57,6 +58,7 @@ namespace Qbism.MoveableCubes
 		{
 			UpdateCenterPosition();
 			yPos = transform.position.y;
+			transform.localScale = moveScale;
 		}
 
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
@@ -117,18 +119,22 @@ namespace Qbism.MoveableCubes
 					yield return new WaitForSeconds(timeStep);
 				}
 
+				transform.localScale = new Vector3(1, 1, 1);
+
 				RoundPosition();
 				isMoving = false;
 				hasBumped = false;
 				isDocked = true;
 
-				if(onFloorKeyCheck(posAhead))
+				var cubePos = FetchGridPos();
+
+				if(onFloorKeyCheck(cubePos))
 				{
-					onSetFindable(posAhead, false);
-					onDicRemove(posAhead);
+					onSetFindable(cubePos, false);
+					onDicRemove(cubePos);
 				} 
 
-				onComponentAdd(posAhead, this.gameObject, shrinkStep, shrinkTimeStep);
+				onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep);
 				onCheckForNewFloorCubes();
 				onRecordStop(this);
 			}
@@ -151,6 +157,8 @@ namespace Qbism.MoveableCubes
 				transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 				yield return timeStep;
 			}
+
+			transform.localScale = new Vector3(1, 1, 1);
 
 			RoundPosition();
 			isMoving = false;

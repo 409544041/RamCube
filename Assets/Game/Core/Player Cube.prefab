@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 1807421524612065335}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 8928064180133485339}
   m_Father: {fileID: 0}
@@ -61,6 +61,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -85,6 +87,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1807421524612065338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,6 +595,7 @@ MonoBehaviour:
     m_AreaError: 15
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
+  m_Mesh: {fileID: 0}
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -795,6 +799,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1807421524612065338, guid: b6331b702f65f304b8b16e5ce332398d,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6331b702f65f304b8b16e5ce332398d, type: 3}
 --- !u!4 &521948824135652602 stripped
@@ -898,6 +907,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1807421524612065336, guid: b6331b702f65f304b8b16e5ce332398d,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1807421524612065338, guid: b6331b702f65f304b8b16e5ce332398d,
         type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1009,6 +1023,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1807421524612065338, guid: b6331b702f65f304b8b16e5ce332398d,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6331b702f65f304b8b16e5ce332398d, type: 3}
 --- !u!4 &2858555314342358429 stripped
@@ -1112,6 +1131,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1807421524612065336, guid: b6331b702f65f304b8b16e5ce332398d,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1807421524612065338, guid: b6331b702f65f304b8b16e5ce332398d,
         type: 3}
       propertyPath: m_Mesh
       value: 
