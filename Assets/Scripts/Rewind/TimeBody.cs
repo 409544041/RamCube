@@ -28,8 +28,10 @@ namespace Qbism.Rewind
 		public RewindCheckDelegate onRewindCheck;
 
 		public Dictionary<int, List<PointInTime>> listDictionary = new Dictionary<int, List<PointInTime>>();
-		public List<Vector2Int> firstPosList { get; set; } = new List<Vector2Int>();
+		private List<Vector2Int> firstPosList { get; set; } = new List<Vector2Int>();
 		private List<bool> isFindableList = new List<bool>();
+		private List<bool> hasShrunkList = new List<bool>();
+		private List<CubeTypes> isStaticList = new List<CubeTypes>();
 
 		private void Awake() 
 		{
@@ -62,8 +64,13 @@ namespace Qbism.Rewind
 				if(this.tag == "Player" && firstPosList.Count > i)
 					firstPosList[i] = firstPosList[i - 1];
 				
-				if(this.tag == "Environment" && isFindableList.Count > i)
-					isFindableList[i] = isFindableList[i -1];
+				if(this.tag == "Environment")
+				{
+					if (isFindableList.Count > i) isFindableList[i] = isFindableList[i - 1];
+					if (isStaticList.Count > i) isStaticList[i] = isStaticList[i - 1];
+					if (hasShrunkList.Count > i) hasShrunkList[i] = hasShrunkList[i - 1];
+				}  
+					
 			}
 
 			if (listDictionary[0].Count > 0)
@@ -84,8 +91,15 @@ namespace Qbism.Rewind
 
 			if(this.tag == "Environment")
 			{
-				if(GetComponent<FloorCube>().isFindable) isFindableList.Insert(0, true);
+				var cube = GetComponent<FloorCube>();
+				if(cube.isFindable) isFindableList.Insert(0, true);
 				else isFindableList.Insert(0, false);
+
+				if(cube.type == CubeTypes.Static) isStaticList.Insert(0, CubeTypes.Static);
+				else if(cube.type == CubeTypes.Shrinking) isStaticList.Insert(0, CubeTypes.Shrinking);
+
+				if(GetComponent<FloorCube>().hasShrunk == true) hasShrunkList.Insert(0, true);
+				else hasShrunkList.Insert(0, false);
 			}
 		}
 
@@ -137,7 +151,6 @@ namespace Qbism.Rewind
 				}
 
 				if (this.tag == "Environment") 
-				//TO DO: same as setfindable, but for shrunk. Instead of checking against player pos
 				{
 					ResetStatic();
 					ResetShrunkStatus();
@@ -174,44 +187,28 @@ namespace Qbism.Rewind
 
 			if (isFindableList.Count > 0 && isFindableList[timesRewinded] == true && 
 				cube.isFindable == false)
-			{
 				cube.isFindable = true;
-			}
 		}
 
 		private void ResetShrunkStatus()
 		{
-			FloorCube cube;
-			bool samePos;
-			CheckIfSamePos(out cube, out samePos);
-
-			if (cube.hasShrunk == true && samePos )
+			var cube = GetComponent<FloorCube>();
+			
+			if(hasShrunkList.Count > 0 && hasShrunkList[timesRewinded] == false &&
+				cube.hasShrunk == true)
 				cube.hasShrunk = false;
 		}
 
 		private void ResetStatic()
 		{
-			FloorCube cube;
-			bool samePos;
-			CheckIfSamePos(out cube, out samePos);
+			var cube = GetComponent<FloorCube>();
 
-			if(cube.hasShrunk == false && samePos && 
-				GetComponent<StaticCube>() && cube.type == CubeTypes.Shrinking)
+			if(isStaticList.Count > 0 && isStaticList[timesRewinded] == CubeTypes.Static &&
+				cube.type == CubeTypes.Shrinking)
 			{
 				cube.type = CubeTypes.Static;
-				GetComponent<MeshRenderer>().material = 
-					GetComponent<StaticCube>().staticCubeMat;
+				GetComponent<MeshRenderer>().material = GetComponent<StaticCube>().staticCubeMat;
 			}	
-		}
-
-		private void CheckIfSamePos(out FloorCube cube, out bool samePos)
-		{
-			cube = GetComponent<FloorCube>();
-			Vector2Int cubePos = cube.FetchGridPos();
-
-			samePos = cubePos == mover.GetComponent<TimeBody>().firstPosList[timesRewinded];
-		}
-
-		
+		}		
 	}
 }
