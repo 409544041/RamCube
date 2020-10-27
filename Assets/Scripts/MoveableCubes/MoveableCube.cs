@@ -21,7 +21,7 @@ namespace Qbism.MoveableCubes
 		[SerializeField] float timeStep = 0.01f;
 		[SerializeField] float lowerStep = 0.5f;
 		[SerializeField] AudioClip landClip = null;
-		public Vector3 moveScale = new Vector3( .9f, .9f, .9f);
+		[SerializeField] Vector3 moveScale = new Vector3( .9f, .9f, .9f);
 
 		//States
 		public bool canMove { get; set;} = true;

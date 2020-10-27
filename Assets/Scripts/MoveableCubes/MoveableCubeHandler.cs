@@ -111,7 +111,7 @@ namespace Qbism.MoveableCubes
 
 			CalculateSide(cubePos, activatorPos, cube, ref side, ref posAhead);
 
-			if (cube.canMove) cube.InitiateMove(side, turnAxis, posAhead, originPos);
+			cube.InitiateMove(side, turnAxis, posAhead, originPos);
 		}
 
 		private void CalculateSide(Vector2Int cubePos, Vector2Int activatorPos, MoveableCube cube, ref Transform side, ref Vector2Int posAhead)

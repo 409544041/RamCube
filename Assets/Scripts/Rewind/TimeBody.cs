@@ -32,6 +32,7 @@ namespace Qbism.Rewind
 		private List<bool> isFindableList = new List<bool>();
 		private List<bool> hasShrunkList = new List<bool>();
 		private List<CubeTypes> isStaticList = new List<CubeTypes>();
+		private List<bool> isDockedList = new List<bool>();
 
 		private void Awake() 
 		{
@@ -69,6 +70,7 @@ namespace Qbism.Rewind
 					if (isFindableList.Count > i) isFindableList[i] = isFindableList[i - 1];
 					if (isStaticList.Count > i) isStaticList[i] = isStaticList[i - 1];
 					if (hasShrunkList.Count > i) hasShrunkList[i] = hasShrunkList[i - 1];
+					if (isDockedList.Count > i) isDockedList[i] = isDockedList[i - 1];
 				}  
 					
 			}
@@ -81,6 +83,9 @@ namespace Qbism.Rewind
 
 		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale)
 		{
+			var cube = GetComponent<FloorCube>();
+			var moveable = GetComponent<MoveableCube>();
+
 			listDictionary[0].Insert(0, new PointInTime(pos, rot, scale));
 
 			if(this.tag == "Player")
@@ -89,17 +94,23 @@ namespace Qbism.Rewind
 				firstPosList.Insert(0, firstPos);
 			}
 
-			if(this.tag == "Environment")
+			if (cube)
 			{
-				var cube = GetComponent<FloorCube>();
-				if(cube.isFindable) isFindableList.Insert(0, true);
+				if (cube.isFindable) isFindableList.Insert(0, true);
 				else isFindableList.Insert(0, false);
 
-				if(cube.type == CubeTypes.Static) isStaticList.Insert(0, CubeTypes.Static);
-				else if(cube.type == CubeTypes.Shrinking) isStaticList.Insert(0, CubeTypes.Shrinking);
+				if (cube.type == CubeTypes.Static) isStaticList.Insert(0, CubeTypes.Static);
+				else if (cube.type == CubeTypes.Shrinking) isStaticList.Insert(0, CubeTypes.Shrinking);
 
-				if(GetComponent<FloorCube>().hasShrunk == true) hasShrunkList.Insert(0, true);
+				if (cube.hasShrunk == true) hasShrunkList.Insert(0, true);
 				else hasShrunkList.Insert(0, false);
+
+			}
+							
+			if(moveable)
+			{
+				if (moveable.isDocked == true) isDockedList.Insert(0, true);
+				else isDockedList.Insert(0, false);
 			}
 		}
 
@@ -150,35 +161,31 @@ namespace Qbism.Rewind
 					handler.currentCube = handler.FetchCube(mover.FetchGridPos());
 				}
 
-				if (this.tag == "Environment") 
+				if (this.tag == "Environment" || this.tag == "Moveable") 
 				{
+					if(GetComponent<MoveableCube>()) print("getting here");
 					ResetStatic();
 					ResetShrunkStatus();
 					SetIsFindable();
+					ResetDocked();
 				}
 
-				if (GetComponent<MoveableCube>())
-				{
-					var moveable = GetComponent<MoveableCube>();
+				// if (GetComponent<MoveableCube>())
+				// {
+				// 	var moveable = GetComponent<MoveableCube>();
 
-					if (Mathf.Approximately(Mathf.Abs(rewindOriginTransform.y - transform.position.y), 0)
-						&& !GetComponent<FloorCube>())
-					{
-						moveable.RoundPosition();
-						moveable.UpdateCenterPosition();
-					}
+				// 	if (Mathf.Approximately(Mathf.Abs(rewindOriginTransform.y - transform.position.y), 0)
+				// 		&& !GetComponent<FloorCube>())
+				// 	{
+						
+				// 	}
 
-					else if(Mathf.Approximately(Mathf.Abs(rewindOriginTransform.y - transform.position.y), 1)
-						&& GetComponent<FloorCube>())
-					{
-						moveable.RoundPosition();
-						moveable.UpdateCenterPosition();
-						moveable.transform.localScale = moveable.moveScale;
-						Destroy(GetComponent<FloorCube>());
-						this.tag = "Moveable";
-						moveable.isDocked = false;
-					}
-				}
+				// 	else if(Mathf.Approximately(Mathf.Abs(rewindOriginTransform.y - transform.position.y), 1)
+				// 		&& GetComponent<FloorCube>())
+				// 	{
+						
+				// 	}
+				// }
 			} 
 		}
 
@@ -210,6 +217,24 @@ namespace Qbism.Rewind
 				cube.type = CubeTypes.Static;
 				GetComponent<MeshRenderer>().material = GetComponent<StaticCube>().staticCubeMat;
 			}	
-		}		
+		}	
+
+		private void ResetDocked()
+		{
+			var moveable = GetComponent<MoveableCube>();
+			if(!moveable) return;
+
+			moveable.RoundPosition();
+			moveable.UpdateCenterPosition();
+
+			if(isDockedList.Count > 0 && isDockedList[timesRewinded] == false && 
+				moveable.isDocked == true)
+			{
+				print("here");
+				this.tag = "Moveable";
+				moveable.isDocked = false;
+				Destroy(GetComponent<FloorCube>());
+			}
+		}	
 	}
 }
