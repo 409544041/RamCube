@@ -24,7 +24,6 @@ namespace Qbism.MoveableCubes
 		[SerializeField] Vector3 moveScale = new Vector3( .9f, .9f, .9f);
 
 		//States
-		public bool canMove { get; set;} = true;
 		public bool isMoving { get; set;} = false;
 		private float yPos = 1f;
 		public bool isBoosting { get; set; } = false;
