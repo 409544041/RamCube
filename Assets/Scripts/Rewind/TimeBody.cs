@@ -169,23 +169,6 @@ namespace Qbism.Rewind
 					SetIsFindable();
 					ResetDocked();
 				}
-
-				// if (GetComponent<MoveableCube>())
-				// {
-				// 	var moveable = GetComponent<MoveableCube>();
-
-				// 	if (Mathf.Approximately(Mathf.Abs(rewindOriginTransform.y - transform.position.y), 0)
-				// 		&& !GetComponent<FloorCube>())
-				// 	{
-						
-				// 	}
-
-				// 	else if(Mathf.Approximately(Mathf.Abs(rewindOriginTransform.y - transform.position.y), 1)
-				// 		&& GetComponent<FloorCube>())
-				// 	{
-						
-				// 	}
-				// }
 			} 
 		}
 
@@ -230,7 +213,6 @@ namespace Qbism.Rewind
 			if(isDockedList.Count > 0 && isDockedList[timesRewinded] == false && 
 				moveable.isDocked == true)
 			{
-				print("here");
 				this.tag = "Moveable";
 				moveable.isDocked = false;
 				Destroy(GetComponent<FloorCube>());

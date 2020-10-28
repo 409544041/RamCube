@@ -51,7 +51,7 @@ namespace Qbism.Cubes
 
 			AdjustBeamLength(hits);
 
-			if (hits.Length > 0 && (mover.input || mover.isBoosting))
+			if (hits.Length > 0 && mover.input)
 			{
 				if (hits[0].transform.gameObject.tag == "Player" &&
 				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
