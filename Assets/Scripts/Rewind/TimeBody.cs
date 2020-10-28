@@ -163,38 +163,40 @@ namespace Qbism.Rewind
 
 				if (this.tag == "Environment" || this.tag == "Moveable") 
 				{
-					if(GetComponent<MoveableCube>()) print("getting here");
-					ResetStatic();
-					ResetShrunkStatus();
-					SetIsFindable();
-					ResetDocked();
+					var cube = GetComponent<FloorCube>();
+					if(cube)
+					{
+						ResetStatic(cube);
+						ResetShrunkStatus(cube);
+						SetIsFindable(cube);
+					}
+
+					var moveable = GetComponent<MoveableCube>();
+					if (moveable)
+					{
+						ResetDocked(moveable);
+					}
 				}
 			} 
 		}
 
-		private void SetIsFindable()
+		private void SetIsFindable(FloorCube cube)
 		{
-			var cube = GetComponent<FloorCube>();
-
-			if (isFindableList.Count > 0 && isFindableList[timesRewinded] == true && 
+			if (isFindableList.Count > timesRewinded && isFindableList[timesRewinded] == true && 
 				cube.isFindable == false)
 				cube.isFindable = true;
 		}
 
-		private void ResetShrunkStatus()
-		{
-			var cube = GetComponent<FloorCube>();
-			
-			if(hasShrunkList.Count > 0 && hasShrunkList[timesRewinded] == false &&
+		private void ResetShrunkStatus(FloorCube cube)
+		{			
+			if(hasShrunkList.Count > timesRewinded && hasShrunkList[timesRewinded] == false &&
 				cube.hasShrunk == true)
 				cube.hasShrunk = false;
 		}
 
-		private void ResetStatic()
+		private void ResetStatic(FloorCube cube)
 		{
-			var cube = GetComponent<FloorCube>();
-
-			if(isStaticList.Count > 0 && isStaticList[timesRewinded] == CubeTypes.Static &&
+			if(isStaticList.Count > timesRewinded && isStaticList[timesRewinded] == CubeTypes.Static &&
 				cube.type == CubeTypes.Shrinking)
 			{
 				cube.type = CubeTypes.Static;
@@ -202,15 +204,12 @@ namespace Qbism.Rewind
 			}	
 		}	
 
-		private void ResetDocked()
+		private void ResetDocked(MoveableCube moveable)
 		{
-			var moveable = GetComponent<MoveableCube>();
-			if(!moveable) return;
-
 			moveable.RoundPosition();
 			moveable.UpdateCenterPosition();
 
-			if(isDockedList.Count > 0 && isDockedList[timesRewinded] == false && 
+			if(isDockedList.Count > timesRewinded && isDockedList[timesRewinded] == false && 
 				moveable.isDocked == true)
 			{
 				this.tag = "Moveable";
