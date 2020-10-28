@@ -101,9 +101,10 @@ namespace Qbism.Rewind
 
 		private void CheckForMovement()
 		{
-			if(!moveHandler.CheckForMovingMoveables() && (!mover.isMoving || !mover.isBoosting))
+			if(mover.isBoosting || mover.isMoving) return;
+
+			if(!moveHandler.CheckForMovingMoveables())
 			{
-				moveHandler.isRecording = false;
 				moveHandler.moveableCubeDic.Clear();
 				moveHandler.LoadMoveableCubeDictionary();
 				StopRecordingMoveables();

@@ -141,8 +141,6 @@ namespace Qbism.Cubes
 				{
 					cubeFF.ShowFeedForward();
 				} 
-
-				if(moveHandler.isRecording == false) mover.input = true;
 			}
 		}
 

@@ -7,9 +7,6 @@ namespace Qbism.MoveableCubes
 {
 	public class MoveableCubeHandler : MonoBehaviour
 	{
-		//States
-		public bool isRecording { get; set; } = false;
-
 		//Cache
 		MoveableCube[] moveableCubes = null;
 
@@ -79,29 +76,6 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		public bool CheckForMovingMoveables()
-		{
-			int amountNotMoving = 0;
-			
-			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
-			{
-				var cube = pair.Value;
-
-				if (!cube.isMoving) amountNotMoving++;
-			}
-
-			if (amountNotMoving == moveableCubeDic.Count && isRecording == true)
-			{
-				// isRecording = false;
-				// moveableCubeDic.Clear();
-				// LoadMoveableCubeDictionary();
-				// onRecordStop();
-				// onSetPlayerInput(true);
-				return false;
-			}
-			else return true;
-		}
-
 		public void ActivateMoveableCube(Vector2Int cubePos, Vector3 turnAxis, Vector2Int activatorPos)
 		{
 			var cube = FetchMoveableCube(cubePos);
@@ -138,6 +112,24 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
+		public bool CheckForMovingMoveables()
+		{
+			if (moveableCubeDic.Count == 0) return false;
+
+			int amountNotMoving = 0;
+
+			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
+			{
+				var cube = pair.Value;
+
+				if (!cube.isMoving) amountNotMoving++;
+			}
+
+			if (amountNotMoving == moveableCubeDic.Count)
+				return false;
+			else return true;
+		}
+
 		public void InitialRecordMoveables()
 		{
 			foreach(KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
@@ -150,7 +142,6 @@ namespace Qbism.MoveableCubes
 
 		public void StartRecordingMoveables()
 		{
-			isRecording = true;
 			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
 			{
 				var cube = pair.Value;
