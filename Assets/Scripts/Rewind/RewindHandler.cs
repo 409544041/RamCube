@@ -101,7 +101,7 @@ namespace Qbism.Rewind
 
 		private void CheckForMovement()
 		{
-			if(mover.isBoosting || mover.isMoving) return;
+			if(mover.isBoosting || mover.isMoving || mover.isTurning) return;
 
 			if(!moveHandler.CheckForMovingMoveables())
 			{

@@ -51,6 +51,7 @@ namespace Qbism.Cubes
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
 			mover.input = false;
+			mover.isTurning = true;
 
 			var axis = transform.TransformDirection(turnAxis);
 
@@ -69,6 +70,7 @@ namespace Qbism.Cubes
 			Vector2Int posAhead = new Vector2Int(0, 0);
 
 			mover.CheckFloorInNewPos(side, turnAxis, posAhead);
+			mover.isTurning = false;
 		}
 
 		public IEnumerator ExecuteActionOnFF(GameObject ffCube)

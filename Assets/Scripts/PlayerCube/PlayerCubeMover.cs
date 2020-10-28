@@ -28,6 +28,7 @@ namespace Qbism.PlayerCube
 		public bool isInBoostPos { get; set; } = true;
 		public bool input { get; set; } = true;
 		public bool isBoosting { get; set; } = false;
+		public bool isTurning { get; set; } = false;
 		bool initiatedByPlayer = true;
 		public bool isMoving { get; set; } = false;
 
