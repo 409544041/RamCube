@@ -61,24 +61,10 @@ namespace Qbism.Rewind
 			{
 				if (listDictionary[i - 1].Count > 0)
 					listDictionary[i] = listDictionary[i - 1];
-
-				if(this.tag == "Player" && firstPosList.Count > i)
-					firstPosList[i] = firstPosList[i - 1];
-				
-				if(this.tag == "Environment")
-				{
-					if (isFindableList.Count > i) isFindableList[i] = isFindableList[i - 1];
-					if (isStaticList.Count > i) isStaticList[i] = isStaticList[i - 1];
-					if (hasShrunkList.Count > i) hasShrunkList[i] = hasShrunkList[i - 1];
-					if (isDockedList.Count > i) isDockedList[i] = isDockedList[i - 1];
-				}  
-					
 			}
 
-			if (listDictionary[0].Count > 0)
-			{
+			if (listDictionary[0].Count > 0) 
 				listDictionary[0] = new List<PointInTime>();
-			}
 		}
 
 		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale)
@@ -110,7 +96,7 @@ namespace Qbism.Rewind
 			if(moveable)
 			{
 				if (moveable.isDocked == true) isDockedList.Insert(0, true);
-				else isDockedList.Insert(0, false);
+				else isDockedList.Insert(0, false); 
 			}
 		}
 

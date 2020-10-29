@@ -131,7 +131,6 @@ namespace Qbism.Rewind
 			
 			foreach (TimeBody timeBody in timeBodies)
 			{
-				moveHandler.moveableCubeDic.Clear();
 				timeBody.timesRewinded = timesRewindUsed;
 				timeBody.StartRewinding();
 			}
@@ -163,8 +162,8 @@ namespace Qbism.Rewind
 
 			if(body != null)
 			{
-				cube.GetComponent<TimeBody>().ShiftLists();
-				cube.GetComponent<TimeBody>().InitialRecord(pos, rot, scale);
+				body.ShiftLists();
+				body.InitialRecord(pos, rot, scale);
 			}
 		}
 
@@ -184,8 +183,8 @@ namespace Qbism.Rewind
 
 			if (body != null)
 			{
-				cube.GetComponent<TimeBody>().ShiftLists();
-				cube.GetComponent<TimeBody>().InitialRecord(pos, rot, scale);
+				body.ShiftLists();
+				body.InitialRecord(pos, rot, scale);
 			}
 		}
 
