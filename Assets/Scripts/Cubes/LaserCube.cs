@@ -23,7 +23,7 @@ namespace Qbism.Cubes
 		SceneHandler loader;
 
 		//States
-		bool shouldMakeSound = true;
+		bool shouldTrigger = true;
 
 		public UnityEvent onLaserPassEvent = new UnityEvent();
 
@@ -56,18 +56,22 @@ namespace Qbism.Cubes
 				if (hits[0].transform.gameObject.tag == "Player" &&
 				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
 				{
-					if(shouldMakeSound)
+					if(shouldTrigger)
 					{
 						source.clip = passClip;
 						onLaserPassEvent.Invoke();
-						shouldMakeSound = false;
+						shouldTrigger = false;
 					}
 				}
 
 				else if (hits[0].transform.gameObject.tag == "Player" &&
 					!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
 				{
-					StartCoroutine(RestartLevelTransition());
+					if (shouldTrigger)
+					{
+						StartCoroutine(RestartLevelTransition());
+						shouldTrigger = false;
+					}
 				}
 			} 	
 		}
@@ -81,7 +85,7 @@ namespace Qbism.Cubes
 			}
 			else
 			{
-				shouldMakeSound = true;
+				shouldTrigger = true;
 				laserBeam.transform.localScale = new Vector3(1, 1, distance);
 				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
 			}
@@ -109,7 +113,7 @@ namespace Qbism.Cubes
 
 		private IEnumerator RestartLevelTransition()
 		{
-			shouldMakeSound = false;
+			shouldTrigger = false;
 			mover.input = false;
 			source.clip = denyClip;
 			onLaserPassEvent.Invoke();
