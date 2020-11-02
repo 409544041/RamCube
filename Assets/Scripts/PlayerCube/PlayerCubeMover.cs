@@ -37,6 +37,7 @@ namespace Qbism.PlayerCube
 		public event Action onRecordStart;
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action onInitialFloorCubeRecord;
+		public event Action<bool> onSetLaserTriggers;
 
 		private void Awake()
 		{
@@ -47,8 +48,6 @@ namespace Qbism.PlayerCube
 
 		private void OnEnable() 
 		{
-			if(moveHandler != null) moveHandler.onSetPlayerInput += SetPlayerInput;
-
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
@@ -88,6 +87,8 @@ namespace Qbism.PlayerCube
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
+			yield return new WaitForSeconds(.1f); //Added to ensure laser has time to register presence
+
 			var cubeToShrink = FetchGridPos();
 
 			isMoving = true;
@@ -100,6 +101,7 @@ namespace Qbism.PlayerCube
 			} 
 
 			onRecordStart();
+			onSetLaserTriggers(true);
 
 			CheckPosAhead(posAhead, turnAxis);
 
@@ -114,7 +116,6 @@ namespace Qbism.PlayerCube
 			RoundPosition();
 			UpdateCenterPosition();
 			isMoving = false;
-
 			onCubeShrink(cubeToShrink);
 
 			CheckFloorInNewPos(side, turnAxis, posAhead);
@@ -202,8 +203,6 @@ namespace Qbism.PlayerCube
 
 		private void OnDisable()
 		{
-			if (moveHandler != null) moveHandler.onSetPlayerInput -= SetPlayerInput;
-
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)

@@ -34,15 +34,15 @@ namespace Qbism.Cubes
 			source = GetComponentInChildren<AudioSource>();
 		}
 
+		private void OnEnable() 
+		{
+			if(mover != null) mover.onSetLaserTriggers += SetLaserTrigger;
+		}
+
 		private void Start()
 		{
 			laserBeam.transform.localScale = new Vector3(1, 1, distance);
 			laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
-		}
-
-		private void Update() 
-		{
-			if (!mover.input) shouldTrigger = true;
 		}
 
 		private void FixedUpdate()
@@ -56,6 +56,9 @@ namespace Qbism.Cubes
 
 			AdjustBeamLength(hits);
 
+			//if (!mover.isMoving) shouldTrigger = true;
+			//from playercube trigger setting 'shouldTrigger' to true;
+
 			if (hits.Length > 0 && (mover.input || mover.isBoosting))
 			{
 				if (hits[0].transform.gameObject.tag == "Player" &&
@@ -63,6 +66,7 @@ namespace Qbism.Cubes
 				{
 					if(shouldTrigger)
 					{
+						print("triggering");
 						source.clip = passClip;
 						onLaserPassEvent.Invoke();
 						shouldTrigger = false;
@@ -90,7 +94,7 @@ namespace Qbism.Cubes
 			}
 			else
 			{
-				shouldTrigger = true;
+				//shouldTrigger = true;
 				laserBeam.transform.localScale = new Vector3(1, 1, distance);
 				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
 			}
@@ -124,6 +128,16 @@ namespace Qbism.Cubes
 			onLaserPassEvent.Invoke();
 			yield return new WaitWhile(() => source.isPlaying);
 			loader.RestartLevel();
+		}
+
+		private void SetLaserTrigger(bool value)
+		{
+			shouldTrigger = value;
+		}
+
+		private void OnDisable()
+		{
+			if (mover != null) mover.onSetLaserTriggers -= SetLaserTrigger;
 		}
 	}
 }

@@ -18,7 +18,6 @@ namespace Qbism.MoveableCubes
 
 		public event Action<MoveableCube> onRecordStart;
 		public event Action onRecordStop;
-		public event Action<bool> onSetPlayerInput;
 		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
 		private void Awake() 
