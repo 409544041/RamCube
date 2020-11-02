@@ -33,6 +33,7 @@ namespace Qbism.PlayerCube
 		public bool isTurning { get; set; } = false;
 		bool initiatedByPlayer = true;
 		public bool isMoving { get; set; } = false;
+		public bool lasersInLevel { get; set; } = false;
 
 		public event Action<Vector2Int> onCubeShrink;
 		public event Action<Vector2Int, GameObject, Transform, Vector3, Vector2Int> onFloorCheck;
@@ -105,7 +106,7 @@ namespace Qbism.PlayerCube
 			} 
 
 			onRecordStart();
-			onSetLaserTriggers(true);
+			if(lasersInLevel) onSetLaserTriggers(true);
 
 			CheckPosAhead(posAhead, turnAxis);
 
@@ -233,7 +234,7 @@ namespace Qbism.PlayerCube
 
 		public void PlayLandClip()
 		{
-			AudioSource.PlayClipAtPoint(landClip, Camera.main.transform.position, .05f);
+			AudioSource.PlayClipAtPoint(landClip, Camera.main.transform.position, .2f);
 		}
 
 		private void OnDisable()

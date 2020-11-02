@@ -43,6 +43,8 @@ namespace Qbism.Cubes
 		{
 			laserBeam.transform.localScale = new Vector3(1, 1, distance);
 			laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
+
+			mover.lasersInLevel = true;
 		}
 
 		private void FixedUpdate()
