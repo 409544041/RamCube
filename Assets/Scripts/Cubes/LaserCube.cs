@@ -56,9 +56,6 @@ namespace Qbism.Cubes
 
 			AdjustBeamLength(hits);
 
-			//if (!mover.isMoving) shouldTrigger = true;
-			//from playercube trigger setting 'shouldTrigger' to true;
-
 			if (hits.Length > 0 && (mover.input || mover.isBoosting))
 			{
 				if (hits[0].transform.gameObject.tag == "Player" &&
@@ -66,7 +63,6 @@ namespace Qbism.Cubes
 				{
 					if(shouldTrigger)
 					{
-						print("triggering");
 						source.clip = passClip;
 						onLaserPassEvent.Invoke();
 						shouldTrigger = false;
@@ -94,7 +90,6 @@ namespace Qbism.Cubes
 			}
 			else
 			{
-				//shouldTrigger = true;
 				laserBeam.transform.localScale = new Vector3(1, 1, distance);
 				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
 			}
