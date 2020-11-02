@@ -46,7 +46,7 @@ namespace Qbism.PlayerCube
 
 		private void DisableFeedForwardOnMove()
 		{
-			if (mover.input == false)
+			if (mover.isMoving || mover.isBoosting || mover.isTurning)
 			{
 				foreach (FeedForwardCube ffCube in feedForwardCubes)
 				{
@@ -75,11 +75,6 @@ namespace Qbism.PlayerCube
 				}
 				else ffCube.gameObject.SetActive(false);
 			}
-		}
-
-		public FeedForwardCube[] FetchFFCubes()
-		{
-			return feedForwardCubes;
 		}
 	}
 }
