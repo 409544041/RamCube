@@ -40,7 +40,12 @@ namespace Qbism.Cubes
 			laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
 		}
 
-		void FixedUpdate()
+		private void Update() 
+		{
+			if (!mover.input) shouldTrigger = true;
+		}
+
+		private void FixedUpdate()
 		{
 			FireLaserCast();
 		}
@@ -51,7 +56,7 @@ namespace Qbism.Cubes
 
 			AdjustBeamLength(hits);
 
-			if (hits.Length > 0 && mover.input)
+			if (hits.Length > 0 && (mover.input || mover.isBoosting))
 			{
 				if (hits[0].transform.gameObject.tag == "Player" &&
 				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
