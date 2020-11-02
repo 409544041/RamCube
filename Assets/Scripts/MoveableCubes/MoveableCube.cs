@@ -78,7 +78,7 @@ namespace Qbism.MoveableCubes
 		{	
 			isMoving = true;	
 
-			if(onMoveableKeyCheck(posAhead) && !onMovingCheck(posAhead))
+			if(onMoveableKeyCheck(posAhead) && !onMovingCheck(posAhead)) //checking if it's not moving to ensure it's not checking itself in his origin pos
 			{
 				onActivateOtherMoveable(posAhead, turnAxis, FetchGridPos());
 				hasBumped = true;
@@ -139,17 +139,17 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		public void InitiateLowering(Vector2Int cubePos, Vector2Int originPos)
+		public void InitiateLowering(Vector2Int cubePos)
 		{
 			Vector3 targetPos = new Vector3(transform.position.x,
 				transform.position.y - 1, transform.position.z);
 			float step = lowerStep * Time.deltaTime;
 
-			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos, originPos));
+			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos));
 		}
 
 		private IEnumerator BecomeFloorByLowering(Vector3 targetPos, float step, 
-			Vector2Int cubePos, Vector2Int originPos)
+			Vector2Int cubePos)
 		{
 			while(transform.position.y > targetPos.y)
 			{

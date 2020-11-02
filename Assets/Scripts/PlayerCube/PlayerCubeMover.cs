@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.MoveableCubes;
+using Qbism.SceneTransition;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Qbism.PlayerCube
 {
@@ -16,8 +18,8 @@ namespace Qbism.PlayerCube
 		public Transform right = null;
 		[SerializeField] int turnStep = 18;
 		[SerializeField] float timeStep = 0.01f;
+		[SerializeField] float lowerStep = 2.5f;
 		[SerializeField] AudioClip landClip = null;
-
 
 		//Cache
 		AudioSource source;
@@ -38,6 +40,8 @@ namespace Qbism.PlayerCube
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action onInitialFloorCubeRecord;
 		public event Action<bool> onSetLaserTriggers;
+
+		public UnityEvent onLoweringEvent = new UnityEvent();
 
 		private void Awake()
 		{
@@ -119,6 +123,37 @@ namespace Qbism.PlayerCube
 			onCubeShrink(cubeToShrink);
 
 			CheckFloorInNewPos(side, turnAxis, posAhead);
+		}
+
+		public void InitiateLowering(Vector2Int cubePos)
+		{
+			Vector3 targetPos = new Vector3(transform.position.x,
+				transform.position.y - 1, transform.position.z);
+			float step = lowerStep * Time.deltaTime;
+
+			StartCoroutine(LowerCube(targetPos, step, cubePos));
+		}
+
+		private IEnumerator LowerCube(Vector3 targetPos, float step, Vector2Int cubePos)
+		{
+			isMoving = true;
+			input = false;
+			onLoweringEvent.Invoke();
+
+			while (transform.position.y > targetPos.y)
+			{
+				transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
+				yield return timeStep;
+			}
+
+			transform.localScale = new Vector3(1, 1, 1);
+
+			RoundPosition();
+
+			AudioSource source = GetComponentInChildren<AudioSource>();
+			yield return new WaitWhile(() => source.isPlaying);
+
+			FindObjectOfType<SceneHandler>().RestartLevel();
 		}
 
 		public void RoundPosition()

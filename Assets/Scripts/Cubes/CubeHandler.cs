@@ -105,9 +105,6 @@ namespace Qbism.Cubes
 			FloorCube previousCube;
 
 			previousCube = currentCube;
-			currentCube = FetchCube(cubePos);
-
-			bool differentCubes = currentCube != previousCube;
 
 			if(previousCube.FetchType() == CubeTypes.Static)
 				previousCube.GetComponent<StaticCube>().BecomeFallingCube(cube);
@@ -117,30 +114,40 @@ namespace Qbism.Cubes
 			{
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
 				moveHandler.StartRecordingMoveables();
-			}	
-	
-			if (currentCube.FetchType() == CubeTypes.Boosting)
-				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-
-			else if ((currentCube.FetchType() == CubeTypes.Flipping ||
-				currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
-			{
-				if (onLand != null) onLand();
-				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 			}
 
-			else
+			if (floorCubeDic.ContainsKey(cubePos))
 			{
-				if (differentCubes && onLand != null)
+				currentCube = FetchCube(cubePos);
+				bool differentCubes = currentCube != previousCube;
+
+				if (currentCube.FetchType() == CubeTypes.Boosting)
+					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+
+				else if ((currentCube.FetchType() == CubeTypes.Flipping ||
+					currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
 				{
-					cubeFF.ShowFeedForward();
-					onLand();
-					mover.PlayLandClip();
+					if (onLand != null) onLand();
+					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 				}
+
 				else
 				{
-					cubeFF.ShowFeedForward();
-				} 
+					if (differentCubes && onLand != null)
+					{
+						cubeFF.ShowFeedForward();
+						onLand();
+						mover.PlayLandClip();
+					}
+					else
+					{
+						cubeFF.ShowFeedForward(); //landing on same cube, like after having turned/flipped
+					}
+				}
+			}
+			else
+			{
+				mover.InitiateLowering(cubePos);
 			}
 		}
 
@@ -186,7 +193,7 @@ namespace Qbism.Cubes
 				}
 			}
 
-			else cube.InitiateLowering(cubePos, originPos);
+			else cube.InitiateLowering(cubePos);
 		}
 
 		private void InitialRecordCubes()
