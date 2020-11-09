@@ -32,7 +32,7 @@ namespace Qbism.General
 
 		void Start()
 		{
-			offSet = new Vector2(0, -scrollSpeed);
+			offSet = new Vector2(-scrollSpeed, 0);
 		}
 
 		private void InitiateScroll()
@@ -42,7 +42,7 @@ namespace Qbism.General
 
 		private IEnumerator ScrollTexture() //Used in action
 		{
-			while (Mathf.Abs(myMaterial.mainTextureOffset.y) < maxOffset.y)
+			while (Mathf.Abs(myMaterial.mainTextureOffset.x) < maxOffset.x)
 			{
 				myMaterial.mainTextureOffset += offSet * Time.deltaTime;
 				yield return null;

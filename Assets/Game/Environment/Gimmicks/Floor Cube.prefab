@@ -59,10 +59,12 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7cd47246bb24e60448c92861fc60b0eb, type: 2}
+  - {fileID: 2100000, guid: 122a167034753b646ac7103637fcc0f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,6 +85,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7618746930442311349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +321,7 @@ MonoBehaviour:
     m_AreaError: 15
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
+  m_Mesh: {fileID: 0}
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -378,4 +382,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d516fbc1af19f847a2d3e72f75e3469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstPosList: []

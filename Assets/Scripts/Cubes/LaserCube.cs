@@ -41,8 +41,8 @@ namespace Qbism.Cubes
 
 		private void Start()
 		{
-			laserBeam.transform.localScale = new Vector3(1, 1, distance);
-			laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
+			// laserBeam.transform.localScale = new Vector3(1, distance, 1);
+			// laserBeam.transform.localPosition = new Vector3(0, (.5f * distance) + 0.5f, -0.5f);
 
 			mover.lasersInLevel = true;
 		}
@@ -87,12 +87,12 @@ namespace Qbism.Cubes
 		{
 			if (hits.Length > 0)
 			{
-				laserBeam.transform.localScale = new Vector3(1, 1, hits[0].distance);
+				laserBeam.transform.localScale = new Vector3(1, hits[0].distance, 1);
 				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * hits[0].distance) + 0.5f);
 			}
 			else
 			{
-				laserBeam.transform.localScale = new Vector3(1, 1, distance);
+				laserBeam.transform.localScale = new Vector3(1, distance, 1);
 				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
 			}
 		}
