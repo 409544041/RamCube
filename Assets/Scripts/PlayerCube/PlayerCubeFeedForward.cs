@@ -20,6 +20,9 @@ namespace Qbism.PlayerCube
 		public delegate bool KeyCheckDelegate(Vector2Int pos);
 		public KeyCheckDelegate onKeyCheck;
 
+		public delegate bool ShrunkCheckDelegate(Vector2Int pos);
+		public ShrunkCheckDelegate onShrunkCheck;
+
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
@@ -43,7 +46,7 @@ namespace Qbism.PlayerCube
 
 		private void DisableFeedForwardOnMove()
 		{
-			if (mover.input == false)
+			if (mover.isMoving || mover.isBoosting || mover.isTurning)
 			{
 				foreach (FeedForwardCube ffCube in feedForwardCubes)
 				{
@@ -61,7 +64,7 @@ namespace Qbism.PlayerCube
 
 				var onePosAhead = mover.FetchGridPos() + neighbourDirs[ffIndex];
 
-				if (onKeyCheck(onePosAhead))
+				if (onKeyCheck(onePosAhead) && onShrunkCheck(onePosAhead) == false)
 				{
 					ffCube.gameObject.SetActive(true);
 					ffCube.transform.position = new Vector3
@@ -72,11 +75,6 @@ namespace Qbism.PlayerCube
 				}
 				else ffCube.gameObject.SetActive(false);
 			}
-		}
-
-		public FeedForwardCube[] FetchFFCubes()
-		{
-			return feedForwardCubes;
 		}
 	}
 }

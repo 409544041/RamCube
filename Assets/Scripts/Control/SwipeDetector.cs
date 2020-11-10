@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.Cubes;
 using Qbism.PlayerCube;
+using Qbism.Rewind;
 using UnityEngine;
 
 namespace Qbism.Control
@@ -16,6 +17,7 @@ namespace Qbism.Control
 		//Cache
 		CubeHandler handler;
 		PlayerCubeMover mover;
+		RewindHandler rewinder;
 
 		//States
 		Vector2 fingerDownPos;
@@ -27,6 +29,7 @@ namespace Qbism.Control
 		{
 			handler = FindObjectOfType<CubeHandler>();
 			mover = FindObjectOfType<PlayerCubeMover>();
+			rewinder = FindObjectOfType<RewindHandler>();
 		}
 
 		void Update()
@@ -58,26 +61,46 @@ namespace Qbism.Control
 
 		private void DetectSwipes()
 		{
-			if (!SwipeDistanceCheck()) return;
-
 			if (SwipeDistanceCheck())
 			{
-				if (IsUpSwipe() &&
-					handler.floorCubeGrid.ContainsKey(mover.FetchGridPos() + Vector2Int.up))
-					mover.HandleSwipeInput(mover.up, Vector3.right);
+				if (IsUpSwipe())
+				{
+					var posAhead = mover.FetchGridPos() + Vector2Int.up;
 
-				if (IsDownSwipe() &&
-					handler.floorCubeGrid.ContainsKey(mover.FetchGridPos() + Vector2Int.down))
-					mover.HandleSwipeInput(mover.down, Vector3.left);
+					if (handler.floorCubeDic.ContainsKey(posAhead)
+						&& handler.FetchShrunkStatus(posAhead) == false)
+						mover.HandleSwipeInput(mover.up, Vector3.right, posAhead);
+				}
 
-				if (IsLeftSwipe() &&
-					handler.floorCubeGrid.ContainsKey(mover.FetchGridPos() + Vector2Int.left))
-					mover.HandleSwipeInput(mover.left, Vector3.forward);
+				if (IsDownSwipe())
+				{
+					var posAhead = mover.FetchGridPos() + Vector2Int.down;
 
-				if (IsRightSwipe() &&
-					handler.floorCubeGrid.ContainsKey(mover.FetchGridPos() + Vector2Int.right))
-					mover.HandleSwipeInput(mover.right, Vector3.back);
+					if (handler.floorCubeDic.ContainsKey(posAhead)
+						&& handler.FetchShrunkStatus(posAhead) == false)
+						mover.HandleSwipeInput(mover.down, Vector3.left, posAhead);
+				}
+
+				if (IsLeftSwipe())
+				{
+					var posAhead = mover.FetchGridPos() + Vector2Int.left;
+
+					if (handler.floorCubeDic.ContainsKey(posAhead)
+						&& handler.FetchShrunkStatus(posAhead) == false)
+						mover.HandleSwipeInput(mover.left, Vector3.forward, posAhead);
+				}
+
+				if (IsRightSwipe())
+				{
+					var posAhead = mover.FetchGridPos() + Vector2Int.right;
+
+					if (handler.floorCubeDic.ContainsKey(posAhead)
+						&& handler.FetchShrunkStatus(posAhead) == false)
+						mover.HandleSwipeInput(mover.right, Vector3.back, posAhead);
+				}
 			}
+
+			else if (rewinder.rewindsAmount > 0) rewinder.StartRewinding();
 		}
 
 		private bool SwipeDistanceCheck()

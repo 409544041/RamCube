@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da2134e19ced364c8315fcfbce781dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallingCubeMat: {fileID: 2100000, guid: 7cd47246bb24e60448c92861fc60b0eb, type: 2}
+  staticCubeMat: {fileID: 2100000, guid: 221d811b57e1996409f4623d0b7f446d, type: 2}
+  shrinkingCubeMat: {fileID: 2100000, guid: 122a167034753b646ac7103637fcc0f7, type: 2}
 --- !u!1001 &5112523308753424840
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34,7 +35,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: eaff07bd33b6a1146b6282e85fb00954, type: 2}
+      objectReference: {fileID: 2100000, guid: 221d811b57e1996409f4623d0b7f446d, type: 2}
     - target: {fileID: 7618746930442311349, guid: 45b9f2351d42c1f4692b9b2bb3a78890,
         type: 3}
       propertyPath: m_Colors.Array.data[0].r
@@ -394,6 +395,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Colors.Array.data[23].b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618746930442311349, guid: 45b9f2351d42c1f4692b9b2bb3a78890,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7618746930442311350, guid: 45b9f2351d42c1f4692b9b2bb3a78890,
         type: 3}

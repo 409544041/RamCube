@@ -10,7 +10,7 @@ namespace Qbism.Cubes
 	public class FinishCube : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] AudioClip succesClip, failClip;
+		[SerializeField] AudioClip succesClip = null, failClip = null;
 
 		//Cache
 		PlayerCubeMover mover;

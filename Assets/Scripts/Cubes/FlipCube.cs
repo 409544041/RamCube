@@ -16,8 +16,6 @@ namespace Qbism.Cubes
 		//Cache
 		PlayerCubeMover mover;
 		CubeHandler handler;
-		FeedForwardCube[] ffCubes;
-		PlayerCubeFeedForward cubeFeedForward;
 
 		//States
 		Vector2Int myPosition;
@@ -28,8 +26,6 @@ namespace Qbism.Cubes
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
 			handler = FindObjectOfType<CubeHandler>();
-			cubeFeedForward = FindObjectOfType<PlayerCubeFeedForward>();
-			ffCubes = cubeFeedForward.FetchFFCubes();
 		}
 
 		private void OnEnable()
@@ -57,9 +53,6 @@ namespace Qbism.Cubes
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
 			mover.input = false;
-			cube.GetComponent<Rigidbody>().isKinematic = true;
-
-			var tileToDrop = mover.FetchGridPos();
 
 			var axis = transform.TransformDirection(Vector3.left);
 
@@ -74,14 +67,17 @@ namespace Qbism.Cubes
 			mover.RoundPosition();
 			mover.UpdateCenterPosition();
 
-			cube.GetComponent<Rigidbody>().isKinematic = false;
+			Transform side = null;
+			Vector3 turnAxis = new Vector3(0, 0, 0);
+			Vector2Int posAhead = new Vector2Int(0, 0);
 
-			mover.CheckFloorInNewPos();
+			mover.CheckFloorInNewPos(side, turnAxis, posAhead);
 		}
 
 		public IEnumerator ExecuteActionOnFF(GameObject ffCube)
 		{
 			var ff = ffCube.GetComponent<FeedForwardCube>();
+
 			var axis = transform.TransformDirection(Vector3.left);
 
 			for (int i = 0; i < (90 / turnStep); i++)
@@ -113,6 +109,16 @@ namespace Qbism.Cubes
 		private void OnDisable()
 		{
 			if (handler != null) handler.onLand -= DisableSeeThrough;
+		}
+
+		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 

@@ -14,7 +14,8 @@ namespace Qbism.Cubes
 		[SerializeField] float distance = 1;
 		[SerializeField] GameObject laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
-		[SerializeField] AudioClip passClip, denyClip;
+		[SerializeField] AudioClip passClip = null, denyClip = null;
+		[SerializeField] LayerMask chosenLayers;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -22,7 +23,7 @@ namespace Qbism.Cubes
 		SceneHandler loader;
 
 		//States
-		bool isFiring = true;
+		bool shouldTrigger = true;
 
 		public UnityEvent onLaserPassEvent = new UnityEvent();
 
@@ -33,51 +34,73 @@ namespace Qbism.Cubes
 			source = GetComponentInChildren<AudioSource>();
 		}
 
-		private void Start()
+		private void OnEnable() 
 		{
-			laserBeam.transform.localScale = new Vector3(1, 1, distance);
-			laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
+			if(mover != null) mover.onSetLaserTriggers += SetLaserTrigger;
 		}
 
-		void FixedUpdate()
+		private void Start()
+		{
+			// laserBeam.transform.localScale = new Vector3(1, distance, 1);
+			// laserBeam.transform.localPosition = new Vector3(0, (.5f * distance) + 0.5f, -0.5f);
+
+			mover.lasersInLevel = true;
+		}
+
+		private void FixedUpdate()
 		{
 			FireLaserCast();
 		}
 
 		private void FireLaserCast()
 		{
-			if (mover.input || mover.isBoosting)
+			RaycastHit[] hits = SortedRaycasts();
+
+			AdjustBeamLength(hits);
+
+			if (hits.Length > 0 && (mover.input || mover.isBoosting))
 			{
-				RaycastHit[] hits = SortedRaycasts();
-
-				if (hits.Length == 0) 
+				if (hits[0].transform.gameObject.tag == "Player" &&
+				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
 				{
-					isFiring = true;
-					return;
-				}
-				
-				if(!isFiring) return;
-				
-
-				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
-					transform.forward), -1))
+					if(shouldTrigger)
 					{
-						isFiring = false;
 						source.clip = passClip;
 						onLaserPassEvent.Invoke();
+						shouldTrigger = false;
 					}
-
-				else 
-				{
-					StartCoroutine(RestartLevelTransition());
 				}
+
+				else if (hits[0].transform.gameObject.tag == "Player" &&
+					!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
+				{
+					if (shouldTrigger)
+					{
+						StartCoroutine(RestartLevelTransition());
+						shouldTrigger = false;
+					}
+				}
+			} 	
+		}
+
+		private void AdjustBeamLength(RaycastHit[] hits)
+		{
+			if (hits.Length > 0)
+			{
+				laserBeam.transform.localScale = new Vector3(1, hits[0].distance, 1);
+				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * hits[0].distance) + 0.5f);
+			}
+			else
+			{
+				laserBeam.transform.localScale = new Vector3(1, distance, 1);
+				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
 			}
 		}
 
 		private RaycastHit[] SortedRaycasts()
 		{
 			RaycastHit[] hits = Physics.RaycastAll(laserOrigin.position,
-				transform.TransformDirection(Vector3.forward), distance, 1 << 9, QueryTriggerInteraction.Ignore);
+				transform.TransformDirection(Vector3.forward), distance, chosenLayers , QueryTriggerInteraction.Ignore);
 
 			Debug.DrawRay(laserOrigin.position,
 				transform.TransformDirection(Vector3.forward * distance), Color.red, distance);
@@ -96,12 +119,22 @@ namespace Qbism.Cubes
 
 		private IEnumerator RestartLevelTransition()
 		{
-			isFiring = false;
+			shouldTrigger = false;
 			mover.input = false;
 			source.clip = denyClip;
 			onLaserPassEvent.Invoke();
 			yield return new WaitWhile(() => source.isPlaying);
 			loader.RestartLevel();
+		}
+
+		private void SetLaserTrigger(bool value)
+		{
+			shouldTrigger = value;
+		}
+
+		private void OnDisable()
+		{
+			if (mover != null) mover.onSetLaserTriggers -= SetLaserTrigger;
 		}
 	}
 }
