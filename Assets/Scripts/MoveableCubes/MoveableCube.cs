@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using Qbism.PlayerCube;
 using UnityEngine;
 
@@ -22,6 +23,8 @@ namespace Qbism.MoveableCubes
 		[SerializeField] float lowerStep = 0.5f;
 		[SerializeField] AudioClip landClip = null;
 		[SerializeField] Vector3 moveScale = new Vector3( .9f, .9f, .9f);
+		[SerializeField] MMFeedbacks shrinkFeedback;
+		[SerializeField] float shrinkFeedbackDuration;
 
 		//States
 		public bool isMoving { get; set;} = false;
@@ -43,7 +46,7 @@ namespace Qbism.MoveableCubes
 		public delegate bool MovingCheckDelegate(Vector2Int pos);
 		public MovingCheckDelegate onMovingCheck;
 
-		public event Action<Vector2Int, GameObject, float, float> onComponentAdd;
+		public event Action<Vector2Int, GameObject, float, float, MMFeedbacks, float> onComponentAdd;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
 		public event Action<MoveableCube> onRecordStop;
 		public event Action onCheckForNewFloorCubes;
@@ -133,7 +136,7 @@ namespace Qbism.MoveableCubes
 					onDicRemove(cubePos);
 				} 
 
-				onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep);
+				onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, shrinkFeedback, shrinkFeedbackDuration);
 				onCheckForNewFloorCubes();
 				onRecordStop(this);
 			}
@@ -163,7 +166,7 @@ namespace Qbism.MoveableCubes
 			isMoving = false;
 			isDocked = true;
 
-			onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep);
+			onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, shrinkFeedback, shrinkFeedbackDuration);
 			onCheckForNewFloorCubes();
 			onRecordStop(this);
 		}

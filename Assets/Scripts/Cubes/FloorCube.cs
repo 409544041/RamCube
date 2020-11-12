@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 namespace Qbism.Cubes
@@ -11,13 +12,15 @@ namespace Qbism.Cubes
 		public CubeTypes type = CubeTypes.Shrinking;
 		public float shrinkStep = 0f;
 		public float timeStep = 0f;
-
-		public event Action<FloorCube> onRecordStart;
-		public event Action<FloorCube> onRecordStop;
+		public MMFeedbacks shrinkFeedback;
+		public float shrinkFeedbackDuration = 0f;
 
 		//States
 		public bool hasShrunk { get; set; } = false;
 		public bool isFindable { get; set; } = true;
+
+		public event Action<FloorCube> onRecordStart;
+		public event Action<FloorCube> onRecordStop;
 
 		public Vector2Int FetchGridPos()
 		{
@@ -44,12 +47,17 @@ namespace Qbism.Cubes
 
 			onRecordStart(this);
 
-			for (int i = 0; i < (2.5 / shrinkStep); i++)
-			{
-				transform.localScale = 
-					Vector3.Lerp(transform.localScale, targetScale, shrinkStep);
-				yield return new WaitForSeconds(timeStep);
-			}
+			shrinkFeedback.Initialization();
+			shrinkFeedback.PlayFeedbacks(); //playing through code instead of UnityEvent here due to floorcube component spawning for moveable cubes
+
+			// for (int i = 0; i < (2.5 / shrinkStep); i++)
+			// {
+			// 	transform.localScale = 
+			// 		Vector3.Lerp(transform.localScale, targetScale, shrinkStep);
+			// 	yield return new WaitForSeconds(timeStep);
+			// }
+
+			yield return new WaitForSeconds(shrinkFeedbackDuration); //If shrink feedback is edited, edit this value to correspond to that
 
 			onRecordStop(this);
 		}
@@ -58,7 +66,7 @@ namespace Qbism.Cubes
 		{
 			if(type != CubeTypes.Shrinking) return;
 
-			if(transform.localScale.x < .05f) 
+			if(transform.localScale.x < .1f) 
 				GetComponent<MeshRenderer>().enabled = false;
 			else GetComponent<MeshRenderer>().enabled = true;
 		}

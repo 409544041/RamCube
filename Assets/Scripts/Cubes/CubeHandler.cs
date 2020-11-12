@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
 using UnityEngine;
@@ -212,12 +213,15 @@ namespace Qbism.Cubes
 			else return false;
 		}
 
-		private void AddComponent(Vector2Int cubePos, GameObject cube, float shrinkStep, float shrinkTimeStep)
+		private void AddComponent(Vector2Int cubePos, GameObject cube, float shrinkStep, 
+			float shrinkTimeStep, MMFeedbacks shrinkFeedback, float shrinkDuration)
 		{
 			FloorCube newFloor = cube.AddComponent<FloorCube>();
 			newFloor.shrinkStep = shrinkStep;
 			newFloor.timeStep = shrinkTimeStep;
 			newFloor.tag = "Environment";
+			newFloor.shrinkFeedback = shrinkFeedback;
+			newFloor.shrinkFeedbackDuration = shrinkDuration;
 
 			AddToDictionary(cubePos, newFloor);
 		}
