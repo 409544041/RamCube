@@ -138,7 +138,7 @@ namespace Qbism.Cubes
 					{
 						cubeFF.ShowFeedForward();
 						onLand();
-						mover.PlayLandClip();
+						mover.GetComponent<PlayerCubeFeedbacker>().PlayLandClip();
 					}
 					else
 					{
