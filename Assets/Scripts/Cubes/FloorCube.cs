@@ -48,7 +48,7 @@ namespace Qbism.Cubes
 			onRecordStart(this);
 
 			shrinkFeedback.Initialization();
-			shrinkFeedback.PlayFeedbacks(); //playing through code instead of UnityEvent here due to floorcube component spawning for moveable cubes
+			shrinkFeedback.PlayFeedbacks(); 
 
 			// for (int i = 0; i < (2.5 / shrinkStep); i++)
 			// {

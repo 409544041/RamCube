@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using Qbism.MoveableCubes;
 using Qbism.SceneTransition;
 using UnityEngine;
@@ -19,12 +20,12 @@ namespace Qbism.PlayerCube
 		[SerializeField] int turnStep = 18;
 		[SerializeField] float timeStep = 0.01f;
 		[SerializeField] float lowerStep = 2.5f;
-		[SerializeField] AudioClip landClip = null;
+		
 
 		//Cache
-		AudioSource source;
 		MoveableCubeHandler moveHandler;
-		MoveableCube[] moveableCubes = null;
+		MoveableCube[] moveableCubes;
+		PlayerCubeJuicer playerJuicer;
 
 		//States
 		public bool isInBoostPos { get; set; } = true;
@@ -35,6 +36,7 @@ namespace Qbism.PlayerCube
 		public bool isMoving { get; set; } = false;
 		public bool lasersInLevel { get; set; } = false;
 
+		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
 		public event Action<Vector2Int, GameObject, Transform, Vector3, Vector2Int> onFloorCheck;
 		public event Action onRecordStart;
@@ -46,9 +48,9 @@ namespace Qbism.PlayerCube
 
 		private void Awake()
 		{
-			source = GetComponentInChildren<AudioSource>();
 			moveHandler = FindObjectOfType<MoveableCubeHandler>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();
+			playerJuicer = GetComponent<PlayerCubeJuicer>();
 		}
 
 		private void OnEnable() 
@@ -112,11 +114,16 @@ namespace Qbism.PlayerCube
 
 			input = false;
 
+			playerJuicer.PlayFlipFeedbacks();
+			yield return new WaitForSeconds(playerJuicer.preFlipFeedbackDuration);
+
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
 				transform.RotateAround(side.position, turnAxis, turnStep);
 				yield return new WaitForSeconds(timeStep);
 			}
+
+			playerJuicer.PlayPostFlipFeedbacks();
 
 			RoundPosition();
 			UpdateCenterPosition();
@@ -230,11 +237,6 @@ namespace Qbism.PlayerCube
 		private void SetPlayerInput(bool value)
 		{
 			input = value;
-		}
-
-		public void PlayLandClip()
-		{
-			AudioSource.PlayClipAtPoint(landClip, Camera.main.transform.position, .2f);
 		}
 
 		private void OnDisable()
