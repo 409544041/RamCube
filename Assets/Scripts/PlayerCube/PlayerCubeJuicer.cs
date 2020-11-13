@@ -10,81 +10,94 @@ namespace Qbism.PlayerCube
 		//Config parameters
 		[SerializeField] AudioClip landClip = null;
 		[SerializeField] MMFeedbacks flipFeedback = null;
-		[SerializeField] float preFlipFeedbackDuration = 0f;
+		public float preFlipFeedbackDuration = 0f;
 		[SerializeField] MMFeedbacks postFlipFeedback = null;
 
 		//Cache
 		AudioSource source;
-		MMFeedbackScale[] postFlipMMScalers = null;
+		MMFeedbackScale[] postFlipMMScalers;
+		MMFeedbackScale[] flipMMScalers;
 
 		private void Awake() 
 		{
 			source = GetComponentInChildren<AudioSource>();
 			postFlipMMScalers = postFlipFeedback.GetComponents<MMFeedbackScale>();
+			flipMMScalers = flipFeedback.GetComponents<MMFeedbackScale>();
+		}
+
+		public void PlayFlipFeedbacks()
+		{
+			for (int i = 0; i < flipMMScalers.Length; i++)
+			{
+				CalculateScaleAxis(i, flipMMScalers);
+			}
+
+			flipFeedback.Initialization();
+			flipFeedback.PlayFeedbacks();
 		}
 
 		public void PlayPostFlipFeedbacks()
 		{
 			for (int i = 0; i < postFlipMMScalers.Length; i++)
 			{
-				CalculateScaleAxis(i);
+				CalculateScaleAxis(i, postFlipMMScalers);
 			}
 
 			postFlipFeedback.Initialization();
 			postFlipFeedback.PlayFeedbacks();
 		}
 
-		private void CalculateScaleAxis(int i)
+		private void CalculateScaleAxis(int i, MMFeedbackScale[] scalers)
 		{
 			if (IsPlayerZWorldY())
 			{
-				if (postFlipMMScalers[i].Label == "HeightScale")
+				if (scalers[i].Label == "HeightScale")
 				{
-					postFlipMMScalers[i].AnimateX = false;
-					postFlipMMScalers[i].AnimateY = false;
-					postFlipMMScalers[i].AnimateZ = true;
+					scalers[i].AnimateX = false;
+					scalers[i].AnimateY = false;
+					scalers[i].AnimateZ = true;
 				}
 
-				if (postFlipMMScalers[i].Label == "WidthScale")
+				if (scalers[i].Label == "WidthScale")
 				{
-					postFlipMMScalers[i].AnimateX = true;
-					postFlipMMScalers[i].AnimateY = true;
-					postFlipMMScalers[i].AnimateZ = false;
+					scalers[i].AnimateX = true;
+					scalers[i].AnimateY = true;
+					scalers[i].AnimateZ = false;
 				}
 			}
 
 			if (IsPlayerXWorldY())
 			{
 
-				if (postFlipMMScalers[i].Label == "HeightScale")
+				if (scalers[i].Label == "HeightScale")
 				{
-					postFlipMMScalers[i].AnimateX = true;
-					postFlipMMScalers[i].AnimateY = false;
-					postFlipMMScalers[i].AnimateZ = false;
+					scalers[i].AnimateX = true;
+					scalers[i].AnimateY = false;
+					scalers[i].AnimateZ = false;
 				}
 
-				if (postFlipMMScalers[i].Label == "WidthScale")
+				if (scalers[i].Label == "WidthScale")
 				{
-					postFlipMMScalers[i].AnimateX = false;
-					postFlipMMScalers[i].AnimateY = true;
-					postFlipMMScalers[i].AnimateZ = true;
+					scalers[i].AnimateX = false;
+					scalers[i].AnimateY = true;
+					scalers[i].AnimateZ = true;
 				}
 			}
 
 			if (IsPlayerYWorldY())
 			{
-				if (postFlipMMScalers[i].Label == "HeightScale")
+				if (scalers[i].Label == "HeightScale")
 				{
-					postFlipMMScalers[i].AnimateX = false;
-					postFlipMMScalers[i].AnimateY = true;
-					postFlipMMScalers[i].AnimateZ = false;
+					scalers[i].AnimateX = false;
+					scalers[i].AnimateY = true;
+					scalers[i].AnimateZ = false;
 				}
 
-				if (postFlipMMScalers[i].Label == "WidthScale")
+				if (scalers[i].Label == "WidthScale")
 				{
-					postFlipMMScalers[i].AnimateX = true;
-					postFlipMMScalers[i].AnimateY = false;
-					postFlipMMScalers[i].AnimateZ = true;
+					scalers[i].AnimateX = true;
+					scalers[i].AnimateY = false;
+					scalers[i].AnimateZ = true;
 				}
 			}
 		}
