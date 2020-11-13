@@ -140,8 +140,17 @@ namespace Qbism.Cubes
 					{
 						cubeFF.ShowFeedForward();
 						onLand();
-						playerJuicer.PlayLandClip();
-						playerJuicer.PlayPostFlipFeedbacks();
+
+						if(previousCube.FetchType() != CubeTypes.Boosting)
+						{
+							playerJuicer.PlayLandClip();
+							playerJuicer.PlayPostFlipJuice();
+						}
+						else
+						{
+							playerJuicer.PlayPostBoostJuice();
+						}
+						
 					}
 					else
 					{

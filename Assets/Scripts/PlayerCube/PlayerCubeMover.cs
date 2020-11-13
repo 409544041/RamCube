@@ -114,8 +114,8 @@ namespace Qbism.PlayerCube
 
 			input = false;
 
-			playerJuicer.PlayFlipFeedbacks();
-			yield return new WaitForSeconds(playerJuicer.preFlipFeedbackDuration);
+			playerJuicer.PlayFlipJuice();
+			yield return new WaitForSeconds(playerJuicer.preFlipJuiceDuration);
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{

@@ -9,9 +9,10 @@ namespace Qbism.PlayerCube
 	{
 		//Config parameters
 		[SerializeField] AudioClip landClip = null;
-		[SerializeField] MMFeedbacks flipFeedback = null;
-		public float preFlipFeedbackDuration = 0f;
-		[SerializeField] MMFeedbacks postFlipFeedback = null;
+		[SerializeField] MMFeedbacks flipJuice = null;
+		public float preFlipJuiceDuration = 0f;
+		[SerializeField] MMFeedbacks postFlipJuice = null;
+		[SerializeField] MMFeedbacks boostJuice = null;
 
 		//Cache
 		AudioSource source;
@@ -21,30 +22,45 @@ namespace Qbism.PlayerCube
 		private void Awake() 
 		{
 			source = GetComponentInChildren<AudioSource>();
-			postFlipMMScalers = postFlipFeedback.GetComponents<MMFeedbackScale>();
-			flipMMScalers = flipFeedback.GetComponents<MMFeedbackScale>();
+			postFlipMMScalers = postFlipJuice.GetComponents<MMFeedbackScale>();
+			flipMMScalers = flipJuice.GetComponents<MMFeedbackScale>();
 		}
 
-		public void PlayFlipFeedbacks()
+		public void PlayFlipJuice()
 		{
 			for (int i = 0; i < flipMMScalers.Length; i++)
 			{
 				CalculateScaleAxis(i, flipMMScalers);
 			}
 
-			flipFeedback.Initialization();
-			flipFeedback.PlayFeedbacks();
+			flipJuice.Initialization();
+			flipJuice.PlayFeedbacks();
 		}
 
-		public void PlayPostFlipFeedbacks()
+		public void PlayPostFlipJuice()
 		{
 			for (int i = 0; i < postFlipMMScalers.Length; i++)
 			{
 				CalculateScaleAxis(i, postFlipMMScalers);
 			}
 
-			postFlipFeedback.Initialization();
-			postFlipFeedback.PlayFeedbacks();
+			postFlipJuice.Initialization();
+			postFlipJuice.PlayFeedbacks();
+		}
+
+		public void PlayBoostJuice(Vector3 direction)
+		{
+			ParticleSystem particles = boostJuice.GetComponent<MMFeedbackParticlesInstantiation>().
+				ParticlesPrefab;
+			particles.transform.forward = transform.TransformDirection(direction);
+			
+			boostJuice.Initialization();
+			boostJuice.PlayFeedbacks();
+		}
+
+		public void PlayPostBoostJuice()
+		{
+			boostJuice.StopFeedbacks();
 		}
 
 		private void CalculateScaleAxis(int i, MMFeedbackScale[] scalers)
