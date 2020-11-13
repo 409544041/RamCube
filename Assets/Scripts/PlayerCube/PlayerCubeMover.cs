@@ -118,7 +118,7 @@ namespace Qbism.PlayerCube
 				yield return new WaitForSeconds(timeStep);
 			}
 
-			GetComponent<PlayerCubeFeedbacker>().PlayPostFlipFeedbacks();
+			GetComponent<PlayerCubeJuicer>().PlayPostFlipFeedbacks();
 
 			RoundPosition();
 			UpdateCenterPosition();

@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Qbism.PlayerCube
 {
-	public class PlayerCubeFeedbacker : MonoBehaviour
+	public class PlayerCubeJuicer : MonoBehaviour
 	{
 		//Config parameters
 		[SerializeField] AudioClip landClip = null;
-		[SerializeField] MMFeedbacks flipFeedback;
-		[SerializeField] float preFlipFeedbackDuration;
-		[SerializeField] MMFeedbacks postFlipFeedback;
+		[SerializeField] MMFeedbacks flipFeedback = null;
+		[SerializeField] float preFlipFeedbackDuration = 0f;
+		[SerializeField] MMFeedbacks postFlipFeedback = null;
 
 		//Cache
 		AudioSource source;
@@ -36,7 +36,7 @@ namespace Qbism.PlayerCube
 
 		private void CalculateScaleAxis(int i)
 		{
-			if (IsForwardY())
+			if (IsPlayerZWorldY())
 			{
 				if (postFlipMMScalers[i].Label == "HeightScale")
 				{
@@ -53,7 +53,7 @@ namespace Qbism.PlayerCube
 				}
 			}
 
-			if ((isForwardZ() && isUpX()) || (isForwardX() && isUpZ()))
+			if (IsPlayerXWorldY())
 			{
 
 				if (postFlipMMScalers[i].Label == "HeightScale")
@@ -71,7 +71,7 @@ namespace Qbism.PlayerCube
 				}
 			}
 
-			if ((isUpY() && isForwardZ()) || (isUpY() && isForwardX()))
+			if (IsPlayerYWorldY())
 			{
 				if (postFlipMMScalers[i].Label == "HeightScale")
 				{
@@ -89,34 +89,20 @@ namespace Qbism.PlayerCube
 			}
 		}
 
-		private bool IsForwardY()
+		private bool IsPlayerZWorldY()
 		{
 			return transform.forward == new Vector3(0, 1, 0) || transform.forward == new Vector3(0, -1, 0);
 		}
 
-		private bool isForwardX()
+		private bool IsPlayerXWorldY()
 		{
-			return transform.forward == new Vector3(1, 0, 0) || transform.forward == new Vector3(-1, 0, 0);
+			return transform.right == new Vector3(0, 1, 0) || transform.right == new Vector3(0, -1, 0);
 		}
 
-		private bool isForwardZ()
-		{
-			return transform.forward == new Vector3(0, 0, 1) || transform.forward == new Vector3(0, 0, -1);
-		}
 
-		private bool isUpY()
+		private bool IsPlayerYWorldY()
 		{
 			return transform.up == new Vector3(0, 1, 0) || transform.up == new Vector3(0, -1, 0);
-		}
-
-		private bool isUpX()
-		{
-			return transform.up == new Vector3(1, 0, 0) || transform.up == new Vector3(-1, 0, 0);
-		}
-
-		private bool isUpZ()
-		{
-			return transform.up == new Vector3(0, 0, 1) || transform.up == new Vector3(0, 0, -1);
 		}
 
 		public void PlayLandClip()

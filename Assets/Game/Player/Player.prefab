@@ -1,5 +1,41 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5402056215351301074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819159287370873271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfe4b9b079619143a9748eeee75e698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: LandingDustParticles
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  Mode: 0
+  CachedRecycle: 1
+  ParticlesPrefab: {fileID: 8268198732246142740}
+  RandomParticlePrefabs: []
+  PositionMode: 0
+  InstantiateParticlesPosition: {fileID: 0}
+  TargetWorldPosition: {x: 0, y: 0, z: 0}
+  Offset: {x: 0, y: -0.5, z: 0}
+  NestParticles: 1
 --- !u!1 &4693261419825178664
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,6 +529,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4106812703290535576, guid: f1d13d9b49bc5f94caac638ac871ec89,
+        type: 3}
+      propertyPath: Feedbacks.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106812703290535576, guid: f1d13d9b49bc5f94caac638ac871ec89,
+        type: 3}
+      propertyPath: Feedbacks.Array.data[2]
+      value: 
+      objectReference: {fileID: 5402056215351301074}
     - target: {fileID: 4433015138559361041, guid: f1d13d9b49bc5f94caac638ac871ec89,
         type: 3}
       propertyPath: m_Mesh
@@ -644,6 +690,18 @@ PrefabInstance:
 --- !u!4 &4693261420208851307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1807421524612065334, guid: f1d13d9b49bc5f94caac638ac871ec89,
+    type: 3}
+  m_PrefabInstance: {fileID: 6355863482587259229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3819159287370873271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7869179477264324842, guid: f1d13d9b49bc5f94caac638ac871ec89,
+    type: 3}
+  m_PrefabInstance: {fileID: 6355863482587259229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8268198732246142740 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3065292015951441481, guid: f1d13d9b49bc5f94caac638ac871ec89,
     type: 3}
   m_PrefabInstance: {fileID: 6355863482587259229}
   m_PrefabAsset: {fileID: 0}
