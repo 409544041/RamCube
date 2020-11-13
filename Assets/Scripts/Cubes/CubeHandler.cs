@@ -16,6 +16,7 @@ namespace Qbism.Cubes
 		PlayerCubeMover mover = null;
 		MoveableCube[] moveableCubes = null;
 		MoveableCubeHandler moveHandler;
+		PlayerCubeJuicer playerJuicer;
 
 		//States
 		public FloorCube currentCube { get; set; } = null;
@@ -34,6 +35,7 @@ namespace Qbism.Cubes
 			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();
 			moveHandler = GetComponent<MoveableCubeHandler>();
+			playerJuicer = mover.GetComponent<PlayerCubeJuicer>();
 
 			LoadFloorCubeDictionary();
 		}
@@ -138,7 +140,8 @@ namespace Qbism.Cubes
 					{
 						cubeFF.ShowFeedForward();
 						onLand();
-						mover.GetComponent<PlayerCubeJuicer>().PlayLandClip();
+						playerJuicer.PlayLandClip();
+						playerJuicer.PlayPostFlipFeedbacks();
 					}
 					else
 					{

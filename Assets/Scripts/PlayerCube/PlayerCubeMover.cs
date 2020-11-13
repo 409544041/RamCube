@@ -123,8 +123,6 @@ namespace Qbism.PlayerCube
 				yield return new WaitForSeconds(timeStep);
 			}
 
-			playerJuicer.PlayPostFlipFeedbacks();
-
 			RoundPosition();
 			UpdateCenterPosition();
 			isMoving = false;
