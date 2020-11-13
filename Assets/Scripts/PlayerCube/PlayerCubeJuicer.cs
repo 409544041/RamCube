@@ -13,11 +13,15 @@ namespace Qbism.PlayerCube
 		public float preFlipJuiceDuration = 0f;
 		[SerializeField] MMFeedbacks postFlipJuice = null;
 		[SerializeField] MMFeedbacks boostJuice = null;
+		[SerializeField] MMFeedbacks postBoostJuice = null;
 
 		//Cache
 		AudioSource source;
 		MMFeedbackScale[] postFlipMMScalers;
 		MMFeedbackScale[] flipMMScalers;
+
+		//States
+		Vector3 boostImpactDir = new Vector3(0, 0, 0);
 
 		private void Awake() 
 		{
@@ -52,7 +56,10 @@ namespace Qbism.PlayerCube
 		{
 			ParticleSystem particles = boostJuice.GetComponent<MMFeedbackParticlesInstantiation>().
 				ParticlesPrefab;
+
 			particles.transform.forward = transform.TransformDirection(direction);
+
+			boostImpactDir = -direction;
 			
 			boostJuice.Initialization();
 			boostJuice.PlayFeedbacks();
@@ -60,7 +67,15 @@ namespace Qbism.PlayerCube
 
 		public void PlayPostBoostJuice()
 		{
+			ParticleSystem particles = postBoostJuice.GetComponent<MMFeedbackParticlesInstantiation>().
+				ParticlesPrefab;
+
+			particles.transform.forward = transform.TransformDirection(boostImpactDir);
+			postBoostJuice.GetComponent<MMFeedbackParticlesInstantiation>().Offset = boostImpactDir * .5f;
+
 			boostJuice.StopFeedbacks();
+			postBoostJuice.Initialization();
+			postBoostJuice.PlayFeedbacks();
 		}
 
 		private void CalculateScaleAxis(int i, MMFeedbackScale[] scalers)

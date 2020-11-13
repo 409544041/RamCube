@@ -50,7 +50,7 @@ namespace Qbism.Cubes
 
 			onBoostEvent.Invoke();
 			mover.GetComponent<PlayerCubeJuicer>().
-				PlayBoostJuice(transform.InverseTransformDirection(Vector3.back));
+				PlayBoostJuice(-transform.forward);
 
 			while (mover.isBoosting)
 			{
