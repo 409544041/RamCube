@@ -107,7 +107,7 @@ namespace Qbism.PlayerCube
 
 		public bool V3Equal(Vector3 a, Vector3 b)
 		{
-			return Vector3.SqrMagnitude(a - b) < 0.001;
+			return Vector3.SqrMagnitude(a - b) < 0.0001;
 		}
 
 		public void PlayLandClip()
