@@ -25,7 +25,7 @@ namespace Qbism.PlayerCube
 		//Cache
 		MoveableCubeHandler moveHandler;
 		MoveableCube[] moveableCubes;
-		PlayerCubeJuicer playerJuicer;
+		PlayerCubeFlipJuicer playerFlipJuicer;
 
 		//States
 		public bool isInBoostPos { get; set; } = true;
@@ -50,7 +50,7 @@ namespace Qbism.PlayerCube
 		{
 			moveHandler = FindObjectOfType<MoveableCubeHandler>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();
-			playerJuicer = GetComponent<PlayerCubeJuicer>();
+			playerFlipJuicer = GetComponent<PlayerCubeFlipJuicer>();
 		}
 
 		private void OnEnable() 
@@ -114,8 +114,8 @@ namespace Qbism.PlayerCube
 
 			input = false;
 
-			playerJuicer.PlayFlipJuice();
-			yield return new WaitForSeconds(playerJuicer.preFlipJuiceDuration);
+			playerFlipJuicer.PlayFlipJuice();
+			yield return new WaitForSeconds(playerFlipJuicer.preFlipJuiceDuration);
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
@@ -127,6 +127,8 @@ namespace Qbism.PlayerCube
 			UpdateCenterPosition();
 			isMoving = false;
 			onCubeShrink(cubeToShrink);
+
+			yield return null;
 
 			CheckFloorInNewPos(side, turnAxis, posAhead);
 		}
