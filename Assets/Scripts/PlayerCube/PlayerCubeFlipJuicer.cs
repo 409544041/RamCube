@@ -88,18 +88,26 @@ namespace Qbism.PlayerCube
 
 		private bool IsPlayerZWorldY()
 		{
-			return transform.forward == Vector3.up || transform.forward == Vector3.down;
+			return V3Equal(transform.forward, Vector3.up) || V3Equal(transform.forward, Vector3.down);
+			//return transform.forward == Vector3.up || transform.forward == Vector3.down;
 		}
 
 		private bool IsPlayerXWorldY()
 		{
-			return transform.right == Vector3.up || transform.right == Vector3.down;
+			return V3Equal(transform.right, Vector3.up) || V3Equal(transform.right, Vector3.down);
+			//return transform.right == Vector3.up || transform.right == Vector3.down;
 		}
 
 
 		private bool IsPlayerYWorldY()
 		{
-			return transform.up == Vector3.up || transform.up == Vector3.down;
+			return V3Equal(transform.up, Vector3.up) || V3Equal(transform.up, Vector3.down);
+			//return transform.up == Vector3.up || transform.up == Vector3.down;
+		}
+
+		public bool V3Equal(Vector3 a, Vector3 b)
+		{
+			return Vector3.SqrMagnitude(a - b) < 0.001;
 		}
 
 		public void PlayLandClip()
