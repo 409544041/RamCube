@@ -23,6 +23,7 @@ namespace Qbism.PlayerCube
 		{
 			postBoostMMScalers = postBoostJuice.GetComponents<MMFeedbackScale>();
 			postBoostMMPos = postBoostJuice.GetComponent<MMFeedbackPosition>();
+			boostMMScalers = boostJuice.GetComponents<MMFeedbackScale>();
 		}
 
 		public void PlayBoostJuice(Vector3 direction)
@@ -32,6 +33,11 @@ namespace Qbism.PlayerCube
 
 			particles.transform.forward = transform.TransformDirection(direction);
 			boostImpactDir = -direction;
+
+			for (int i = 0; i < boostMMScalers.Length; i++)
+			{
+				CalculateBoostScaleAxis(i, boostMMScalers);
+			}
 
 			boostJuice.Initialization();
 			boostJuice.PlayFeedbacks();
@@ -49,7 +55,7 @@ namespace Qbism.PlayerCube
 
 			for (int i = 0; i < postBoostMMScalers.Length; i++)
 			{
-				CalculatePostBoostScaleAxis(i, postBoostMMScalers);
+				CalculateBoostScaleAxis(i, postBoostMMScalers);
 			}
 
 			CalculatePostBoostScaleMoveDir();
@@ -74,7 +80,7 @@ namespace Qbism.PlayerCube
 				SetBoostMoveValues(true, false, false, -1);
 		}
 
-		private void CalculatePostBoostScaleAxis(int i, MMFeedbackScale[] scalers)
+		private void CalculateBoostScaleAxis(int i, MMFeedbackScale[] scalers)
 		{
 			if((isBoostImpactX() && IsPlayerZWorldX()) || (isBoostsImpactZ() && IsPlayerZWorldZ()))
 			{
