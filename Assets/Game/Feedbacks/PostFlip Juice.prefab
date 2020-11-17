@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 3584214023801283320}
   - component: {fileID: 1663471117860873877}
   - component: {fileID: 6565473517948271032}
+  - component: {fileID: -5861929508724117730}
   m_Layer: 9
-  m_Name: PostFlip Feedback
+  m_Name: PostFlip Juice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,6 +51,7 @@ MonoBehaviour:
   - {fileID: 3584214023801283320}
   - {fileID: 1663471117860873877}
   - {fileID: 6565473517948271032}
+  - {fileID: -5861929508724117730}
   InitializationMode: 0
   SafeMode: 3
   AutoPlayOnStart: 0
@@ -81,12 +83,12 @@ MonoBehaviour:
     Quantized: 0
     TargetBPM: 120
   DebugActive: 0
-  Mode: 1
+  Mode: 0
   TimeScale: 0
   AnimateScaleTarget: {fileID: 0}
   AnimateScaleDuration: 0.3
-  RemapCurveZero: 0
-  RemapCurveOne: -0.2
+  RemapCurveZero: 0.9
+  RemapCurveOne: 0.72
   Offset: 0
   AnimateX: 1
   AnimateScaleX:
@@ -218,12 +220,12 @@ MonoBehaviour:
     Quantized: 0
     TargetBPM: 120
   DebugActive: 0
-  Mode: 1
+  Mode: 0
   TimeScale: 0
   AnimateScaleTarget: {fileID: 0}
   AnimateScaleDuration: 0.3
-  RemapCurveZero: 0
-  RemapCurveOne: 0.1
+  RemapCurveZero: 0.9
+  RemapCurveOne: 0.99
   Offset: 0
   AnimateX: 1
   AnimateScaleX:
@@ -364,3 +366,36 @@ MonoBehaviour:
   TargetWorldPosition: {x: 0, y: 0, z: 0}
   Offset: {x: 0, y: -0.5, z: 0}
   NestParticles: 1
+--- !u!114 &-5861929508724117730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762630433775790215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fe7e41857f44348b52714b3238715c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Camera Shake
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 0
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  RepeatUntilStopped: 0
+  Channel: 0
+  CameraShakeProperties:
+    Duration: 0.2
+    Amplitude: 0.1
+    Frequency: 20
