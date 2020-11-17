@@ -146,37 +146,31 @@ namespace Qbism.PlayerCube
 		private bool IsPlayerZWorldX()
 		{
 			return V3Equal(transform.forward, Vector3.left) || V3Equal(transform.forward, Vector3.right);
-			//return transform.forward == Vector3.left || transform.forward == Vector3.right;
 		}
 
 		private bool IsPlayerXWorldX()
 		{
 			return V3Equal(transform.right, Vector3.left) || V3Equal(transform.right, Vector3.right);
-			//return transform.right == Vector3.left || transform.right == Vector3.right;
 		}
 
 		private bool IsPlayerYWorldX()
 		{
 			return V3Equal(transform.up, Vector3.left) || V3Equal(transform.up, Vector3.right);
-			//return transform.up == Vector3.left || transform.up == Vector3.right;
 		}
 
 		private bool IsPlayerZWorldZ()
 		{
 			return V3Equal(transform.forward, Vector3.forward) || V3Equal(transform.forward, Vector3.back);
-			//return transform.forward == Vector3.forward || transform.forward == Vector3.back;
 		}
 
 		private bool IsPlayerXWorldZ()
 		{
 			return V3Equal(transform.right, Vector3.forward) || V3Equal(transform.right, Vector3.back);
-			//return transform.right == Vector3.forward || transform.right == Vector3.back;
 		}
 
 		private bool IsPlayerYWorldZ()
 		{
 			return V3Equal(transform.up, Vector3.forward) || V3Equal(transform.up, Vector3.back);
-			//return transform.up == Vector3.forward || transform.up == Vector3.back;
 		}
 
 		public bool V3Equal(Vector3 a, Vector3 b)
