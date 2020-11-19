@@ -11,8 +11,8 @@ namespace Qbism.Cubes
 	public class LaserCube : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] float distance = 1;
-		[SerializeField] GameObject laserBeam = null;
+		public float distance = 1;
+		public GameObject laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
 		[SerializeField] AudioClip passClip = null, denyClip = null;
 		[SerializeField] LayerMask chosenLayers;

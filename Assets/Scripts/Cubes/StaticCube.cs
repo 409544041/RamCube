@@ -8,12 +8,12 @@ namespace Qbism.Cubes
 	public class StaticCube : MonoBehaviour
 	{
 		//Config parameters
-		public Material staticCubeMat = null;
-		[SerializeField] Material shrinkingCubeMat = null;
+		public Texture staticFaceTex = null;
 
 		public void BecomeFallingCube(GameObject cube)
 		{
-			GetComponent<MeshRenderer>().material = shrinkingCubeMat;
+			Material[] mats = GetComponent<Renderer>().materials;
+			mats[1].SetTexture("_BaseMap", null);
 			GetComponent<FloorCube>().type = CubeTypes.Shrinking;
 		}
 

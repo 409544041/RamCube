@@ -1810,6 +1810,7 @@ GameObject:
   - component: {fileID: 4763916636059647073}
   - component: {fileID: 6387899755342672437}
   - component: {fileID: 2134249337782816407}
+  - component: {fileID: 4765442448934840136}
   m_Layer: 0
   m_Name: Turning Floor Cube
   m_TagString: Untagged
@@ -1826,7 +1827,7 @@ Transform:
   m_GameObject: {fileID: 7821491857819746057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
   m_Children:
   - {fileID: 3405181485817477463}
   - {fileID: 6805768967784469873}
@@ -1848,6 +1849,8 @@ MonoBehaviour:
   type: 4
   shrinkStep: 0
   timeStep: 0
+  shrinkFeedback: {fileID: 0}
+  shrinkFeedbackDuration: 0
 --- !u!114 &2134249337782816407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1879,3 +1882,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4765442448934840136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7821491857819746057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8170ec981fe22418a277f58a30ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
