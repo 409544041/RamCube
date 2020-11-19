@@ -13,14 +13,14 @@ namespace Qbism.Cubes
 		//Config parameters
 		[SerializeField] int turnStep = 9;
 		[SerializeField] float timeStep = 0.01f;
-		[SerializeField] bool isLeftTurning = false;
-		[SerializeField] GameObject topPlane = null;
+		public bool isLeftTurning = false;
+		public GameObject topPlane = null;
 
 		//Cache
 		PlayerCubeMover mover;
 
 		//States
-		Vector3 turnAxis = new Vector3(0, 0, 0);
+		public Vector3 turnAxis { get; set; } = new Vector3(0, 0, 0);
 
 		public UnityEvent onTurnEvent = new UnityEvent();
 
@@ -28,12 +28,12 @@ namespace Qbism.Cubes
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
 
-			if(isLeftTurning)
-			{
-				topPlane.transform.localScale = new Vector3 (-1, 1, 1);
-				turnAxis = Vector3.down;
-			} 
-			else turnAxis = Vector3.up;
+			// if(isLeftTurning)
+			// {
+			// 	topPlane.transform.localScale = new Vector3 (-1, 1, 1);
+			// 	turnAxis = Vector3.down;
+			// } 
+			// else turnAxis = Vector3.up;
 		}
 
 		public void PrepareAction(GameObject cube)
