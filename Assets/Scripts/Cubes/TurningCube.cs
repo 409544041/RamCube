@@ -14,7 +14,6 @@ namespace Qbism.Cubes
 		[SerializeField] int turnStep = 9;
 		[SerializeField] float timeStep = 0.01f;
 		public bool isLeftTurning = false;
-		public GameObject topPlane = null;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -27,13 +26,6 @@ namespace Qbism.Cubes
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
-
-			// if(isLeftTurning)
-			// {
-			// 	topPlane.transform.localScale = new Vector3 (-1, 1, 1);
-			// 	turnAxis = Vector3.down;
-			// } 
-			// else turnAxis = Vector3.up;
 		}
 
 		public void PrepareAction(GameObject cube)
