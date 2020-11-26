@@ -15,23 +15,15 @@ namespace Qbism.Cubes
 		public GameObject laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
 		[SerializeField] LayerMask chosenLayers;
-
-		[Header("Juice Options")]
-		[SerializeField] Light laserTipLight;
-		[SerializeField] AudioClip passClip = null, denyClip = null;
-		[SerializeField] Color neutralColor, passColor, denyColor;		
-
+		
 		//Cache
 		PlayerCubeMover mover;
 		AudioSource source;
 		SceneHandler loader;
+		LaserJuicer juicer;
 
 		//States
 		bool shouldTrigger = true;
-		Color currentColor;
-		Material beamMat;
-		ParticleSystem[] laserParticles;
-		Light[] laserLights;
 
 		public UnityEvent onLaserPassEvent = new UnityEvent();
 
@@ -40,6 +32,7 @@ namespace Qbism.Cubes
 			mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();
 			loader = FindObjectOfType<SceneHandler>();
 			source = GetComponentInChildren<AudioSource>();
+			juicer = GetComponent<LaserJuicer>();
 		}
 
 		private void OnEnable() 
@@ -50,10 +43,6 @@ namespace Qbism.Cubes
 		private void Start()
 		{
 			mover.lasersInLevel = true;
-			beamMat = laserBeam.GetComponent<Renderer>().material;
-			laserParticles = GetComponentsInChildren<ParticleSystem>();
-			laserLights = GetComponentsInChildren<Light>();
-			currentColor = neutralColor;
 		}
 
 		private void FixedUpdate()
@@ -74,8 +63,8 @@ namespace Qbism.Cubes
 				{
 					if(shouldTrigger)
 					{
-						SetLaserColor(passColor);
-						source.clip = passClip;
+						juicer.SetLaserColor(juicer.passColor, juicer.passFlame);
+						source.clip = juicer.passClip;
 						onLaserPassEvent.Invoke();
 						shouldTrigger = false;
 					}
@@ -86,7 +75,7 @@ namespace Qbism.Cubes
 				{
 					if (shouldTrigger)
 					{
-						SetLaserColor(denyColor);
+						juicer.SetLaserColor(juicer.denyColor, juicer.denyFlame);
 						StartCoroutine(RestartLevelTransition());
 						shouldTrigger = false;
 					}
@@ -99,13 +88,13 @@ namespace Qbism.Cubes
 			if (hits.Length > 0)
 			{
 				laserBeam.transform.localScale = new Vector3(0.5f, hits[0].distance, 0.5f);
-				laserTipLight.transform.localPosition = new Vector3(0, 0, hits[0].distance + 0.4f);
+				juicer.MoveTipLight(hits[0].distance);
 			}
 			else
 			{
-				SetLaserColor(neutralColor);
+				juicer.SetLaserColor(juicer.neutralColor, juicer.neutralFlame);
 				laserBeam.transform.localScale = new Vector3(0.5f, distance, 0.5f);
-				laserTipLight.transform.localPosition = new Vector3(0, 0, distance + 0.4f);
+				juicer.MoveTipLight(distance);
 			}
 		}
 
@@ -129,31 +118,13 @@ namespace Qbism.Cubes
 			return hits;
 		}
 
-		private void SetLaserColor(Color color)
-		{
-			if(currentColor == color) return;
-
-			beamMat.color = color;
-			
-			foreach(ParticleSystem particle in laserParticles)
-			{
-				var mainModule = particle.main;
-				mainModule.startColor = color;
-			}
-			
-			foreach(Light light in laserLights)
-			{
-				light.color = color;
-			}
-
-			currentColor = color;
-		}
+		
 
 		private IEnumerator RestartLevelTransition()
 		{
 			shouldTrigger = false;
 			mover.input = false;
-			source.clip = denyClip;
+			source.clip = juicer.denyClip;
 			onLaserPassEvent.Invoke();
 			yield return new WaitWhile(() => source.isPlaying);
 			loader.RestartLevel();

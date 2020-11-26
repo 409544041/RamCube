@@ -281,6 +281,7 @@ Transform:
   - {fileID: 964975944800555894}
   - {fileID: 3014983553934378344}
   - {fileID: 7762180424352017780}
+  - {fileID: 5863895017534448106}
   m_Father: {fileID: 6338049353625553075}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -530,6 +531,100 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &6047583074614603032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5863895017534448106}
+  - component: {fileID: 8728238238923372030}
+  - component: {fileID: 8565177887816645992}
+  - component: {fileID: 1438616450311580091}
+  m_Layer: 0
+  m_Name: Flame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5863895017534448106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047583074614603032}
+  m_LocalRotation: {x: -0.17670284, y: -0.8194917, z: 0.4266005, w: -0.339443}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1183382058331065002}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 42.606, y: -54.015, z: 1.332}
+--- !u!33 &8728238238923372030
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047583074614603032}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &8565177887816645992
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047583074614603032}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 0d5f6e10f99b9d841bdb8213d28ad058, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1438616450311580091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047583074614603032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecba0b0eec2487443be2e2e935618d91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7658275567881013289
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,6 +638,7 @@ GameObject:
   - component: {fileID: 1705799819932277459}
   - component: {fileID: 6813072441104246111}
   - component: {fileID: 1717065178620433115}
+  - component: {fileID: 8649825046668680329}
   - component: {fileID: 5076859881550052239}
   m_Layer: 0
   m_Name: Laser Cube
@@ -649,12 +745,6 @@ MonoBehaviour:
   chosenLayers:
     serializedVersion: 2
     m_Bits: 768
-  laserTipLight: {fileID: 4370280854708649856}
-  passClip: {fileID: 8300000, guid: f934c68d20589494d900c7a0e8fde496, type: 3}
-  denyClip: {fileID: 8300000, guid: afceebbc0a8dcaf428f7534813a90cb9, type: 3}
-  neutralColor: {r: 0.8980392, g: 0.5411765, b: 0.105882354, a: 0.6}
-  passColor: {r: 0.06608224, g: 0.5188679, b: 0.16186635, a: 0.6}
-  denyColor: {r: 1, g: 0.09580837, b: 0, a: 0.6}
   onLaserPassEvent:
     m_PersistentCalls:
       m_Calls:
@@ -670,6 +760,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8649825046668680329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7658275567881013289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a59762b31829632438eb8845a9a43d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserTipLight: {fileID: 4370280854708649856}
+  passClip: {fileID: 8300000, guid: f934c68d20589494d900c7a0e8fde496, type: 3}
+  denyClip: {fileID: 8300000, guid: afceebbc0a8dcaf428f7534813a90cb9, type: 3}
+  neutralColor: {r: 0.8980392, g: 0.5411765, b: 0.105882354, a: 0.6}
+  passColor: {r: 0.10613209, g: 0.5, b: 0.1458401, a: 0.6}
+  denyColor: {r: 0.7924528, g: 0.1009256, b: 0.1009256, a: 0.6}
+  flame: {fileID: 6047583074614603032}
+  neutralFlame: {fileID: 2100000, guid: 0d5f6e10f99b9d841bdb8213d28ad058, type: 2}
+  passFlame: {fileID: 2100000, guid: f8e4655259262194d90f223931541d55, type: 2}
+  denyFlame: {fileID: 2100000, guid: ceea1b3c1248f3c4ea3870c7f6a6908c, type: 2}
 --- !u!114 &5076859881550052239
 MonoBehaviour:
   m_ObjectHideFlags: 0
