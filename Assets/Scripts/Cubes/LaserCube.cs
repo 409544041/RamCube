@@ -14,8 +14,12 @@ namespace Qbism.Cubes
 		public float distance = 1;
 		public GameObject laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
-		[SerializeField] AudioClip passClip = null, denyClip = null;
 		[SerializeField] LayerMask chosenLayers;
+
+		[Header("Juice Options")]
+		[SerializeField] Light laserTipLight;
+		[SerializeField] AudioClip passClip = null, denyClip = null;
+		[SerializeField] Color neutralColor, passColor, denyColor;		
 
 		//Cache
 		PlayerCubeMover mover;
@@ -24,6 +28,10 @@ namespace Qbism.Cubes
 
 		//States
 		bool shouldTrigger = true;
+		Color currentColor;
+		Material beamMat;
+		ParticleSystem[] laserParticles;
+		Light[] laserLights;
 
 		public UnityEvent onLaserPassEvent = new UnityEvent();
 
@@ -42,6 +50,10 @@ namespace Qbism.Cubes
 		private void Start()
 		{
 			mover.lasersInLevel = true;
+			beamMat = laserBeam.GetComponent<Renderer>().material;
+			laserParticles = GetComponentsInChildren<ParticleSystem>();
+			laserLights = GetComponentsInChildren<Light>();
+			currentColor = neutralColor;
 		}
 
 		private void FixedUpdate()
@@ -62,6 +74,7 @@ namespace Qbism.Cubes
 				{
 					if(shouldTrigger)
 					{
+						SetLaserColor(passColor);
 						source.clip = passClip;
 						onLaserPassEvent.Invoke();
 						shouldTrigger = false;
@@ -73,6 +86,7 @@ namespace Qbism.Cubes
 				{
 					if (shouldTrigger)
 					{
+						SetLaserColor(denyColor);
 						StartCoroutine(RestartLevelTransition());
 						shouldTrigger = false;
 					}
@@ -86,11 +100,14 @@ namespace Qbism.Cubes
 			{
 				laserBeam.transform.localScale = new Vector3(0.5f, hits[0].distance, 0.5f);
 				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * hits[0].distance) + 0.5f);
+				laserTipLight.transform.localPosition = new Vector3(0, 0, hits[0].distance + 0.4f);
 			}
 			else
 			{
+				SetLaserColor(neutralColor);
 				laserBeam.transform.localScale = new Vector3(0.5f, distance, 0.5f);
 				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
+				laserTipLight.transform.localPosition = new Vector3(0, 0, distance + 0.4f);
 			}
 		}
 
@@ -112,6 +129,26 @@ namespace Qbism.Cubes
 			Array.Sort(hitDistances, hits);
 
 			return hits;
+		}
+
+		private void SetLaserColor(Color color)
+		{
+			if(currentColor == color) return;
+
+			beamMat.color = color;
+			
+			foreach(ParticleSystem particle in laserParticles)
+			{
+				var mainModule = particle.main;
+				mainModule.startColor = color;
+			}
+			
+			foreach(Light light in laserLights)
+			{
+				light.color = color;
+			}
+
+			currentColor = color;
 		}
 
 		private IEnumerator RestartLevelTransition()
