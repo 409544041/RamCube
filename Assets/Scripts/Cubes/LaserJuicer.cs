@@ -18,14 +18,12 @@ namespace Qbism.Cubes
 		Material beamMat;
 		ParticleSystem[] laserParticles;
 		Light[] laserLights;
-		Material flameMat;
 
 		private void Awake() 
 		{
 			beamMat = GetComponent<LaserCube>().laserBeam.GetComponent<Renderer>().material;
 			laserParticles = GetComponentsInChildren<ParticleSystem>();
 			laserLights = GetComponentsInChildren<Light>();
-			flameMat = flame.GetComponent<Renderer>().material;
 		}
 
 		private void Start() 
@@ -50,14 +48,13 @@ namespace Qbism.Cubes
 				light.color = color;
 			}
 
-			flameMat = mat;
+			flame.GetComponent<Renderer>().material = mat;
 
-			if(mat = denyFlame)
+			if(mat == denyFlame)
 			{
 				flame.transform.localScale = new Vector3(1, 2, 1);
 				flame.transform.localPosition = new Vector3(0, 1.75f, 0);
 			}
-				
 			else
 			{
 				flame.transform.localScale = new Vector3(1, 1, 1);
