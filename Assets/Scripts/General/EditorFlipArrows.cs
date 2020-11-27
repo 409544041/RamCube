@@ -18,14 +18,16 @@ namespace Qbism.General
 
 		private void Start() 
 		{
+			MeshRenderer renderer = GetComponentInChildren<MeshRenderer>();
+
 			if (cube.isLeftTurning)
 			{
-				cube.topPlane.transform.localScale = new Vector3(-1, 1, 1);
+				renderer.transform.localScale = new Vector3 (-1, 1 ,1);
 				cube.turnAxis = Vector3.down;
 			}
 			else
 			{
-				cube.topPlane.transform.localScale = new Vector3(1, 1, 1);
+				renderer.transform.localScale = new Vector3(1, 1, 1);
 				cube.turnAxis = Vector3.up;
 			} 
 		}

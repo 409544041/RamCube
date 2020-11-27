@@ -14,13 +14,13 @@ namespace Qbism.Cubes
 		public float distance = 1;
 		public GameObject laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
-		[SerializeField] AudioClip passClip = null, denyClip = null;
 		[SerializeField] LayerMask chosenLayers;
-
+		
 		//Cache
 		PlayerCubeMover mover;
 		AudioSource source;
 		SceneHandler loader;
+		LaserJuicer juicer;
 
 		//States
 		bool shouldTrigger = true;
@@ -32,6 +32,7 @@ namespace Qbism.Cubes
 			mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();
 			loader = FindObjectOfType<SceneHandler>();
 			source = GetComponentInChildren<AudioSource>();
+			juicer = GetComponent<LaserJuicer>();
 		}
 
 		private void OnEnable() 
@@ -62,7 +63,8 @@ namespace Qbism.Cubes
 				{
 					if(shouldTrigger)
 					{
-						source.clip = passClip;
+						juicer.SetLaserColor(juicer.passColor, juicer.passFlame);
+						source.clip = juicer.passClip;
 						onLaserPassEvent.Invoke();
 						shouldTrigger = false;
 					}
@@ -73,6 +75,7 @@ namespace Qbism.Cubes
 				{
 					if (shouldTrigger)
 					{
+						juicer.SetLaserColor(juicer.denyColor, juicer.denyFlame);
 						StartCoroutine(RestartLevelTransition());
 						shouldTrigger = false;
 					}
@@ -84,13 +87,14 @@ namespace Qbism.Cubes
 		{
 			if (hits.Length > 0)
 			{
-				laserBeam.transform.localScale = new Vector3(1, hits[0].distance, 1);
-				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * hits[0].distance) + 0.5f);
+				laserBeam.transform.localScale = new Vector3(0.5f, hits[0].distance, 0.5f);
+				juicer.MoveTipLight(hits[0].distance);
 			}
 			else
 			{
-				laserBeam.transform.localScale = new Vector3(1, distance, 1);
-				laserBeam.transform.localPosition = new Vector3(0, -0.5f, (.5f * distance) + 0.5f);
+				juicer.SetLaserColor(juicer.neutralColor, juicer.neutralFlame);
+				laserBeam.transform.localScale = new Vector3(0.5f, distance, 0.5f);
+				juicer.MoveTipLight(distance);
 			}
 		}
 
@@ -114,11 +118,13 @@ namespace Qbism.Cubes
 			return hits;
 		}
 
+		
+
 		private IEnumerator RestartLevelTransition()
 		{
 			shouldTrigger = false;
 			mover.input = false;
-			source.clip = denyClip;
+			source.clip = juicer.denyClip;
 			onLaserPassEvent.Invoke();
 			yield return new WaitWhile(() => source.isPlaying);
 			loader.RestartLevel();

@@ -188,7 +188,7 @@ namespace Qbism.Rewind
 				cube.type = CubeTypes.Static;
 
 				Material[] mats = GetComponent<Renderer>().materials;
-				mats[1].SetTexture("_BaseMap", GetComponent<StaticCube>().staticFaceTex);
+				mats[2].SetTexture("_BaseMap", GetComponent<StaticCube>().staticFaceTex);
 			}	
 		}	
 
