@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Island Cliff Mat
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
-  m_ShaderKeywords: DR_GRADIENT_ON _CELPRIMARYMODE_SINGLE _FLAT_RIM_ENABLED _FLAT_SHADOWS_ENABLED
-    _FLAT_SPECULAR_ENABLED _UNITYSHADOWMODE_NONE
+  m_ShaderKeywords: DR_CEL_EXTRA_ON DR_GRADIENT_ON _CELPRIMARYMODE_SINGLE _FLAT_RIM_ENABLED
+    _FLAT_SHADOWS_ENABLED _FLAT_SPECULAR_ENABLED _UNITYSHADOWMODE_MULTIPLY
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -73,7 +73,7 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
-    - _CelExtraEnabled: 0
+    - _CelExtraEnabled: 1
     - _CelNumSteps: 3
     - _CelPrimaryMode: 1
     - _Cull: 2
@@ -83,7 +83,7 @@ Material:
     - _FlatRimAmount: 0.5
     - _FlatRimEdgeSmoothness: 0
     - _FlatRimEnabled: 1
-    - _FlatRimLightAlign: 1
+    - _FlatRimLightAlign: 0
     - _FlatRimSize: 0
     - _FlatShadowsEnabled: 1
     - _FlatSmoothness: 0.362
@@ -92,7 +92,7 @@ Material:
     - _FlatSpecularSize: 0.405
     - _FlatSpecularSmoothness: 0.5
     - _Flatness: 1
-    - _FlatnessExtra: 0
+    - _FlatnessExtra: 1
     - _FlatnessSecondary: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -122,8 +122,8 @@ Material:
     - _RimEnabled: 0
     - _SecondaryColor: 1
     - _SecondaryColorEnabled: 1
-    - _SelfShadingSize: 0.715
-    - _SelfShadingSizeExtra: 0
+    - _SelfShadingSize: 0.721
+    - _SelfShadingSizeExtra: 0.598
     - _ShadowEdgeSize: 0
     - _ShadowEdgeSizeExtra: 0
     - _ShadowEdgeSmoothness: 0.01
@@ -136,7 +136,7 @@ Material:
     - _TextureBlendingMode: 0
     - _TextureImpact: 0
     - _UVSec: 0
-    - _UnityShadowMode: 0
+    - _UnityShadowMode: 1
     - _UnityShadowPower: 0.442
     - _UnityShadowSharpness: 10
     - _VertexColorsEnabled: 0
@@ -145,7 +145,7 @@ Material:
     - _BaseColor: {r: 0.25882354, g: 0.49019608, b: 0.54901963, a: 1}
     - _Color: {r: 0.8113208, g: 0.74652207, b: 0.22579211, a: 1}
     - _ColorCelShadow: {r: 0.38581347, g: 0.38787434, b: 0.9622642, a: 1}
-    - _ColorDim: {r: 0, g: 0, b: 0, a: 1}
+    - _ColorDim: {r: 0.17265932, g: 0.3358654, b: 0.3773585, a: 1}
     - _ColorDimCurve: {r: 0.85, g: 0.85, b: 0.85, a: 0.85}
     - _ColorDimExtra: {r: 0, g: 0, b: 0, a: 1}
     - _ColorDimSteps: {r: 0.85, g: 0.85, b: 0.85, a: 0.85}
@@ -155,7 +155,7 @@ Material:
     - _ColorShadows: {r: 0.37835297, g: 0.4602353, b: 0.72, a: 1}
     - _EmissionColor: {r: 4.9245777, g: 0, b: 0, a: 1}
     - _FlatRimColor: {r: 0.13725491, g: 0.13725491, b: 0.2, a: 1}
-    - _FlatSpecularColor: {r: 0.4, g: 0.7607843, b: 0.8509804, a: 1}
+    - _FlatSpecularColor: {r: 0.078097194, g: 0.2858979, b: 0.3679245, a: 1}
     - _LightmapDirection: {r: 0, g: 0.7193398, b: 0.6946584, a: 0}
     - _UnityShadowColor: {r: 0.65, g: 0.65, b: 0.65, a: 1}
   m_BuildTextureStacks: []
