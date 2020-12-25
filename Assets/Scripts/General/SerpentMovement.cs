@@ -16,7 +16,6 @@ namespace Qbism.General
 
 		//Cache
 		SplineFollower follower;
-		//MMFeedbackPosition transMMPos;
 
 		//States
 		float dis;
@@ -29,15 +28,14 @@ namespace Qbism.General
 		private void Awake() 
 		{
 			follower = GetComponent<SplineFollower>();
-			//transMMPos = overshootJuice.GetComponent<MMFeedbackPosition>();
 		}
 
 		void Start()
 		{
-			foreach (Transform bodyPart in bodyParts)
-			{
-				bodyPart.GetComponent<MeshRenderer>().enabled = false;
-			}
+			// foreach (Transform bodyPart in bodyParts)
+			// {
+			// 	bodyPart.GetComponent<MeshRenderer>().enabled = false;
+			// }
 
 			StartCoroutine(CalcVelocity());
 		}
