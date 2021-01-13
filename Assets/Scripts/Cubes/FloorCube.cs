@@ -45,21 +45,14 @@ namespace Qbism.Cubes
 			hasShrunk = true;
 			Vector3 targetScale = new Vector3(0, 0, 0);
 
-			onRecordStart(this);
+			if(type == CubeTypes.Shrinking) onRecordStart(this);
 
 			shrinkFeedback.Initialization();
 			shrinkFeedback.PlayFeedbacks(); 
 
-			// for (int i = 0; i < (2.5 / shrinkStep); i++)
-			// {
-			// 	transform.localScale = 
-			// 		Vector3.Lerp(transform.localScale, targetScale, shrinkStep);
-			// 	yield return new WaitForSeconds(timeStep);
-			// }
-
 			yield return new WaitForSeconds(shrinkFeedbackDuration); //If shrink feedback is edited, edit this value to correspond to that
 
-			onRecordStop(this);
+			if (type == CubeTypes.Shrinking) onRecordStop(this);
 		}
 
 		private void CheckForVisualDisabling()

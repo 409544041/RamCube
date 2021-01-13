@@ -48,8 +48,23 @@ namespace Qbism.Cubes
 			{
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
 					transform.forward), -1)) 
+				{
+					DestroyAllFloorCubes();
 					StartCoroutine(NextLevelTransition());
+				}		
+
 				else StartCoroutine(RestartLevelTransition());
+			}
+		}
+
+		private void DestroyAllFloorCubes()
+		{
+			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.floorCubeDic)
+			{
+				var cube = pair.Value;
+				if(cube.GetComponent<FinishCube>() || cube.hasShrunk == true) continue;
+
+				cube.StartShrinking();
 			}
 		}
 
