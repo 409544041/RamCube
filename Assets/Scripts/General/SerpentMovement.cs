@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Dreamteck.Splines;
 using MoreMountains.Feedbacks;
+using Qbism.Cubes;
 
 namespace Qbism.General
 {
@@ -109,6 +110,11 @@ namespace Qbism.General
 			{
 				bodyPart.GetComponent<MeshRenderer>().enabled = true;
 			}
+		}
+
+		private void OnTriggerEnter(Collider other) 
+		{
+			if(other.GetComponent<FinishCube>()) other.transform.parent = transform;
 		}
 	}
 }

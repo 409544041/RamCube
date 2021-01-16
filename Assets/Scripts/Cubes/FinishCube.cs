@@ -5,6 +5,7 @@ using Qbism.SceneTransition;
 using UnityEngine;
 using UnityEngine.Events;
 using Cinemachine;
+using Dreamteck.Splines;
 
 namespace Qbism.Cubes
 {
@@ -50,8 +51,10 @@ namespace Qbism.Cubes
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
 					transform.up), -1)) 
 				{
+					mover.transform.parent = transform;
 					DestroyAllFloorCubes();
 					ActivateLevelCompleteCam();
+					ActivateSerpent();
 					StartCoroutine(NextLevelTransition());
 				}		
 
@@ -73,7 +76,14 @@ namespace Qbism.Cubes
 		private void ActivateLevelCompleteCam()
 		{
 			var lvlCompCam = GetComponentInChildren<CinemachineVirtualCamera>();
-			lvlCompCam.Priority = 101;
+			lvlCompCam.Priority = 11;
+			lvlCompCam.transform.parent = null;
+		}
+
+		private void ActivateSerpent()
+		{
+			var serpent = FindObjectOfType<SplineFollower>();
+			serpent.followSpeed = 15;
 		}
 
 		private IEnumerator NextLevelTransition()
@@ -81,6 +91,8 @@ namespace Qbism.Cubes
 			source.clip = succesClip;
 			onFinishEvent.Invoke();
 			yield return new WaitWhile(() => source.isPlaying);
+			yield return new WaitForSeconds(5);
+			print("loading next level");
 			loader.NextLevel();
 		}
 
