@@ -4,6 +4,7 @@
 	Static,
 	Boosting,
 	Flipping,
-	Turning
+	Turning,
+	Finish
 }
 

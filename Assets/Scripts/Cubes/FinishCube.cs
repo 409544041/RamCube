@@ -4,6 +4,7 @@ using Qbism.PlayerCube;
 using Qbism.SceneTransition;
 using UnityEngine;
 using UnityEngine.Events;
+using Cinemachine;
 
 namespace Qbism.Cubes
 {
@@ -47,9 +48,10 @@ namespace Qbism.Cubes
 			if (handler.FetchCube(myPosition) == handler.FetchCube(mover.FetchGridPos()))
 			{
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
-					transform.forward), -1)) 
+					transform.up), -1)) 
 				{
 					DestroyAllFloorCubes();
+					ActivateLevelCompleteCam();
 					StartCoroutine(NextLevelTransition());
 				}		
 
@@ -66,6 +68,12 @@ namespace Qbism.Cubes
 
 				cube.StartShrinking();
 			}
+		}
+
+		private void ActivateLevelCompleteCam()
+		{
+			var lvlCompCam = GetComponentInChildren<CinemachineVirtualCamera>();
+			lvlCompCam.Priority = 101;
 		}
 
 		private IEnumerator NextLevelTransition()
