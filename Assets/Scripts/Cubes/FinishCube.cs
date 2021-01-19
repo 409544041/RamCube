@@ -82,7 +82,7 @@ namespace Qbism.Cubes
 
 		private void ActivateSerpent()
 		{
-			var serpent = FindObjectOfType<SplineFollower>();
+			var serpent = GameObject.FindGameObjectWithTag("LevelCompFollower").GetComponent<SplineFollower>();
 			serpent.followSpeed = 15;
 		}
 
@@ -91,7 +91,7 @@ namespace Qbism.Cubes
 			source.clip = succesClip;
 			onFinishEvent.Invoke();
 			yield return new WaitWhile(() => source.isPlaying);
-			yield return new WaitForSeconds(5);
+			yield return new WaitForSeconds(5); //TO DO: Make timing wait for animations that are to come
 			print("loading next level");
 			loader.NextLevel();
 		}
