@@ -20,7 +20,7 @@ namespace Qbism.WorldMap
 
 		private void Start()
 		{
-			var pinID = QbismDataSheets.world_Map_Data[levelID.ToString()];
+			var pinID = QbismDataSheets.levelData[levelID.ToString()];
 
 			levelIndex = pinID.lVL_Index;
 			levelName = pinID.level_Name;
