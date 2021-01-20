@@ -8,9 +8,6 @@ namespace Qbism.WorldMap
 	[ExecuteInEditMode]
 	public class EditorSetPinValues : MonoBehaviour
 	{
-		//Config parameters
-		public LevelIDs levelID;
-
 		//States
 		public int levelIndex { get; private set; }
 		string levelName;
@@ -20,19 +17,32 @@ namespace Qbism.WorldMap
 
 		private void Start()
 		{
-			var pinID = QbismDataSheets.levelData[levelID.ToString()];
+			LevelIDs levelID = GetComponent<LevelPin>().levelID;
+			var sheetID = QbismDataSheets.levelData[levelID.ToString()];
 
-			levelIndex = pinID.lVL_Index;
-			levelName = pinID.level_Name;
-			hasSerpentSegment = pinID.serp_Seg;
+			levelIndex = sheetID.lVL_Index;
+			levelName = sheetID.level_Name;
+			hasSerpentSegment = sheetID.serp_Seg;
+
+			bool unlock1Found = false;
+			bool unlock2Found = false;
 
 			foreach (LevelIDs ID in Enum.GetValues(typeof(LevelIDs)))
 			{
-				if(ID.ToString() == pinID.lVL_Unlock_1) levelUnlock_1 = ID;
-				else 
-				if (ID.ToString() == pinID.lVL_Unlock_2) levelUnlock_2 = ID;
-				else levelUnlock_2 = LevelIDs.empty;
+				if (ID.ToString() == sheetID.lVL_Unlock_1)
+				{
+					levelUnlock_1 = ID;
+					unlock1Found = true;
+				} 
+				if (ID.ToString() == sheetID.lVL_Unlock_2)
+				{
+					levelUnlock_2 = ID;
+					unlock2Found = true;
+				}
 			}
+
+			if(!unlock1Found) levelUnlock_1 = LevelIDs.empty;
+			if(!unlock2Found) levelUnlock_2 = LevelIDs.empty;
 
 		}
 	}

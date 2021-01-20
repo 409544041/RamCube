@@ -9,7 +9,7 @@ namespace Qbism.WorldMap
 	{
 		void Start()
 		{
-			string pinID = GetComponent<EditorSetPinValues>().levelID.ToString();
+			string pinID = GetComponent<LevelPin>().levelID.ToString();
 			transform.gameObject.name = "pin " + pinID;
 		}
 	}
