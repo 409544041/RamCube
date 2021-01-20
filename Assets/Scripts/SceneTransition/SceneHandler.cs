@@ -33,5 +33,10 @@ namespace Qbism.SceneTransition
 			if (currentSceneIndex == SceneManager.sceneCountInBuildSettings - 1) return;
 			SceneManager.LoadSceneAsync(currentSceneIndex + 1);
 		}
+
+		public void LoadBySceneIndex(int index)
+		{
+			SceneManager.LoadSceneAsync(index);
+		}
 	}
 }

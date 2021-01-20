@@ -12,7 +12,7 @@ namespace Qbism.WorldMap
 		public LevelIDs levelID;
 
 		//States
-		int levelIndex;
+		public int levelIndex { get; private set; }
 		string levelName;
 		LevelIDs levelUnlock_1;
 		LevelIDs levelUnlock_2;
