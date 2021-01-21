@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Cinemachine;
 using Dreamteck.Splines;
+using Qbism.Saving;
 
 namespace Qbism.Cubes
 {
@@ -51,11 +52,15 @@ namespace Qbism.Cubes
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
 					transform.up), -1)) 
 				{
+					ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
+					progHandler.SetLevelToComplete();
+					progHandler.SaveProgress();
+					
 					mover.transform.parent = transform;
 					DestroyAllFloorCubes();
 					ActivateLevelCompleteCam();
-					ActivateSerpent();
-					StartCoroutine(NextLevelTransition());
+					//ActivateSerpent();
+					StartCoroutine(WorldMapTransition());
 				}		
 
 				else StartCoroutine(RestartLevelTransition());
@@ -86,14 +91,13 @@ namespace Qbism.Cubes
 			serpent.followSpeed = 15;
 		}
 
-		private IEnumerator NextLevelTransition()
+		private IEnumerator WorldMapTransition()
 		{
 			source.clip = succesClip;
 			onFinishEvent.Invoke();
 			yield return new WaitWhile(() => source.isPlaying);
 			yield return new WaitForSeconds(5); //TO DO: Make timing wait for animations that are to come
-			print("loading next level");
-			loader.NextLevel();
+			loader.LoadWorldMap();
 		}
 
 		private IEnumerator RestartLevelTransition()

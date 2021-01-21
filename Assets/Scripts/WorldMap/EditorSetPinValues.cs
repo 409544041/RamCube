@@ -43,7 +43,6 @@ namespace Qbism.WorldMap
 
 			if(!unlock1Found) levelUnlock_1 = LevelIDs.empty;
 			if(!unlock2Found) levelUnlock_2 = LevelIDs.empty;
-
 		}
 	}
 }

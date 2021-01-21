@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 5583913237353594585}
   - component: {fileID: 5250939728127066332}
   - component: {fileID: 1521552297238041297}
-  - component: {fileID: 5013437355230790839}
   m_Layer: 11
   m_Name: LevelPin
   m_TagString: Untagged
@@ -113,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda3621b7f36de449523ea4cee7020b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelID: 0
 --- !u!114 &5583913237353594585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727bf4332d9abda4a8302b3b5093c1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelID: 10
 --- !u!114 &5250939728127066332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,8 +152,8 @@ MonoBehaviour:
   onClickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5013437355230790839}
-        m_TargetAssemblyTypeName: Qbism.WorldMap.LevelLoadOnClick, Assembly-CSharp
+      - m_Target: {fileID: 739622578570481642}
+        m_TargetAssemblyTypeName: Qbism.WorldMap.LevelPin, Assembly-CSharp
         m_MethodName: LoadAssignedLevel
         m_Mode: 1
         m_Arguments:
@@ -165,15 +164,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5013437355230790839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3947237476793911876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9473ba50719b4b746876868956ae0f6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
