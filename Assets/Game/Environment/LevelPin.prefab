@@ -64,8 +64,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 63d8f4e74a30aec41bba9db201843555, type: 2}
-  - {fileID: 2100000, guid: 597e85f129a7b8646ad8d0802e67d308, type: 2}
+  - {fileID: 2100000, guid: d75e183ee5cf7e2409b5199faa84a875, type: 2}
+  - {fileID: 2100000, guid: ad561b01da9bcbe46bec2d53fb48e5b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,6 +113,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelID: 0
+  unlockedCliffMat: {fileID: 2100000, guid: 63d8f4e74a30aec41bba9db201843555, type: 2}
+  unlockedGroundMat: {fileID: 2100000, guid: 597e85f129a7b8646ad8d0802e67d308, type: 2}
+  unlockingCliffMat: {fileID: 2100000, guid: 167fe2f9d09ac0d4fa1fd95bfe1cbcfe, type: 2}
+  unlockingGroundMat: {fileID: 2100000, guid: 4e8508753ae8fb44b8dd503556e9f724, type: 2}
+  unlockStep: 0.05
+  unlockSpeed: 0.1
 --- !u!114 &5583913237353594585
 MonoBehaviour:
   m_ObjectHideFlags: 0

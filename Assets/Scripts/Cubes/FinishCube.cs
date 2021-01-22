@@ -54,7 +54,6 @@ namespace Qbism.Cubes
 				{
 					ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
 					progHandler.SetLevelToComplete();
-					progHandler.SaveProgress();
 					
 					mover.transform.parent = transform;
 					DestroyAllFloorCubes();
@@ -96,7 +95,7 @@ namespace Qbism.Cubes
 			source.clip = succesClip;
 			onFinishEvent.Invoke();
 			yield return new WaitWhile(() => source.isPlaying);
-			yield return new WaitForSeconds(5); //TO DO: Make timing wait for animations that are to come
+			// yield return new WaitForSeconds(5); //TO DO: Make timing wait for animations that are to come
 			loader.LoadWorldMap();
 		}
 
