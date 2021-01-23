@@ -74,6 +74,8 @@ namespace Qbism.WorldMap
 
 		private IEnumerator RaiseCliff()
 		{
+			GetComponent<LevelPinRaiseJuicer>().PlayRaiseJuice();
+
 			while(raising)
 			{
 				transform.position += new Vector3 (0, raiseStep, 0);
@@ -85,6 +87,8 @@ namespace Qbism.WorldMap
 					raising = false;
 					transform.position = new Vector3(
 						transform.position.x, unlockedYPos, transform.position.z);
+
+					GetComponent<LevelPinRaiseJuicer>().StopRaiseJuice();
 				}
 			}
 		}

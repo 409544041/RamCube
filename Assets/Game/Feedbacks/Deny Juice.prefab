@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1669679837286113052}
   - component: {fileID: 643865921225784297}
-  - component: {fileID: 1915856606092617479}
   - component: {fileID: 3726404500824576875}
+  - component: {fileID: 5517647476417276843}
   m_Layer: 0
   m_Name: Deny Juice
   m_TagString: Untagged
@@ -46,45 +46,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Feedbacks:
-  - {fileID: 1915856606092617479}
   - {fileID: 3726404500824576875}
+  - {fileID: 5517647476417276843}
   InitializationMode: 0
   SafeMode: 3
   AutoPlayOnStart: 0
   DebugActive: 0
---- !u!114 &1915856606092617479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9192293794657447341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8fe7e41857f44348b52714b3238715c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Active: 1
-  Label: Camera Shake
-  Chance: 100
-  Timing:
-    TimescaleMode: 0
-    InitialDelay: 0
-    CooldownDuration: 0
-    NumberOfRepeats: 0
-    RepeatForever: 0
-    DelayBetweenRepeats: 1
-    Sequence: {fileID: 0}
-    TrackID: 0
-    Quantized: 0
-    TargetBPM: 120
-  DebugActive: 0
-  RepeatUntilStopped: 0
-  Channel: 0
-  CameraShakeProperties:
-    Duration: 0.3
-    Amplitude: 0.5
-    Frequency: 15
 --- !u!114 &3726404500824576875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,3 +229,61 @@ MonoBehaviour:
   RemapShadowStrengthZero: 0
   RemapShadowStrengthOne: 1
   InstantShadowStrength: 0
+--- !u!114 &5517647476417276843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9192293794657447341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba1d39e1a4e0a142831b5815b528429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Cinemachine Impulse
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_RawSignal: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.3
+      m_DecayTime: 0
+      m_ScaleWithImpact: 0
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
+  Velocity: {x: 0.5, y: 0.5, z: 0.5}
