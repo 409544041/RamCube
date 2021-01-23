@@ -10,27 +10,24 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public LevelIDs levelID;
-		[SerializeField] Material unlockedCliffMat;
-		[SerializeField] Material unlockedGroundMat;
-		[SerializeField] Material unlockingCliffMat;
-		[SerializeField] Material unlockingGroundMat;
-		[SerializeField] float unlockStep;
-		[SerializeField] float unlockSpeed;
+		[SerializeField] float lockedYPos;
+		[SerializeField] float unlockedYPos;
+		[SerializeField] float raiseStep;
+		[SerializeField] float raiseSpeed;
 
 		//Cache
 		ProgressHandler progHandler;
 
 		//States
-		bool unlocked;
-		bool unlockAnimPlayed;
-		bool completed;
+		public bool unlocked { get; set; }
+		public bool unlockAnimPlayed { get; set; }
+		public bool completed { get; set; }
+		bool raising;
 
 		private void Start()
 		{
 			progHandler = FindObjectOfType<ProgressHandler>();
-			//progHandler.LoadProgHandlerData();
 
-			ActivateFirstPinValues();
 			CheckUnlockStatus();
 			CheckCompleteStatus();
 		}
@@ -47,75 +44,49 @@ namespace Qbism.WorldMap
 		{
 			if(levelID == LevelIDs.a_01) return;
 
-			MeshRenderer mesh = GetComponent<MeshRenderer>();
-			Material[] mats = mesh.materials;
-
 			foreach (ProgressHandler.LevelStatusData data in progHandler.levelDataList)
-
+			{
 				if (data.levelID == levelID)
 				{
 					unlockAnimPlayed = data.unlockAnimPlayed;
 					unlocked = data.unlocked;
 				} 
+			}
 			GetComponent<ClickableObject>().canClick = unlocked;
 			
 			if(unlocked && !unlockAnimPlayed)
 			{
 				foreach (ProgressHandler.LevelStatusData data in progHandler.levelDataList)
 					if (data.levelID == levelID) data.unlockAnimPlayed = true;
-				
+
+				unlockAnimPlayed = true;				
 				progHandler.SaveProgHandlerData();
-				HandleUnlockingMats(mesh, mats);
+				
+				raising = true;
+				StartCoroutine(RaiseCliff());
 			}
 			else if(unlocked && unlockAnimPlayed)
 			{
-				SetToUnlockedMat(mesh, mats);
+				transform.position = new Vector3(
+					transform.position.x, unlockedYPos, transform.position.z);
 			}
 		}
 
-		private void HandleUnlockingMats(MeshRenderer mesh, Material[] mats)
+		private IEnumerator RaiseCliff()
 		{
-			float startHeight = mats[0].GetFloat("_GradientCenterY");
-
-			mats[0] = unlockingCliffMat;
-			mats[1] = unlockingGroundMat;
-			mesh.materials = mats;
-
-			StartCoroutine(LowerHeightGradient(mesh, mats, startHeight));
-		}
-
-		private IEnumerator LowerHeightGradient(MeshRenderer mesh, Material[] mats, float startHeight)
-		{
-			float gradientBottom = unlockedCliffMat.GetFloat("_GradientCenterY");
-
-			while(mats[0].GetFloat("_GradientCenterY") > gradientBottom && mats[0] == unlockingCliffMat)
+			while(raising)
 			{
-				foreach (Material mat in mats)
+				transform.position += new Vector3 (0, raiseStep, 0);
+
+				yield return new WaitForSeconds(raiseSpeed);
+
+				if (transform.position.y >= unlockedYPos)
 				{
-					float currentHeight = mat.GetFloat("_GradientCenterY");
-					mat.SetFloat("_GradientCenterY", currentHeight - unlockStep);
+					raising = false;
+					transform.position = new Vector3(
+						transform.position.x, unlockedYPos, transform.position.z);
 				}
-				yield return new WaitForSeconds(unlockSpeed);
 			}
-
-			if(mats[0].GetFloat("_GradientCenterY") <= gradientBottom)
-			{
-				SetToUnlockedMat(mesh, mats);
-				ResetHeightGradient(startHeight);
-			}
-		}
-
-		private void ResetHeightGradient(float startHeight)
-		{
-			unlockingCliffMat.SetFloat("_GradientCenterY", startHeight);
-			unlockingGroundMat.SetFloat("_GradientCenterY", startHeight);
-		}
-
-		private void SetToUnlockedMat(MeshRenderer mesh, Material[] mats)
-		{
-			mats[0] = unlockedCliffMat;
-			mats[1] = unlockedGroundMat;
-			mesh.materials = mats;
 		}
 
 		public void LoadAssignedLevel()
@@ -129,22 +100,6 @@ namespace Qbism.WorldMap
 		private void SetCurrentLevelID()
 		{
 			FindObjectOfType<ProgressHandler>().currentLevelID = levelID;
-		}
-
-		private void ActivateFirstPinValues()
-		{
-			if (levelID == LevelIDs.a_01)
-			{
-				unlocked = true;
-				unlockAnimPlayed = true;
-				completed = true;
-
-				MeshRenderer mesh = GetComponent<MeshRenderer>();
-				Material[] mats = mesh.materials;
-				mats[0] = unlockedCliffMat;
-				mats[1] = unlockedGroundMat;
-				mesh.materials = mats;
-			}
 		}
 	}
 }

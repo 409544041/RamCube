@@ -9,18 +9,6 @@ namespace Qbism.Saving
 	{
 		//States
 		public LevelIDs currentLevelID { get; set; }
-		public bool isCompleted { get; set; }
-
-
-		// public Dictionary<LevelIDs, bool> levelCompleteDic =
-		// 		new Dictionary<LevelIDs, bool>();
-
-		// public Dictionary<LevelIDs, bool> levelUnlockDic =
-		// 		new Dictionary<LevelIDs, bool>();
-
-		// public Dictionary<LevelIDs, Dictionary<bool, Dictionary<bool, bool>>> levelStatusDic = 
-		// 	new Dictionary<LevelIDs, Dictionary<bool, Dictionary<bool, bool>>>();
-		//1st bool = completed, 2nd bool = unlocked, 3rd bool = unlock animation done
 
 		public List<LevelStatusData> levelDataList;
 
@@ -51,26 +39,25 @@ namespace Qbism.Saving
 			{
 				LevelStatusData newData = new LevelStatusData();
 				newData.levelID = ID;
-				levelDataList.Add(newData); //Find a way to see this list in inspector
+				levelDataList.Add(newData);
 			}
 		}
 
-		public void SetLevelToComplete()
+		public void SetLevelToComplete(LevelIDs id, bool value)
 		{
-			isCompleted = true;
 			foreach (LevelStatusData data in levelDataList)
 			{
-				if (data.levelID == currentLevelID)
-					data.completed = true;	
+				if (data.levelID == id)
+					data.completed = value;	
 			}
 
-			CheckLevelsToUnlock();
+			CheckLevelsToUnlock(id);
 			SaveProgHandlerData();
 		}
 
-		private void CheckLevelsToUnlock()
+		private void CheckLevelsToUnlock(LevelIDs incomingID)
 		{
-			var sheetID = QbismDataSheets.levelData[currentLevelID.ToString()];
+			var sheetID = QbismDataSheets.levelData[incomingID.ToString()];
 
 			LevelIDs levelToUnlock_1 = LevelIDs.empty;
 			LevelIDs levelToUnlock_2 = LevelIDs.empty;
@@ -91,21 +78,29 @@ namespace Qbism.Saving
 				}
 			}
 
-			SetUnlockedStatus(unlock1Found, levelToUnlock_1);
-			SetUnlockedStatus(unlock2Found, levelToUnlock_2);
+			if(unlock1Found) SetUnlockedStatus(levelToUnlock_1, true);
+			else levelToUnlock_1 = LevelIDs.empty;
+
+			if(unlock2Found) SetUnlockedStatus(levelToUnlock_2, true);
+			else levelToUnlock_2 = LevelIDs.empty;
 		}
 
-		private void SetUnlockedStatus(bool found, LevelIDs levelToUnlock)
+		public void SetUnlockedStatus(LevelIDs id, bool value)
 		{
-			if (found)
+			foreach (LevelStatusData data in levelDataList)
 			{
-				foreach (LevelStatusData data in levelDataList)
-				{
-					if (data.levelID == levelToUnlock)
-						data.unlocked = true;
-				}
+				if (data.levelID == id)
+					data.unlocked = value;
+			}			
+		}
+
+		public void SetUnlockAnimPlayedStatus(LevelIDs id, bool value)
+		{
+			foreach (LevelStatusData data in levelDataList)
+			{
+				if (data.levelID == id)
+					data.unlockAnimPlayed = value;
 			}
-			else levelToUnlock = LevelIDs.empty;
 		}
 
 		public void SaveProgHandlerData()

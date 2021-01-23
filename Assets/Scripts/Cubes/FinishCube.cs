@@ -53,12 +53,12 @@ namespace Qbism.Cubes
 					transform.up), -1)) 
 				{
 					ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
-					progHandler.SetLevelToComplete();
+					progHandler.SetLevelToComplete(progHandler.currentLevelID, true);
 					
 					mover.transform.parent = transform;
 					DestroyAllFloorCubes();
 					ActivateLevelCompleteCam();
-					//ActivateSerpent();
+					//ActivateSerpent(); //temporarily disabled bc only few lvls actually have serpent
 					StartCoroutine(WorldMapTransition());
 				}		
 
