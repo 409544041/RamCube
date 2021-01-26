@@ -14,6 +14,7 @@ namespace Qbism.WorldMap
 		[SerializeField] float unlockedYPos;
 		[SerializeField] float raiseStep;
 		[SerializeField] float raiseSpeed;
+		[SerializeField] Transform pathPoint;
 
 		//Cache
 		ProgressHandler progHandler;
@@ -22,11 +23,15 @@ namespace Qbism.WorldMap
 		public bool unlocked { get; set; }
 		public bool unlockAnimPlayed { get; set; }
 		public bool completed { get; set; }
-		bool raising;
+		bool pathDrawn = false;
+		bool justCompleted = false;
+		bool raising = false;
 
 		private void Start()
 		{
 			progHandler = FindObjectOfType<ProgressHandler>();
+			if (progHandler != null)
+				progHandler.onRaisedCliff += InitiateDrawPath;
 
 			CheckUnlockStatus();
 			CheckCompleteStatus();
@@ -34,38 +39,59 @@ namespace Qbism.WorldMap
 
 		private void CheckCompleteStatus()
 		{
-			if(levelID == LevelIDs.a_01) return;
+			justCompleted = false;
 
 			foreach (ProgressHandler.LevelStatusData data in progHandler.levelDataList)
-				if(data.levelID == levelID) completed = data.completed;
+				if (data.levelID == levelID)
+				{
+					completed = data.completed;
+					pathDrawn = data.pathDrawn;
+				} 
+
+			if(completed && !pathDrawn)
+			{
+				foreach (ProgressHandler.LevelStatusData data in progHandler.levelDataList)
+					if (data.levelID == levelID) data.pathDrawn = true;
+
+				pathDrawn = true;
+				justCompleted = true;
+			}
 		}
 
 		private void CheckUnlockStatus()
 		{
-			if(levelID == LevelIDs.a_01) return;
+			if (levelID == LevelIDs.a_01) return;
+			FetchStatusFromProgHandler();
+			CheckRaiseStatus();
+		}
 
+		private void FetchStatusFromProgHandler()
+		{
 			foreach (ProgressHandler.LevelStatusData data in progHandler.levelDataList)
 			{
 				if (data.levelID == levelID)
 				{
 					unlockAnimPlayed = data.unlockAnimPlayed;
 					unlocked = data.unlocked;
-				} 
+				}
 			}
 			GetComponent<ClickableObject>().canClick = unlocked;
-			
-			if(unlocked && !unlockAnimPlayed)
+		}
+
+		private void CheckRaiseStatus()
+		{
+			if (unlocked && !unlockAnimPlayed)
 			{
 				foreach (ProgressHandler.LevelStatusData data in progHandler.levelDataList)
 					if (data.levelID == levelID) data.unlockAnimPlayed = true;
 
-				unlockAnimPlayed = true;				
+				unlockAnimPlayed = true;
 				progHandler.SaveProgHandlerData();
-				
+
 				raising = true;
 				StartCoroutine(RaiseCliff());
 			}
-			else if(unlocked && unlockAnimPlayed)
+			else if (unlocked && unlockAnimPlayed)
 			{
 				transform.position = new Vector3(
 					transform.position.x, unlockedYPos, transform.position.z);
@@ -89,11 +115,23 @@ namespace Qbism.WorldMap
 						transform.position.x, unlockedYPos, transform.position.z);
 
 					GetComponent<LevelPinRaiseJuicer>().StopRaiseJuice();
+					progHandler.StartDrawingPath(pathPoint);
 				}
 			}
 		}
 
-		public void LoadAssignedLevel()
+		private void InitiateDrawPath(Transform point)
+		{
+			if(!justCompleted) return;
+
+			LineDrawer drawer = GetComponentInChildren<LineDrawer>();
+			drawer.SetPositions(pathPoint.transform, point.transform);
+
+			pathPoint.GetComponentInChildren<LineRenderer>().enabled = true;
+			drawer.drawing = true;
+		}
+
+		public void LoadAssignedLevel() //Called from Unity Event on Clickable Object
 		{
 			SetCurrentLevelID();
 			var handler = FindObjectOfType<SceneHandler>();
@@ -104,6 +142,12 @@ namespace Qbism.WorldMap
 		private void SetCurrentLevelID()
 		{
 			FindObjectOfType<ProgressHandler>().currentLevelID = levelID;
+		}
+
+		private void OnDisable()
+		{
+			if (progHandler != null)
+				progHandler.onRaisedCliff -= InitiateDrawPath;
 		}
 	}
 }

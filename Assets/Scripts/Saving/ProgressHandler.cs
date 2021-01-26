@@ -12,6 +12,9 @@ namespace Qbism.Saving
 
 		public List<LevelStatusData> levelDataList;
 
+		//Actions, events, delegates etc
+		public event Action<Transform> onRaisedCliff;
+
 		[System.Serializable]
 		public class LevelStatusData
 		{
@@ -19,6 +22,7 @@ namespace Qbism.Saving
 			public bool unlocked;
 			public bool unlockAnimPlayed;
 			public bool completed;
+			public bool pathDrawn;
 		}
 
 		private void Awake() 
@@ -103,6 +107,11 @@ namespace Qbism.Saving
 			}
 		}
 
+		public void StartDrawingPath(Transform point)
+		{
+			onRaisedCliff(point);
+		}
+
 		public void SaveProgHandlerData()
 		{
 			SavingSystem.SaveProgHandlerData(this);
@@ -121,7 +130,8 @@ namespace Qbism.Saving
 			{
 				levelDataList[i].unlocked = false;
 				levelDataList[i].unlockAnimPlayed = false;
-				levelDataList[i].completed = false;				
+				levelDataList[i].completed = false;		
+				levelDataList[i].pathDrawn = false;		
 			}
 			SavingSystem.SaveProgHandlerData(this);
 		}
