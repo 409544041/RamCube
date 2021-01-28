@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Qbism.Saving;
+using Qbism.General;
 using Qbism.SceneTransition;
 using UnityEngine;
 using static Qbism.Saving.ProgressHandler;
@@ -24,6 +24,7 @@ namespace Qbism.WorldMap
 
 		//Actions, events, delegates etc
 		public event Action<Transform> onRaisedCliff;
+		public event Action<LevelIDs> onSetCurrentLevel;
 
 		//States
 		public bool justCompleted { get; set; } = false;
@@ -136,9 +137,9 @@ namespace Qbism.WorldMap
 			handler.LoadBySceneIndex(indexToLoad);
 		}
 
-		private void SetCurrentLevelID() //TO DO: delegate this
+		private void SetCurrentLevelID()
 		{
-			FindObjectOfType<ProgressHandler>().currentLevelID = levelID;
+			onSetCurrentLevel(levelID);
 		}
 	}
 }

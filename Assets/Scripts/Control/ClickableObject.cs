@@ -8,6 +8,7 @@ public class ClickableObject : MonoBehaviour
 	//States
 	public bool canClick { get; set; }
 
+	//Actions, events, delegates etc
 	public UnityEvent onClickEvent;
 
 	public void ClickReaction()

@@ -35,6 +35,14 @@ namespace Qbism.Saving
 			if (Input.GetKeyDown(KeyCode.P)) WipeProgress();
 		}
 
+		public void InitiatePins()
+		{
+			levelPinList.Clear();
+			BuildLevelPinList();
+			FixDelegateLink();
+			HandleLevelPins();
+		}
+
 		private void BuildLevelDataList()
 		{
 			foreach (LevelIDs ID in Enum.GetValues(typeof(LevelIDs)))
@@ -69,6 +77,7 @@ namespace Qbism.Saving
 				foreach (LevelPin pin in levelPinList)
 				{
 					pin.onRaisedCliff += StartDrawingPath;
+					pin.onSetCurrentLevel += SetCurrentLevelID;
 				}
 			}
 		}
@@ -196,7 +205,7 @@ namespace Qbism.Saving
 			}
 		}
 
-		public void StartDrawingPath(Transform point)
+		private void StartDrawingPath(Transform point)
 		{
 			foreach (LevelPin pin in levelPinList)
 			{
@@ -205,6 +214,11 @@ namespace Qbism.Saving
 					pin.InitiateDrawPath(point);
 				}
 			}
+		}
+
+		private void SetCurrentLevelID(LevelIDs ID)
+		{
+			currentLevelID = ID;
 		}
 
 		public void SaveProgHandlerData()
@@ -238,6 +252,7 @@ namespace Qbism.Saving
 				foreach (LevelPin pin in levelPinList)
 				{
 					pin.onRaisedCliff -= StartDrawingPath;
+					pin.onSetCurrentLevel -= SetCurrentLevelID;
 				}
 			}
 		}
