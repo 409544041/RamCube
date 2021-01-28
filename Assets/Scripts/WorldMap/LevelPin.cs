@@ -121,8 +121,8 @@ namespace Qbism.WorldMap
 				LineDrawer drawer = lRenders[i].GetComponent<LineDrawer>();
 				if(drawer.drawing) continue;
 
-				drawer.SetPositions(pathPoint.transform, point.transform);
 				drawer.drawing = true;
+				drawer.SetPositions(pathPoint.transform, point.transform);
 				lRenders[i].enabled = true;
 				return;
 			}

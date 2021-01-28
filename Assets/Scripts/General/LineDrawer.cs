@@ -6,9 +6,10 @@ public class LineDrawer : MonoBehaviour
 {
 	//Config parameters
 	[SerializeField] float drawSpeed = 5f;
+	[SerializeField] float lineWidth = .15f;
 
 	//Cache
-	LineRenderer lineRenderer;
+	LineRenderer lRender;
 
 	//States
 	public bool drawing { get; set; } = false;
@@ -19,7 +20,8 @@ public class LineDrawer : MonoBehaviour
 
 	private void Awake() 
 	{
-		lineRenderer = GetComponent<LineRenderer>();
+		lRender = GetComponent<LineRenderer>();
+		SetLineWidth(0);
 	}
 
 	private void Update()
@@ -40,8 +42,11 @@ public class LineDrawer : MonoBehaviour
 				Vector3.Normalize(destination.position - origin.position)
 				+ origin.position;
 
-			lineRenderer.SetPosition(1, pointAlongLine);
+			lRender.SetPosition(1, pointAlongLine);
 		}
+
+		if(lRender.startWidth == 0 && lRender.endWidth == 0)
+			SetLineWidth(lineWidth);
 	}
 
 	public void SetPositions(Transform incOrigin, Transform incDestination)
@@ -49,9 +54,23 @@ public class LineDrawer : MonoBehaviour
 		origin = incOrigin;
 		destination = incDestination;
 
-		lineRenderer.positionCount = 2;
-		lineRenderer.SetPosition(0, origin.position);
-		if(!drawing) lineRenderer.SetPosition(1, destination.position);
-		distance = Vector3.Distance(origin.position, destination.position);
+		lRender.positionCount = 2;
+		lRender.SetPosition(0, origin.position);
+		if(drawing)
+		{
+			lRender.SetPosition(0, origin.position);
+			distance = Vector3.Distance(origin.position, destination.position);
+		}
+		if(!drawing) 
+		{
+			lRender.SetPosition(1, destination.position);
+			SetLineWidth(lineWidth);
+		}
+	}
+
+	private void SetLineWidth(float width)
+	{
+		lRender.startWidth = width;
+		lRender.endWidth = width;
 	}
 }
