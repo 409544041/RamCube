@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Qbism.Saving;
 using Qbism.SceneTransition;
 using UnityEngine;
+using static Qbism.Saving.ProgressHandler;
 
 namespace Qbism.WorldMap
 {
@@ -17,118 +19,113 @@ namespace Qbism.WorldMap
 		[SerializeField] Transform pathPoint;
 
 		//Cache
-		ProgressHandler progHandler;
+		MeshRenderer mRender;
+		LineRenderer[] lRenders;
+
+		//Actions, events, delegates etc
+		public event Action<Transform> onRaisedCliff;
 
 		//States
-		public bool unlocked { get; set; }
-		public bool unlockAnimPlayed { get; set; }
-		public bool completed { get; set; }
-		bool pathDrawn = false;
-		bool justCompleted = false;
+		public bool justCompleted { get; set; } = false;
 		bool raising = false;
 
-		private void Start()
+		private void Awake() 
 		{
-			progHandler = FindObjectOfType<ProgressHandler>();
-			if (progHandler != null)
-				progHandler.onRaisedCliff += InitiateDrawPath;
-
-			CheckUnlockStatus();
-			CheckCompleteStatus();
+			mRender = GetComponentInChildren<MeshRenderer>();
+			lRenders = GetComponentsInChildren<LineRenderer>();
 		}
 
-		private void CheckCompleteStatus()
+		public void CheckRaiseStatus(bool unlocked, bool unlockAnimPlayed)
 		{
-			justCompleted = false;
+			if (!unlocked) mRender.transform.position = new Vector3
+				(transform.position.x, lockedYPos, transform.position.z);
 
-			foreach (ProgressHandler.LevelStatusData data in progHandler.levelDataList)
-				if (data.levelID == levelID)
-				{
-					completed = data.completed;
-					pathDrawn = data.pathDrawn;
-				} 
-
-			if(completed && !pathDrawn)
-			{
-				foreach (ProgressHandler.LevelStatusData data in progHandler.levelDataList)
-					if (data.levelID == levelID) data.pathDrawn = true;
-
-				pathDrawn = true;
-				justCompleted = true;
-			}
-		}
-
-		private void CheckUnlockStatus()
-		{
-			if (levelID == LevelIDs.a_01) return;
-			FetchStatusFromProgHandler();
-			CheckRaiseStatus();
-		}
-
-		private void FetchStatusFromProgHandler()
-		{
-			foreach (ProgressHandler.LevelStatusData data in progHandler.levelDataList)
-			{
-				if (data.levelID == levelID)
-				{
-					unlockAnimPlayed = data.unlockAnimPlayed;
-					unlocked = data.unlocked;
-				}
-			}
-			GetComponent<ClickableObject>().canClick = unlocked;
-		}
-
-		private void CheckRaiseStatus()
-		{
-			if (unlocked && !unlockAnimPlayed)
-			{
-				foreach (ProgressHandler.LevelStatusData data in progHandler.levelDataList)
-					if (data.levelID == levelID) data.unlockAnimPlayed = true;
-
-				unlockAnimPlayed = true;
-				progHandler.SaveProgHandlerData();
-
-				raising = true;
-				StartCoroutine(RaiseCliff());
-			}
 			else if (unlocked && unlockAnimPlayed)
 			{
-				transform.position = new Vector3(
-					transform.position.x, unlockedYPos, transform.position.z);
+				mRender.transform.position = new Vector3
+				(transform.position.x, unlockedYPos, transform.position.z);
 			}
 		}
 
-		private IEnumerator RaiseCliff()
+		public void CheckPathStatus(LevelStatusData unlock1Data, LevelStatusData unlock2Data, bool completed)
+		{
+			List<Transform> destinationList = new List<Transform>();
+
+			AddToList(completed, unlock1Data.unlocked, unlock1Data.unlockAnimPlayed,
+				unlock1Data.levelID, destinationList);
+			AddToList(completed, unlock2Data.unlocked, unlock2Data.unlockAnimPlayed,
+			unlock2Data.levelID, destinationList);
+
+			if (destinationList.Count > 0)
+			{
+				for (int i = 0; i < destinationList.Count; i++)
+				{
+					lRenders[i].GetComponent<LineDrawer>().SetPositions(pathPoint, destinationList[i]);
+					lRenders[i].enabled = true;
+				}
+			}
+		}
+
+		private void AddToList(bool completed, bool unlockStatus, bool unlockAnim, 
+			LevelIDs ID, List<Transform> destinationList)
+		{		
+			if(completed && unlockStatus && unlockAnim)
+			{
+				if(ID == LevelIDs.empty) return;
+
+				LevelPin[] pins = FindObjectsOfType<LevelPin>();
+				foreach(LevelPin pin in pins)
+				{
+					if(pin.levelID == ID) destinationList.Add(pin.pathPoint);
+				}
+			}
+		}
+
+		public void InitiateRaising(bool unlocked, bool unlockAnimPlayed)
+		{
+			mRender.transform.position = new Vector3
+				(transform.position.x, lockedYPos, transform.position.z);
+
+			raising = true;
+			StartCoroutine(RaiseCliff(mRender));
+		}
+
+		private IEnumerator RaiseCliff(MeshRenderer mRender)
 		{
 			GetComponent<LevelPinRaiseJuicer>().PlayRaiseJuice();
 
 			while(raising)
 			{
-				transform.position += new Vector3 (0, raiseStep, 0);
+				mRender.transform.position += new Vector3 (0, raiseStep, 0);
 
 				yield return new WaitForSeconds(raiseSpeed);
 
-				if (transform.position.y >= unlockedYPos)
+				if (mRender.transform.position.y >= unlockedYPos)
 				{
 					raising = false;
-					transform.position = new Vector3(
+					mRender.transform.position = new Vector3(
 						transform.position.x, unlockedYPos, transform.position.z);
 
 					GetComponent<LevelPinRaiseJuicer>().StopRaiseJuice();
-					progHandler.StartDrawingPath(pathPoint);
+					onRaisedCliff(pathPoint);
 				}
 			}
 		}
 
-		private void InitiateDrawPath(Transform point)
+		public void InitiateDrawPath(Transform point)
 		{
 			if(!justCompleted) return;
 
-			LineDrawer drawer = GetComponentInChildren<LineDrawer>();
-			drawer.SetPositions(pathPoint.transform, point.transform);
+			for (int i = 0; i < lRenders.Length; i++)
+			{
+				LineDrawer drawer = lRenders[i].GetComponent<LineDrawer>();
+				if(drawer.drawing) continue;
 
-			pathPoint.GetComponentInChildren<LineRenderer>().enabled = true;
-			drawer.drawing = true;
+				drawer.SetPositions(pathPoint.transform, point.transform);
+				drawer.drawing = true;
+				lRenders[i].enabled = true;
+				return;
+			}
 		}
 
 		public void LoadAssignedLevel() //Called from Unity Event on Clickable Object
@@ -139,15 +136,9 @@ namespace Qbism.WorldMap
 			handler.LoadBySceneIndex(indexToLoad);
 		}
 
-		private void SetCurrentLevelID()
+		private void SetCurrentLevelID() //TO DO: delegate this
 		{
 			FindObjectOfType<ProgressHandler>().currentLevelID = levelID;
-		}
-
-		private void OnDisable()
-		{
-			if (progHandler != null)
-				progHandler.onRaisedCliff -= InitiateDrawPath;
 		}
 	}
 }

@@ -40,7 +40,7 @@ namespace QbismDataSheetsTypes{
 		}
 	}
 	public class SheetLevelData: IEnumerable{
-		public System.DateTime updated = new System.DateTime(2021,1,20,17,7,54);
+		public System.DateTime updated = new System.DateTime(2021,1,28,10,7,56);
 		public readonly string[] labels = new string[]{"Pin_ID","LVL_Index","LVL_Unlock_1","LVL_Unlock_2","Level_Name","Lock_Unlock","Serp_Seg","Pin_Text"};
 		private LevelData[] _rows = new LevelData[38];
 		public void Init() {
@@ -48,7 +48,7 @@ namespace QbismDataSheetsTypes{
 					new LevelData("a_01",0,"a_02","","Introduction","",true,1),
 					new LevelData("a_02",1,"a_03","a_05","TinyZigZag","",false,2),
 					new LevelData("a_03",2,"a_04","","SevenStepZigZag","",false,3),
-					new LevelData("a_04",3,"","","LaserIntro","",false,4),
+					new LevelData("a_04",3,"a_06","","LaserIntro","",false,4),
 					new LevelData("a_05",4,"","","JustTwoLasers","",false,5),
 					new LevelData("a_06",5,"","","BoostIntro","",false,6),
 					new LevelData("a_07",6,"","","ChooseBoostMoment","",false,7),

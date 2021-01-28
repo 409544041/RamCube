@@ -51,6 +51,7 @@ public class LineDrawer : MonoBehaviour
 
 		lineRenderer.positionCount = 2;
 		lineRenderer.SetPosition(0, origin.position);
+		if(!drawing) lineRenderer.SetPosition(1, destination.position);
 		distance = Vector3.Distance(origin.position, destination.position);
 	}
 }

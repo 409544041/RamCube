@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.WorldMap;
 using UnityEngine;
 
 namespace Qbism.Saving
@@ -11,9 +12,7 @@ namespace Qbism.Saving
 		public LevelIDs currentLevelID { get; set; }
 
 		public List<LevelStatusData> levelDataList;
-
-		//Actions, events, delegates etc
-		public event Action<Transform> onRaisedCliff;
+		public List<LevelPin> levelPinList;
 
 		[System.Serializable]
 		public class LevelStatusData
@@ -33,7 +32,6 @@ namespace Qbism.Saving
 
 		private void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.L)) LoadProgHandlerData(); //TO DO: Temporary solution just to test. Fix later.
 			if (Input.GetKeyDown(KeyCode.P)) WipeProgress();
 		}
 
@@ -45,6 +43,97 @@ namespace Qbism.Saving
 				newData.levelID = ID;
 				levelDataList.Add(newData);
 			}
+		}
+
+		public void BuildLevelPinList()
+		{
+			foreach (LevelPin pin in FindObjectsOfType<LevelPin>())
+			{
+				levelPinList.Add(pin);
+			}
+
+			levelPinList.Sort(PinsByID);
+		}
+
+		private int PinsByID(LevelPin A, LevelPin B)
+		{
+			if(A.levelID < B.levelID) return -1;
+			else if(A.levelID > B.levelID) return 1;
+			return 0;
+		}
+
+		public void FixDelegateLink()
+		{
+			if (levelPinList != null)
+			{
+				foreach (LevelPin pin in levelPinList)
+				{
+					pin.onRaisedCliff += StartDrawingPath;
+				}
+			}
+		}
+
+		public void HandleLevelPins()
+		{
+			for (int i = 0; i < levelPinList.Count; i++)
+			{
+				if (levelPinList[i].levelID != levelDataList[i].levelID)
+				{
+					Debug.LogError("levelPinList " + levelPinList[i].levelID + " and levelDataList "
+					+ levelDataList[i].levelID + " are not in the same order.");
+					continue;
+				}
+
+				if(levelDataList[i].levelID == LevelIDs.a_01)
+				{
+					if (!levelDataList[i].unlocked) levelDataList[i].unlocked = true;
+					if (!levelDataList[i].unlockAnimPlayed) levelDataList[i].unlockAnimPlayed = true; 
+				}
+
+				LevelIDs unlock1ID = levelPinList[i].GetComponent<EditorSetPinValues>().levelUnlock_1;
+				LevelIDs unlock2ID = levelPinList[i].GetComponent<EditorSetPinValues>().levelUnlock_2;
+				LevelStatusData unlock1Data = FetchUnlockStatusData(unlock1ID);
+				LevelStatusData unlock2Data = FetchUnlockStatusData(unlock2ID);
+
+				var unlockAnimPlayed = levelDataList[i].unlockAnimPlayed;
+				var unlocked = levelDataList[i].unlocked;
+				var completed = levelDataList[i].completed;
+				var pathDrawn = levelDataList[i].pathDrawn;
+				
+				levelPinList[i].justCompleted = false;
+
+				levelPinList[i].GetComponent<ClickableObject>().canClick = unlocked;
+				
+				levelPinList[i].CheckRaiseStatus(unlocked, unlockAnimPlayed);
+				levelPinList[i].CheckPathStatus(unlock1Data, unlock2Data, completed);
+
+				if(unlocked && !unlockAnimPlayed)
+				{
+					levelPinList[i].InitiateRaising(unlocked, unlockAnimPlayed);
+					levelDataList[i].unlockAnimPlayed = true;
+				}
+
+				if(completed && !pathDrawn)
+				{
+					levelPinList[i].justCompleted = true;
+					levelDataList[i].pathDrawn = true;
+				}
+			}
+
+			SaveProgHandlerData();
+		}
+
+		private LevelStatusData FetchUnlockStatusData(LevelIDs ID)
+		{
+			foreach (LevelStatusData data in levelDataList)
+			{
+				if (data.levelID == ID)
+				{
+					return data;
+				} 
+			}
+			Debug.LogWarning("Can't fetch unlock data");
+			return null;
 		}
 
 		public void SetLevelToComplete(LevelIDs id, bool value)
@@ -109,7 +198,13 @@ namespace Qbism.Saving
 
 		public void StartDrawingPath(Transform point)
 		{
-			onRaisedCliff(point);
+			foreach (LevelPin pin in levelPinList)
+			{
+				if(pin.justCompleted)
+				{
+					pin.InitiateDrawPath(point);
+				}
+			}
 		}
 
 		public void SaveProgHandlerData()
@@ -126,7 +221,7 @@ namespace Qbism.Saving
 
 		public void WipeProgress()
 		{
-			for (int i = 0; i < levelDataList.Count - 1; i++)
+			for (int i = 0; i < levelDataList.Count; i++)
 			{
 				levelDataList[i].unlocked = false;
 				levelDataList[i].unlockAnimPlayed = false;
@@ -134,6 +229,17 @@ namespace Qbism.Saving
 				levelDataList[i].pathDrawn = false;		
 			}
 			SavingSystem.SaveProgHandlerData(this);
+		}
+
+		private void OnDisable()
+		{
+			if (levelPinList != null)
+			{
+				foreach (LevelPin pin in levelPinList)
+				{
+					pin.onRaisedCliff -= StartDrawingPath;
+				}
+			}
 		}
 	}
 }

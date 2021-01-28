@@ -11,11 +11,11 @@ namespace Qbism.WorldMap
 		//States
 		public int levelIndex { get; private set; }
 		string levelName;
-		LevelIDs levelUnlock_1;
-		LevelIDs levelUnlock_2;
+		public LevelIDs levelUnlock_1 { get; set; }
+		public LevelIDs levelUnlock_2 { get; set; }
 		bool hasSerpentSegment;
 
-		private void Start()
+		private void Awake()
 		{
 			LevelIDs levelID = GetComponent<LevelPin>().levelID;
 			var sheetID = QbismDataSheets.levelData[levelID.ToString()];
