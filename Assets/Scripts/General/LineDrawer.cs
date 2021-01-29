@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Qbism.WorldMap;
 using UnityEngine;
 
 namespace Qbism.General
@@ -68,6 +69,13 @@ namespace Qbism.General
 				lRender.SetPosition(1, destination.position);
 				SetLineWidth(lineWidth);
 			}
+		}
+
+		private void InitiateDrawPath(Transform origin, Transform destination)
+		{
+			if(drawing)return;
+			drawing = true;
+			SetPositions(origin, destination);
 		}
 
 		private void SetLineWidth(float width)

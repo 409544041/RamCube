@@ -7,7 +7,7 @@ using UnityEngine;
 public class ProgHandlerData
 {
 	//States
-	public List<ProgressHandler.LevelStatusData> savedLevelDataList;
+	public List<LevelStatusData> savedLevelDataList;
 
 	public ProgHandlerData(ProgressHandler progHandler)
 	{

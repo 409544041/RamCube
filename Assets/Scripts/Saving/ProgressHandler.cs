@@ -14,16 +14,6 @@ namespace Qbism.Saving
 		public List<LevelStatusData> levelDataList;
 		public List<LevelPin> levelPinList;
 
-		[System.Serializable]
-		public class LevelStatusData
-		{
-			public LevelIDs levelID;
-			public bool unlocked;
-			public bool unlockAnimPlayed;
-			public bool completed;
-			public bool pathDrawn;
-		}
-
 		private void Awake() 
 		{
 			BuildLevelDataList();
@@ -76,7 +66,6 @@ namespace Qbism.Saving
 			{
 				foreach (LevelPin pin in levelPinList)
 				{
-					pin.onRaisedCliff += StartDrawingPath;
 					pin.onSetCurrentLevel += SetCurrentLevelID;
 				}
 			}
@@ -205,17 +194,6 @@ namespace Qbism.Saving
 			}
 		}
 
-		private void StartDrawingPath(Transform point)
-		{
-			foreach (LevelPin pin in levelPinList)
-			{
-				if(pin.justCompleted)
-				{
-					pin.InitiateDrawPath(point);
-				}
-			}
-		}
-
 		private void SetCurrentLevelID(LevelIDs ID)
 		{
 			currentLevelID = ID;
@@ -251,7 +229,6 @@ namespace Qbism.Saving
 			{
 				foreach (LevelPin pin in levelPinList)
 				{
-					pin.onRaisedCliff -= StartDrawingPath;
 					pin.onSetCurrentLevel -= SetCurrentLevelID;
 				}
 			}

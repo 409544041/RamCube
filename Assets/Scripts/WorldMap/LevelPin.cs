@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Qbism.General;
 using Qbism.SceneTransition;
 using UnityEngine;
-using static Qbism.Saving.ProgressHandler;
 
 namespace Qbism.WorldMap
 {
@@ -16,15 +14,16 @@ namespace Qbism.WorldMap
 		[SerializeField] float unlockedYPos;
 		[SerializeField] float raiseStep;
 		[SerializeField] float raiseSpeed;
-		[SerializeField] Transform pathPoint;
+		public Transform pathPoint;
 
 		//Cache
 		MeshRenderer mRender;
 		LineRenderer[] lRenders;
 
 		//Actions, events, delegates etc
-		public event Action<Transform> onRaisedCliff;
+		public event Action<Transform, LineRenderer[]> onPathDrawing;
 		public event Action<LevelIDs> onSetCurrentLevel;
+		public event Action<Transform, List<Transform>, LineRenderer[]> onPathCreation;
 
 		//States
 		public bool justCompleted { get; set; } = false;
@@ -57,14 +56,7 @@ namespace Qbism.WorldMap
 			AddToList(completed, unlock2Data.unlocked, unlock2Data.unlockAnimPlayed,
 			unlock2Data.levelID, destinationList);
 
-			if (destinationList.Count > 0)
-			{
-				for (int i = 0; i < destinationList.Count; i++)
-				{
-					lRenders[i].GetComponent<LineDrawer>().SetPositions(pathPoint, destinationList[i]);
-					lRenders[i].enabled = true;
-				}
-			}
+			onPathCreation(pathPoint, destinationList, lRenders);
 		}
 
 		private void AddToList(bool completed, bool unlockStatus, bool unlockAnim, 
@@ -108,24 +100,8 @@ namespace Qbism.WorldMap
 						transform.position.x, unlockedYPos, transform.position.z);
 
 					GetComponent<LevelPinRaiseJuicer>().StopRaiseJuice();
-					onRaisedCliff(pathPoint);
+					onPathDrawing(pathPoint, lRenders);
 				}
-			}
-		}
-
-		public void InitiateDrawPath(Transform point)
-		{
-			if(!justCompleted) return;
-
-			for (int i = 0; i < lRenders.Length; i++)
-			{
-				LineDrawer drawer = lRenders[i].GetComponent<LineDrawer>();
-				if(drawer.drawing) continue;
-
-				drawer.drawing = true;
-				drawer.SetPositions(pathPoint.transform, point.transform);
-				lRenders[i].enabled = true;
-				return;
 			}
 		}
 
