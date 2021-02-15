@@ -24,6 +24,11 @@ namespace Qbism.Cubes
 		//States
 		Vector2Int myPosition;
 
+		//Actions, events, delegates etc
+		public delegate bool GetConnectionDel();
+		public GetConnectionDel onSerpentCheck;
+		public GetConnectionDel onMapCheck;
+
 		public UnityEvent onFinishEvent = new UnityEvent();
 
 		private void Awake()
@@ -52,17 +57,21 @@ namespace Qbism.Cubes
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
 					transform.up), -1)) 
 				{
-					ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
-					progHandler.SetLevelToComplete(progHandler.currentLevelID, true);
+					if(onMapCheck()) //TO DO: eventually these checks should be obsolete
+					{
+						ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
+						progHandler.SetLevelToComplete(progHandler.currentLevelID, true);
+					}
 					
 					mover.transform.parent = transform;
 					DestroyAllFloorCubes();
 					ActivateLevelCompleteCam();
-					//ActivateSerpent(); //temporarily disabled bc only few lvls actually have serpent
-					StartCoroutine(WorldMapTransition());
+					if(onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete
+					if(onMapCheck()) StartCoroutine(LevelTransition(succesClip, true, false));
+					else StartCoroutine(LevelTransition(succesClip, false, false));
 				}		
 
-				else StartCoroutine(RestartLevelTransition());
+				else StartCoroutine(LevelTransition(failClip, false, true));
 			}
 		}
 
@@ -90,22 +99,42 @@ namespace Qbism.Cubes
 			serpent.followSpeed = 15;
 		}
 
-		private IEnumerator WorldMapTransition()
+		private IEnumerator LevelTransition(AudioClip clip, bool mapConnected, bool restart)
 		{
-			source.clip = succesClip;
+			source.clip = clip;
 			onFinishEvent.Invoke();
 			yield return new WaitWhile(() => source.isPlaying);
 			// yield return new WaitForSeconds(5); //TO DO: Make timing wait for animations that are to come
-			loader.LoadWorldMap();
+
+			if(restart) loader.RestartLevel();
+			else if(mapConnected) loader.LoadWorldMap();
+			else loader.NextLevel();
 		}
 
-		private IEnumerator RestartLevelTransition()
-		{
-			source.clip = failClip;
-			onFinishEvent.Invoke();
-			yield return new WaitWhile(() => source.isPlaying);
-			loader.RestartLevel();
-		}
+		// private IEnumerator WorldMapTransition()
+		// {
+		// 	source.clip = succesClip;
+		// 	onFinishEvent.Invoke();
+		// 	yield return new WaitWhile(() => source.isPlaying);
+		// 	loader.LoadWorldMap();
+		// }
+
+		// private IEnumerator NextLevelTransition()
+		// {
+		// 	source.clip = succesClip;
+		// 	onFinishEvent.Invoke();
+		// 	yield return new WaitWhile(() => source.isPlaying);
+		// 	// yield return new WaitForSeconds(5); //TO DO: Make timing wait for animations that are to come
+		// 	loader.NextLevel();
+		// }
+
+		// private IEnumerator RestartLevelTransition()
+		// {
+		// 	source.clip = failClip;
+		// 	onFinishEvent.Invoke();
+		// 	yield return new WaitWhile(() => source.isPlaying);
+		// 	loader.RestartLevel();
+		// }
 
 		private void OnDisable()
 		{

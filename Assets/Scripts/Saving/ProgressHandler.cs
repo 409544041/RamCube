@@ -25,7 +25,7 @@ namespace Qbism.Saving
 			if (Input.GetKeyDown(KeyCode.P)) WipeProgress();
 		}
 
-		public void InitiatePins()
+		public void InitiatePins() //Done every time world map is loaded
 		{
 			levelPinList.Clear();
 			BuildLevelPinList();
