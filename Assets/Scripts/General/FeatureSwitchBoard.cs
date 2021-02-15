@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Qbism.General
 {
-	public class FeatureHandler : MonoBehaviour
+	public class FeatureSwitchBoard : MonoBehaviour
 	{
 		//Config parameters
 		public bool serpentConnected;
