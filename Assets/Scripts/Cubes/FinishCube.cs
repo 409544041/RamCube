@@ -111,31 +111,6 @@ namespace Qbism.Cubes
 			else loader.NextLevel();
 		}
 
-		// private IEnumerator WorldMapTransition()
-		// {
-		// 	source.clip = succesClip;
-		// 	onFinishEvent.Invoke();
-		// 	yield return new WaitWhile(() => source.isPlaying);
-		// 	loader.LoadWorldMap();
-		// }
-
-		// private IEnumerator NextLevelTransition()
-		// {
-		// 	source.clip = succesClip;
-		// 	onFinishEvent.Invoke();
-		// 	yield return new WaitWhile(() => source.isPlaying);
-		// 	// yield return new WaitForSeconds(5); //TO DO: Make timing wait for animations that are to come
-		// 	loader.NextLevel();
-		// }
-
-		// private IEnumerator RestartLevelTransition()
-		// {
-		// 	source.clip = failClip;
-		// 	onFinishEvent.Invoke();
-		// 	yield return new WaitWhile(() => source.isPlaying);
-		// 	loader.RestartLevel();
-		// }
-
 		private void OnDisable()
 		{
 			if (handler != null) handler.onLand -= CheckForFinish;
