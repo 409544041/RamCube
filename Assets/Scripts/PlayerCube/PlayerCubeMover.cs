@@ -93,7 +93,7 @@ namespace Qbism.PlayerCube
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			yield return new WaitForSeconds(.1f); //Added to ensure laser has time to register presence
+			yield return new WaitForSeconds(.1f); //Added to ensure laser has time to register presence. Can possibly remove when using spherecast instead of raycast
 
 			var cubeToShrink = FetchGridPos();
 
@@ -106,7 +106,7 @@ namespace Qbism.PlayerCube
 				moveHandler.InitialRecordMoveables();
 			} 
 
-			onRecordStart();
+			//onRecordStart();
 			if(lasersInLevel) onSetLaserTriggers(true);
 
 			CheckPosAhead(posAhead, turnAxis);
@@ -176,7 +176,7 @@ namespace Qbism.PlayerCube
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
-				moveHandler.StartRecordingMoveables();
+				//moveHandler.StartRecordingMoveables();
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, FetchGridPos());
 			}
 		}

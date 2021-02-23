@@ -45,7 +45,7 @@ namespace Qbism.Cubes
 			hasShrunk = true;
 			Vector3 targetScale = new Vector3(0, 0, 0);
 
-			if(type == CubeTypes.Shrinking) onRecordStart(this);
+			//if(type == CubeTypes.Shrinking) onRecordStart(this);
 
 			shrinkFeedback.Initialization();
 			shrinkFeedback.PlayFeedbacks(); 

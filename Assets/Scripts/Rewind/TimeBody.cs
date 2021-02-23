@@ -52,7 +52,7 @@ namespace Qbism.Rewind
 		private void FixedUpdate() 
 		{
 			if(isRewinding) Rewind();
-			if(isRecording) Record();
+			// if(isRecording) Record();
 		}
 
 		public void ShiftLists()
@@ -100,11 +100,11 @@ namespace Qbism.Rewind
 			}
 		}
 
-		public void Record()
-		{
-			listDictionary[0].Insert(0,
-				new PointInTime(transform.position, transform.rotation, transform.localScale));
-		}
+		// public void Record()
+		// {
+		// 	listDictionary[0].Insert(0,
+		// 		new PointInTime(transform.position, transform.rotation, transform.localScale));
+		// }
 
 		public void StartRewinding()
 		{
