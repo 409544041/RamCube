@@ -26,7 +26,6 @@ namespace Qbism.Cubes
 			new Dictionary<Vector2Int, FloorCube>();
 		
 		public event Action onLand;
-		public event Action onRecordStop;
 		public event Action<FloorCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
 		private void Awake()
@@ -118,7 +117,6 @@ namespace Qbism.Cubes
 				moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-				//moveHandler.StartRecordingMoveables();
 			}
 
 			if (floorCubeDic.ContainsKey(cubePos))

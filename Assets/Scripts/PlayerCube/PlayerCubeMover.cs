@@ -38,7 +38,6 @@ namespace Qbism.PlayerCube
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
 		public event Action<Vector2Int, GameObject, Transform, Vector3, Vector2Int> onFloorCheck;
-		public event Action onRecordStart;
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action onInitialFloorCubeRecord;
 		public event Action<bool> onSetLaserTriggers;
@@ -106,7 +105,6 @@ namespace Qbism.PlayerCube
 				moveHandler.InitialRecordMoveables();
 			} 
 
-			//onRecordStart();
 			if(lasersInLevel) onSetLaserTriggers(true);
 
 			CheckPosAhead(posAhead, turnAxis);
@@ -176,7 +174,6 @@ namespace Qbism.PlayerCube
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
-				//moveHandler.StartRecordingMoveables();
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, FetchGridPos());
 			}
 		}

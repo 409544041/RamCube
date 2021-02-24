@@ -64,8 +64,8 @@ namespace Qbism.Control
 
 			if (Input.GetKeyDown(KeyCode.R))
 				loader.RestartLevel();
-
-			if (Input.GetKeyDown(KeyCode.Return) && rewinder.rewindsAmount > 0)
+			
+			if (Input.GetKeyDown(KeyCode.Return)) 
 				rewinder.StartRewinding();
 
 		}

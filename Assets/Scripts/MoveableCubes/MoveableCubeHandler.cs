@@ -16,8 +16,6 @@ namespace Qbism.MoveableCubes
 		public Dictionary<Vector3Int, GameObject> wallCubeDic =
 			new Dictionary<Vector3Int, GameObject>();
 
-		public event Action<MoveableCube> onRecordStart;
-		public event Action onRecordStop;
 		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
 		private void Awake() 
@@ -136,15 +134,6 @@ namespace Qbism.MoveableCubes
 				var cube = pair.Value;
 				onInitialCubeRecording(cube, cube.transform.position,
 					cube.transform.rotation, cube.transform.localScale);
-			}
-		}
-
-		public void StartRecordingMoveables()
-		{
-			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
-			{
-				var cube = pair.Value;
-				onRecordStart(cube);
 			}
 		}
 

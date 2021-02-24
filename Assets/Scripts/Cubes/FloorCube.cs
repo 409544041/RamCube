@@ -19,9 +19,6 @@ namespace Qbism.Cubes
 		public bool hasShrunk { get; set; } = false;
 		public bool isFindable { get; set; } = true;
 
-		public event Action<FloorCube> onRecordStart;
-		public event Action<FloorCube> onRecordStop;
-
 		public Vector2Int FetchGridPos()
 		{
 			Vector2Int roundedPos = new Vector2Int
@@ -45,14 +42,10 @@ namespace Qbism.Cubes
 			hasShrunk = true;
 			Vector3 targetScale = new Vector3(0, 0, 0);
 
-			//if(type == CubeTypes.Shrinking) onRecordStart(this);
-
 			shrinkFeedback.Initialization();
 			shrinkFeedback.PlayFeedbacks(); 
 
-			yield return new WaitForSeconds(shrinkFeedbackDuration); //If shrink feedback is edited, edit this value to correspond to that
-
-			if (type == CubeTypes.Shrinking) onRecordStop(this);
+			yield return new WaitForSeconds(shrinkFeedbackDuration); //----- TO DO: If shrink feedback is edited, edit this value to correspond to that
 		}
 
 		private void CheckForVisualDisabling()

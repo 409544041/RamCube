@@ -57,7 +57,7 @@ namespace Qbism.Cubes
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
 					transform.up), -1)) 
 				{
-					if(onMapCheck()) //TO DO: eventually these checks should be obsolete
+					if(onMapCheck()) //TO DO: eventually these checks should be obsolete bc map should always be available and a level is always started via map
 					{
 						ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
 						progHandler.SetLevelToComplete(progHandler.currentLevelID, true);
@@ -66,7 +66,7 @@ namespace Qbism.Cubes
 					mover.transform.parent = transform;
 					DestroyAllFloorCubes();
 					ActivateLevelCompleteCam();
-					if(onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete
+					if(onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
 					if(onMapCheck()) StartCoroutine(LevelTransition(succesClip, true, false));
 					else StartCoroutine(LevelTransition(succesClip, false, false));
 				}		
