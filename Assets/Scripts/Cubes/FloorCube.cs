@@ -73,9 +73,13 @@ namespace Qbism.Cubes
 		// public void StopShrinking()
 		// {
 		// 	print("Stopping Shrinking");
-		// 	shrinkFeedback.StopFeedbacks();
-		// 	shrinkFeedback.ResetFeedbacks();
-		// 	shrinkFeedback.enabled = false;
+
+		// 	MMFeedback[] feedbacks = shrinkFeedback.GetComponents<MMFeedback>();
+		// 	foreach (MMFeedback feedback in feedbacks)
+		// 	{
+		// 		feedback.
+		// 	}
+			
 		// 	isShrinking = false;
 		// }
 

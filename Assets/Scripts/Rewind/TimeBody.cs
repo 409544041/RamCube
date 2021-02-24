@@ -58,6 +58,13 @@ namespace Qbism.Rewind
 		{	
 			if(rewindList.Count <= 0) return;
 
+			//if(cube.isShrinking) cube.StopShrinking(); //----- TO DO: wait on MM response. Fix this. Put correct code.
+
+			transform.position = rewindList[0].position;
+			transform.rotation = rewindList[0].rotation;
+			transform.localScale = rewindList[0].scale;
+			rewindList.RemoveAt(0);
+
 			if (this.tag == "Player")
 			{
 				mover.RoundPosition();
@@ -71,7 +78,6 @@ namespace Qbism.Rewind
 				var cube = GetComponent<FloorCube>();
 				if (cube)
 				{
-					//if(cube.isShrinking) cube.StopShrinking(); //----- TO DO: wait on MM response. Fix this.
 					ResetStatic(cube);
 					ResetShrunkStatus(cube);
 					SetIsFindable(cube);
@@ -83,15 +89,11 @@ namespace Qbism.Rewind
 					ResetDocked(moveable);
 				}
 			}
-
-			transform.position = rewindList[0].position;
-			transform.rotation = rewindList[0].rotation;
-			transform.localScale = rewindList[0].scale;
-			rewindList.RemoveAt(0);
 		}
 
-		//----- TO DO: Check if record moment for each of these is good (it's wrong for docked)
-		private void SetIsFindable(FloorCube cube) //----- TO DO: What is this even? Do we need it still?
+		//isFindable is removed from a floorcube if a moveable becomes a floorcube on a location of the old (shrunk) floorcube
+		//floor cubes with isFindable are added to floorcubedic after moveables get docked. So the old shrunk floorcube isn't added to avoid dic overlap
+		private void SetIsFindable(FloorCube cube)
 		{
 			if (isFindableList.Count > 0 && isFindableList[0] == true && cube.isFindable == false)
 				cube.isFindable = true;
@@ -121,7 +123,7 @@ namespace Qbism.Rewind
 			isStaticList.RemoveAt(0);
 		}	
 
-		private void ResetDocked(MoveableCube moveable)
+		private void ResetDocked(MoveableCube moveable) //----- TO DO: Check if record moment for each of these is good (it's wrong for docked)
 		{
 			moveable.RoundPosition();
 			moveable.UpdateCenterPosition();
