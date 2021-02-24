@@ -214,8 +214,12 @@ namespace Qbism.Cubes
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in floorCubeDic)
 			{
 				var cube = pair.Value;
+
+				Vector3 recordedScale = new Vector3 (0, 0, 0);
+				if(!cube.hasShrunk) recordedScale = cube.transform.localScale;
+				
 				onInitialCubeRecording(cube, cube.transform.position, 
-					cube.transform.rotation, cube.transform.localScale);
+					cube.transform.rotation, recordedScale);
 			}
 		}
 

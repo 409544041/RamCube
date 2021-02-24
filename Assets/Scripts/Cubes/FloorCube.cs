@@ -18,6 +18,7 @@ namespace Qbism.Cubes
 		//States
 		public bool hasShrunk { get; set; } = false;
 		public bool isFindable { get; set; } = true;
+		//public bool isShrinking { get; set; } = false;
 
 		public Vector2Int FetchGridPos()
 		{
@@ -39,14 +40,44 @@ namespace Qbism.Cubes
 
 		private IEnumerator Shrink()
 		{
+			//isShrinking = true; //----- TO DO: Wait on MM respose. Fix this.
 			hasShrunk = true;
-			Vector3 targetScale = new Vector3(0, 0, 0);
+
+			MMFeedbackPosition[] posFeedbacks =
+				shrinkFeedback.GetComponents<MMFeedbackPosition>();
+			foreach (MMFeedbackPosition posFeedback in posFeedbacks)
+			{
+				//This makes sure when shrinking for a second time the initial position doesn't magically changes (bug in MM?)
+				if(posFeedback.Label == "Position Upwards")
+				{
+					posFeedback.InitialPosition = new Vector3(0, 0, 0);
+					posFeedback.DestinationPosition = new Vector3(0, 1, 0);
+				}
+
+				if(posFeedback.Label =="Position Downwards")
+				{
+					posFeedback.InitialPosition = new Vector3(0, 1, 0);
+					posFeedback.DestinationPosition = new Vector3(0, -1, 0);
+				}
+			}
 
 			shrinkFeedback.Initialization();
 			shrinkFeedback.PlayFeedbacks(); 
 
-			yield return new WaitForSeconds(shrinkFeedbackDuration); //----- TO DO: If shrink feedback is edited, edit this value to correspond to that
+			yield return new WaitForSeconds(shrinkFeedbackDuration); 
+			//----- TO DO: If shrink feedback is edited, edit this value to correspond to that
+
+			//isShrinking = false;
 		}
+
+		// public void StopShrinking()
+		// {
+		// 	print("Stopping Shrinking");
+		// 	shrinkFeedback.StopFeedbacks();
+		// 	shrinkFeedback.ResetFeedbacks();
+		// 	shrinkFeedback.enabled = false;
+		// 	isShrinking = false;
+		// }
 
 		private void CheckForVisualDisabling()
 		{

@@ -34,6 +34,7 @@ namespace Qbism.PlayerCube
 		bool initiatedByPlayer = true;
 		public bool isMoving { get; set; } = false;
 		public bool lasersInLevel { get; set; } = false;
+		private Vector3 startScale = new Vector3(1, 1, 1);
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
@@ -66,6 +67,7 @@ namespace Qbism.PlayerCube
 		private void Start()
 		{
 			UpdateCenterPosition();
+			startScale = transform.localScale;
 		}
 
 		public void HandleSwipeInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
@@ -100,7 +102,7 @@ namespace Qbism.PlayerCube
 
 			if (initiatedByPlayer)
 			{
-				onInitialRecord(transform.position, transform.rotation, transform.localScale);
+				onInitialRecord(transform.position, transform.rotation, startScale);
 				onInitialFloorCubeRecord();
 				moveHandler.InitialRecordMoveables();
 			} 

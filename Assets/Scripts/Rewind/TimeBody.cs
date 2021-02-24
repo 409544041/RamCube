@@ -56,10 +56,7 @@ namespace Qbism.Rewind
 
 		public void Rewind()
 		{	
-			transform.position = rewindList[0].position;
-			transform.rotation = rewindList[0].rotation;
-			transform.localScale = rewindList[0].scale;
-			rewindList.RemoveAt(0);
+			if(rewindList.Count <= 0) return;
 
 			if (this.tag == "Player")
 			{
@@ -74,6 +71,7 @@ namespace Qbism.Rewind
 				var cube = GetComponent<FloorCube>();
 				if (cube)
 				{
+					//if(cube.isShrinking) cube.StopShrinking(); //----- TO DO: wait on MM response. Fix this.
 					ResetStatic(cube);
 					ResetShrunkStatus(cube);
 					SetIsFindable(cube);
@@ -85,9 +83,15 @@ namespace Qbism.Rewind
 					ResetDocked(moveable);
 				}
 			}
+
+			transform.position = rewindList[0].position;
+			transform.rotation = rewindList[0].rotation;
+			transform.localScale = rewindList[0].scale;
+			rewindList.RemoveAt(0);
 		}
 
-		private void SetIsFindable(FloorCube cube) //TO DO: Check if record moment for each of these is good (it's wrong for docked)
+		//----- TO DO: Check if record moment for each of these is good (it's wrong for docked)
+		private void SetIsFindable(FloorCube cube) //----- TO DO: What is this even? Do we need it still?
 		{
 			if (isFindableList.Count > 0 && isFindableList[0] == true && cube.isFindable == false)
 				cube.isFindable = true;
