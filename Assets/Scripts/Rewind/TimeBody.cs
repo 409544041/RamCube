@@ -43,7 +43,9 @@ namespace Qbism.Rewind
 				if (cube.type == CubeTypes.Static) isStaticList.Insert(0, CubeTypes.Static);
 				else if (cube.type == CubeTypes.Shrinking) isStaticList.Insert(0, CubeTypes.Shrinking);
 
-				if (cube.hasShrunk == true) hasShrunkList.Insert(0, true);
+				CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
+				if (shrinker && shrinker.hasShrunk == true) 
+					hasShrunkList.Insert(0, true);
 				else hasShrunkList.Insert(0, false);
 			}
 							
@@ -57,8 +59,6 @@ namespace Qbism.Rewind
 		public void Rewind()
 		{	
 			if(rewindList.Count <= 0) return;
-
-			//if(cube.isShrinking) cube.StopShrinking(); //----- TO DO: wait on MM response. Fix this. Put correct code.
 
 			transform.position = rewindList[0].position;
 			transform.rotation = rewindList[0].rotation;
@@ -102,9 +102,16 @@ namespace Qbism.Rewind
 		}
 
 		private void ResetShrunkStatus(FloorCube cube)
-		{			
-			if(hasShrunkList.Count > 0 && hasShrunkList[0] == false && cube.hasShrunk == true)
-				cube.hasShrunk = false;
+		{	
+			CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();	
+
+			if(hasShrunkList.Count > 0 && hasShrunkList[0] == false 
+				&& shrinker.hasShrunk == true)
+				{
+					shrinker.hasShrunk = false;
+					shrinker.EnableMesh();
+				}
+				
 			
 			hasShrunkList.RemoveAt(0);
 		}
@@ -116,7 +123,7 @@ namespace Qbism.Rewind
 			{
 				cube.type = CubeTypes.Static;
 
-				Material[] mats = GetComponent<Renderer>().materials;
+				Material[] mats = GetComponentInChildren<Renderer>().materials;
 				mats[2].SetTexture("_BaseMap", GetComponent<StaticCube>().staticFaceTex);
 			}
 

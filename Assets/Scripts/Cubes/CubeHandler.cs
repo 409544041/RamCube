@@ -99,7 +99,7 @@ namespace Qbism.Cubes
 		{
 			if (floorCubeDic[cubeToShrink].FetchType() == CubeTypes.Shrinking)
 			{
-				floorCubeDic[cubeToShrink].StartShrinking();
+				floorCubeDic[cubeToShrink].GetComponent<CubeShrinker>().StartShrinking();
 			}
 		}
 
@@ -111,7 +111,7 @@ namespace Qbism.Cubes
 			previousCube = currentCube;
 
 			if(previousCube.FetchType() == CubeTypes.Static)
-				previousCube.GetComponent<StaticCube>().BecomeFallingCube(cube);
+				previousCube.GetComponent<StaticCube>().BecomeShrinkingCube(cube);
 			
 			if(previousCube.FetchType() == CubeTypes.Boosting && 
 				moveHandler.CheckMoveableCubeDicKey(posAhead))
@@ -214,9 +214,11 @@ namespace Qbism.Cubes
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in floorCubeDic)
 			{
 				var cube = pair.Value;
-
+				CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
 				Vector3 recordedScale = new Vector3 (0, 0, 0);
-				if(!cube.hasShrunk) recordedScale = cube.transform.localScale;
+
+				if(shrinker && !shrinker.hasShrunk) 
+					recordedScale = cube.transform.localScale;
 				
 				onInitialCubeRecording(cube, cube.transform.position, 
 					cube.transform.rotation, recordedScale);
@@ -233,11 +235,13 @@ namespace Qbism.Cubes
 			float shrinkTimeStep, MMFeedbacks shrinkFeedback, float shrinkDuration)
 		{
 			FloorCube newFloor = cube.AddComponent<FloorCube>();
-			newFloor.shrinkStep = shrinkStep;
-			newFloor.timeStep = shrinkTimeStep;
+			CubeShrinker newShrinker = cube.AddComponent<CubeShrinker>();
+			newShrinker.shrinkStep = shrinkStep;
+			newShrinker.timeStep = shrinkTimeStep;
 			newFloor.tag = "Environment";
-			newFloor.shrinkFeedback = shrinkFeedback;
-			newFloor.shrinkFeedbackDuration = shrinkDuration;
+			newFloor.type = CubeTypes.Shrinking;
+			newShrinker.shrinkFeedback = shrinkFeedback;
+			newShrinker.shrinkFeedbackDuration = shrinkDuration;
 
 			AddToDictionary(cubePos, newFloor);
 		}
@@ -260,7 +264,9 @@ namespace Qbism.Cubes
 		public bool FetchShrunkStatus(Vector2Int cubePos)
 		{
 			FloorCube cube = FetchCube(cubePos);
-			if (cube.hasShrunk) return true;
+			CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
+
+			if (shrinker && shrinker.hasShrunk) return true;
 			else return false;
 		}
 
@@ -272,7 +278,7 @@ namespace Qbism.Cubes
 		private void SetShrunkStatus(Vector2Int cubePos, bool value)
 		{
 			if(FetchCube(cubePos).type == CubeTypes.Shrinking)
-				FetchCube(cubePos).hasShrunk = value;
+				FetchCube(cubePos).GetComponent<CubeShrinker>().hasShrunk = value;
 		}
 
 		private void OnDisable()

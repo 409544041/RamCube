@@ -80,9 +80,10 @@ namespace Qbism.Cubes
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.floorCubeDic)
 			{
 				var cube = pair.Value;
-				if(cube.GetComponent<FinishCube>() || cube.hasShrunk == true) continue;
+				if(cube.GetComponent<FinishCube>() || 
+					cube.GetComponent<CubeShrinker>().hasShrunk == true) continue;
 
-				cube.StartShrinking();
+				cube.GetComponent<CubeShrinker>().StartShrinking();
 			}
 		}
 
