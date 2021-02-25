@@ -95,17 +95,20 @@ namespace Qbism.Rewind
 		//floor cubes with isFindable are added to floorcubedic after moveables get docked. So the old shrunk floorcube isn't added to avoid dic overlap
 		private void SetIsFindable(FloorCube cube)
 		{
-			if (isFindableList.Count > 0 && isFindableList[0] == true && cube.isFindable == false)
+			if(isFindableList.Count <= 0) return;
+
+			if (isFindableList[0] == true && cube.isFindable == false)
 				cube.isFindable = true;
 			
 			isFindableList.RemoveAt(0);
 		}
 
 		private void ResetShrunkStatus(FloorCube cube)
-		{	
-			CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();	
+		{
+			if (hasShrunkList.Count <= 0) return;
+			CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
 
-			if(hasShrunkList.Count > 0 && hasShrunkList[0] == false 
+			if(hasShrunkList[0] == false 
 				&& shrinker.hasShrunk == true)
 				{
 					shrinker.hasShrunk = false;
@@ -118,7 +121,9 @@ namespace Qbism.Rewind
 
 		private void ResetStatic(FloorCube cube)
 		{
-			if(isStaticList.Count > 0 && isStaticList[0] == CubeTypes.Static &&
+			if(isStaticList.Count <= 0) return;
+
+			if(isStaticList[0] == CubeTypes.Static &&
 				cube.type == CubeTypes.Shrinking)
 			{
 				cube.type = CubeTypes.Static;
@@ -140,6 +145,7 @@ namespace Qbism.Rewind
 				this.tag = "Moveable";
 				moveable.isDocked = false;
 				Destroy(GetComponent<FloorCube>());
+				Destroy(GetComponent<CubeShrinker>());
 			}
 
 			isDockedList.RemoveAt(0);

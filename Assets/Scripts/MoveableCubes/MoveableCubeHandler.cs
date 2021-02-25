@@ -23,7 +23,7 @@ namespace Qbism.MoveableCubes
 			moveableCubes = FindObjectsOfType<MoveableCube>();
 			
 			LoadMoveableCubeDictionary();
-			LoadWallCubeDictionary();
+			LoadWallCubeDictionary(); //----- TO DO: Why do we have this here? Has nothing to do with moveables?
 		}
 
 		private void OnEnable() 

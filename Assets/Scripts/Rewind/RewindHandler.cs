@@ -25,7 +25,7 @@ namespace Qbism.Rewind
 			moveHandler = handler.GetComponent<MoveableCubeHandler>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();
 
-			FloorCube[] floorCubesAtStart = FindObjectsOfType<FloorCube>();
+			FloorCube[] floorCubesAtStart = FindObjectsOfType<FloorCube>(); //TO DO: What is up with this list? Doesn't seem to be used anywhere?
 			foreach (FloorCube cube in floorCubesAtStart)
 			{
 				floorCubes.Add(cube);
@@ -75,8 +75,11 @@ namespace Qbism.Rewind
 			}
 		}
 
-		private void ReloadDics()
+		private IEnumerator ReloadDics() 
 		{
+			yield return new WaitForSeconds(.1f); 
+			//Without this extra time floorcubedic would register just rewinded moveables as floorcubes
+			
 			handler.floorCubeDic.Clear();
 			handler.LoadFloorCubeDictionary();
 			moveHandler.moveableCubeDic.Clear();
@@ -92,7 +95,7 @@ namespace Qbism.Rewind
 				timeBody.Rewind();
 			}
 
-			ReloadDics();
+			StartCoroutine(ReloadDics());
 		}
 
 		private void AddInitialPlayerRecording(Vector3 pos, Quaternion rot, Vector3 scale)
