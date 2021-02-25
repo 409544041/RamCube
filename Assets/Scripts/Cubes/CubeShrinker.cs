@@ -19,12 +19,19 @@ namespace Qbism.Cubes
 
 		//States
 		public bool hasShrunk { get; set; } = false;
+		Vector3 resetPos;
+		Quaternion resetRot;
+		Vector3 resetScale;
 
 		private void Start() 
 		{
 			MeshRenderer[] meshes = GetComponentsInChildren<MeshRenderer>();
 			mesh = meshes[0];
 			shrinkMesh = meshes[1];
+
+			resetPos = shrinkMesh.transform.position;
+			resetRot = shrinkMesh.transform.rotation;
+			resetScale = shrinkMesh.transform.localScale;
 			shrinkMesh.enabled = false;
 		}
 
@@ -40,9 +47,10 @@ namespace Qbism.Cubes
 
 			hasShrunk = true;
 
-			Vector3 resetPos = shrinkMesh.transform.position;
-			Quaternion resetRot = shrinkMesh.transform.rotation;
-			Vector3 resetScale = shrinkMesh.transform.localScale;
+			//Makes sure all values are reset in case this is the second shrink
+			shrinkMesh.transform.position = resetPos;
+			shrinkMesh.transform.rotation = resetRot;
+			shrinkMesh.transform.localScale = resetScale;
 
 			MMFeedbackPosition[] posFeedbacks =
 				shrinkFeedback.GetComponents<MMFeedbackPosition>();
@@ -69,9 +77,6 @@ namespace Qbism.Cubes
 			//----- TO DO: If shrink feedback is edited, edit this value to correspond to that
 
 			shrinkMesh.enabled = false;
-			shrinkMesh.transform.position = resetPos;
-			shrinkMesh.transform.rotation = resetRot;
-			shrinkMesh.transform.localScale = resetScale;
 		}
 
 		public void EnableMesh()
