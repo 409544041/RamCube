@@ -28,6 +28,7 @@ namespace Qbism.Rewind
 			handler = FindObjectOfType<CubeHandler>();
 		}
 
+		//Is initiated by player move
 		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale)
 		{
 			var cube = GetComponent<FloorCube>();
