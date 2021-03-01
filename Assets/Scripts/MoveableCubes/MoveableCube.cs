@@ -31,7 +31,9 @@ namespace Qbism.MoveableCubes
 		public bool isBoosting { get; set; } = false;
 		public bool hasBumped { get; set; } = false;
 		public bool isDocked { get; set; } = false;
+		Quaternion resetRot;
 
+		//Actions, events, delegates etc
 		public delegate bool KeyCheckDelegate(Vector3Int pos);
 		public KeyCheckDelegate onWallKeyCheck;
 		public delegate bool FloorKeyCheckDelegate(Vector2Int pos);
@@ -47,7 +49,6 @@ namespace Qbism.MoveableCubes
 
 		public event Action<Vector2Int, GameObject, float, float, MMFeedbacks, float> onComponentAdd;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
-		public event Action<MoveableCube> onRecordStop;
 		public event Action onCheckForNewFloorCubes;
 		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
 		public event Action<Vector2Int, bool> onSetFindable;
@@ -60,6 +61,7 @@ namespace Qbism.MoveableCubes
 			UpdateCenterPosition();
 			yPos = transform.position.y;
 			transform.localScale = moveScale;
+			resetRot = transform.rotation;
 		}
 
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
@@ -80,20 +82,20 @@ namespace Qbism.MoveableCubes
 		{	
 			isMoving = true;	
 
-			if(onMoveableKeyCheck(posAhead) && !onMovingCheck(posAhead)) //checking if it's not moving to ensure it's not checking itself in his origin pos
+			if(onMoveableKeyCheck(posAhead) && !onMovingCheck(posAhead)) //Checking if it's not moving to ensure it's not checking itself in his origin pos
 			{
 				onActivateOtherMoveable(posAhead, turnAxis, FetchGridPos());
 				hasBumped = true;
 			} 	
 
-			if(posAhead == onPlayerPosCheck())	
+			if(posAhead == onPlayerPosCheck())	//Checking if it bumps into player
 			{
 				onActivatePlayerMove(this, side, turnAxis, posAhead);
 				onSetShrunk(posAhead, true);
 				hasBumped = true;
 			}
 
-			if(onFloorKeyCheck(posAhead) && !onShrunkCheck(posAhead))
+			if(onFloorKeyCheck(posAhead) && !onShrunkCheck(posAhead)) //Normal movement
 			{
 				for (int i = 0; i < (90 / turnStep); i++)
 				{
@@ -112,6 +114,7 @@ namespace Qbism.MoveableCubes
 				CheckFloorInNewPos(side, turnAxis, posAhead, this, FetchGridPos(), originPos, prevPos);
 			}
 
+			//Docking
 			else if(!onFloorKeyCheck(posAhead) || (onFloorKeyCheck(posAhead) && onShrunkCheck(posAhead))) 
 			{
 				for (int i = 0; i < (180 / turnStep); i++)
@@ -121,6 +124,7 @@ namespace Qbism.MoveableCubes
 				}
 
 				transform.localScale = new Vector3(1, 1, 1);
+				transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
 				RoundPosition();
 				isMoving = false;
@@ -137,7 +141,6 @@ namespace Qbism.MoveableCubes
 
 				onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, shrinkFeedback, shrinkFeedbackDuration);
 				onCheckForNewFloorCubes();
-				onRecordStop(this);
 			}
 		}
 
@@ -160,6 +163,7 @@ namespace Qbism.MoveableCubes
 			}
 
 			transform.localScale = new Vector3(1, 1, 1);
+			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
 			RoundPosition();
 			isMoving = false;
@@ -167,7 +171,6 @@ namespace Qbism.MoveableCubes
 
 			onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, shrinkFeedback, shrinkFeedbackDuration);
 			onCheckForNewFloorCubes();
-			onRecordStop(this);
 		}
 
 		private bool CheckForWallAhead(Vector2Int pos)

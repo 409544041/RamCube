@@ -10,25 +10,12 @@ namespace Qbism.Rewind
 {
 	public class TimeBody : MonoBehaviour
 	{
-		//States
-		public bool isRewinding { get; set; } = false;
-		public bool isRecording { get; set; } = false;
-		public int rewindAmount { get; set; } = 0;
-		public int timesRewinded { get; set; } = 0;
-		bool originPosSaved = false;
-		Vector2Int rewindOriginPos = new Vector2Int(0,0);
-		Vector3 rewindOriginTransform;
-
 		//Cache
 		PlayerCubeMover mover;
 		MoveableCubeHandler moveHandler;
 		CubeHandler handler;
 
-		public delegate bool RewindCheckDelegate();
-		public RewindCheckDelegate onRewindCheck;
-
-		public Dictionary<int, List<PointInTime>> listDictionary = new Dictionary<int, List<PointInTime>>();
-		private List<Vector2Int> firstPosList { get; set; } = new List<Vector2Int>();
+		private List<PointInTime> rewindList = new List<PointInTime>(); //TO DO: Make private afterwards
 		private List<bool> isFindableList = new List<bool>();
 		private List<bool> hasShrunkList = new List<bool>();
 		private List<CubeTypes> isStaticList = new List<CubeTypes>();
@@ -41,44 +28,13 @@ namespace Qbism.Rewind
 			handler = FindObjectOfType<CubeHandler>();
 		}
 
-		private void Start() 
-		{	
-			for (int i = 0; i < rewindAmount; i++)
-			{
-				listDictionary.Add(i, new List<PointInTime>());
-			}
-		}
-
-		private void FixedUpdate() 
-		{
-			if(isRewinding) Rewind();
-			if(isRecording) Record();
-		}
-
-		public void ShiftLists()
-		{
-			for (int i = rewindAmount - 1; i > 0; i--)
-			{
-				if (listDictionary[i - 1].Count > 0)
-					listDictionary[i] = listDictionary[i - 1];
-			}
-
-			if (listDictionary[0].Count > 0) 
-				listDictionary[0] = new List<PointInTime>();
-		}
-
+		//Is initiated by player move
 		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale)
 		{
 			var cube = GetComponent<FloorCube>();
 			var moveable = GetComponent<MoveableCube>();
 
-			listDictionary[0].Insert(0, new PointInTime(pos, rot, scale));
-
-			if(this.tag == "Player")
-			{
-				Vector2Int firstPos = new Vector2Int(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z));
-				firstPosList.Insert(0, firstPos);
-			}
+			rewindList.Insert(0, new PointInTime(pos, rot, scale));
 
 			if (cube)
 			{
@@ -88,9 +44,10 @@ namespace Qbism.Rewind
 				if (cube.type == CubeTypes.Static) isStaticList.Insert(0, CubeTypes.Static);
 				else if (cube.type == CubeTypes.Shrinking) isStaticList.Insert(0, CubeTypes.Shrinking);
 
-				if (cube.hasShrunk == true) hasShrunkList.Insert(0, true);
+				CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
+				if (shrinker && shrinker.hasShrunk == true) 
+					hasShrunkList.Insert(0, true);
 				else hasShrunkList.Insert(0, false);
-
 			}
 							
 			if(moveable)
@@ -100,110 +57,99 @@ namespace Qbism.Rewind
 			}
 		}
 
-		public void Record()
-		{
-			listDictionary[0].Insert(0,
-				new PointInTime(transform.position, transform.rotation, transform.localScale));
-		}
-
-		public void StartRewinding()
-		{
-			isRewinding = true;
-			if (this.tag == "Player" || this.tag == "Moveable") mover.input = false;
-			if (this.tag == "Moveable") originPosSaved = false;
-		}
-
-		private void Rewind()
+		public void Rewind()
 		{	
-			if(listDictionary[timesRewinded].Count > 0)
+			if(rewindList.Count <= 0) return;
+
+			transform.position = rewindList[0].position;
+			transform.rotation = rewindList[0].rotation;
+			transform.localScale = rewindList[0].scale;
+			rewindList.RemoveAt(0);
+
+			if (this.tag == "Player")
 			{
-				if(!originPosSaved) 
-				{
-					rewindOriginPos = new Vector2Int(Mathf.RoundToInt(listDictionary[timesRewinded][0].position.x), 
-						Mathf.RoundToInt(listDictionary[timesRewinded][0].position.z));
-
-					rewindOriginTransform = listDictionary[timesRewinded][0].position;
-
-					originPosSaved = true;
-				}
-
-				transform.position = listDictionary[timesRewinded][0].position;
-				transform.rotation = listDictionary[timesRewinded][0].rotation;
-				transform.localScale = listDictionary[timesRewinded][0].scale;
-				listDictionary[timesRewinded].RemoveAt(0);				
+				mover.RoundPosition();
+				mover.UpdateCenterPosition();
+				mover.GetComponent<PlayerCubeFeedForward>().ShowFeedForward();
+				handler.currentCube = handler.FetchCube(mover.FetchGridPos());
 			}
 
-			else //at end of rewind
+			if (this.tag == "Environment" || this.tag == "Moveable")
 			{
-				isRewinding = false;
-				rewindAmount--;
-				if(!onRewindCheck()) mover.input = true;
-
-				if (this.tag == "Player")
+				var cube = GetComponent<FloorCube>();
+				if (cube)
 				{
-					mover.RoundPosition();
-					mover.UpdateCenterPosition();
-					mover.GetComponent<PlayerCubeFeedForward>().ShowFeedForward();
-					handler.currentCube = handler.FetchCube(mover.FetchGridPos());
+					ResetStatic(cube);
+					ResetShrunkStatus(cube);
+					SetIsFindable(cube);
 				}
 
-				if (this.tag == "Environment" || this.tag == "Moveable") 
+				var moveable = GetComponent<MoveableCube>();
+				if (moveable)
 				{
-					var cube = GetComponent<FloorCube>();
-					if(cube)
-					{
-						ResetStatic(cube);
-						ResetShrunkStatus(cube);
-						SetIsFindable(cube);
-					}
-
-					var moveable = GetComponent<MoveableCube>();
-					if (moveable)
-					{
-						ResetDocked(moveable);
-					}
+					ResetDocked(moveable);
 				}
-			} 
+			}
 		}
 
+		//isFindable is removed from a floorcube if a moveable becomes a floorcube on a location of the old (shrunk) floorcube
+		//floor cubes with isFindable are added to floorcubedic after moveables get docked. So the old shrunk floorcube isn't added to avoid dic overlap
 		private void SetIsFindable(FloorCube cube)
 		{
-			if (isFindableList.Count > timesRewinded && isFindableList[timesRewinded] == true && 
-				cube.isFindable == false)
+			if(isFindableList.Count <= 0) return;
+
+			if (isFindableList[0] == true && cube.isFindable == false)
 				cube.isFindable = true;
+			
+			isFindableList.RemoveAt(0);
 		}
 
 		private void ResetShrunkStatus(FloorCube cube)
-		{			
-			if(hasShrunkList.Count > timesRewinded && hasShrunkList[timesRewinded] == false &&
-				cube.hasShrunk == true)
-				cube.hasShrunk = false;
+		{
+			if (hasShrunkList.Count <= 0) return;
+			CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
+
+			if(hasShrunkList[0] == false 
+				&& shrinker.hasShrunk == true)
+				{
+					shrinker.hasShrunk = false;
+					shrinker.EnableMesh();
+				}
+				
+			
+			hasShrunkList.RemoveAt(0);
 		}
 
 		private void ResetStatic(FloorCube cube)
 		{
-			if(isStaticList.Count > timesRewinded && isStaticList[timesRewinded] == CubeTypes.Static &&
+			if(isStaticList.Count <= 0) return;
+
+			if(isStaticList[0] == CubeTypes.Static &&
 				cube.type == CubeTypes.Shrinking)
 			{
 				cube.type = CubeTypes.Static;
 
-				Material[] mats = GetComponent<Renderer>().materials;
+				Material[] mats = GetComponentInChildren<Renderer>().materials;
 				mats[2].SetTexture("_BaseMap", GetComponent<StaticCube>().staticFaceTex);
-			}	
+			}
+
+			isStaticList.RemoveAt(0);
 		}	
 
-		private void ResetDocked(MoveableCube moveable)
+		private void ResetDocked(MoveableCube moveable) //----- TO DO: Check if record moment for each of these is good (it's wrong for docked)
 		{
 			moveable.RoundPosition();
 			moveable.UpdateCenterPosition();
 
-			if(isDockedList.Count > timesRewinded && isDockedList[timesRewinded] == false && 
-				moveable.isDocked == true)
+			if(isDockedList.Count > 0 && isDockedList[0] == false && moveable.isDocked == true)
 			{
 				this.tag = "Moveable";
 				moveable.isDocked = false;
 				Destroy(GetComponent<FloorCube>());
+				Destroy(GetComponent<CubeShrinker>());
 			}
+
+			isDockedList.RemoveAt(0);
 		}	
 	}
 }

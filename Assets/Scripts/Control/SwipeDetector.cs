@@ -99,8 +99,8 @@ namespace Qbism.Control
 						mover.HandleSwipeInput(mover.right, Vector3.back, posAhead);
 				}
 			}
-
-			else if (rewinder.rewindsAmount > 0) rewinder.StartRewinding();
+			
+			//----- TO DO: Add rewind button instead of having it on tap
 		}
 
 		private bool SwipeDistanceCheck()

@@ -62,10 +62,10 @@ namespace Qbism.Control
 					mover.HandleKeyInput(mover.right, Vector3.back, posAhead);
 			}
 
-			if (Input.GetKeyDown(KeyCode.R))
+			if (Input.GetKeyDown(KeyCode.Return))
 				loader.RestartLevel();
-
-			if (Input.GetKeyDown(KeyCode.Return) && rewinder.rewindsAmount > 0)
+			
+			if (Input.GetKeyDown(KeyCode.R)) 
 				rewinder.StartRewinding();
 
 		}

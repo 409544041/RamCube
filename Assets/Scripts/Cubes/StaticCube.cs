@@ -10,13 +10,12 @@ namespace Qbism.Cubes
 		//Config parameters
 		public Texture staticFaceTex = null;
 
-		public void BecomeFallingCube(GameObject cube)
+		public void BecomeShrinkingCube(GameObject cube)
 		{
-			Material[] mats = GetComponent<Renderer>().materials;
+			Material[] mats = GetComponentInChildren<MeshRenderer>().materials;
 			mats[2].SetTexture("_BaseMap", null);
 			GetComponent<FloorCube>().type = CubeTypes.Shrinking;
 		}
-
 	}
 }
 

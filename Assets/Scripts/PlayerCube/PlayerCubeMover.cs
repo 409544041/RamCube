@@ -34,11 +34,11 @@ namespace Qbism.PlayerCube
 		bool initiatedByPlayer = true;
 		public bool isMoving { get; set; } = false;
 		public bool lasersInLevel { get; set; } = false;
+		private Vector3 startScale = new Vector3(1, 1, 1);
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
 		public event Action<Vector2Int, GameObject, Transform, Vector3, Vector2Int> onFloorCheck;
-		public event Action onRecordStart;
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action onInitialFloorCubeRecord;
 		public event Action<bool> onSetLaserTriggers;
@@ -67,6 +67,7 @@ namespace Qbism.PlayerCube
 		private void Start()
 		{
 			UpdateCenterPosition();
+			startScale = transform.localScale;
 		}
 
 		public void HandleSwipeInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
@@ -93,7 +94,7 @@ namespace Qbism.PlayerCube
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			yield return new WaitForSeconds(.1f); //Added to ensure laser has time to register presence
+			yield return new WaitForSeconds(.1f); //Added to ensure laser has time to register presence. Can possibly remove when using spherecast instead of raycast
 
 			var cubeToShrink = FetchGridPos();
 
@@ -101,12 +102,11 @@ namespace Qbism.PlayerCube
 
 			if (initiatedByPlayer)
 			{
-				onInitialRecord(transform.position, transform.rotation, transform.localScale);
+				onInitialRecord(transform.position, transform.rotation, startScale);
 				onInitialFloorCubeRecord();
 				moveHandler.InitialRecordMoveables();
 			} 
 
-			onRecordStart();
 			if(lasersInLevel) onSetLaserTriggers(true);
 
 			CheckPosAhead(posAhead, turnAxis);
@@ -176,7 +176,6 @@ namespace Qbism.PlayerCube
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
-				moveHandler.StartRecordingMoveables();
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, FetchGridPos());
 			}
 		}
