@@ -10,8 +10,6 @@ namespace Qbism.Cubes
 		public Light laserTipLight;
 		public AudioClip passClip = null, denyClip = null;
 		public Color neutralColor, passColor, denyColor;
-		[SerializeField] GameObject flame;
-		public Material neutralFlame, passFlame, denyFlame;
 
 		//States
 		Color currentColor;
@@ -31,7 +29,7 @@ namespace Qbism.Cubes
 			currentColor = neutralColor;
 		}
 
-		public void SetLaserColor(Color color, Material mat)
+		public void SetLaserColor(Color color)
 		{
 			if (currentColor == color) return;
 
@@ -47,19 +45,6 @@ namespace Qbism.Cubes
 			{
 				light.color = color;
 			}
-
-			flame.GetComponent<Renderer>().material = mat;
-
-			if(mat == denyFlame)
-			{
-				flame.transform.localScale = new Vector3(1, 2, 1);
-				flame.transform.localPosition = new Vector3(0, 1.75f, 0);
-			}
-			else
-			{
-				flame.transform.localScale = new Vector3(1, 1, 1);
-				flame.transform.localPosition = new Vector3(0, 1, 0);
-			} 
 
 			currentColor = color;
 		}

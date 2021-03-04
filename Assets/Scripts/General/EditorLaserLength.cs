@@ -18,7 +18,7 @@ namespace Qbism.General
 		
 		private void Start()
 		{
-			laser.laserBeam.transform.localScale = new Vector3(0.5f, laser.distance, 0.5f);
+			laser.laserBeam.transform.localScale = new Vector3(laser.laserThickness, laser.distance, laser.laserThickness);
 		}
 	}
 }

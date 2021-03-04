@@ -14,6 +14,7 @@ namespace Qbism.Cubes
 		public float distance = 1;
 		public GameObject laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
+		public float laserThickness = .25f;
 		[SerializeField] LayerMask chosenLayers;
 		
 		//Cache
@@ -63,7 +64,7 @@ namespace Qbism.Cubes
 				{
 					if(shouldTrigger)
 					{
-						juicer.SetLaserColor(juicer.passColor, juicer.passFlame);
+						juicer.SetLaserColor(juicer.passColor);
 						source.clip = juicer.passClip;
 						onLaserPassEvent.Invoke();
 						shouldTrigger = false;
@@ -75,7 +76,7 @@ namespace Qbism.Cubes
 				{
 					if (shouldTrigger)
 					{
-						juicer.SetLaserColor(juicer.denyColor, juicer.denyFlame);
+						juicer.SetLaserColor(juicer.denyColor);
 						StartCoroutine(RestartLevelTransition());
 						shouldTrigger = false;
 					}
@@ -87,13 +88,13 @@ namespace Qbism.Cubes
 		{
 			if (hits.Length > 0)
 			{
-				laserBeam.transform.localScale = new Vector3(0.5f, hits[0].distance, 0.5f);
+				laserBeam.transform.localScale = new Vector3(laserThickness, hits[0].distance, laserThickness);
 				juicer.MoveTipLight(hits[0].distance);
 			}
 			else
 			{
-				juicer.SetLaserColor(juicer.neutralColor, juicer.neutralFlame);
-				laserBeam.transform.localScale = new Vector3(0.5f, distance, 0.5f);
+				juicer.SetLaserColor(juicer.neutralColor);
+				laserBeam.transform.localScale = new Vector3(laserThickness, distance, laserThickness);
 				juicer.MoveTipLight(distance);
 			}
 		}
