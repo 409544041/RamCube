@@ -41,6 +41,14 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""afde2e99-0105-4de5-88d3-a6bb5e786936"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -307,6 +315,17 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""action"": ""Restart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be93a79b-baf0-46e2-bf4f-e533b4fc5bd0"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -341,6 +360,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_Rewind = m_Gameplay.FindAction("Rewind", throwIfNotFound: true);
         m_Gameplay_Restart = m_Gameplay.FindAction("Restart", throwIfNotFound: true);
+        m_Gameplay_Click = m_Gameplay.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -393,6 +413,7 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_Rewind;
     private readonly InputAction m_Gameplay_Restart;
+    private readonly InputAction m_Gameplay_Click;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -400,6 +421,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @Rewind => m_Wrapper.m_Gameplay_Rewind;
         public InputAction @Restart => m_Wrapper.m_Gameplay_Restart;
+        public InputAction @Click => m_Wrapper.m_Gameplay_Click;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -418,6 +440,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @Restart.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRestart;
                 @Restart.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRestart;
                 @Restart.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRestart;
+                @Click.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -431,6 +456,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @Restart.started += instance.OnRestart;
                 @Restart.performed += instance.OnRestart;
                 @Restart.canceled += instance.OnRestart;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
             }
         }
     }
@@ -458,5 +486,6 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnRewind(InputAction.CallbackContext context);
         void OnRestart(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
     }
 }

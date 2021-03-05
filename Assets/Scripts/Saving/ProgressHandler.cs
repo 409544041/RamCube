@@ -22,7 +22,7 @@ namespace Qbism.Saving
 
 		private void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.P)) WipeProgress();
+			//if (Input.GetKeyDown(KeyCode.P)) WipeProgress(); //Put this in an input detector
 		}
 
 		public void InitiatePins() //Done every time world map is loaded
@@ -100,7 +100,8 @@ namespace Qbism.Saving
 				
 				levelPinList[i].justCompleted = false;
 
-				levelPinList[i].GetComponent<ClickableObject>().canClick = unlocked;
+				levelPinList[i].GetComponent<ClickValueSetter>().SetClickValue(unlocked);
+				//Using dependency breaker to communicate back to Control namespace
 				
 				levelPinList[i].CheckRaiseStatus(unlocked, unlockAnimPlayed);
 				levelPinList[i].CheckPathStatus(unlock1Data, unlock2Data, completed);
