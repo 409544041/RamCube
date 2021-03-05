@@ -32,6 +32,8 @@ namespace Qbism.Control
 
 			//from Brackeys gamepad setup tut. Don't actually understand Lambda Expressions
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
+			controls.Gameplay.Rewind.performed += ctx => Rewind();
+			controls.Gameplay.Restart.performed += ctx => RestartLevel();
 		}
 		
 		private void OnEnable() 
@@ -101,6 +103,16 @@ namespace Qbism.Control
 				if (handler.floorCubeDic.ContainsKey(posAhead)
 					&& handler.FetchShrunkStatus(posAhead) == false)
 					mover.HandleKeyInput(mover.right, Vector3.back, posAhead);
+		}
+			
+		private void Rewind()
+		{
+			rewinder.StartRewinding();
+		}
+
+		private void RestartLevel()
+		{
+			loader.RestartLevel();
 		}
 
 		private void OnDisable() 
