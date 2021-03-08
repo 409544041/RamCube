@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Qbism.General
 {
-	public class Initiator : MonoBehaviour
+	public class LevelPinInitiator : MonoBehaviour
 	{
 		void Start()
 		{

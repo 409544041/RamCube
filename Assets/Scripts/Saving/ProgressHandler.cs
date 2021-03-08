@@ -20,11 +20,6 @@ namespace Qbism.Saving
 			LoadProgHandlerData();
 		}
 
-		private void Update()
-		{
-			//if (Input.GetKeyDown(KeyCode.P)) WipeProgress(); //Put this in an input detector
-		}
-
 		public void InitiatePins() //Done every time world map is loaded
 		{
 			levelPinList.Clear();

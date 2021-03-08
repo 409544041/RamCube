@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Qbism.Cubes;
 using Qbism.PlayerCube;
 using Qbism.Rewind;
 using Qbism.SceneTransition;
-using UnityEngine;
-using UnityEngine.InputSystem;
+
 
 namespace Qbism.Control
 {
-	public class InputDetector : MonoBehaviour
+	public class GameplayInputDetector : MonoBehaviour
 	{
 		//Cache
 		CubeHandler handler;
