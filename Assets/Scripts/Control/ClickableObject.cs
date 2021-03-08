@@ -36,7 +36,6 @@ namespace Qbism.Control
 
 		private void SetCanClick(LevelPin pin, bool value)
 		{
-			print(this.gameObject);
 			if(pin.levelID == GetComponent<LevelPin>().levelID)
 			{
 				canClick = value;

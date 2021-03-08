@@ -14,6 +14,7 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		[SerializeField] AudioClip succesClip = null, failClip = null;
+		[SerializeField] float shrinkInterval = .25f;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -54,36 +55,47 @@ namespace Qbism.Cubes
 		{
 			if (handler.FetchCube(myPosition) == handler.FetchCube(mover.FetchGridPos()))
 			{
-				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward,
-					transform.up), -1)) 
-				{
-					if(onMapCheck()) //TO DO: eventually these checks should be obsolete bc map should always be available and a level is always started via map
-					{
-						ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
-						progHandler.SetLevelToComplete(progHandler.currentLevelID, true);
-					}
-					
-					mover.transform.parent = transform;
-					DestroyAllFloorCubes();
-					ActivateLevelCompleteCam();
-					if(onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
-					if(onMapCheck()) StartCoroutine(LevelTransition(succesClip, true, false));
-					else StartCoroutine(LevelTransition(succesClip, false, false));
-				}		
+				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.up), -1))
+					StartCoroutine(Finish());	
 
 				else StartCoroutine(LevelTransition(failClip, false, true));
 			}
 		}
 
-		private void DestroyAllFloorCubes()
+		private IEnumerator Finish()
 		{
+			if (onMapCheck()) //TO DO: eventually these checks should be obsolete bc map should always be available and a level is always started via map
+			{
+				ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
+				progHandler.SetLevelToComplete(progHandler.currentLevelID, true);
+			}
+
+			mover.transform.parent = transform;
+			yield return DestroyAllFloorCubes();
+			ActivateLevelCompleteCam();
+			if (onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
+			if (onMapCheck()) StartCoroutine(LevelTransition(succesClip, true, false));
+			else StartCoroutine(LevelTransition(succesClip, false, false));
+		}
+
+		private IEnumerator DestroyAllFloorCubes()
+		{
+			List<FloorCube> floorCubeList = new List<FloorCube>();
+
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.floorCubeDic)
 			{
 				var cube = pair.Value;
 				if(cube.GetComponent<FinishCube>() || 
 					cube.GetComponent<CubeShrinker>().hasShrunk == true) continue;
 
-				cube.GetComponent<CubeShrinker>().StartShrinking();
+				floorCubeList.Add(cube);
+				
+			}
+
+			for (int i = 0; i < floorCubeList.Count; i++)
+			{
+				floorCubeList[i].GetComponent<CubeShrinker>().StartShrinking();
+				yield return new WaitForSeconds(shrinkInterval);
 			}
 		}
 
@@ -105,7 +117,7 @@ namespace Qbism.Cubes
 			source.clip = clip;
 			onFinishEvent.Invoke();
 			yield return new WaitWhile(() => source.isPlaying);
-			// yield return new WaitForSeconds(5); //TO DO: Make timing wait for animations that are to come
+			//TO DO: Make timing wait for animations that are to come
 
 			if(restart) loader.RestartLevel();
 			else if(mapConnected) loader.LoadWorldMap();
