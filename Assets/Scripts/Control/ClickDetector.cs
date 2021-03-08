@@ -1,21 +1,43 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class ClickDetector : MonoBehaviour
+namespace Qbism.Control
 {
-	//Config parameters
-	[SerializeField] LayerMask layerMask;
-
-	void Update()
+	public class ClickDetector : MonoBehaviour
 	{
-		if(Input.GetMouseButtonDown(0))
+		//Config parameters
+		[SerializeField] LayerMask layerMask;
+
+		//Cache
+		GameControls controls;
+
+		private void Awake() 
+		{
+			controls = new GameControls();
+
+			controls.Gameplay.Click.performed += ctx => HandleMouseClick();	
+		}
+
+		private void OnEnable() 
+		{
+			controls.Gameplay.Enable();
+		}
+
+		private void HandleMouseClick()
 		{
 			RaycastHit hit;
 
-			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), 
+			if(Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()),
 				out hit, Mathf.Infinity, layerMask))
 				hit.collider.GetComponent<ClickableObject>().ClickReaction();
 		}
+
+		private void OnDisable() 
+		{
+			controls.Gameplay.Disable();	
+		}
 	}
 }
+

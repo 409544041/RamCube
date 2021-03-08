@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Qbism.General
 {
-	public class TheMiddleMan : MonoBehaviour
+	public class LineDrawComm : MonoBehaviour
 	{
 		//Cache
 		LevelPin[] pins;
@@ -19,8 +19,11 @@ namespace Qbism.General
 		{
 			foreach(LevelPin pin in pins)
 			{
-				if(pin != null) pin.onPathDrawing += DrawNewPath;
-				if(pin != null) pin.onPathCreation += CreatePath;
+				if(pin != null) 
+				{
+					pin.onPathDrawing += DrawNewPath;
+					pin.onPathCreation += CreatePath;
+				}
 			}
 		}
 
@@ -60,8 +63,11 @@ namespace Qbism.General
 		{
 			foreach (LevelPin pin in pins)
 			{
-				if (pin != null) pin.onPathDrawing -= DrawNewPath;
-				if (pin != null) pin.onPathCreation -= CreatePath;
+				if (pin != null) 
+				{
+					pin.onPathDrawing -= DrawNewPath;
+					pin.onPathCreation -= CreatePath;
+				}
 			}
 		}
 	}
