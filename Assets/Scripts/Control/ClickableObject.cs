@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Qbism.Saving;
+using Qbism.WorldMap;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +10,8 @@ namespace Qbism.Control
 	public class ClickableObject : MonoBehaviour
 	{
 		//Cache
-		ClickValueSetter valueSetter;
+		ProgressHandler progHandler = null;
+
 		//States
 		public bool canClick { get; set; }
 
@@ -18,12 +20,12 @@ namespace Qbism.Control
 
 		private void Awake() 
 		{
-			valueSetter = GetComponent<ClickValueSetter>();
+			progHandler = FindObjectOfType<ProgressHandler>();
 		}
 
 		private void OnEnable() 
 		{
-			if(valueSetter != null) valueSetter.onSetClickValue += SetCanClick;
+			if(progHandler != null) progHandler.onSetClickValue += SetCanClick;
 		}
 
 		public void ClickReaction()
@@ -32,14 +34,18 @@ namespace Qbism.Control
 			onClickEvent.Invoke();
 		}
 
-		private void SetCanClick(bool value)
+		private void SetCanClick(LevelPin pin, bool value)
 		{
-			canClick = value;
+			print(this.gameObject);
+			if(pin.levelID == GetComponent<LevelPin>().levelID)
+			{
+				canClick = value;
+			}
 		}
 
 		private void OnDisable()
 		{
-			if (valueSetter != null) valueSetter.onSetClickValue -= SetCanClick;
+			if (progHandler != null) progHandler.onSetClickValue -= SetCanClick;
 		}
 	}
 }

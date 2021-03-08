@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using Qbism.Saving;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.WorldMap
 {
 	public class LevelPinInitiator : MonoBehaviour
 	{
+		//Actions, events, delegates etc
+		public event Action onPinInitation;
+
 		void Start()
 		{
-			FindObjectOfType<ProgressHandler>().InitiatePins();
+			onPinInitation();
 		}
 	}
 }

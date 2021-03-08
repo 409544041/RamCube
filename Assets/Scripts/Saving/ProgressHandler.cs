@@ -10,22 +10,16 @@ namespace Qbism.Saving
 	{
 		//States
 		public LevelIDs currentLevelID { get; set; }
-
 		public List<LevelStatusData> levelDataList;
 		public List<LevelPin> levelPinList;
+
+		//Actions, events, delegates etc
+		public event Action<LevelPin, bool> onSetClickValue;
 
 		private void Awake() 
 		{
 			BuildLevelDataList();
 			LoadProgHandlerData();
-		}
-
-		public void InitiatePins() //Done every time world map is loaded
-		{
-			levelPinList.Clear();
-			BuildLevelPinList();
-			FixDelegateLink();
-			HandleLevelPins();
 		}
 
 		private void BuildLevelDataList()
@@ -36,6 +30,23 @@ namespace Qbism.Saving
 				newData.levelID = ID;
 				levelDataList.Add(newData);
 			}
+		}
+
+		public void FixPinListDelegateLinks()
+		{
+			if (levelPinList != null)
+			{
+				foreach (LevelPin pin in levelPinList)
+				{
+					pin.onSetCurrentLevel += SetCurrentLevelID;
+				}
+			}
+		}
+
+		public void FixDelegateLinks()
+		{
+			LevelPinInitiator initiator = FindObjectOfType<LevelPinInitiator>();
+			if (initiator != null) initiator.onPinInitation += InitiatePins;
 		}
 
 		public void BuildLevelPinList()
@@ -55,15 +66,12 @@ namespace Qbism.Saving
 			return 0;
 		}
 
-		public void FixDelegateLink()
+		public void InitiatePins() //Done every time world map is loaded
 		{
-			if (levelPinList != null)
-			{
-				foreach (LevelPin pin in levelPinList)
-				{
-					pin.onSetCurrentLevel += SetCurrentLevelID;
-				}
-			}
+			levelPinList.Clear();
+			BuildLevelPinList();
+			FixPinListDelegateLinks();
+			HandleLevelPins();
 		}
 
 		public void HandleLevelPins()
@@ -95,7 +103,8 @@ namespace Qbism.Saving
 				
 				levelPinList[i].justCompleted = false;
 
-				levelPinList[i].GetComponent<ClickValueSetter>().SetClickValue(unlocked);
+				onSetClickValue(levelPinList[i], unlocked);
+				//levelPinList[i].GetComponent<ClickValueSetter>().SetClickValue(unlocked);
 				//Using dependency breaker to communicate back to Control namespace
 				
 				levelPinList[i].CheckRaiseStatus(unlocked, unlockAnimPlayed);
@@ -228,6 +237,9 @@ namespace Qbism.Saving
 					pin.onSetCurrentLevel -= SetCurrentLevelID;
 				}
 			}
+
+			LevelPinInitiator initiator = FindObjectOfType<LevelPinInitiator>();
+			if (initiator != null) initiator.onPinInitation -= InitiatePins;
 		}
 	}
 }
