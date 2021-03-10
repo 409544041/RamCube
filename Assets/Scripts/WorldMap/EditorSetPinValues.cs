@@ -14,6 +14,7 @@ namespace Qbism.WorldMap
 		public LevelIDs levelUnlock_1 { get; set; }
 		public LevelIDs levelUnlock_2 { get; set; }
 		bool hasSerpentSegment;
+		public GameObject pinUI { get; set; }
 
 		private void Awake()
 		{

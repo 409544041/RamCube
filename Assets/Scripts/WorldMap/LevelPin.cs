@@ -105,15 +105,7 @@ namespace Qbism.WorldMap
 			}
 		}
 
-		public void LoadAssignedLevel() //Called from Unity Event on Clickable Object
-		{
-			SetCurrentLevelID();
-			var handler = FindObjectOfType<SceneHandler>();
-			int indexToLoad = GetComponent<EditorSetPinValues>().levelIndex;
-			handler.LoadBySceneIndex(indexToLoad);
-		}
-
-		private void SetCurrentLevelID()
+		public void SetCurrentLevelID()
 		{
 			onSetCurrentLevel(levelID);
 		}

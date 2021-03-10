@@ -14,7 +14,8 @@ namespace Qbism.Saving
 		public List<LevelPin> levelPinList;
 
 		//Actions, events, delegates etc
-		public event Action<LevelPin, bool> onSetClickValue;
+		public event Action<LevelPin> onSetUIComplete;
+		public event Action<LevelPin, bool> onShowOrHideUI;
 
 		private void Awake() 
 		{
@@ -103,12 +104,13 @@ namespace Qbism.Saving
 				
 				levelPinList[i].justCompleted = false;
 
-				onSetClickValue(levelPinList[i], unlocked);
-				//levelPinList[i].GetComponent<ClickValueSetter>().SetClickValue(unlocked);
-				//Using dependency breaker to communicate back to Control namespace
-				
 				levelPinList[i].CheckRaiseStatus(unlocked, unlockAnimPlayed);
 				levelPinList[i].CheckPathStatus(unlock1Data, unlock2Data, completed);
+
+				if(unlockAnimPlayed) onShowOrHideUI(levelPinList[i], true);
+				else onShowOrHideUI(levelPinList[i], false);
+
+				if (completed) onSetUIComplete(levelPinList[i]);
 
 				if(unlocked && !unlockAnimPlayed)
 				{

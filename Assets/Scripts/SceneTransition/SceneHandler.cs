@@ -36,7 +36,7 @@ namespace Qbism.SceneTransition
 
 		public void LoadWorldMap()
 		{
-			SceneManager.LoadSceneAsync("ArtTest_Islands_WorldMap"); //TO DO: This name will change. Don't forget to change it here
+			SceneManager.LoadSceneAsync(1); //TO DO: Index order might change. Don't forget to change it here too.
 		}
 
 		public void LoadBySceneIndex(int index)
