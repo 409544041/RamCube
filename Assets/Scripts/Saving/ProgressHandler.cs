@@ -16,6 +16,7 @@ namespace Qbism.Saving
 		//Actions, events, delegates etc
 		public event Action<LevelPin> onSetUIComplete;
 		public event Action<LevelPin, bool> onShowOrHideUI;
+		public event Action<LevelIDs> onSelectPinUI;
 
 		private void Awake() 
 		{
@@ -106,6 +107,8 @@ namespace Qbism.Saving
 
 				levelPinList[i].CheckRaiseStatus(unlocked, unlockAnimPlayed);
 				levelPinList[i].CheckPathStatus(unlock1Data, unlock2Data, completed);
+
+				onSelectPinUI(currentLevelID);
 
 				if(unlockAnimPlayed) onShowOrHideUI(levelPinList[i], true);
 				else onShowOrHideUI(levelPinList[i], false);
