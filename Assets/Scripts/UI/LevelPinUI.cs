@@ -10,6 +10,9 @@ namespace Qbism.UI
 {
 	public class LevelPinUI : MonoBehaviour
 	{
+		//Config parameters
+		public LevelPin levelPin;
+		
 		//Cache
 		EditorLevelPinUI editorPin;
 		ProgressHandler progHandler;
@@ -31,15 +34,15 @@ namespace Qbism.UI
 
 		public void LoadAssignedLevel() //Called from Unity Event on Clickable Object
 		{
-			editorPin.levelPin.GetComponent<LevelPin>().SetCurrentLevelID();
+			levelPin.SetCurrentLevelID();
 			var handler = FindObjectOfType<SceneHandler>();
-			int indexToLoad = editorPin.levelPin.GetComponent<EditorSetPinValues>().levelIndex;
+			int indexToLoad = levelPin.GetComponent<EditorSetPinValues>().levelIndex;
 			handler.LoadBySceneIndex(indexToLoad);
 		}
 
 		private void SetUIComplete(LevelPin pin)
 		{
-			if (pin.levelID == editorPin.levelPin.levelID)
+			if (pin.levelID == levelPin.levelID)
 			{
 				Button button = GetComponentInChildren<Button>();
 				ColorBlock colors = button.colors;
@@ -52,7 +55,7 @@ namespace Qbism.UI
 
 		public void ShowOrHideUI(LevelPin pin, bool value)
 		{
-			if(pin.levelID == editorPin.levelPin.levelID)
+			if(pin.levelID == levelPin.levelID)
 			{
 				GetComponentInChildren<Image>().enabled = value;
 				GetComponentInChildren<Text>().enabled = value;
