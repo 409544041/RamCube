@@ -24,6 +24,7 @@ namespace Qbism.WorldMap
 		public event Action<Transform, LineRenderer[]> onPathDrawing;
 		public event Action<LevelIDs> onSetCurrentLevel;
 		public event Action<Transform, List<Transform>, LineRenderer[]> onPathCreation;
+		public event Action<LevelPin, bool> onShowOrHideUI;
 
 		//States
 		public bool justCompleted { get; set; } = false;
@@ -100,20 +101,13 @@ namespace Qbism.WorldMap
 						transform.position.x, unlockedYPos, transform.position.z);
 
 					GetComponent<LevelPinRaiseJuicer>().StopRaiseJuice();
+					onShowOrHideUI(this, true);
 					onPathDrawing(pathPoint, lRenders);
 				}
 			}
 		}
 
-		public void LoadAssignedLevel() //Called from Unity Event on Clickable Object
-		{
-			SetCurrentLevelID();
-			var handler = FindObjectOfType<SceneHandler>();
-			int indexToLoad = GetComponent<EditorSetPinValues>().levelIndex;
-			handler.LoadBySceneIndex(indexToLoad);
-		}
-
-		private void SetCurrentLevelID()
+		public void SetCurrentLevelID()
 		{
 			onSetCurrentLevel(levelID);
 		}
