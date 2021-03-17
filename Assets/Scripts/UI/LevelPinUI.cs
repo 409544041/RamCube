@@ -37,9 +37,12 @@ namespace Qbism.UI
 			if(levelPin != null) levelPin.onShowOrHideUI += ShowOrHideUI;
 		}
 
-		public void LoadAssignedLevel() //Called from Unity Event on Clickable Object
-		{
-			levelPin.SetCurrentLevelID();
+		public void LoadAssignedLevel() //Called from Unity Event 
+		{				
+			LevelIDs id = levelPin.levelID;
+			bool hasSerpent = levelPin.GetComponent<EditorSetPinValues>().hasSerpentSegment;
+			progHandler.SetCurrentData(id, hasSerpent);
+				
 			var handler = FindObjectOfType<SceneHandler>();
 			int indexToLoad = levelPin.GetComponent<EditorSetPinValues>().levelIndex;
 			handler.LoadBySceneIndex(indexToLoad);

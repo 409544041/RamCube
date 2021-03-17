@@ -8,8 +8,12 @@ namespace Qbism.Saving
 {
 	public class ProgressHandler : MonoBehaviour
 	{
+		//Cache
+		SerpentProgress serpProg = null;
+
 		//States
 		public LevelIDs currentLevelID { get; set; }
+		public bool currentHasSerpent { get ; set ; }
 		public List<LevelStatusData> levelDataList;
 		public List<LevelPin> levelPinList;
 
@@ -20,6 +24,7 @@ namespace Qbism.Saving
 
 		private void Awake() 
 		{
+			serpProg = FindObjectOfType<SerpentProgress>();
 			BuildLevelDataList();
 			LoadProgHandlerData();
 		}
@@ -36,13 +41,7 @@ namespace Qbism.Saving
 
 		public void FixPinListDelegateLinks()
 		{
-			if (levelPinList != null)
-			{
-				foreach (LevelPin pin in levelPinList)
-				{
-					pin.onSetCurrentLevel += SetCurrentLevelID;
-				}
-			}
+			//empty for now
 		}
 
 		public void FixDelegateLinks()
@@ -128,7 +127,7 @@ namespace Qbism.Saving
 				}
 			}
 
-			SaveProgHandlerData();
+			SaveProgData();
 		}
 
 		private LevelStatusData FetchUnlockStatusData(LevelIDs ID)
@@ -153,7 +152,7 @@ namespace Qbism.Saving
 			}
 
 			CheckLevelsToUnlock(id);
-			SaveProgHandlerData();
+			SaveProgData();
 		}
 
 		private void CheckLevelsToUnlock(LevelIDs incomingID)
@@ -204,24 +203,31 @@ namespace Qbism.Saving
 			}
 		}
 
-		private void SetCurrentLevelID(LevelIDs ID)
+		public void SetCurrentData(LevelIDs id, bool serpent)
 		{
-			currentLevelID = ID;
+			currentLevelID = id;
+			foreach (LevelStatusData data in levelDataList)
+			{
+				if(data.levelID != id) continue;
+				
+				if(data.completed) currentHasSerpent = false;
+				else currentHasSerpent = serpent;
+			}
 		}
 
-		public void SaveProgHandlerData()
+		public void SaveProgData()
 		{
-			SavingSystem.SaveProgHandlerData(this);
+			SavingSystem.SaveProgData(this, serpProg);
 		}
 
 		public void LoadProgHandlerData()
 		{
-			ProgHandlerData data = SavingSystem.LoadProgHandlerData();
+			ProgData data = SavingSystem.LoadProgData();
 
 			levelDataList = data.savedLevelDataList;
 		}
 
-		public void WipeProgress()
+		public void WipeProgData() //TO DO: Make this debug only
 		{
 			for (int i = 0; i < levelDataList.Count; i++)
 			{
@@ -230,19 +236,17 @@ namespace Qbism.Saving
 				levelDataList[i].completed = false;		
 				levelDataList[i].pathDrawn = false;		
 			}
-			SavingSystem.SaveProgHandlerData(this);
+
+			for (int i = 0; i < serpProg.serpentDataList.Count; i++)
+			{
+				serpProg.serpentDataList[i] = false;
+			}
+
+			SavingSystem.SaveProgData(this, serpProg);
 		}
 
 		private void OnDisable()
 		{
-			if (levelPinList != null)
-			{
-				foreach (LevelPin pin in levelPinList)
-				{
-					pin.onSetCurrentLevel -= SetCurrentLevelID;
-				}
-			}
-
 			LevelPinInitiator initiator = FindObjectOfType<LevelPinInitiator>();
 			if (initiator != null) initiator.onPinInitation -= InitiatePins;
 		}

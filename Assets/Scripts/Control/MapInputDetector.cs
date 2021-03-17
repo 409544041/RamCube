@@ -25,7 +25,7 @@ namespace Qbism.Control
 		private void DeleteSaveData()
 		{
 			ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
-			progHandler.WipeProgress();
+			progHandler.WipeProgData();
 		}
 
 		private void OnDisable()

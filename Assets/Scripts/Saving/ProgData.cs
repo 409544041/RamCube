@@ -4,13 +4,15 @@ using Qbism.Saving;
 using UnityEngine;
 
 [System.Serializable]
-public class ProgHandlerData
+public class ProgData
 {
 	//States
 	public List<LevelStatusData> savedLevelDataList;
+	public List<bool> savedSerpentDataList;
 
-	public ProgHandlerData(ProgressHandler progHandler)
+	public ProgData(ProgressHandler progHandler, SerpentProgress serpProg)
 	{
 		savedLevelDataList = progHandler.levelDataList;
+		savedSerpentDataList = serpProg.serpentDataList;
 	}
 }

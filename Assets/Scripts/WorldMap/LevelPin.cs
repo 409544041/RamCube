@@ -106,10 +106,5 @@ namespace Qbism.WorldMap
 				}
 			}
 		}
-
-		public void SetCurrentLevelID()
-		{
-			onSetCurrentLevel(levelID);
-		}
 	}
 }

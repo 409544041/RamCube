@@ -8,19 +8,19 @@ namespace Qbism.Saving
 {
 	public static class SavingSystem
 	{
-		public static void SaveProgHandlerData(ProgressHandler progHandler)
+		public static void SaveProgData(ProgressHandler progHandler, SerpentProgress serpProg)
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
 			string path = Application.persistentDataPath + "/progression.sav";
 			FileStream stream = new FileStream(path, FileMode.Create);
 
-			ProgHandlerData data = new ProgHandlerData(progHandler);
+			ProgData data = new ProgData(progHandler, serpProg);
 
 			formatter.Serialize(stream, data);
 			stream.Close();
 		}
 
-		public static ProgHandlerData LoadProgHandlerData()
+		public static ProgData LoadProgData()
 		{
 			string path = Application.persistentDataPath + "/progression.sav";
 			if (File.Exists(path))
@@ -28,7 +28,7 @@ namespace Qbism.Saving
 				BinaryFormatter formatter = new BinaryFormatter();
 				FileStream stream = new FileStream(path, FileMode.Open);
 
-				ProgHandlerData data = formatter.Deserialize(stream) as ProgHandlerData;
+				ProgData data = formatter.Deserialize(stream) as ProgData;
 				stream.Close();
 
 				return data;
