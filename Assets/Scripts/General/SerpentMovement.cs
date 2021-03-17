@@ -84,18 +84,21 @@ namespace Qbism.General
 			SerpentProgress serpProg = FindObjectOfType<SerpentProgress>();
 			for (int i = 0; i < segments.Length; i++)
 			{
-				MeshRenderer mRender = segments[i].GetComponent<MeshRenderer>();
-				BoxCollider collider = segments[i].GetComponent<BoxCollider>();
+				MeshRenderer mRender = segments[i].GetComponentInChildren<MeshRenderer>();
+				SpriteRenderer sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
+
+				if(!mRender || ! sRender) Debug.LogError
+					(segments[i] + " is missing either a meshrenderer or spriterenderer!");
 				
 				if(serpProg.serpentDataList[i] == true)
 				{
 					mRender.enabled = true;
-					collider.enabled = true;
+					sRender.enabled = true;
 				}
 				else
 				{
 					mRender.enabled = false;
-					collider.enabled = false;
+					sRender.enabled = false;
 				}
 			}
 		}

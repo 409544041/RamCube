@@ -86,12 +86,13 @@ namespace Qbism.Cubes
 			}
 			else print("Shapekin liberated!");
 
+			progHandler.SaveProgData();
+
 			mover.transform.parent = transform;
 			yield return DestroyAllFloorCubes();
 			ActivateLevelCompleteCam();
 
-			if (onSerpentCheck() && progHandler.currentHasSerpent) 
-				ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
+			if (onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
 			yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
 			
 			if (onMapCheck()) StartCoroutine(LevelTransition(succesClip, true, false));

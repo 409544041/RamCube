@@ -152,7 +152,6 @@ namespace Qbism.Saving
 			}
 
 			CheckLevelsToUnlock(id);
-			SaveProgData();
 		}
 
 		private void CheckLevelsToUnlock(LevelIDs incomingID)
