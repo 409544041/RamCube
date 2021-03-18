@@ -57,6 +57,14 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Debug Complete Level"",
+                    ""type"": ""Button"",
+                    ""id"": ""8a5b591b-0d86-433a-986d-c984ef31dfc3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -345,6 +353,17 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""action"": ""Debug Delete Save Data"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9084f9ca-7e5f-400b-b0fe-8fe0747f00ab"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Debug Complete Level"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -381,6 +400,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Gameplay_Restart = m_Gameplay.FindAction("Restart", throwIfNotFound: true);
         m_Gameplay_Click = m_Gameplay.FindAction("Click", throwIfNotFound: true);
         m_Gameplay_DebugDeleteSaveData = m_Gameplay.FindAction("Debug Delete Save Data", throwIfNotFound: true);
+        m_Gameplay_DebugCompleteLevel = m_Gameplay.FindAction("Debug Complete Level", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -435,6 +455,7 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Restart;
     private readonly InputAction m_Gameplay_Click;
     private readonly InputAction m_Gameplay_DebugDeleteSaveData;
+    private readonly InputAction m_Gameplay_DebugCompleteLevel;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -444,6 +465,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @Restart => m_Wrapper.m_Gameplay_Restart;
         public InputAction @Click => m_Wrapper.m_Gameplay_Click;
         public InputAction @DebugDeleteSaveData => m_Wrapper.m_Gameplay_DebugDeleteSaveData;
+        public InputAction @DebugCompleteLevel => m_Wrapper.m_Gameplay_DebugCompleteLevel;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -468,6 +490,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugDeleteSaveData.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugDeleteSaveData;
                 @DebugDeleteSaveData.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugDeleteSaveData;
                 @DebugDeleteSaveData.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugDeleteSaveData;
+                @DebugCompleteLevel.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
+                @DebugCompleteLevel.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
+                @DebugCompleteLevel.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -487,6 +512,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugDeleteSaveData.started += instance.OnDebugDeleteSaveData;
                 @DebugDeleteSaveData.performed += instance.OnDebugDeleteSaveData;
                 @DebugDeleteSaveData.canceled += instance.OnDebugDeleteSaveData;
+                @DebugCompleteLevel.started += instance.OnDebugCompleteLevel;
+                @DebugCompleteLevel.performed += instance.OnDebugCompleteLevel;
+                @DebugCompleteLevel.canceled += instance.OnDebugCompleteLevel;
             }
         }
     }
@@ -516,5 +544,6 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnRestart(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnDebugDeleteSaveData(InputAction.CallbackContext context);
+        void OnDebugCompleteLevel(InputAction.CallbackContext context);
     }
 }
