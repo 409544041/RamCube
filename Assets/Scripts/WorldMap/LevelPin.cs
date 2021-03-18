@@ -10,8 +10,9 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public LevelIDs levelID;
+		public Biomes biome;
 		[SerializeField] float lockedYPos;
-		[SerializeField] float unlockedYPos;
+		public float unlockedYPos;
 		[SerializeField] float raiseStep;
 		[SerializeField] float raiseSpeed;
 		public Transform pathPoint;
@@ -22,7 +23,6 @@ namespace Qbism.WorldMap
 
 		//Actions, events, delegates etc
 		public event Action<Transform, LineRenderer[]> onPathDrawing;
-		public event Action<LevelIDs> onSetCurrentLevel;
 		public event Action<Transform, List<Transform>, LineRenderer[]> onPathCreation;
 		public event Action<LevelPin, bool> onShowOrHideUI;
 
@@ -38,11 +38,15 @@ namespace Qbism.WorldMap
 
 		public void CheckRaiseStatus(bool unlocked, bool unlockAnimPlayed)
 		{
-			if (!unlocked) mRender.transform.position = new Vector3
-				(transform.position.x, lockedYPos, transform.position.z);
+			if (!unlocked)
+			{
+				mRender.enabled = false;
+				mRender.transform.position = new Vector3 (transform.position.x, lockedYPos, transform.position.z);
+			} 
 
 			else if (unlocked && unlockAnimPlayed)
 			{
+				mRender.enabled = true;
 				mRender.transform.position = new Vector3
 				(transform.position.x, unlockedYPos, transform.position.z);
 			}
@@ -86,6 +90,7 @@ namespace Qbism.WorldMap
 
 		private IEnumerator RaiseCliff(MeshRenderer mRender)
 		{
+			mRender.enabled = true;
 			GetComponent<LevelPinRaiseJuicer>().PlayRaiseJuice();
 
 			while(raising)

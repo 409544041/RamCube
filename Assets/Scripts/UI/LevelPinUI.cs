@@ -16,12 +16,14 @@ namespace Qbism.UI
 		//Cache
 		EditorLevelPinUI editorPin = null;
 		ProgressHandler progHandler = null;
+		PinSelectionTracker pinSelTrack = null;
 		Button button = null;
 
 		private void Awake() 
 		{
 			editorPin = GetComponent<EditorLevelPinUI>();
 			progHandler = FindObjectOfType<ProgressHandler>();
+			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
 			button = GetComponentInChildren<Button>();
 		}
 
@@ -35,6 +37,8 @@ namespace Qbism.UI
 			}
 
 			if(levelPin != null) levelPin.onShowOrHideUI += ShowOrHideUI;
+
+			if(pinSelTrack != null) pinSelTrack.onPinFetch += FetchPin;
 		}
 
 		public void LoadAssignedLevel() //Called from Unity Event 
@@ -75,6 +79,12 @@ namespace Qbism.UI
 			}
 		}
 
+		private void FetchPin(GameObject selected)
+		{
+			if(selected == button.gameObject)
+				pinSelTrack.selectedPin = levelPin;
+		}
+
 		private void OnDisable() 
 		{
 			if (progHandler != null) 
@@ -85,6 +95,8 @@ namespace Qbism.UI
 			}
 
 			if (levelPin != null) levelPin.onShowOrHideUI -= ShowOrHideUI;
+
+			if (pinSelTrack != null) pinSelTrack.onPinFetch -= FetchPin;
 		}
 	}
 }
