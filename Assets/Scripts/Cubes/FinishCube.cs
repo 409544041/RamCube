@@ -65,6 +65,11 @@ namespace Qbism.Cubes
 			}
 		}
 
+		public void StartFinish()
+		{
+			StartCoroutine(Finish());
+		}
+
 		private IEnumerator Finish()
 		{
 			ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
@@ -106,7 +111,7 @@ namespace Qbism.Cubes
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.floorCubeDic)
 			{
 				var cube = pair.Value;
-				if(cube.GetComponent<FinishCube>() || 
+				if(cube.type == CubeTypes.Finish || 
 					cube.GetComponent<CubeShrinker>().hasShrunk == true) continue;
 
 				floorCubeList.Add(cube);

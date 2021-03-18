@@ -34,6 +34,7 @@ namespace Qbism.Control
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
 			controls.Gameplay.Rewind.performed += ctx => Rewind();
 			controls.Gameplay.Restart.performed += ctx => RestartLevel();
+			controls.Gameplay.DebugCompleteLevel.performed += ctx => FinishLevel();
 		}
 		
 		private void OnEnable() 
@@ -103,6 +104,12 @@ namespace Qbism.Control
 				if (handler.floorCubeDic.ContainsKey(posAhead)
 					&& handler.FetchShrunkStatus(posAhead) == false)
 					mover.HandleKeyInput(mover.right, Vector3.back, posAhead);
+		}
+
+		private void FinishLevel()
+		{
+			FinishCube finish = FindObjectOfType<FinishCube>();
+			if(finish) finish.StartFinish();
 		}
 			
 		private void Rewind()
