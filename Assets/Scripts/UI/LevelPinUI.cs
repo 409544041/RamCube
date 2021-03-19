@@ -18,6 +18,7 @@ namespace Qbism.UI
 		ProgressHandler progHandler = null;
 		PinSelectionTracker pinSelTrack = null;
 		Button button = null;
+		public Vector3 uiPos { get; set; }
 
 		private void Awake() 
 		{
@@ -25,6 +26,7 @@ namespace Qbism.UI
 			progHandler = FindObjectOfType<ProgressHandler>();
 			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
 			button = GetComponentInChildren<Button>();
+			uiPos = levelPin.GetComponentInChildren<LineRenderer>().transform.position;
 		}
 
 		private void OnEnable() 
@@ -39,6 +41,17 @@ namespace Qbism.UI
 			if(levelPin != null) levelPin.onShowOrHideUI += ShowOrHideUI;
 
 			if(pinSelTrack != null) pinSelTrack.onPinFetch += FetchPin;
+		}
+
+		private void Update() 
+		{
+			PositionElement();
+		}
+
+		private void PositionElement()
+		{
+			Vector2 screenPoint = Camera.main.WorldToScreenPoint(uiPos);
+			transform.position = screenPoint;
 		}
 
 		public void LoadAssignedLevel() //Called from Unity Event 

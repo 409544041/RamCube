@@ -10,6 +10,8 @@ namespace Qbism.General
 {
 	public class PositionBiomeCenterpoint : MonoBehaviour
 	{
+		//Config Parameters
+		[SerializeField] BiomeCenterLimits centerLimits;
 		//Cache
 		ProgressHandler progHandler = null;
 		PinSelectionTracker selTracker = null;
@@ -31,7 +33,6 @@ namespace Qbism.General
 			if(selTracker != null)
 			{
 				selTracker.onSetCenterPos += StartPositionCenterPoint;
-				//selTracker.onChangeZPos += ChangeZPos;
 			} 
 		}
 
@@ -63,15 +64,12 @@ namespace Qbism.General
 			yield return new WaitForSeconds(.1f); //To avoid race condition
 
 			float xPos;
-			float yPos;
-
 			if(currentBiome != prevBiome) xPos = FindXPos(biome);
 			else xPos = transform.position.x;
 
-			if (currentBiome != prevBiome) yPos = FindYPos(biome);
-			else yPos = transform.position.y;
+			float yPos = selPin.unlockedYPos;
 
-			float zPos = FindZPos(selPin);
+			float zPos = FindZPos(biome, selPin);
 
 			transform.position = new Vector3(xPos, yPos, zPos);
 		}
@@ -104,38 +102,27 @@ namespace Qbism.General
 			}
 		}
 
-		private float FindYPos(Biomes biome)
-		{
-			foreach (LevelPin pin in progHandler.levelPinList)
-			{
-				if (pin.biome != biome) continue;
-
-				return pin.unlockedYPos;
-			}
-
-			Debug.LogError("Couldn't find unlockedYPos of correct biome");
-			return 0;
-		}
-
-		private float FindZPos(LevelPin selPin)
+		private float FindZPos(Biomes biome, LevelPin selPin)
 		{
 			Vector3 selPos = selPin.pathPoint.transform.position;
-
 			float zPos = selPos.z;
+
+			foreach (BiomeCenterLimits.BiomeLimit limit in centerLimits.biomeLimits)
+			{
+				if(limit.biome != biome) continue;
+
+				if(zPos <= limit.minZ) zPos = limit.minZ;
+				if(zPos >= limit.maxZ) zPos = limit.maxZ;
+			}
+
 			return zPos;
 		}
-
-		// private void ChangeZPos(LevelPin pin)
-		// {
-
-		// }
 
 		private void OnDisable()
 		{
 			if (selTracker != null)
 			{
 				selTracker.onSetCenterPos -= StartPositionCenterPoint;
-				//selTracker.onChangeZPos -= ChangeZPos;
 			}
 		}
 	}

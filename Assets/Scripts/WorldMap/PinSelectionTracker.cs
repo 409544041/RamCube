@@ -17,7 +17,6 @@ namespace Qbism.WorldMap
 		//Actions, events, delegates etc
 		public event Action<GameObject> onPinFetch;
 		public event Action<Biomes, LevelPin> onSetCenterPos;
-		public event Action<LevelPin> onChangeZPos;
 
 		private void Update() 
 		{
@@ -29,7 +28,6 @@ namespace Qbism.WorldMap
 			currentBiome = selectedPin.biome;
 
 			if(selectedPin != prevPin) onSetCenterPos(currentBiome, selectedPin);
-			//if(currentBiome != prevBiome) onSetCenterPos(currentBiome);
 		}
 	}
 }
