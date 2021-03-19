@@ -16,6 +16,7 @@ namespace Qbism.General
 
 		//States
 		Biomes currentBiome;
+		Biomes prevBiome;
 		float leftest, rightest;
 		bool firstValueAssigned = false;
 
@@ -27,13 +28,20 @@ namespace Qbism.General
 
 		private void OnEnable() 
 		{
-			if(selTracker != null) selTracker.onChangeBiome += StartPositionCenterPoint;
+			if(selTracker != null)
+			{
+				selTracker.onSetCenterPos += StartPositionCenterPoint;
+				//selTracker.onChangeZPos += ChangeZPos;
+			} 
 		}
 
 		void Start()
 		{
+			GameObject selected = EventSystem.current.currentSelectedGameObject;
+			LevelPin selPin = selected.GetComponentInParent<LevelPinUI>().levelPin;
+
 			StartCoroutine(FetchCurrentBiome());
-			StartCoroutine(PositionCenterPoint(currentBiome));
+			StartCoroutine(PositionCenterPoint(currentBiome, selPin));
 		}
 
 		private IEnumerator FetchCurrentBiome()
@@ -43,23 +51,34 @@ namespace Qbism.General
 			currentBiome = selected.GetComponentInParent<LevelPinUI>().levelPin.biome;
 		}
 
-		private void StartPositionCenterPoint(Biomes biome)
+		private void StartPositionCenterPoint(Biomes biome, LevelPin selPin)
 		{
-			firstValueAssigned = false;
-			StartCoroutine(PositionCenterPoint(biome));
+			prevBiome = currentBiome;
+			currentBiome = biome;
+			StartCoroutine(PositionCenterPoint(biome, selPin));
 		}
 
-		private IEnumerator PositionCenterPoint(Biomes biome)
+		private IEnumerator PositionCenterPoint(Biomes biome, LevelPin selPin)
 		{
 			yield return new WaitForSeconds(.1f); //To avoid race condition
-			float xPos = FindXPos(biome);
-			float yPos = FindYPos(biome);
-			float zPos = FindZPos();
+
+			float xPos;
+			float yPos;
+
+			if(currentBiome != prevBiome) xPos = FindXPos(biome);
+			else xPos = transform.position.x;
+
+			if (currentBiome != prevBiome) yPos = FindYPos(biome);
+			else yPos = transform.position.y;
+
+			float zPos = FindZPos(selPin);
+
 			transform.position = new Vector3(xPos, yPos, zPos);
 		}
 
 		private float FindXPos(Biomes biome)
 		{
+			firstValueAssigned = false;
 			FindEdgePins(biome);
 
 			float xPos = leftest + (rightest - leftest) / 2;
@@ -98,19 +117,26 @@ namespace Qbism.General
 			return 0;
 		}
 
-		private float FindZPos()
+		private float FindZPos(LevelPin selPin)
 		{
-			GameObject selected = EventSystem.current.currentSelectedGameObject;
-			Vector3 selPos = selected.GetComponentInParent<LevelPinUI>().
-				levelPin.pathPoint.transform.position;
+			Vector3 selPos = selPin.pathPoint.transform.position;
 
 			float zPos = selPos.z;
 			return zPos;
 		}
 
+		// private void ChangeZPos(LevelPin pin)
+		// {
+
+		// }
+
 		private void OnDisable()
 		{
-			if (selTracker != null) selTracker.onChangeBiome -= StartPositionCenterPoint;
+			if (selTracker != null)
+			{
+				selTracker.onSetCenterPos -= StartPositionCenterPoint;
+				//selTracker.onChangeZPos -= ChangeZPos;
+			}
 		}
 	}
 }

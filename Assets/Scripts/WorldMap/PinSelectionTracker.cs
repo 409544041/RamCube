@@ -12,19 +12,24 @@ namespace Qbism.WorldMap
 		public LevelPin selectedPin { get; set; }
 		public Biomes currentBiome { get; private set; }
 		Biomes prevBiome;
+		LevelPin prevPin;
 
 		//Actions, events, delegates etc
 		public event Action<GameObject> onPinFetch;
-		public event Action<Biomes> onChangeBiome;
+		public event Action<Biomes, LevelPin> onSetCenterPos;
+		public event Action<LevelPin> onChangeZPos;
 
 		private void Update() 
 		{
 			prevBiome = currentBiome;
+			prevPin = selectedPin;
+
 			GameObject selected = EventSystem.current.currentSelectedGameObject;
-			onPinFetch(selected);
+			onPinFetch(selected); //Sets new selectedPin
 			currentBiome = selectedPin.biome;
 
-			if(currentBiome != prevBiome) onChangeBiome(currentBiome);
+			if(selectedPin != prevPin) onSetCenterPos(currentBiome, selectedPin);
+			//if(currentBiome != prevBiome) onSetCenterPos(currentBiome);
 		}
 	}
 }
