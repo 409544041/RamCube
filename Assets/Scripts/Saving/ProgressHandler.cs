@@ -10,6 +10,8 @@ namespace Qbism.Saving
 	{
 		//Cache
 		SerpentProgress serpProg = null;
+		PinSelectionTracker pinSelTrack = null;
+		LevelPinInitiator initiator = null;
 
 		//States
 		public LevelIDs currentLevelID { get; set; }
@@ -24,7 +26,7 @@ namespace Qbism.Saving
 
 		private void Awake() 
 		{
-			serpProg = FindObjectOfType<SerpentProgress>();
+			serpProg = GetComponent<SerpentProgress>();
 			BuildLevelDataList();
 			LoadProgHandlerData();
 		}
@@ -39,15 +41,13 @@ namespace Qbism.Saving
 			}
 		}
 
-		public void FixPinListDelegateLinks()
-		{
-			//empty for now
-		}
-
 		public void FixDelegateLinks()
 		{
-			LevelPinInitiator initiator = FindObjectOfType<LevelPinInitiator>();
+			initiator = FindObjectOfType<LevelPinInitiator>();
 			if (initiator != null) initiator.onPinInitation += InitiatePins;
+
+			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
+			if (pinSelTrack != null) pinSelTrack.onSavedPinFetch += FetchCurrentPin;
 		}
 
 		public void BuildLevelPinList()
@@ -71,7 +71,6 @@ namespace Qbism.Saving
 		{
 			levelPinList.Clear();
 			BuildLevelPinList();
-			FixPinListDelegateLinks();
 			HandleLevelPins();
 		}
 
@@ -214,6 +213,16 @@ namespace Qbism.Saving
 			}
 		}
 
+		private void FetchCurrentPin()
+		{
+			foreach (LevelPin pin in levelPinList)
+			{
+				if (pin.levelID != currentLevelID) continue;
+				pinSelTrack.selectedPin = pin;
+				pinSelTrack.currentBiome = pin.biome;
+			}
+		}
+
 		public void SaveProgData()
 		{
 			SavingSystem.SaveProgData(this, serpProg);
@@ -224,6 +233,7 @@ namespace Qbism.Saving
 			ProgData data = SavingSystem.LoadProgData();
 
 			levelDataList = data.savedLevelDataList;
+			currentLevelID = data.currentLevelID;
 		}
 
 		public void WipeProgData() //TO DO: Make this debug only
@@ -236,6 +246,8 @@ namespace Qbism.Saving
 				levelDataList[i].pathDrawn = false;		
 			}
 
+			currentLevelID = LevelIDs.a_01;
+
 			for (int i = 0; i < serpProg.serpentDataList.Count; i++)
 			{
 				serpProg.serpentDataList[i] = false;
@@ -246,8 +258,8 @@ namespace Qbism.Saving
 
 		private void OnDisable()
 		{
-			LevelPinInitiator initiator = FindObjectOfType<LevelPinInitiator>();
 			if (initiator != null) initiator.onPinInitation -= InitiatePins;
+			if (pinSelTrack != null) pinSelTrack.onSavedPinFetch -= FetchCurrentPin;
 		}
 	}
 }

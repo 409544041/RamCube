@@ -40,7 +40,11 @@ namespace Qbism.UI
 
 			if(levelPin != null) levelPin.onShowOrHideUI += ShowOrHideUI;
 
-			if(pinSelTrack != null) pinSelTrack.onPinFetch += FetchPin;
+			if (pinSelTrack != null)
+			{
+				pinSelTrack.onPinFetch += FetchPin;
+				pinSelTrack.onSelectPinUI += SelectPinUI;
+			}
 		}
 
 		private void Update() 
@@ -109,7 +113,11 @@ namespace Qbism.UI
 
 			if (levelPin != null) levelPin.onShowOrHideUI -= ShowOrHideUI;
 
-			if (pinSelTrack != null) pinSelTrack.onPinFetch -= FetchPin;
+			if (pinSelTrack != null)
+			{
+				pinSelTrack.onPinFetch -= FetchPin;
+				pinSelTrack.onSelectPinUI -= SelectPinUI;
+			} 
 		}
 	}
 }
