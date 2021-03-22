@@ -16,13 +16,17 @@ namespace Qbism.UI
 		//Cache
 		EditorLevelPinUI editorPin = null;
 		ProgressHandler progHandler = null;
+		PinSelectionTracker pinSelTrack = null;
 		Button button = null;
+		public Vector3 uiPos { get; set; }
 
 		private void Awake() 
 		{
 			editorPin = GetComponent<EditorLevelPinUI>();
 			progHandler = FindObjectOfType<ProgressHandler>();
+			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
 			button = GetComponentInChildren<Button>();
+			uiPos = levelPin.GetComponentInChildren<LineRenderer>().transform.position;
 		}
 
 		private void OnEnable() 
@@ -35,11 +39,31 @@ namespace Qbism.UI
 			}
 
 			if(levelPin != null) levelPin.onShowOrHideUI += ShowOrHideUI;
+
+			if (pinSelTrack != null)
+			{
+				pinSelTrack.onPinFetch += FetchPin;
+				pinSelTrack.onSelectPinUI += SelectPinUI;
+			}
 		}
 
-		public void LoadAssignedLevel() //Called from Unity Event on Clickable Object
+		private void Update() 
 		{
-			levelPin.SetCurrentLevelID();
+			PositionElement();
+		}
+
+		private void PositionElement()
+		{
+			Vector2 screenPoint = Camera.main.WorldToScreenPoint(uiPos);
+			transform.position = screenPoint;
+		}
+
+		public void LoadAssignedLevel() //Called from Unity Event 
+		{				
+			LevelIDs id = levelPin.levelID;
+			bool hasSerpent = levelPin.GetComponent<EditorSetPinValues>().hasSerpentSegment;
+			progHandler.SetCurrentData(id, hasSerpent);
+				
 			var handler = FindObjectOfType<SceneHandler>();
 			int indexToLoad = levelPin.GetComponent<EditorSetPinValues>().levelIndex;
 			handler.LoadBySceneIndex(indexToLoad);
@@ -72,6 +96,12 @@ namespace Qbism.UI
 			}
 		}
 
+		private void FetchPin(GameObject selected)
+		{
+			if(selected == button.gameObject)
+				pinSelTrack.selectedPin = levelPin;
+		}
+
 		private void OnDisable() 
 		{
 			if (progHandler != null) 
@@ -82,6 +112,12 @@ namespace Qbism.UI
 			}
 
 			if (levelPin != null) levelPin.onShowOrHideUI -= ShowOrHideUI;
+
+			if (pinSelTrack != null)
+			{
+				pinSelTrack.onPinFetch -= FetchPin;
+				pinSelTrack.onSelectPinUI -= SelectPinUI;
+			} 
 		}
 	}
 }

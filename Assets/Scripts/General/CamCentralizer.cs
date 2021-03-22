@@ -14,7 +14,7 @@ namespace Qbism.General
 		void Start()
 		{	
 			PositionCenterpoint posCenter = GetComponent<PositionCenterpoint>();
-			if(!posCenter) PositionCam();
+			if(!posCenter) PositionCam(); //This is for the level complete cam. Not the gameplay cam.
 		}
 
 		public void PositionCam()

@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2855492354395296858}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4435121214177497342}
   m_RootOrder: 0
@@ -173,7 +173,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3947237476793911876}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.528808, y: -10.89, z: 0.8069818}
+  m_LocalPosition: {x: -8.528808, y: -3.63, z: 0.8069818}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 914814808531762062}
@@ -193,8 +193,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 27, z: 2}
-  m_Center: {x: 0, y: -8.5, z: 0}
+  m_Size: {x: 1, y: 13.5, z: 1}
+  m_Center: {x: 0, y: -4.25, z: 0}
 --- !u!114 &739622578570481642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,8 +208,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelID: 0
-  lockedYPos: -15
-  unlockedYPos: -8
+  biome: 0
+  lockedYPos: -14
+  unlockedYPos: -9
   raiseStep: 0.25
   raiseSpeed: 0.05
   pathPoint: {fileID: 8218998986718881874}
@@ -274,7 +275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6634471909946147462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.25, z: 0}
+  m_LocalPosition: {x: -0.0000019073486, y: 3.62, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 3094542345819858911}

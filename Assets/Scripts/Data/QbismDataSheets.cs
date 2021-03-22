@@ -40,7 +40,7 @@ namespace QbismDataSheetsTypes{
 		}
 	}
 	public class SheetLevelData: IEnumerable{
-		public System.DateTime updated = new System.DateTime(2021,3,8,10,26,0);
+		public System.DateTime updated = new System.DateTime(2021,3,18,15,48,40);
 		public readonly string[] labels = new string[]{"Pin_ID","LVL_Index","LVL_Unlock_1","LVL_Unlock_2","Level_Name","Lock_Unlock","Serp_Seg","Pin_Text"};
 		private LevelData[] _rows = new LevelData[38];
 		public void Init() {
@@ -48,9 +48,9 @@ namespace QbismDataSheetsTypes{
 					new LevelData("a_01",2,"a_02","","Introduction","",true,1),
 					new LevelData("a_02",3,"a_03","a_05","TinyZigZag","",false,2),
 					new LevelData("a_03",4,"a_04","","SevenStepZigZag","",false,3),
-					new LevelData("a_04",5,"a_06","","LaserIntro","",false,4),
-					new LevelData("a_05",6,"","","JustTwoLasers","",false,5),
-					new LevelData("a_06",7,"","","BoostIntro","",false,6),
+					new LevelData("a_04",5,"a_05","","LaserIntro","",false,4),
+					new LevelData("a_05",6,"a_06","","JustTwoLasers","",false,5),
+					new LevelData("a_06",7,"b_01","","BoostIntro","",false,6),
 					new LevelData("a_07",8,"","","ChooseBoostMoment","",false,7),
 					new LevelData("a_08",9,"","","BoostSelection","",false,8),
 					new LevelData("a_09",10,"","","DoubleBoostWithChoice","",false,9),
@@ -60,7 +60,7 @@ namespace QbismDataSheetsTypes{
 					new LevelData("a_13",14,"","","SmallStatic","",false,13),
 					new LevelData("a_14",15,"","","CircleAroundLasers","",false,14),
 					new LevelData("a_15",16,"","","TinySquareWithBoost","",false,15),
-					new LevelData("b_01",17,"","","TwoIslands","",false,16),
+					new LevelData("b_01",17,"b_02","","TwoIslands","",false,16),
 					new LevelData("b_02",18,"","","FourBoostsOneFake","",false,17),
 					new LevelData("b_03",19,"","","TurnIntro","",false,18),
 					new LevelData("b_04",20,"","","ChooseTurnPosition","",false,19),

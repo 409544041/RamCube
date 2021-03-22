@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using Cinemachine;
 using Dreamteck.Splines;
 using Qbism.Saving;
+using System;
 
 namespace Qbism.Cubes
 {
@@ -31,6 +32,8 @@ namespace Qbism.Cubes
 		public GetConnectionDel onMapCheck;
 
 		public UnityEvent onFinishEvent = new UnityEvent();
+		public event Action<bool> onSetSerpentMove; 
+		public event Action onShowSerpentSegments;
 
 		private void Awake()
 		{
@@ -62,18 +65,41 @@ namespace Qbism.Cubes
 			}
 		}
 
+		public void StartFinish()
+		{
+			StartCoroutine(Finish());
+		}
+
 		private IEnumerator Finish()
 		{
+			ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
+
 			if (onMapCheck()) //TO DO: eventually these checks should be obsolete bc map should always be available and a level is always started via map
 			{
-				ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
 				progHandler.SetLevelToComplete(progHandler.currentLevelID, true);
 			}
+
+			if (progHandler.currentHasSerpent)
+			{
+				print("Serpent segment found!");
+
+				if (onSerpentCheck())
+				{
+					SerpentProgress serpProg = FindObjectOfType<SerpentProgress>();
+					serpProg.AddSegment();
+				}
+			}
+			else print("Shapekin liberated!");
+
+			progHandler.SaveProgData();
 
 			mover.transform.parent = transform;
 			yield return DestroyAllFloorCubes();
 			ActivateLevelCompleteCam();
+
 			if (onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
+			yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
+			
 			if (onMapCheck()) StartCoroutine(LevelTransition(succesClip, true, false));
 			else StartCoroutine(LevelTransition(succesClip, false, false));
 		}
@@ -85,7 +111,7 @@ namespace Qbism.Cubes
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.floorCubeDic)
 			{
 				var cube = pair.Value;
-				if(cube.GetComponent<FinishCube>() || 
+				if(cube.type == CubeTypes.Finish || 
 					cube.GetComponent<CubeShrinker>().hasShrunk == true) continue;
 
 				floorCubeList.Add(cube);
@@ -108,8 +134,10 @@ namespace Qbism.Cubes
 
 		private void ActivateSerpent()
 		{
-			var serpent = GameObject.FindGameObjectWithTag("LevelCompFollower").GetComponent<SplineFollower>();
-			serpent.followSpeed = 15;
+			var serpent = GameObject.FindGameObjectWithTag("LevelCompFollower");
+			serpent.GetComponent<SplineFollower>().followSpeed = 15;
+			onSetSerpentMove(true);
+			onShowSerpentSegments();
 		}
 
 		private IEnumerator LevelTransition(AudioClip clip, bool mapConnected, bool restart)

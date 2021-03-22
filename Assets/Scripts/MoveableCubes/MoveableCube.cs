@@ -9,7 +9,6 @@ namespace Qbism.MoveableCubes
 	public class MoveableCube : MonoBehaviour, IActiveCube
 	{
 		//Config parameters
-		[SerializeField] CubeTypes type = CubeTypes.Shrinking;
 		[SerializeField] float shrinkStep = 0f;
 		[SerializeField] float shrinkTimeStep = 0f;
 		[SerializeField] Transform center = null;

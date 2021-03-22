@@ -11,7 +11,7 @@ namespace Qbism.WorldMap
 		//Actions, events, delegates etc
 		public event Action onPinInitation;
 
-		void Start()
+		private void Start()
 		{
 			onPinInitation();
 		}
