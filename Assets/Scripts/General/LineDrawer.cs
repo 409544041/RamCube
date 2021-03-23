@@ -10,6 +10,7 @@ namespace Qbism.General
 		//Config parameters
 		[SerializeField] float drawSpeed = 5f;
 		[SerializeField] float lineWidth = .15f;
+		public Material fullLine, dottedLine;
 
 		//Cache
 		LineRenderer lRender;

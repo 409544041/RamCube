@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drawSpeed: 5
   lineWidth: 0.15
+  fullLine: {fileID: 2100000, guid: a553d183d21cbc84fa59a35d1d2db3bc, type: 2}
+  dottedLine: {fileID: 2100000, guid: 50b8fe2b1cbc5564f854573e08b455fd, type: 2}
 --- !u!120 &3861330339856256658
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -135,7 +137,7 @@ LineRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 0
+    numCapVertices: 4
     alignment: 0
     textureMode: 0
     shadowBias: 0.5

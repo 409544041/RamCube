@@ -42,14 +42,14 @@ namespace QbismDataSheetsTypes{
 		}
 	}
 	public class SheetLevelData: IEnumerable{
-		public System.DateTime updated = new System.DateTime(2021,3,23,10,17,43);
+		public System.DateTime updated = new System.DateTime(2021,3,23,12,1,12);
 		public readonly string[] labels = new string[]{"Pin_ID","Biome","LVL_Index","LVL_Unlock_1","LVL_Unlock_2","Level_Name","Locks","Serp_Seg","Pin_Text"};
 		private LevelData[] _rows = new LevelData[39];
 		public void Init() {
 			_rows = new LevelData[]{
 					new LevelData("a_01","Biome01",2,"a_02","","Introduction",0,true,1),
 					new LevelData("a_02","Biome01",3,"a_03","a_05","TinyZigZag",0,false,2),
-					new LevelData("a_03","Biome01",4,"a_04","","SevenStepZigZag",0,false,3),
+					new LevelData("a_03","Biome01",4,"a_04","b_01","SevenStepZigZag",0,false,3),
 					new LevelData("a_04","Biome01",5,"a_05","","LaserIntro",0,false,4),
 					new LevelData("a_05","Biome01",6,"a_06","","JustTwoLasers",0,false,5),
 					new LevelData("a_06","Biome01",7,"b_01","","BoostIntro",0,false,6),
@@ -62,7 +62,7 @@ namespace QbismDataSheetsTypes{
 					new LevelData("a_13","Biome01",14,"","","SmallStatic",0,false,13),
 					new LevelData("a_14","Biome01",15,"","","CircleAroundLasers",0,false,14),
 					new LevelData("a_15","Biome01",16,"","","TinySquareWithBoost",0,false,15),
-					new LevelData("b_01","Biome02",17,"b_02","","TwoIslands",1,false,16),
+					new LevelData("b_01","Biome02",17,"b_02","","TwoIslands",2,false,16),
 					new LevelData("b_02","Biome02",18,"","","FourBoostsOneFake",0,false,17),
 					new LevelData("b_03","Biome02",19,"","","TurnIntro",0,false,18),
 					new LevelData("b_04","Biome02",20,"","","ChooseTurnPosition",0,false,19),

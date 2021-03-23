@@ -51,7 +51,8 @@ namespace Qbism.WorldMap
 			}
 		}
 
-		public void CheckPathStatus(LevelStatusData unlock1Data, LevelStatusData unlock2Data, bool completed)
+		public void CheckPathStatus(LevelStatusData unlock1Data, 
+			LevelStatusData unlock2Data, bool completed)
 		{
 			List<Transform> destinationList = new List<Transform>();
 			AddToList(completed, unlock1Data.unlocked, unlock1Data.unlockAnimPlayed,

@@ -91,12 +91,14 @@ namespace Qbism.Saving
 					if (!levelDataList[i].unlockAnimPlayed) levelDataList[i].unlockAnimPlayed = true; 
 				}
 
-				int locks = levelPinList[i].GetComponent<EditorSetPinValues>().locks;
-				LevelIDs unlock1ID = levelPinList[i].GetComponent<EditorSetPinValues>().levelUnlock_1;
-				LevelIDs unlock2ID = levelPinList[i].GetComponent<EditorSetPinValues>().levelUnlock_2;
+				EditorSetPinValues pinValues = levelPinList[i].GetComponent<EditorSetPinValues>();
+				LevelIDs unlock1ID = pinValues.levelUnlock_1;
+				LevelIDs unlock2ID = pinValues.levelUnlock_2;
 				LevelStatusData unlock1Data = FetchUnlockStatusData(unlock1ID);
 				LevelStatusData unlock2Data = FetchUnlockStatusData(unlock2ID);
 				
+				var originalLocks = pinValues.locks;
+				var currentLocks = levelDataList[i].locks;
 				var unlockAnimPlayed = levelDataList[i].unlockAnimPlayed;
 				var unlocked = levelDataList[i].unlocked;
 				var completed = levelDataList[i].completed;
@@ -112,13 +114,8 @@ namespace Qbism.Saving
 				if(unlockAnimPlayed) onShowOrHideUI(levelPinList[i], true);
 				else onShowOrHideUI(levelPinList[i], false);
 
-				if (completed)
-				{
-					onSetUIComplete(levelPinList[i]);
-					if (unlock1Data.locks > 0) unlock1Data.locks--;
-					if (unlock2Data.locks > 0) unlock2Data.locks--;
-				} 
-				
+				if (completed) onSetUIComplete(levelPinList[i]);
+
 				if(unlocked && !unlockAnimPlayed)
 				{
 					levelPinList[i].InitiateRaising(unlocked, unlockAnimPlayed);
