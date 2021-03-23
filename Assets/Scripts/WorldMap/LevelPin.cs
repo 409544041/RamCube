@@ -22,7 +22,7 @@ namespace Qbism.WorldMap
 
 		//Actions, events, delegates etc
 		public event Action<Transform, LineRenderer[]> onPathDrawing;
-		public event Action<Transform, List<Transform>, LineRenderer[]> onPathCreation;
+		public event Action<Transform, List<LineDrawData>, LineRenderer[]> onPathCreation;
 		public event Action<LevelPin, bool> onShowOrHideUI;
 
 		//States
@@ -54,28 +54,53 @@ namespace Qbism.WorldMap
 		public void CheckPathStatus(LevelStatusData unlock1Data, 
 			LevelStatusData unlock2Data, bool completed)
 		{
-			List<Transform> destinationList = new List<Transform>();
-			AddToList(completed, unlock1Data.unlocked, unlock1Data.unlockAnimPlayed,
-				unlock1Data.levelID, destinationList);
-			AddToList(completed, unlock2Data.unlocked, unlock2Data.unlockAnimPlayed,
-			unlock2Data.levelID, destinationList);
+			List<LineDrawData> lineDestList = new List<LineDrawData>();
 
-			onPathCreation(pathPoint, destinationList, lRenders);
+			AddToList(completed, unlock1Data.unlocked, unlock1Data.unlockAnimPlayed,
+				unlock1Data.levelID, unlock1Data.locks, lineDestList);
+			AddToList(completed, unlock2Data.unlocked, unlock2Data.unlockAnimPlayed,
+			unlock2Data.levelID, unlock2Data.locks, lineDestList);
+
+			onPathCreation(pathPoint, lineDestList, lRenders);
 		}
 
 		private void AddToList(bool completed, bool unlockStatus, bool unlockAnim, 
-			LevelIDs ID, List<Transform> destinationList)
-		{		
-			if(completed && unlockStatus && unlockAnim)
-			{
-				if(ID == LevelIDs.empty) return;
+			LevelIDs id, int locks, List<LineDrawData> lineDestList)
+		{
+			if (id == LevelIDs.empty) return;
+			LevelPin pin = GetPin(id);
 
-				LevelPin[] pins = FindObjectsOfType<LevelPin>();
-				foreach(LevelPin pin in pins)
-				{
-					if(pin.levelID == ID) destinationList.Add(pin.pathPoint);
-				}
+			int sheetLocks = pin.GetComponent<EditorSetPinValues>().locks;
+			bool lessLocks = sheetLocks > locks && locks > 0;
+
+			if(completed && lessLocks)
+			{
+				LineDrawData drawData = new LineDrawData();
+				drawData.destination = pin.pathPoint;
+				drawData.isDotted = true;
+				lineDestList.Add(drawData);
 			}
+
+			if (completed && unlockStatus && unlockAnim)
+			{
+				LineDrawData drawData = new LineDrawData();
+				drawData.destination = pin.pathPoint;
+				drawData.isDotted = false;
+				lineDestList.Add(drawData);
+			}
+		}
+
+		private LevelPin GetPin(LevelIDs id)
+		{
+			LevelPin[] pins = FindObjectsOfType<LevelPin>();
+			LevelPin foundPin = null;
+
+			foreach (LevelPin pin in pins)
+			{
+				if (pin.levelID != id) continue;
+				foundPin = pin;
+			}
+			return foundPin;
 		}
 
 		public void InitiateRaising(bool unlocked, bool unlockAnimPlayed)

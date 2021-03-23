@@ -47,14 +47,29 @@ namespace Qbism.General
 			}
 		}
 
-		private void CreatePath(Transform origin, List<Transform> destinationList, LineRenderer[] lRenders)
+		private void CreatePath(Transform origin, List<LineDrawData> lineDestList, 
+			LineRenderer[] lRenders)
 		{
-			if(destinationList.Count > 0)
+			if(lineDestList.Count > 0)
 			{
-				for (int i = 0; i < destinationList.Count; i++)
+				for (int i = 0; i < lineDestList.Count; i++)
 				{
-					lRenders[i].GetComponent<LineDrawer>().SetPositions(origin, destinationList[i]);
-					lRenders[i].enabled = true;
+					LineDrawer drawer = lRenders[i].GetComponent<LineDrawer>();
+
+					if(lineDestList[i].isDotted)
+					{
+						drawer.SetPositions(origin, lineDestList[i].destination);
+						lRenders[i].material = drawer.dottedLine;
+						lRenders[i].textureMode = LineTextureMode.Tile;
+						lRenders[i].enabled = true;
+					}
+					else if (!lineDestList[i].isDotted)
+					{
+						drawer.SetPositions(origin, lineDestList[i].destination);
+						lRenders[i].material = drawer.fullLine;
+						lRenders[i].textureMode = LineTextureMode.Stretch;
+						lRenders[i].enabled = true;
+					}
 				}
 			}
 		}

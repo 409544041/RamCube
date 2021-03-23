@@ -97,14 +97,15 @@ namespace Qbism.Saving
 				LevelStatusData unlock1Data = FetchUnlockStatusData(unlock1ID);
 				LevelStatusData unlock2Data = FetchUnlockStatusData(unlock2ID);
 				
-				var originalLocks = pinValues.locks;
-				var currentLocks = levelDataList[i].locks;
+				var sheetLocks = pinValues.locks;
+				var savedLocks = levelDataList[i].locks;
 				var unlockAnimPlayed = levelDataList[i].unlockAnimPlayed;
 				var unlocked = levelDataList[i].unlocked;
 				var completed = levelDataList[i].completed;
 				var pathDrawn = levelDataList[i].pathDrawn;
 				
 				levelPinList[i].justCompleted = false;
+				bool lessLocks = (sheetLocks > savedLocks) && savedLocks != 0;
 
 				levelPinList[i].CheckRaiseStatus(unlocked, unlockAnimPlayed);
 				levelPinList[i].CheckPathStatus(unlock1Data, unlock2Data, completed);
