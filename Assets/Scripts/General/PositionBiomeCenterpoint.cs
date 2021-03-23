@@ -36,22 +36,6 @@ namespace Qbism.General
 			} 
 		}
 
-		// void Start()
-		// {
-		// 	GameObject selected = EventSystem.current.currentSelectedGameObject;
-		// 	LevelPin selPin = selected.GetComponentInParent<LevelPinUI>().levelPin;
-
-		// 	StartCoroutine(FetchCurrentBiome());
-		// 	StartCoroutine(PositionCenterPoint(currentBiome, selPin));
-		// }
-
-		// private IEnumerator FetchCurrentBiome()
-		// {
-		// 	yield return new WaitForSeconds(.1f); //To avoid race condition
-		// 	GameObject selected = EventSystem.current.currentSelectedGameObject;
-		// 	currentBiome = selected.GetComponentInParent<LevelPinUI>().levelPin.biome;
-		// }
-
 		private void StartPositionCenterPoint(Biomes biome, LevelPin selPin)
 		{
 			prevBiome = currentBiome;
@@ -87,7 +71,7 @@ namespace Qbism.General
 		{
 			foreach (LevelPin pin in progHandler.levelPinList)
 			{
-				if (pin.biome != biome) continue;
+				if (pin.GetComponent<EditorSetPinValues>().biome != biome) continue;
 
 				if (!firstValueAssigned)
 				{

@@ -38,7 +38,7 @@ namespace Qbism.WorldMap
 
 			GameObject selected = EventSystem.current.currentSelectedGameObject;
 			onPinFetch(selected); //Sets new selectedPin
-			currentBiome = selectedPin.biome;
+			currentBiome = selectedPin.GetComponent<EditorSetPinValues>().biome;
 
 			if(selectedPin != prevPin) onSetCenterPos(currentBiome, selectedPin);
 		}

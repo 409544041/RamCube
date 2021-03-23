@@ -91,11 +91,12 @@ namespace Qbism.Saving
 					if (!levelDataList[i].unlockAnimPlayed) levelDataList[i].unlockAnimPlayed = true; 
 				}
 
+				int locks = levelPinList[i].GetComponent<EditorSetPinValues>().locks;
 				LevelIDs unlock1ID = levelPinList[i].GetComponent<EditorSetPinValues>().levelUnlock_1;
 				LevelIDs unlock2ID = levelPinList[i].GetComponent<EditorSetPinValues>().levelUnlock_2;
 				LevelStatusData unlock1Data = FetchUnlockStatusData(unlock1ID);
 				LevelStatusData unlock2Data = FetchUnlockStatusData(unlock2ID);
-
+				
 				var unlockAnimPlayed = levelDataList[i].unlockAnimPlayed;
 				var unlocked = levelDataList[i].unlocked;
 				var completed = levelDataList[i].completed;
@@ -111,8 +112,13 @@ namespace Qbism.Saving
 				if(unlockAnimPlayed) onShowOrHideUI(levelPinList[i], true);
 				else onShowOrHideUI(levelPinList[i], false);
 
-				if (completed) onSetUIComplete(levelPinList[i]);
-
+				if (completed)
+				{
+					onSetUIComplete(levelPinList[i]);
+					if (unlock1Data.locks > 0) unlock1Data.locks--;
+					if (unlock2Data.locks > 0) unlock2Data.locks--;
+				} 
+				
 				if(unlocked && !unlockAnimPlayed)
 				{
 					levelPinList[i].InitiateRaising(unlocked, unlockAnimPlayed);
@@ -155,6 +161,7 @@ namespace Qbism.Saving
 
 		private void CheckLevelsToUnlock(LevelIDs incomingID)
 		{
+			//Need to get this from sheets bc EditorSetPinValues is not available during gameplay
 			var sheetID = QbismDataSheets.levelData[incomingID.ToString()];
 
 			LevelIDs levelToUnlock_1 = LevelIDs.empty;
@@ -188,7 +195,10 @@ namespace Qbism.Saving
 			foreach (LevelStatusData data in levelDataList)
 			{
 				if (data.levelID == id)
-					data.unlocked = value;
+				{
+					if(data.locks > 0) data.locks--;
+					if(data.locks == 0) data.unlocked = value;
+				}	
 			}			
 		}
 
@@ -219,7 +229,7 @@ namespace Qbism.Saving
 			{
 				if (pin.levelID != currentLevelID) continue;
 				pinSelTrack.selectedPin = pin;
-				pinSelTrack.currentBiome = pin.biome;
+				pinSelTrack.currentBiome = pin.GetComponent<EditorSetPinValues>().biome;
 			}
 		}
 
@@ -240,6 +250,9 @@ namespace Qbism.Saving
 		{
 			for (int i = 0; i < levelDataList.Count; i++)
 			{
+				var sheetID = QbismDataSheets.levelData[levelDataList[i].levelID.ToString()];
+				//If errors when deleting: Check if sheet.count and leveldatalist.count are similar and that sheet has an 'empty'
+				levelDataList[i].locks = sheetID.locks;
 				levelDataList[i].unlocked = false;
 				levelDataList[i].unlockAnimPlayed = false;
 				levelDataList[i].completed = false;		

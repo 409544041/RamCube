@@ -18,71 +18,74 @@ public class QbismDataSheets{
 namespace QbismDataSheetsTypes{
 	public class LevelData{
 		public string pin_ID;
+		public string biome;
 		public int lVL_Index;
 		public string lVL_Unlock_1;
 		public string lVL_Unlock_2;
 		public string level_Name;
-		public string lock_Unlock;
+		public int locks;
 		public bool serp_Seg;
 		public int pin_Text;
 
 		public LevelData(){}
 
-		public LevelData(string pin_ID, int lVL_Index, string lVL_Unlock_1, string lVL_Unlock_2, string level_Name, string lock_Unlock, bool serp_Seg, int pin_Text){
+		public LevelData(string pin_ID, string biome, int lVL_Index, string lVL_Unlock_1, string lVL_Unlock_2, string level_Name, int locks, bool serp_Seg, int pin_Text){
 			this.pin_ID = pin_ID;
+			this.biome = biome;
 			this.lVL_Index = lVL_Index;
 			this.lVL_Unlock_1 = lVL_Unlock_1;
 			this.lVL_Unlock_2 = lVL_Unlock_2;
 			this.level_Name = level_Name;
-			this.lock_Unlock = lock_Unlock;
+			this.locks = locks;
 			this.serp_Seg = serp_Seg;
 			this.pin_Text = pin_Text;
 		}
 	}
 	public class SheetLevelData: IEnumerable{
-		public System.DateTime updated = new System.DateTime(2021,3,18,15,48,40);
-		public readonly string[] labels = new string[]{"Pin_ID","LVL_Index","LVL_Unlock_1","LVL_Unlock_2","Level_Name","Lock_Unlock","Serp_Seg","Pin_Text"};
-		private LevelData[] _rows = new LevelData[38];
+		public System.DateTime updated = new System.DateTime(2021,3,23,10,17,43);
+		public readonly string[] labels = new string[]{"Pin_ID","Biome","LVL_Index","LVL_Unlock_1","LVL_Unlock_2","Level_Name","Locks","Serp_Seg","Pin_Text"};
+		private LevelData[] _rows = new LevelData[39];
 		public void Init() {
 			_rows = new LevelData[]{
-					new LevelData("a_01",2,"a_02","","Introduction","",true,1),
-					new LevelData("a_02",3,"a_03","a_05","TinyZigZag","",false,2),
-					new LevelData("a_03",4,"a_04","","SevenStepZigZag","",false,3),
-					new LevelData("a_04",5,"a_05","","LaserIntro","",false,4),
-					new LevelData("a_05",6,"a_06","","JustTwoLasers","",false,5),
-					new LevelData("a_06",7,"b_01","","BoostIntro","",false,6),
-					new LevelData("a_07",8,"","","ChooseBoostMoment","",false,7),
-					new LevelData("a_08",9,"","","BoostSelection","",false,8),
-					new LevelData("a_09",10,"","","DoubleBoostWithChoice","",false,9),
-					new LevelData("a_10",11,"","","StaticIntro","",false,10),
-					new LevelData("a_11",12,"","","StaticEasy","",false,11),
-					new LevelData("a_12",13,"","","BoostToPosition","",false,12),
-					new LevelData("a_13",14,"","","SmallStatic","",false,13),
-					new LevelData("a_14",15,"","","CircleAroundLasers","",false,14),
-					new LevelData("a_15",16,"","","TinySquareWithBoost","",false,15),
-					new LevelData("b_01",17,"b_02","","TwoIslands","",false,16),
-					new LevelData("b_02",18,"","","FourBoostsOneFake","",false,17),
-					new LevelData("b_03",19,"","","TurnIntro","",false,18),
-					new LevelData("b_04",20,"","","ChooseTurnPosition","",false,19),
-					new LevelData("b_05",21,"","","DoubleTurn","",false,20),
-					new LevelData("b_06",22,"","","SquareAroundTurn","",false,21),
-					new LevelData("b_07",23,"","","TurnBackTrack","",false,22),
-					new LevelData("b_08",24,"","","TurnAndBoost","",false,23),
-					new LevelData("b_09",25,"","","BoostAfterTurning","",false,24),
-					new LevelData("b_10",26,"","","TurnBoostTurn","",false,25),
-					new LevelData("b_11",27,"","","MoveableIntro","",false,26),
-					new LevelData("b_12",28,"","","MoveablePushAlong","",false,27),
-					new LevelData("b_13",29,"","","MoveableSimpleBridge","",false,28),
-					new LevelData("b_14",30,"","","SimpleSelectBridge","",false,29),
-					new LevelData("b_15",31,"","","SelectBridgeLocation","",false,30),
-					new LevelData("c_01",32,"","","MoveableCreateBlockage","",false,31),
-					new LevelData("c_02",33,"","","DoubleCubeBridge","",false,32),
-					new LevelData("c_03",34,"","","BoostIntoMoveableEasy","",false,33),
-					new LevelData("c_04",35,"","","BoostIntoMoveable","",false,34),
-					new LevelData("c_05",36,"","","SlalomMoveableBoosts","",false,35),
-					new LevelData("c_06",37,"","","BoostMoveableIntoMoveable","",false,36),
-					new LevelData("c_07",38,"","","VeryOpenWithLasers","",false,37),
-					new LevelData("c_08",39,"","","MoveableTurnBoostBridge","",false,38)
+					new LevelData("a_01","Biome01",2,"a_02","","Introduction",0,true,1),
+					new LevelData("a_02","Biome01",3,"a_03","a_05","TinyZigZag",0,false,2),
+					new LevelData("a_03","Biome01",4,"a_04","","SevenStepZigZag",0,false,3),
+					new LevelData("a_04","Biome01",5,"a_05","","LaserIntro",0,false,4),
+					new LevelData("a_05","Biome01",6,"a_06","","JustTwoLasers",0,false,5),
+					new LevelData("a_06","Biome01",7,"b_01","","BoostIntro",0,false,6),
+					new LevelData("a_07","Biome01",8,"","","ChooseBoostMoment",0,false,7),
+					new LevelData("a_08","Biome01",9,"","","BoostSelection",0,false,8),
+					new LevelData("a_09","Biome01",10,"","","DoubleBoostWithChoice",0,false,9),
+					new LevelData("a_10","Biome01",11,"","","StaticIntro",0,false,10),
+					new LevelData("a_11","Biome01",12,"","","StaticEasy",0,false,11),
+					new LevelData("a_12","Biome01",13,"","","BoostToPosition",0,false,12),
+					new LevelData("a_13","Biome01",14,"","","SmallStatic",0,false,13),
+					new LevelData("a_14","Biome01",15,"","","CircleAroundLasers",0,false,14),
+					new LevelData("a_15","Biome01",16,"","","TinySquareWithBoost",0,false,15),
+					new LevelData("b_01","Biome02",17,"b_02","","TwoIslands",1,false,16),
+					new LevelData("b_02","Biome02",18,"","","FourBoostsOneFake",0,false,17),
+					new LevelData("b_03","Biome02",19,"","","TurnIntro",0,false,18),
+					new LevelData("b_04","Biome02",20,"","","ChooseTurnPosition",0,false,19),
+					new LevelData("b_05","Biome02",21,"","","DoubleTurn",0,false,20),
+					new LevelData("b_06","Biome02",22,"","","SquareAroundTurn",0,false,21),
+					new LevelData("b_07","Biome02",23,"","","TurnBackTrack",0,false,22),
+					new LevelData("b_08","Biome02",24,"","","TurnAndBoost",0,false,23),
+					new LevelData("b_09","Biome02",25,"","","BoostAfterTurning",0,false,24),
+					new LevelData("b_10","Biome02",26,"","","TurnBoostTurn",0,false,25),
+					new LevelData("b_11","Biome02",27,"","","MoveableIntro",0,false,26),
+					new LevelData("b_12","Biome02",28,"","","MoveablePushAlong",0,false,27),
+					new LevelData("b_13","Biome02",29,"","","MoveableSimpleBridge",0,false,28),
+					new LevelData("b_14","Biome02",30,"","","SimpleSelectBridge",0,false,29),
+					new LevelData("b_15","Biome02",31,"","","SelectBridgeLocation",0,false,30),
+					new LevelData("c_01","Biome03",32,"","","MoveableCreateBlockage",0,false,31),
+					new LevelData("c_02","Biome03",33,"","","DoubleCubeBridge",0,false,32),
+					new LevelData("c_03","Biome03",34,"","","BoostIntoMoveableEasy",0,false,33),
+					new LevelData("c_04","Biome03",35,"","","BoostIntoMoveable",0,false,34),
+					new LevelData("c_05","Biome03",36,"","","SlalomMoveableBoosts",0,false,35),
+					new LevelData("c_06","Biome03",37,"","","BoostMoveableIntoMoveable",0,false,36),
+					new LevelData("c_07","Biome03",38,"","","VeryOpenWithLasers",0,false,37),
+					new LevelData("c_08","Biome03",39,"","","MoveableTurnBoostBridge",0,false,38),
+					new LevelData("empty","",0,"","","",0,false,0)
 				};
 		}
 			
@@ -177,6 +180,7 @@ namespace QbismDataSheetsTypes{
 		public LevelData c_06{	get{ return _rows[35]; } }
 		public LevelData c_07{	get{ return _rows[36]; } }
 		public LevelData c_08{	get{ return _rows[37]; } }
+		public LevelData empty{	get{ return _rows[38]; } }
 
 	}
 }

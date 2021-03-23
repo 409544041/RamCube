@@ -10,7 +10,6 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public LevelIDs levelID;
-		public Biomes biome;
 		[SerializeField] float lockedYPos;
 		public float unlockedYPos;
 		[SerializeField] float raiseStep;
@@ -55,7 +54,6 @@ namespace Qbism.WorldMap
 		public void CheckPathStatus(LevelStatusData unlock1Data, LevelStatusData unlock2Data, bool completed)
 		{
 			List<Transform> destinationList = new List<Transform>();
-
 			AddToList(completed, unlock1Data.unlocked, unlock1Data.unlockAnimPlayed,
 				unlock1Data.levelID, destinationList);
 			AddToList(completed, unlock2Data.unlocked, unlock2Data.unlockAnimPlayed,

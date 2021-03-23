@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelStatusData
 {
 	public LevelIDs levelID;
+	public int locks;
 	public bool unlocked;
 	public bool unlockAnimPlayed;
 	public bool completed;

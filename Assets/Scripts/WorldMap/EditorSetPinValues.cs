@@ -11,6 +11,8 @@ namespace Qbism.WorldMap
 		//States
 		public int levelIndex { get; private set; }
 		string levelName;
+		public Biomes biome { get; private set; }
+		public int locks { get; private set; }
 		public LevelIDs levelUnlock_1 { get; private set; }
 		public LevelIDs levelUnlock_2 { get; private set; }
 		public bool hasSerpentSegment { get; private set; }
@@ -22,7 +24,14 @@ namespace Qbism.WorldMap
 
 			levelIndex = sheetID.lVL_Index;
 			levelName = sheetID.level_Name;
+			locks = sheetID.locks;
 			hasSerpentSegment = sheetID.serp_Seg;
+
+			foreach (Biomes biomeType in Enum.GetValues(typeof(Biomes)))
+			{
+				if(biomeType.ToString() == sheetID.biome)
+				biome = biomeType;
+			}
 
 			bool unlock1Found = false;
 			bool unlock2Found = false;
