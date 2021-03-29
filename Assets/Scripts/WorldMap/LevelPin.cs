@@ -15,14 +15,15 @@ namespace Qbism.WorldMap
 		[SerializeField] float raiseStep;
 		[SerializeField] float raiseSpeed;
 		public Transform pathPoint;
+		public LineRenderer[] fullLineRenderers;
+		public LineRenderer dottedLineRenderer;
 
 		//Cache
 		MeshRenderer mRender;
-		LineRenderer[] lRenders;
 
 		//Actions, events, delegates etc
-		public event Action<Transform, LineRenderer[]> onPathDrawing;
-		public event Action<Transform, List<LineDrawData>, LineRenderer[]> onPathCreation;
+		public event Action<Transform, LineTypes, List<LevelPin>> onPathDrawing;
+		public event Action<Transform, List<LineDrawData>, LineRenderer[], LineRenderer> onPathCreation;
 		public event Action<LevelPin, bool> onShowOrHideUI;
 
 		//States
@@ -32,7 +33,6 @@ namespace Qbism.WorldMap
 		private void Awake() 
 		{
 			mRender = GetComponentInChildren<MeshRenderer>();
-			lRenders = GetComponentsInChildren<LineRenderer>();
 		}
 
 		public void CheckRaiseStatus(bool unlocked, bool unlockAnimPlayed)
@@ -55,13 +55,12 @@ namespace Qbism.WorldMap
 			LevelStatusData unlock2Data, bool completed)
 		{
 			List<LineDrawData> lineDestList = new List<LineDrawData>();
-
 			AddToList(completed, unlock1Data.unlocked, unlock1Data.unlockAnimPlayed,
 				unlock1Data.levelID, unlock1Data.locks, lineDestList);
 			AddToList(completed, unlock2Data.unlocked, unlock2Data.unlockAnimPlayed,
 			unlock2Data.levelID, unlock2Data.locks, lineDestList);
 
-			onPathCreation(pathPoint, lineDestList, lRenders);
+			onPathCreation(pathPoint, lineDestList, fullLineRenderers, dottedLineRenderer);
 		}
 
 		private void AddToList(bool completed, bool unlockStatus, bool unlockAnim, 
@@ -77,7 +76,7 @@ namespace Qbism.WorldMap
 			{
 				LineDrawData drawData = new LineDrawData();
 				drawData.destination = pin.pathPoint;
-				drawData.isDotted = true;
+				drawData.lineType = LineTypes.dotted;
 				lineDestList.Add(drawData);
 			}
 
@@ -85,7 +84,7 @@ namespace Qbism.WorldMap
 			{
 				LineDrawData drawData = new LineDrawData();
 				drawData.destination = pin.pathPoint;
-				drawData.isDotted = false;
+				drawData.lineType = LineTypes.full;
 				lineDestList.Add(drawData);
 			}
 		}
@@ -103,16 +102,16 @@ namespace Qbism.WorldMap
 			return foundPin;
 		}
 
-		public void InitiateRaising(bool unlocked, bool unlockAnimPlayed)
+		public void InitiateRaising(bool unlocked, bool unlockAnimPlayed, List<LevelPin> originPins)
 		{
 			mRender.transform.position = new Vector3
 				(transform.position.x, lockedYPos, transform.position.z);
 
 			raising = true;
-			StartCoroutine(RaiseCliff(mRender));
+			StartCoroutine(RaiseCliff(mRender, originPins));
 		}
 
-		private IEnumerator RaiseCliff(MeshRenderer mRender)
+		private IEnumerator RaiseCliff(MeshRenderer mRender, List<LevelPin> originPins)
 		{
 			mRender.enabled = true;
 			GetComponent<LevelPinRaiseJuicer>().PlayRaiseJuice();
@@ -131,9 +130,14 @@ namespace Qbism.WorldMap
 
 					GetComponent<LevelPinRaiseJuicer>().StopRaiseJuice();
 					onShowOrHideUI(this, true);
-					onPathDrawing(pathPoint, lRenders);
+					onPathDrawing(pathPoint, LineTypes.full, originPins);
 				}
 			}
+		}
+
+		public void DrawPath(List<LevelPin> originPins)
+		{
+			onPathDrawing(pathPoint, LineTypes.dotted, originPins);
 		}
 	}
 }

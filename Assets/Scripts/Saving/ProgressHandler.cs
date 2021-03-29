@@ -96,9 +96,12 @@ namespace Qbism.Saving
 				LevelIDs unlock2ID = pinValues.levelUnlock_2;
 				LevelStatusData unlock1Data = FetchUnlockStatusData(unlock1ID);
 				LevelStatusData unlock2Data = FetchUnlockStatusData(unlock2ID);
+				List<LevelPin> originPins = new List<LevelPin>();
+				AddOriginPins(levelPinList[i], originPins);
 				
 				var sheetLocks = pinValues.locks;
 				var savedLocks = levelDataList[i].locks;
+				var dottedAnimPlayed = levelDataList[i].dottedAnimPlayed;
 				var unlockAnimPlayed = levelDataList[i].unlockAnimPlayed;
 				var unlocked = levelDataList[i].unlocked;
 				var completed = levelDataList[i].completed;
@@ -117,10 +120,24 @@ namespace Qbism.Saving
 
 				if (completed) onSetUIComplete(levelPinList[i]);
 
+				if(lessLocks && !dottedAnimPlayed)
+				{
+					levelDataList[i].dottedAnimPlayed = true;
+					levelPinList[i].DrawPath(originPins);
+				}
+
 				if(unlocked && !unlockAnimPlayed)
 				{
-					levelPinList[i].InitiateRaising(unlocked, unlockAnimPlayed);
-					levelDataList[i].unlockAnimPlayed = true;
+					if(savedLocks == 0)
+					{
+						levelPinList[i].InitiateRaising(unlocked, unlockAnimPlayed, originPins);
+						levelDataList[i].unlockAnimPlayed = true;
+					}
+					else
+					{
+						levelPinList[i].DrawPath(originPins);
+					}
+
 				}
 
 				if(completed && !pathDrawn)
@@ -131,6 +148,17 @@ namespace Qbism.Saving
 			}
 
 			SaveProgData();
+		}
+
+		private void AddOriginPins(LevelPin incomingPin, List<LevelPin> originPins)
+		{
+			foreach (LevelPin pin in levelPinList)
+			{
+				var editValues = pin.GetComponent<EditorSetPinValues>();
+				if (editValues.levelUnlock_1 == incomingPin.levelID ||
+					editValues.levelUnlock_2 == incomingPin.levelID)
+					originPins.Add(pin);
+			}
 		}
 
 		private LevelStatusData FetchUnlockStatusData(LevelIDs ID)
@@ -251,6 +279,7 @@ namespace Qbism.Saving
 				var sheetID = QbismDataSheets.levelData[levelDataList[i].levelID.ToString()];
 				//If errors when deleting: Check if sheet.count and leveldatalist.count are similar and that sheet has an 'empty'
 				levelDataList[i].locks = sheetID.locks;
+				levelDataList[i].dottedAnimPlayed = false;
 				levelDataList[i].unlocked = false;
 				levelDataList[i].unlockAnimPlayed = false;
 				levelDataList[i].completed = false;		

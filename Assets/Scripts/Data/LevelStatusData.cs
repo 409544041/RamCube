@@ -7,6 +7,7 @@ public class LevelStatusData
 {
 	public LevelIDs levelID;
 	public int locks;
+	public bool dottedAnimPlayed;
 	public bool unlocked;
 	public bool unlockAnimPlayed;
 	public bool completed;

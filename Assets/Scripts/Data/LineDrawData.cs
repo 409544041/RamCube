@@ -6,5 +6,5 @@ using UnityEngine;
 public class LineDrawData
 {
 	public Transform destination;
-	public bool isDotted;
+	public LineTypes lineType;
 }
