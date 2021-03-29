@@ -71,8 +71,9 @@ namespace Qbism.WorldMap
 
 			int sheetLocks = pin.GetComponent<EditorSetPinValues>().locks;
 			bool lessLocks = sheetLocks > locks && locks > 0;
+			bool noLocks = sheetLocks > locks && locks == 0;
 
-			if(completed && lessLocks)
+			if((completed && lessLocks) || (!justCompleted && completed && noLocks && !unlockAnim))
 			{
 				LineDrawData drawData = new LineDrawData();
 				drawData.destination = pin.pathPoint;

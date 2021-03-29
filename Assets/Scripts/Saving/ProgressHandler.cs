@@ -108,6 +108,7 @@ namespace Qbism.Saving
 				var pathDrawn = levelDataList[i].pathDrawn;
 				
 				levelPinList[i].justCompleted = false;
+				if (completed && !pathDrawn) levelPinList[i].justCompleted = true;
 				bool lessLocks = (sheetLocks > savedLocks) && savedLocks != 0;
 
 				levelPinList[i].CheckRaiseStatus(unlocked, unlockAnimPlayed);
@@ -140,11 +141,7 @@ namespace Qbism.Saving
 
 				}
 
-				if(completed && !pathDrawn)
-				{
-					levelPinList[i].justCompleted = true;
-					levelDataList[i].pathDrawn = true;
-				}
+				if(completed && !pathDrawn) levelDataList[i].pathDrawn = true;
 			}
 
 			SaveProgData();
