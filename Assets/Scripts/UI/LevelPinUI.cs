@@ -108,14 +108,21 @@ namespace Qbism.UI
 			if(id != levelPin.levelID) return;
 			
 			int locks = 0;
+			int sheetLocks = 0;
+
 			foreach (LevelStatusData data in progHandler.levelDataList)
 			{
 				if(data.levelID == levelPin.levelID)
-				{
 					locks = data.locks;
-				}
 			}
-			if(locks == 0) lockIcon.enabled = false;
+
+			foreach (LevelPin pin in progHandler.levelPinList)
+			{
+				if(pin.levelID == levelPin.levelID)
+					sheetLocks = pin.GetComponent<EditorSetPinValues>().locks;
+			}
+			
+			if(locks == sheetLocks) lockIcon.enabled = false;
 		}
 
 		private void OnDisable() 
