@@ -12,12 +12,13 @@ namespace Qbism.UI
 	{
 		//Config parameters
 		public LevelPin levelPin = null;
+		[SerializeField] Button button = null;
+		[SerializeField] Image lockIcon = null;
 
 		//Cache
 		EditorLevelPinUI editorPin = null;
 		ProgressHandler progHandler = null;
 		PinSelectionTracker pinSelTrack = null;
-		Button button = null;
 		public Vector3 uiPos { get; set; }
 
 		private void Awake() 
@@ -25,7 +26,6 @@ namespace Qbism.UI
 			editorPin = GetComponent<EditorLevelPinUI>();
 			progHandler = FindObjectOfType<ProgressHandler>();
 			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
-			button = GetComponentInChildren<Button>();
 			uiPos = levelPin.GetComponentInChildren<LineRenderer>().transform.position;
 		}
 
@@ -36,6 +36,7 @@ namespace Qbism.UI
 				progHandler.onSetUIComplete += SetUIComplete;
 				progHandler.onShowOrHideUI += ShowOrHideUI;
 				progHandler.onSelectPinUI += SelectPinUI;
+				progHandler.onDisableLockIcon += DisableLockIcon;
 			}
 
 			if(levelPin != null) levelPin.onShowOrHideUI += ShowOrHideUI;
@@ -102,6 +103,21 @@ namespace Qbism.UI
 				pinSelTrack.selectedPin = levelPin;
 		}
 
+		public void DisableLockIcon(LevelIDs id)
+		{
+			if(id != levelPin.levelID) return;
+			
+			int locks = 0;
+			foreach (LevelStatusData data in progHandler.levelDataList)
+			{
+				if(data.levelID == levelPin.levelID)
+				{
+					locks = data.locks;
+				}
+			}
+			if(locks == 0) lockIcon.enabled = false;
+		}
+
 		private void OnDisable() 
 		{
 			if (progHandler != null) 
@@ -109,6 +125,7 @@ namespace Qbism.UI
 				progHandler.onSetUIComplete -= SetUIComplete;
 				progHandler.onShowOrHideUI -= ShowOrHideUI;
 				progHandler.onSelectPinUI -= SelectPinUI;
+				progHandler.onDisableLockIcon -= DisableLockIcon;
 			}
 
 			if (levelPin != null) levelPin.onShowOrHideUI -= ShowOrHideUI;

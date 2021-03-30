@@ -46,7 +46,7 @@ namespace Qbism.General
 							if (drawer.drawing) continue;
 							drawer.pointToMove = 1;
 							drawer.drawing = true;
-							drawer.SetPositions(pin.pathPoint.transform, destination.transform, false);
+							drawer.SetPositions(pin.pathPoint.transform, destination, false);
 							fullRenders[i].enabled = true;
 							return;
 						}
@@ -57,7 +57,7 @@ namespace Qbism.General
 						LineDrawer drawer = dotRender.GetComponent<LineDrawer>();
 						drawer.pointToMove = 1;
 						drawer.drawing = true;
-						drawer.SetPositions(pin.pathPoint.transform, destination.transform, false);
+						drawer.SetPositions(pin.pathPoint.transform, destination, false);
 						dotRender.enabled = true;
 					}
 				}
@@ -71,7 +71,7 @@ namespace Qbism.General
 						LineDrawer dotDrawer = dotRender.GetComponent<LineDrawer>();
 						dotDrawer.pointToMove = 0;
 						dotDrawer.drawing = true;
-						dotDrawer.SetPositions(pin.pathPoint.transform, destination.transform, true);
+						dotDrawer.SetPositions(pin.pathPoint.transform, destination, true);
 						dotRender.enabled = true;
 
 						//Make sure that the path to 'second' unlock is always unlock02 in sheets
@@ -79,7 +79,7 @@ namespace Qbism.General
 						LineDrawer fullDrawer = fullRenders[1].GetComponent<LineDrawer>();
 						fullDrawer.pointToMove = 1;
 						fullDrawer.drawing = true;
-						fullDrawer.SetPositions(pin.pathPoint.transform, destination.transform, false);
+						fullDrawer.SetPositions(pin.pathPoint.transform, destination, false);
 						fullRenders[1].enabled = true;
 					}
 				}

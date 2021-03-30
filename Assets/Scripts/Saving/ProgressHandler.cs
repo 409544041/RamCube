@@ -23,6 +23,7 @@ namespace Qbism.Saving
 		public event Action<LevelPin> onSetUIComplete;
 		public event Action<LevelPin, bool> onShowOrHideUI;
 		public event Action<LevelIDs> onSelectPinUI;
+		public event Action<LevelIDs> onDisableLockIcon;
 
 		private void Awake() 
 		{
@@ -120,6 +121,8 @@ namespace Qbism.Saving
 				else onShowOrHideUI(levelPinList[i], false);
 
 				if (completed) onSetUIComplete(levelPinList[i]);
+
+				if(sheetLocks == 0) onDisableLockIcon(levelPinList[i].levelID);
 
 				if(lessLocks && !dottedAnimPlayed)
 				{

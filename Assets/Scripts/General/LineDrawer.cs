@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Qbism.UI;
 using Qbism.WorldMap;
 using UnityEngine;
 
@@ -20,7 +21,9 @@ namespace Qbism.General
 		float counter = 0;
 		float distance = 0;
 		public Transform origin { get; set; }
+		public LevelIDs destinationID { get; private set; }
 		public Transform destination { get; set; }
+		Vector3 pointAlongLine;
 		public int pointToMove = 0;
 
 		private void Awake()
@@ -43,21 +46,34 @@ namespace Qbism.General
 				counter += .1f / drawSpeed;
 				float x = Mathf.Lerp(0, distance, counter);
 
-				Vector3 pointAlongLine = x *
-					Vector3.Normalize(destination.position - origin.position)
-					+ origin.position;
+				pointAlongLine = x * Vector3.Normalize(destination.position - 
+				origin.position) + origin.position;
 
 				lRender.SetPosition(pointToMove, pointAlongLine);
 			}
 
 			if (lRender.startWidth == 0 && lRender.endWidth == 0)
 				SetLineWidth(lineWidth);
+
+			if (Vector3.Distance(pointAlongLine, destination.position) <= .1) 
+			{
+				LevelPinUI[] pinUIs = FindObjectsOfType<LevelPinUI>();
+
+				foreach (LevelPinUI pinUI in pinUIs)
+				{
+					if(pinUI.levelPin.levelID == destinationID)
+						pinUI.DisableLockIcon(destinationID); 
+						//Adding ID bc the function is also called as delegate in progHandler
+				}
+			}
 		}
 
-		public void SetPositions(Transform incOrigin, Transform incDestination, bool retracting)
+		public void SetPositions(Transform incOrigin, Transform incDestination, 
+			bool retracting)
 		{
 			origin = incOrigin;
 			destination = incDestination;
+			destinationID = incDestination.GetComponentInParent<LevelPin>().levelID;
 
 			lRender.positionCount = 2;
 			lRender.SetPosition(0, origin.position);
