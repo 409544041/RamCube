@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Qbism.Saving;
+using Qbism.SceneTransition;
 using UnityEngine;
 
 namespace Qbism.Control
@@ -15,6 +16,7 @@ namespace Qbism.Control
 			controls = new GameControls();
 
 			controls.Gameplay.DebugDeleteSaveData.performed += ctx => DeleteSaveData();
+			controls.Gameplay.DebugSceneSwitch01.performed += ctx => LoadSerpentScreen();
 		}
 
 		private void OnEnable()
@@ -26,6 +28,12 @@ namespace Qbism.Control
 		{
 			ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
 			progHandler.WipeProgData();
+		}
+
+		private void LoadSerpentScreen()
+		{
+			SceneHandler sceneHandler = GetComponent<SceneHandler>();
+			sceneHandler.LoadSerpentScreen();
 		}
 
 		private void OnDisable()

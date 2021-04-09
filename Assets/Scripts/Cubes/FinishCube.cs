@@ -33,7 +33,6 @@ namespace Qbism.Cubes
 
 		public UnityEvent onFinishEvent = new UnityEvent();
 		public event Action<bool> onSetSerpentMove; 
-		public event Action onShowSerpentSegments;
 
 		private void Awake()
 		{
@@ -137,7 +136,6 @@ namespace Qbism.Cubes
 			var serpent = GameObject.FindGameObjectWithTag("LevelCompFollower");
 			serpent.GetComponent<SplineFollower>().followSpeed = 15;
 			onSetSerpentMove(true);
-			onShowSerpentSegments();
 		}
 
 		private IEnumerator LevelTransition(AudioClip clip, bool mapConnected, bool restart)

@@ -39,6 +39,11 @@ namespace Qbism.SceneTransition
 			SceneManager.LoadSceneAsync(1); //TO DO: Index order might change. Don't forget to change it here too.
 		}
 
+		public void LoadSerpentScreen()
+		{
+			SceneManager.LoadSceneAsync(2); //TO DO: Index order might change. Don't forget to change it here too.
+		}
+
 		public void LoadBySceneIndex(int index)
 		{
 			SceneManager.LoadSceneAsync(index);

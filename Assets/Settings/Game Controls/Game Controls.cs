@@ -65,6 +65,14 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Debug Scene Switch 01"",
+                    ""type"": ""Button"",
+                    ""id"": ""607ce4e9-7ba6-44b4-9d0c-527befba9380"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -364,6 +372,17 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""action"": ""Debug Complete Level"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8f5d0be-3a97-40c8-b431-720fd2816e05"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Debug Scene Switch 01"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -401,6 +420,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Gameplay_Click = m_Gameplay.FindAction("Click", throwIfNotFound: true);
         m_Gameplay_DebugDeleteSaveData = m_Gameplay.FindAction("Debug Delete Save Data", throwIfNotFound: true);
         m_Gameplay_DebugCompleteLevel = m_Gameplay.FindAction("Debug Complete Level", throwIfNotFound: true);
+        m_Gameplay_DebugSceneSwitch01 = m_Gameplay.FindAction("Debug Scene Switch 01", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -456,6 +476,7 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Click;
     private readonly InputAction m_Gameplay_DebugDeleteSaveData;
     private readonly InputAction m_Gameplay_DebugCompleteLevel;
+    private readonly InputAction m_Gameplay_DebugSceneSwitch01;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -466,6 +487,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @Click => m_Wrapper.m_Gameplay_Click;
         public InputAction @DebugDeleteSaveData => m_Wrapper.m_Gameplay_DebugDeleteSaveData;
         public InputAction @DebugCompleteLevel => m_Wrapper.m_Gameplay_DebugCompleteLevel;
+        public InputAction @DebugSceneSwitch01 => m_Wrapper.m_Gameplay_DebugSceneSwitch01;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -493,6 +515,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugCompleteLevel.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
                 @DebugCompleteLevel.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
                 @DebugCompleteLevel.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
+                @DebugSceneSwitch01.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugSceneSwitch01;
+                @DebugSceneSwitch01.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugSceneSwitch01;
+                @DebugSceneSwitch01.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugSceneSwitch01;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -515,6 +540,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugCompleteLevel.started += instance.OnDebugCompleteLevel;
                 @DebugCompleteLevel.performed += instance.OnDebugCompleteLevel;
                 @DebugCompleteLevel.canceled += instance.OnDebugCompleteLevel;
+                @DebugSceneSwitch01.started += instance.OnDebugSceneSwitch01;
+                @DebugSceneSwitch01.performed += instance.OnDebugSceneSwitch01;
+                @DebugSceneSwitch01.canceled += instance.OnDebugSceneSwitch01;
             }
         }
     }
@@ -545,5 +573,6 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnClick(InputAction.CallbackContext context);
         void OnDebugDeleteSaveData(InputAction.CallbackContext context);
         void OnDebugCompleteLevel(InputAction.CallbackContext context);
+        void OnDebugSceneSwitch01(InputAction.CallbackContext context);
     }
 }
