@@ -122,7 +122,7 @@ namespace Qbism.Saving
 
 				if (completed) onSetUIComplete(levelPinList[i]);
 
-				if(sheetLocks == savedLocks || sheetLocks == 0) onDisableLockIcon(levelPinList[i].levelID);
+				onDisableLockIcon(levelPinList[i].levelID);
 
 				if(lessLocks && !dottedAnimPlayed)
 				{
@@ -141,7 +141,6 @@ namespace Qbism.Saving
 					{
 						levelPinList[i].DrawPath(originPins);
 					}
-
 				}
 
 				if(completed && !pathDrawn) levelDataList[i].pathDrawn = true;
