@@ -12,11 +12,11 @@ namespace Qbism.General
 		//Config parameters
 		[SerializeField] Transform head = null;
 		[SerializeField] Transform[] segments = null;
-		[SerializeField] float segmentSpacing = 1f; 
-
+		[SerializeField] float segmentSpacing = 1f;
+		
 		//Cache
 		FinishCube finish;
-
+		
 		//States
 		List<Vector3> breadcrumbs = null;
 		bool isMoving = false;
@@ -45,10 +45,10 @@ namespace Qbism.General
 
 		void Update()
 		{
-			if (isMoving) Move();
+			if (isMoving) FollowHead();
 		}
 
-		private void Move()
+		private void FollowHead()
 		{
 			float headDisplacement = (head.position - breadcrumbs[0]).magnitude;
 
@@ -87,7 +87,7 @@ namespace Qbism.General
 				MeshRenderer mRender = segments[i].GetComponentInChildren<MeshRenderer>();
 				SpriteRenderer sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
 
-				if(!mRender || ! sRender) Debug.LogError
+				if(!mRender || !sRender) Debug.LogError
 					(segments[i] + " is missing either a meshrenderer or spriterenderer!");
 				
 				if(serpProg.serpentDataList[i] == true)

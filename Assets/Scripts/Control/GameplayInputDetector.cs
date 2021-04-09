@@ -54,19 +54,19 @@ namespace Qbism.Control
 		private void HandleStickValues()
 		{
 			if((stickValue.x > .1 && stickValue.y > .1) ||
-				(stickValue.x > -.05 && stickValue.x < .05 && stickValue.y > .5)) moveUp();
+				(stickValue.x > -.05 && stickValue.x < .05 && stickValue.y > .5)) MoveUp();
 
 			if((stickValue.x < -.1 && stickValue.y < -.1) ||
-				(stickValue.x > -.05 && stickValue.x < .05 && stickValue.y < -.5)) moveDown();
+				(stickValue.x > -.05 && stickValue.x < .05 && stickValue.y < -.5)) MoveDown();
 
 			if((stickValue.x < -.1 && stickValue.y > .1) ||
-				(stickValue.y > -.05 && stickValue.y < .05 && stickValue.x < -.5)) moveLeft();
+				(stickValue.y > -.05 && stickValue.y < .05 && stickValue.x < -.5)) MoveLeft();
 
 			if((stickValue.x > .1 && stickValue.y < -.1) ||
-				(stickValue.y > -.05 && stickValue.y < .05 && stickValue.x > .5))moveRight();
+				(stickValue.y > -.05 && stickValue.y < .05 && stickValue.x > .5)) MoveRight();
 		}
 
-		private void moveUp()
+		private void MoveUp()
 		{
 			inputting = true;
 			var posAhead = mover.FetchGridPos() + Vector2Int.up;
@@ -76,7 +76,7 @@ namespace Qbism.Control
 				mover.HandleKeyInput(mover.up, Vector3.right, posAhead);
 		}
 
-		private void moveDown()
+		private void MoveDown()
 		{
 			inputting = true;
 				var posAhead = mover.FetchGridPos() + Vector2Int.down;
@@ -86,7 +86,7 @@ namespace Qbism.Control
 					mover.HandleKeyInput(mover.down, Vector3.left, posAhead);
 		}
 
-		private void moveLeft()
+		private void MoveLeft()
 		{
 			inputting = true;
 				var posAhead = mover.FetchGridPos() + Vector2Int.left;
@@ -96,7 +96,7 @@ namespace Qbism.Control
 					mover.HandleKeyInput(mover.left, Vector3.forward, posAhead);
 		}
 
-		private void moveRight()
+		private void MoveRight()
 		{
 			inputting = true;
 				var posAhead = mover.FetchGridPos() + Vector2Int.right;
