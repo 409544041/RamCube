@@ -22,6 +22,7 @@ namespace Qbism.Serpent
 
 		//States
 		SplineFollower closestFollower = null;
+		int closestFollowerIndex = 0;
 		Vector3 triggerPos;
 		float shortestDis = 0f;
 		bool startPosSet = false;
@@ -60,8 +61,10 @@ namespace Qbism.Serpent
 
 			followers[serpSize].result.percent = spline.triggerGroups[0].triggers[0].position;
 
-			HighlightClosestFollower();
+			GetClosestFollower();
 			SnapSegmentPositions();
+			SetScrollPermissions();
+			HighlightSegment();
 
 			startPosSet = true;
 		}
@@ -83,38 +86,57 @@ namespace Qbism.Serpent
 			}
 		}
 
-		public void StopMovement() //Called by spline trigger
+		private void StopMovement() 
 		{
 			foreach (SplineFollower follower in followers) follower.followSpeed = 0;
 		}
 
-		public void HighlightClosestFollower() //Called by spline trigger
+		private void GetClosestFollower()
 		{
 			bool firstValueAssigned = false;
 
-			foreach (SplineFollower follower in followers)
+			// foreach (SplineFollower follower in followers)
+			// {
+			// 	Vector3 followerPos = follower.result.position;
+			// 	float disToTrigger = Vector3.Distance(triggerPos, followerPos);
+
+			// 	if (!firstValueAssigned && follower.useTriggers)
+			// 	{
+			// 		shortestDis = disToTrigger;
+			// 		closestFollower = follower;
+			// 		firstValueAssigned = true;
+			// 	}
+
+			// 	if (disToTrigger < shortestDis && follower.useTriggers)
+			// 	{
+			// 		shortestDis = disToTrigger;
+			// 		closestFollower = follower;
+			// 	}
+			// }
+
+			for (int i = 0; i < followers.Length; i++)
 			{
-				Vector3 followerPos = follower.result.position;
+				Vector3 followerPos = followers[i].result.position;
 				float disToTrigger = Vector3.Distance(triggerPos, followerPos);
 
-				if (!firstValueAssigned && follower.useTriggers)
+				if (!firstValueAssigned && followers[i].useTriggers)
 				{
 					shortestDis = disToTrigger;
-					closestFollower = follower;
+					closestFollower = followers[i];
+					closestFollowerIndex = i;
 					firstValueAssigned = true;
 				}
 
-				if (disToTrigger < shortestDis && follower.useTriggers)
+				if (disToTrigger < shortestDis && followers[i].useTriggers)
 				{
 					shortestDis = disToTrigger;
-					closestFollower = follower;
+					closestFollower = followers[i];
+					closestFollowerIndex = i;
 				}
 			}
-
-			SetScrollPermissions();
 		}
 
-		public void SnapSegmentPositions() //Called from spline trigger
+		private void SnapSegmentPositions()
 		{
 			int startIndex = 0;
 			double startPos = 0;
@@ -149,6 +171,30 @@ namespace Qbism.Serpent
 			}
 		}
 
+		private void HighlightSegment()
+		{
+			//Ensure order is same in highlightSegments and followers arrays for this to work correctly
+			for (int i = 0; i < highlightSegments.Length; i++)
+			{
+				MeshRenderer mRender = highlightSegments[i].GetComponentInChildren<MeshRenderer>();
+				SpriteRenderer sRender = highlightSegments[i].GetComponentInChildren<SpriteRenderer>();
+
+				if (!mRender || !sRender) Debug.LogWarning
+					 (highlightSegments[i] + " is missing either a meshrenderer or spriterenderer!");
+
+				if(i == closestFollowerIndex) 
+				{
+					mRender.enabled = true;
+					if (sRender) sRender.enabled = true; 
+				}
+				else
+				{
+					mRender.enabled = false;
+					if (sRender) sRender.enabled = false;
+				}
+			}
+		}
+
 		private void SetScrollPermissions()
 		{
 			if (followers.Length > 1 && closestFollower == followers[serpSize])
@@ -171,6 +217,15 @@ namespace Qbism.Serpent
 				canScrollUp = true;
 				canScrollDown = true;
 			}
+		}
+
+		public void HandleSplineTrigger() //Called by spline trigger
+		{
+			StopMovement();
+			GetClosestFollower();
+			SnapSegmentPositions();
+			SetScrollPermissions();
+			HighlightSegment();
 		}
 	}
 }
