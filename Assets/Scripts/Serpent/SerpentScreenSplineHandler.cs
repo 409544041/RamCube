@@ -95,25 +95,6 @@ namespace Qbism.Serpent
 		{
 			bool firstValueAssigned = false;
 
-			// foreach (SplineFollower follower in followers)
-			// {
-			// 	Vector3 followerPos = follower.result.position;
-			// 	float disToTrigger = Vector3.Distance(triggerPos, followerPos);
-
-			// 	if (!firstValueAssigned && follower.useTriggers)
-			// 	{
-			// 		shortestDis = disToTrigger;
-			// 		closestFollower = follower;
-			// 		firstValueAssigned = true;
-			// 	}
-
-			// 	if (disToTrigger < shortestDis && follower.useTriggers)
-			// 	{
-			// 		shortestDis = disToTrigger;
-			// 		closestFollower = follower;
-			// 	}
-			// }
-
 			for (int i = 0; i < followers.Length; i++)
 			{
 				Vector3 followerPos = followers[i].result.position;

@@ -17,8 +17,9 @@ namespace Qbism.PlayerCube
 		Vector2Int[] neighbourDirs;
 		Vector3[] turnAxis;
 
-		public delegate bool KeyCheckDelegate(Vector2Int pos);
-		public KeyCheckDelegate onKeyCheck;
+		//Actions, events, delegates etc
+		public delegate bool KeyCheckDel(Vector2Int pos);
+		public KeyCheckDel onKeyCheck;
 
 		public delegate bool ShrunkCheckDelegate(Vector2Int pos);
 		public ShrunkCheckDelegate onShrunkCheck;
