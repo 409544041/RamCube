@@ -8,9 +8,13 @@ namespace Qbism.UI
 {
 	public class LevelDisplay : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] int firstLevelIndex;
+
 		private void Start()
 		{	
-			GetComponent<Text>().text = "Level " + (SceneManager.GetActiveScene().buildIndex + 1).ToString();
+			GetComponent<Text>().text = "Level " + 
+				(SceneManager.GetActiveScene().buildIndex - firstLevelIndex + 1).ToString();
 		}
 	}
 }
