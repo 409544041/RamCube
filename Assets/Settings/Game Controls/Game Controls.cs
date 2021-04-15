@@ -73,6 +73,14 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Debug Fart"",
+                    ""type"": ""Button"",
+                    ""id"": ""a606b6d3-6ac0-4a2b-96e4-44ec3c39c192"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -383,6 +391,17 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""action"": ""Debug Scene Switch 01"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b86ac861-fde8-458d-a07b-e861a6913238"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Debug Fart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -421,6 +440,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Gameplay_DebugDeleteSaveData = m_Gameplay.FindAction("Debug Delete Save Data", throwIfNotFound: true);
         m_Gameplay_DebugCompleteLevel = m_Gameplay.FindAction("Debug Complete Level", throwIfNotFound: true);
         m_Gameplay_DebugSceneSwitch01 = m_Gameplay.FindAction("Debug Scene Switch 01", throwIfNotFound: true);
+        m_Gameplay_DebugFart = m_Gameplay.FindAction("Debug Fart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -477,6 +497,7 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_DebugDeleteSaveData;
     private readonly InputAction m_Gameplay_DebugCompleteLevel;
     private readonly InputAction m_Gameplay_DebugSceneSwitch01;
+    private readonly InputAction m_Gameplay_DebugFart;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -488,6 +509,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @DebugDeleteSaveData => m_Wrapper.m_Gameplay_DebugDeleteSaveData;
         public InputAction @DebugCompleteLevel => m_Wrapper.m_Gameplay_DebugCompleteLevel;
         public InputAction @DebugSceneSwitch01 => m_Wrapper.m_Gameplay_DebugSceneSwitch01;
+        public InputAction @DebugFart => m_Wrapper.m_Gameplay_DebugFart;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -518,6 +540,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugSceneSwitch01.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugSceneSwitch01;
                 @DebugSceneSwitch01.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugSceneSwitch01;
                 @DebugSceneSwitch01.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugSceneSwitch01;
+                @DebugFart.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugFart;
+                @DebugFart.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugFart;
+                @DebugFart.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugFart;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -543,6 +568,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugSceneSwitch01.started += instance.OnDebugSceneSwitch01;
                 @DebugSceneSwitch01.performed += instance.OnDebugSceneSwitch01;
                 @DebugSceneSwitch01.canceled += instance.OnDebugSceneSwitch01;
+                @DebugFart.started += instance.OnDebugFart;
+                @DebugFart.performed += instance.OnDebugFart;
+                @DebugFart.canceled += instance.OnDebugFart;
             }
         }
     }
@@ -574,5 +602,6 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnDebugDeleteSaveData(InputAction.CallbackContext context);
         void OnDebugCompleteLevel(InputAction.CallbackContext context);
         void OnDebugSceneSwitch01(InputAction.CallbackContext context);
+        void OnDebugFart(InputAction.CallbackContext context);
     }
 }

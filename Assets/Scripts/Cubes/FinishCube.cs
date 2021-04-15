@@ -19,6 +19,7 @@ namespace Qbism.Cubes
 
 		//Cache
 		PlayerCubeMover mover;
+		PlayerFartLauncher farter;
 		CubeHandler handler;
 		SceneHandler loader;
 		AudioSource source;
@@ -37,6 +38,7 @@ namespace Qbism.Cubes
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
+			farter = mover.GetComponent<PlayerFartLauncher>();
 			handler = FindObjectOfType<CubeHandler>();
 			loader = FindObjectOfType<SceneHandler>();
 			source = GetComponentInChildren<AudioSource>();
@@ -45,6 +47,7 @@ namespace Qbism.Cubes
 		private void OnEnable()
 		{
 			if (handler != null) handler.onLand += CheckForFinish;
+			if (farter != null) farter.onDoneFarting += InitiateSerpentSequence;
 		}
 
 		private void Start()
@@ -92,15 +95,35 @@ namespace Qbism.Cubes
 
 			progHandler.SaveProgData();
 
-			mover.transform.parent = transform;
+			//mover.transform.parent = null;
+			// mover.transform.position = new Vector3(
+			// 	transform.position.x, transform.position.y + 1, transform.position.z);
+
 			yield return DestroyAllFloorCubes();
 			ActivateLevelCompleteCam();
 
+			farter.InitiateFartSequence();
+		}
+
+		private void InitiateSerpentSequence()
+		{
+			StartCoroutine(SerpentSequence());
+		}
+
+		private IEnumerator SerpentSequence()
+		{
 			if (onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
 			yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
-			
+
 			if (onMapCheck()) StartCoroutine(LevelTransition(succesClip, true, false));
 			else StartCoroutine(LevelTransition(succesClip, false, false));
+		}
+
+		private void ActivateSerpent()
+		{
+			var serpent = GameObject.FindGameObjectWithTag("LevelCompFollower");
+			serpent.GetComponent<SplineFollower>().followSpeed = 15;
+			onSetSerpentMove(true);
 		}
 
 		private IEnumerator DestroyAllFloorCubes()
@@ -131,13 +154,6 @@ namespace Qbism.Cubes
 			lvlCompCam.transform.parent = null;
 		}
 
-		private void ActivateSerpent()
-		{
-			var serpent = GameObject.FindGameObjectWithTag("LevelCompFollower");
-			serpent.GetComponent<SplineFollower>().followSpeed = 15;
-			onSetSerpentMove(true);
-		}
-
 		private IEnumerator LevelTransition(AudioClip clip, bool mapConnected, bool restart)
 		{
 			source.clip = clip;
@@ -153,6 +169,7 @@ namespace Qbism.Cubes
 		private void OnDisable()
 		{
 			if (handler != null) handler.onLand -= CheckForFinish;
+			if (farter != null) farter.onDoneFarting -= InitiateSerpentSequence;
 		}
 	}
 
