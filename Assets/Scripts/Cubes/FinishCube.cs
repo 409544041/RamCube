@@ -14,15 +14,14 @@ namespace Qbism.Cubes
 	public class FinishCube : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] AudioClip succesClip = null, failClip = null;
 		[SerializeField] float shrinkInterval = .25f;
 
 		//Cache
 		PlayerCubeMover mover;
-		PlayerFartLauncher farter;
 		CubeHandler handler;
 		SceneHandler loader;
-		AudioSource source;
+		FinishCubeJuicer juicer;
+		PlayerFartLauncher farter;
 
 		//States
 		Vector2Int myPosition;
@@ -32,22 +31,20 @@ namespace Qbism.Cubes
 		public GetConnectionDel onSerpentCheck;
 		public GetConnectionDel onMapCheck;
 
-		public UnityEvent onFinishEvent = new UnityEvent();
 		public event Action<bool> onSetSerpentMove; 
 
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
-			farter = mover.GetComponent<PlayerFartLauncher>();
 			handler = FindObjectOfType<CubeHandler>();
 			loader = FindObjectOfType<SceneHandler>();
-			source = GetComponentInChildren<AudioSource>();
+			juicer = GetComponent<FinishCubeJuicer>();
+			farter = FindObjectOfType<PlayerFartLauncher>();
 		}
 
 		private void OnEnable()
 		{
 			if (handler != null) handler.onLand += CheckForFinish;
-			if (farter != null) farter.onDoneFarting += InitiateSerpentSequence;
 		}
 
 		private void Start()
@@ -63,7 +60,7 @@ namespace Qbism.Cubes
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.up), -1))
 					StartCoroutine(Finish());	
 
-				else StartCoroutine(LevelTransition(failClip, false, true));
+				else StartCoroutine(LevelTransition(false, true));
 			}
 		}
 
@@ -95,9 +92,7 @@ namespace Qbism.Cubes
 
 			progHandler.SaveProgData();
 
-			//mover.transform.parent = null;
-			// mover.transform.position = new Vector3(
-			// 	transform.position.x, transform.position.y + 1, transform.position.z);
+			juicer.PlaySuccesSound();
 
 			yield return DestroyAllFloorCubes();
 			ActivateLevelCompleteCam();
@@ -105,18 +100,13 @@ namespace Qbism.Cubes
 			farter.InitiateFartSequence();
 		}
 
-		private void InitiateSerpentSequence()
-		{
-			StartCoroutine(SerpentSequence());
-		}
-
 		private IEnumerator SerpentSequence()
 		{
 			if (onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
 			yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
 
-			if (onMapCheck()) StartCoroutine(LevelTransition(succesClip, true, false));
-			else StartCoroutine(LevelTransition(succesClip, false, false));
+			if (onMapCheck()) StartCoroutine(LevelTransition(true, false));
+			else StartCoroutine(LevelTransition(false, false));
 		}
 
 		private void ActivateSerpent()
@@ -147,6 +137,8 @@ namespace Qbism.Cubes
 			}
 		}
 
+		
+
 		private void ActivateLevelCompleteCam()
 		{
 			var lvlCompCam = GetComponentInChildren<CinemachineVirtualCamera>();
@@ -154,14 +146,16 @@ namespace Qbism.Cubes
 			lvlCompCam.transform.parent = null;
 		}
 
-		private IEnumerator LevelTransition(AudioClip clip, bool mapConnected, bool restart)
+		private IEnumerator LevelTransition(bool mapConnected, bool restart)
 		{
-			source.clip = clip;
-			onFinishEvent.Invoke();
-			yield return new WaitWhile(() => source.isPlaying);
+			yield return new WaitWhile(() => juicer.source.isPlaying);
 			//TO DO: Make timing wait for animations that are to come
 
-			if(restart) loader.RestartLevel();
+			if(restart)
+			{
+				juicer.PlayFailSound();
+				loader.RestartLevel();
+			} 
 			else if(mapConnected) loader.LoadWorldMap();
 			else loader.NextLevel();
 		}
@@ -169,7 +163,6 @@ namespace Qbism.Cubes
 		private void OnDisable()
 		{
 			if (handler != null) handler.onLand -= CheckForFinish;
-			if (farter != null) farter.onDoneFarting -= InitiateSerpentSequence;
 		}
 	}
 

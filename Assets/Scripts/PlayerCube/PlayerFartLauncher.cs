@@ -48,19 +48,16 @@ namespace Qbism.PlayerCube
 		{
 			transform.parent = null;
 			
-			print("rumble");
 			preFartJuice.Initialization();
 			preFartJuice.PlayFeedbacks();
 
 			float feedbackDuration = preFartMMWiggle.WigglePositionDuration;
 			yield return new WaitForSeconds(feedbackDuration);
-			print("done rumbling");
 
 			rb.isKinematic = false;
 
 			while (viewPos.y < stopFartViewportPos)
 			{
-				print("farting");
 				int forceIndex = UnityEngine.Random.Range(0, fartForces.Length);
 				LaunchPlayer(fartForces[forceIndex]);
 				
@@ -70,7 +67,7 @@ namespace Qbism.PlayerCube
 
 				yield return new WaitForSeconds(intervals[intervalIndex]);
 			}
-			print("done farting");
+			
 			rb.isKinematic = true;
 			onDoneFarting();
 		}
