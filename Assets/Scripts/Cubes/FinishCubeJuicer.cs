@@ -12,7 +12,7 @@ namespace Qbism.Cubes
 		[SerializeField] AudioClip succesClip = null, failClip = null;
 		[SerializeField] ParticleSystem[] impactParticles;
 		[SerializeField] ParticleSystem chargingBeamsParticles;
-		[SerializeField] float glowRampSpeed = .03f;
+		[SerializeField] float glowIncrease = .03f, glowIncreaseInterval = .05f;
 
 		//Cache
 		public AudioSource source { get; private set; }
@@ -53,9 +53,14 @@ namespace Qbism.Cubes
 			animator.SetTrigger("Open");
 		}
 
-		private void StartLightBeams() //Called from animation event
+		private void StartChargeFX() //Called from animation event
 		{
 			chargingBeamsParticles.Play();
+		}
+
+		private void StopChargeFX() //Called from animation event
+		{
+			chargingBeamsParticles.Stop();
 		}
 
 		private void Impact() //Called from animation event
@@ -77,12 +82,14 @@ namespace Qbism.Cubes
 
 			while (meshes[1].materials[3].GetFloat("Glow_Alpha") < 1)
 			{
+				print(meshes[1].materials[3].GetFloat("Glow_Alpha"));
+
 				foreach (Material mat in meshes[1].materials)
 				{
 					float current = mat.GetFloat("Glow_Alpha");
-					mat.SetFloat("Glow_Alpha", current + glowRampSpeed);
+					mat.SetFloat("Glow_Alpha", current + glowIncrease);
 				}
-				yield return null;
+				yield return new WaitForSeconds(glowIncreaseInterval);
 			}
 
 			meshes[0].enabled = false;
