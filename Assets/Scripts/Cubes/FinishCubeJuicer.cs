@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Qbism.PlayerCube;
 using UnityEngine;
@@ -9,8 +10,11 @@ namespace Qbism.Cubes
 	public class FinishCubeJuicer : MonoBehaviour
 	{
 		//Config parameters
+		[Header("SFX")]
 		[SerializeField] AudioClip succesClip = null, failClip = null;
+		[Header("Impact VFX")]
 		[SerializeField] ParticleSystem[] impactParticles;
+		[Header("Charging VFX")]
 		[SerializeField] ParticleSystem chargingBeamsParticles;
 		[SerializeField] float glowIncrease = .03f, glowIncreaseInterval = .05f;
 
@@ -22,6 +26,7 @@ namespace Qbism.Cubes
 
 		//Actions, events, delegates etc
 		public UnityEvent onFinishEvent = new UnityEvent();
+		public event Action onSpawnFriends;
 
 		private void Awake() 
 		{
@@ -74,6 +79,8 @@ namespace Qbism.Cubes
 			{
 				mesh.enabled = false;
 			}
+
+			onSpawnFriends();
 		}
 
 		private IEnumerator EnableGlowMesh() //Called from animation event
@@ -82,8 +89,6 @@ namespace Qbism.Cubes
 
 			while (meshes[1].materials[3].GetFloat("Glow_Alpha") < 1)
 			{
-				print(meshes[1].materials[3].GetFloat("Glow_Alpha"));
-
 				foreach (Material mat in meshes[1].materials)
 				{
 					float current = mat.GetFloat("Glow_Alpha");

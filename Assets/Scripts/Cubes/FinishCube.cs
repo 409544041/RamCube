@@ -15,6 +15,7 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		[SerializeField] float shrinkInterval = .25f;
+		[SerializeField] GameObject[] shapies = null;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -25,6 +26,7 @@ namespace Qbism.Cubes
 
 		//States
 		Vector2Int myPosition;
+		List<float> pushDegrees = new List<float> { 0, 45, 90, 135, 180, 225, 270, 315 };
 
 		//Actions, events, delegates etc
 		public delegate bool GetConnectionDel();
@@ -45,6 +47,7 @@ namespace Qbism.Cubes
 		private void OnEnable()
 		{
 			if (handler != null) handler.onLand += CheckForFinish;
+			if (juicer != null) juicer.onSpawnFriends += SpawnFriends;
 		}
 
 		private void Start()
@@ -103,7 +106,7 @@ namespace Qbism.Cubes
 		private IEnumerator SerpentSequence()
 		{
 			if (onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
-			yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
+			yield return new WaitForSeconds(3); //TO DO: this should be the length of serpent anim
 
 			if (onMapCheck()) StartCoroutine(LevelTransition(true, false));
 			else StartCoroutine(LevelTransition(false, false));
@@ -137,13 +140,23 @@ namespace Qbism.Cubes
 			}
 		}
 
-		
-
 		private void ActivateLevelCompleteCam()
 		{
 			var lvlCompCam = GetComponentInChildren<CinemachineVirtualCamera>();
 			lvlCompCam.Priority = 11;
 			lvlCompCam.transform.parent = null;
+		}
+
+		private void SpawnFriends()
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				int shapeIndex = UnityEngine.Random.Range(0, shapies.Length - 1);
+				GameObject toSpawn = shapies[shapeIndex];
+				int degreeIndex = UnityEngine.Random.Range(0, pushDegrees.Count - 1);
+				Instantiate(toSpawn, transform.position, Quaternion.Euler(0f, pushDegrees[degreeIndex], 0f));
+				pushDegrees.RemoveAt(degreeIndex);
+			}
 		}
 
 		private IEnumerator LevelTransition(bool mapConnected, bool restart)
@@ -163,6 +176,7 @@ namespace Qbism.Cubes
 		private void OnDisable()
 		{
 			if (handler != null) handler.onLand -= CheckForFinish;
+			if (juicer != null) juicer.onSpawnFriends -= SpawnFriends;
 		}
 	}
 
