@@ -13,7 +13,7 @@ namespace Qbism.Cubes
 		[Header("SFX")]
 		[SerializeField] AudioClip succesClip = null, failClip = null;
 		[Header("Impact VFX")]
-		[SerializeField] ParticleSystem[] impactParticles;
+		[SerializeField] ParticleSystem impactParticle;
 		[Header("Charging VFX")]
 		[SerializeField] ParticleSystem chargingBeamsParticles;
 		[SerializeField] float glowIncrease = .03f, glowIncreaseInterval = .05f;
@@ -38,7 +38,11 @@ namespace Qbism.Cubes
 
 		private void OnEnable()
 		{
-			if (farter != null) farter.onDoneFarting += StartBreakingAnimation;
+			if (farter != null)
+			{
+				farter.onDoneFarting += StartBreakingAnimation;
+				farter.onStartFarting += StartGlowing;
+			} 
 		}
 
 		public void PlaySuccesSound()
@@ -70,10 +74,7 @@ namespace Qbism.Cubes
 
 		private void Impact() //Called from animation event
 		{
-			foreach (ParticleSystem particle in impactParticles)
-			{
-				particle.Play();
-			}
+			impactParticle.Play();
 
 			foreach (MeshRenderer mesh in meshes)
 			{
@@ -83,7 +84,12 @@ namespace Qbism.Cubes
 			onSpawnFriends();
 		}
 
-		private IEnumerator EnableGlowMesh() //Called from animation event
+		private void StartGlowing()
+		{
+			StartCoroutine(EnableGlowMesh());
+		}
+
+		private IEnumerator EnableGlowMesh() 
 		{
 			meshes[1].enabled = true;
 
@@ -102,7 +108,11 @@ namespace Qbism.Cubes
 
 		private void OnDisable()
 		{
-			if (farter != null) farter.onDoneFarting -= StartBreakingAnimation;
+			if (farter != null)
+			{
+				farter.onDoneFarting -= StartBreakingAnimation;
+				farter.onStartFarting -= StartGlowing;
+			}
 		}
 	}
 }

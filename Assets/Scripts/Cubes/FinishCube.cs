@@ -106,7 +106,7 @@ namespace Qbism.Cubes
 		private IEnumerator SerpentSequence()
 		{
 			if (onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
-			yield return new WaitForSeconds(3); //TO DO: this should be the length of serpent anim
+			yield return new WaitForSeconds(4); //TO DO: this should be the length of serpent anim
 
 			if (onMapCheck()) StartCoroutine(LevelTransition(true, false));
 			else StartCoroutine(LevelTransition(false, false));

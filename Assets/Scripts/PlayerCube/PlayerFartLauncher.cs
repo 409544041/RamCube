@@ -9,12 +9,20 @@ namespace Qbism.PlayerCube
 	public class PlayerFartLauncher : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] float[] fartForces;
-		[SerializeField] float[] intervals;
+		[Header ("Farts")]
+		// [SerializeField] float[] fartForces;
+		// [SerializeField] float[] intervals;
+		[SerializeField] float fartForce;
+		[SerializeField] float stopFartViewportPos = 1.2f;
+		[SerializeField] LayerMask fartRayCastLayers;
+		[SerializeField] Transform fartVFXParent;
+		[SerializeField] float impactBuffer;
+		[Header("Falling")]
 		[SerializeField] float fallMultiplier = 2.5f;
 		[SerializeField] float lowLaunchMultiplier = 2f;
-		[SerializeField] float stopFartViewportPos = 1.2f;
+		[Header ("Juice")]
 		[SerializeField] MMFeedbacks preFartJuice = null;
+		[SerializeField] ParticleSystem fartCharge, bulletFart, fartBeam, fartBeamImpact;
 
 		//Cache
 		GameControls controls;
@@ -23,9 +31,15 @@ namespace Qbism.PlayerCube
 
 		//States
 		Vector3 viewPos;
+		bool doneFarting = false;
+		bool fartCollided = false;
+		bool fartCounting = false;
+		int fartCount = 0;
+		ParticleSystem currentFartImpact = null;
 
 		//Actions, events, delegates etc
 		public event Action onDoneFarting;
+		public event Action onStartFarting;
 
 		void Awake()
 		{
@@ -35,8 +49,13 @@ namespace Qbism.PlayerCube
 
 		private void Update() 
 		{
+			if(fartCounting) fartCount++;
+			if(fartCount > 10) StopFartHit();
+
 			viewPos = Camera.main.WorldToViewportPoint(transform.position);
+
 			AddGravityIfFalling();	
+			CheckIfOutOfScreen();
 		}
 
 		public void InitiateFartSequence()
@@ -50,31 +69,77 @@ namespace Qbism.PlayerCube
 			
 			preFartJuice.Initialization();
 			preFartJuice.PlayFeedbacks();
+			fartCharge.Play();
 
 			float feedbackDuration = preFartMMWiggle.WigglePositionDuration;
 			yield return new WaitForSeconds(feedbackDuration);
 
 			rb.isKinematic = false;
 
-			while (viewPos.y < stopFartViewportPos)
-			{
-				int forceIndex = UnityEngine.Random.Range(0, fartForces.Length);
-				LaunchPlayer(fartForces[forceIndex]);
+			// while (viewPos.y < stopFartViewportPos)
+			// {
+			// 	int forceIndex = UnityEngine.Random.Range(0, fartForces.Length);
+			// 	LaunchPlayer(fartForces[forceIndex]);
 				
-				int intervalIndex = 0;
-				if (forceIndex <= 1) intervalIndex = UnityEngine.Random.Range(0, 1);
-				else if ( forceIndex > 1) intervalIndex = UnityEngine.Random.Range(1, intervals.Length);
+			// 	int intervalIndex = 0;
+			// 	if (forceIndex <= 1) intervalIndex = UnityEngine.Random.Range(0, 1);
+			// 	else if ( forceIndex > 1) intervalIndex = UnityEngine.Random.Range(1, intervals.Length);
 
-				yield return new WaitForSeconds(intervals[intervalIndex]);
-			}
+			// 	yield return new WaitForSeconds(intervals[intervalIndex]);
+			// }
+
+			fartBeam.Play();
+			onStartFarting();
+			LaunchPlayer(fartForce);
+		}
+
+		public void StartBeamImpact()
+		{
+			currentFartImpact = fartBeamImpact;
+			ProcessFartRaycast();
+		}
+
+		private void ProcessFartRaycast()
+		{
+			RaycastHit hit;
 			
-			rb.isKinematic = true;
-			onDoneFarting();
+			if (Physics.Raycast(transform.position, transform.forward, out hit, 20, fartRayCastLayers, QueryTriggerInteraction.Ignore))
+			{
+				if(!fartCollided)
+				{
+					currentFartImpact.transform.parent = null;
+					currentFartImpact.transform.position = Vector3.Lerp(hit.point, transform.position, .05f);
+					currentFartImpact.Play();
+					fartCollided = true;
+				}
+
+				fartCount = 0;
+				fartCounting = true;
+			}
+		}
+
+		private void StopFartHit()
+		{
+			var module = currentFartImpact.main;
+			if (module.loop) currentFartImpact.Stop();
+			currentFartImpact.transform.parent = fartVFXParent;
+			fartCounting = false;
 		}
 
 		private void LaunchPlayer(float force)
 		{
 			rb.velocity = Vector3.up * force;
+		}
+
+		private void CheckIfOutOfScreen()
+		{
+			if (!doneFarting && viewPos.y > stopFartViewportPos)
+			{
+				doneFarting = true;
+				rb.isKinematic = true;
+				onDoneFarting();
+				fartBeam.Stop();
+			}
 		}
 
 		private void AddGravityIfFalling()
