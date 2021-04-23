@@ -15,7 +15,7 @@ namespace Qbism.Saving
 
 		//States
 		public LevelIDs currentLevelID { get; set; }
-		public bool currentHasSerpent { get ; set ; }
+		public bool currentHasSegment { get ; set ; }
 		public List<LevelStatusData> levelDataList;
 		public List<LevelPin> levelPinList;
 
@@ -42,7 +42,7 @@ namespace Qbism.Saving
 			}
 		}
 
-		public void FixDelegateLinks()
+		public void FixMapDelegateLinks()
 		{
 			initiator = FindObjectOfType<LevelPinInitiator>();
 			if (initiator != null) initiator.onPinInitation += InitiatePins;
@@ -243,8 +243,8 @@ namespace Qbism.Saving
 			{
 				if(data.levelID != id) continue;
 				
-				if(data.completed) currentHasSerpent = false;
-				else currentHasSerpent = serpent;
+				if(data.completed) currentHasSegment = false;
+				else currentHasSegment = serpent;
 			}
 		}
 

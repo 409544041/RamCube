@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Dreamteck.Splines;
-using Qbism.Saving;
 
 namespace Qbism.Serpent
 {
@@ -17,9 +16,6 @@ namespace Qbism.Serpent
 		[SerializeField] GameObject[] highlightSegments;
 		//Using doubles because that's how spline percent works
 
-		//Cache
-		SerpentProgress serpProg;
-
 		//States
 		SplineFollower closestFollower = null;
 		int closestFollowerIndex = 0;
@@ -29,15 +25,21 @@ namespace Qbism.Serpent
 		bool canScrollUp = true;
 		bool canScrollDown = true;
 		int serpSize = 0;
+		List<bool> serpDataList = new List<bool>();
+
+		//Actions, events, delegates etc
+		public delegate List<bool> GetSerpDataDel();
+		public GetSerpDataDel onFetchSerpDataList;
+
 
 		private void Awake()
 		{
-			serpProg = FindObjectOfType<SerpentProgress>();
 			triggerPos = spline.EvaluatePosition(spline.triggerGroups[0].triggers[0].position);
 		}
 
 		private void Start()
 		{
+			serpDataList = onFetchSerpDataList();
 			FetchSerpentSize();
 		}
 
@@ -49,7 +51,7 @@ namespace Qbism.Serpent
 
 		private void FetchSerpentSize()
 		{
-			foreach (bool serpData in serpProg.serpentDataList)
+			foreach (bool serpData in serpDataList)
 			{
 				if (serpData) serpSize++;
 			}

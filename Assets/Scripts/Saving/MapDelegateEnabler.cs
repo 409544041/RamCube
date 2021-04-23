@@ -9,7 +9,7 @@ namespace Qbism.Saving
 		private void Awake() 
 		{
 			ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
-			progHandler.FixDelegateLinks();
+			progHandler.FixMapDelegateLinks();
 		}
 	}
 }

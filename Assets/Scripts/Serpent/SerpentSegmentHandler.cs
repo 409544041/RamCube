@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Dreamteck.Splines;
-using Qbism.Saving;
 using UnityEngine;
 
 namespace Qbism.Serpent
@@ -11,16 +10,17 @@ namespace Qbism.Serpent
 		//Config parameters
 		public Transform[] segments = null;
 
-		//Cache
-		SerpentProgress serpProg;
+		//States
+		List<bool> serpDataList = new List<bool>();
 
-		private void Awake() 
-		{
-			serpProg = FindObjectOfType<SerpentProgress>();	
-		}
+		//Actions, events, delegates etc
+		public delegate List<bool> GetSerpDataDel();
+		public GetSerpDataDel onFetchSerpDataList;
 
 		private void Start()
 		{
+			serpDataList = onFetchSerpDataList();
+
 			for (int i = 0; i < segments.Length; i++)
 			{
 				MeshRenderer mRender = segments[i].GetComponentInChildren<MeshRenderer>();
@@ -30,7 +30,7 @@ namespace Qbism.Serpent
 				if (!mRender || !sRender) Debug.LogError
 					 (segments[i] + " is missing either a meshrenderer or spriterenderer!");
 
-				if (serpProg.serpentDataList[i] == true)
+				if (serpDataList[i] == true)
 				{
 					mRender.enabled = true;
 					sRender.enabled = true;

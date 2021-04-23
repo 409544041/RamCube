@@ -81,7 +81,7 @@ namespace Qbism.Cubes
 				progHandler.SetLevelToComplete(progHandler.currentLevelID, true);
 			}
 
-			if (progHandler.currentHasSerpent)
+			if (progHandler.currentHasSegment)
 			{
 				print("Serpent segment found!");
 
