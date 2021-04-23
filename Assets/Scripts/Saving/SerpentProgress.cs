@@ -14,10 +14,11 @@ namespace Qbism.Saving
 		//Cache
 		SerpentSegmentHandler[] serpSegHandlers = null;
 		SerpentScreenSplineHandler serpSplineHandler = null;
+		SegmentSpawner segSpawner = null;
 
 		//States
 		public List<bool> serpentDataList;
-		public SegmentIDs nextSegmentToUnlock;
+		public GameObject nextSegmentToUnlock;
 
 		private void Awake() 
 		{
@@ -52,16 +53,20 @@ namespace Qbism.Saving
 			}
 		}
 
-		// private void FetchSegmentToUnlock()
-		// {
-		// 	for (int i = 0; i < serpentDataList.Count; i++)
-		// 	{
-		// 		if(serpentDataList[i] == false)
-		// 		{
-		// 			nextSegmentToUnlock == segments[i].GetComponent<SegmentIdentifier>().s
-		// 		}
-		// 	}
-		// }
+		private GameObject FetchSegmentToSpawn()
+		{
+			for (int i = 0; i < serpentDataList.Count; i++)
+			{
+				if(serpentDataList[i] == false)
+				{
+					nextSegmentToUnlock = segments[i];
+					return nextSegmentToUnlock;
+				}
+			}
+
+			Debug.LogError("Couldn't find next segment to unlock.");
+			return null;
+		}
 
 		private List<bool> FetchSerpentDataList()
 		{
@@ -88,6 +93,9 @@ namespace Qbism.Saving
 			{
 				if (handler != null) handler.onFetchSerpDataList += FetchSerpentDataList;
 			}
+
+			segSpawner = FindObjectOfType<SegmentSpawner>();
+			if (segSpawner != null) segSpawner.onFetchSegmentToSpawn += FetchSegmentToSpawn;
 		}
 
 		private void OnDisable()
@@ -96,8 +104,11 @@ namespace Qbism.Saving
 			{
 				if (handler != null) handler.onFetchSerpDataList -= FetchSerpentDataList;
 			}
+
 			if (serpSplineHandler != null)
 				serpSplineHandler.onFetchSerpDataList -= FetchSerpentDataList;
+
+			if (segSpawner != null) segSpawner.onFetchSegmentToSpawn -= FetchSegmentToSpawn;
 		}
 	}
 }

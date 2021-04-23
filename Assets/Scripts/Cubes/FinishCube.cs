@@ -15,7 +15,6 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		[SerializeField] float shrinkInterval = .25f;
-		[SerializeField] GameObject[] shapies = null;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -23,17 +22,20 @@ namespace Qbism.Cubes
 		SceneHandler loader;
 		FinishCubeJuicer juicer;
 		PlayerFartLauncher farter;
+		ProgressHandler progHandler;
+		SerpentProgress serpProg;
 
 		//States
 		Vector2Int myPosition;
-		List<float> pushDegrees = new List<float> { 0, 45, 90, 135, 180, 225, 270, 315 };
-
+		
 		//Actions, events, delegates etc
 		public delegate bool GetConnectionDel();
 		public GetConnectionDel onSerpentCheck;
 		public GetConnectionDel onMapCheck;
-
+		public event Action onSetSegment;
+		public event Action onSpawnSegment;
 		public event Action<bool> onSetSerpentMove; 
+		public event Action onSpawnShapie;
 
 		private void Awake()
 		{
@@ -42,6 +44,8 @@ namespace Qbism.Cubes
 			loader = FindObjectOfType<SceneHandler>();
 			juicer = GetComponent<FinishCubeJuicer>();
 			farter = FindObjectOfType<PlayerFartLauncher>();
+			progHandler = FindObjectOfType<ProgressHandler>();
+			serpProg = FindObjectOfType<SerpentProgress>();
 		}
 
 		private void OnEnable()
@@ -74,8 +78,6 @@ namespace Qbism.Cubes
 
 		private IEnumerator Finish()
 		{
-			ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
-
 			if (onMapCheck()) //TO DO: eventually these checks should be obsolete bc map should always be available and a level is always started via map
 			{
 				progHandler.SetLevelToComplete(progHandler.currentLevelID, true);
@@ -87,7 +89,7 @@ namespace Qbism.Cubes
 
 				if (onSerpentCheck())
 				{
-					SerpentProgress serpProg = FindObjectOfType<SerpentProgress>();
+					onSetSegment(); //Needs to be done before AddSegment
 					serpProg.AddSegment();
 				}
 			}
@@ -149,14 +151,11 @@ namespace Qbism.Cubes
 
 		private void SpawnFriends()
 		{
-			for (int i = 0; i < 3; i++)
+			if (progHandler.currentHasSegment)
 			{
-				int shapeIndex = UnityEngine.Random.Range(0, shapies.Length - 1);
-				GameObject toSpawn = shapies[shapeIndex];
-				int degreeIndex = UnityEngine.Random.Range(0, pushDegrees.Count - 1);
-				Instantiate(toSpawn, transform.position, Quaternion.Euler(0f, pushDegrees[degreeIndex], 0f));
-				pushDegrees.RemoveAt(degreeIndex);
+				onSpawnSegment();
 			}
+			else onSpawnShapie();
 		}
 
 		private IEnumerator LevelTransition(bool mapConnected, bool restart)
