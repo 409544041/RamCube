@@ -1,17 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Qbism.Saving;
-using Qbism.UI;
 using Qbism.WorldMap;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Qbism.General
 {
 	public class PositionBiomeCenterpoint : MonoBehaviour
 	{
-		//Config Parameters
-		[SerializeField] BiomeCenterLimits centerLimits;
+		//Config parameters
+		public BiomeLimit[] biomeCenterLimits = null;
+
+		[System.Serializable]
+		public class BiomeLimit
+		{
+			public Biomes biome;
+			public float minZ;
+			public float maxZ;
+		}
+
 		//Cache
 		ProgressHandler progHandler = null;
 		PinSelectionTracker selTracker = null;
@@ -91,7 +98,7 @@ namespace Qbism.General
 			Vector3 selPos = selPin.pathPoint.transform.position;
 			float zPos = selPos.z;
 
-			foreach (BiomeCenterLimits.BiomeLimit limit in centerLimits.biomeLimits)
+			foreach (BiomeLimit limit in biomeCenterLimits)
 			{
 				if(limit.biome != biome) continue;
 
