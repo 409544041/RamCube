@@ -31,10 +31,10 @@ public class StylizedSurfaceEditor : ShaderGUI {
     private int _celShadingNumSteps = 0;
     private AnimationCurve _gradient = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
 
-    private static readonly Dictionary<string, bool> _foldoutStates =
+    private static readonly Dictionary<string, bool> FoldoutStates =
         new Dictionary<string, bool> {{"Rendering options", false}};
 
-    private static readonly Color hashColor = new Color(0.85023f, 0.85034f, 0.85045f, 0.85056f);
+    private static readonly Color HashColor = new Color(0.85023f, 0.85034f, 0.85045f, 0.85056f);
     private static readonly int ColorPropertyName = Shader.PropertyToID("_Color");
 
     void DrawStandard(MaterialProperty property) {
@@ -110,14 +110,14 @@ public class StylizedSurfaceEditor : ShaderGUI {
                 string foldoutName = displayName.Split('(', ')')[1];
                 string foldoutItemCount = displayName.Split('{', '}')[1];
                 foldoutRemainingItems = Convert.ToInt32(foldoutItemCount);
-                if (!_foldoutStates.ContainsKey(property.name)) {
-                    _foldoutStates.Add(property.name, false);
+                if (!FoldoutStates.ContainsKey(property.name)) {
+                    FoldoutStates.Add(property.name, false);
                 }
 
                 EditorGUILayout.Space();
-                _foldoutStates[property.name] =
-                    EditorGUILayout.Foldout(_foldoutStates[property.name], foldoutName);
-                latestFoldoutState = _foldoutStates[property.name];
+                FoldoutStates[property.name] =
+                    EditorGUILayout.Foldout(FoldoutStates[property.name], foldoutName);
+                latestFoldoutState = FoldoutStates[property.name];
             }
 
             if (foldoutRemainingItems > 0) {
@@ -158,7 +158,7 @@ public class StylizedSurfaceEditor : ShaderGUI {
 
             if (!skipProperty &&
                 property.type == MaterialProperty.PropType.Color &&
-                property.colorValue == hashColor) {
+                property.colorValue == HashColor) {
                 property.colorValue = _target.GetColor(ColorPropertyName);
             }
 
@@ -171,9 +171,9 @@ public class StylizedSurfaceEditor : ShaderGUI {
         }
 
         EditorGUILayout.Space();
-        _foldoutStates["Rendering options"] =
-            EditorGUILayout.Foldout(_foldoutStates["Rendering options"], "Rendering options");
-        if (_foldoutStates["Rendering options"]) {
+        FoldoutStates["Rendering options"] =
+            EditorGUILayout.Foldout(FoldoutStates["Rendering options"], "Rendering options");
+        if (FoldoutStates["Rendering options"]) {
             EditorGUI.indentLevel += 1;
 
             HandleUrpSettings(_target, _editor);

@@ -94,20 +94,20 @@ Shader "Hidden/FlatKit/FogFilter"
             {
                 float4 original = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv);
 
-                float depthPacked = SampleDepth(uv);
-                float depthEye = LinearEyeDepth(depthPacked);
-                float depthCameraPlanes = Linear01Depth(depthPacked);
-                float depthAbsolute = _ProjectionParams.y + (_ProjectionParams.z - _ProjectionParams.y) *
+                const float depthPacked = SampleDepth(uv);
+                const float depthEye = LinearEyeDepth(depthPacked);
+                const float depthCameraPlanes = Linear01Depth(depthPacked);
+                const float depthAbsolute = _ProjectionParams.y + (_ProjectionParams.z - _ProjectionParams.y) *
                     depthCameraPlanes;
-                float depthFogPlanes = saturate((depthAbsolute - _Near) / (_Far - _Near));
-                float isSky = step(ALMOST_ONE, depthCameraPlanes);
+                const float depthFogPlanes = saturate((depthAbsolute - _Near) / (_Far - _Near));
+                const float isSky = step(ALMOST_ONE, depthCameraPlanes);
 
                 float4 distanceFog = tex2D(_DistanceLUT, float2(depthFogPlanes, 0.5));
                 distanceFog.a *= step(isSky, _UseDistanceFogOnSky);
                 distanceFog.a *= _UseDistanceFog * _DistanceFogIntensity;
 
-                float3 worldPos = screen_pos * depthEye + _WorldSpaceCameraPos;
-                float heightUV = saturate((worldPos.y - _LowWorldY) / (_HighWorldY - _LowWorldY));
+                const float3 worldPos = screen_pos * depthEye + _WorldSpaceCameraPos;
+                const float heightUV = saturate((worldPos.y - _LowWorldY) / (_HighWorldY - _LowWorldY));
                 float4 heightFog = tex2D(_HeightLUT, float2(heightUV, 0.5));
                 heightFog.a *= step(isSky, _UseHeightFogOnSky);
                 heightFog.a *= _UseHeightFog * _HeightFogIntensity;
@@ -115,7 +115,7 @@ Shader "Hidden/FlatKit/FogFilter"
                 float fogBlend = _DistanceHeightBlend;
                 if (!_UseDistanceFog) fogBlend = 1.0;
                 if (!_UseHeightFog) fogBlend = 0.0;
-                float4 fog = lerp(distanceFog, heightFog, fogBlend);
+                const float4 fog = lerp(distanceFog, heightFog, fogBlend);
 
                 float4 final = lerp(original, fog, fog.a);
                 final.a = original.a;
@@ -141,7 +141,7 @@ Shader "Hidden/FlatKit/FogFilter"
                 Varyings output = (Varyings)0;
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
-                VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
+                const VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
                 output.vertex = vertexInput.positionCS;
                 output.uv = input.uv;
                 output.screen_pos = ComputeScreenPos(output.vertex).xyz;

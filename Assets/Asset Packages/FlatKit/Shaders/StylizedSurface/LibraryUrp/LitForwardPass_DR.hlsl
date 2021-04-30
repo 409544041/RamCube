@@ -56,34 +56,36 @@ void InitializeInputData(Varyings input, half3 normalTS, out InputData inputData
 {
     inputData.positionWS = input.posWS;
 
-    #ifdef _NORMALMAP
+#ifdef _NORMALMAP
     half3 viewDirWS = half3(input.normal.w, input.tangent.w, input.bitangent.w);
     inputData.normalWS = TransformTangentToWorld(normalTS,
         half3x3(input.tangent.xyz, input.bitangent.xyz, input.normal.xyz));
-    #else
+#else
     half3 viewDirWS = input.viewDir;
     inputData.normalWS = input.normal;
-    #endif
+#endif
 
     inputData.normalWS = NormalizeNormalPerPixel(inputData.normalWS);
     viewDirWS = SafeNormalize(viewDirWS);
 
     inputData.viewDirectionWS = viewDirWS;
 
-    #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
     inputData.shadowCoord = input.shadowCoord;
-    #elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
+#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
     inputData.shadowCoord = TransformWorldToShadowCoord(inputData.positionWS);
-    #else
+#else
     inputData.shadowCoord = float4(0, 0, 0, 0);
-    #endif
+#endif
 
     inputData.fogCoord = input.fogFactorAndVertexLight.x;
     inputData.vertexLighting = input.fogFactorAndVertexLight.yzw;
     inputData.bakedGI = SAMPLE_GI(input.lightmapUV, input.vertexSH, inputData.normalWS);
 
-    // inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
-    // inputData.shadowMask = SAMPLE_SHADOWMASK(input.lightmapUV);
+#if VERSION_GREATER_EQUAL(10, 0)
+    inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
+    inputData.shadowMask = SAMPLE_SHADOWMASK(input.lightmapUV);
+#endif
 }
 
 Varyings StylizedPassVertex(Attributes input)
@@ -94,7 +96,7 @@ Varyings StylizedPassVertex(Attributes input)
     UNITY_TRANSFER_INSTANCE_ID(input, output);
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
-    VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
+    const VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
     VertexNormalInputs normalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
     half3 viewDirWS = GetCameraPositionWS() - vertexInput.positionWS;
     half3 vertexLight = VertexLighting(vertexInput.positionWS, normalInput.normalWS);
@@ -134,18 +136,18 @@ half4 StylizedPassFragment(Varyings input) : SV_Target
     UNITY_SETUP_INSTANCE_ID(input);
     UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
-    float2 uv = input.uv;
-    half4 diffuseAlpha = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+    const float2 uv = input.uv;
+    const half4 diffuseAlpha = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
     half3 diffuse = diffuseAlpha.rgb * _BaseColor.rgb;
 
-    half alpha = diffuseAlpha.a * _BaseColor.a;
+    const half alpha = diffuseAlpha.a * _BaseColor.a;
     AlphaDiscard(alpha, _Cutoff);
 #ifdef _ALPHAPREMULTIPLY_ON
     diffuse *= alpha;
 #endif
 
-    half3 normalTS = SampleNormal(input.uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap));
-    half3 emission = SampleEmission(input.uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
+    const half3 normalTS = SampleNormal(input.uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap));
+    const half3 emission = SampleEmission(input.uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
 
     InputData inputData;
     InitializeInputData(input, normalTS, inputData);
@@ -154,7 +156,7 @@ half4 StylizedPassFragment(Varyings input) : SV_Target
     half4 color = UniversalFragment_DSTRM(inputData, diffuse, emission, alpha);
 
     {
-        half4 tex = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv);
+        const half4 tex = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv);
 #if defined(_TEXTUREBLENDINGMODE_ADD)
         color.rgb += lerp(half4(0.0, 0.0, 0.0, 0.0), tex, _TextureImpact).rgb;
 #else  // _TEXTUREBLENDINGMODE_MULTIPLY
@@ -169,8 +171,9 @@ half4 StylizedPassFragment(Varyings input) : SV_Target
 
     color.rgb = MixFog(color.rgb, inputData.fogCoord);
 
-    // TODO: Enable once we can use UNITY 2020.1 or newer.
-    //color.a = OutputAlpha(color.a);
+#if VERSION_GREATER_EQUAL(10, 0)
+    color.a = OutputAlpha(color.a);
+#endif
 
     return color;
 }

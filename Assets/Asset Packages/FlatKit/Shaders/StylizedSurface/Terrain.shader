@@ -136,6 +136,7 @@
 
             // -------------------------------------
             // Flat Kit
+            #pragma shader_feature_local UNITY_2020_2_OR_NEWER
             #pragma shader_feature_local __ _CELPRIMARYMODE_SINGLE _CELPRIMARYMODE_STEPS _CELPRIMARYMODE_CURVE
             #pragma shader_feature_local DR_CEL_EXTRA_ON
             #pragma shader_feature_local DR_GRADIENT_ON

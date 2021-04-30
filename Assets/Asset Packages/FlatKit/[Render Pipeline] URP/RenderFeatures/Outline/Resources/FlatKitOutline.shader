@@ -33,6 +33,8 @@ Shader "Hidden/FlatKit/OutlineFilter"
         }
         LOD 200
 
+
+
         Pass
         {
             HLSLPROGRAM
@@ -61,9 +63,9 @@ Shader "Hidden/FlatKit/OutlineFilter"
 
             float3 DecodeViewNormalStereo(float4 enc4)
             {
-                float kScale = 1.7777;
-                float3 nn = enc4.xyz * float3(2.0 * kScale, 2.0 * kScale, 0) + float3(-kScale, -kScale, 1);
-                float g = 2.0 / dot(nn.xyz, nn.xyz);
+                const float kScale = 1.7777;
+                const float3 nn = enc4.xyz * float3(2.0 * kScale, 2.0 * kScale, 0) + float3(-kScale, -kScale, 1);
+                const float g = 2.0 / dot(nn.xyz, nn.xyz);
                 float3 n;
                 n.xy = g * nn.xy;
                 n.z = g - 1.0;
@@ -74,8 +76,8 @@ Shader "Hidden/FlatKit/OutlineFilter"
             // Handles orthographic projection correctly
             float Linear01Depth(float z)
             {
-                float isOrtho = unity_OrthoParams.w;
-                float isPers = 1.0 - unity_OrthoParams.w;
+                const float isOrtho = unity_OrthoParams.w;
+                const float isPers = 1.0 - unity_OrthoParams.w;
                 z *= _ZBufferParams.x;
                 return (1.0 - isOrtho * z) / (isPers * z + _ZBufferParams.y);
             }
@@ -102,9 +104,9 @@ Shader "Hidden/FlatKit/OutlineFilter"
             {
                 float4 original = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv);
 
-                float offset_positive = + ceil(_Thickness * 0.5);
-                float offset_negative = - floor(_Thickness * 0.5);
-                float2 texel_size = 1.0 / float2(_CameraColorTexture_TexelSize.z, _CameraColorTexture_TexelSize.w);
+                const float offset_positive = + ceil(_Thickness * 0.5);
+                const float offset_negative = - floor(_Thickness * 0.5);
+                const float2 texel_size = 1.0 / float2(_CameraColorTexture_TexelSize.z, _CameraColorTexture_TexelSize.w);
 
                 float left = texel_size.x * offset_negative;
                 float right = texel_size.x * offset_positive;
@@ -144,13 +146,13 @@ Shader "Hidden/FlatKit/OutlineFilter"
                 #endif  // OUTLINE_USE_NORMALS
 
                 #ifdef OUTLINE_USE_COLOR
-                float3 c0 = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv0);
-                float3 c1 = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv1);
-                float3 c2 = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv2);
-                float3 c3 = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv3);
+                const float3 c0 = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv0);
+                const float3 c1 = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv1);
+                const float3 c2 = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv2);
+                const float3 c3 = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv3);
 
-                float3 cd1 = c1 - c0;
-                float3 cd2 = c3 - c2;
+                const float3 cd1 = c1 - c0;
+                const float3 cd2 = c3 - c2;
                 float c = sqrt(dot(cd1, cd1) + dot(cd2, cd2));
                 c = smoothstep(_ColorThresholdMin, _ColorThresholdMax, c);
                 #else
@@ -173,21 +175,26 @@ Shader "Hidden/FlatKit/OutlineFilter"
             {
                 float4 positionOS : POSITION;
                 float2 uv : TEXCOORD0;
+
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct Varyings
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
+
+                UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
             Varyings vert(Attributes input)
             {
+                UNITY_SETUP_INSTANCE_ID(input);
                 Varyings output = (Varyings)0;
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
-                VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
+                const VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
                 output.vertex = vertexInput.positionCS;
                 output.uv = input.uv;
 
@@ -196,7 +203,9 @@ Shader "Hidden/FlatKit/OutlineFilter"
 
             half4 frag(Varyings input) : SV_Target
             {
+                UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+
                 float4 c = Outline(input.uv);
                 return c;
             }

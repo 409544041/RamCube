@@ -125,29 +125,48 @@
             UNITY_DEFINE_INSTANCED_PROP(half, _CameraDistanceImpact)
             UNITY_INSTANCING_BUFFER_END(OutlineProps)
 
-            struct v2f
+            struct VertexInput
             {
-                UNITY_FOG_COORDS(0)
-                float4 vertex : SV_POSITION;
+                float4 position : POSITION;
+                float3 normal : NORMAL;
+
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
-            v2f VertexProgram(float4 position : POSITION, float3 normal : NORMAL) {
-                float4 clipPosition = UnityObjectToClipPos(position);
-                float3 clipNormal = mul((float3x3) UNITY_MATRIX_VP, mul((float3x3) UNITY_MATRIX_M, normal));
+            struct VertexOutput
+            {
+                float4 position : SV_POSITION;
+                float3 normal : NORMAL;
+
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+                UNITY_VERTEX_OUTPUT_STEREO
+            };
+
+            VertexOutput VertexProgram(VertexInput v) {
+                VertexOutput o;
+                
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_OUTPUT(VertexOutput, o);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+
+                float4 clipPosition = UnityObjectToClipPos(v.position);
+                float3 clipNormal = mul((float3x3) UNITY_MATRIX_VP, mul((float3x3) UNITY_MATRIX_M, v.normal));
                 half outlineWidth = UNITY_ACCESS_INSTANCED_PROP(OutlineProps, _OutlineWidth);
                 half cameraDistanceImpact = lerp(clipPosition.w, 4.0, _CameraDistanceImpact);
                 float2 offset = normalize(clipNormal.xy) / _ScreenParams.xy * outlineWidth * cameraDistanceImpact * 2.0;
                 clipPosition.xy += offset;
                 half outlineDepthOffset = UNITY_ACCESS_INSTANCED_PROP(OutlineProps, _OutlineDepthOffset);
                 clipPosition.z -= outlineDepthOffset;
+                o.position = clipPosition;
+                o.normal = clipNormal;
 
-                v2f o;
-                o.vertex = clipPosition;
                 UNITY_TRANSFER_FOG(o, o.vertex);
+
                 return o;
             }
 
-            half4 FragmentProgram(v2f i) : SV_TARGET {
+            half4 FragmentProgram(VertexOutput i) : SV_TARGET {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
                 half4 color = UNITY_ACCESS_INSTANCED_PROP(OutlineProps, _OutlineColor);
                 UNITY_APPLY_FOG(i.fogCoord, color);
                 return color;
