@@ -10,6 +10,7 @@ namespace Qbism.Cubes
 	public class BoostCube : MonoBehaviour, ICubeInfluencer
 	{
 		//Config parameters
+		[Header ("Boosting")]
 		[SerializeField] float boostSpeed = 30f;
 		[SerializeField] GameObject boostCollider = null;
 		[SerializeField] Transform colliderSpawnPos = null;

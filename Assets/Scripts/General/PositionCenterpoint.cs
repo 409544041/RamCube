@@ -10,6 +10,7 @@ namespace Qbism.General
 		//States
 		float highest, lowest, leftest, rightest;
 		bool firstValueAssigned = false;
+		Vector3 centerPoint = new Vector3(0, 0, 0);
 		
 		void Start()
 		{
@@ -18,39 +19,49 @@ namespace Qbism.General
 
 		private void PositionCenterPoint()
 		{
-			FindEdgeCubes();
+			FindEdges();
+			CalculateCenterpoint();
 
-			float zPos = lowest + (highest - lowest) / 2;
-			float xPos = leftest + (rightest - leftest) / 2;
-
-			transform.position = new Vector3(xPos, 0, zPos);
+			transform.position = centerPoint;
 
 			CamCentralizer centralizer = GetComponent<CamCentralizer>();
 			if(centralizer) centralizer.PositionCam();
 		}
 
-		private void FindEdgeCubes()
+		private void FindEdges()
 		{
 			CubeHandler handler = FindObjectOfType<CubeHandler>();
 
-			foreach (KeyValuePair<Vector2Int, FloorCube> cube in handler.floorCubeDic)
-			{
-				if (!firstValueAssigned)
+				foreach (KeyValuePair<Vector2Int, FloorCube> cube in handler.floorCubeDic)
 				{
-					highest = cube.Value.transform.position.z;
-					lowest = cube.Value.transform.position.z;
-					leftest = cube.Value.transform.position.x;
-					rightest = cube.Value.transform.position.x;
+					Vector2 viewPortPos = Camera.main.WorldToViewportPoint(cube.Value.transform.position);
 
-					firstValueAssigned = true;
+					if (!firstValueAssigned)
+					{
+						highest = viewPortPos.y;
+						lowest = viewPortPos.y;
+						leftest = viewPortPos.x;
+						rightest = viewPortPos.x;
+
+						firstValueAssigned = true;
+					}
+
+					if (viewPortPos.y > highest) highest = viewPortPos.y;
+					if (viewPortPos.y < lowest) lowest = viewPortPos.y;
+					if (viewPortPos.x < leftest) leftest = viewPortPos.x;
+					if (viewPortPos.x > rightest) rightest = viewPortPos.x;
 				}
-
-				if (cube.Value.transform.position.z > highest) highest = cube.Value.transform.position.z;
-				if (cube.Value.transform.position.z < lowest) lowest = cube.Value.transform.position.z;
-				if (cube.Value.transform.position.x < leftest) leftest = cube.Value.transform.position.x;
-				if (cube.Value.transform.position.x > rightest) rightest = cube.Value.transform.position.x;
 			}
-		}
 
+			private void CalculateCenterpoint()
+			{
+				float deltaX = rightest - leftest;
+				float deltaY = highest - lowest;
+
+				float xPos = leftest + (deltaX / 2);
+				float yPos = lowest + (deltaY / 2);
+
+				centerPoint = Camera.main.ViewportToWorldPoint(new Vector3(xPos, yPos, 10));
+			}
 	}
 }
