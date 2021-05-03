@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Qbism.UI
+namespace Qbism.General
 {
 	public class LevelDisplay : MonoBehaviour
 	{

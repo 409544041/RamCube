@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using Qbism.Saving;
 using Qbism.SceneTransition;
-using Qbism.WorldMap;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Qbism.UI
+namespace Qbism.WorldMap
 {
 	public class LevelPinUI : MonoBehaviour
 	{
