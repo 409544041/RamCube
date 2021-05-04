@@ -4,7 +4,7 @@ using Qbism.PlayerCube;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Qbism.Cubes.UI
+namespace Qbism.Cubes
 {
 	public class CubeUIHandler : MonoBehaviour
 	{
@@ -38,8 +38,7 @@ namespace Qbism.Cubes.UI
 
 		private void Update()
 		{
-			//To ensure UI doesn't show on static cubes that have become floor cubes
-			if(floorCube.type != CubeTypes.Shrinking) ShowOrHideUI();
+			ShowOrHideUI();
 		}
 
 		private void ShowOrHideUI()
@@ -47,7 +46,8 @@ namespace Qbism.Cubes.UI
 			disToPlayer = Vector3.Distance
 				(floorCube.transform.position, mover.transform.position);
 
-			if (mover.isMoving || disToPlayer < triggerDis)
+			//The last part is to avoid bug when static cube becomes floor cube
+			if (mover.isMoving || disToPlayer < triggerDis || floorCube.type == CubeTypes.Shrinking) 
 			{
 				uiElement.SetActive(false);
 				lRender.enabled = false;
