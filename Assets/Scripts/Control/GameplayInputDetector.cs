@@ -74,6 +74,7 @@ namespace Qbism.Control
 			if (handler.floorCubeDic.ContainsKey(posAhead)
 				&& handler.FetchShrunkStatus(posAhead) == false)
 				mover.HandleKeyInput(mover.up, Vector3.right, posAhead);
+			else mover.InitiateWiggle(mover.up, Vector3.right);
 		}
 
 		private void MoveDown()
@@ -84,6 +85,7 @@ namespace Qbism.Control
 				if (handler.floorCubeDic.ContainsKey(posAhead)
 					&& handler.FetchShrunkStatus(posAhead) == false)
 					mover.HandleKeyInput(mover.down, Vector3.left, posAhead);
+				else mover.InitiateWiggle(mover.down, Vector3.left);
 		}
 
 		private void MoveLeft()
@@ -94,6 +96,7 @@ namespace Qbism.Control
 				if (handler.floorCubeDic.ContainsKey(posAhead)
 					&& handler.FetchShrunkStatus(posAhead) == false)
 					mover.HandleKeyInput(mover.left, Vector3.forward, posAhead);
+				else mover.InitiateWiggle(mover.left, Vector3.forward);
 		}
 
 		private void MoveRight()
@@ -104,6 +107,7 @@ namespace Qbism.Control
 				if (handler.floorCubeDic.ContainsKey(posAhead)
 					&& handler.FetchShrunkStatus(posAhead) == false)
 					mover.HandleKeyInput(mover.right, Vector3.back, posAhead);
+			else mover.InitiateWiggle(mover.right, Vector3.back);
 		}
 
 		private void FinishLevel()

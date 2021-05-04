@@ -119,8 +119,6 @@ namespace Qbism.Cubes
 			return hits;
 		}
 
-		
-
 		private IEnumerator RestartLevelTransition()
 		{
 			shouldTrigger = false;

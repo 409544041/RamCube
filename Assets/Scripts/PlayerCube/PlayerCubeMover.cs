@@ -11,14 +11,19 @@ namespace Qbism.PlayerCube
 	public class PlayerCubeMover : MonoBehaviour, IActiveCube
 	{
 		//Config parameters
+		[Header ("Turn Axis")]
 		[SerializeField] Transform center = null;
 		public Transform up = null;
 		public Transform down = null;
 		public Transform left = null;
 		public Transform right = null;
+		[Header ("Turning")]
 		[SerializeField] int turnStep = 18;
 		[SerializeField] float timeStep = 0.01f;
 		[SerializeField] float lowerStep = 2.5f;
+		[Header ("Wiggle")]
+		[SerializeField] int wiggleTurnStep = 18;
+		[SerializeField] int wiggleRotation = 8;
 		
 
 		//Cache
@@ -94,8 +99,9 @@ namespace Qbism.PlayerCube
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			yield return new WaitForSeconds(.1f); //Added to ensure laser has time to register presence. Can possibly remove when using spherecast instead of raycast
-
+			//Added to ensure laser has time to register presence. Can possibly remove when using spherecast instead of raycast
+			yield return new WaitForSeconds(.1f); 
+	
 			var cubeToShrink = FetchGridPos();
 
 			isMoving = true;
@@ -130,6 +136,26 @@ namespace Qbism.PlayerCube
 			yield return null;
 
 			CheckFloorInNewPos(side, turnAxis, posAhead);
+		}
+
+		public void InitiateWiggle(Transform side, Vector3 turnAxis)
+		{
+			StartCoroutine(Wiggle(side, turnAxis));
+		}
+
+		private IEnumerator Wiggle(Transform side, Vector3 turnAxis)
+		{
+			for (int i = 0; i < (8 / wiggleTurnStep); i++)
+			{
+				transform.RotateAround(side.position, turnAxis, wiggleTurnStep);
+				yield return new WaitForSeconds(timeStep);
+			}
+
+			for (int i = 0; i < (wiggleRotation / wiggleTurnStep); i++)
+			{
+				transform.RotateAround(side.position, -turnAxis, wiggleTurnStep);
+				yield return new WaitForSeconds(timeStep);
+			}
 		}
 
 		public void InitiateLowering(Vector2Int cubePos)
