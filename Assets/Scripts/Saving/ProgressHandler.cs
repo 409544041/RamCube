@@ -12,6 +12,7 @@ namespace Qbism.Saving
 		SerpentProgress serpProg = null;
 		PinSelectionTracker pinSelTrack = null;
 		LevelPinInitiator initiator = null;
+		LevelPinUI[] pinUIs = null;
 
 		//States
 		public LevelIDs currentLevelID { get; set; }
@@ -43,6 +44,17 @@ namespace Qbism.Saving
 
 			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
 			if (pinSelTrack != null) pinSelTrack.onSavedPinFetch += FetchCurrentPin;
+
+			pinUIs = FindObjectsOfType<LevelPinUI>();
+			foreach (LevelPinUI pinUI in pinUIs)
+			{
+				if (pinUI != null)
+				{
+					pinUI.onSetCurrentData += SetCurrentData;
+					pinUI.onFetchLevelData += FetchLevelDataList;
+					pinUI.onFetchLevelPins += FetchLevelPinList;
+				} 
+			}
 		}
 
 		public void BuildLevelPinList()
@@ -231,7 +243,17 @@ namespace Qbism.Saving
 			}
 		}
 
-		public void SetCurrentData(LevelIDs id, bool serpent)
+		private List<LevelStatusData> FetchLevelDataList()
+		{
+			return levelDataList;
+		}
+
+		private List<LevelPin> FetchLevelPinList()
+		{
+			return levelPinList;
+		}
+
+		private void SetCurrentData(LevelIDs id, bool serpent)
 		{
 			currentLevelID = id;
 			foreach (LevelStatusData data in levelDataList)
@@ -294,6 +316,15 @@ namespace Qbism.Saving
 		{
 			if (initiator != null) initiator.onPinInitation -= InitiatePins;
 			if (pinSelTrack != null) pinSelTrack.onSavedPinFetch -= FetchCurrentPin;
+			foreach (LevelPinUI pinUI in pinUIs)
+			{
+				if (pinUI != null)
+				{
+					pinUI.onSetCurrentData -= SetCurrentData;
+					pinUI.onFetchLevelData -= FetchLevelDataList;
+					pinUI.onFetchLevelPins -= FetchLevelPinList;
+				}
+			}
 		}
 	}
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Qbism.PlayerCube;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Qbism.Cubes
 {
@@ -47,7 +46,8 @@ namespace Qbism.Cubes
 				(floorCube.transform.position, mover.transform.position);
 
 			//The last part is to avoid bug when static cube becomes floor cube
-			if (mover.isMoving || disToPlayer < triggerDis || floorCube.type == CubeTypes.Shrinking) 
+			if (mover.isMoving || mover.isBoosting || mover.isTurning ||
+				disToPlayer < triggerDis || floorCube.type == CubeTypes.Shrinking) 
 			{
 				uiElement.SetActive(false);
 				lRender.enabled = false;

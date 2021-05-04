@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Qbism.Saving;
 using Qbism.SceneTransition;
@@ -16,14 +17,21 @@ namespace Qbism.WorldMap
 
 		//Cache
 		EditorLevelPinUI editorPin = null;
-		ProgressHandler progHandler = null;
 		PinSelectionTracker pinSelTrack = null;
 		public Vector3 uiPos { get; set; }
+
+		//Actions, events, delegates etc
+		public event Action<LevelIDs, bool> onSetCurrentData;
+		
+		public delegate List<LevelStatusData> LevelDataDel();
+		public LevelDataDel onFetchLevelData;
+
+		public delegate List<LevelPin> PinDataDel();
+		public PinDataDel onFetchLevelPins;
 
 		private void Awake() 
 		{
 			editorPin = GetComponent<EditorLevelPinUI>();
-			progHandler = FindObjectOfType<ProgressHandler>();
 			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
 			uiPos = levelPin.GetComponentInChildren<LineRenderer>().transform.position;
 		}
@@ -49,7 +57,7 @@ namespace Qbism.WorldMap
 		{				
 			LevelIDs id = levelPin.levelID;
 			bool hasSerpent = levelPin.GetComponent<EditorSetPinValues>().hasSerpentSegment;
-			progHandler.SetCurrentData(id, hasSerpent);
+			onSetCurrentData(id, hasSerpent);
 				
 			var handler = FindObjectOfType<SceneHandler>();
 			int indexToLoad = levelPin.GetComponent<EditorSetPinValues>().levelIndex;
@@ -88,13 +96,16 @@ namespace Qbism.WorldMap
 			int locks = 0;
 			int sheetLocks = 0;
 
-			foreach (LevelStatusData data in progHandler.levelDataList)
+			List<LevelStatusData> levelDataList = onFetchLevelData();
+			List<LevelPin> levelPinList = onFetchLevelPins();
+
+			foreach (LevelStatusData data in levelDataList)
 			{
 				if(data.levelID == levelPin.levelID)
 					locks = data.locks;
 			}
 
-			foreach (LevelPin pin in progHandler.levelPinList)
+			foreach (LevelPin pin in levelPinList)
 			{
 				if(pin.levelID == levelPin.levelID)
 					sheetLocks = pin.GetComponent<EditorSetPinValues>().locks;
