@@ -19,12 +19,6 @@ namespace Qbism.Saving
 		public List<LevelStatusData> levelDataList;
 		public List<LevelPin> levelPinList;
 
-		//Actions, events, delegates etc
-		public event Action<LevelPin> onSetUIComplete;
-		public event Action<LevelPin, bool> onShowOrHideUI;
-		public event Action<LevelIDs> onSelectPinUI;
-		public event Action<LevelIDs> onDisableLockIcon;
-
 		private void Awake() 
 		{
 			serpProg = GetComponent<SerpentProgress>();
@@ -115,14 +109,15 @@ namespace Qbism.Saving
 				levelPinList[i].CheckRaiseStatus(unlocked, unlockAnimPlayed);
 				levelPinList[i].CheckPathStatus(unlock1Data, unlock2Data, completed);
 
-				onSelectPinUI(currentLevelID);
+				//onSelectPinUI(currentLevelID);
+				levelPinList[i].pinUI.SelectPinUI();
 
-				if(unlockAnimPlayed) onShowOrHideUI(levelPinList[i], true);
-				else onShowOrHideUI(levelPinList[i], false);
+				if(unlockAnimPlayed) levelPinList[i].pinUI.ShowOrHideUI(true);
+				else levelPinList[i].pinUI.ShowOrHideUI(false);
 
-				if (completed) onSetUIComplete(levelPinList[i]);
+				if (completed) levelPinList[i].pinUI.SetUIComplete();
 
-				onDisableLockIcon(levelPinList[i].levelID);
+				levelPinList[i].pinUI.DisableLockIcon();
 
 				if(lessLocks && !dottedAnimPlayed)
 				{

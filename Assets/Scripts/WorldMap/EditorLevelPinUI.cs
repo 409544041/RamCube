@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Qbism.WorldMap;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Qbism.UI
+namespace Qbism.WorldMap
 {
 	[ExecuteAlways]
 	public class EditorLevelPinUI : MonoBehaviour

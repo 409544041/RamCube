@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Qbism.UI;
 using Qbism.WorldMap;
 using UnityEngine;
 
@@ -62,8 +61,7 @@ namespace Qbism.General
 				foreach (LevelPinUI pinUI in pinUIs)
 				{
 					if(pinUI.levelPin.levelID == destinationID)
-						pinUI.DisableLockIcon(destinationID); 
-						//Adding ID bc the function is also called as delegate in progHandler
+						pinUI.DisableLockIcon(); 
 				}
 			}
 		}

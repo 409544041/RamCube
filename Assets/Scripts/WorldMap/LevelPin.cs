@@ -10,10 +10,13 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public LevelIDs levelID;
+		public LevelPinUI pinUI;
+		[Header ("Unlocking")]
 		[SerializeField] float lockedYPos;
 		public float unlockedYPos;
 		[SerializeField] float raiseStep;
 		[SerializeField] float raiseSpeed;
+		[Header ("Paths")]
 		public Transform pathPoint;
 		public LineRenderer[] fullLineRenderers;
 		public LineRenderer dottedLineRenderer;
@@ -24,7 +27,6 @@ namespace Qbism.WorldMap
 		//Actions, events, delegates etc
 		public event Action<Transform, LineTypes, List<LevelPin>> onPathDrawing;
 		public event Action<Transform, List<LineDrawData>, LineRenderer[], LineRenderer> onPathCreation;
-		public event Action<LevelPin, bool> onShowOrHideUI;
 
 		//States
 		public bool justCompleted { get; set; } = false;
@@ -130,7 +132,7 @@ namespace Qbism.WorldMap
 						transform.position.x, unlockedYPos, transform.position.z);
 
 					GetComponent<LevelPinRaiseJuicer>().StopRaiseJuice();
-					onShowOrHideUI(this, true);
+					pinUI.ShowOrHideUI(true);
 					onPathDrawing(pathPoint, LineTypes.full, originPins);
 				}
 			}

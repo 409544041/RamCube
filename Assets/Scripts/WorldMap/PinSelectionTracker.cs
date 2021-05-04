@@ -9,7 +9,7 @@ namespace Qbism.WorldMap
 	public class PinSelectionTracker : MonoBehaviour
 	{
 		//States
-		public LevelPin selectedPin { get; set; }
+		public LevelPin selectedPin { get; set; } = null;
 		public Biomes currentBiome { get; set; }
 		Biomes prevBiome;
 		LevelPin prevPin;
@@ -18,7 +18,6 @@ namespace Qbism.WorldMap
 		public event Action<GameObject> onPinFetch;
 		public event Action<Biomes, LevelPin> onSetCenterPos;
 		public event Action onSavedPinFetch;
-		public event Action<LevelIDs> onSelectPinUI;
 
 		private IEnumerator Start() 
 		{
@@ -28,7 +27,8 @@ namespace Qbism.WorldMap
 
 			//Sets pin and biome of saved 'currentLevelID' as selectedPin and currentBiome
 			onSavedPinFetch(); 
-			onSelectPinUI(selectedPin.levelID);
+			selectedPin.pinUI.SelectPinUI();
+			onSetCenterPos(currentBiome, selectedPin);
 		}
 
 		private void Update() 
@@ -39,7 +39,6 @@ namespace Qbism.WorldMap
 			GameObject selected = EventSystem.current.currentSelectedGameObject;
 			onPinFetch(selected); //Sets new selectedPin
 			currentBiome = selectedPin.GetComponent<EditorSetPinValues>().biome;
-
 			if(selectedPin != prevPin) onSetCenterPos(currentBiome, selectedPin);
 		}
 	}
