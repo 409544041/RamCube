@@ -40,6 +40,7 @@ namespace Qbism.PlayerCube
 		public bool isMoving { get; set; } = false;
 		public bool lasersInLevel { get; set; } = false;
 		private Vector3 startScale = new Vector3(1, 1, 1);
+		public bool isStunned { get; set; }	= false;
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;

@@ -21,6 +21,9 @@ namespace Qbism.Rewind
 		private List<CubeTypes> isStaticList = new List<CubeTypes>();
 		private List<bool> isDockedList = new List<bool>();
 
+		//Actions, events, delegates etc
+		public event Action<InterfaceIDs> onStopRewindPulse;
+
 		private void Awake() 
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
@@ -72,6 +75,13 @@ namespace Qbism.Rewind
 				mover.UpdateCenterPosition();
 				mover.GetComponent<PlayerCubeFeedForward>().ShowFeedForward();
 				handler.currentCube = handler.FetchCube(mover.FetchGridPos());
+				
+				if (mover.isStunned)
+				{
+					mover.isStunned = false;
+					onStopRewindPulse(InterfaceIDs.Rewind);
+					mover.GetComponent<PlayerStunJuicer>().StopStunVFX();
+				}
 			}
 
 			if (this.tag == "Environment" || this.tag == "Moveable")

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Qbism.Cubes;
 using Qbism.MoveableCubes;
@@ -16,6 +17,9 @@ namespace Qbism.Rewind
 		List<FloorCube> floorCubes = new List<FloorCube>();
 		MoveableCubeHandler moveHandler = null;
 		MoveableCube[] moveableCubes;
+
+		//Actions, events, delegates etc
+		public event Action<InterfaceIDs> onStopRewindPulse;
 
 		private void Awake() 
 		{
@@ -63,7 +67,8 @@ namespace Qbism.Rewind
 			CheckForMovement();
 		}
 
-		private void CheckForMovement() //Makes sure that after moveables stopped moving they are added to correct dic
+		//Makes sure that after moveables stopped moving they are added to correct dic
+		private void CheckForMovement() 
 		{
 			if(mover.isBoosting || mover.isMoving || mover.isTurning) return;
 
@@ -95,12 +100,10 @@ namespace Qbism.Rewind
 				timeBody.Rewind();
 			}
 
+			//To stop rewind UI element from pulsing if rewinding off finish. Here bc finish doesn't have timebody component
 			var finish = FindObjectOfType<FinishCube>();
 			if (finish.wrongOnFinish)
-			{
-				finish.StopPulseRewindUI();
-				finish.wrongOnFinish = false;
-			}
+				onStopRewindPulse(InterfaceIDs.Rewind);
 
 			StartCoroutine(ReloadDics());
 		}

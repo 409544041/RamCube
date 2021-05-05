@@ -70,43 +70,55 @@ namespace Qbism.Control
 		{
 			inputting = true;
 			var posAhead = mover.FetchGridPos() + Vector2Int.up;
+			
+			if (mover.isStunned) mover.InitiateWiggle(mover.up, Vector3.right);
 
-			if (handler.floorCubeDic.ContainsKey(posAhead)
+			else if (handler.floorCubeDic.ContainsKey(posAhead)
 				&& handler.FetchShrunkStatus(posAhead) == false)
 				mover.HandleKeyInput(mover.up, Vector3.right, posAhead);
+
 			else mover.InitiateWiggle(mover.up, Vector3.right);
 		}
 
 		private void MoveDown()
 		{
 			inputting = true;
-				var posAhead = mover.FetchGridPos() + Vector2Int.down;
+			var posAhead = mover.FetchGridPos() + Vector2Int.down;
 
-				if (handler.floorCubeDic.ContainsKey(posAhead)
-					&& handler.FetchShrunkStatus(posAhead) == false)
-					mover.HandleKeyInput(mover.down, Vector3.left, posAhead);
-				else mover.InitiateWiggle(mover.down, Vector3.left);
+			if (mover.isStunned) mover.InitiateWiggle(mover.down, Vector3.left);
+
+			else if (handler.floorCubeDic.ContainsKey(posAhead)
+				&& handler.FetchShrunkStatus(posAhead) == false)
+				mover.HandleKeyInput(mover.down, Vector3.left, posAhead);
+
+			else mover.InitiateWiggle(mover.down, Vector3.left);
 		}
 
 		private void MoveLeft()
 		{
 			inputting = true;
-				var posAhead = mover.FetchGridPos() + Vector2Int.left;
+			var posAhead = mover.FetchGridPos() + Vector2Int.left;
 
-				if (handler.floorCubeDic.ContainsKey(posAhead)
-					&& handler.FetchShrunkStatus(posAhead) == false)
-					mover.HandleKeyInput(mover.left, Vector3.forward, posAhead);
-				else mover.InitiateWiggle(mover.left, Vector3.forward);
+			if (mover.isStunned) mover.InitiateWiggle(mover.left, Vector3.forward);
+
+			else if (handler.floorCubeDic.ContainsKey(posAhead)
+				&& handler.FetchShrunkStatus(posAhead) == false)
+				mover.HandleKeyInput(mover.left, Vector3.forward, posAhead);
+
+			else mover.InitiateWiggle(mover.left, Vector3.forward);
 		}
 
 		private void MoveRight()
 		{
 			inputting = true;
-				var posAhead = mover.FetchGridPos() + Vector2Int.right;
+			var posAhead = mover.FetchGridPos() + Vector2Int.right;
 
-				if (handler.floorCubeDic.ContainsKey(posAhead)
-					&& handler.FetchShrunkStatus(posAhead) == false)
-					mover.HandleKeyInput(mover.right, Vector3.back, posAhead);
+			if (mover.isStunned) mover.InitiateWiggle(mover.right, Vector3.back);
+
+			else if (handler.floorCubeDic.ContainsKey(posAhead)
+				&& handler.FetchShrunkStatus(posAhead) == false)
+				mover.HandleKeyInput(mover.right, Vector3.back, posAhead);
+				
 			else mover.InitiateWiggle(mover.right, Vector3.back);
 		}
 

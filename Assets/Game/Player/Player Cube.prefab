@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 4401686593962990724}
   - component: {fileID: 7636770465740133781}
   - component: {fileID: 1745422041723140935}
+  - component: {fileID: 3845914782526647718}
   m_Layer: 9
   m_Name: Player Cube
   m_TagString: Player
@@ -158,6 +159,7 @@ MonoBehaviour:
   timeStep: 0.01
   lowerStep: 2.5
   wiggleTurnStep: 2
+  wiggleRotation: 8
   onLoweringEvent:
     m_PersistentCalls:
       m_Calls:
@@ -485,6 +487,19 @@ MonoBehaviour:
     NoiseShiftMin: {x: 0, y: 0, z: 0}
     NoiseShiftMax: {x: 0, y: 0, z: 0}
   DebugWiggleDuration: 2
+--- !u!114 &3845914782526647718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807421524612065335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02bba36881b5e5408373497ab221dc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunVFX: {fileID: 0}
 --- !u!1 &2096589824242152289
 GameObject:
   m_ObjectHideFlags: 0

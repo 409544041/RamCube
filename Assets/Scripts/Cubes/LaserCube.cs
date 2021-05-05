@@ -26,6 +26,8 @@ namespace Qbism.Cubes
 		//States
 		bool shouldTrigger = true;
 
+		//Actions, events, delegates etc
+		public event Action<InterfaceIDs> onRewindPulse;
 		public UnityEvent onLaserPassEvent = new UnityEvent();
 
 		private void Awake()
@@ -62,6 +64,7 @@ namespace Qbism.Cubes
 				if (hits[0].transform.gameObject.tag == "Player" &&
 				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
 				{
+					// shouldTrigger is to prevent laser from triggering if boosting along laser right-way-facing
 					if(shouldTrigger)
 					{
 						juicer.SetLaserColor(juicer.passColor);
@@ -76,9 +79,14 @@ namespace Qbism.Cubes
 				{
 					if (shouldTrigger)
 					{
-						juicer.SetLaserColor(juicer.denyColor);
-						StartCoroutine(RestartLevelTransition());
 						shouldTrigger = false;
+						juicer.SetLaserColor(juicer.denyColor);
+						source.clip = juicer.denyClip;
+						onLaserPassEvent.Invoke();
+						onRewindPulse(InterfaceIDs.Rewind);
+						mover.input = false;
+						mover.isStunned = true;
+						mover.GetComponent<PlayerStunJuicer>().PlayStunVFX();
 					}
 				}
 			} 	
@@ -117,16 +125,6 @@ namespace Qbism.Cubes
 			Array.Sort(hitDistances, hits);
 
 			return hits;
-		}
-
-		private IEnumerator RestartLevelTransition()
-		{
-			shouldTrigger = false;
-			mover.input = false;
-			source.clip = juicer.denyClip;
-			onLaserPassEvent.Invoke();
-			yield return new WaitWhile(() => source.isPlaying);
-			loader.RestartLevel();
 		}
 
 		private void SetLaserTrigger(bool value)

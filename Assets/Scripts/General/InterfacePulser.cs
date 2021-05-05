@@ -2,51 +2,86 @@
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using Qbism.Cubes;
+using Qbism.Rewind;
 using UnityEngine;
 
-public class InterfacePulser : MonoBehaviour
+namespace Qbism.General
 {
-	//Config parameters
-	[SerializeField] InterfaceIDs interfaceID;
-	[SerializeField] MMFeedbacks pulser = null;
-
-	//Cache
-	FinishCube finishCube = null;
-
-	private void Awake() 
+	public class InterfacePulser : MonoBehaviour
 	{
-		finishCube = FindObjectOfType<FinishCube>();
-	}
+		//Config parameters
+		[SerializeField] InterfaceIDs interfaceID;
+		[SerializeField] MMFeedbacks pulser = null;
 
-	private void OnEnable() 
-	{
-		if(finishCube != null)
+		//Cache
+		FinishCube finishCube = null;
+		RewindHandler rewinder = null;
+		LaserCube[] lasers = null;
+		TimeBody[] bodies = null;
+
+		private void Awake()
 		{
-			finishCube.onRewindPulse += InitiatePulse;
-			finishCube.onStopRewindPulse += StopPulse;
-		} 
-	}
+			finishCube = FindObjectOfType<FinishCube>();
+			rewinder = FindObjectOfType<RewindHandler>();
+			lasers = FindObjectsOfType<LaserCube>();
+			bodies = FindObjectsOfType<TimeBody>();
+		}
 
-	private void InitiatePulse(InterfaceIDs id)
-	{
-		if (id == interfaceID)
+		private void OnEnable()
 		{
-			pulser.Initialization();
-			pulser.PlayFeedbacks();
+			if (finishCube != null)
+			{
+				finishCube.onRewindPulse += InitiatePulse;
+				finishCube.onStopRewindPulse += StopPulse;
+			}
+
+			if (rewinder != null) rewinder.onStopRewindPulse += StopPulse;
+
+			foreach (LaserCube laser in lasers)
+			{
+				if (laser != null) laser.onRewindPulse += InitiatePulse;
+			}
+			
+			foreach (TimeBody body in bodies)
+			{
+				if (body != null) body.onStopRewindPulse += StopPulse;
+			}
+		}
+
+		private void InitiatePulse(InterfaceIDs id)
+		{
+			if (id == interfaceID)
+			{
+				pulser.Initialization();
+				pulser.PlayFeedbacks();
+			}
+		}
+
+		private void StopPulse(InterfaceIDs id)
+		{
+			pulser.StopFeedbacks();
+		}
+
+		private void OnDisable()
+		{
+			if (finishCube != null)
+			{
+				finishCube.onRewindPulse -= InitiatePulse;
+				finishCube.onStopRewindPulse -= StopPulse;
+			}
+
+			if (rewinder != null) rewinder.onStopRewindPulse -= StopPulse;
+
+			foreach (LaserCube laser in lasers)
+			{
+				if (laser != null) laser.onRewindPulse -= InitiatePulse;
+			}
+
+			foreach (TimeBody body in bodies)
+			{
+				if (body != null) body.onStopRewindPulse -= StopPulse;
+			}
 		}
 	}
 
-	private void StopPulse(InterfaceIDs id)
-	{
-		pulser.StopFeedbacks();
-	}
-
-	private void OnDisable()
-	{
-		if (finishCube != null)
-		{
-			finishCube.onRewindPulse -= InitiatePulse;
-			finishCube.onStopRewindPulse -= StopPulse;
-		}
-	}
 }
