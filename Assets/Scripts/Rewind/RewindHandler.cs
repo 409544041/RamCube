@@ -95,6 +95,13 @@ namespace Qbism.Rewind
 				timeBody.Rewind();
 			}
 
+			var finish = FindObjectOfType<FinishCube>();
+			if (finish.wrongOnFinish)
+			{
+				finish.StopPulseRewindUI();
+				finish.wrongOnFinish = false;
+			}
+
 			StartCoroutine(ReloadDics());
 		}
 

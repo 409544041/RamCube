@@ -27,6 +27,7 @@ namespace Qbism.Cubes
 
 		//States
 		Vector2Int myPosition;
+		public bool wrongOnFinish { get; set; } = false;
 		
 		//Actions, events, delegates etc
 		public delegate bool GetConnectionDel();
@@ -36,6 +37,8 @@ namespace Qbism.Cubes
 		public event Action onSpawnSegment;
 		public event Action<bool> onSetSerpentMove; 
 		public event Action onSpawnShapie;
+		public event Action<InterfaceIDs> onRewindPulse;
+		public event Action<InterfaceIDs> onStopRewindPulse;
 
 		private void Awake()
 		{
@@ -67,8 +70,17 @@ namespace Qbism.Cubes
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.up), -1))
 					StartCoroutine(Finish());	
 
-				else StartCoroutine(LevelTransition(false, true));
+				else
+				{
+					wrongOnFinish = true;
+					PulseRewindUI();
+				} 
 			}
+			else if (wrongOnFinish)
+			{
+				onStopRewindPulse(InterfaceIDs.Rewind);
+				wrongOnFinish = false;
+			} 
 		}
 
 		public void StartFinish()
@@ -170,6 +182,16 @@ namespace Qbism.Cubes
 			} 
 			else if(mapConnected) loader.LoadWorldMap();
 			else loader.NextLevel();
+		}
+
+		private void PulseRewindUI()
+		{
+			onRewindPulse(InterfaceIDs.Rewind);
+		}
+
+		public void StopPulseRewindUI()
+		{
+			onStopRewindPulse(InterfaceIDs.Rewind);
 		}
 
 		private void OnDisable()
