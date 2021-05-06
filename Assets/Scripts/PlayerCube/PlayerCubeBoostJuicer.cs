@@ -67,16 +67,16 @@ namespace Qbism.PlayerCube
 
 		private void CalculatePostBoostScaleMoveDir()
 		{
-			if (boostImpactDir == new Vector3(0, 0, 1))
+			if (V3Equal(boostImpactDir, Vector3.forward))
 				SetBoostMoveValues(false, false, true, 1);
 
-			if (boostImpactDir == new Vector3(0, 0, -1))
+			if (V3Equal(boostImpactDir, Vector3.back))
 				SetBoostMoveValues(false, false, true, -1);
 
-			if (boostImpactDir == new Vector3(1, 0, 0))
+			if (V3Equal(boostImpactDir, Vector3.right))
 				SetBoostMoveValues(true, false, false, 1);
 
-			if (boostImpactDir == new Vector3(-1, 0, 0))
+			if (V3Equal(boostImpactDir, Vector3.left))
 				SetBoostMoveValues(true, false, false, -1);
 		}
 
@@ -135,12 +135,12 @@ namespace Qbism.PlayerCube
 
 		private bool isBoostsImpactZ()
 		{
-			return boostImpactDir == Vector3.forward || boostImpactDir == Vector3.back;
+			return V3Equal(boostImpactDir, Vector3.forward) || V3Equal(boostImpactDir, Vector3.back);
 		}
 
 		private bool isBoostImpactX()
 		{
-			return boostImpactDir == Vector3.left || boostImpactDir == Vector3.right;
+			return V3Equal(boostImpactDir, Vector3.left) || V3Equal(boostImpactDir, Vector3.right);
 		}
 
 		private bool IsPlayerZWorldX()
@@ -175,7 +175,7 @@ namespace Qbism.PlayerCube
 
 		public bool V3Equal(Vector3 a, Vector3 b)
 		{
-			return Vector3.SqrMagnitude(a - b) < 0.0001;
+			return Vector3.SqrMagnitude(a - b) < 0.001;
 		}
 	}
 }
