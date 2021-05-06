@@ -82,6 +82,8 @@ namespace Qbism.Rewind
 					onStopRewindPulse(InterfaceIDs.Rewind);
 					mover.GetComponent<PlayerStunJuicer>().StopStunVFX();
 				}
+
+				mover.gameObject.SendMessage("StartRewindDust");
 			}
 
 			if (this.tag == "Environment" || this.tag == "Moveable")
@@ -125,8 +127,7 @@ namespace Qbism.Rewind
 					shrinker.hasShrunk = false;
 					shrinker.EnableMesh();
 				}
-				
-			
+		
 			hasShrunkList.RemoveAt(0);
 		}
 
@@ -146,7 +147,7 @@ namespace Qbism.Rewind
 			isStaticList.RemoveAt(0);
 		}	
 
-		private void ResetDocked(MoveableCube moveable) //----- TO DO: Check if record moment for each of these is good (it's wrong for docked)
+		private void ResetDocked(MoveableCube moveable) 
 		{
 			moveable.RoundPosition();
 			moveable.UpdateCenterPosition();
@@ -157,6 +158,7 @@ namespace Qbism.Rewind
 				moveable.isDocked = false;
 				Destroy(GetComponent<FloorCube>());
 				Destroy(GetComponent<CubeShrinker>());
+				moveable.gameObject.SendMessage("StartRewindDust");
 			}
 
 			isDockedList.RemoveAt(0);

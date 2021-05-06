@@ -39,19 +39,13 @@ namespace Qbism.Rewind
 		private void OnEnable() 
 		{
 			if(mover != null)
-			{
 				mover.onInitialRecord += AddInitialPlayerRecording;
-			} 
 
 			if(handler != null)
-			{
 				handler.onInitialCubeRecording += AddInitialCubeRecording;
-			} 
 
 			if(moveHandler != null)
-			{
 				moveHandler.onInitialCubeRecording += AddInitialMoveableRecording;
-			}
 
 			if(moveableCubes != null)
 			{
@@ -148,19 +142,13 @@ namespace Qbism.Rewind
 		private void OnDisable()
 		{
 			if (mover != null)
-			{
-				mover.onInitialRecord -= AddInitialPlayerRecording;
-			} 
+				mover.onInitialRecord -= AddInitialPlayerRecording; 
 
 			if (handler != null)
-			{
 				handler.onInitialCubeRecording -= AddInitialCubeRecording;
-			} 
 
 			if (moveHandler != null)
-			{
 				moveHandler.onInitialCubeRecording -= AddInitialMoveableRecording;
-			}
 
 			if (moveableCubes != null)
 			{

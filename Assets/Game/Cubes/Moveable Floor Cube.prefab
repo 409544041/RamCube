@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 4515865334334731891}
   - component: {fileID: 8028607793029448003}
   - component: {fileID: 5301483408941736163}
+  - component: {fileID: 2489216231011968775}
   m_Layer: 8
   m_Name: Moveable Cube
   m_TagString: Moveable
@@ -247,7 +248,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a3e89b5083c0e44b30582c3fd4b301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
   shrinkStep: 0.5
   shrinkTimeStep: 0.01
   center: {fileID: 4745137476811388159}
@@ -303,6 +303,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2489216231011968775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028607793029448002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 981d0f862067bbd4cb2aabe28373c4f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewindVFX: {fileID: 4731585437288492461}
 --- !u!1 &8414849812941373003
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,6 +615,12 @@ Transform:
 --- !u!4 &4745137476971675417 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2476357465057020470, guid: 010b0b4fa0b157d43bcc54a51fb065a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 7171934691595285807}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4731585437288492461 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2462945047225276546, guid: 010b0b4fa0b157d43bcc54a51fb065a2,
     type: 3}
   m_PrefabInstance: {fileID: 7171934691595285807}
   m_PrefabAsset: {fileID: 0}
