@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
@@ -12,15 +13,13 @@ namespace Qbism.Cubes
 		//Config parameters
 		[Header ("Boosting")]
 		[SerializeField] float boostSpeed = 30f;
-		[SerializeField] GameObject boostCollider = null;
-		[SerializeField] Transform colliderSpawnPos = null;
+		[SerializeField] Transform boostRayOrigin = null;
+		[SerializeField] LayerMask boostRayMask;
 
 		public UnityEvent onBoostEvent = new UnityEvent();
 
 		public void PrepareAction(GameObject cube)
 		{
-			CreateSpawnCollider(cube);
-
 			if (cube.GetComponent<PlayerCubeMover>()) StartCoroutine(ExecuteActionOnPlayer(cube));
 			else if (cube.GetComponent<FeedForwardCube>()) StartCoroutine(ExecuteActionOnFF(cube));
 		}
@@ -28,23 +27,15 @@ namespace Qbism.Cubes
 		public void PrepareActionForMoveable(Transform side, Vector3 turnAxis, 
 			Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
-			CreateSpawnCollider(cube);
 			StartCoroutine(ExecuteActionOnMoveable(side, turnAxis, posAhead, cube, originPos, prevCube));
-		}
-
-		private void CreateSpawnCollider(GameObject cube)
-		{
-			GameObject spawnedCollider = Instantiate(boostCollider,
-							colliderSpawnPos.position, transform.localRotation);
-
-			spawnedCollider.transform.parent = cube.transform;
-			spawnedCollider.GetComponent<Collider>().enabled = true;
 		}
 
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
 			var mover = cube.GetComponent<PlayerCubeMover>();
 			var launchPos = mover.FetchGridPos();
+
+			Vector3 boostTarget = GetBoostTarget();
 
 			mover.input = false;
 			mover.isBoosting = true;
@@ -55,8 +46,12 @@ namespace Qbism.Cubes
 
 			while (mover.isBoosting)
 			{
-				cube.transform.position +=
-					transform.TransformDirection(Vector3.forward) * boostSpeed * Time.deltaTime;
+				cube.transform.position = Vector3.MoveTowards(cube.transform.position, 
+					boostTarget, boostSpeed * Time.deltaTime);
+				
+				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.001f)
+					mover.isBoosting = false;
+
 				yield return null;
 			}
 
@@ -68,10 +63,27 @@ namespace Qbism.Cubes
 			Transform side = null;
 			Vector3 turnAxis = new Vector3(0, 0, 0);
 			Vector2Int posAhead = new Vector2Int(0, 0);
-			
+
 			CalculateSide(mover, launchPos, cubePos, ref side, ref turnAxis, ref posAhead);
 
 			mover.CheckFloorInNewPos(side, turnAxis, posAhead);
+		}
+
+		private Vector3 GetBoostTarget()
+		{
+			RaycastHit wallHit;
+			Vector3 target = new Vector3(0, 0, 0);
+
+			if (Physics.Raycast(boostRayOrigin.position,
+				transform.TransformDirection(Vector3.forward), out wallHit, 30, boostRayMask))
+			{
+				//For this to work, wall or other blocker objects needs to be placed on 'the grid', just like cubes
+				float distance = Vector3.Distance(boostRayOrigin.position, wallHit.transform.position) - 1;
+				target = boostRayOrigin.position + (transform.TransformDirection(Vector3.forward) * distance);
+			}
+			else target = boostRayOrigin.position + (transform.TransformDirection(Vector3.forward) * 100);
+
+			return target;
 		}
 
 		private static void CalculateSide(PlayerCubeMover mover, Vector2Int launchPos, Vector2Int cubePos, ref Transform side, ref Vector3 turnAxis, ref Vector2Int posAhead)
@@ -108,10 +120,16 @@ namespace Qbism.Cubes
 
 			ff.isBoosting = true;
 
+			Vector3 boostTarget = GetBoostTarget();
+
 			while (ff.isBoosting)
 			{
-				ffCube.transform.position +=
-					transform.TransformDirection(Vector3.forward) * boostSpeed * Time.deltaTime;
+				ffCube.transform.position = Vector3.MoveTowards(ffCube.transform.position,
+					boostTarget, boostSpeed * Time.deltaTime);
+
+				if (Vector3.Distance(ffCube.transform.position, boostTarget) < 0.001f)
+					ff.isBoosting = false;
+
 				yield return null;
 			}
 
@@ -132,12 +150,20 @@ namespace Qbism.Cubes
 
 			moveable.isBoosting = true;
 
+			Vector3 boostTarget = GetBoostTarget();
+
 			while (moveable.isBoosting)
 			{
-				moveable.transform.position +=
-					transform.TransformDirection(Vector3.forward) * boostSpeed * Time.deltaTime;
+
+				cube.transform.position = Vector3.MoveTowards(cube.transform.position,
+					boostTarget, boostSpeed * Time.deltaTime);
+
+				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.001f)
+					moveable.isBoosting = false;
+
 				yield return null;
 			}
+
 			moveable.RoundPosition();
 			moveable.UpdateCenterPosition();
 
