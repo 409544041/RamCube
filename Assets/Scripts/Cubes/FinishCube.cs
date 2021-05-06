@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Qbism.PlayerCube;
 using Qbism.SceneTransition;
 using UnityEngine;
-using UnityEngine.Events;
 using Cinemachine;
 using Dreamteck.Splines;
 using Qbism.Saving;
@@ -39,6 +38,7 @@ namespace Qbism.Cubes
 		public event Action onSpawnShapie;
 		public event Action<InterfaceIDs> onRewindPulse;
 		public event Action<InterfaceIDs> onStopRewindPulse;
+		public event Action onShowSegments;
 
 		private void Awake()
 		{
@@ -131,6 +131,7 @@ namespace Qbism.Cubes
 			var serpent = GameObject.FindGameObjectWithTag("LevelCompFollower");
 			serpent.GetComponent<SplineFollower>().followSpeed = 15;
 			onSetSerpentMove(true);
+			onShowSegments();
 		}
 
 		private IEnumerator DestroyAllFloorCubes()

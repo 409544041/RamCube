@@ -14,6 +14,7 @@ namespace Qbism.Cubes
 		[SerializeField] AudioClip succesClip = null, failClip = null;
 		[Header("Impact VFX")]
 		[SerializeField] ParticleSystem impactParticle;
+		[SerializeField] MeshRenderer[] meshes = null;
 		[Header("Charging VFX")]
 		[SerializeField] ParticleSystem chargingBeamsParticles;
 		[SerializeField] float glowIncrease = .03f, glowIncreaseInterval = .05f;
@@ -21,7 +22,6 @@ namespace Qbism.Cubes
 		//Cache
 		public AudioSource source { get; private set; }
 		Animator animator;
-		MeshRenderer[] meshes;
 		PlayerFartLauncher farter;
 
 		//Actions, events, delegates etc
@@ -32,7 +32,6 @@ namespace Qbism.Cubes
 		{
 			source = GetComponentInChildren<AudioSource>();
 			animator = GetComponent<Animator>();
-			meshes = GetComponentsInChildren<MeshRenderer>();
 			farter = FindObjectOfType<PlayerFartLauncher>();
 		}
 

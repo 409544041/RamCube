@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Dreamteck.Splines;
 using UnityEngine;
+using Qbism.Cubes;
 
 namespace Qbism.Serpent
 {
@@ -10,6 +11,10 @@ namespace Qbism.Serpent
 		//Config parameters
 		public Transform[] segments = null;
 
+		//Cache
+		FinishCube finish = null;
+		SerpentScreenSplineHandler splineHandler = null;
+
 		//States
 		List<bool> serpDataList = new List<bool>();
 
@@ -17,7 +22,35 @@ namespace Qbism.Serpent
 		public delegate List<bool> GetSerpDataDel();
 		public GetSerpDataDel onFetchSerpDataList;
 
+		private void Awake() 
+		{
+			finish = FindObjectOfType<FinishCube>();
+			splineHandler = FindObjectOfType<SerpentScreenSplineHandler>();
+		}
+
+		private void OnEnable() 
+		{
+			if (finish != null) finish.onShowSegments += EnableSegments;
+		}
+
 		private void Start()
+		{
+			if (splineHandler == null) //Checking if we're in serpent screen or not
+			{
+				for (int i = 0; i < segments.Length; i++)
+				{
+					MeshRenderer mRender = segments[i].GetComponentInChildren<MeshRenderer>();
+					SpriteRenderer sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
+
+					mRender.enabled = false;
+					sRender.enabled = false;
+				}
+			}
+			else EnableSegments();
+			
+		}
+
+		public void EnableSegments()
 		{
 			serpDataList = onFetchSerpDataList();
 
@@ -43,6 +76,11 @@ namespace Qbism.Serpent
 					if (follower) follower.useTriggers = false;
 				}
 			}
+		}
+
+		private void OnDisable()
+		{
+			if (finish != null) finish.onShowSegments -= EnableSegments;
 		}
 	}
 }
