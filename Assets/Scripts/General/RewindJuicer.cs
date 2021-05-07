@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 namespace Qbism.General
@@ -8,10 +9,13 @@ namespace Qbism.General
 	{
 		//Config parameters
 		[SerializeField] ParticleSystem rewindVFX = null;
+		[SerializeField] MMFeedbacks postRewindJuice = null;
 
-		public void StartRewindDust()
+		//Activated by SendMessage from timebody. If method name changes, must change it there too.
+		public void StartPostRewindJuice()
 		{
-			rewindVFX.Play();
+			postRewindJuice.Initialization();
+			postRewindJuice.PlayFeedbacks();
 		}
 	}
 }

@@ -83,7 +83,7 @@ namespace Qbism.Rewind
 					mover.GetComponent<PlayerStunJuicer>().StopStunVFX();
 				}
 
-				mover.gameObject.SendMessage("StartRewindDust");
+				mover.gameObject.SendMessage("StartPostRewindJuice");
 			}
 
 			if (this.tag == "Environment" || this.tag == "Moveable")
@@ -158,7 +158,7 @@ namespace Qbism.Rewind
 				moveable.isDocked = false;
 				Destroy(GetComponent<FloorCube>());
 				Destroy(GetComponent<CubeShrinker>());
-				moveable.gameObject.SendMessage("StartRewindDust");
+				moveable.gameObject.SendMessage("StartPostRewindJuice");
 			}
 
 			isDockedList.RemoveAt(0);
