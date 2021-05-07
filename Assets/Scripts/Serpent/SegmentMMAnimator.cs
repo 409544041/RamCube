@@ -22,12 +22,6 @@ namespace Qbism.Serpent
 			hopRot = hopMovement.GetComponent<MMFeedbackRotation>();
 		}
 
-		private IEnumerator Start() 
-		{
-			yield return new WaitForSeconds(2f);
-			StartCoroutine(TriggerHopMovement());
-		}
-
 		private IEnumerator TriggerHopMovement()
 		{
 			hopMovement.Initialization();
