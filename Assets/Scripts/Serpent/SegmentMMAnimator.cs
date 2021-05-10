@@ -8,24 +8,29 @@ namespace Qbism.Serpent
 	public class SegmentMMAnimator : MonoBehaviour
 	{
 		//Config paramters
-		[SerializeField] MMFeedbacks hopMovement = null;
+		[Header ("Hop Look Around")]
+		[SerializeField] MMFeedbacks hopAnim = null;
 		[SerializeField] float hopInterval = 1f;
+		[Header ("Landing Squish")]
+		[SerializeField] MMFeedbacks squishAnim = null;
 
 		//Cache
 		MMFeedbackRotation hopRot = null;
+		MMFeedbackPosition hopPos = null;
 
 		//States
 		bool firstHop = true;
 
 		private void Awake() 
 		{
-			hopRot = hopMovement.GetComponent<MMFeedbackRotation>();
+			hopRot = hopAnim.GetComponent<MMFeedbackRotation>();
+			hopPos = hopAnim.GetComponent<MMFeedbackPosition>();
 		}
 
-		private IEnumerator TriggerHopMovement()
+		private IEnumerator TriggerHopAnim()
 		{
-			hopMovement.Initialization();
-			hopMovement.PlayFeedbacks();
+			hopAnim.Initialization();
+			hopAnim.PlayFeedbacks();
 
 			if (firstHop)
 			{
@@ -33,8 +38,14 @@ namespace Qbism.Serpent
 				//take the total time of the MMmovement into account for hopInterval duration
 				yield return new WaitForSeconds(hopInterval);
 				hopRot.RemapCurveOne *= -1;
-				StartCoroutine(TriggerHopMovement());
+				StartCoroutine(TriggerHopAnim());
 			}
+		}
+
+		private void TriggerSquishAnim()
+		{
+			squishAnim.Initialization();
+			squishAnim.PlayFeedbacks();
 		}
 	}
 }
