@@ -39,8 +39,8 @@ namespace Qbism.Serpent
 			{
 				for (int i = 0; i < segments.Length; i++)
 				{
-					MeshRenderer mRender = segments[i].GetComponentInChildren<MeshRenderer>();
-					SpriteRenderer sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
+					var mRender = segments[i].GetComponentInChildren<SkinnedMeshRenderer>();
+					var sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
 
 					mRender.enabled = false;
 					sRender.enabled = false;
@@ -56,9 +56,9 @@ namespace Qbism.Serpent
 
 			for (int i = 0; i < segments.Length; i++)
 			{
-				MeshRenderer mRender = segments[i].GetComponentInChildren<MeshRenderer>();
-				SpriteRenderer sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
-				SplineFollower follower = segments[i].GetComponent<SplineFollower>();
+				var mRender = segments[i].GetComponentInChildren<SkinnedMeshRenderer>();
+				var sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
+				var follower = segments[i].GetComponent<SplineFollower>();
 
 				if (!mRender || !sRender) Debug.LogError
 					 (segments[i] + " is missing either a meshrenderer or spriterenderer!");

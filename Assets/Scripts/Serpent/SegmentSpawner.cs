@@ -39,7 +39,7 @@ namespace Qbism.Serpent
 
 		private void SpawnSegment()
 		{
-			Instantiate(segmentToSpawn, transform.position, Quaternion.identity);
+			Instantiate(segmentToSpawn, transform.position, Quaternion.Euler(0f, 145f, 0f));
 			segmentToSpawn.transform.position = this.transform.position;
 		}
 

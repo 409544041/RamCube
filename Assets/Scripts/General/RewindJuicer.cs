@@ -8,7 +8,6 @@ namespace Qbism.General
 	public class RewindJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] ParticleSystem rewindVFX = null;
 		[SerializeField] MMFeedbacks postRewindJuice = null;
 
 		//Activated by SendMessage from timebody. If method name changes, must change it there too.
