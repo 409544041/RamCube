@@ -17,30 +17,37 @@ namespace Qbism.Serpent
 		[SerializeField] float spawnAnimDelay = .2f, lookAroundAnimDelay = 0f, 
 			lookUpAnimDelay = 0f, happyWiggleAnimDelay = 0f;
 
-		//States
-		bool firstHop = true;
-		float spawnWiggleTime = 0f;
-		float lookAroundTime = 0f;
-		float lookUpTime = 0f;
-		float happyWiggleTime = 0f;
+		//Cache
+		SegmentExpressionHandler faceHandler = null;
+
+		// //States
+		// float spawnWiggleTime = 0f;
+		// float lookAroundTime = 0f;
+		// float lookUpTime = 0f;
+		// float happyWiggleTime = 0f;
+
+		private void Awake() 
+		{
+			faceHandler = GetComponent<SegmentExpressionHandler>();
+		}
 
 		private void Start() 
 		{
-			GetAnimationClipTimes();
+			// GetAnimationClipTimes();
 			StartCoroutine(TriggerSpawnSequence());
 		}
 
-		private void GetAnimationClipTimes()
-		{
-			AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
-			foreach (AnimationClip clip in clips)
-			{
-				if(clip.name == "Segment Spawn Wiggle") spawnWiggleTime = clip.length;
-				else if(clip.name == "Segment Look Around") lookAroundTime = clip.length;
-				else if(clip.name == "Segment Look Up") lookUpTime = clip.length;
-				else if(clip.name == "Segment Happy Wiggle") happyWiggleTime = clip.length;
-			}
-		}
+		// private void GetAnimationClipTimes()
+		// {
+		// 	AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+		// 	foreach (AnimationClip clip in clips)
+		// 	{
+		// 		if(clip.name == "Segment Spawn Wiggle") spawnWiggleTime = clip.length;
+		// 		else if(clip.name == "Segment Look Around") lookAroundTime = clip.length;
+		// 		else if(clip.name == "Segment Look Up") lookUpTime = clip.length;
+		// 		else if(clip.name == "Segment Happy Wiggle") happyWiggleTime = clip.length;
+		// 	}
+		// }
 
 		private IEnumerator TriggerSpawnSequence()
 		{
