@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using Qbism.Cubes;
+using Qbism.PlayerCube;
 using UnityEngine;
 
 namespace Qbism.Serpent
@@ -13,27 +14,34 @@ namespace Qbism.Serpent
 		[SerializeField] MMFeedbacks spawnJuice = null;
 		[Header ("Animation")]
 		[SerializeField] Animator animator = null;
-		[SerializeField] float spawnAnimDelay = .2f, lookAroundAnimDelay = 0f, 
+		[SerializeField] float lookAroundAnimDelay = 0f, 
 			lookUpAnimDelay = 0f, happyWiggleAnimDelay = 0f;
 
 		//Cache
 		SegmentExpressionHandler faceHandler = null;
+		PlayerAnimator playerAnim = null;
+		Animator playerAnimCont = null;
+
+		//States
+		bool justSpawned = false;
 
 		private void Awake() 
 		{
 			faceHandler = GetComponent<SegmentExpressionHandler>();
+			playerAnim = FindObjectOfType<PlayerAnimator>();
+			playerAnimCont = playerAnim.GetComponent<Animator>();
+		}
+
+		private void OnEnable() 
+		{
+			if (playerAnim != null) playerAnim.onActivateSegmentSquish += TriggerSquish;	
 		}
 
 		public void Spawn()
 		{
-			StartCoroutine(TriggerSpawnSequence());
-		}
-		
-		private IEnumerator TriggerSpawnSequence()
-		{
+			justSpawned = true;
 			spawnJuice.Initialization();
 			spawnJuice.PlayFeedbacks();
-			yield return new WaitForSeconds(spawnAnimDelay);
 			animator.SetTrigger("SpawnWiggle");
 		}
 
@@ -45,7 +53,7 @@ namespace Qbism.Serpent
 
 		private void TriggerSquish()
 		{
-			animator.SetTrigger("Squish");
+			if (justSpawned) animator.SetTrigger("Squish");
 		}
 
 		private IEnumerator TriggerLookUp() //Called from animation event
@@ -67,11 +75,32 @@ namespace Qbism.Serpent
 			finish.InitiateSerpentSequence();
 		}
 
-		// TO DO: CALL PLAYER LANDING ANIM
-		// private void ActivatePlayerLanding() //Called from animation event
-		// {
-		// 	var finishJuicer = FindObjectOfType<FinishCubeJuicer>();
-		// 	finishJuicer.ActivatePlayerLanding();
-		// }
+		private IEnumerator TriggerPlayerLanding() //Called from animation event
+		{
+			GameObject player = GameObject.FindGameObjectWithTag("Player");
+			playerAnimCont.SetTrigger("Fall");
+
+			yield return null; //to ensure the player isn't on screen for 1 frame before starting anim
+
+			player.transform.position = new Vector3(transform.position.x, 
+				transform.position.y + 1, transform.position.z);
+			
+			player.transform.rotation = Quaternion.Euler(0f, -45f, 0f);
+		}
+
+		private void TriggerPlayerLookDown()
+		{
+			playerAnimCont.SetTrigger("LookDown");
+		}
+
+		private void TriggerPlayerWiggle() // Called from animation event
+		{
+			playerAnimCont.SetTrigger("Wiggle");
+		}
+
+		private void OnDisable()
+		{
+			if (playerAnim != null) playerAnim.onActivateSegmentSquish -= TriggerSquish;
+		}
 	}
 }
