@@ -96,13 +96,12 @@ namespace Qbism.PlayerCube
 			return V3Equal(transform.right, Vector3.up) || V3Equal(transform.right, Vector3.down);
 		}
 
-
 		private bool IsPlayerYWorldY()
 		{
 			return V3Equal(transform.up, Vector3.up) || V3Equal(transform.up, Vector3.down);
 		}
 
-		public bool V3Equal(Vector3 a, Vector3 b)
+		private bool V3Equal(Vector3 a, Vector3 b)
 		{
 			return Vector3.SqrMagnitude(a - b) < 0.001;
 		}

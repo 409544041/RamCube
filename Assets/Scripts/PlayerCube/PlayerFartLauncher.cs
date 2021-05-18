@@ -54,7 +54,7 @@ namespace Qbism.PlayerCube
 
 			viewPos = Camera.main.WorldToViewportPoint(transform.position);
 
-			AddGravityIfFalling();	
+			// AddGravityIfFalling();	
 			CheckIfOutOfScreen();
 		}
 
@@ -142,17 +142,17 @@ namespace Qbism.PlayerCube
 			}
 		}
 
-		private void AddGravityIfFalling()
-		{
-			if (rb.velocity.y < 0)
-			{
-				rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-			}
-			else if (rb.velocity.y > 0)
-			{
-				rb.velocity += Vector3.up * Physics.gravity.y * (lowLaunchMultiplier - 1) * Time.deltaTime;
-			}
-		}
+		// private void AddGravityIfFalling()
+		// {
+		// 	if (rb.velocity.y < 0)
+		// 	{
+		// 		rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+		// 	}
+		// 	else if (rb.velocity.y > 0)
+		// 	{
+		// 		rb.velocity += Vector3.up * Physics.gravity.y * (lowLaunchMultiplier - 1) * Time.deltaTime;
+		// 	}
+		// }
 	}
 }
 
