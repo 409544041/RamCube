@@ -300,7 +300,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8554115220973713375}
   - component: {fileID: -8787589194336391386}
-  - component: {fileID: 5406313334586724239}
   m_Layer: 0
   m_Name: Segment 01
   m_TagString: Untagged
@@ -337,25 +336,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   segmentID: 1
---- !u!114 &5406313334586724239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8554115220973709344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 802b7b0c2e317e6498e773496021cd4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnJuice: {fileID: 1570939729246052504}
-  squishAnim: {fileID: 0}
-  animator: {fileID: 6708227828586836224}
-  spawnAnimDelay: 0.2
-  lookAroundAnimDelay: 0
-  lookUpAnimDelay: 0
-  happyWiggleAnimDelay: 0
 --- !u!95 &6708227828586836224
 Animator:
   serializedVersion: 3
@@ -401,9 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnJuice: {fileID: 1570939729246052504}
-  squishAnim: {fileID: 0}
   animator: {fileID: 6708227828586836224}
-  spawnAnimDelay: 0.2
   lookAroundAnimDelay: 1
   lookUpAnimDelay: 1
   happyWiggleAnimDelay: 0.5

@@ -23,6 +23,7 @@ namespace Qbism.Cubes
 		PlayerFartLauncher farter;
 		ProgressHandler progHandler;
 		SerpentProgress serpProg;
+		PlayerAnimator playerAnim;
 
 		//States
 		Vector2Int myPosition;
@@ -49,12 +50,19 @@ namespace Qbism.Cubes
 			farter = FindObjectOfType<PlayerFartLauncher>();
 			progHandler = FindObjectOfType<ProgressHandler>();
 			serpProg = FindObjectOfType<SerpentProgress>();
+			playerAnim = farter.GetComponentInChildren<PlayerAnimator>();
 		}
 
 		private void OnEnable()
 		{
 			if (handler != null) handler.onLand += CheckForFinish;
 			if (juicer != null) juicer.onSpawnFriends += SpawnFriends;
+			if (playerAnim != null) 
+			{
+				playerAnim.onGetFinishPos += GetPos;
+				playerAnim.onTriggerSerpent += InitiateSerpentSequence;
+				playerAnim.onHasSeg += FetchHasSegment;
+			}
 		}
 
 		private void Start()
@@ -169,11 +177,21 @@ namespace Qbism.Cubes
 
 		private void SpawnFriends()
 		{
-			if (progHandler.currentHasSegment)
+			if (FetchHasSegment())
 			{
 				onSpawnSegment();
 			}
 			else onSpawnShapie();
+		}
+
+		public bool FetchHasSegment()
+		{
+			return progHandler.currentHasSegment;
+		}
+
+		private Vector3 GetPos()
+		{
+			return transform.position;
 		}
 
 		private IEnumerator LevelTransition(bool mapConnected, bool restart)
@@ -204,6 +222,12 @@ namespace Qbism.Cubes
 		{
 			if (handler != null) handler.onLand -= CheckForFinish;
 			if (juicer != null) juicer.onSpawnFriends -= SpawnFriends;
+			if (playerAnim != null) 
+			{
+				playerAnim.onGetFinishPos -= GetPos;
+				playerAnim.onTriggerSerpent -= InitiateSerpentSequence;
+				playerAnim.onHasSeg -= FetchHasSegment;
+			}
 		}
 	}
 

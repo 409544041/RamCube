@@ -20,7 +20,6 @@ namespace Qbism.Serpent
 		//Cache
 		SegmentExpressionHandler faceHandler = null;
 		PlayerAnimator playerAnim = null;
-		Animator playerAnimCont = null;
 
 		//States
 		bool justSpawned = false;
@@ -29,12 +28,11 @@ namespace Qbism.Serpent
 		{
 			faceHandler = GetComponent<SegmentExpressionHandler>();
 			playerAnim = FindObjectOfType<PlayerAnimator>();
-			playerAnimCont = playerAnim.GetComponent<Animator>();
 		}
 
 		private void OnEnable() 
 		{
-			if (playerAnim != null) playerAnim.onActivateSegmentSquish += TriggerSquish;	
+			if (playerAnim != null) playerAnim.onTriggerLandingReaction += TriggerSquish;	
 		}
 
 		public void Spawn()
@@ -69,38 +67,24 @@ namespace Qbism.Serpent
 			animator.SetTrigger("HappyWiggle");
 		}
 
-		private void ActivateSerpent()
+		private void TriggerPlayerLanding() //Called from animation event
 		{
-			var finish = FindObjectOfType<FinishCube>();
-			finish.InitiateSerpentSequence();
+			playerAnim.TriggerFalling(.5f);
 		}
 
-		private IEnumerator TriggerPlayerLanding() //Called from animation event
+		private void TriggerPlayerLookDown() //Called from animation event
 		{
-			GameObject player = GameObject.FindGameObjectWithTag("Player");
-			playerAnimCont.SetTrigger("Fall");
-
-			yield return null; //to ensure the player isn't on screen for 1 frame before starting anim
-
-			player.transform.position = new Vector3(transform.position.x, 
-				transform.position.y + 1, transform.position.z);
-			
-			player.transform.rotation = Quaternion.Euler(0f, -45f, 0f);
-		}
-
-		private void TriggerPlayerLookDown()
-		{
-			playerAnimCont.SetTrigger("LookDown");
+			playerAnim.TriggerLookDown();
 		}
 
 		private void TriggerPlayerWiggle() // Called from animation event
 		{
-			playerAnimCont.SetTrigger("Wiggle");
+			playerAnim.TriggerWiggle();
 		}
 
 		private void OnDisable()
 		{
-			if (playerAnim != null) playerAnim.onActivateSegmentSquish -= TriggerSquish;
+			if (playerAnim != null) playerAnim.onTriggerLandingReaction -= TriggerSquish;
 		}
 	}
 }
