@@ -13,12 +13,12 @@ namespace Qbism.Environment
 		Animator animator;
 
 		//States
-		bool counting = true;
-		float timeCounter = 0f;
+		bool counting = true, blinkCounting = true;
+		float timeCounter = 0f, blinkCounter = 0f;
 		bool isOpen = false;
-		float closedTime, actionTime;
+		float closedTime, actionTime, blinkTime;
 		string[] anims = new string[5];
-		bool inAction = false;
+		bool inAction = false, blinking = false;
 
 		private void Awake() 
 		{
@@ -29,15 +29,18 @@ namespace Qbism.Environment
 		{
 			ResetActionTime(); //Don't change order of these resets as not to fudge up isOpen on start
 			ResetClosedTime();
+			ResetBlinkTime();
 			PopulateAnimsArray();
 		}
 
 		private void Update()
 		{
 			if (counting) timeCounter += Time.deltaTime;
+			if (blinkCounting) blinkCounter += Time.deltaTime;
 
 			if (!isOpen && timeCounter >= closedTime) OpenEye();
 			if (isOpen && timeCounter >= actionTime && !inAction) DoEyeAction();
+			if (isOpen && blinkCounter >= blinkTime && !blinking) Blink();
 		}
 
 		private void OpenEye()
@@ -52,6 +55,14 @@ namespace Qbism.Environment
 			string actionString = anims[Random.Range(0,anims.Length)];
 			animator.SetTrigger(actionString);
 			counting = false;
+		}
+
+		private void Blink()
+		{
+			animator.SetLayerWeight(1, 1);
+			animator.SetTrigger("Blink");
+			blinking = true;
+			blinkCounting = false;
 		}
 
 		private void ResetClosedTime() //Gets called by animation event
@@ -71,6 +82,15 @@ namespace Qbism.Environment
 			if (!isOpen) isOpen = true;
 		}
 
+		private void ResetBlinkTime() //Gets called by animation event
+		{
+			blinkTime = Random.Range(minBlink, maxBlink);
+			blinkCounter = 0;
+			blinkCounting = true;
+			blinking = false;
+			animator.SetLayerWeight(1, 0);
+		}
+
 		private void PopulateAnimsArray()
 		{
 			anims[0] = "Close";
@@ -78,6 +98,16 @@ namespace Qbism.Environment
 			anims[2] = "Look01";
 			anims[3] = "Look02";
 			anims[4] = "Look02";
+		}
+
+		private void IsOpenTrue() //Gets called by animation event
+		{
+			isOpen = true;
+		}
+
+		private void IsOpenFalse() //Gets called by animation event
+		{
+			isOpen = false;
 		}
 	}
 }
