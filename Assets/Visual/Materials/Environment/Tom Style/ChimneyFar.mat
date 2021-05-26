@@ -7,10 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Chimney
+  m_Name: ChimneyFar
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
-  m_ShaderKeywords: _CELPRIMARYMODE_SINGLE _FLAT_RIM_ENABLED _FLAT_SHADOWS_ENABLED
-    _FLAT_SPECULAR_ENABLED _TEXTUREBLENDINGMODE_MULTIPLY _UNITYSHADOWMODE_MULTIPLY
+  m_ShaderKeywords: DR_ENABLE_LIGHTMAP_DIR DR_SPECULAR_ON _CELPRIMARYMODE_SINGLE
+    _FLAT_RIM_ENABLED _FLAT_SHADOWS_ENABLED _FLAT_SPECULAR_ENABLED _TEXTUREBLENDINGMODE_MULTIPLY
+    _UNITYSHADOWMODE_MULTIPLY
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -87,9 +88,9 @@ Material:
     - _FlatRimSize: 0
     - _FlatShadowsEnabled: 1
     - _FlatSmoothness: 0.362
-    - _FlatSpecularEdgeSmoothness: 0.921
+    - _FlatSpecularEdgeSmoothness: 0
     - _FlatSpecularEnabled: 1
-    - _FlatSpecularSize: 0.754
+    - _FlatSpecularSize: 0.5
     - _FlatSpecularSmoothness: 0.5
     - _Flatness: 1
     - _FlatnessExtra: 0.635
@@ -108,12 +109,12 @@ Material:
     - _GradientTop: 10
     - _LightContribution: 0.5
     - _LightFalloffSize: 0.0001
-    - _LightmapDirectionPitch: 194
-    - _LightmapDirectionYaw: 247
+    - _LightmapDirectionPitch: 90
+    - _LightmapDirectionYaw: 207
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OverrideLightmapDir: 0
+    - _OverrideLightmapDir: 1
     - _OverrideShadows: 1
     - _OverrideShadowsEnabled: 1
     - _Parallax: 0.02
@@ -129,7 +130,7 @@ Material:
     - _ShadowEdgeSmoothness: 0.01
     - _ShadowFalloff: 0.01
     - _SmoothnessTextureChannel: 0
-    - _SpecularEnabled: 0
+    - _SpecularEnabled: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
@@ -137,12 +138,12 @@ Material:
     - _TextureImpact: 0
     - _UVSec: 0
     - _UnityShadowMode: 1
-    - _UnityShadowPower: 0.5
+    - _UnityShadowPower: 1
     - _UnityShadowSharpness: 10
     - _VertexColorsEnabled: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.7924528, g: 0.34763256, b: 0.38631257, a: 1}
+    - _BaseColor: {r: 0.8584906, g: 0.45759168, b: 0.4945166, a: 1}
     - _Color: {r: 0.8113207, g: 0.74652207, b: 0.22579193, a: 1}
     - _ColorCelShadow: {r: 0.38581347, g: 0.38787434, b: 0.9622642, a: 1}
     - _ColorDim: {r: 0, g: 0, b: 0, a: 1}
@@ -155,7 +156,7 @@ Material:
     - _ColorShadows: {r: 0.37835297, g: 0.4602353, b: 0.72, a: 1}
     - _EmissionColor: {r: 4.9245777, g: 0, b: 0, a: 1}
     - _FlatRimColor: {r: 0.7169812, g: 0.23335709, b: 0.23335709, a: 1}
-    - _FlatSpecularColor: {r: 0.7967476, g: 0.23629406, b: 0.8490566, a: 1}
-    - _LightmapDirection: {r: 0.22269018, g: -0.9702957, b: 0.094526395, a: 0}
+    - _FlatSpecularColor: {r: 0.9245283, g: 0.44545558, b: 0.44045925, a: 1}
+    - _LightmapDirection: {r: -0.45399055, g: -0.00000004371139, b: -0.8910065, a: 0}
     - _UnityShadowColor: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
