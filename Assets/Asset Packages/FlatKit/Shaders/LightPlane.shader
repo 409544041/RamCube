@@ -72,13 +72,13 @@ SubShader
         fixed4 frag(v2f i) : SV_TARGET
         {
             fixed4 c = _Color;
-            float scene_depth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.projPos)));
-            float object_depth = i.projPos.z + length(i.dist);
-            float depth_fade = saturate((scene_depth - object_depth) / _Depth);
+            const float scene_depth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.projPos)));
+            const float object_depth = i.projPos.z + length(i.dist);
+            const float depth_fade = saturate((scene_depth - object_depth) / _Depth);
             c.a *= saturate((depth_fade * length(i.dist) - _CameraDistanceFadeClose) / (_CameraDistanceFadeFar - _CameraDistanceFadeClose));
             
-            float fade_uv_x = pow(smoothstep(1, 0, abs(i.uv.x * 2 - 1)), _UvFadeX);
-            float fade_uv_y = pow(smoothstep(1, 0, abs(i.uv.y * 2 - 1)), _UvFadeY);
+            const float fade_uv_x = pow(smoothstep(1, 0, abs(i.uv.x * 2 - 1)), _UvFadeX);
+            const float fade_uv_y = pow(smoothstep(1, 0, abs(i.uv.y * 2 - 1)), _UvFadeY);
             c.a *= fade_uv_x * fade_uv_y;
             
 #ifdef _ALLOWALPHAOVERFLOW_OFF

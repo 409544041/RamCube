@@ -19,27 +19,44 @@ public class FlatKitOutline : ScriptableRendererFeature {
             _destination = destination;
         }
 
-        public override void Configure(CommandBuffer cmd, RenderTextureDescriptor cameraTextureDescriptor) { }
+#if UNITY_2020_3_OR_NEWER
+        public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData) {
+            ConfigureClear(ClearFlag.None, Color.white);
+        }
+#else
+        public override void Configure(CommandBuffer cmd,
+            RenderTextureDescriptor cameraTextureDescriptor) {
+            ConfigureClear(ClearFlag.None, Color.white);
+        }
+#endif
 
-        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
+        public override void Execute(ScriptableRenderContext context,
+            ref RenderingData renderingData) {
             CommandBuffer cmd = CommandBufferPool.Get("FlatKit Outline Pass");
 
-            RenderTextureDescriptor opaqueDescriptor = renderingData.cameraData.cameraTargetDescriptor;
+            RenderTextureDescriptor opaqueDescriptor =
+                renderingData.cameraData.cameraTargetDescriptor;
             opaqueDescriptor.depthBufferBits = 0;
 
             if (_destination == RenderTargetHandle.CameraTarget) {
                 cmd.GetTemporaryRT(_temporaryColorTexture.id, opaqueDescriptor, FilterMode.Point);
-                Blit(cmd, _renderer.cameraColorTarget, _temporaryColorTexture.Identifier(), _outlineMaterial, 0);
-                Blit(cmd, _temporaryColorTexture.Identifier(), _renderer.cameraColorTarget);
+                cmd.Blit(_renderer.cameraColorTarget, _temporaryColorTexture.Identifier(),
+                    _outlineMaterial, 0);
+                cmd.Blit(_temporaryColorTexture.Identifier(), _renderer.cameraColorTarget);
             } else {
-                Blit(cmd, _renderer.cameraColorTarget, _destination.Identifier(), _outlineMaterial, 0);
+                cmd.Blit(_renderer.cameraColorTarget, _destination.Identifier(), _outlineMaterial,
+                    0);
             }
 
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
         }
 
+#if UNITY_2020_3_OR_NEWER
+        public override void OnCameraCleanup(CommandBuffer cmd) {
+#else
         public override void FrameCleanup(CommandBuffer cmd) {
+#endif
             if (_destination == RenderTargetHandle.CameraTarget) {
                 cmd.ReleaseTemporaryRT(_temporaryColorTexture.id);
             }
@@ -82,7 +99,14 @@ public class FlatKitOutline : ScriptableRendererFeature {
         _outlineTexture.Init("_OutlineTexture");
     }
 
-    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
+    public override void AddRenderPasses(ScriptableRenderer renderer,
+        ref RenderingData renderingData) {
+#if UNITY_EDITOR
+        if (renderingData.cameraData.isPreviewCamera) {
+            return;
+        }
+#endif
+
         if (settings == null) {
             Debug.LogWarning("[FlatKit] Missing Outline Settings");
             return;

@@ -5,44 +5,59 @@ using UnityEngine.Rendering.Universal;
 namespace FlatKit {
 public class FlatKitFog : ScriptableRendererFeature {
     class EffectPass : ScriptableRenderPass {
+        private readonly ProfilingSampler _profilingSampler = new ProfilingSampler("Flat Kit Fog");
         private ScriptableRenderer _renderer;
         private RenderTargetHandle _destination;
         private readonly Material _effectMaterial = null;
         private RenderTargetHandle _temporaryColorTexture;
-
-        public void Setup(ScriptableRenderer renderer, RenderTargetHandle dst) {
-            _renderer = renderer;
-            _destination = dst;
-        }
+        private RenderTextureDescriptor _descriptor;
 
         public EffectPass(Material effectMaterial) {
             _effectMaterial = effectMaterial;
         }
 
-        public override void Configure(CommandBuffer cmd, RenderTextureDescriptor cameraTextureDescriptor) { }
+        public void Setup(ScriptableRenderer renderer, RenderTargetHandle dst) {
+            _renderer = renderer;
+            _destination = dst;
+#if UNITY_2020_3_OR_NEWER
+            ConfigureInput(ScriptableRenderPassInput.Depth);
+#endif
+        }
 
-        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
-            CommandBuffer cmd = CommandBufferPool.Get("FlatKitFogPass");
+#if UNITY_2020_3_OR_NEWER
+        public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData) {
+            _descriptor = renderingData.cameraData.cameraTargetDescriptor;
+#else
+        public override void Configure(CommandBuffer cmd,
+            RenderTextureDescriptor cameraTextureDescriptor) {
+            _descriptor = cameraTextureDescriptor;
+#endif
+            _descriptor.depthBufferBits = 0;
+            cmd.GetTemporaryRT(_temporaryColorTexture.id, _descriptor, FilterMode.Point);
+        }
 
-            RenderTextureDescriptor opaqueDescriptor = renderingData.cameraData.cameraTargetDescriptor;
-            opaqueDescriptor.depthBufferBits = 0;
-
-            if (_destination == RenderTargetHandle.CameraTarget) {
-                cmd.GetTemporaryRT(_temporaryColorTexture.id, opaqueDescriptor, FilterMode.Point);
-                Blit(cmd, _renderer.cameraColorTarget, _temporaryColorTexture.Identifier(), _effectMaterial, 0);
-                Blit(cmd, _temporaryColorTexture.Identifier(), _renderer.cameraColorTarget);
-            } else {
-                Blit(cmd, _renderer.cameraColorTarget, _destination.Identifier(), _effectMaterial, 0);
+        public override void Execute(ScriptableRenderContext context,
+            ref RenderingData renderingData) {
+            CommandBuffer cmd = CommandBufferPool.Get();
+            using (new ProfilingScope(cmd, _profilingSampler)) {
+                if (_destination == RenderTargetHandle.CameraTarget) {
+                    cmd.Blit(null, _temporaryColorTexture.Identifier(), _effectMaterial);
+                    cmd.Blit(_temporaryColorTexture.Identifier(), _renderer.cameraColorTarget);
+                } else {
+                    cmd.Blit(null, _destination.Identifier(), _effectMaterial);
+                }
             }
 
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
         }
 
+#if UNITY_2020_3_OR_NEWER
+        public override void OnCameraCleanup(CommandBuffer cmd) {
+#else
         public override void FrameCleanup(CommandBuffer cmd) {
-            if (_destination == RenderTargetHandle.CameraTarget) {
-                cmd.ReleaseTemporaryRT(_temporaryColorTexture.id);
-            }
+#endif
+            cmd.ReleaseTemporaryRT(_temporaryColorTexture.id);
         }
     }
 
@@ -51,7 +66,6 @@ public class FlatKitFog : ScriptableRendererFeature {
 
     private Material _material = null;
     private EffectPass _effectPass;
-    private RenderTargetHandle _effectTexture;
 
     private Texture2D _lutDepth;
     private Texture2D _lutHeight;
@@ -80,12 +94,18 @@ public class FlatKitFog : ScriptableRendererFeature {
         InitMaterial();
 
         _effectPass = new EffectPass(_material) {
-            renderPassEvent = RenderPassEvent.AfterRenderingTransparents
+            renderPassEvent = settings.renderEvent
         };
-        _effectTexture.Init("_FogTexture");
     }
 
-    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
+    public override void AddRenderPasses(ScriptableRenderer renderer,
+        ref RenderingData renderingData) {
+#if UNITY_EDITOR
+        if (renderingData.cameraData.isPreviewCamera) {
+            return;
+        }
+#endif
+
         if (settings == null) {
             Debug.LogWarning("[FlatKit] Missing Fog Settings");
             return;
@@ -96,6 +116,12 @@ public class FlatKitFog : ScriptableRendererFeature {
         _effectPass.Setup(renderer, RenderTargetHandle.CameraTarget);
         renderer.EnqueuePass(_effectPass);
     }
+
+#if UNITY_2020_3_OR_NEWER
+    protected override void Dispose(bool disposing) {
+        CoreUtils.Destroy(_material);
+    }
+#endif
 
     private void InitMaterial() {
 #if UNITY_EDITOR

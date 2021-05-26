@@ -30,7 +30,7 @@ namespace Qbism.General
 			if (handler != null) handler.onLand += InitiateScroll;
 		}
 
-		void Start()
+		private void Start()
 		{
 			offSet = new Vector2(-scrollSpeed, 0);
 		}

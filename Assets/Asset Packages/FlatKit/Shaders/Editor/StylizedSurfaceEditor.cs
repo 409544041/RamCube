@@ -31,11 +31,16 @@ public class StylizedSurfaceEditor : ShaderGUI {
     private int _celShadingNumSteps = 0;
     private AnimationCurve _gradient = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
 
+    private MaterialProperty QueueOffsetProp { get; set; }
+    private readonly GUIContent _queueSlider = new GUIContent("Priority",
+        "Determines the chronological rendering order for a Material. High values are rendered first.");
+    private const int QueueOffsetRange = 50;
+
     private static readonly Dictionary<string, bool> FoldoutStates =
         new Dictionary<string, bool> {{"Rendering options", false}};
 
     private static readonly Color HashColor = new Color(0.85023f, 0.85034f, 0.85045f, 0.85056f);
-    private static readonly int ColorPropertyName = Shader.PropertyToID("_Color");
+    private static readonly int ColorPropertyName = Shader.PropertyToID("_BaseColor");
 
     void DrawStandard(MaterialProperty property) {
         string displayName = property.displayName;
@@ -178,10 +183,11 @@ public class StylizedSurfaceEditor : ShaderGUI {
 
             HandleUrpSettings(_target, _editor);
 
-            EditorGUILayout.Space();
+            QueueOffsetProp = FindProperty("_QueueOffset", _properties, false);
+            DrawQueueOffsetField();
+
             _editor.EnableInstancingField();
         }
-
         /*
         if (HasProperty("_MainTex")) {
             TransferToBaseMap();
@@ -198,7 +204,8 @@ public class StylizedSurfaceEditor : ShaderGUI {
 
         if (alphaClip) {
             material.EnableKeyword("_ALPHATEST_ON");
-        } else {
+        }
+        else {
             material.DisableKeyword("_ALPHATEST_ON");
         }
 
@@ -218,7 +225,8 @@ public class StylizedSurfaceEditor : ShaderGUI {
                 if (alphaClip) {
                     material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.AlphaTest;
                     material.SetOverrideTag("RenderType", "TransparentCutout");
-                } else {
+                }
+                else {
                     material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Geometry;
                     material.SetOverrideTag("RenderType", "Opaque");
                 }
@@ -230,7 +238,8 @@ public class StylizedSurfaceEditor : ShaderGUI {
                 material.SetInt("_ZWrite", 1);
                 material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
                 material.SetShaderPassEnabled("ShadowCaster", true);
-            } else // Transparent
+            }
+            else // Transparent
             {
                 BlendMode blendMode = (BlendMode) material.GetFloat("_Blend");
 
@@ -325,7 +334,8 @@ public class StylizedSurfaceEditor : ShaderGUI {
             var loadedTexture = LoadTexture(fullPath);
             if (loadedTexture != null) {
                 _target.SetTexture(propertyName, loadedTexture);
-            } else {
+            }
+            else {
                 Debug.LogWarning("Could not save the texture. Make sure the destination is in the Assets folder.");
             }
         }
@@ -421,6 +431,18 @@ public class StylizedSurfaceEditor : ShaderGUI {
         }
 
         return fullPath.Remove(0, count);
+    }
+
+    private void DrawQueueOffsetField() {
+        if (QueueOffsetProp != null) {
+            EditorGUI.BeginChangeCheck();
+            EditorGUI.showMixedValue = QueueOffsetProp.hasMixedValue;
+            var queue = EditorGUILayout.IntSlider(_queueSlider, (int) QueueOffsetProp.floatValue, -QueueOffsetRange,
+                QueueOffsetRange);
+            if (EditorGUI.EndChangeCheck())
+                QueueOffsetProp.floatValue = queue;
+            EditorGUI.showMixedValue = false;
+        }
     }
 
     private void TransferToBaseMap() {

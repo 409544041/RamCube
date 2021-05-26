@@ -2,7 +2,7 @@ Shader "Hidden/FlatKit/FogFilter"
 {
     Properties
     {
-        [HideInInspector]_MainTex ("Base (RGB)", 2D) = "white" { }
+        [HideInInspector][MainTexture]_BaseMap ("Base (RGB)", 2D) = "white" { }
 
         [Toggle(USE_DISTANCE_FOG)]_UseDistanceFog ("Use Distance", Float) = 0
         [Toggle(USE_DISTANCE_FOG_ON_SKY)]_UseDistanceFogOnSky ("Use Distance Fog On Sky", Float) = 0
@@ -39,14 +39,13 @@ Shader "Hidden/FlatKit/FogFilter"
         Pass
         {
             HLSLPROGRAM
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareOpaqueTexture.hlsl"
 
-            TEXTURE2D(_CameraColorTexture);
-            SAMPLER(sampler_CameraColorTexture);
-            float4 _CameraColorTexture_TexelSize;
-
-            TEXTURE2D(_CameraDepthTexture);
-            SAMPLER(sampler_CameraDepthTexture);
+            TEXTURE2D_X(_BaseMap);
+            SAMPLER(sampler_BaseMap);
+            #define SAMPLE_BASEMAP(uv)   SAMPLE_TEXTURE2D_X(_BaseMap, sampler_BaseMap, UnityStereoTransformScreenSpaceTex(uv));
 
             sampler2D _DistanceLUT;
             float _Near;
@@ -81,20 +80,11 @@ Shader "Hidden/FlatKit/FogFilter"
                 return rcp(_ZBufferParams.z * z + _ZBufferParams.w);
             }
 
-            float SampleDepth(float2 uv)
-            {
-                #if defined(UNITY_STEREO_INSTANCING_ENABLED) || defined(UNITY_STEREO_MULTIVIEW_ENABLED)
-					return SAMPLE_TEXTURE2D_ARRAY(_CameraDepthTexture, sampler_CameraDepthTexture, uv, unity_StereoEyeIndex).r;
-                #else
-                return SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, uv);
-                #endif
-            }
-
             float4 Fog(float2 uv, float3 screen_pos)
             {
-                float4 original = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uv);
+                const float4 original = float4(SampleSceneColor(uv), 1.0);
 
-                const float depthPacked = SampleDepth(uv);
+                const float depthPacked = SampleSceneDepth(uv);
                 const float depthEye = LinearEyeDepth(depthPacked);
                 const float depthCameraPlanes = Linear01Depth(depthPacked);
                 const float depthAbsolute = _ProjectionParams.y + (_ProjectionParams.z - _ProjectionParams.y) *

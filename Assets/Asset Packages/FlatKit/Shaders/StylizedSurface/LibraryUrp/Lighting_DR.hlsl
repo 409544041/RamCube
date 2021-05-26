@@ -38,7 +38,7 @@ half3 LightingPhysicallyBased_DSTRM(Light light, half3 normalWS, half3 viewDirec
 
 #if defined(_CELPRIMARYMODE_SINGLE)
     const half NdotLTPrimary = NdotLTransitionPrimary(normalWS, light.direction);
-    c = lerp(UNITY_ACCESS_INSTANCED_PROP(Props, _ColorDim), c, NdotLTPrimary);
+    c = lerp(_ColorDim, c, NdotLTPrimary);
 #endif  // _CELPRIMARYMODE_SINGLE
 
 #if defined(_CELPRIMARYMODE_STEPS)
@@ -67,32 +67,28 @@ half3 LightingPhysicallyBased_DSTRM(Light light, half3 normalWS, half3 viewDirec
 
 #if defined(DR_RIM_ON)
     const half NdotL = dot(normalWS, light.direction);
-    const float4 rim = 1.0 - dot(viewDirectionWS, normalWS);
-    const float rimLightAlign = UNITY_ACCESS_INSTANCED_PROP(Props, _FlatRimLightAlign);
-    const float rimSize = UNITY_ACCESS_INSTANCED_PROP(Props, _FlatRimSize);
-    const float rimSpread = 1.0 - rimSize - NdotL * rimLightAlign;
-    const float rimEdgeSmooth = UNITY_ACCESS_INSTANCED_PROP(Props, _FlatRimEdgeSmoothness);
+    const float rim = 1.0 - dot(viewDirectionWS, normalWS);
+    const float rimSpread = 1.0 - _FlatRimSize - NdotL * _FlatRimLightAlign;
+    const float rimEdgeSmooth = _FlatRimEdgeSmoothness;
     const float rimTransition = smoothstep(rimSpread - rimEdgeSmooth * 0.5, rimSpread + rimEdgeSmooth * 0.5, rim);
-    c = lerp(c, UNITY_ACCESS_INSTANCED_PROP(Props, _FlatRimColor), rimTransition);
+    c = lerp(c, _FlatRimColor, rimTransition);
 #endif  // DR_RIM_ON
 
 #if defined(DR_SPECULAR_ON)
     // Halfway between lighting direction and view vector.
     const float3 halfVector = normalize(light.direction + viewDirectionWS);
     const float NdotH = dot(normalWS, halfVector) * 0.5 + 0.5;
-    const float specularSize = UNITY_ACCESS_INSTANCED_PROP(Props, _FlatSpecularSize);
-    const float specEdgeSmooth = UNITY_ACCESS_INSTANCED_PROP(Props, _FlatSpecularEdgeSmoothness);
-    const float specular = saturate(pow(NdotH, 100.0 * (1.0 - specularSize) * (1.0 - specularSize)));
-    const float specularTransition = smoothstep(0.5 - specEdgeSmooth * 0.1, 0.5 + specEdgeSmooth * 0.1, specular);
-    c = lerp(c, UNITY_ACCESS_INSTANCED_PROP(Props, _FlatSpecularColor), specularTransition);
+    const float specular = saturate(pow(abs(NdotH), 100.0 * (1.0 - _FlatSpecularSize) * (1.0 - _FlatSpecularSize)));
+    const float specularTransition = smoothstep(0.5 - _FlatSpecularEdgeSmoothness * 0.1,
+                                                0.5 + _FlatSpecularEdgeSmoothness * 0.1, specular);
+    c = lerp(c, _FlatSpecularColor, specularTransition);
 #endif  // DR_SPECULAR_ON
 
 #if defined(_UNITYSHADOWMODE_MULTIPLY)
     c *= lerp(1, light.shadowAttenuation, _UnityShadowPower);
 #endif
 #if defined(_UNITYSHADOWMODE_COLOR)
-    const half4 unityShadowColor = UNITY_ACCESS_INSTANCED_PROP(Props, _UnityShadowColor);
-    c = lerp(lerp(c, unityShadowColor, unityShadowColor.a), c, light.shadowAttenuation);
+    c = lerp(lerp(c, _UnityShadowColor, _UnityShadowColor.a), c, light.shadowAttenuation);
 #endif
 
     c.rgb *= light.color * light.distanceAttenuation;
@@ -114,31 +110,47 @@ void StylizeLight(inout Light light)
 
 half4 UniversalFragment_DSTRM(InputData inputData, half3 albedo, half3 emission, half alpha)
 {
+    // To ensure backward compatibility we have to avoid using shadowMask input, as it is not present in older shaders
+    #if defined(SHADOWS_SHADOWMASK) && defined(LIGHTMAP_ON)
+    const half4 shadowMask = inputData.shadowMask;
+    #elif !defined (LIGHTMAP_ON)
+    const half4 shadowMask = unity_ProbesOcclusion;
+    #else
+    const half4 shadowMask = half4(1, 1, 1, 1);
+    #endif
+
+    #if VERSION_GREATER_EQUAL(10, 0)
+    Light mainLight = GetMainLight(inputData.shadowCoord, inputData.positionWS, shadowMask);
+    #else
     Light mainLight = GetMainLight(inputData.shadowCoord);
+    #endif
+
 #if LIGHTMAP_ON
     mainLight.distanceAttenuation = 1.0;
 #endif
     StylizeLight(mainLight);
+
+    #if defined(_SCREEN_SPACE_OCCLUSION)
+        AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(inputData.normalizedScreenSpaceUV);
+        mainLight.color *= aoFactor.directAmbientOcclusion;
+        inputData.bakedGI *= aoFactor.indirectAmbientOcclusion;
+    #endif
+
     MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI, half4(0, 0, 0, 0));
 
-    // Apply Flat Kit stylizing to `inputData.bakedGI`.
+    // Apply Flat Kit stylizing to `inputData.bakedGI` (which is half3).
 #if LIGHTMAP_ON
     const half sharpness01 = (_UnityShadowSharpness - 1.0) / (10.0 - 1.0);  // UI range is set to 1.0 - 10.0.
     const half blur = max(1.0 - sharpness01, 0.001);
     const half transitionPoint = 1.0 - _LightFalloffSize;
     inputData.bakedGI = smoothstep(transitionPoint, transitionPoint + blur, length(inputData.bakedGI));
 
-    /*
     #if defined(_UNITYSHADOWMODE_MULTIPLY)
         inputData.bakedGI *= _UnityShadowPower;
     #endif
     #if defined(_UNITYSHADOWMODE_COLOR)
-        half4 unityShadowColor = UNITY_ACCESS_INSTANCED_PROP(Props, _UnityShadowColor);
-        inputData.bakedGI = lerp(inputData.bakedGI, unityShadowColor, unityShadowColor.a * inputData.bakedGI);
+        inputData.bakedGI = lerp(inputData.bakedGI, _UnityShadowColor.rgb, _UnityShadowColor.a * inputData.bakedGI);
     #endif
-    */
-
-    // return half4(inputData.bakedGI, 1);
 #endif
 
     BRDFData brdfData;
@@ -150,7 +162,16 @@ half4 UniversalFragment_DSTRM(InputData inputData, half3 albedo, half3 emission,
     const uint pixelLightCount = GetAdditionalLightsCount();
     for (uint lightIndex = 0u; lightIndex < pixelLightCount; ++lightIndex)
     {
+        #if VERSION_GREATER_EQUAL(10, 0)
+        Light light = GetAdditionalLight(lightIndex, inputData.positionWS, shadowMask);
+        #else
         Light light = GetAdditionalLight(lightIndex, inputData.positionWS);
+        #endif
+
+        #if defined(_SCREEN_SPACE_OCCLUSION)
+            light.color *= aoFactor.directAmbientOcclusion;
+        #endif
+
         StylizeLight(light);
         color += LightingPhysicallyBased_DSTRM(light, inputData.normalWS, inputData.viewDirectionWS, inputData.positionWS);
     }
