@@ -8,7 +8,7 @@ namespace Qbism.Environment
 	{
 		//Config parameters
 		[SerializeField] FloraIdentifier[] flora;
-		[SerializeField] FloraSpawnChanceScripOb chanceSO;
+		[SerializeField] int[] spawnAmountWeight;
 		[SerializeField] float minBushSize = .4f, maxBushSize = 1, minRockSize = 1, maxRockSize = 1.3f;
 		[SerializeField] bool onTile = false;
 
@@ -29,8 +29,8 @@ namespace Qbism.Environment
 
 		private void GetSpawnAmount()
 		{
-			var amountIndex = Random.Range(0, chanceSO.chanceWeight.Length);
-			spawnAmount = chanceSO.chanceWeight[amountIndex];	
+			var amountIndex = Random.Range(0, spawnAmountWeight.Length);
+			spawnAmount = spawnAmountWeight[amountIndex];	
 
 			if (flora.Length < spawnAmount)
 			{

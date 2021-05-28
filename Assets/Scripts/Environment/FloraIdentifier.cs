@@ -6,8 +6,5 @@ public class FloraIdentifier : MonoBehaviour
 {
 	//Config parameters
 	public FloraID floraType;
-	public bool checkForCollision = false;
-
-	//States
-	public bool canSpawn { get; set; } = true;
+	public bool canSpawn = true;
 }
