@@ -52,7 +52,7 @@ namespace Qbism.Environment
 		private void DoEyeAction()
 		{
 			inAction = true;
-			string actionString = anims[Random.Range(0,anims.Length)];
+			string actionString = anims[Random.Range(0, anims.Length)];
 			animator.SetTrigger(actionString);
 			counting = false;
 		}

@@ -43,10 +43,11 @@ namespace Qbism.Environment
 			{
 				if (drips[j] == dripToShow)
 				{
-					drips[j].GetComponent<MeshRenderer>().enabled = true;
+					drips[j].dripMesh.enabled = true;
+					drips[j].GetComponent<FloraSpawner>().SpawnFlora();
 					prevHeight = drips[j].endHeight;
 				}
-				else drips[j].GetComponent<MeshRenderer>().enabled = false;
+				else drips[j].dripMesh.enabled = false;
 			}
 		}
 
@@ -71,10 +72,11 @@ namespace Qbism.Environment
 			{
 				if (drips[k] == dripToShow)
 				{
-					drips[k].GetComponent<MeshRenderer>().enabled = true;
+					drips[k].dripMesh.enabled = true;
+					drips[k].GetComponent<FloraSpawner>().SpawnFlora();
 					prevHeight = drips[k].endHeight;
 				}
-				else drips[k].GetComponent<MeshRenderer>().enabled = false;
+				else drips[k].dripMesh.enabled = false;
 			}
 		}
 	}
