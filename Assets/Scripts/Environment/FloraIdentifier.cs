@@ -7,7 +7,5 @@ public class FloraIdentifier : MonoBehaviour
 	//Config parameters
 	public FloraID floraType;
 	public MeshRenderer[] floraMeshes;
-	
-	//States
-	public bool canSpawn { get; set; } = true;
+	public bool canSpawn = true;
 }
