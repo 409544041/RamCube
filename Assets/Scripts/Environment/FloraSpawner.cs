@@ -10,7 +10,7 @@ namespace Qbism.Environment
 		[SerializeField] bool spawnFlora = true;
 		[SerializeField] FloraIdentifier[] flora;
 		[SerializeField] int[] spawnAmountWeight;
-		[SerializeField] float minBushSize = .4f, maxBushSize = 1, minRockSize = 1, maxRockSize = 1.3f;
+		[SerializeField] Vector2 minMaxBushSize, minMaxRockSize, minMaxMossSize;
 		[SerializeField] bool generateOnStart = false;
 
 		//States
@@ -92,17 +92,23 @@ namespace Qbism.Environment
 		{
 			if (flor.floraType == FloraID.bush)
 			{
-				var scale = Random.Range(minBushSize, maxBushSize);
+				var scale = Random.Range(minMaxBushSize.x, minMaxBushSize.y);
 				flor.transform.localScale = new Vector3 (scale, scale, scale);
 			} 
 
 			if (flor.floraType == FloraID.rock)
 			{
-				var scale = Random.Range(minRockSize, maxRockSize);
+				var scale = Random.Range(minMaxRockSize.x, minMaxRockSize.y);
 				flor.transform.localScale = new Vector3(scale, scale, scale);
 
 				float rot = Random.Range(0, 359);
 				flor.transform.rotation = Quaternion.Euler(0, rot, 0);
+			}
+
+			if (flor.floraType == FloraID.moss)
+			{
+				var scale = Random.Range(minMaxMossSize.x, minMaxMossSize.y);
+				flor.transform.localScale = new Vector3 (scale, scale, scale);
 			}
 		}
 	}
