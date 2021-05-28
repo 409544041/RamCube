@@ -7,22 +7,27 @@ namespace Qbism.Environment
 	public class FloraSpawner : MonoBehaviour
 	{
 		//Config parameters
+		[SerializeField] bool spawnFlora = true;
 		[SerializeField] FloraIdentifier[] flora;
 		[SerializeField] int[] spawnAmountWeight;
 		[SerializeField] float minBushSize = .4f, maxBushSize = 1, minRockSize = 1, maxRockSize = 1.3f;
-		[SerializeField] bool onTile = false;
+		[SerializeField] bool generateOnStart = false;
 
 		//States
 		int spawnAmount = 0;
 
 		private void Start() 
 		{
-			if (onTile) SpawnFlora();
+			if (!spawnFlora) return;
+
+			if (generateOnStart) SpawnFlora();
 		}
 
 
 		public void SpawnFlora() 
 		{
+			if (!spawnFlora) return;
+
 			GetSpawnAmount();
 			GenerateFlora();
 		}
@@ -45,7 +50,10 @@ namespace Qbism.Environment
 				if (i == 0) 
 				{
 					var toSpawn = flora[Random.Range(0, flora.Length)];
-					toSpawn.GetComponent<MeshRenderer>().enabled = true;
+					foreach (var mesh in toSpawn.floraMeshes)
+					{
+						mesh.enabled = true;
+					}
 					ApplyVariation(toSpawn);
 					toSpawn.canSpawn = false;
 				}
@@ -59,7 +67,10 @@ namespace Qbism.Environment
 					}
 
 					var toSpawn = spawnables[Random.Range(0, spawnables.Count)];
-					toSpawn.GetComponent<MeshRenderer>().enabled = true;
+					foreach (var mesh in toSpawn.floraMeshes)
+					{
+						mesh.enabled = true;
+					}
 					ApplyVariation(toSpawn);
 					toSpawn.canSpawn = false;
 				}
@@ -67,7 +78,13 @@ namespace Qbism.Environment
 
 			foreach (var flor in flora)
 			{
-				if (flor.canSpawn) flor.GetComponent<MeshRenderer>().enabled = false;
+				if (flor.canSpawn)
+				{
+					foreach (var mesh in flor.floraMeshes)
+					{
+						mesh.enabled = false;
+					}
+				}
 			}
 		}
 
@@ -76,13 +93,13 @@ namespace Qbism.Environment
 			if (flor.floraType == FloraID.bush)
 			{
 				var scale = Random.Range(minBushSize, maxBushSize);
-				flor.transform.localScale *= scale;
+				flor.transform.localScale = new Vector3 (scale, scale, scale);
 			} 
 
 			if (flor.floraType == FloraID.rock)
 			{
 				var scale = Random.Range(minRockSize, maxRockSize);
-				flor.transform.localScale *= scale;
+				flor.transform.localScale = new Vector3(scale, scale, scale);
 
 				float rot = Random.Range(0, 359);
 				flor.transform.rotation = Quaternion.Euler(0, rot, 0);

@@ -1,4 +1,4 @@
 public enum FloraID 
 {
-	bush, rock
+	bush, rock, tree
 }
