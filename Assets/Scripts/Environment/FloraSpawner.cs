@@ -16,18 +16,18 @@ namespace Qbism.Environment
 		//States
 		int spawnAmount = 0;
 
+		List<FloraIdentifier> floraList = new List<FloraIdentifier>();
+
 		private void Start() 
 		{
-			if (!spawnFlora) return;
-
 			if (generateOnStart) SpawnFlora();
 		}
-
 
 		public void SpawnFlora() 
 		{
 			if (!spawnFlora) return;
 
+			AddFloraToFloraList();
 			GetSpawnAmount();
 			GenerateFlora();
 		}
@@ -37,9 +37,9 @@ namespace Qbism.Environment
 			var amountIndex = Random.Range(0, spawnAmountWeight.Length);
 			spawnAmount = spawnAmountWeight[amountIndex];	
 
-			if (flora.Length < spawnAmount)
+			if (floraList.Count < spawnAmount)
 			{
-				spawnAmount = flora.Length;
+				spawnAmount = floraList.Count;
 			}	
 		}
 
@@ -47,33 +47,14 @@ namespace Qbism.Environment
 		{
 			for (int i = 0; i < spawnAmount; i++)
 			{
-				if (i == 0) 
+				var toSpawn = floraList[Random.Range(0, floraList.Count)];
+				foreach (var mesh in toSpawn.floraMeshes)
 				{
-					var toSpawn = flora[Random.Range(0, flora.Length)];
-					foreach (var mesh in toSpawn.floraMeshes)
-					{
-						mesh.enabled = true;
-					}
-					ApplyVariation(toSpawn);
-					toSpawn.canSpawn = false;
+					mesh.enabled = true;
 				}
-				else
-				{
-					List<FloraIdentifier> spawnables = new List<FloraIdentifier>();
-
-					foreach (var flor in flora)
-					{
-						if (flor.canSpawn == true) spawnables.Add(flor);
-					}
-
-					var toSpawn = spawnables[Random.Range(0, spawnables.Count)];
-					foreach (var mesh in toSpawn.floraMeshes)
-					{
-						mesh.enabled = true;
-					}
-					ApplyVariation(toSpawn);
-					toSpawn.canSpawn = false;
-				}
+				ApplyVariation(toSpawn);
+				toSpawn.canSpawn = false;
+				floraList.Remove(toSpawn);
 			}
 
 			foreach (var flor in flora)
@@ -109,6 +90,21 @@ namespace Qbism.Environment
 			{
 				var scale = Random.Range(minMaxMossSize.x, minMaxMossSize.y);
 				flor.transform.localScale = new Vector3 (scale, scale, scale);
+			}
+		}
+
+		private void AddFloraToFloraList()
+		{
+			foreach (var flor in flora)
+			{
+				if (flor.canSpawn) floraList.Add(flor);
+				else
+				{
+					foreach (var mesh in flor.floraMeshes)
+					{
+						mesh.enabled = false;
+					}
+				}
 			}
 		}
 	}
