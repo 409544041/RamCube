@@ -11,7 +11,10 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		[Header("SFX")]
-		[SerializeField] AudioClip succesClip = null, failClip = null;
+		[SerializeField] AudioClip succesClip = null;
+		[SerializeField] AudioClip failClip = null;
+		[Header("VFX")]
+		[SerializeField] GameObject glowEmitParticles;
 		[Header("Impact VFX")]
 		[SerializeField] ParticleSystem impactParticle;
 		[SerializeField] MeshRenderer[] meshes = null;
@@ -23,16 +26,21 @@ namespace Qbism.Cubes
 		public AudioSource source { get; private set; }
 		Animator animator;
 		PlayerFartLauncher farter;
+		PlayerCubeMover player;
 
 		//Actions, events, delegates etc
 		public UnityEvent onFinishEvent = new UnityEvent();
 		public event Action onSpawnFriends;
 
+		public delegate bool GetCompleteDel();
+		public GetCompleteDel onFinishCheck;
+
 		private void Awake() 
 		{
 			source = GetComponentInChildren<AudioSource>();
 			animator = GetComponent<Animator>();
-			farter = FindObjectOfType<PlayerFartLauncher>();
+			player = FindObjectOfType<PlayerCubeMover>();
+			farter = player.GetComponent<PlayerFartLauncher>();
 		}
 
 		private void OnEnable()
@@ -42,6 +50,23 @@ namespace Qbism.Cubes
 				farter.onDoneFarting += StartBreakingAnimation;
 				farter.onStartFarting += StartGlowing;
 			} 
+		}
+
+		private void Update()
+		{
+			if(!onFinishCheck()) CheckForGlowDeactivation();
+		}
+
+		private void CheckForGlowDeactivation()
+		{
+			if (Vector3.Distance(transform.position, player.transform.position) < 1.25f)
+				glowEmitParticles.SetActive(false);
+			else if (glowEmitParticles.activeSelf == false) glowEmitParticles.SetActive(true);
+		}
+
+		public void DeactivateGlow()
+		{
+			glowEmitParticles.SetActive(false);
 		}
 
 		public void PlaySuccesSound()

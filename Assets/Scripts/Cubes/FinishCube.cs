@@ -28,6 +28,7 @@ namespace Qbism.Cubes
 		//States
 		Vector2Int myPosition;
 		public bool wrongOnFinish { get; set; } = false;
+		bool hasFinished = false;
 		
 		//Actions, events, delegates etc
 		public delegate bool GetConnectionDel();
@@ -56,7 +57,11 @@ namespace Qbism.Cubes
 		private void OnEnable()
 		{
 			if (handler != null) handler.onLand += CheckForFinish;
-			if (juicer != null) juicer.onSpawnFriends += SpawnFriends;
+			if (juicer != null)
+			{
+				juicer.onSpawnFriends += SpawnFriends;
+				juicer.onFinishCheck += FetchFinishStatus;
+			} 
 			if (playerAnim != null) 
 			{
 				playerAnim.onGetFinishPos += GetPos;
@@ -91,7 +96,7 @@ namespace Qbism.Cubes
 			} 
 		}
 
-		public void StartFinish()
+		public void StartFinish() //For debug finishing
 		{
 			StartCoroutine(Finish());
 		}
@@ -117,6 +122,8 @@ namespace Qbism.Cubes
 
 			progHandler.SaveProgData();
 
+			hasFinished = true;
+			juicer.DeactivateGlow();
 			juicer.PlaySuccesSound();
 
 			yield return DestroyAllFloorCubes();
@@ -218,10 +225,19 @@ namespace Qbism.Cubes
 			onStopRewindPulse(InterfaceIDs.Rewind);
 		}
 
+		private bool FetchFinishStatus()
+		{
+			return hasFinished;
+		}
+
 		private void OnDisable()
 		{
 			if (handler != null) handler.onLand -= CheckForFinish;
-			if (juicer != null) juicer.onSpawnFriends -= SpawnFriends;
+			if (juicer != null)
+			{
+				juicer.onSpawnFriends -= SpawnFriends;
+				juicer.onFinishCheck -= FetchFinishStatus;
+			}
 			if (playerAnim != null) 
 			{
 				playerAnim.onGetFinishPos -= GetPos;
