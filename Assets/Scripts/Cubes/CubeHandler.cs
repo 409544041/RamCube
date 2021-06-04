@@ -216,13 +216,9 @@ namespace Qbism.Cubes
 			{
 				var cube = pair.Value;
 				CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
-				Vector3 recordedScale = new Vector3 (0, 0, 0);
-
-				if(shrinker && !shrinker.hasShrunk) 
-					recordedScale = cube.transform.localScale;
 				
 				onInitialCubeRecording(cube, cube.transform.position, 
-					cube.transform.rotation, recordedScale);
+					cube.transform.rotation, cube.transform.localScale);
 			}
 		}
 

@@ -58,7 +58,7 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		private void LoadWallCubeDictionary()
+		private void LoadWallCubeDictionary() //TO DO: Check why this is here. Is it still relevant?
 		{
 			GameObject[] cubes = GameObject.FindGameObjectsWithTag("Wall");
 			foreach (GameObject cube in cubes)
