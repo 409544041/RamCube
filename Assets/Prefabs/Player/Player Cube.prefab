@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88096a14f518ea44b744faa6301b169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  altWiggleDelay: 1
 --- !u!1 &995449580525320680
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +147,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -247,6 +248,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boostJuice: {fileID: 5263398275875843955}
   postBoostJuice: {fileID: 762758906432211995}
+  boostTrails: {fileID: 2790709368037952540}
+  maxBoostTrailTime: 0.75
 --- !u!114 &7636770465740133781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1231,12 +1234,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1b777b401d930b04b81b05ccf7051efd, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: -6842650868727793573, guid: 145ecca113bbc034a98bcfa002d946b6,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a3804104142ce254f8b39acb836d591b, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: -6652725513331149018, guid: 145ecca113bbc034a98bcfa002d946b6,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1351,7 +1354,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a3804104142ce254f8b39acb836d591b, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 4167280743394806330, guid: 145ecca113bbc034a98bcfa002d946b6,
         type: 3}
       propertyPath: m_LocalPosition.x

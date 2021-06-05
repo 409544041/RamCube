@@ -16,6 +16,7 @@ namespace Qbism.Cubes
 		[SerializeField] Transform boostRayOrigin = null;
 		[SerializeField] LayerMask boostRayMask;
 
+		//Actions, events, delegates etc
 		public UnityEvent onBoostEvent = new UnityEvent();
 
 		public void PrepareAction(GameObject cube)
@@ -41,6 +42,7 @@ namespace Qbism.Cubes
 			mover.isBoosting = true;
 
 			onBoostEvent.Invoke();
+
 			mover.GetComponent<PlayerCubeBoostJuicer>().
 				PlayBoostJuice(-transform.forward);
 
@@ -55,18 +57,21 @@ namespace Qbism.Cubes
 				yield return null;
 			}
 
-			mover.RoundPosition();
-			mover.UpdateCenterPosition();
+			if (!mover.isOutOfBounds)
+			{
+				mover.RoundPosition();
+				mover.UpdateCenterPosition();
 
-			var cubePos = mover.FetchGridPos();
+				var cubePos = mover.FetchGridPos();
 
-			Transform side = null;
-			Vector3 turnAxis = new Vector3(0, 0, 0);
-			Vector2Int posAhead = new Vector2Int(0, 0);
+				Transform side = null;
+				Vector3 turnAxis = new Vector3(0, 0, 0);
+				Vector2Int posAhead = new Vector2Int(0, 0);
 
-			CalculateSide(mover, launchPos, cubePos, ref side, ref turnAxis, ref posAhead);
+				CalculateSide(mover, launchPos, cubePos, ref side, ref turnAxis, ref posAhead);
 
-			mover.CheckFloorInNewPos(side, turnAxis, posAhead);
+				mover.CheckFloorInNewPos(side, turnAxis, posAhead);
+			}
 		}
 
 		private Vector3 GetBoostTarget()
@@ -75,13 +80,14 @@ namespace Qbism.Cubes
 			Vector3 target = new Vector3(0, 0, 0);
 
 			if (Physics.Raycast(boostRayOrigin.position,
-				transform.TransformDirection(Vector3.forward), out wallHit, 30, boostRayMask))
+				transform.TransformDirection(Vector3.forward), out wallHit, 20, boostRayMask))
 			{
 				//For this to work, wall or other blocker objects needs to be placed on 'the grid', just like cubes
 				float distance = Vector3.Distance(boostRayOrigin.position, wallHit.transform.position) - 1;
 				target = boostRayOrigin.position + (transform.TransformDirection(Vector3.forward) * distance);
 			}
-			else target = boostRayOrigin.position + (transform.TransformDirection(Vector3.forward) * 100);
+			//this else means if it flies out of bounds
+			else target = boostRayOrigin.position + (transform.TransformDirection(Vector3.forward) * 20);
 
 			return target;
 		}

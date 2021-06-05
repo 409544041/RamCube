@@ -15,11 +15,12 @@ namespace Qbism.Rewind
 		MoveableCubeHandler moveHandler;
 		CubeHandler handler;
 
-		private List<PointInTime> rewindList = new List<PointInTime>(); //TO DO: Make private afterwards
+		private List<PointInTime> rewindList = new List<PointInTime>(); 
 		private List<bool> isFindableList = new List<bool>();
 		private List<bool> hasShrunkList = new List<bool>();
 		private List<CubeTypes> isStaticList = new List<CubeTypes>();
 		private List<bool> isDockedList = new List<bool>();
+		private List<bool> isOutOfBoundsList = new List<bool>();
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onStopRewindPulse;
@@ -57,6 +58,9 @@ namespace Qbism.Rewind
 			{
 				if (moveable.isDocked == true) isDockedList.Insert(0, true);
 				else isDockedList.Insert(0, false); 
+
+				if (moveable.isOutOfBounds == true) isOutOfBoundsList.Insert(0, true);
+				else isOutOfBoundsList.Insert(0, false);
 			}
 		}
 
@@ -75,6 +79,12 @@ namespace Qbism.Rewind
 				mover.UpdateCenterPosition();
 				mover.GetComponent<PlayerCubeFeedForward>().ShowFeedForward();
 				handler.currentCube = handler.FetchCube(mover.FetchGridPos());
+
+				if (mover.isOutOfBounds)
+				{
+					mover.isOutOfBounds = false;
+					onStopRewindPulse(InterfaceIDs.Rewind);
+				}
 				
 				if (mover.isStunned)
 				{
@@ -100,6 +110,7 @@ namespace Qbism.Rewind
 				if (moveable)
 				{
 					ResetDocked(moveable);
+					ResetOutOfBounds(moveable);
 				}
 			}
 		}
@@ -152,7 +163,8 @@ namespace Qbism.Rewind
 			moveable.RoundPosition();
 			moveable.UpdateCenterPosition();
 
-			if(isDockedList.Count > 0 && isDockedList[0] == false && moveable.isDocked == true)
+			if(isDockedList.Count > 0 && isDockedList[0] == false 
+				&& moveable.isDocked == true)
 			{
 				this.tag = "Moveable";
 				moveable.isDocked = false;
@@ -163,5 +175,17 @@ namespace Qbism.Rewind
 
 			isDockedList.RemoveAt(0);
 		}	
+
+		private void ResetOutOfBounds(MoveableCube moveable)
+		{
+			if (isOutOfBoundsList.Count > 0 && isOutOfBoundsList[0] == false &&
+				moveable.isOutOfBounds == true)
+			{
+				moveable.isOutOfBounds = false;
+				moveable.mesh.enabled = true;
+			}
+
+			isOutOfBoundsList.RemoveAt(0);
+		}
 	}
 }

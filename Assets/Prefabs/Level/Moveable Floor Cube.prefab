@@ -262,6 +262,7 @@ MonoBehaviour:
   moveScale: {x: 0.9, y: 0.9, z: 0.9}
   shrinkFeedback: {fileID: 9158600549025654425}
   shrinkFeedbackDuration: 0.4
+  mesh: {fileID: 7123817644234092039}
 --- !u!114 &4515865334334731891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +286,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 1, z: 0.9}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5301483408941736163
 Rigidbody:
@@ -297,12 +298,12 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_AngularDrag: 0
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!114 &2489216231011968775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981d0f862067bbd4cb2aabe28373c4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewindVFX: {fileID: 4731585437288492461}
   postRewindJuice: {fileID: 3419522717608653130}
 --- !u!1 &8414849812941373003
 GameObject:

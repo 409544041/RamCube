@@ -10,6 +10,7 @@ namespace Qbism.PlayerCube
 		//Config parameters
 		[SerializeField] MMFeedbacks boostJuice = null;
 		[SerializeField] MMFeedbacks postBoostJuice = null;
+		[SerializeField] float maxBoostTrailTime = 1f;
 
 		//Cache
 		MMFeedbackScale[] postBoostMMScalers;
@@ -18,6 +19,8 @@ namespace Qbism.PlayerCube
 
 		//States
 		Vector3 boostImpactDir = new Vector3(0, 0, 0);
+		float boostTrailTimer = 0f;
+		bool boostTrailCounting = false;
 
 		private void Awake() 
 		{
@@ -26,10 +29,26 @@ namespace Qbism.PlayerCube
 			boostMMScalers = boostJuice.GetComponents<MMFeedbackScale>();
 		}
 
+		private void Update()
+		{
+			BoostTrailCounting();
+		}
+
+		private void BoostTrailCounting()
+		{
+			if (boostTrailCounting) boostTrailTimer += Time.deltaTime;
+
+			if (boostTrailTimer >= maxBoostTrailTime)
+			{
+				boostJuice.StopFeedbacks();
+				boostTrailCounting = false;
+			}
+		}
+
 		public void PlayBoostJuice(Vector3 direction)
 		{
-			ParticleSystem particles = boostJuice.GetComponent<MMFeedbackParticlesInstantiation>().
-				ParticlesPrefab;
+			ParticleSystem particles = boostJuice.
+			GetComponent<MMFeedbackParticlesInstantiation>().ParticlesPrefab;
 
 			particles.transform.forward = transform.TransformDirection(direction);
 			boostImpactDir = -direction;
@@ -41,6 +60,8 @@ namespace Qbism.PlayerCube
 
 			boostJuice.Initialization();
 			boostJuice.PlayFeedbacks();
+			boostTrailTimer = 0;
+			boostTrailCounting = true;
 		}
 
 		public void PlayPostBoostJuice()

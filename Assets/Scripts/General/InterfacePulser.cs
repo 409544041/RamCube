@@ -18,6 +18,7 @@ namespace Qbism.General
 		RewindHandler rewinder = null;
 		LaserCube[] lasers = null;
 		TimeBody[] bodies = null;
+		OutOfBounds[] outOfBounds = null;
 
 		private void Awake()
 		{
@@ -25,6 +26,7 @@ namespace Qbism.General
 			rewinder = FindObjectOfType<RewindHandler>();
 			lasers = FindObjectsOfType<LaserCube>();
 			bodies = FindObjectsOfType<TimeBody>();
+			outOfBounds = FindObjectsOfType<OutOfBounds>();
 		}
 
 		private void OnEnable()
@@ -45,6 +47,11 @@ namespace Qbism.General
 			foreach (TimeBody body in bodies)
 			{
 				if (body != null) body.onStopRewindPulse += StopPulse;
+			}
+
+			foreach (OutOfBounds oob in outOfBounds)
+			{
+				if (oob != null) oob.onRewindPulse += InitiatePulse;
 			}
 		}
 
@@ -80,6 +87,11 @@ namespace Qbism.General
 			foreach (TimeBody body in bodies)
 			{
 				if (body != null) body.onStopRewindPulse -= StopPulse;
+			}
+
+			foreach (OutOfBounds oob in outOfBounds)
+			{
+				if (oob != null) oob.onRewindPulse -= InitiatePulse;
 			}
 		}
 	}

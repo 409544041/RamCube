@@ -9,20 +9,25 @@ namespace Qbism.MoveableCubes
 	public class MoveableCube : MonoBehaviour, IActiveCube
 	{
 		//Config parameters
+		[Header("Shrinking")]
 		[SerializeField] float shrinkStep = 0f;
 		[SerializeField] float shrinkTimeStep = 0f;
+		[Header("Flip Center")]
 		[SerializeField] Transform center = null;
 		public Transform up = null;
 		public Transform down = null;
 		public Transform left = null;
 		public Transform right = null;
+		[Header("Flipping & Lowering")]
 		[SerializeField] int turnStep = 18;
 		[SerializeField] float timeStep = 0.01f;
 		[SerializeField] float lowerStep = 0.5f;
+		[Header("Feedback")]
 		[SerializeField] AudioClip landClip = null;
 		[SerializeField] Vector3 moveScale = new Vector3( .9f, .9f, .9f);
 		[SerializeField] MMFeedbacks shrinkFeedback;
 		[SerializeField] float shrinkFeedbackDuration;
+		public Renderer mesh;
 
 		//States
 		public bool isMoving { get; set;} = false;
@@ -30,21 +35,17 @@ namespace Qbism.MoveableCubes
 		public bool isBoosting { get; set; } = false;
 		public bool hasBumped { get; set; } = false;
 		public bool isDocked { get; set; } = false;
+		public bool isOutOfBounds { get; set; } = false;
 		Quaternion resetRot;
 
 		//Actions, events, delegates etc
-		public delegate bool KeyCheckDelegate(Vector3Int pos);
-		public KeyCheckDelegate onWallKeyCheck;
-		public delegate bool FloorKeyCheckDelegate(Vector2Int pos);
-		public FloorKeyCheckDelegate onFloorKeyCheck;
-		public delegate bool MoveKeyCheckDelegate(Vector2Int pos);
-		public MoveKeyCheckDelegate onMoveableKeyCheck;
-		public delegate bool ShrunkCheckDelegate(Vector2Int pos);
-		public ShrunkCheckDelegate onShrunkCheck;
+		public delegate bool KeyCheckDel(Vector3Int pos);
+		public KeyCheckDel onWallKeyCheck;
+		public delegate bool CheckDel(Vector2Int pos);
+		public CheckDel onFloorKeyCheck, onMoveableKeyCheck, onShrunkCheck, onMovingCheck;
 		public delegate Vector2Int PlayerPosDelegate();
 		public PlayerPosDelegate onPlayerPosCheck;
-		public delegate bool MovingCheckDelegate(Vector2Int pos);
-		public MovingCheckDelegate onMovingCheck;
+		
 
 		public event Action<Vector2Int, GameObject, float, float, MMFeedbacks, float> onComponentAdd;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
