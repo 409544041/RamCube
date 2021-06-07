@@ -22,12 +22,14 @@ namespace Qbism.General
 
 			if (cube.isLeftTurning)
 			{
-				renderer.transform.localScale = new Vector3 (-1, 1 ,1);
+				renderer.transform.localScale = new Vector3 (renderer.transform.localScale.x * -1,
+					renderer.transform.localScale.y, renderer.transform.localScale.z);
 				cube.turnAxis = Vector3.down;
 			}
 			else
 			{
-				renderer.transform.localScale = new Vector3(1, 1, 1);
+				renderer.transform.localScale = new Vector3(renderer.transform.localScale.x * 1,
+					renderer.transform.localScale.y, renderer.transform.localScale.z);
 				cube.turnAxis = Vector3.up;
 			} 
 		}
