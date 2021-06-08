@@ -13,7 +13,7 @@ namespace Qbism.Cubes
 		public void BecomeShrinkingCube(GameObject cube)
 		{
 			Material[] mats = GetComponentInChildren<MeshRenderer>().materials;
-			mats[2].SetTexture("_BaseMap", null);
+			mats[1].SetTexture("_BaseMap", null);
 			GetComponent<FloorCube>().type = CubeTypes.Shrinking;
 		}
 	}
