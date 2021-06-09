@@ -82,7 +82,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d784e323015a03446aabf442e3b1f895, type: 2}
+  - {fileID: 2100000, guid: 6604a0a9064ce674d897af5ba3a9bd02, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -202,6 +202,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &3269567532659613261
@@ -361,7 +362,7 @@ Transform:
   - {fileID: 9027375018052151850}
   - {fileID: 964975944800555894}
   - {fileID: 3014983553934378344}
-  - {fileID: 7762180424352017780}
+  - {fileID: 6289879130658006246}
   m_Father: {fileID: 6338049353625553075}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -455,6 +456,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &5371208692123027623
@@ -486,6 +488,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2161271611328356892}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5371672882111544176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1785031627100214510}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6289879130658006246}
+  m_Layer: 0
+  m_Name: Laser Origin Sparks (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6289879130658006246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1785031627100214510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5371672882111544176}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7762180424352017780}
+  m_Father: {fileID: 1183382058331065002}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5513430788092304332
 GameObject:
@@ -610,8 +643,40 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &6126570275681931807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1785031627100214510}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7762180424352017780}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7762180424352017780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 8321940963410540954, guid: 6d34ff814d12a33469cd0d26399d256b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1785031627100214510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6126570275681931807}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6289879130658006246}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7658275567881013289
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,7 +842,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d784e323015a03446aabf442e3b1f895, type: 2}
+  - {fileID: 2100000, guid: 6604a0a9064ce674d897af5ba3a9bd02, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -914,12 +979,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d34ff814d12a33469cd0d26399d256b, type: 3}
---- !u!4 &7762180424352017780 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8321940963410540954, guid: 6d34ff814d12a33469cd0d26399d256b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1785031627100214510}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3102168898639507427
 PrefabInstance:
   m_ObjectHideFlags: 0
