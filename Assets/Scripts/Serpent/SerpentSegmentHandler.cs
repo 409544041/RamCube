@@ -54,26 +54,29 @@ namespace Qbism.Serpent
 		{
 			serpDataList = onFetchSerpDataList();
 
-			for (int i = 0; i < segments.Length; i++)
+			if (serpDataList.Count > 0)
 			{
-				var mRender = segments[i].GetComponentInChildren<SkinnedMeshRenderer>();
-				var sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
-				var follower = segments[i].GetComponent<SplineFollower>();
-
-				if (!mRender || !sRender) Debug.LogError
-					 (segments[i] + " is missing either a meshrenderer or spriterenderer!");
-
-				if (serpDataList[i] == true)
+				for (int i = 0; i < segments.Length; i++)
 				{
-					mRender.enabled = true;
-					sRender.enabled = true;
-					if (follower) follower.useTriggers = true;
-				}
-				else
-				{
-					mRender.enabled = false;
-					sRender.enabled = false;
-					if (follower) follower.useTriggers = false;
+					var mRender = segments[i].GetComponentInChildren<SkinnedMeshRenderer>();
+					var sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
+					var follower = segments[i].GetComponent<SplineFollower>();
+
+					if (!mRender || !sRender) Debug.LogError
+						 (segments[i] + " is missing either a meshrenderer or spriterenderer!");
+
+					if (serpDataList[i] == true)
+					{
+						mRender.enabled = true;
+						sRender.enabled = true;
+						if (follower) follower.useTriggers = true;
+					}
+					else
+					{
+						mRender.enabled = false;
+						sRender.enabled = false;
+						if (follower) follower.useTriggers = false;
+					}
 				}
 			}
 		}
