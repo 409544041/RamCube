@@ -21,7 +21,7 @@ namespace Qbism.WorldMap
 		public Vector3 uiPos { get; set; }
 
 		//Actions, events, delegates etc
-		public event Action<LevelIDs, bool> onSetCurrentData;
+		public event Action<LevelIDs, bool, Biomes> onSetCurrentData;
 		
 		public delegate List<LevelStatusData> LevelDataDel();
 		public LevelDataDel onFetchLevelData;
@@ -56,8 +56,10 @@ namespace Qbism.WorldMap
 		public void LoadAssignedLevel() //Called from Unity Event 
 		{				
 			LevelIDs id = levelPin.levelID;
-			bool hasSerpent = levelPin.GetComponent<EditorSetPinValues>().hasSerpentSegment;
-			onSetCurrentData(id, hasSerpent);
+			var editorPinVal = levelPin.GetComponent<EditorSetPinValues>();
+			bool hasSerpent = editorPinVal.hasSerpentSegment;
+			Biomes biome = editorPinVal.biome;
+			onSetCurrentData(id, hasSerpent, biome);
 				
 			var handler = FindObjectOfType<SceneHandler>();
 			int indexToLoad = levelPin.GetComponent<EditorSetPinValues>().levelIndex;

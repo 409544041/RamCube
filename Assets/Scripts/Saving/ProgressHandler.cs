@@ -16,6 +16,7 @@ namespace Qbism.Saving
 
 		//States
 		public LevelIDs currentLevelID { get; set; }
+		public Biomes currentBiome { get; set ; }
 		public bool currentHasSegment { get ; set ; }
 		public List<LevelStatusData> levelDataList;
 		public List<LevelPin> levelPinList;
@@ -121,7 +122,6 @@ namespace Qbism.Saving
 				levelPinList[i].CheckRaiseStatus(unlocked, unlockAnimPlayed);
 				levelPinList[i].CheckPathStatus(unlock1Data, unlock2Data, completed);
 
-				//onSelectPinUI(currentLevelID);
 				levelPinList[i].pinUI.SelectPinUI();
 
 				if(unlockAnimPlayed) levelPinList[i].pinUI.ShowOrHideUI(true);
@@ -253,9 +253,10 @@ namespace Qbism.Saving
 			return levelPinList;
 		}
 
-		private void SetCurrentData(LevelIDs id, bool serpent)
+		private void SetCurrentData(LevelIDs id, bool serpent, Biomes biome)
 		{
 			currentLevelID = id;
+			currentBiome = biome;
 			foreach (LevelStatusData data in levelDataList)
 			{
 				if(data.levelID != id) continue;

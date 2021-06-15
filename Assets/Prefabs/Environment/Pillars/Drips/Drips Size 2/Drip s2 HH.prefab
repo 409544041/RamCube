@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 3381503018304147579}
   - component: {fileID: 163986017095596745}
   - component: {fileID: 8418122342035803831}
+  - component: {fileID: 4684389468700173143}
   m_Layer: 0
   m_Name: Drip s2 HH
   m_TagString: Untagged
@@ -181,16 +182,25 @@ MonoBehaviour:
   - {fileID: 3402455321401587064}
   - {fileID: 4420977039427835776}
   spawnAmountWeight: 0000000000000000010000000100000002000000
-  minBushSize: 0.5
-  maxBushSize: 0.8
-  minRockSize: 1
-  maxRockSize: 1.3
-  minMossSize: 0.5
-  maxMossSize: 0
   minMaxBushSize: {x: 0.5, y: 0.8}
   minMaxRockSize: {x: 1, y: 1.3}
   minMaxMossSize: {x: 0.5, y: 0.7}
   generateOnStart: 0
+--- !u!114 &4684389468700173143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2712947879007111873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshParts:
+  - {fileID: 911189619818521211}
+  biomeVarietySO: {fileID: 11400000, guid: 136667da40100e94ea3aff456c87bc83, type: 2}
 --- !u!1001 &3301467811756286368
 PrefabInstance:
   m_ObjectHideFlags: 0

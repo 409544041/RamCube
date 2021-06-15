@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3788149931802882389}
   - component: {fileID: 3788149931802882388}
   - component: {fileID: 3788149931802882387}
+  - component: {fileID: 7285448175964090615}
   m_Layer: 0
   m_Name: Mist Plane
   m_TagString: Untagged
@@ -81,3 +82,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7285448175964090615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788149931802882386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshParts:
+  - {fileID: 3788149931802882386}
+  biomeVarietySO: {fileID: 11400000, guid: 1d8932c4aed2bd64b93326629781b1ff, type: 2}
+  recalculate: 1

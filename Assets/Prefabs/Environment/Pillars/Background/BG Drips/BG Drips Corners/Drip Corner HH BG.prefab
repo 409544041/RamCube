@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1204028820462008204}
   - component: {fileID: 6435361555390530430}
   - component: {fileID: 4194631322495403431}
+  - component: {fileID: 633880136374519853}
   m_Layer: 0
   m_Name: Drip Corner HH BG
   m_TagString: Untagged
@@ -66,16 +67,25 @@ MonoBehaviour:
   - {fileID: 5825177820429522245}
   - {fileID: 556748356701574086}
   spawnAmountWeight: 000000000100000001000000
-  minBushSize: 0.3
-  maxBushSize: 0.6
-  minRockSize: 1
-  maxRockSize: 1.1
-  minMossSize: 0.5
-  maxMossSize: 0
   minMaxBushSize: {x: 0.3, y: 0.6}
   minMaxRockSize: {x: 1, y: 1.1}
   minMaxMossSize: {x: 0.5, y: 0.7}
   generateOnStart: 0
+--- !u!114 &633880136374519853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017121673811602742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshParts:
+  - {fileID: 6201489801500507452}
+  biomeVarietySO: {fileID: 11400000, guid: d187abd0e6319944fae1f86797b74f65, type: 2}
 --- !u!1 &4751858665704259046
 GameObject:
   m_ObjectHideFlags: 0

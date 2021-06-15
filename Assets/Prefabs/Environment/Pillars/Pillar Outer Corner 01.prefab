@@ -43,6 +43,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 888461833684550273}
+  - component: {fileID: 5849457858257519579}
   m_Layer: 0
   m_Name: Pillar Outer Corner 01
   m_TagString: Untagged
@@ -66,6 +67,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5849457858257519579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7588631727738947561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshParts:
+  - {fileID: 5565105583483469549}
+  biomeVarietySO: {fileID: 11400000, guid: 9abdd124837d2794f9b0c0548abfddcf, type: 2}
 --- !u!1001 &2764187695558763952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -385,6 +401,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 653ef366b9c3d2440a65a83fe4ea69da, type: 3}
+--- !u!1 &5565105583483469549 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 653ef366b9c3d2440a65a83fe4ea69da,
+    type: 3}
+  m_PrefabInstance: {fileID: 4754204556254905276}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5075814785638163543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 653ef366b9c3d2440a65a83fe4ea69da,

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 239689148432661435}
   - component: {fileID: 2645718869746438001}
   - component: {fileID: 209092399163102424}
+  - component: {fileID: 9134334525841823641}
   m_Layer: 0
   m_Name: Rock_01
   m_TagString: Untagged
@@ -97,3 +98,19 @@ MonoBehaviour:
   floraType: 1
   floraMeshes:
   - {fileID: 2645718869746438001}
+  canSpawn: 1
+--- !u!114 &9134334525841823641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4591287034351939236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshParts:
+  - {fileID: 4591287034351939236}
+  biomeVarietySO: {fileID: 11400000, guid: 536b4228c8d32c24a8d65a118d5cd51d, type: 2}
