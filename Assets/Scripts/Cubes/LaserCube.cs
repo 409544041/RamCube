@@ -22,9 +22,11 @@ namespace Qbism.Cubes
 		AudioSource source;
 		SceneHandler loader;
 		LaserJuicer juicer;
+		LaserAnimationHandler laserAnim;
 
 		//States
 		bool shouldTrigger = true;
+		bool hitting = false;
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onRewindPulse;
@@ -36,6 +38,7 @@ namespace Qbism.Cubes
 			loader = FindObjectOfType<SceneHandler>();
 			source = GetComponentInChildren<AudioSource>();
 			juicer = GetComponent<LaserJuicer>();
+			laserAnim = GetComponentInChildren<LaserAnimationHandler>();
 		}
 
 		private void OnEnable() 
@@ -48,9 +51,11 @@ namespace Qbism.Cubes
 			mover.lasersInLevel = true;
 		}
 
-		private void FixedUpdate()
+		private void Update()
 		{
 			FireLaserCast();
+
+			if (!hitting) laserAnim.OpenEyes();
 		}
 
 		private void FireLaserCast()
@@ -64,14 +69,17 @@ namespace Qbism.Cubes
 				if (hits[0].transform.gameObject.tag == "Player" &&
 				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
 				{
-					// shouldTrigger is to prevent laser from triggering if boosting along laser right-way-facing
+					// shouldTrigger is to prevent laser from triggering if boosting along laser correct-way-facing
 					if(shouldTrigger)
 					{
 						juicer.SetLaserColor(juicer.passColor);
 						source.clip = juicer.passClip;
 						onLaserPassEvent.Invoke();
 						shouldTrigger = false;
+						laserAnim.CloseEyes();
 					}
+
+					hitting = true;
 				}
 
 				else if (hits[0].transform.gameObject.tag == "Player" &&
@@ -88,8 +96,12 @@ namespace Qbism.Cubes
 						mover.isStunned = true;
 						mover.GetComponent<PlayerStunJuicer>().PlayStunVFX();
 					}
+
+					hitting = true;
 				}
-			} 	
+			}
+
+			else hitting = false;
 		}
 
 		private void AdjustBeamLength(RaycastHit[] hits)
