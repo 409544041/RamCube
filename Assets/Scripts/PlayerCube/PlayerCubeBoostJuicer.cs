@@ -16,6 +16,7 @@ namespace Qbism.PlayerCube
 		MMFeedbackScale[] postBoostMMScalers;
 		MMFeedbackPosition postBoostMMPos;
 		MMFeedbackScale[] boostMMScalers;
+		PlayerExpressionHandler expresHandler;
 
 		//States
 		Vector3 boostImpactDir = new Vector3(0, 0, 0);
@@ -27,6 +28,7 @@ namespace Qbism.PlayerCube
 			postBoostMMScalers = postBoostJuice.GetComponents<MMFeedbackScale>();
 			postBoostMMPos = postBoostJuice.GetComponent<MMFeedbackPosition>();
 			boostMMScalers = boostJuice.GetComponents<MMFeedbackScale>();
+			expresHandler = GetComponentInChildren<PlayerExpressionHandler>();
 		}
 
 		private void Update()
@@ -62,6 +64,8 @@ namespace Qbism.PlayerCube
 			boostJuice.PlayFeedbacks();
 			boostTrailTimer = 0;
 			boostTrailCounting = true;
+			// expresHandler.SetGameplayExpression(expresHandler.
+			// 	expressionsSO.boostExpressions);
 		}
 
 		public void PlayPostBoostJuice()
@@ -84,6 +88,8 @@ namespace Qbism.PlayerCube
 			boostJuice.StopFeedbacks();
 			postBoostJuice.Initialization();
 			postBoostJuice.PlayFeedbacks();
+			// expresHandler.SetGameplayExpression(expresHandler.
+			// 	expressionsSO.wallHitExpressions);
 		}
 
 		private void CalculatePostBoostScaleMoveDir()

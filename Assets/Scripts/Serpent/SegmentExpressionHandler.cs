@@ -7,7 +7,7 @@ namespace Qbism.Serpent
 	public class SegmentExpressionHandler : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] SegmentExpressionsScripOb expressionsScripOb;
+		[SerializeField] SegmentExpressionsScripOb expressionsSO;
 
 		//Cache
 		SegmentSpriteAnimator mouthAnim = null;
@@ -29,8 +29,8 @@ namespace Qbism.Serpent
 
 		public void SetNeutralExpression()
 		{
-			var mouth = expressionsScripOb.neutral.mouth;
-			var eyes = expressionsScripOb.neutral.eyes;
+			var mouth = expressionsSO.neutral.mouth;
+			var eyes = expressionsSO.neutral.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
@@ -38,8 +38,8 @@ namespace Qbism.Serpent
 
 		public void SetContentExpression()
 		{
-			var mouth = expressionsScripOb.content.mouth;
-			var eyes = expressionsScripOb.content.eyes;
+			var mouth = expressionsSO.content.mouth;
+			var eyes = expressionsSO.content.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
@@ -47,8 +47,8 @@ namespace Qbism.Serpent
 
 		public void SetSadExpression()
 		{
-			var mouth = expressionsScripOb.sad.mouth;
-			var eyes = expressionsScripOb.sad.eyes;
+			var mouth = expressionsSO.sad.mouth;
+			var eyes = expressionsSO.sad.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
@@ -56,8 +56,8 @@ namespace Qbism.Serpent
 
 		public void SetHappySmileExpression()
 		{
-			var mouth = expressionsScripOb.happySmile.mouth;
-			var eyes = expressionsScripOb.happySmile.eyes;
+			var mouth = expressionsSO.happySmile.mouth;
+			var eyes = expressionsSO.happySmile.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
@@ -65,8 +65,8 @@ namespace Qbism.Serpent
 
 		public void SetLaughingLoudExpression()
 		{
-			var mouth = expressionsScripOb.laughingAloud.mouth;
-			var eyes = expressionsScripOb.laughingAloud.eyes;
+			var mouth = expressionsSO.laughingAloud.mouth;
+			var eyes = expressionsSO.laughingAloud.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
@@ -74,8 +74,8 @@ namespace Qbism.Serpent
 
 		public void SetVeryHappyExpression()
 		{
-			var mouth = expressionsScripOb.veryHappy.mouth;
-			var eyes = expressionsScripOb.veryHappy.eyes;
+			var mouth = expressionsSO.veryHappy.mouth;
+			var eyes = expressionsSO.veryHappy.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
@@ -83,8 +83,8 @@ namespace Qbism.Serpent
 
 		public void SetSlightlyPainfulExpression()
 		{
-			var mouth = expressionsScripOb.slightlyPainful.mouth;
-			var eyes = expressionsScripOb.slightlyPainful.eyes;
+			var mouth = expressionsSO.slightlyPainful.mouth;
+			var eyes = expressionsSO.slightlyPainful.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
@@ -92,8 +92,8 @@ namespace Qbism.Serpent
 
 		public void SetVeryPainfulExpression()
 		{
-			var mouth = expressionsScripOb.veryPainful.mouth;
-			var eyes = expressionsScripOb.veryPainful.eyes;
+			var mouth = expressionsSO.veryPainful.mouth;
+			var eyes = expressionsSO.veryPainful.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
@@ -101,8 +101,8 @@ namespace Qbism.Serpent
 
 		public void SetAnnoyedExpression()
 		{
-			var mouth = expressionsScripOb.annoyed.mouth;
-			var eyes = expressionsScripOb.annoyed.eyes;
+			var mouth = expressionsSO.annoyed.mouth;
+			var eyes = expressionsSO.annoyed.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
@@ -110,8 +110,8 @@ namespace Qbism.Serpent
 
 		public void SetLookingUpSadExpression()
 		{
-			var mouth = expressionsScripOb.lookingUpSad.mouth;
-			var eyes = expressionsScripOb.lookingUpSad.eyes;
+			var mouth = expressionsSO.lookingUpSad.mouth;
+			var eyes = expressionsSO.lookingUpSad.eyes;
 
 			mouthAnim.SetSprite(mouth, false);
 			eyesAnim.SetSprite(eyes, false);
@@ -119,8 +119,8 @@ namespace Qbism.Serpent
 
 		public void SetLookingUpShockedExpression()
 		{
-			var mouth = expressionsScripOb.lookingUpShocked.mouth;
-			var eyes = expressionsScripOb.lookingUpShocked.eyes;
+			var mouth = expressionsSO.lookingUpShocked.mouth;
+			var eyes = expressionsSO.lookingUpShocked.eyes;
 
 			mouthAnim.SetSprite(mouth, false);
 			eyesAnim.SetSprite(eyes, false);
@@ -128,8 +128,8 @@ namespace Qbism.Serpent
 
 		public void SetLookConfusedLeftExpression()
 		{
-			var mouth = expressionsScripOb.confusedLeft.mouth;
-			var eyes = expressionsScripOb.confusedLeft.eyes;
+			var mouth = expressionsSO.confusedLeft.mouth;
+			var eyes = expressionsSO.confusedLeft.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
@@ -137,8 +137,8 @@ namespace Qbism.Serpent
 
 		public void SetLookConfusedRightExpression()
 		{
-			var mouth = expressionsScripOb.confusedRight.mouth;
-			var eyes = expressionsScripOb.confusedRight.eyes;
+			var mouth = expressionsSO.confusedRight.mouth;
+			var eyes = expressionsSO.confusedRight.eyes;
 
 			mouthAnim.SetSprite(mouth, true);
 			eyesAnim.SetSprite(eyes, true);
