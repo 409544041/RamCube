@@ -26,7 +26,6 @@ namespace Qbism.Cubes
 
 		//States
 		bool shouldTrigger = true;
-		bool hitting = false;
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onRewindPulse;
@@ -51,16 +50,15 @@ namespace Qbism.Cubes
 			mover.lasersInLevel = true;
 		}
 
-		private void Update()
+		private void FixedUpdate()
 		{
 			FireLaserCast();
-
-			if (!hitting) laserAnim.OpenEyes();
 		}
 
 		private void FireLaserCast()
 		{
-			RaycastHit[] hits = SortedRaycasts();
+			RaycastHit[] hits = SortedSphereCasts();
+			print(hits.Length);
 
 			AdjustBeamLength(hits);
 
@@ -72,14 +70,13 @@ namespace Qbism.Cubes
 					// shouldTrigger is to prevent laser from triggering if boosting along laser correct-way-facing
 					if(shouldTrigger)
 					{
-						juicer.SetLaserColor(juicer.passColor);
+						laserBeam.GetComponent<MeshRenderer>().enabled = false;
 						source.clip = juicer.passClip;
 						onLaserPassEvent.Invoke();
 						shouldTrigger = false;
 						laserAnim.CloseEyes();
+						juicer.pinkEyeVFX.Play();
 					}
-
-					hitting = true;
 				}
 
 				else if (hits[0].transform.gameObject.tag == "Player" &&
@@ -95,13 +92,17 @@ namespace Qbism.Cubes
 						mover.input = false;
 						mover.isStunned = true;
 						mover.GetComponent<PlayerStunJuicer>().PlayStunVFX();
+						juicer.pinkEyeVFX.Stop();
 					}
-
-					hitting = true;
 				}
 			}
 
-			else hitting = false;
+			else
+			{
+				juicer.pinkEyeVFX.Stop();
+				laserAnim.OpenEyes();
+				laserBeam.GetComponent<MeshRenderer>().enabled = true;
+			}
 		}
 
 		private void AdjustBeamLength(RaycastHit[] hits)
@@ -119,13 +120,13 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private RaycastHit[] SortedRaycasts()
+		private RaycastHit[] SortedSphereCasts()
 		{
-			RaycastHit[] hits = Physics.RaycastAll(laserOrigin.position,
+			RaycastHit[] hits = Physics.SphereCastAll(laserOrigin.position, .05f,
 				transform.TransformDirection(Vector3.forward), distance, chosenLayers , QueryTriggerInteraction.Ignore);
-
+			
 			Debug.DrawRay(laserOrigin.position,
-				transform.TransformDirection(Vector3.forward * distance), Color.red, distance);
+				transform.TransformDirection(Vector3.forward), Color.red, distance);
 
 			float[] hitDistances = new float[hits.Length];
 
@@ -139,7 +140,7 @@ namespace Qbism.Cubes
 			return hits;
 		}
 
-		private void SetLaserTrigger(bool value)
+		public void SetLaserTrigger(bool value)
 		{
 			shouldTrigger = value;
 		}

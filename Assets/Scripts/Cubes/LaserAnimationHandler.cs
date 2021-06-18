@@ -17,13 +17,11 @@ namespace Qbism.Cubes
 		public void CloseEyes()
 		{
 			animator.SetBool("Open", false);
-			print("setting closed");
 		}
 
 		public void OpenEyes()
 		{
 			animator.SetBool("Open", true);
-			print("setting open");
 		}
 
 		public void Blink()

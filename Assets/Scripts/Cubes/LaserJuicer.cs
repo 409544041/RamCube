@@ -9,7 +9,8 @@ namespace Qbism.Cubes
 		//Config parameters
 		public Light laserTipLight;
 		public AudioClip passClip = null, denyClip = null;
-		public Color neutralColor, passColor, denyColor;
+		public Color neutralColor, denyColor;
+		public ParticleSystem pinkEyeVFX;
 
 		//States
 		Color currentColor;
@@ -26,6 +27,7 @@ namespace Qbism.Cubes
 
 		private void Start() 
 		{
+			beamMat.color = neutralColor;
 			currentColor = neutralColor;
 		}
 

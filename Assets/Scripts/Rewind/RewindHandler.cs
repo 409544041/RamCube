@@ -99,6 +99,16 @@ namespace Qbism.Rewind
 			if (finish.wrongOnFinish)
 				onStopRewindPulse(InterfaceIDs.Rewind);
 
+			//To make sure lasers work correctly when rewinding into laser while still in laser
+			LaserCube[] lasers = FindObjectsOfType<LaserCube>();
+			if (lasers.Length > 0)
+			{
+				foreach (var laser in lasers)
+				{
+					laser.SetLaserTrigger(true);
+				}
+			}
+
 			StartCoroutine(ReloadDics());
 		}
 
