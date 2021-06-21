@@ -222,7 +222,7 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private bool CheckFloorCubeDicKey(Vector2Int cubePos)
+		public bool CheckFloorCubeDicKey(Vector2Int cubePos)
 		{
 			if(floorCubeDic.ContainsKey(cubePos)) return true;
 			else return false;

@@ -9,20 +9,20 @@ namespace Qbism.General
 	public class TextureScroller : MonoBehaviour
 	{
 		//Config parameters
+		[SerializeField] Material material = null;
 		[SerializeField] float scrollSpeed = 7f;
 		[SerializeField] Vector2 maxOffset = new Vector2(1, 0);
+		[SerializeField] bool scrollAlways = false;
 
 		//Cache
 		CubeHandler handler;
 
 		//States
 		Vector2 offSet;
-		Material myMaterial;
 
 		private void Awake()
 		{
 			handler = FindObjectOfType<CubeHandler>();
-			myMaterial = GetComponent<Renderer>().material;
 		}
 
 		private void OnEnable()
@@ -30,25 +30,28 @@ namespace Qbism.General
 			if (handler != null) handler.onLand += InitiateScroll;
 		}
 
-		private void Start()
+		private void Update() 
 		{
-			offSet = new Vector2(-scrollSpeed, 0);
+			offSet = new Vector2(-scrollSpeed, 0); 
+			if (scrollAlways) material.mainTextureOffset += 
+				offSet * Time.deltaTime;
 		}
 
 		private void InitiateScroll()
 		{
-			StartCoroutine(ScrollTexture());
+			var booster = GetComponentInParent<BoostCube>();
+			if (booster) StartCoroutine(ScrollTexture());
 		}
 
 		private IEnumerator ScrollTexture() //Used in action
 		{
-			while (Mathf.Abs(myMaterial.mainTextureOffset.x) < maxOffset.x)
+			while (Mathf.Abs(material.mainTextureOffset.x) < maxOffset.x)
 			{
-				myMaterial.mainTextureOffset += offSet * Time.deltaTime;
+				material.mainTextureOffset += offSet * Time.deltaTime;
 				yield return null;
 			}
 
-			myMaterial.mainTextureOffset = new Vector2(0, 0);
+			material.mainTextureOffset = new Vector2(0, 0);
 		}
 
 		private void OnDisable()

@@ -23,9 +23,11 @@ namespace Qbism.Cubes
 		SceneHandler loader;
 		LaserJuicer juicer;
 		LaserAnimationHandler laserAnim;
+		CubeHandler cubeHandler;
 
 		//States
 		bool shouldTrigger = true;
+		float currentLength = 0f;
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onRewindPulse;
@@ -38,6 +40,7 @@ namespace Qbism.Cubes
 			source = GetComponentInChildren<AudioSource>();
 			juicer = GetComponent<LaserJuicer>();
 			laserAnim = GetComponentInChildren<LaserAnimationHandler>();
+			cubeHandler = FindObjectOfType<CubeHandler>();
 		}
 
 		private void OnEnable() 
@@ -58,7 +61,6 @@ namespace Qbism.Cubes
 		private void FireLaserCast()
 		{
 			RaycastHit[] hits = SortedSphereCasts();
-			print(hits.Length);
 
 			AdjustBeamLength(hits);
 
@@ -105,21 +107,6 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private void AdjustBeamLength(RaycastHit[] hits)
-		{
-			if (hits.Length > 0)
-			{
-				laserBeam.transform.localScale = new Vector3(laserThickness, hits[0].distance, laserThickness);
-				juicer.MoveTipLight(hits[0].distance);
-			}
-			else
-			{
-				juicer.SetLaserColor(juicer.neutralColor);
-				laserBeam.transform.localScale = new Vector3(laserThickness, distance, laserThickness);
-				juicer.MoveTipLight(distance);
-			}
-		}
-
 		private RaycastHit[] SortedSphereCasts()
 		{
 			RaycastHit[] hits = Physics.SphereCastAll(laserOrigin.position, .05f,
@@ -138,6 +125,55 @@ namespace Qbism.Cubes
 			Array.Sort(hitDistances, hits);
 
 			return hits;
+		}
+
+		private void AdjustBeamLength(RaycastHit[] hits)
+		{
+			float dist;
+			if (hits.Length <= 0) dist = distance;
+			else dist = hits[0].distance;
+
+			if (dist != currentLength)
+			{
+				juicer.MoveTipLight(dist);
+				CastDottedLines(dist, distance);
+
+				currentLength = dist;
+			}
+		}
+
+		private void CastDottedLines(float dist, float startDist)
+		{
+			int distRoundDown = (int)(Math.Floor(dist));
+			int startDistRoundDown = (int)(Math.Floor(startDist));
+			Vector3 laserDir = transform.forward;
+
+			//enables dotted lines on cubes within distance
+			CheckForCubes(laserDir, 1, distRoundDown, true);
+
+			//disables dotted lines between actual distance and start distance
+			if (startDistRoundDown - distRoundDown > 0)
+				CheckForCubes(laserDir, distRoundDown + 1, startDistRoundDown, false);
+		}
+
+		private void CheckForCubes(Vector3 laserDir, int iStart, 
+			int iCondition, bool enable)
+		{
+			//checks each int within the laser distance
+			for (int i = iStart; i <= iCondition; i++)
+			{
+				Vector3 checkPos = transform.position + (laserDir * i);
+
+				Vector2Int roundedCheckPos = new Vector2Int
+					(Mathf.RoundToInt(checkPos.x), Mathf.RoundToInt(checkPos.z));
+
+				//checks if point has a cube
+				if (cubeHandler.CheckFloorCubeDicKey(roundedCheckPos))
+				{
+					var cube = cubeHandler.FetchCube(roundedCheckPos);
+					cube.CastDottedLines(transform.position, enable);
+				}
+			}
 		}
 
 		public void SetLaserTrigger(bool value)
