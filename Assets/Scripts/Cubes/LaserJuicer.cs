@@ -27,7 +27,7 @@ namespace Qbism.Cubes
 
 		private void Start() 
 		{
-			beamMat.color = neutralColor;
+			//beamMat.color = neutralColor;
 			currentColor = neutralColor;
 		}
 
