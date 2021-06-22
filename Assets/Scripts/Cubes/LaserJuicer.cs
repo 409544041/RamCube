@@ -31,25 +31,25 @@ namespace Qbism.Cubes
 			currentColor = neutralColor;
 		}
 
-		public void SetLaserColor(Color color)
-		{
-			if (currentColor == color) return;
+		// public void SetLaserColor(Color color)
+		// {
+		// 	if (currentColor == color) return;
 
-			beamMat.color = color;
+		// 	beamMat.color = color;
 
-			foreach (ParticleSystem particle in laserParticles)
-			{
-				var mainModule = particle.main;
-				mainModule.startColor = color;
-			}
+		// 	foreach (ParticleSystem particle in laserParticles)
+		// 	{
+		// 		var mainModule = particle.main;
+		// 		mainModule.startColor = color;
+		// 	}
 
-			foreach (Light light in laserLights)
-			{
-				light.color = color;
-			}
+		// 	foreach (Light light in laserLights)
+		// 	{
+		// 		light.color = color;
+		// 	}
 
-			currentColor = color;
-		}
+		// 	currentColor = color;
+		// }
 
 		public void MoveTipLight(float distance)
 		{

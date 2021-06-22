@@ -12,7 +12,7 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		public float distance = 1;
-		public GameObject laserBeam = null;
+		public ParticleSystem laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
 		public float laserThickness = .25f;
 		[SerializeField] LayerMask chosenLayers;
@@ -55,10 +55,10 @@ namespace Qbism.Cubes
 
 		private void FixedUpdate()
 		{
-			FireLaserCast();
+			FireSphereCast();
 		}
 
-		private void FireLaserCast()
+		private void FireSphereCast()
 		{
 			RaycastHit[] hits = SortedSphereCasts();
 
@@ -72,12 +72,12 @@ namespace Qbism.Cubes
 					// shouldTrigger is to prevent laser from triggering if boosting along laser correct-way-facing
 					if(shouldTrigger)
 					{
-						laserBeam.GetComponent<MeshRenderer>().enabled = false;
-						source.clip = juicer.passClip;
-						onLaserPassEvent.Invoke();
 						shouldTrigger = false;
-						laserAnim.CloseEyes();
-						juicer.pinkEyeVFX.Play();
+
+						var fartLauncher = mover.GetComponent<PlayerFartLauncher>();
+						bool hasHit = false;
+						RaycastHit hit = fartLauncher.FireRayCast(out hasHit);
+						if (hasHit) fartLauncher.FireBulletFart();
 					}
 				}
 
@@ -87,7 +87,8 @@ namespace Qbism.Cubes
 					if (shouldTrigger)
 					{
 						shouldTrigger = false;
-						juicer.SetLaserColor(juicer.denyColor);
+						laserBeam.Play();
+						// juicer.SetLaserColor(juicer.denyColor);
 						source.clip = juicer.denyClip;
 						onLaserPassEvent.Invoke();
 						onRewindPulse(InterfaceIDs.Rewind);
@@ -103,8 +104,19 @@ namespace Qbism.Cubes
 			{
 				juicer.pinkEyeVFX.Stop();
 				laserAnim.OpenEyes();
-				laserBeam.GetComponent<MeshRenderer>().enabled = true;
+				laserBeam.Play();
 			}
+		}
+
+		public void CloseEye()
+		{
+			
+			laserBeam.Stop();
+			source.clip = juicer.passClip;
+			onLaserPassEvent.Invoke();
+			laserAnim.CloseEyes();
+			juicer.pinkEyeVFX.Play();
+			CheckForCubes(transform.forward, 1, (int)(Math.Floor(distance)), false);
 		}
 
 		private RaycastHit[] SortedSphereCasts()

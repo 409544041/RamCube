@@ -22,7 +22,8 @@ namespace Qbism.PlayerCube
 		[SerializeField] float lowLaunchMultiplier = 2f;
 		[Header ("Juice")]
 		[SerializeField] MMFeedbacks preFartJuice = null;
-		[SerializeField] ParticleSystem fartCharge, bulletFart, fartBeam, fartBeamImpact;
+		[SerializeField] ParticleSystem fartCharge, bulletFart, fartBeam, 
+			fartBeamImpact, bulletFartImpact;
 
 		//Cache
 		GameControls controls;
@@ -99,11 +100,18 @@ namespace Qbism.PlayerCube
 			ProcessFartRaycast();
 		}
 
+		public void StartLaserBulletImpact()
+		{
+			currentFartImpact = bulletFartImpact;
+			ProcessFartRaycast();
+		}
+
 		private void ProcessFartRaycast()
 		{
-			RaycastHit hit;
+			bool hasHit = false;
+			RaycastHit hit = FireRayCast(out hasHit);
 			
-			if (Physics.Raycast(transform.position, transform.forward, out hit, 20, fartRayCastLayers, QueryTriggerInteraction.Ignore))
+			if (hasHit)
 			{
 				if(!fartCollided)
 				{
@@ -116,6 +124,24 @@ namespace Qbism.PlayerCube
 				fartCount = 0;
 				fartCounting = true;
 			}
+		}
+
+		public RaycastHit FireRayCast(out bool hasHit)
+		{
+			//returning hasHit bool for a raycast check done in laser cube
+			RaycastHit hit;
+			if (Physics.Raycast(transform.position, transform.forward, out hit, 20, 
+				fartRayCastLayers, QueryTriggerInteraction.Ignore))
+				hasHit = true;
+
+			else hasHit = false;
+
+			return hit;
+		}
+
+		public void FireBulletFart()
+		{
+			bulletFart.Play();
 		}
 
 		private void StopFartHit()

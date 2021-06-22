@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Qbism.Cubes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,6 +14,9 @@ namespace Qbism.General
 		private void OnParticleCollision(GameObject other) 
 		{
 			onParticleCollision.Invoke();
+
+			var laser = other.GetComponentInParent<LaserCube>();
+			if (laser) laser.CloseEye();
 		}
 	}
 }
