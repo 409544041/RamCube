@@ -156,6 +156,9 @@ namespace Qbism.Cubes
 				juicer.MoveTipLight(dist);
 				CastDottedLines(dist, distance);
 
+				var main = laserBeam.main;
+				main.startSizeZMultiplier = dist;
+
 				currentLength = dist;
 			}
 		}

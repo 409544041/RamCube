@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using Qbism.Cubes;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.Cubes
 {
 	[ExecuteInEditMode]
 	public class EditorLaserLength : MonoBehaviour
 	{
+		//TO DO: We probably don't need this script anymore. Toss it?
+		
 		//Cache
 		LaserCube laser;
 
@@ -18,7 +20,8 @@ namespace Qbism.General
 		
 		private void Start()
 		{
-			// laser.laserBeam.transform.localScale = new Vector3(laser.laserThickness, laser.distance, laser.laserThickness);
+			var main = laser.laserBeam.main;
+			main.startSizeZMultiplier = laser.distance;
 		}
 	}
 }
