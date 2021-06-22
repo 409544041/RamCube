@@ -22,8 +22,9 @@ namespace Qbism.Cubes
 		AudioSource source;
 		SceneHandler loader;
 		LaserJuicer juicer;
-		LaserAnimationHandler laserAnim;
 		CubeHandler cubeHandler;
+		LaserMouthAnimator mouthAnim;
+		LaserEyeAnimator eyeAnim;
 
 		//States
 		bool shouldTrigger = true;
@@ -39,8 +40,9 @@ namespace Qbism.Cubes
 			loader = FindObjectOfType<SceneHandler>();
 			source = GetComponentInChildren<AudioSource>();
 			juicer = GetComponent<LaserJuicer>();
-			laserAnim = GetComponentInChildren<LaserAnimationHandler>();
 			cubeHandler = FindObjectOfType<CubeHandler>();
+			eyeAnim = GetComponentInChildren<LaserEyeAnimator>();
+			mouthAnim = GetComponentInChildren<LaserMouthAnimator>();
 		}
 
 		private void OnEnable() 
@@ -96,6 +98,9 @@ namespace Qbism.Cubes
 						mover.isStunned = true;
 						mover.GetComponent<PlayerStunJuicer>().PlayStunVFX();
 						juicer.pinkEyeVFX.Stop();
+						eyeAnim.OpenEyes();
+						mouthAnim.HappyMouth();
+
 					}
 				}
 			}
@@ -103,7 +108,8 @@ namespace Qbism.Cubes
 			else
 			{
 				juicer.pinkEyeVFX.Stop();
-				laserAnim.OpenEyes();
+				eyeAnim.OpenEyes();
+				mouthAnim.HappyMouth();
 				laserBeam.Play();
 			}
 		}
@@ -114,7 +120,8 @@ namespace Qbism.Cubes
 			laserBeam.Stop();
 			source.clip = juicer.passClip;
 			onLaserPassEvent.Invoke();
-			laserAnim.CloseEyes();
+			eyeAnim.CloseEyes();
+			mouthAnim.SadMouth();
 			juicer.pinkEyeVFX.Play();
 			CheckForCubes(transform.forward, 1, (int)(Math.Floor(distance)), false);
 		}
@@ -122,10 +129,9 @@ namespace Qbism.Cubes
 		private RaycastHit[] SortedSphereCasts()
 		{
 			RaycastHit[] hits = Physics.SphereCastAll(laserOrigin.position, .05f,
-				transform.TransformDirection(Vector3.forward), distance, chosenLayers , QueryTriggerInteraction.Ignore);
+				transform.forward, distance, chosenLayers , QueryTriggerInteraction.Ignore);
 			
-			Debug.DrawRay(laserOrigin.position,
-				transform.TransformDirection(Vector3.forward), Color.red, distance);
+			Debug.DrawRay(laserOrigin.position, transform.forward, Color.red, distance);
 
 			float[] hitDistances = new float[hits.Length];
 

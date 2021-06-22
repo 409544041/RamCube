@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Qbism.Cubes
 {
-	public class LaserAnimationHandler : MonoBehaviour
+	public class LaserEyeAnimator : MonoBehaviour
 	{
 		//Cache
 		Animator animator;
