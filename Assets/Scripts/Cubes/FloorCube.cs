@@ -34,8 +34,8 @@ namespace Qbism.Cubes
 			float endX = .4f * dir.x;
 			float endY = .4f * dir.z;
 
-			laserLine.SetPosition(0, new Vector3(startX, startY, transform.rotation.z));
-			laserLine.SetPosition(1, new Vector3(endX, endY, transform.rotation.z));
+			laserLine.SetPosition(0, new Vector3(startX, startY, transform.position.y));
+			laserLine.SetPosition(1, new Vector3(endX, endY, transform.position.y));
 			laserLine.enabled = enableValue;
 		}
 

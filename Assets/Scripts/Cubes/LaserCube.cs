@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Qbism.PlayerCube;
 using Qbism.SceneTransition;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Qbism.Cubes
 {
@@ -12,19 +11,15 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		public float distance = 1;
-		public ParticleSystem laserBeam = null;
 		[SerializeField] Transform laserOrigin = null;
-		public float laserThickness = .25f;
 		[SerializeField] LayerMask chosenLayers;
 		
 		//Cache
 		PlayerCubeMover mover;
-		AudioSource source;
 		SceneHandler loader;
 		LaserJuicer juicer;
 		CubeHandler cubeHandler;
-		LaserMouthAnimator mouthAnim;
-		LaserEyeAnimator eyeAnim;
+
 
 		//States
 		bool shouldTrigger = true;
@@ -32,17 +27,13 @@ namespace Qbism.Cubes
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onRewindPulse;
-		public UnityEvent onLaserPassEvent = new UnityEvent();
 
 		private void Awake()
 		{
 			mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();
 			loader = FindObjectOfType<SceneHandler>();
-			source = GetComponentInChildren<AudioSource>();
 			juicer = GetComponent<LaserJuicer>();
 			cubeHandler = FindObjectOfType<CubeHandler>();
-			eyeAnim = GetComponentInChildren<LaserEyeAnimator>();
-			mouthAnim = GetComponentInChildren<LaserMouthAnimator>();
 		}
 
 		private void OnEnable() 
@@ -75,7 +66,6 @@ namespace Qbism.Cubes
 					if(shouldTrigger)
 					{
 						shouldTrigger = false;
-
 						var fartLauncher = mover.GetComponent<PlayerFartLauncher>();
 						bool hasHit = false;
 						RaycastHit hit = fartLauncher.FireRayCast(out hasHit);
@@ -89,40 +79,24 @@ namespace Qbism.Cubes
 					if (shouldTrigger)
 					{
 						shouldTrigger = false;
-						laserBeam.Play();
-						// juicer.SetLaserColor(juicer.denyColor);
-						source.clip = juicer.denyClip;
-						onLaserPassEvent.Invoke();
+						juicer.TriggerDenyJuice(currentLength);
 						onRewindPulse(InterfaceIDs.Rewind);
 						mover.input = false;
 						mover.isStunned = true;
 						mover.GetComponent<PlayerStunJuicer>().PlayStunVFX();
-						juicer.pinkEyeVFX.Stop();
-						eyeAnim.OpenEyes();
-						mouthAnim.HappyMouth();
-
 					}
 				}
 			}
 
 			else
 			{
-				juicer.pinkEyeVFX.Stop();
-				eyeAnim.OpenEyes();
-				mouthAnim.HappyMouth();
-				laserBeam.Play();
+				juicer.TriggerIdleJuice();
 			}
 		}
 
-		public void CloseEye()
+		public void CloseEye() //Called from fart particle collision
 		{
-			
-			laserBeam.Stop();
-			source.clip = juicer.passClip;
-			onLaserPassEvent.Invoke();
-			eyeAnim.CloseEyes();
-			mouthAnim.SadMouth();
-			juicer.pinkEyeVFX.Play();
+			juicer.TriggerPassJuice();
 			CheckForCubes(transform.forward, 1, (int)(Math.Floor(distance)), false);
 		}
 
@@ -153,12 +127,8 @@ namespace Qbism.Cubes
 
 			if (dist != currentLength)
 			{
-				juicer.MoveTipLight(dist);
 				CastDottedLines(dist, distance);
-
-				var main = laserBeam.main;
-				main.startSizeZMultiplier = dist;
-
+				juicer.AdjustBeamVisualLength(dist);
 				currentLength = dist;
 			}
 		}

@@ -57,6 +57,7 @@ namespace Qbism.General
 		private void OnDisable()
 		{
 			if (handler != null) handler.onLand -= InitiateScroll;
+			material.mainTextureOffset = new Vector2(0, 0);
 		}
 	}
 }

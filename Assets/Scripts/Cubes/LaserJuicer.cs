@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Qbism.Cubes
 {
@@ -9,51 +10,77 @@ namespace Qbism.Cubes
 		//Config parameters
 		public Light laserTipLight;
 		public AudioClip passClip = null, denyClip = null;
-		public Color neutralColor, denyColor;
-		public ParticleSystem pinkEyeVFX;
+		public ParticleSystem laserBeam, denyBeam, denySunSpots, pinkEyeVFX;
 
-		//States
-		Color currentColor;
-		Material beamMat;
-		ParticleSystem[] laserParticles;
-		Light[] laserLights;
+		//Cache
+		AudioSource source;
+		LaserMouthAnimator mouthAnim;
+		LaserEyeAnimator eyeAnim;
+
+		//Actions, events, delegates etc
+		public UnityEvent onLaserPassEvent = new UnityEvent();
 
 		private void Awake() 
 		{
-			beamMat = GetComponent<LaserCube>().laserBeam.GetComponent<Renderer>().material;
-			laserParticles = GetComponentsInChildren<ParticleSystem>();
-			laserLights = GetComponentsInChildren<Light>();
+			source = GetComponentInChildren<AudioSource>();
+			eyeAnim = GetComponentInChildren<LaserEyeAnimator>();
+			mouthAnim = GetComponentInChildren<LaserMouthAnimator>();
 		}
 
-		private void Start() 
+		public void AdjustBeamVisualLength(float dist)
 		{
-			//beamMat.color = neutralColor;
-			currentColor = neutralColor;
+			var idleMain = laserBeam.main;
+			idleMain.startSizeZMultiplier = dist;
+
+			var denyMain = denyBeam.main;
+			denyMain.startSizeZMultiplier = dist;
+
+			var shape = denySunSpots.shape;
+			shape.length = dist;
+
+			MoveTipLight(dist);
 		}
 
-		// public void SetLaserColor(Color color)
-		// {
-		// 	if (currentColor == color) return;
-
-		// 	beamMat.color = color;
-
-		// 	foreach (ParticleSystem particle in laserParticles)
-		// 	{
-		// 		var mainModule = particle.main;
-		// 		mainModule.startColor = color;
-		// 	}
-
-		// 	foreach (Light light in laserLights)
-		// 	{
-		// 		light.color = color;
-		// 	}
-
-		// 	currentColor = color;
-		// }
-
-		public void MoveTipLight(float distance)
+		public void TriggerPassJuice()
 		{
-			laserTipLight.transform.localPosition = new Vector3(0, 0, distance + 0.4f);
+			laserBeam.Stop();
+			denyBeam.Stop();
+			pinkEyeVFX.Play();
+
+			source.clip = passClip;
+			onLaserPassEvent.Invoke();
+
+			eyeAnim.CloseEyes();
+			mouthAnim.SadMouth();
+
+		}
+
+		public void TriggerDenyJuice(float dist)
+		{
+			laserBeam.Stop();
+			pinkEyeVFX.Stop();			
+			denyBeam.Play();
+
+			source.clip = denyClip;
+			onLaserPassEvent.Invoke();
+
+			eyeAnim.OpenEyes();
+			mouthAnim.HappyMouth();
+		}
+
+		public void TriggerIdleJuice()
+		{
+			pinkEyeVFX.Stop();
+			denyBeam.Stop();
+			laserBeam.Play();
+
+			eyeAnim.OpenEyes();
+			mouthAnim.HappyMouth();
+		}
+
+		private void MoveTipLight(float dist)
+		{
+			laserTipLight.transform.localPosition = new Vector3(0, 0, dist + 0.4f);
 		}
 	}
 }
