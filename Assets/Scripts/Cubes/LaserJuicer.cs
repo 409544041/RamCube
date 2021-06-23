@@ -36,7 +36,10 @@ namespace Qbism.Cubes
 			denyMain.startSizeZMultiplier = dist;
 
 			var shape = denySunSpots.shape;
-			shape.length = dist;
+			var spotsMain = denySunSpots.main;
+			//Ensure that sunspots stop at player even with the extra length it gets from its speed
+			var extraLength = spotsMain.startSpeedMultiplier * spotsMain.startLifetimeMultiplier;
+			shape.length = dist - extraLength;
 
 			MoveTipLight(dist);
 		}
