@@ -11,6 +11,7 @@ namespace Qbism.Environment
 		[SerializeField] GameObject[] meshParts;
 		[SerializeField] BiomeVisualsScripOb biomeVarietySO;
 		[SerializeField] bool recalculate = false;
+		[SerializeField] bool isSkyBox = false;
 		//mesh and mat order should be same in scrip ob as in here
 
 		//Cache
@@ -36,7 +37,8 @@ namespace Qbism.Environment
 				else Debug.LogError("Progression Handler is not Linked. Setting first biome visuals");
 			}
 
-			SetVisuals();
+			if (isSkyBox) SetSkybox();
+			else SetVisuals();
 		}
 
 		private void SetVisuals()
@@ -72,6 +74,16 @@ namespace Qbism.Environment
 						mFilter.mesh.RecalculateNormals();
 					}
 				}
+			}
+		}
+
+		private void SetSkybox()
+		{
+			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
+			{
+				if (biomeVariety.biome != currentBiome) continue;
+
+				RenderSettings.skybox = biomeVariety.parts[0].mats[0];
 			}
 		}
 	}
