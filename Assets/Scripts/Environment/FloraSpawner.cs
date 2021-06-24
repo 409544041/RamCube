@@ -77,6 +77,12 @@ namespace Qbism.Environment
 				flor.transform.localScale = new Vector3 (scale, scale, scale);
 			} 
 
+			if (flor.floraType == FloraID.tree)
+			{
+				float rot = Random.Range(0, 359);
+				flor.transform.rotation = Quaternion.Euler(0, rot, 0);
+			}
+
 			if (flor.floraType == FloraID.rock)
 			{
 				var scale = Random.Range(minMaxRockSize.x, minMaxRockSize.y);

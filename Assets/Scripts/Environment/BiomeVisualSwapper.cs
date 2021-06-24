@@ -25,7 +25,15 @@ namespace Qbism.Environment
 			progHandler = FindObjectOfType<ProgressHandler>();	
 		}
 
-		private void Start() 
+		private void Start()
+		{
+			FetchBiome();
+
+			if (isSkyBox) SetSkybox();
+			else SetVisuals();
+		}
+
+		private void FetchBiome()
 		{
 			if (progHandler)
 				currentBiome = progHandler.currentBiome;
@@ -36,9 +44,6 @@ namespace Qbism.Environment
 				if (bOverWriter) currentBiome = bOverWriter.biomeOverwrite;
 				else Debug.LogError("Progression Handler is not Linked. Setting first biome visuals");
 			}
-
-			if (isSkyBox) SetSkybox();
-			else SetVisuals();
 		}
 
 		private void SetVisuals()
