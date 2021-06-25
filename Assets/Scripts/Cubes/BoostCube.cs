@@ -97,6 +97,8 @@ namespace Qbism.Cubes
 				float distance = Vector3.Distance(boostRayOrigin.position, wallHit.transform.position) - 1;
 				target = boostRayOrigin.position + (boostObjDir.transform.TransformDirection(Vector3.forward) * distance);
 				wallObject = wallHit.transform.gameObject;
+				//TO DO: fix bug where distance is wrong. It's bc transform of wall can be low/high/left/right
+				//which messes up distance. Needs to be straight line to x/z center. Use Vector2Int?
 			}
 
 			//this else is for when it flies out of bounds
