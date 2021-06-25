@@ -58,8 +58,12 @@ namespace Qbism.Cubes
 				if (popWall && Vector3.Distance(cube.transform.position, boostTarget) < 1f)
 					popWall.InitiatePopUp();
 				
-				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.001f)
+				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.75f)
+				{
 					mover.isBoosting = false;
+					cube.transform.position = boostTarget;
+				}
+					
 
 				yield return null;
 			}

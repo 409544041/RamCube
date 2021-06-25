@@ -39,7 +39,7 @@ namespace Qbism.Environment
 				wallMesh.transform.position = Vector3.MoveTowards(wallMesh.transform.position, 
 					popUpTarget, upwardSpeed * Time.deltaTime);
 
-				if (Vector3.Distance(wallMesh.transform.position, popUpTarget) < 0.001f)
+				if (Vector3.Distance(wallMesh.transform.position, popUpTarget) < 0.01f)
 				{
 					goingUp = false;
 					wallMesh.transform.position = popUpTarget;
@@ -60,7 +60,7 @@ namespace Qbism.Environment
 				wallMesh.transform.position = Vector3.MoveTowards(wallMesh.transform.position,
 					startPos, downwardSpeed * Time.deltaTime);
 
-				if (Vector3.Distance(wallMesh.transform.position, startPos) < 0.001f)
+				if (Vector3.Distance(wallMesh.transform.position, startPos) < 0.01f)
 				{
 					goingDown = false;
 					wallMesh.transform.position = startPos;
