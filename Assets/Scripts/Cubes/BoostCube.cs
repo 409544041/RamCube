@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.Environment;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace Qbism.Cubes
 		[Header ("Boosting")]
 		[SerializeField] float boostSpeed = 30f;
 		[SerializeField] Transform boostRayOrigin = null;
+		[SerializeField] GameObject boostObjDir = null;
 		[SerializeField] LayerMask boostRayMask;
 
 		//Actions, events, delegates etc
@@ -36,7 +38,9 @@ namespace Qbism.Cubes
 			var mover = cube.GetComponent<PlayerCubeMover>();
 			var launchPos = mover.FetchGridPos();
 
-			Vector3 boostTarget = GetBoostTarget();
+			GameObject wallObject = null;
+			Vector3 boostTarget = GetBoostTarget(out wallObject);
+			PopUpWall popWall = wallObject.GetComponent<PopUpWall>();
 
 			mover.input = false;
 			mover.isBoosting = true;
@@ -44,12 +48,15 @@ namespace Qbism.Cubes
 			onBoostEvent.Invoke();
 
 			mover.GetComponent<PlayerCubeBoostJuicer>().
-				PlayBoostJuice(-transform.forward);
+				PlayBoostJuice(-boostObjDir.transform.forward);
 
 			while (mover.isBoosting)
 			{
 				cube.transform.position = Vector3.MoveTowards(cube.transform.position, 
 					boostTarget, boostSpeed * Time.deltaTime);
+				
+				if (popWall && Vector3.Distance(cube.transform.position, boostTarget) < 1f)
+					popWall.InitiatePopUp();
 				
 				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.001f)
 					mover.isBoosting = false;
@@ -74,21 +81,26 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private Vector3 GetBoostTarget()
+		private Vector3 GetBoostTarget(out GameObject wallObject)
 		{
 			RaycastHit wallHit;
 			Vector3 target = new Vector3(0, 0, 0);
 
 			if (Physics.Raycast(boostRayOrigin.position,
-				transform.TransformDirection(Vector3.forward), out wallHit, 20, boostRayMask))
+				boostObjDir.transform.TransformDirection(Vector3.forward), out wallHit, 20, boostRayMask))
 			{
 				//For this to work, wall or other blocker objects needs to be placed on 'the grid', just like cubes
 				float distance = Vector3.Distance(boostRayOrigin.position, wallHit.transform.position) - 1;
-				target = boostRayOrigin.position + (transform.TransformDirection(Vector3.forward) * distance);
+				target = boostRayOrigin.position + (boostObjDir.transform.TransformDirection(Vector3.forward) * distance);
+				wallObject = wallHit.transform.gameObject;
 			}
-			//this else means if it flies out of bounds
-			else target = boostRayOrigin.position + (transform.TransformDirection(Vector3.forward) * 20);
 
+			//this else is for when it flies out of bounds
+			else
+			{
+				target = boostRayOrigin.position + (boostObjDir.transform.TransformDirection(Vector3.forward) * 20);
+				wallObject = null;
+			} 
 			return target;
 		}
 
@@ -126,7 +138,8 @@ namespace Qbism.Cubes
 
 			ff.isBoosting = true;
 
-			Vector3 boostTarget = GetBoostTarget();
+			GameObject wallObject = null;
+			Vector3 boostTarget = GetBoostTarget(out wallObject);
 
 			while (ff.isBoosting)
 			{
@@ -156,7 +169,8 @@ namespace Qbism.Cubes
 
 			moveable.isBoosting = true;
 
-			Vector3 boostTarget = GetBoostTarget();
+			GameObject wallObject = null;
+			Vector3 boostTarget = GetBoostTarget(out wallObject);
 
 			while (moveable.isBoosting)
 			{
