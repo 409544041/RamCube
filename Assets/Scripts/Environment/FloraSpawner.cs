@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Qbism.Environment
 {
+	[ExecuteInEditMode]
 	public class FloraSpawner : MonoBehaviour
 	{
 		//Config parameters
@@ -13,20 +14,27 @@ namespace Qbism.Environment
 		[SerializeField] Vector2 minMaxBushSize, minMaxRockSize, minMaxMossSize;
 		[SerializeField] bool generateOnStart = false;
 
+		//Cache
+		BiomeOverwriter bOverwriter;
+
 		//States
 		int spawnAmount = 0;
 
 		List<FloraIdentifier> floraList = new List<FloraIdentifier>();
 
-		private void Start() 
+		private void Awake()
 		{
-			if (generateOnStart) SpawnFlora();
+			bOverwriter = FindObjectOfType<BiomeOverwriter>();
+		}
+
+		private void Start() 
+		{	
+			if (bOverwriter.respawnVariety && generateOnStart) SpawnFlora();
 		}
 
 		public void SpawnFlora() 
 		{
 			if (!spawnFlora) return;
-
 			AddFloraToFloraList();
 			GetSpawnAmount();
 			GenerateFlora();
@@ -65,6 +73,17 @@ namespace Qbism.Environment
 					{
 						mesh.enabled = false;
 					}
+				}
+			}
+		}
+
+		public void DespawnFlora()
+		{
+			foreach (var flor in flora)
+			{
+				foreach (var mesh in flor.floraMeshes)
+				{
+					mesh.enabled = false;
 				}
 			}
 		}

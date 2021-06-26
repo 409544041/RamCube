@@ -4,17 +4,26 @@ using UnityEngine;
 
 namespace Qbism.Environment
 {
+	[ExecuteInEditMode]
 	public class DripSpawner : MonoBehaviour
 	{
 		//Config parameters
 		[SerializeField] GameObject[] pillarSegments; //Make sure they're in order from left ot right
 
+		//Cache
+		BiomeOverwriter bOverwriter;
+
 		//States
 		DripHeightID prevHeight;
 
+		private void Awake()
+		{
+			bOverwriter = FindObjectOfType<BiomeOverwriter>();
+		}
+
 		private void Start()
 		{
-			GenerateDrips();
+			if (bOverwriter.respawnVariety) GenerateDrips();
 		}
 
 		private void GenerateDrips()
@@ -70,13 +79,19 @@ namespace Qbism.Environment
 
 			for (int k = 0; k < drips.Length; k++)
 			{
+				var florSpawn = drips[k].GetComponent<FloraSpawner>();
+				
 				if (drips[k] == dripToShow)
 				{
 					drips[k].dripMesh.enabled = true;
-					drips[k].GetComponent<FloraSpawner>().SpawnFlora();
+					florSpawn.SpawnFlora();
 					prevHeight = drips[k].endHeight;
 				}
-				else drips[k].dripMesh.enabled = false;
+				else
+				{
+					drips[k].dripMesh.enabled = false;
+					florSpawn.DespawnFlora();
+				} 
 			}
 		}
 	}

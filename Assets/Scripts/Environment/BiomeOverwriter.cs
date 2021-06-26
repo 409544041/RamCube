@@ -8,5 +8,6 @@ namespace Qbism.Environment
 	{
 		//Config parameters
 		public Biomes biomeOverwrite;
+		public bool respawnVariety = false;
 	}
 }
