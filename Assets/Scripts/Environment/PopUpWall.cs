@@ -9,7 +9,7 @@ namespace Qbism.Environment
 		//Config parameters
 		[SerializeField] GameObject wallMesh = null;
 		[SerializeField] float popUpHeight = .5f;
-		[SerializeField] float upwardSpeed = 1f, downwardSpeed = .5f;
+		[SerializeField] float upwardDuration = .5f, downwardDuration = 1f;
 		[SerializeField] float downwardDelay = .5f;
 
 		//States
@@ -34,10 +34,12 @@ namespace Qbism.Environment
 			goingUp = true;
 			goingDown = false;
 
+			float speed = (popUpHeight - startPos.y) / upwardDuration;
+
 			while (goingUp)
 			{
 				wallMesh.transform.position = Vector3.MoveTowards(wallMesh.transform.position, 
-					popUpTarget, upwardSpeed * Time.deltaTime);
+					popUpTarget, speed * Time.deltaTime);
 
 				if (Vector3.Distance(wallMesh.transform.position, popUpTarget) < 0.01f)
 				{
@@ -55,10 +57,12 @@ namespace Qbism.Environment
 			yield return new WaitForSeconds(downwardDelay);
 			goingDown = true;
 
+			float speed = (popUpHeight - startPos.y) / downwardDuration;
+
 			while (goingDown)
 			{
 				wallMesh.transform.position = Vector3.MoveTowards(wallMesh.transform.position,
-					startPos, downwardSpeed * Time.deltaTime);
+					startPos, speed * Time.deltaTime);
 
 				if (Vector3.Distance(wallMesh.transform.position, startPos) < 0.01f)
 				{
