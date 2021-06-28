@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,14 +9,21 @@ namespace Qbism.Cubes
 	public class LaserJuicer : MonoBehaviour
 	{
 		//Config parameters
-		public Light laserTipLight;
-		public AudioClip passClip = null, denyClip = null;
-		public ParticleSystem laserBeam, denyBeam, denySunSpots, pinkEyeVFX;
+		[SerializeField] Light laserTipLight;
+		[SerializeField] AudioClip passClip = null, denyClip = null;
+		[SerializeField] ParticleSystem laserBeam, denyBeam, denySunSpots, pinkEyeVFX;
+		[SerializeField] MMFeedbacks denyJuice;
 
 		//Cache
 		AudioSource source;
 		LaserMouthAnimator mouthAnim;
 		LaserEyeAnimator eyeAnim;
+		MMFeedbackWiggle denyMMWiggle;
+
+		//States
+		bool isDenying = false;
+		float shakeTimer = 0;
+		float shakeDur = 0;
 
 		//Actions, events, delegates etc
 		public UnityEvent onLaserPassEvent = new UnityEvent();
@@ -25,6 +33,13 @@ namespace Qbism.Cubes
 			source = GetComponentInChildren<AudioSource>();
 			eyeAnim = GetComponentInChildren<LaserEyeAnimator>();
 			mouthAnim = GetComponentInChildren<LaserMouthAnimator>();
+			denyMMWiggle = denyJuice.GetComponent<MMFeedbackWiggle>();
+			shakeDur = denyMMWiggle.WigglePositionDuration;
+		}
+
+		private void Update()
+		{
+			HandleShakeTimer();
 		}
 
 		public void AdjustBeamVisualLength(float dist)
@@ -46,6 +61,8 @@ namespace Qbism.Cubes
 
 		public void TriggerPassJuice()
 		{
+			isDenying = false;
+
 			laserBeam.Stop();
 			denyBeam.Stop();
 			pinkEyeVFX.Play();
@@ -60,9 +77,13 @@ namespace Qbism.Cubes
 
 		public void TriggerDenyJuice(float dist)
 		{
+			isDenying = true;
+
 			laserBeam.Stop();
-			pinkEyeVFX.Stop();			
+			pinkEyeVFX.Stop();
 			denyBeam.Play();
+
+			Shake();
 
 			source.clip = denyClip;
 			onLaserPassEvent.Invoke();
@@ -73,12 +94,33 @@ namespace Qbism.Cubes
 
 		public void TriggerIdleJuice()
 		{
+			isDenying = false;
+
 			pinkEyeVFX.Stop();
 			denyBeam.Stop();
 			laserBeam.Play();
 
 			eyeAnim.OpenEyes();
 			mouthAnim.HappyMouth();
+		}
+
+		private void Shake()
+		{
+			denyJuice.Initialization();
+			denyJuice.PlayFeedbacks();
+		}
+
+		private void HandleShakeTimer()
+		{
+			if (isDenying)
+			{
+				shakeTimer += Time.deltaTime;
+				if (shakeTimer >= shakeDur + .1f)
+				{
+					Shake();
+					shakeTimer = 0;
+				}
+			}
 		}
 
 		private void MoveTipLight(float dist)
