@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5653807347314632382}
   - component: {fileID: 7607332498799743604}
   - component: {fileID: 8828575970641081869}
+  - component: {fileID: 5479656558376683847}
   m_Layer: 8
   m_Name: Chimney
   m_TagString: Untagged
@@ -96,6 +97,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.39999998, y: 2, z: 0.39999998}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &5479656558376683847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8255750033305105313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshParts:
+  - {fileID: 8255750033305105313}
+  biomeVarietySO: {fileID: 11400000, guid: 6de3b25145f20954b9d04333068f2337, type: 2}
+  recalculate: 0
+  isSkyBox: 0
+  isVolume: 0
 --- !u!1001 &1501381828702949512
 PrefabInstance:
   m_ObjectHideFlags: 0
