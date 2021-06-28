@@ -50,13 +50,19 @@ namespace Qbism.Environment
 
 			for (int j = 0; j < drips.Length; j++)
 			{
+				var florSpawn = drips[j].GetComponent<FloraSpawner>();
+
 				if (drips[j] == dripToShow)
 				{
 					drips[j].dripMesh.enabled = true;
-					drips[j].GetComponent<FloraSpawner>().SpawnFlora();
+					florSpawn.SpawnFlora();
 					prevHeight = drips[j].endHeight;
 				}
-				else drips[j].dripMesh.enabled = false;
+				else
+				{
+					drips[j].dripMesh.enabled = false;
+					florSpawn.DespawnFlora();
+				} 
 			}
 		}
 

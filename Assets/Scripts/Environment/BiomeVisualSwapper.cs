@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.Saving;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace Qbism.Environment
 {
@@ -11,7 +12,7 @@ namespace Qbism.Environment
 		[SerializeField] GameObject[] meshParts;
 		[SerializeField] BiomeVisualsScripOb biomeVarietySO;
 		[SerializeField] bool recalculate = false;
-		[SerializeField] bool isSkyBox = false;
+		[SerializeField] bool isSkyBox = false, isVolume = false;
 		//mesh and mat order should be same in scrip ob as in here
 
 		//Cache
@@ -30,6 +31,7 @@ namespace Qbism.Environment
 			FetchBiome();
 
 			if (isSkyBox) SetSkybox();
+			else if (isVolume) SetVolume();
 			else SetVisuals();
 		}
 
@@ -42,7 +44,7 @@ namespace Qbism.Environment
 			{
 				var bOverWriter = FindObjectOfType<BiomeOverwriter>();
 				if (bOverWriter) currentBiome = bOverWriter.biomeOverwrite;
-				else Debug.LogError("Progression Handler is not Linked. Setting first biome visuals");
+				else Debug.LogError("Progression Handler or Biome Overwriter not Linked. Setting first biome visuals");
 			}
 		}
 
@@ -89,6 +91,24 @@ namespace Qbism.Environment
 				if (biomeVariety.biome != currentBiome) continue;
 
 				RenderSettings.skybox = biomeVariety.parts[0].mats[0];
+			}
+		}
+
+		private void SetVolume()
+		{
+			//Not sure how it works is but it works
+			UnityEngine.Rendering.VolumeProfile volProf = GetComponent<UnityEngine.Rendering.Volume>()?.profile;
+			if (!volProf) throw new System.NullReferenceException(nameof(UnityEngine.Rendering.VolumeProfile));
+			UnityEngine.Rendering.Universal.Vignette vignette;
+			if (!volProf.TryGet(out vignette)) throw new System.NullReferenceException(nameof(vignette));
+
+			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
+			{
+				if (biomeVariety.biome != currentBiome) continue;
+
+				var vigColor = biomeVariety.parts[0].mats[0].color;
+
+				vignette.color.Override(vigColor);
 			}
 		}
 	}

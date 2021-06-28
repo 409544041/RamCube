@@ -34,10 +34,14 @@ namespace Qbism.Environment
 
 		public void SpawnFlora() 
 		{
-			if (!spawnFlora) return;
-			AddFloraToFloraList();
-			GetSpawnAmount();
-			GenerateFlora();
+			DespawnFlora();
+			
+			if (spawnFlora) 
+			{
+				AddFloraToFloraList();
+				GetSpawnAmount();
+				GenerateFlora();
+			}
 		}
 
 		private void GetSpawnAmount()
