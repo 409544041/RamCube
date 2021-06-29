@@ -52,7 +52,7 @@ namespace Qbism.Cubes
 
 			var shape = denySunSpots.shape;
 			var spotsMain = denySunSpots.main;
-			//Ensure that sunspots stop at player even with the extra length it gets from its speed
+			//Ensures that sunspots stop at player even with the extra length it gets from its speed
 			var extraLength = spotsMain.startSpeedMultiplier * spotsMain.startLifetimeMultiplier;
 			shape.length = dist - extraLength;
 
@@ -88,8 +88,8 @@ namespace Qbism.Cubes
 			source.clip = denyClip;
 			onLaserPassEvent.Invoke();
 
-			eyeAnim.OpenEyes();
-			mouthAnim.HappyMouth();
+			eyeAnim.ShootyEyes();
+			mouthAnim.SadMouth();
 		}
 
 		public void TriggerIdleJuice()

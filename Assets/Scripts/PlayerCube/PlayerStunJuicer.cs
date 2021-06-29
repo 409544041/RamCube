@@ -8,15 +8,18 @@ namespace Qbism.PlayerCube
 	{
 		//Config parameters
 		[SerializeField] ParticleSystem stunVFX;
+		[SerializeField] GameObject stunMesh;
 
 		public void PlayStunVFX()
 		{
 			stunVFX.Play();
+			stunMesh.SetActive(true);
 		}
 
 		public void StopStunVFX()
 		{
 			stunVFX.Stop();
+			stunMesh.SetActive(false);
 		}
 	}
 }

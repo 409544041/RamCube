@@ -17,16 +17,18 @@ namespace Qbism.Cubes
 		public void CloseEyes()
 		{
 			animator.SetBool("Open", false);
+			animator.SetBool("Shooting", false);
 		}
 
 		public void OpenEyes()
 		{
 			animator.SetBool("Open", true);
+			animator.SetBool("Shooting", false);
 		}
 
-		public void Blink()
+		public void ShootyEyes()
 		{
-			animator.SetTrigger("Blink");
+			animator.SetBool("Shooting", true);
 		}
 	}
 }
