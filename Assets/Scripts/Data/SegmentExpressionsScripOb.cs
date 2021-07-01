@@ -4,7 +4,5 @@
 public class SegmentExpressionsScripOb : ScriptableObject
 {
 	//Config Parameters
-	public ExpressionsData neutral, content, sad, veryHappy, shocked,
-		happySmile, laughingAloud, slightlyPainful, veryPainful, annoyed,
-		lookingUpSad, lookingUpShocked, confusedLeft, confusedRight;
+	
 }
