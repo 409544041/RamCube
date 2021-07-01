@@ -49,6 +49,9 @@ namespace Qbism.Cubes
 
 			onTurnEvent.Invoke();
 
+			mover.GetComponentInChildren<PlayerExpressionHandler>().
+				SetFace(ExpressionSituations.turning);
+
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
 				cube.transform.Rotate(axis, turnStep, Space.World);

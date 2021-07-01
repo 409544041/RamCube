@@ -141,15 +141,18 @@ namespace Qbism.Cubes
 					{
 						cubeFF.ShowFeedForward();
 						onLand();
+						var expressHandler = cube.GetComponentInChildren<PlayerExpressionHandler>();
 
 						if(previousCube.FetchType() != CubeTypes.Boosting)
 						{
 							playerFlipJuicer.PlayLandClip();
 							playerFlipJuicer.PlayPostFlipJuice();
+							expressHandler.SetFace(ExpressionSituations.flip);
 						}
 						else
 						{
 							playerBoostJuicer.PlayPostBoostJuice();
+							expressHandler.SetFace(ExpressionSituations.wallHit);
 						}
 						
 					}

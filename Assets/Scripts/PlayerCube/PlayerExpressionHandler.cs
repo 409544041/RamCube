@@ -8,107 +8,48 @@ namespace Qbism.PlayerCube
 	public class PlayerExpressionHandler : MonoBehaviour
 	{
 		//Config parameters
-		public PlayerExpressionsScripOb expressionsSO;
+		[SerializeField] Expression[] expressions;
+
+		[System.Serializable]
+		public class Expression
+		{
+			public ExpressionSituations situation;
+			public FacialState[] facialStates;
+		}
+
+		[System.Serializable]
+		public class FacialState
+		{
+			public BrowStates brows;
+			public EyesStates eyes;
+			public MouthStates mouth;
+		}
 
 		//Cache
-		SegmentSpriteAnimator mouthAnim = null;
-		SegmentSpriteAnimator eyesAnim = null;
+		PlayerSpriteBrowAnimator browAnim = null;
+		PlayerSpriteEyesAnimator eyesAnim = null;
+		PlayerSpriteMouthAnimator mouthAnim = null;
 
 		private void Awake()
 		{
-			SegmentSpriteAnimator[] spriteAnims = GetComponentsInChildren<SegmentSpriteAnimator>();
+			browAnim = GetComponentInChildren<PlayerSpriteBrowAnimator>();
+			eyesAnim = GetComponentInChildren<PlayerSpriteEyesAnimator>();
+			mouthAnim = GetComponentInChildren<PlayerSpriteMouthAnimator>();
+		}
 
-			foreach (SegmentSpriteAnimator spriteAnim in spriteAnims)
+		public void SetFace(ExpressionSituations incSituation)
+		{
+			foreach (var expression in expressions)
 			{
-				if (spriteAnim.spriteID == SegmentSpriteIDs.mouth)
-					mouthAnim = spriteAnim;
+				if (expression.situation != incSituation) continue;
 
-				else if (spriteAnim.spriteID == SegmentSpriteIDs.eyes)
-					eyesAnim = spriteAnim;
+				int index = Random.Range(0, expression.facialStates.Length -1);
+				var expressionToSet = expression.facialStates[index];
+
+				browAnim.SetBrows(expressionToSet.brows);
+				eyesAnim.SetEyes(expressionToSet.eyes);
+				mouthAnim.SetMouth(expressionToSet.mouth);
 			}
-		}
-
-		public void SetGameplayExpression(ExpressionsData[] expressions)
-		{
-			var expression = expressions[Random.Range(0, expressions.Length)];
-
-			var mouth = expression.mouth;
-			var eyes = expression.eyes;
-
-			mouthAnim.SetSprite(mouth, true);
-			eyesAnim.SetSprite(eyes, true);
-		}
-
-		public void SetSadExpression()
-		{
-			var mouth = expressionsSO.sad.mouth;
-			var eyes = expressionsSO.sad.eyes;
-
-			mouthAnim.SetSprite(mouth, true);
-			eyesAnim.SetSprite(eyes, true);
-		}
-
-		public void SetSlightlyPainfulExpression()
-		{
-			var mouth = expressionsSO.slightlyPainful.mouth;
-			var eyes = expressionsSO.slightlyPainful.eyes;
-
-			mouthAnim.SetSprite(mouth, true);
-			eyesAnim.SetSprite(eyes, true);
-		}
-
-		public void SetVeryPainfulExpression()
-		{
-			var mouth = expressionsSO.veryPainful.mouth;
-			var eyes = expressionsSO.veryPainful.eyes;
-
-			mouthAnim.SetSprite(mouth, true);
-			eyesAnim.SetSprite(eyes, true);
-		}
-
-		public void SetAnnoyedExpression()
-		{
-			var mouth = expressionsSO.annoyed.mouth;
-			var eyes = expressionsSO.annoyed.eyes;
-
-			mouthAnim.SetSprite(mouth, true);
-			eyesAnim.SetSprite(eyes, true);
-		}
-
-		public void SetShockedExpression()
-		{
-			var mouth = expressionsSO.shocked.mouth;
-			var eyes = expressionsSO.shocked.eyes;
-
-			mouthAnim.SetSprite(mouth, true);
-			eyesAnim.SetSprite(eyes, true);
-		}
-
-		public void SetWailingPainExpression()
-		{
-			var mouth = expressionsSO.wailingPain.mouth;
-			var eyes = expressionsSO.wailingPain.eyes;
-
-			mouthAnim.SetSprite(mouth, true);
-			eyesAnim.SetSprite(eyes, true);
-		}
-
-		public void SetLovingItExpression()
-		{
-			var mouth = expressionsSO.lovingIt.mouth;
-			var eyes = expressionsSO.lovingIt.eyes;
-
-			mouthAnim.SetSprite(mouth, true);
-			eyesAnim.SetSprite(eyes, true);
-		}
-
-		public void SetAngryExpression()
-		{
-			var mouth = expressionsSO.angry.mouth;
-			var eyes = expressionsSO.angry.eyes;
-
-			mouthAnim.SetSprite(mouth, true);
-			eyesAnim.SetSprite(eyes, true);
 		}
 	}
 }

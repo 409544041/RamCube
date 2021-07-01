@@ -142,6 +142,8 @@ namespace Qbism.PlayerCube
 		public void FireBulletFart()
 		{
 			bulletFart.Play();
+			GetComponentInChildren<PlayerExpressionHandler>().
+				SetFace(ExpressionSituations.fart);
 		}
 
 		private void StopFartHit()
