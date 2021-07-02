@@ -10,7 +10,7 @@ namespace Qbism.PlayerCube
 		Animator animator;
 
 		//States
-		BrowStates currentBrow;
+		BrowStates currentBrow = BrowStates.low;
 		const string TO_LOW = "ToLow";
 		const string TO_HIGH = "ToHigh";
 		const string TO_ANGRY = "ToAngry"; 
@@ -41,12 +41,10 @@ namespace Qbism.PlayerCube
 		{
 			if (currentBrow == state) return;
 
-			if (currentBrow != BrowStates.low)
-			{
-				ToBaseAnim();
-				animator.SetTrigger(trigger);
-				currentBrow = state;
-			}
+			if (currentBrow != BrowStates.low) ToBaseAnim();
+
+			animator.SetTrigger(trigger);
+			currentBrow = state;
 		}
 	}
 }

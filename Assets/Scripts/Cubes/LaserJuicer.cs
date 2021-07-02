@@ -112,6 +112,8 @@ namespace Qbism.Cubes
 
 		private void HandleShakeTimer()
 		{
+			//This repeats the shake feedback (which is .5s) over and over instead of
+			//using 'repeat forever' bc couldn't find way to stop that
 			if (isDenying)
 			{
 				shakeTimer += Time.deltaTime;

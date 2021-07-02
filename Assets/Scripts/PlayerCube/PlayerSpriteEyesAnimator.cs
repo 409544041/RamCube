@@ -10,7 +10,7 @@ namespace Qbism.PlayerCube
 		Animator animator;
 
 		//States
-		EyesStates currentEyes;
+		EyesStates currentEyes = EyesStates.normal;
 		const string TO_NORMAL = "ToNormal";
 		const string TO_WINK = "ToWink";
 		const string TO_SHUT = "ToShut";

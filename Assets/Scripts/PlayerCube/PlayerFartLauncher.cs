@@ -143,7 +143,7 @@ namespace Qbism.PlayerCube
 		{
 			bulletFart.Play();
 			GetComponentInChildren<PlayerExpressionHandler>().
-				SetFace(ExpressionSituations.fart);
+				SetFace(ExpressionSituations.fart, .75f);
 		}
 
 		private void StopFartHit()

@@ -81,9 +81,10 @@ namespace Qbism.Cubes
 						shouldTrigger = false;
 						juicer.TriggerDenyJuice(currentLength);
 						onRewindPulse(InterfaceIDs.Rewind);
+						mover.GetComponent<PlayerStunJuicer>().PlayStunVFX();
 						mover.input = false;
 						mover.isStunned = true;
-						mover.GetComponent<PlayerStunJuicer>().PlayStunVFX();
+						
 					}
 				}
 			}

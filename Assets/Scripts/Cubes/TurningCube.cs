@@ -50,7 +50,7 @@ namespace Qbism.Cubes
 			onTurnEvent.Invoke();
 
 			mover.GetComponentInChildren<PlayerExpressionHandler>().
-				SetFace(ExpressionSituations.turning);
+				SetFace(ExpressionSituations.turning, 1f);
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{

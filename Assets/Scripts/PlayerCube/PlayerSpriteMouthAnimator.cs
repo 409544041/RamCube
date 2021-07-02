@@ -10,7 +10,7 @@ namespace Qbism.PlayerCube
 		Animator animator;
 
 		//States
-		MouthStates currentMouth;
+		MouthStates currentMouth = MouthStates.normal;
 		const string TO_NORMAL = "ToNormal";
 		const string TO_CIRCLE = "ToCircle";
 		const string TO_TEETH = "ToTeeth";
@@ -77,12 +77,8 @@ namespace Qbism.PlayerCube
 				ToFirstTierAnim(MouthStates.smile, MouthStates.happyOpen,
 				MouthStates.laugh, TO_SMILE);
 
-			if (currentMouth == MouthStates.circle || currentMouth == MouthStates.sad ||
-				currentMouth == MouthStates.smile || currentMouth == MouthStates.teeth)
-			{
-				animator.SetTrigger(TO_NORMAL);
-				currentMouth = MouthStates.normal;
-			}
+			animator.SetTrigger(TO_NORMAL);
+			currentMouth = MouthStates.normal;
 		}
 
 		private void ToFirstTierAnim(MouthStates state1, MouthStates state2, 
@@ -125,17 +121,14 @@ namespace Qbism.PlayerCube
 
 			if (currentMouth != MouthStates.normal && currentMouth != state2 &&
 				currentMouth != state3)
-			{
 				ToBaseAnim();
 
-				if (state1 == MouthStates.wail) 
-					ToFirstTierAnim(MouthStates.sad, MouthStates.wail, MouthStates.cry,
-					TO_SAD);
+			string newTrigger = null;
+			if (state1 == MouthStates.wail) newTrigger = TO_SAD;
+			if (state1 == MouthStates.happyOpen) newTrigger = TO_SMILE;
 
-				if (state1 == MouthStates.happyOpen)
-					ToFirstTierAnim(MouthStates.smile, MouthStates.happyOpen, 
-					MouthStates.laugh, TO_SMILE);
-			}
+			if (currentMouth == MouthStates.normal) 
+				ToFirstTierAnim(state2, state1, state3, newTrigger);
 
 			animator.SetTrigger(trigger);
 			currentMouth = state1;
@@ -151,24 +144,16 @@ namespace Qbism.PlayerCube
 			{
 				ToBaseAnim();
 
-				if (state1 == MouthStates.cry)
-				{
-					ToFirstTierAnim(MouthStates.sad, MouthStates.wail, MouthStates.cry,
-						TO_SAD);
+				string newTrigger = null;
+				if (state1 == MouthStates.cry) newTrigger = TO_SAD;
+				if (state1 == MouthStates.laugh) newTrigger = TO_SMILE;
 
-					ToSecondTierAnim(MouthStates.wail, MouthStates.sad,
-						MouthStates.cry, TO_WAIL);
-				}
-					
+				ToFirstTierAnim(state2, state3, state1, newTrigger);
 
-				if (state1 == MouthStates.laugh)
-				{
-					ToFirstTierAnim(MouthStates.smile, MouthStates.happyOpen,
-						MouthStates.laugh, TO_SMILE);
+				if (state1 == MouthStates.cry) newTrigger = TO_WAIL;
+				if (state1 == MouthStates.laugh) newTrigger = TO_LAUGH;
 
-					ToSecondTierAnim(MouthStates.happyOpen, MouthStates.smile,
-					MouthStates.laugh, TO_HAPPY);
-				}	
+				ToSecondTierAnim(state3, state2, state1, newTrigger);
 			}
 
 			if (currentMouth == state2)

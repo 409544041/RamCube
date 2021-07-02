@@ -9,6 +9,7 @@ namespace Qbism.PlayerCube
 	{
 		//Config parameters
 		[SerializeField] Expression[] expressions;
+		[SerializeField] Vector2 minMaxExpressionTime;
 
 		[System.Serializable]
 		public class Expression
@@ -29,15 +30,26 @@ namespace Qbism.PlayerCube
 		PlayerSpriteBrowAnimator browAnim = null;
 		PlayerSpriteEyesAnimator eyesAnim = null;
 		PlayerSpriteMouthAnimator mouthAnim = null;
+		PlayerCubeMover mover = null;
+
+		//States
+		float expressionTimer = 0f;
+		float timeToExpress = 0f;
 
 		private void Awake()
 		{
 			browAnim = GetComponentInChildren<PlayerSpriteBrowAnimator>();
 			eyesAnim = GetComponentInChildren<PlayerSpriteEyesAnimator>();
 			mouthAnim = GetComponentInChildren<PlayerSpriteMouthAnimator>();
+			mover = GetComponentInParent<PlayerCubeMover>();
 		}
 
-		public void SetFace(ExpressionSituations incSituation)
+		private void Update()
+		{
+			HandleExpressionTimer();
+		}
+
+		public void SetFace(ExpressionSituations incSituation, float incTime)
 		{
 			foreach (var expression in expressions)
 			{
@@ -50,6 +62,20 @@ namespace Qbism.PlayerCube
 				eyesAnim.SetEyes(expressionToSet.eyes);
 				mouthAnim.SetMouth(expressionToSet.mouth);
 			}
+
+			if (incTime < 0) timeToExpress = 
+				Random.Range(minMaxExpressionTime.x, minMaxExpressionTime.y);
+			else timeToExpress = incTime;
+			
+			expressionTimer = 0;
+		}
+
+		private void HandleExpressionTimer()
+		{
+			expressionTimer += Time.deltaTime;
+
+			if (expressionTimer >= timeToExpress)
+				SetFace(ExpressionSituations.play, -1f);
 		}
 	}
 }
