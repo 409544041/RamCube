@@ -110,15 +110,12 @@ namespace Qbism.Cubes
 
 			if (progHandler.currentHasSegment)
 			{
-				print("Serpent segment found!");
-
 				if (onSerpentCheck())
 				{
 					onSetSegment(); //Needs to be done before AddSegment
 					serpProg.AddSegment();
 				}
 			}
-			else print("Shapekin liberated!");
 
 			progHandler.SaveProgData();
 

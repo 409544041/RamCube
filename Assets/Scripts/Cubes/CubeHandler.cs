@@ -139,7 +139,7 @@ namespace Qbism.Cubes
 				{
 					if (differentCubes && onLand != null)
 					{
-						cubeFF.ShowFeedForward();
+						if (!mover.isStunned) cubeFF.ShowFeedForward();
 						onLand();
 						var expressHandler = cube.GetComponentInChildren<PlayerExpressionHandler>();
 
@@ -158,7 +158,7 @@ namespace Qbism.Cubes
 					}
 					else
 					{
-						cubeFF.ShowFeedForward(); //landing on same cube, like after having turned/flipped
+						if (!mover.isStunned) cubeFF.ShowFeedForward(); //landing on same cube, like after having turned/flipped
 					}
 				}
 			}

@@ -260,11 +260,6 @@ namespace Qbism.PlayerCube
 			return posA.y - posB.y;
 		}
 
-		private void SetPlayerInput(bool value)
-		{
-			input = value;
-		}
-
 		private void OnDisable()
 		{
 			if (moveableCubes != null)

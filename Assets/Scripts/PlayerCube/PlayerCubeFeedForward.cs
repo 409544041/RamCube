@@ -56,8 +56,10 @@ namespace Qbism.PlayerCube
 			}
 		}
 
-		public void ShowFeedForward()
+		public IEnumerator ShowFeedForward()
 		{
+			yield return null; //This is dirty fix so laser hits before FF is shown
+
 			for (int ffIndex = 0; ffIndex < feedForwardCubes.Length; ffIndex++)
 			{
 				var ffCube = feedForwardCubes[ffIndex];
