@@ -23,14 +23,38 @@ namespace Qbism.PlayerCube
 		const string TO_SPARKLE = "ToSparkle";
 		const string TO_SQUINT = "ToSquint";
 
+		List<string> animStringList = new List<string>();
+
 		private void Awake()
 		{
 			animator = GetComponent<Animator>();
 		}
 
+		private void Start() 
+		{
+			animStringList.Add(TO_NORMAL);
+			animStringList.Add(TO_WINK);
+			animStringList.Add(TO_SHUT);
+			animStringList.Add(TO_LAUGH_SHUT);
+			animStringList.Add(TO_ARCH);
+			animStringList.Add(TO_LAUGH_ARCH);
+			animStringList.Add(TO_TWITCH);
+			animStringList.Add(TO_SHOCKED);
+			animStringList.Add(TO_CROSS);
+			animStringList.Add(TO_SPARKLE);
+			animStringList.Add(TO_SQUINT);
+		}
+
 		//state1 is always the state you're going to.
 		public void SetEyes(EyesStates state)
 		{
+			SetCurrentEyes();
+
+			foreach (var anim in animStringList)
+			{
+				animator.ResetTrigger(anim);
+			}
+
 			if (state == EyesStates.normal) ToBaseAnim();
 
 			if (state == EyesStates.wink) 
@@ -56,6 +80,28 @@ namespace Qbism.PlayerCube
 
 			if (state == EyesStates.squint) 
 				ToFirstTierAnim(EyesStates.squint, EyesStates.nullz, TO_SQUINT);
+		}
+
+		private void SetCurrentEyes()
+		{
+			var currentClipInfo = animator.GetCurrentAnimatorClipInfo(0);
+			var currentClipName = currentClipInfo[0].clip.name;
+
+			if (currentClipName == "Eyes_WinkToNormal" || currentClipName == "Eyes_ShutToNormal" ||
+				currentClipName == "Eyes_ArchedToNormal" || currentClipName == "Eyes_Normal")
+				currentEyes = EyesStates.normal;
+			
+			if (currentClipName == "Eyes_NormalToWink") currentEyes = EyesStates.wink;
+			if (currentClipName == "Eyes_NormalToShut") currentEyes = EyesStates.shut;
+			if (currentClipName == "Eyes_NormalToArched") currentEyes = EyesStates.arched;
+			if (currentClipName == "Eyes_Twitching") currentEyes = EyesStates.twitch;
+			if (currentClipName == "Eyes_Shocked") currentEyes = EyesStates.shock;
+			if (currentClipName == "Eyes_CrossShut") currentEyes = EyesStates.cross;
+			if (currentClipName == "Eyes_Sprakling") currentEyes = EyesStates.sparkle;
+			if (currentClipName == "Eyes_Squinted") currentEyes = EyesStates.squint;
+
+			if (currentClipName == "Eyes_LaughingShut") currentEyes = EyesStates.laughShut;
+			if (currentClipName == "Eyes_LaughingArched") currentEyes = EyesStates.laughArched;
 		}
 
 		private void ToBaseAnim()
