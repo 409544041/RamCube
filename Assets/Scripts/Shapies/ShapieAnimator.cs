@@ -37,7 +37,10 @@ namespace Qbism.Shapies
 
 		public void PushBack()
 		{
-			int randomPush = Random.Range(0, 3);
+			//Leaving 3rd push animation out on purpose bc it breaks end seq
+			//bc it doesn't get to 'get up' which triggers player falling
+			//TO DO: Fix this
+			int randomPush = Random.Range(0, 2);
 			animator.SetInteger("PushInt", randomPush);
 
 			float randomPushDis = Random.Range(minMaxPush.x, minMaxPush.y);
