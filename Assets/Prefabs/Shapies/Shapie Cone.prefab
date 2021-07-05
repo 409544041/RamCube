@@ -106,7 +106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1038596561979755004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1038596563799349459}
@@ -166,7 +166,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1038596563799349458}
-  m_LocalRotation: {x: -0, y: 0.70710707, z: -0, w: 0.70710653}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.003655031, y: 0, z: 0.003654977}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -175,7 +175,7 @@ Transform:
   - {fileID: 1038596562071492148}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1038596563920427481
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,10 +258,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pushBackTarget: {fileID: 1038596561979755005}
   pushBackJuice: {fileID: 1038596562581287752}
-  minGetUpDelay: 0
-  maxGetUpDelay: 1.5
-  minCelebrateDelay: 0.5
-  maxCelebrateDelay: 1.5
+  minMaxGetUpDelay: {x: 0, y: 1}
+  minMaxCelebrateDelay: {x: 0.5, y: 1}
+  minMaxPush: {x: 1.3, y: 1.8}
 --- !u!1001 &570851396819191522
 PrefabInstance:
   m_ObjectHideFlags: 0

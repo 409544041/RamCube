@@ -31,11 +31,12 @@ namespace Qbism.Shapies
 		{
 			var spawnPos = new Vector3(transform.position.x,
 				transform.position.y - .5f, transform.position.z);
+
 			for (int i = 0; i < spawnAmount; i++)
 			{
-				int shapeIndex = UnityEngine.Random.Range(0, shapies.Length - 1);
+				int shapeIndex = Random.Range(0, shapies.Length - 1);
 				GameObject toSpawn = shapies[shapeIndex];
-				int degreeIndex = UnityEngine.Random.Range(0, pushDegrees.Count - 1);
+				int degreeIndex = Random.Range(0, pushDegrees.Count - 1);
 				Instantiate(toSpawn, spawnPos, Quaternion.Euler(0f, pushDegrees[degreeIndex], 0f));
 				pushDegrees.RemoveAt(degreeIndex);
 			}

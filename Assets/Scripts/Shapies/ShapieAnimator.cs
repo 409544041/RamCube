@@ -11,17 +11,18 @@ namespace Qbism.Shapies
 		//Config parameters
 		[SerializeField] Transform pushBackTarget;
 		[SerializeField] MMFeedbacks pushBackJuice;
-		[SerializeField] float minGetUpDelay, maxGetUpDelay, 
-			minCelebrateDelay, maxCelebrateDelay;
+		[SerializeField] Vector2 minMaxGetUpDelay, minMaxCelebrateDelay, minMaxPush;
 
 		//Cache
 		Animator animator;
 		PlayerAnimator playerAnim;
+		MMFeedbackPosition pushMMPos;
 
 		private void Awake() 
 		{
 			animator = GetComponent<Animator>();
 			playerAnim = FindObjectOfType<PlayerAnimator>();
+			pushMMPos = pushBackJuice.GetComponent<MMFeedbackPosition>();
 		}
 
 		private void OnEnable() 
@@ -29,15 +30,22 @@ namespace Qbism.Shapies
 			if (playerAnim != null) playerAnim.onTriggerLandingReaction += TriggerShock;
 		}
 
-		private void Start() 
+		private void Start()
 		{
 			PushBack();
 		}
 
 		public void PushBack()
 		{
-			int randomPush = Random.Range(0, 2);
+			int randomPush = Random.Range(0, 3);
 			animator.SetInteger("PushInt", randomPush);
+
+			float randomPushDis = Random.Range(minMaxPush.x, minMaxPush.y);
+			pushBackTarget.localPosition = new Vector3(0, 0, randomPushDis);
+
+			//if using the 'walking back' animation, make push back slower
+			if (randomPush == 2) pushMMPos.AnimatePositionDuration = 1.5f;
+			else pushMMPos.AnimatePositionDuration = .7f;
 
 			pushBackJuice.Initialization();
 			pushBackJuice.PlayFeedbacks();
@@ -45,7 +53,7 @@ namespace Qbism.Shapies
 
 		private IEnumerator TriggerGettingUp() //Called from animation event
 		{
-			var delay = Random.Range(minGetUpDelay, maxGetUpDelay);
+			var delay = Random.Range(minMaxGetUpDelay.x, minMaxGetUpDelay.y);
 			yield return new WaitForSeconds(delay);
 			animator.SetTrigger("GetUp");
 		}
@@ -57,7 +65,7 @@ namespace Qbism.Shapies
 
 		private IEnumerator TriggerCelebration() //Called from animation event
 		{
-			var delay = Random.Range(minCelebrateDelay, maxCelebrateDelay);
+			var delay = Random.Range(minMaxCelebrateDelay.x, minMaxCelebrateDelay.y);
 			yield return new WaitForSeconds(delay);
 			animator.SetTrigger("Celebrate");
 		}
