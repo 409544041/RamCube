@@ -21,15 +21,40 @@ namespace Qbism.PlayerCube
 		const string TO_HAPPY = "ToHappyOpen";
 		const string TO_LAUGH = "ToLaugh";
 
+		List<string> animStringList = new List<string>();
+		// List<string> animSetTrueList = new List<string>();
+
 		private void Awake()
 		{
 			animator = GetComponent<Animator>();
+		}
+
+		private void Start() 
+		{
+			animStringList.Add(TO_NORMAL);
+			animStringList.Add(TO_CIRCLE);
+			animStringList.Add(TO_TEETH);
+			animStringList.Add(TO_SAD);
+			animStringList.Add(TO_WAIL);
+			animStringList.Add(TO_CRY);
+			animStringList.Add(TO_SMILE);
+			animStringList.Add(TO_HAPPY);
+			animStringList.Add(TO_LAUGH);
 		}
 
 		//state1 is always the state you're going to.
 		//Order of state2 and 3 are from center of animator outwards 
 		public void SetMouth(MouthStates state)
 		{
+			SetCurrentMouth();
+
+			// animSetTrueList.Clear();
+
+			foreach (var anim in animStringList)
+			{
+				animator.ResetTrigger(anim);
+			}
+
 			if (state == MouthStates.normal) ToBaseAnim();
 
 			if (state == MouthStates.circle) ToFirstTierAnim(MouthStates.circle,
@@ -55,6 +80,35 @@ namespace Qbism.PlayerCube
 
 			if(state == MouthStates.laugh) ToThirdTierAnim(MouthStates.laugh,
 				MouthStates.smile, MouthStates.happyOpen, TO_LAUGH);
+
+			// foreach (var anim in animStringList)
+			// {
+			// 	for (int i = 0; i < animSetTrueList.Count; i++)
+			// 	{
+			// 		if (anim == animSetTrueList[i]) ResetTrigger(anim, true);
+			// 	}
+			// }
+		}
+
+		private void SetCurrentMouth()
+		{
+			var currentClipInfo = animator.GetCurrentAnimatorClipInfo(0);
+			var currentClipName = currentClipInfo[0].clip.name;
+
+			if (currentClipName == "Mouth_Normal" || currentClipName == "Mouth_CircleToNormal" ||
+				currentClipName == "Mouth_TeethToNormal" || currentClipName == "Mouth_SadToNormal" ||
+				currentClipName == "Mouth_SmileToNormal") currentMouth = MouthStates.normal;
+			
+			if (currentClipName == "Mouth_NormalToCircle") currentMouth = MouthStates.circle;
+			if (currentClipName == "Mouth_NormalToTeeth") currentMouth = MouthStates.teeth;
+			if (currentClipName == "Mouth_NormalToSad" || currentClipName == "Mouth_WailToSad") currentMouth = MouthStates.sad;
+			if (currentClipName == "Mouth_NormalToSmile" || currentClipName == "Mouth_HappyOpenToSmile") currentMouth = MouthStates.smile;
+
+			if (currentClipName == "Mouth_SadToWail") currentMouth = MouthStates.wail;
+			if (currentClipName == "Mouth_HappyOpenToSmile") currentMouth = MouthStates.happyOpen;
+
+			if (currentClipName == "Mouth_Crying") currentMouth = MouthStates.cry;
+			if (currentClipName == "Mouth_Laughing") currentMouth = MouthStates.laugh;
 		}
 
 		private void ToBaseAnim()
@@ -78,6 +132,7 @@ namespace Qbism.PlayerCube
 				MouthStates.laugh, TO_SMILE);
 
 			animator.SetTrigger(TO_NORMAL);
+			// animSetTrueList.Add(TO_NORMAL);
 			currentMouth = MouthStates.normal;
 		}
 
@@ -91,6 +146,7 @@ namespace Qbism.PlayerCube
 				if (currentMouth != MouthStates.normal) ToBaseAnim();
 
 				animator.SetTrigger(trigger1);
+				// animSetTrueList.Add(trigger1);
 				currentMouth = state1;
 			}
 			else
@@ -107,9 +163,10 @@ namespace Qbism.PlayerCube
 					if (state1 == MouthStates.smile) 
 						ToSecondTierAnim(MouthStates.happyOpen, MouthStates.smile,
 						MouthStates.laugh, TO_HAPPY);
-				} 
+				}
 
 				animator.SetTrigger(trigger1);
+				// animSetTrueList.Add(trigger1);
 				currentMouth = state1;
 			}
 		}
@@ -131,6 +188,7 @@ namespace Qbism.PlayerCube
 				ToFirstTierAnim(state2, state1, state3, newTrigger);
 
 			animator.SetTrigger(trigger);
+			// animSetTrueList.Add(trigger);
 			currentMouth = state1;
 		}
 
@@ -168,6 +226,7 @@ namespace Qbism.PlayerCube
 			}
 
 			animator.SetTrigger(trigger);
+			// animSetTrueList.Add(trigger);
 			currentMouth = state1;
 		}
 	}
