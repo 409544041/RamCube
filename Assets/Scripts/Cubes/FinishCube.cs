@@ -41,6 +41,7 @@ namespace Qbism.Cubes
 		public event Action<InterfaceIDs> onRewindPulse;
 		public event Action<InterfaceIDs> onStopRewindPulse;
 		public event Action onShowSegments;
+		public event Action<float> onUIFade;
 
 		private void Awake()
 		{
@@ -125,6 +126,7 @@ namespace Qbism.Cubes
 
 			yield return DestroyAllFloorCubes();
 			ActivateLevelCompleteCam();
+			onUIFade(0);
 
 			farter.InitiateFartSequence();
 		}
