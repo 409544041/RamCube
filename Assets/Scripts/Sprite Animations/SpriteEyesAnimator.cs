@@ -53,7 +53,6 @@ namespace Qbism.SpriteAnimations
 		//state1 is always the state you're going to.
 		public void SetEyes(EyesStates state)
 		{
-			print("Setting eyes " + state);
 			SetCurrentEyes();
 
 			foreach (var anim in animStringList)
@@ -106,7 +105,8 @@ namespace Qbism.SpriteAnimations
 			var currentClipName = currentClipInfo[0].clip.name;
 
 			if (currentClipName == "Eyes_WinkToNormal" || currentClipName == "Eyes_ShutToNormal" ||
-				currentClipName == "Eyes_ArchedToNormal" || currentClipName == "Eyes_Normal")
+				currentClipName == "Eyes_ArchedToNormal" || currentClipName == "Eyes_Normal" ||
+				currentClipName == "Eyes_CrossShutToNormal")
 				currentEyes = EyesStates.normal;
 			
 			if (currentClipName == "Eyes_NormalToWink") currentEyes = EyesStates.wink;
@@ -114,7 +114,7 @@ namespace Qbism.SpriteAnimations
 			if (currentClipName == "Eyes_NormalToArched") currentEyes = EyesStates.arched;
 			if (currentClipName == "Eyes_Twitching") currentEyes = EyesStates.twitch;
 			if (currentClipName == "Eyes_Shocked") currentEyes = EyesStates.shock;
-			if (currentClipName == "Eyes_CrossShut") currentEyes = EyesStates.cross;
+			if (currentClipName == "Eyes_NormalToCrossShut") currentEyes = EyesStates.cross;
 			if (currentClipName == "Eyes_Sprakling") currentEyes = EyesStates.sparkle;
 			if (currentClipName == "Eyes_Squinted") currentEyes = EyesStates.squint;
 

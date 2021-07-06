@@ -90,7 +90,6 @@ namespace Qbism.Serpent
 
 		private void SetOofExpr()
 		{
-			print("Anim Event is working");
 			exprHandler.SetFace(ExpressionSituations.landing, -1);
 		}
 

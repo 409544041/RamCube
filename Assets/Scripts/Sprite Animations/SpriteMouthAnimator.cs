@@ -44,7 +44,6 @@ namespace Qbism.SpriteAnimations
 		//Order of state2 and 3 are from center of animator outwards 
 		public void SetMouth(MouthStates state)
 		{
-			print("Setting mouth " + state);
 			SetCurrentMouth();
 
 			foreach (var anim in animStringList)

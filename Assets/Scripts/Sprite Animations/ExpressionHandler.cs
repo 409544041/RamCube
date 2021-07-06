@@ -36,7 +36,6 @@ namespace Qbism.SpriteAnimations
 
 		public void SetFace(ExpressionSituations incSituation, float incTime)
 		{
-			print("Setting Face " + incSituation);
 			foreach (var expression in expressionsSO.expressions)
 			{
 				if (expression.situation != incSituation) continue;
