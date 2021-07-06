@@ -94,7 +94,7 @@ namespace Qbism.PlayerCube
 			if (currentClipName == "Mouth_NormalToSmile" || currentClipName == "Mouth_HappyOpenToSmile") currentMouth = MouthStates.smile;
 
 			if (currentClipName == "Mouth_SadToWail") currentMouth = MouthStates.wail;
-			if (currentClipName == "Mouth_HappyOpenToSmile") currentMouth = MouthStates.happyOpen;
+			if (currentClipName == "Mouth_SmileToHappyOpen") currentMouth = MouthStates.happyOpen;
 
 			if (currentClipName == "Mouth_Crying") currentMouth = MouthStates.cry;
 			if (currentClipName == "Mouth_Laughing") currentMouth = MouthStates.laugh;
