@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Qbism.SpriteAnimations;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
@@ -14,7 +15,7 @@ namespace Qbism.PlayerCube
 		{
 			stunVFX.Play();
 			stunMesh.SetActive(true);
-			GetComponentInChildren<PlayerExpressionHandler>().
+			GetComponentInChildren<ExpressionHandler>().
 				SetFace(ExpressionSituations.laserHit, -1f);
 		}
 

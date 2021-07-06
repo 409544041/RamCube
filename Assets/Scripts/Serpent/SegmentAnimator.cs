@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using Qbism.Cubes;
 using Qbism.PlayerCube;
+using Qbism.SpriteAnimations;
 using UnityEngine;
 
 namespace Qbism.Serpent
@@ -18,16 +19,16 @@ namespace Qbism.Serpent
 			lookUpAnimDelay = 0f, happyWiggleAnimDelay = 0f;
 
 		//Cache
-		SegmentExpressionHandler faceHandler = null;
 		PlayerAnimator playerAnim = null;
+		ExpressionHandler exprHandler;
 
 		//States
 		bool justSpawned = false;
 
 		private void Awake() 
 		{
-			faceHandler = GetComponent<SegmentExpressionHandler>();
 			playerAnim = FindObjectOfType<PlayerAnimator>();
+			exprHandler = GetComponent<ExpressionHandler>();
 		}
 
 		private void OnEnable() 
@@ -80,6 +81,22 @@ namespace Qbism.Serpent
 		private void TriggerPlayerWiggle() // Called from animation event
 		{
 			playerAnim.TriggerWiggle();
+		}
+
+		private void SetCelebrateExpr()
+		{
+			exprHandler.SetFace(ExpressionSituations.celebrating, -1);
+		}
+
+		private void SetOofExpr()
+		{
+			print("Anim Event is working");
+			exprHandler.SetFace(ExpressionSituations.landing, -1);
+		}
+
+		private void SetShockedExpr()
+		{
+			exprHandler.SetFace(ExpressionSituations.serpPickUp, -1);
 		}
 
 		private void OnDisable()

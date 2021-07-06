@@ -25,93 +25,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb9aa31c2604b6c4390d791ed869305e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expressions:
-  - situation: 0
-    facialStates:
-    - brows: 1
-      eyes: 0
-      mouth: 0
-    - brows: 0
-      eyes: 8
-      mouth: 0
-    - brows: 0
-      eyes: 10
-      mouth: 0
-    - brows: 0
-      eyes: 10
-      mouth: 2
-  - situation: 1
-    facialStates:
-    - brows: 0
-      eyes: 4
-      mouth: 7
-    - brows: 0
-      eyes: 10
-      mouth: 7
-    - brows: 0
-      eyes: 8
-      mouth: 7
-  - situation: 2
-    facialStates:
-    - brows: 0
-      eyes: 4
-      mouth: 6
-    - brows: 1
-      eyes: 2
-      mouth: 1
-  - situation: 3
-    facialStates:
-    - brows: 0
-      eyes: 8
-      mouth: 1
-    - brows: 0
-      eyes: 8
-      mouth: 3
-    - brows: 0
-      eyes: 10
-      mouth: 4
-    - brows: 0
-      eyes: 8
-      mouth: 2
-  - situation: 4
-    facialStates:
-    - brows: 1
-      eyes: 0
-      mouth: 6
-    - brows: 0
-      eyes: 0
-      mouth: 6
-    - brows: 0
-      eyes: 0
-      mouth: 7
-    - brows: 0
-      eyes: 0
-      mouth: 1
-  - situation: 5
-    facialStates:
-    - brows: 0
-      eyes: 8
-      mouth: 7
-    - brows: 1
-      eyes: 2
-      mouth: 7
-    - brows: 0
-      eyes: 4
-      mouth: 2
-    - brows: 0
-      eyes: 10
-      mouth: 2
-  - situation: 6
-    facialStates:
-    - brows: 0
-      eyes: 7
-      mouth: 4
-    - brows: 1
-      eyes: 8
-      mouth: 4
-    - brows: 1
-      eyes: 10
-      mouth: 3
+  expressionsSO: {fileID: 11400000, guid: 60b8a37ca39b9fe4a924362eeede26f7, type: 2}
+  isPlayer: 1
+  hasBrows: 1
   minMaxExpressionTime: {x: 0.5, y: 1}
 --- !u!1 &995449580525320680
 GameObject:
@@ -874,6 +790,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae6ad55e089c4e43b2eb2d80bde6daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasCircle: 1
+  hasTeeth: 1
+  hasWail: 1
 --- !u!1 &3961160860897456752
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,6 +909,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbbee7216a09074baf0db8e635e34f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasTwitch: 1
+  hasSquint: 1
+  hasAnnoyed: 0
 --- !u!1 &4392760717412041765
 GameObject:
   m_ObjectHideFlags: 0

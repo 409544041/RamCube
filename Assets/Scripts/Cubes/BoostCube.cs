@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Qbism.Environment;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
+using Qbism.SpriteAnimations;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -49,7 +50,7 @@ namespace Qbism.Cubes
 
 			mover.GetComponent<PlayerCubeBoostJuicer>().
 				PlayBoostJuice(-boostObjDir.transform.forward);
-			mover.GetComponentInChildren<PlayerExpressionHandler>().
+			mover.GetComponentInChildren<ExpressionHandler>().
 				SetFace(ExpressionSituations.boosting, -1f);
 
 			while (mover.isBoosting)

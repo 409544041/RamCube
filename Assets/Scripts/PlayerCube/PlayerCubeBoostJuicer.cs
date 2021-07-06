@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using Qbism.SpriteAnimations;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
@@ -16,7 +17,7 @@ namespace Qbism.PlayerCube
 		MMFeedbackScale[] postBoostMMScalers;
 		MMFeedbackPosition postBoostMMPos;
 		MMFeedbackScale[] boostMMScalers;
-		PlayerExpressionHandler expresHandler;
+		ExpressionHandler expresHandler;
 
 		//States
 		Vector3 boostImpactDir = new Vector3(0, 0, 0);
@@ -28,7 +29,7 @@ namespace Qbism.PlayerCube
 			postBoostMMScalers = postBoostJuice.GetComponents<MMFeedbackScale>();
 			postBoostMMPos = postBoostJuice.GetComponent<MMFeedbackPosition>();
 			boostMMScalers = boostJuice.GetComponents<MMFeedbackScale>();
-			expresHandler = GetComponentInChildren<PlayerExpressionHandler>();
+			expresHandler = GetComponentInChildren<ExpressionHandler>();
 		}
 
 		private void Update()

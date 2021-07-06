@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using Qbism.SpriteAnimations;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
@@ -142,7 +143,7 @@ namespace Qbism.PlayerCube
 		public void FireBulletFart()
 		{
 			bulletFart.Play();
-			GetComponentInChildren<PlayerExpressionHandler>().
+			GetComponentInChildren<ExpressionHandler>().
 				SetFace(ExpressionSituations.fart, .75f);
 		}
 

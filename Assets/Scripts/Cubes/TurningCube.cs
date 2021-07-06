@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using Qbism.PlayerCube;
 using Qbism.MoveableCubes;
 using System;
+using Qbism.SpriteAnimations;
 
 namespace Qbism.Cubes
 {
@@ -49,7 +50,7 @@ namespace Qbism.Cubes
 
 			onTurnEvent.Invoke();
 
-			mover.GetComponentInChildren<PlayerExpressionHandler>().
+			mover.GetComponentInChildren<ExpressionHandler>().
 				SetFace(ExpressionSituations.turning, 1f);
 
 			for (int i = 0; i < (90 / turnStep); i++)
