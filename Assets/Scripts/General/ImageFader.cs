@@ -13,17 +13,17 @@ namespace Qbism.General
 
 		//Cache
 		CanvasGroup canvasGroup;
-		FinishCube finish;
+		FinishEndSeqHandler finishEndSeq;
 
 		private void Awake() 
 		{
 			canvasGroup = GetComponent<CanvasGroup>();	
-			finish = FindObjectOfType<FinishCube>();
+			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
 		}
 
 		private void OnEnable() 
 		{
-			if (finish != null) finish.onUIFade += StartFade;
+			if (finishEndSeq != null) finishEndSeq.onUIFade += StartFade;
 		}
 
 		private void StartFade(float target)
@@ -43,7 +43,7 @@ namespace Qbism.General
 
 		private void OnDisable()
 		{
-			if (finish != null) finish.onUIFade -= StartFade;
+			if (finishEndSeq != null) finishEndSeq.onUIFade -= StartFade;
 		}
 	}
 }

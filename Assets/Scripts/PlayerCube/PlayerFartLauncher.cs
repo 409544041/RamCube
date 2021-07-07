@@ -25,6 +25,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] MMFeedbacks preFartJuice = null;
 		[SerializeField] ParticleSystem fartCharge, bulletFart, fartBeam, 
 			fartBeamImpact, bulletFartImpact;
+		[SerializeField] GameObject playerVis;
 
 		//Cache
 		GameControls controls;
@@ -42,6 +43,7 @@ namespace Qbism.PlayerCube
 		//Actions, events, delegates etc
 		public event Action onDoneFarting;
 		public event Action onStartFarting;
+		public event Action onSwitchToEndCam;
 
 		void Awake()
 		{
@@ -56,16 +58,15 @@ namespace Qbism.PlayerCube
 
 			viewPos = Camera.main.WorldToViewportPoint(transform.position);
 
-			// AddGravityIfFalling();	
-			CheckIfOutOfScreen();
+			// AddGravityIfFalling();
 		}
 
-		public void InitiateFartSequence()
+		public void InitiateFartSequence(Transform target)
 		{
-			StartCoroutine(FartSequence());
+			StartCoroutine(FartSequence(target));
 		}
 
-		private IEnumerator FartSequence()
+		private IEnumerator FartSequence(Transform target)
 		{
 			transform.parent = null;
 			
@@ -92,7 +93,7 @@ namespace Qbism.PlayerCube
 
 			fartBeam.Play();
 			onStartFarting();
-			LaunchPlayer(fartForce);
+			StartCoroutine(LaunchPlayer(target));
 		}
 
 		public void StartBeamImpact()
@@ -155,19 +156,39 @@ namespace Qbism.PlayerCube
 			fartCounting = false;
 		}
 
-		private void LaunchPlayer(float force)
+		private IEnumerator LaunchPlayer(Transform target)
 		{
-			rb.velocity = Vector3.up * force;
+			float step = fartForce * Time.deltaTime;
+
+			while (Vector3.Distance(transform.position, target.position) > 0.01f)
+			{
+				transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+				yield return null;
+			}
+
+			transform.position = target.position;
+			doneFarting = true;
+			rb.isKinematic = true;
+			DisableVisuals();
+			onSwitchToEndCam();
+			onDoneFarting();
+			fartBeam.Stop();
 		}
 
-		private void CheckIfOutOfScreen()
+		private void DisableVisuals()
 		{
-			if (!doneFarting && viewPos.y > stopFartViewportPos)
+			SkinnedMeshRenderer[] meshes = playerVis.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+			foreach (var mesh in meshes)
 			{
-				doneFarting = true;
-				rb.isKinematic = true;
-				onDoneFarting();
-				fartBeam.Stop();
+				mesh.enabled = false;
+			}
+
+			SpriteRenderer[] sprites = playerVis.GetComponentsInChildren<SpriteRenderer>();
+
+			foreach (var sprite in sprites)
+			{
+				sprite.enabled = false;
 			}
 		}
 

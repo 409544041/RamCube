@@ -12,7 +12,7 @@ namespace Qbism.Serpent
 		public Transform[] segments = null;
 
 		//Cache
-		FinishCube finish = null;
+		FinishEndSeqHandler finishEndSeq = null;
 		SerpentScreenSplineHandler splineHandler = null;
 
 		//States
@@ -24,13 +24,13 @@ namespace Qbism.Serpent
 
 		private void Awake() 
 		{
-			finish = FindObjectOfType<FinishCube>();
+			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
 			splineHandler = FindObjectOfType<SerpentScreenSplineHandler>();
 		}
 
 		private void OnEnable() 
 		{
-			if (finish != null) finish.onShowSegments += EnableSegments;
+			if (finishEndSeq != null) finishEndSeq.onShowSegments += EnableSegments;
 		}
 
 		private void Start()
@@ -80,7 +80,7 @@ namespace Qbism.Serpent
 
 		private void OnDisable()
 		{
-			if (finish != null) finish.onShowSegments -= EnableSegments;
+			if (finishEndSeq != null) finishEndSeq.onShowSegments -= EnableSegments;
 		}
 	}
 }

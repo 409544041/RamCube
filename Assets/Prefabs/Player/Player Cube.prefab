@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27de08aacd000f4eb5f3d2d68f2901e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fartForce: 30
+  fartForce: 15
   stopFartViewportPos: 2.5
   fartRayCastLayers:
     serializedVersion: 2
@@ -293,6 +293,7 @@ MonoBehaviour:
   fartBeam: {fileID: 9046272342194140262}
   fartBeamImpact: {fileID: 7016283604650742275}
   bulletFartImpact: {fileID: 33796855108541357}
+  playerVis: {fileID: 711168732030923187}
 --- !u!114 &1745422041723140935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1640,6 +1641,11 @@ PrefabInstance:
     - target: {fileID: 1316672478550573244, guid: 145ecca113bbc034a98bcfa002d946b6,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 145ecca113bbc034a98bcfa002d946b6,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1630794972795428178, guid: 145ecca113bbc034a98bcfa002d946b6,

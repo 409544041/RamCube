@@ -1,10 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Qbism.PlayerCube;
-using Qbism.SceneTransition;
 using UnityEngine;
-using Cinemachine;
-using Dreamteck.Splines;
 using Qbism.Saving;
 using System;
 
@@ -12,18 +9,13 @@ namespace Qbism.Cubes
 {
 	public class FinishCube : MonoBehaviour
 	{
-		//Config parameters
-		[SerializeField] float shrinkInterval = .25f;
-
 		//Cache
 		PlayerCubeMover mover;
 		CubeHandler handler;
-		SceneHandler loader;
 		FinishCubeJuicer juicer;
-		PlayerFartLauncher farter;
 		ProgressHandler progHandler;
 		SerpentProgress serpProg;
-		PlayerAnimator playerAnim;
+		FinishEndSeqHandler finishEndSeq;
 
 		//States
 		Vector2Int myPosition;
@@ -35,40 +27,24 @@ namespace Qbism.Cubes
 		public GetConnectionDel onSerpentCheck;
 		public GetConnectionDel onMapCheck;
 		public event Action onSetSegment;
-		public event Action onSpawnSegment;
-		public event Action<bool> onSetSerpentMove; 
-		public event Action onSpawnShapie;
 		public event Action<InterfaceIDs> onRewindPulse;
 		public event Action<InterfaceIDs> onStopRewindPulse;
-		public event Action onShowSegments;
-		public event Action<float> onUIFade;
 
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
 			handler = FindObjectOfType<CubeHandler>();
-			loader = FindObjectOfType<SceneHandler>();
 			juicer = GetComponent<FinishCubeJuicer>();
-			farter = FindObjectOfType<PlayerFartLauncher>();
 			progHandler = FindObjectOfType<ProgressHandler>();
 			serpProg = FindObjectOfType<SerpentProgress>();
-			playerAnim = farter.GetComponentInChildren<PlayerAnimator>();
+			finishEndSeq = GetComponent<FinishEndSeqHandler>();
+
 		}
 
 		private void OnEnable()
 		{
 			if (handler != null) handler.onLand += CheckForFinish;
-			if (juicer != null)
-			{
-				juicer.onSpawnFriends += SpawnFriends;
-				juicer.onFinishCheck += FetchFinishStatus;
-			} 
-			if (playerAnim != null) 
-			{
-				playerAnim.onGetFinishPos += GetPos;
-				playerAnim.onTriggerSerpent += InitiateSerpentSequence;
-				playerAnim.onHasSeg += FetchHasSegment;
-			}
+			if (juicer != null) juicer.onFinishCheck += FetchFinishStatus;
 		}
 
 		private void Start()
@@ -82,7 +58,7 @@ namespace Qbism.Cubes
 			if (handler.FetchCube(myPosition) == handler.FetchCube(mover.FetchGridPos()))
 			{
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.up), -1))
-					StartCoroutine(Finish());	
+					Finish();	
 
 				else
 				{
@@ -97,12 +73,7 @@ namespace Qbism.Cubes
 			} 
 		}
 
-		public void StartFinish() //For debug finishing
-		{
-			StartCoroutine(Finish());
-		}
-
-		private IEnumerator Finish()
+		public void Finish()
 		{
 			if (onMapCheck()) //TO DO: eventually these checks should be obsolete bc map should always be available and a level is always started via map
 			{
@@ -124,94 +95,7 @@ namespace Qbism.Cubes
 			juicer.DeactivateGlow();
 			juicer.PlaySuccesSound();
 
-			yield return DestroyAllFloorCubes();
-			ActivateLevelCompleteCam();
-			onUIFade(0);
-
-			farter.InitiateFartSequence();
-		}
-
-		public void InitiateSerpentSequence()
-		{
-			StartCoroutine(SerpentSequence());
-		}
-
-		private IEnumerator SerpentSequence()
-		{
-			if (onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
-			yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
-
-			if (onMapCheck()) StartCoroutine(LevelTransition(true, false));
-			else StartCoroutine(LevelTransition(false, false));
-		}
-
-		private void ActivateSerpent()
-		{
-			var serpent = GameObject.FindGameObjectWithTag("LevelCompFollower");
-			serpent.GetComponent<SplineFollower>().followSpeed = 15;
-			onSetSerpentMove(true);
-			onShowSegments();
-		}
-
-		private IEnumerator DestroyAllFloorCubes()
-		{
-			List<FloorCube> floorCubeList = new List<FloorCube>();
-
-			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.floorCubeDic)
-			{
-				var cube = pair.Value;
-				if(cube.type == CubeTypes.Finish || 
-					cube.GetComponent<CubeShrinker>().hasShrunk == true) continue;
-
-				floorCubeList.Add(cube);
-				
-			}
-
-			for (int i = 0; i < floorCubeList.Count; i++)
-			{
-				floorCubeList[i].GetComponent<CubeShrinker>().StartShrinking();
-				yield return new WaitForSeconds(shrinkInterval);
-			}
-		}
-
-		private void ActivateLevelCompleteCam()
-		{
-			var lvlCompCam = GetComponentInChildren<CinemachineVirtualCamera>();
-			lvlCompCam.Priority = 11;
-			lvlCompCam.transform.parent = null;
-		}
-
-		private void SpawnFriends()
-		{
-			if (FetchHasSegment())
-			{
-				onSpawnSegment();
-			}
-			else onSpawnShapie();
-		}
-
-		public bool FetchHasSegment()
-		{
-			return progHandler.currentHasSegment;
-		}
-
-		private Vector3 GetPos()
-		{
-			return transform.position;
-		}
-
-		private IEnumerator LevelTransition(bool mapConnected, bool restart)
-		{
-			yield return new WaitWhile(() => juicer.source.isPlaying);
-			//TO DO: Make timing wait for animations that are to come
-
-			if(restart)
-			{
-				juicer.PlayFailSound();
-				loader.RestartLevel();
-			} 
-			else if(mapConnected) loader.LoadWorldMap();
-			else loader.NextLevel();
+			finishEndSeq.InitiateEndSeq();
 		}
 
 		private void PulseRewindUI()
@@ -232,17 +116,7 @@ namespace Qbism.Cubes
 		private void OnDisable()
 		{
 			if (handler != null) handler.onLand -= CheckForFinish;
-			if (juicer != null)
-			{
-				juicer.onSpawnFriends -= SpawnFriends;
-				juicer.onFinishCheck -= FetchFinishStatus;
-			}
-			if (playerAnim != null) 
-			{
-				playerAnim.onGetFinishPos -= GetPos;
-				playerAnim.onTriggerSerpent -= InitiateSerpentSequence;
-				playerAnim.onHasSeg -= FetchHasSegment;
-			}
+			if (juicer != null) juicer.onFinishCheck -= FetchFinishStatus;
 		}
 	}
 

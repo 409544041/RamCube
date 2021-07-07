@@ -125,7 +125,7 @@ namespace Qbism.Control
 		private void FinishLevel()
 		{
 			FinishCube finish = FindObjectOfType<FinishCube>();
-			if(finish) finish.StartFinish();
+			if(finish) finish.Finish();
 		}
 			
 		private void Rewind()

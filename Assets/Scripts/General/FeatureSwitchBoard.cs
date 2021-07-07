@@ -13,10 +13,12 @@ namespace Qbism.General
 
 		//Cache
 		FinishCube finish;
+		FinishEndSeqHandler finishEndSeq;
 
 		private void Awake() 
 		{
 			finish = FindObjectOfType<FinishCube>();
+			finishEndSeq = finish.GetComponent<FinishEndSeqHandler>();
 		}
 
 		private void OnEnable() 
@@ -26,6 +28,12 @@ namespace Qbism.General
 				finish.onSerpentCheck += FetchSerpentConnect;
 				finish.onMapCheck += FetchMapConnect;
 			} 
+
+			if(finishEndSeq != null)
+			{
+				finishEndSeq.onSerpentCheck += FetchSerpentConnect;
+				finishEndSeq.onMapCheck += FetchMapConnect;
+			}
 		}
 
 		public bool FetchSerpentConnect()
@@ -44,6 +52,12 @@ namespace Qbism.General
 			{
 				finish.onSerpentCheck -= FetchSerpentConnect;
 				finish.onMapCheck -= FetchMapConnect;
+			}
+
+			if (finishEndSeq != null)
+			{
+				finishEndSeq.onSerpentCheck -= FetchSerpentConnect;
+				finishEndSeq.onMapCheck -= FetchMapConnect;
 			}
 		}
 	}

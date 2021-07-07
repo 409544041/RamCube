@@ -13,7 +13,7 @@ namespace Qbism.Serpent
 		[SerializeField] float segmentSpacing = 1f;
 		
 		//Cache
-		FinishCube finish = null;
+		FinishEndSeqHandler finishEndSeq = null;
 		SerpentSegmentHandler segmentHandler;
 		
 		//States
@@ -23,13 +23,13 @@ namespace Qbism.Serpent
 
 		private void Awake() 
 		{
-			finish = FindObjectOfType<FinishCube>();
+			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
 			segmentHandler = GetComponent<SerpentSegmentHandler>();
 		}
 
 		private void OnEnable() 
 		{
-			if(finish != null) finish.onSetSerpentMove += SetMoving;
+			if(finishEndSeq != null) finishEndSeq.onSetSerpentMove += SetMoving;
 		}
 
 		void Start()
@@ -86,7 +86,7 @@ namespace Qbism.Serpent
 
 		private void OnDisable()
 		{
-			if (finish != null) finish.onSetSerpentMove -= SetMoving;
+			if (finishEndSeq != null) finishEndSeq.onSetSerpentMove -= SetMoving;
 		}
 	}
 }

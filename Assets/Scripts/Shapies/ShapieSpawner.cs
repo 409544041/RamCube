@@ -12,19 +12,19 @@ namespace Qbism.Shapies
 		[SerializeField] int spawnAmount = 3;
 
 		//Cache
-		FinishCube finishCube;
+		FinishEndSeqHandler finishEndSeq;
 
 		//States
 		List<float> pushDegrees = new List<float> { 0, 45, 90, 135, 180, 225, 270, 315 };
 
 		private void Awake()
 		{
-			finishCube = GetComponent<FinishCube>();
+			finishEndSeq = GetComponent<FinishEndSeqHandler>();
 		}
 
 		private void OnEnable()
 		{
-			if (finishCube != null) finishCube.onSpawnShapie += SpawnShapie;
+			if (finishEndSeq != null) finishEndSeq.onSpawnShapie += SpawnShapie;
 		}
 
 		private void SpawnShapie()
@@ -44,7 +44,7 @@ namespace Qbism.Shapies
 
 		private void OnDisable()
 		{
-			if (finishCube != null) finishCube.onSpawnShapie -= SpawnShapie;
+			if (finishEndSeq != null) finishEndSeq.onSpawnShapie -= SpawnShapie;
 		}
 	}
 }

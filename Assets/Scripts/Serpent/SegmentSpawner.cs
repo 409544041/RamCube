@@ -12,7 +12,8 @@ namespace Qbism.Serpent
 		GameObject segmentToSpawn = null;
 
 		//Cache
-		FinishCube finishCube;
+		FinishEndSeqHandler finishEndSeq;
+		FinishCube finish;
 
 		//Actions, events, delegates etc
 		public delegate GameObject GetSegDel();
@@ -20,16 +21,14 @@ namespace Qbism.Serpent
 
 		private void Awake() 
 		{
-			finishCube = GetComponent<FinishCube>();
+			finish = GetComponent<FinishCube>();
+			finishEndSeq = GetComponent<FinishEndSeqHandler>();
 		}
 
 		private void OnEnable() 
 		{
-			if (finishCube != null)
-			{
-				finishCube.onSetSegment += FetchSegmentToSpawn;
-				finishCube.onSpawnSegment += SpawnSegment;
-			} 
+			if (finish != null) finish.onSetSegment += FetchSegmentToSpawn;
+			if (finishEndSeq != null) finishEndSeq.onSpawnSegment += SpawnSegment;
 		}
 
 		private void FetchSegmentToSpawn()
@@ -47,11 +46,8 @@ namespace Qbism.Serpent
 
 		private void OnDisable()
 		{
-			if (finishCube != null)
-			{
-				finishCube.onSetSegment -= FetchSegmentToSpawn;
-				finishCube.onSpawnSegment -= SpawnSegment;
-			}
+			if (finish != null) finish.onSetSegment -= FetchSegmentToSpawn;
+			if (finishEndSeq != null) finishEndSeq.onSpawnSegment -= SpawnSegment;
 		}
 	}
 }

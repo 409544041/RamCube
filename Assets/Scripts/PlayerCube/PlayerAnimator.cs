@@ -44,23 +44,34 @@ namespace Qbism.PlayerCube
 
 		public void TriggerFalling(float addedY)
 		{
-			if (!fallen) StartCoroutine(Fall(addedY));
-		}
-
-		private IEnumerator Fall(float addedY)
-		{
-			fallen = true; 
-
-			animator.SetTrigger("Fall");
-
-			//to ensure the player isn't on screen for 1 frame before starting anim
-			yield return null; 
+			fallen = true;
 
 			GameObject player = this.gameObject;
 			player.transform.position = new Vector3(playerLandPos.x,
 				playerLandPos.y + addedY, playerLandPos.z);
 
 			player.transform.rotation = Quaternion.Euler(0f, -45f, 0f);
+
+			EnableVisuals();
+
+			animator.SetTrigger("Fall");
+		}
+
+		private void EnableVisuals()
+		{
+			SkinnedMeshRenderer[] meshes = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+			foreach (var mesh in meshes)
+			{
+				mesh.enabled = true;
+			}
+
+			SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
+
+			foreach (var sprite in sprites)
+			{
+				sprite.enabled = true;
+			}
 		}
 
 		private IEnumerator TriggerWiggleAlt()
