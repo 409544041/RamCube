@@ -7,7 +7,7 @@ namespace Qbism.SceneTransition
 	public class Fader : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] float transitionTime;
+		public float sceneTransTime, endSeqTransTime = .5f;
 
 		//Cache
 		CanvasGroup canvasGroup = null;
@@ -23,17 +23,17 @@ namespace Qbism.SceneTransition
 			canvasGroup.alpha = 1;
 		}
 
-		public Coroutine FadeOut()
+		public Coroutine FadeOut(float time)
 		{
-			return Fade(1);
+			return Fade(1, time);
 		}
 
-		public Coroutine FadeIn()
+		public Coroutine FadeIn(float time)
 		{
-			return Fade(0);
+			return Fade(0, time);
 		}
 
-		public Coroutine Fade(float target) 
+		public Coroutine Fade(float target, float time) 
 		{
 			if (activeCoroutine != null) StopCoroutine(activeCoroutine);
 			activeCoroutine = StartCoroutine(FadeRoutine(target)); 
@@ -45,7 +45,8 @@ namespace Qbism.SceneTransition
 			while (!Mathf.Approximately(canvasGroup.alpha, target))
 			{
 				//mathf.movetowards to get float to desired value using desired speed
-				canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, target, Time.deltaTime / transitionTime);
+				canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, target, 
+					Time.deltaTime / sceneTransTime);
 				yield return null;
 			}
 		}

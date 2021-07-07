@@ -23,7 +23,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] float lowLaunchMultiplier = 2f;
 		[Header ("Juice")]
 		[SerializeField] MMFeedbacks preFartJuice = null;
-		[SerializeField] ParticleSystem fartCharge, bulletFart, fartBeam, 
+		public ParticleSystem fartCharge, bulletFart, fartBeam, 
 			fartBeamImpact, bulletFartImpact;
 		[SerializeField] GameObject playerVis;
 
@@ -31,6 +31,7 @@ namespace Qbism.PlayerCube
 		GameControls controls;
 		Rigidbody rb;
 		MMFeedbackWiggle preFartMMWiggle;
+		ExpressionHandler exprHandler;
 
 		//States
 		Vector3 viewPos;
@@ -39,16 +40,19 @@ namespace Qbism.PlayerCube
 		bool fartCounting = false;
 		int fartCount = 0;
 		ParticleSystem currentFartImpact = null;
+		bool endCam = false;
 
 		//Actions, events, delegates etc
 		public event Action onDoneFarting;
 		public event Action onStartFarting;
 		public event Action onSwitchToEndCam;
+		public event Action onMoveCam;
 
 		void Awake()
 		{
 			rb = GetComponent<Rigidbody>();
 			preFartMMWiggle = preFartJuice.GetComponent<MMFeedbackWiggle>();
+			exprHandler = GetComponentInChildren<ExpressionHandler>();
 		}
 
 		private void Update() 
@@ -57,8 +61,6 @@ namespace Qbism.PlayerCube
 			if(fartCount > 10) StopFartHit();
 
 			viewPos = Camera.main.WorldToViewportPoint(transform.position);
-
-			// AddGravityIfFalling();
 		}
 
 		public void InitiateFartSequence(Transform target)
@@ -74,23 +76,18 @@ namespace Qbism.PlayerCube
 			preFartJuice.PlayFeedbacks();
 			fartCharge.Play();
 
+			exprHandler.SetFace(ExpressionSituations.fartCharge, -1);
+
 			float feedbackDuration = preFartMMWiggle.WigglePositionDuration;
 			yield return new WaitForSeconds(feedbackDuration);
 
+			exprHandler.SetFace(ExpressionSituations.preFartBlast, -1);
+			onMoveCam();
+
 			rb.isKinematic = false;
 
-			// while (viewPos.y < stopFartViewportPos)
-			// {
-			// 	int forceIndex = UnityEngine.Random.Range(0, fartForces.Length);
-			// 	LaunchPlayer(fartForces[forceIndex]);
-				
-			// 	int intervalIndex = 0;
-			// 	if (forceIndex <= 1) intervalIndex = UnityEngine.Random.Range(0, 1);
-			// 	else if ( forceIndex > 1) intervalIndex = UnityEngine.Random.Range(1, intervals.Length);
-
-			// 	yield return new WaitForSeconds(intervals[intervalIndex]);
-			// }
-
+			yield return new WaitForSeconds(.5f);
+			exprHandler.SetFace(ExpressionSituations.endSeqFart, -1);
 			fartBeam.Play();
 			onStartFarting();
 			StartCoroutine(LaunchPlayer(target));
@@ -159,10 +156,18 @@ namespace Qbism.PlayerCube
 		private IEnumerator LaunchPlayer(Transform target)
 		{
 			float step = fartForce * Time.deltaTime;
+			float startDis = Vector3.Distance(transform.position, target.position);
 
 			while (Vector3.Distance(transform.position, target.position) > 0.01f)
 			{
 				transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+
+				if(Vector3.Distance(transform.position, Camera.main.transform.position) < 1 && !endCam)
+				{
+					onSwitchToEndCam();
+					endCam = true;
+				} 
+
 				yield return null;
 			}
 
@@ -170,7 +175,6 @@ namespace Qbism.PlayerCube
 			doneFarting = true;
 			rb.isKinematic = true;
 			DisableVisuals();
-			onSwitchToEndCam();
 			onDoneFarting();
 			fartBeam.Stop();
 		}
@@ -191,18 +195,6 @@ namespace Qbism.PlayerCube
 				sprite.enabled = false;
 			}
 		}
-
-		// private void AddGravityIfFalling()
-		// {
-		// 	if (rb.velocity.y < 0)
-		// 	{
-		// 		rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-		// 	}
-		// 	else if (rb.velocity.y > 0)
-		// 	{
-		// 		rb.velocity += Vector3.up * Physics.gravity.y * (lowLaunchMultiplier - 1) * Time.deltaTime;
-		// 	}
-		// }
 	}
 }
 

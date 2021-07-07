@@ -4,6 +4,7 @@ using Qbism.PlayerCube;
 using UnityEngine;
 using Qbism.Saving;
 using System;
+using Qbism.SpriteAnimations;
 
 namespace Qbism.Cubes
 {
@@ -38,7 +39,6 @@ namespace Qbism.Cubes
 			progHandler = FindObjectOfType<ProgressHandler>();
 			serpProg = FindObjectOfType<SerpentProgress>();
 			finishEndSeq = GetComponent<FinishEndSeqHandler>();
-
 		}
 
 		private void OnEnable()
@@ -92,6 +92,8 @@ namespace Qbism.Cubes
 			progHandler.SaveProgData();
 
 			hasFinished = true;
+			mover.GetComponentInChildren<ExpressionHandler>().hasFinished = true;
+
 			juicer.DeactivateGlow();
 			juicer.PlaySuccesSound();
 
@@ -119,5 +121,4 @@ namespace Qbism.Cubes
 			if (juicer != null) juicer.onFinishCheck -= FetchFinishStatus;
 		}
 	}
-
 }

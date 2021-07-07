@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.Serpent;
@@ -21,6 +22,7 @@ namespace Qbism.SpriteAnimations
 		//States
 		float expressionTimer = 0f;
 		float timeToExpress = 0f;
+		public bool hasFinished { get; set; } = false;
 
 		private void Awake()
 		{
@@ -31,7 +33,7 @@ namespace Qbism.SpriteAnimations
 
 		private void Update()
 		{
-			if (isPlayer) HandleExpressionTimer();
+			if (isPlayer && !hasFinished) HandleExpressionTimer();
 		}
 
 		public void SetFace(ExpressionSituations incSituation, float incTime)
@@ -40,7 +42,7 @@ namespace Qbism.SpriteAnimations
 			{
 				if (expression.situation != incSituation) continue;
 
-				int index = Random.Range(0, expression.facialStates.Length);
+				int index = UnityEngine.Random.Range(0, expression.facialStates.Length);
 				var expressionToSet = expression.facialStates[index];
 
 				if (hasBrows) browAnim.SetBrows(expressionToSet.brows);
@@ -51,7 +53,7 @@ namespace Qbism.SpriteAnimations
 			if (isPlayer)
 			{
 				if (incTime < 0) timeToExpress =
-				Random.Range(minMaxExpressionTime.x, minMaxExpressionTime.y);
+				UnityEngine.Random.Range(minMaxExpressionTime.x, minMaxExpressionTime.y);
 				else timeToExpress = incTime;
 
 				expressionTimer = 0;

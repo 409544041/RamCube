@@ -30,11 +30,11 @@ namespace Qbism.SceneTransition
 			DontDestroyOnLoad(gameObject);
 
 			yield return new WaitForSeconds(splashTime);
-			yield return fader.FadeOut();
+			yield return fader.FadeOut(fader.sceneTransTime);
 
 			yield return SceneManager.LoadSceneAsync(sceneIndex);
 			
-			yield return fader.FadeIn(); 
+			yield return fader.FadeIn(fader.sceneTransTime); 
 			Destroy(gameObject);
 		}
 	}

@@ -11,21 +11,21 @@ namespace Qbism.General
 		//Config parameters
 		[SerializeField] float camMoveSpeed = 10f;
 		[SerializeField] Transform camTarget;
+
 		//Cache
 		FinishEndSeqHandler finishEndSeq;
+		PlayerFartLauncher farter;
 
 		private void Awake() 
 		{
 			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
+			farter = FindObjectOfType<PlayerFartLauncher>();
 		}
 
 		private void OnEnable() 
 		{
-			if (finishEndSeq != null)
-			{
-				finishEndSeq.onAlignCam += AllignRotation;
-				finishEndSeq.onMoveCam += InitiateCamMove;
-			} 
+			if (finishEndSeq != null) finishEndSeq.onAlignCam += AllignRotation;
+			if (farter != null) farter.onMoveCam += InitiateCamMove;
 		}
 
 		private void AllignRotation() 
@@ -56,11 +56,8 @@ namespace Qbism.General
 
 		private void OnDisable()
 		{
-			if (finishEndSeq != null)
-			{
-				finishEndSeq.onAlignCam -= AllignRotation;
-				finishEndSeq.onMoveCam -= InitiateCamMove;
-			}
+			if (finishEndSeq != null) finishEndSeq.onAlignCam -= AllignRotation;
+			if (farter != null) farter.onMoveCam -= InitiateCamMove;
 		}
 	}
 }

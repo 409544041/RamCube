@@ -16,6 +16,7 @@ namespace Qbism.Cubes
 		[SerializeField] float shrinkInterval = .25f;
 		[SerializeField] CinemachineVirtualCamera closeUpCam, endCam;
 		[SerializeField] Transform fartTowardsTarget;
+		[SerializeField] float fartDelay;
 
 		//Cache
 		CubeHandler handler;
@@ -24,6 +25,7 @@ namespace Qbism.Cubes
 		SceneHandler loader;
 		ProgressHandler progHandler;
 		PlayerFartLauncher farter;
+		Fader fader;
 
 		//Actions, events, delegates etc
 		public delegate bool GetConnectionDel();
@@ -32,7 +34,6 @@ namespace Qbism.Cubes
 		public event Action<bool> onSetSerpentMove;
 		public event Action onShowSegments;
 		public event Action onAlignCam;
-		public event Action onMoveCam;
 		public event Action onSpawnSegment;
 		public event Action onSpawnShapie;
 		public event Action<float> onUIFade;
@@ -58,7 +59,7 @@ namespace Qbism.Cubes
 
 			if (juicer != null) juicer.onSpawnFriends += SpawnFriends;
 			
-			if (farter != null) farter.onSwitchToEndCam += SwitchToEndCam;
+			if (farter != null) farter.onSwitchToEndCam += InitiateEndCamSwitch;
 		}
 
 		public void InitiateEndSeq()
@@ -69,9 +70,9 @@ namespace Qbism.Cubes
 		private IEnumerator EndSequence()
 		{
 			yield return DestroyAllFloorCubes();
-			SwitchToCloseupCam();
+			StartCoroutine(SwitchToCloseupCam());
 			onUIFade(0);
-			yield return new WaitForSeconds(.25f);
+			yield return new WaitForSeconds(fartDelay);
 			farter.InitiateFartSequence(fartTowardsTarget);
 		}
 
@@ -96,20 +97,29 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private void SwitchToCloseupCam()
+		private IEnumerator SwitchToCloseupCam()
 		{
+			fader = FindObjectOfType<Fader>();
 			onAlignCam();
-			onMoveCam();
+			yield return fader.FadeOut(fader.endSeqTransTime);
 			closeUpCam.Priority = 11;
 			Camera.main.orthographic = false;
 			closeUpCam.transform.parent = null;
+			fader.FadeIn(fader.endSeqTransTime);
 		}
 
-		private void SwitchToEndCam()
+		private void InitiateEndCamSwitch()
 		{
+			StartCoroutine(SwitchToEndCam());
+		}
+
+		private IEnumerator SwitchToEndCam()
+		{
+			yield return fader.FadeOut(fader.endSeqTransTime);
 			endCam.Priority = 12;
 			Camera.main.orthographic = true;
 			endCam.transform.parent = null;
+			fader.FadeIn(fader.endSeqTransTime);
 		}
 
 		private void InitiateSerpentSequence()
@@ -178,7 +188,7 @@ namespace Qbism.Cubes
 
 			if (juicer != null) juicer.onSpawnFriends -= SpawnFriends;
 
-			if (farter != null) farter.onSwitchToEndCam -= SwitchToEndCam;
+			if (farter != null) farter.onSwitchToEndCam -= InitiateEndCamSwitch;
 		}
 	}
 }
