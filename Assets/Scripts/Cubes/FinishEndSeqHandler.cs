@@ -16,7 +16,7 @@ namespace Qbism.Cubes
 		[SerializeField] float shrinkInterval = .25f;
 		[SerializeField] CinemachineVirtualCamera closeUpCam, endCam;
 		[SerializeField] Transform fartTowardsTarget;
-		[SerializeField] float fartDelay;
+		[SerializeField] float fartDelay, flyByDelay;
 
 		//Cache
 		CubeHandler handler;
@@ -120,6 +120,31 @@ namespace Qbism.Cubes
 			Camera.main.orthographic = true;
 			endCam.transform.parent = null;
 			fader.FadeIn(fader.endSeqTransTime);
+			yield return new WaitForSeconds(flyByDelay);
+
+			Vector3 startPos, endPos;
+			CalculateStartEnd(out startPos, out endPos);
+			farter.InitiateFlyBy(startPos, endPos);
+		}
+
+		private void CalculateStartEnd(out Vector3 startPos, out Vector3 endPos)
+		{
+			float[] possibleX = new float[2];
+			possibleX[0] = -.25f;
+			possibleX[1] = 1.25f;
+
+			var index = UnityEngine.Random.Range(0, possibleX.Length);
+			float startX = possibleX[index];
+
+			float targetX;
+			if (startX > 0) targetX = -1;
+			else targetX = 2;
+
+			float startY = UnityEngine.Random.Range(.15f, .85f);
+			float targetY = UnityEngine.Random.Range(.15f, .85f);
+
+			startPos = Camera.main.ViewportToWorldPoint(new Vector3(startX, startY, 5));
+			endPos = Camera.main.ViewportToWorldPoint(new Vector3(targetX, targetY, -3));
 		}
 
 		private void InitiateSerpentSequence()

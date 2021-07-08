@@ -294,6 +294,8 @@ MonoBehaviour:
   fartBeamImpact: {fileID: 7016283604650742275}
   bulletFartImpact: {fileID: 33796855108541357}
   playerVis: {fileID: 711168732030923187}
+  flyByScaleMod: 3
+  flyBySpeedMod: 3
 --- !u!114 &1745422041723140935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1367,6 +1369,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6929028534961260793}
     m_Modifications:
+    - target: {fileID: 125706114270063458, guid: 656d9c46a7164fd43a1a2e8a341464f6,
+        type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 125706114270063458, guid: 656d9c46a7164fd43a1a2e8a341464f6,
+        type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1533179940680613338, guid: 656d9c46a7164fd43a1a2e8a341464f6,
         type: 3}
       propertyPath: onParticleCollision.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1436,6 +1448,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Beam Fart
+      objectReference: {fileID: 0}
+    - target: {fileID: 7753243982622944000, guid: 656d9c46a7164fd43a1a2e8a341464f6,
+        type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7753243982622944000, guid: 656d9c46a7164fd43a1a2e8a341464f6,
+        type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145992315019427262, guid: 656d9c46a7164fd43a1a2e8a341464f6,
+        type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145992315019427262, guid: 656d9c46a7164fd43a1a2e8a341464f6,
+        type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 656d9c46a7164fd43a1a2e8a341464f6, type: 3}

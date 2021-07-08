@@ -26,21 +26,26 @@ namespace Qbism.PlayerCube
 		public ParticleSystem fartCharge, bulletFart, fartBeam, 
 			fartBeamImpact, bulletFartImpact;
 		[SerializeField] GameObject playerVis;
+		[SerializeField] float flyByScaleMod, flyBySpeedMod;
 
 		//Cache
 		GameControls controls;
-		Rigidbody rb;
 		MMFeedbackWiggle preFartMMWiggle;
 		ExpressionHandler exprHandler;
 
 		//States
 		Vector3 viewPos;
-		bool doneFarting = false;
 		bool fartCollided = false;
 		bool fartCounting = false;
 		int fartCount = 0;
 		ParticleSystem currentFartImpact = null;
 		bool endCam = false;
+		Vector3 originalScale;
+		float[] beamOriginalMins;
+		float[] beamOriginalMaxs;
+		float beamOriginalMin;
+		float beamOriginalMax;
+		ParticleSystem[] beamParticles;
 
 		//Actions, events, delegates etc
 		public event Action onDoneFarting;
@@ -50,9 +55,13 @@ namespace Qbism.PlayerCube
 
 		void Awake()
 		{
-			rb = GetComponent<Rigidbody>();
 			preFartMMWiggle = preFartJuice.GetComponent<MMFeedbackWiggle>();
 			exprHandler = GetComponentInChildren<ExpressionHandler>();
+		}
+
+		private void Start()
+		{
+			SaveOriginalScales();
 		}
 
 		private void Update() 
@@ -83,8 +92,6 @@ namespace Qbism.PlayerCube
 
 			exprHandler.SetFace(ExpressionSituations.preFartBlast, -1);
 			onMoveCam();
-
-			rb.isKinematic = false;
 
 			yield return new WaitForSeconds(.5f);
 			exprHandler.SetFace(ExpressionSituations.endSeqFart, -1);
@@ -156,13 +163,12 @@ namespace Qbism.PlayerCube
 		private IEnumerator LaunchPlayer(Transform target)
 		{
 			float step = fartForce * Time.deltaTime;
-			float startDis = Vector3.Distance(transform.position, target.position);
 
 			while (Vector3.Distance(transform.position, target.position) > 0.01f)
 			{
 				transform.position = Vector3.MoveTowards(transform.position, target.position, step);
 
-				if(Vector3.Distance(transform.position, Camera.main.transform.position) < 1 && !endCam)
+				if(Vector3.Distance(transform.position, Camera.main.transform.position) < 2 && !endCam)
 				{
 					onSwitchToEndCam();
 					endCam = true;
@@ -172,28 +178,94 @@ namespace Qbism.PlayerCube
 			}
 
 			transform.position = target.position;
-			doneFarting = true;
-			rb.isKinematic = true;
-			DisableVisuals();
+			SetVisuals(false);
 			onDoneFarting();
 			fartBeam.Stop();
 		}
 
-		private void DisableVisuals()
+		public void InitiateFlyBy(Vector3 startPos, Vector3 endPos)
+		{
+			StartCoroutine(FlyBy(startPos, endPos));
+		}
+
+		private IEnumerator FlyBy(Vector3 startPos, Vector3 endPos)
+		{
+			var step = fartForce * flyBySpeedMod * Time.deltaTime;
+
+			transform.position = startPos;
+			transform.LookAt(transform.position - (endPos - transform.position));
+
+			SetVisuals(true);
+			fartBeam.Play();
+
+			SetScale(flyByScaleMod);
+
+			while (Vector3.Distance(transform.position, endPos) > .1f)
+			{
+				transform.position = Vector3.MoveTowards(transform.position, endPos, step);
+				yield return null;
+			}
+
+			SetVisuals(false);
+			SetScale(1);
+			fartBeam.Stop();
+		}
+
+		private void SetScale(float multiplier)
+		{
+			transform.localScale = originalScale * multiplier;
+
+			for (int i = 0; i < beamParticles.Length; i++)
+			{
+				var main = beamParticles[i].main;
+				float min = beamOriginalMins[i] * multiplier;
+				float max = beamOriginalMaxs[i]	* multiplier;
+
+				main.startSize = new ParticleSystem.MinMaxCurve(min, max);
+			}
+
+			var main2 = fartBeam.main;
+			float min2 = beamOriginalMin * multiplier;
+			float max2 = beamOriginalMax * multiplier;
+
+			main2.startSize = new ParticleSystem.MinMaxCurve(min2, max2);
+		}
+
+		private void SetVisuals(bool value)
 		{
 			SkinnedMeshRenderer[] meshes = playerVis.GetComponentsInChildren<SkinnedMeshRenderer>();
 
 			foreach (var mesh in meshes)
 			{
-				mesh.enabled = false;
+				mesh.enabled = value;
 			}
 
 			SpriteRenderer[] sprites = playerVis.GetComponentsInChildren<SpriteRenderer>();
 
 			foreach (var sprite in sprites)
 			{
-				sprite.enabled = false;
+				sprite.enabled = value;
 			}
+		}
+
+		private void SaveOriginalScales()
+		{
+			originalScale = transform.localScale;
+
+			beamParticles = fartBeam.GetComponentsInChildren<ParticleSystem>();
+			beamOriginalMins = new float[beamParticles.Length];
+			beamOriginalMaxs = new float[beamParticles.Length];
+
+			for (int i = 0; i < beamParticles.Length; i++)
+			{
+				var main = beamParticles[i].main;
+				beamOriginalMins[i] = main.startSize.constantMin;
+				beamOriginalMaxs[i] = main.startSize.constantMax;
+			}
+
+			var main2 = fartBeam.main;
+			beamOriginalMin = main2.startSize.constantMin;
+			beamOriginalMax = main2.startSize.constantMax;
 		}
 	}
 }
