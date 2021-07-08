@@ -39,7 +39,7 @@ namespace Qbism.Serpent
 		private void SpawnSegment()
 		{
 			GameObject spawnedSegment = Instantiate(segmentToSpawn, transform.position, 
-				Quaternion.Euler(0f, 145f, 0f));
+				Quaternion.Euler(0f, -45f, 0f));
 			segmentToSpawn.transform.position = transform.position;
 			spawnedSegment.GetComponentInChildren<SegmentAnimator>().Spawn();
 		}
