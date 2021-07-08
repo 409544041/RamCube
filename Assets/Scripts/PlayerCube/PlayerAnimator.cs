@@ -44,6 +44,11 @@ namespace Qbism.PlayerCube
 
 		public void TriggerFalling(float addedY)
 		{
+			StartCoroutine(Fall(addedY));
+		}
+
+		private IEnumerator Fall(float addedY)
+		{
 			fallen = true;
 
 			GameObject player = this.gameObject;
@@ -51,6 +56,8 @@ namespace Qbism.PlayerCube
 				playerLandPos.y + addedY, playerLandPos.z);
 
 			player.transform.rotation = Quaternion.Euler(0f, -45f, 0f);
+
+			yield return null; //This is to prevent cube from showing for 1 frame at wrong loc
 
 			EnableVisuals();
 
