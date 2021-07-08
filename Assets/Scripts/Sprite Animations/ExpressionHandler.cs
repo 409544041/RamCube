@@ -67,5 +67,20 @@ namespace Qbism.SpriteAnimations
 			if (expressionTimer >= timeToExpress)
 				SetFace(ExpressionSituations.play, -1f);
 		}
+
+		private void SetGleefulFace()
+		{
+			SetFace(ExpressionSituations.endSeqFart, -1);
+		}
+
+		private void SetOuchFace()
+		{
+			SetFace(ExpressionSituations.wallHit, -1);
+		}
+
+		private void SetSmileFace()
+		{
+			SetFace(ExpressionSituations.play, -1);
+		}
 	}
 }
