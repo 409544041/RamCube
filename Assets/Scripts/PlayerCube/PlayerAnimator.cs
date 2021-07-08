@@ -24,9 +24,6 @@ namespace Qbism.PlayerCube
 		public delegate Vector3 FinishPosDel();
 		public FinishPosDel onGetFinishPos;
 
-		public delegate bool SegOrShapeDel();
-		public SegOrShapeDel onHasSeg;
-
 		private void Awake() 
 		{
 			animator = GetComponent<Animator>();
@@ -42,12 +39,12 @@ namespace Qbism.PlayerCube
 			onTriggerLandingReaction();
 		}
 
-		public void TriggerFalling(float addedY)
+		public void TriggerFall(float addedY, string fallType)
 		{
-			StartCoroutine(Fall(addedY));
+			StartCoroutine(Fall(addedY, fallType));
 		}
 
-		private IEnumerator Fall(float addedY)
+		private IEnumerator Fall(float addedY, string fallType)
 		{
 			fallen = true;
 
@@ -61,7 +58,7 @@ namespace Qbism.PlayerCube
 
 			EnableVisuals();
 
-			animator.SetTrigger("Fall");
+			animator.SetTrigger(fallType);
 		}
 
 		private void EnableVisuals()
@@ -81,23 +78,23 @@ namespace Qbism.PlayerCube
 			}
 		}
 
-		private IEnumerator TriggerWiggleAlt()
+		private IEnumerator TriggerDelayedWiggle() //Called from animation
 		{
 			yield return new WaitForSeconds(altWiggleDelay);
-			if (!onHasSeg()) animator.SetTrigger("Wiggle");
+			animator.SetTrigger("Wiggle");
 		}
 
-		public void TriggerLookDown()
+		public void TriggerLookDown() //Called from animation
 		{
 			animator.SetTrigger("LookDown");
 		}
 
-		public void TriggerWiggle()
+		public void TriggerWiggle() //Called from animation
 		{
 			animator.SetTrigger("Wiggle");
 		}
 
-		private void ActivateSerpent()
+		private void ActivateSerpent() //Called from animation
 		{
 			onTriggerSerpent(); 
 			//TO DO: activate straight to serpent instead of via finish?

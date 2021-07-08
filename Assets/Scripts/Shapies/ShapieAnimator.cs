@@ -76,7 +76,7 @@ namespace Qbism.Shapies
 		private IEnumerator TriggerPlayerFalling(float delay) //Called from animation event
 		{
 			yield return new WaitForSeconds(delay);
-			playerAnim.TriggerFalling(0);
+			playerAnim.TriggerFall(0, "FallOnGround");
 		}
 
 		private void OnDisable()

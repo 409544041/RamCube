@@ -53,7 +53,6 @@ namespace Qbism.Cubes
 			if (playerAnim != null)
 			{
 				playerAnim.onTriggerSerpent += InitiateSerpentSequence;
-				playerAnim.onHasSeg += FetchHasSegment;
 				playerAnim.onGetFinishPos += GetPos;
 			}
 
@@ -207,7 +206,6 @@ namespace Qbism.Cubes
 			if (playerAnim != null)
 			{
 				playerAnim.onTriggerSerpent -= InitiateSerpentSequence;
-				playerAnim.onHasSeg -= FetchHasSegment;
 				playerAnim.onGetFinishPos -= GetPos;
 			}
 
