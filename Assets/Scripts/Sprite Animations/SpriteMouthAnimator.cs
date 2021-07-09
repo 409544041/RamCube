@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.Environment;
 using UnityEngine;
 
 namespace Qbism.SpriteAnimations
@@ -42,14 +43,15 @@ namespace Qbism.SpriteAnimations
 
 		//state1 is always the state you're going to.
 		//Order of state2 and 3 are from center of animator outwards 
+
 		public void SetMouth(MouthStates state)
 		{
-			SetCurrentMouth();
-
 			foreach (var anim in animStringList)
 			{
 				animator.ResetTrigger(anim);
 			}
+
+			SetCurrentMouth();
 
 			if (state == MouthStates.normal) ToBaseAnim();
 
@@ -65,7 +67,7 @@ namespace Qbism.SpriteAnimations
 			if (state == MouthStates.teeth && hasTeeth) ToFirstTierAnim(MouthStates.teeth,
 				MouthStates.nullz, MouthStates.nullz, TO_TEETH);
 
-			else if (state == MouthStates.teeth && hasTeeth) 
+			else if (state == MouthStates.teeth && !hasTeeth) 
 				Debug.LogError("Segment does not have teeth mouth animation.");
 
 			if (state == MouthStates.sad) ToFirstTierAnim(MouthStates.sad,

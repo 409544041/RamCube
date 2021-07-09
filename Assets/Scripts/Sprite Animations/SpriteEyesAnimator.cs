@@ -7,7 +7,7 @@ namespace Qbism.SpriteAnimations
 	public class SpriteEyesAnimator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] bool hasTwitch, hasSquint, hasAnnoyed;
+		[SerializeField] bool hasTwitch, hasSquint, hasAnnoyed, hasLooking;
 
 		//Cache
 		Animator animator;
@@ -26,6 +26,7 @@ namespace Qbism.SpriteAnimations
 		const string TO_SPARKLE = "ToSparkle";
 		const string TO_SQUINT = "ToSquint";
 		const string TO_ANNOYED = "ToAnnoyed";
+		const string TO_LOOKING = "ToLooking";
 
 		List<string> animStringList = new List<string>();
 
@@ -48,6 +49,7 @@ namespace Qbism.SpriteAnimations
 			animStringList.Add(TO_SPARKLE);
 			animStringList.Add(TO_SQUINT);
 			animStringList.Add(TO_ANNOYED);
+			animStringList.Add(TO_LOOKING);
 		}
 
 		//state1 is always the state you're going to.
@@ -81,7 +83,7 @@ namespace Qbism.SpriteAnimations
 				ToFirstTierAnim(EyesStates.twitch, EyesStates.nullz, TO_TWITCH);
 			
 			else if (state == EyesStates.twitch && !hasTwitch)
-				Debug.LogError("Segment does not have twitch eye animation.");
+				Debug.LogError("Character does not have twitch eye animation.");
 
 			if (state == EyesStates.shock) 
 				ToFirstTierAnim(EyesStates.shock, EyesStates.nullz, TO_SHOCKED);
@@ -96,7 +98,13 @@ namespace Qbism.SpriteAnimations
 				ToFirstTierAnim(EyesStates.squint, EyesStates.nullz, TO_SQUINT);
 
 			else if (state == EyesStates.squint && !hasSquint)
-				Debug.LogError("Segment does not have squint eye animation.");
+				Debug.LogError("Character does not have squint eye animation.");
+
+			if (state == EyesStates.looking && hasLooking)
+				ToFirstTierAnim(EyesStates.looking, EyesStates.nullz, TO_LOOKING);
+			
+			else if (state == EyesStates.looking & !hasLooking)
+				Debug.LogError("Character does not have looking eye animation.");
 		}
 
 		private void SetCurrentEyes()
@@ -106,7 +114,7 @@ namespace Qbism.SpriteAnimations
 
 			if (currentClipName == "Eyes_WinkToNormal" || currentClipName == "Eyes_ShutToNormal" ||
 				currentClipName == "Eyes_ArchedToNormal" || currentClipName == "Eyes_Normal" ||
-				currentClipName == "Eyes_CrossShutToNormal")
+				currentClipName == "Eyes_CrossShutToNormal" || currentClipName == "Eyes_AnnoyedToNormal_Seg01")
 				currentEyes = EyesStates.normal;
 			
 			if (currentClipName == "Eyes_NormalToWink") currentEyes = EyesStates.wink;
@@ -117,6 +125,8 @@ namespace Qbism.SpriteAnimations
 			if (currentClipName == "Eyes_NormalToCrossShut") currentEyes = EyesStates.cross;
 			if (currentClipName == "Eyes_Sprakling") currentEyes = EyesStates.sparkle;
 			if (currentClipName == "Eyes_Squinted") currentEyes = EyesStates.squint;
+			if (currentClipName == "Eyes_Looking_Wall") currentEyes = EyesStates.looking;
+			if (currentClipName == "Eyes_NormalToAnnoyed_Seg01") currentEyes = EyesStates.annoyed;
 
 			if (currentClipName == "Eyes_LaughingShut") currentEyes = EyesStates.laughShut;
 			if (currentClipName == "Eyes_LaughingArched") currentEyes = EyesStates.laughArched;

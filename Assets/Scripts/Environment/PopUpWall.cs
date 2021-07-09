@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.SpriteAnimations;
 using UnityEngine;
 
 namespace Qbism.Environment
@@ -12,10 +13,20 @@ namespace Qbism.Environment
 		[SerializeField] float upwardDuration = .5f, downwardDuration = 1f;
 		[SerializeField] float downwardDelay = .5f;
 
+		//Cache
+		PopUpWallJuicer juicer;
+		ExpressionHandler exprHandler;
+
 		//States
 		Vector3 startPos;
 		bool goingUp = false, goingDown = false;
 		Vector3 popUpTarget;
+
+		private void Awake() 
+		{
+			juicer = GetComponent<PopUpWallJuicer>();
+			exprHandler = GetComponent<ExpressionHandler>();
+		}
 
 		private void Start() 
 		{
@@ -26,7 +37,7 @@ namespace Qbism.Environment
 
 		public void InitiatePopUp()
 		{
-			StartCoroutine(PopUp());
+			if (!goingUp) StartCoroutine(PopUp());
 		}
 
 		private IEnumerator PopUp()
@@ -35,6 +46,8 @@ namespace Qbism.Environment
 			goingDown = false;
 
 			float speed = (popUpHeight - startPos.y) / upwardDuration;
+
+			exprHandler.SetFace(Expressions.toothyLaugh, -1);
 
 			while (goingUp)
 			{
@@ -50,12 +63,16 @@ namespace Qbism.Environment
 					
 				yield return null;
 			}
+
+			juicer.TriggerPopUpJuice();
 		}
 
 		private IEnumerator PopDown()
 		{
 			yield return new WaitForSeconds(downwardDelay);
 			goingDown = true;
+
+			exprHandler.SetFace(Expressions.looking, -1);
 
 			float speed = (popUpHeight - startPos.y) / downwardDuration;
 
@@ -72,6 +89,8 @@ namespace Qbism.Environment
 
 				yield return null;
 			}
+
+			exprHandler.SetFace(Expressions.calm, -1);
 		}
 	}
 }

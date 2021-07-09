@@ -121,5 +121,15 @@ namespace Qbism.SpriteAnimations
 		{
 			SetFace(Expressions.annoyed, -1);
 		}
+
+		private void SetLookingFace()
+		{
+			SetFace(Expressions.looking, -1);
+		}
+
+		private void SetCalmFace()
+		{
+			SetFace(Expressions.calm, -1);
+		}
 	}
 }
