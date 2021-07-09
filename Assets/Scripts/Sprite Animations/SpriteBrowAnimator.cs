@@ -13,6 +13,7 @@ namespace Qbism.SpriteAnimations
 		BrowStates currentBrow = BrowStates.low;
 		const string TO_LOW = "ToLow";
 		const string TO_HIGH = "ToHigh";
+		const string TO_FROWN = "ToFrown";
 		const string TO_ANGRY = "ToAngry";
 
 		List<string> animStringList = new List<string>();
@@ -26,9 +27,11 @@ namespace Qbism.SpriteAnimations
 		{
 			animStringList.Add(TO_LOW);
 			animStringList.Add(TO_HIGH);
+			animStringList.Add(TO_FROWN);
 			animStringList.Add(TO_ANGRY);
 		}
 
+		//state1 is always the state you're going to.
 		public void SetBrows(BrowStates state)
 		{
 			SetCurrentBrow();
@@ -40,9 +43,11 @@ namespace Qbism.SpriteAnimations
 
 			if (state == BrowStates.low) ToBaseAnim();
 
-			if (state == BrowStates.high) ToFirstTierAnim(BrowStates.high, TO_HIGH);
+			if (state == BrowStates.high) ToFirstTierAnim(BrowStates.high, BrowStates.nullz, TO_HIGH);
 
-			if (state == BrowStates.angry) ToFirstTierAnim(BrowStates.angry, TO_ANGRY);
+			if (state == BrowStates.frown) ToFirstTierAnim(BrowStates.frown, BrowStates.angry, TO_FROWN);
+
+			if (state == BrowStates.angry) ToSecondTierAnim(BrowStates.angry, BrowStates.frown, TO_ANGRY);
 		}
 
 		private void SetCurrentBrow()
@@ -50,29 +55,55 @@ namespace Qbism.SpriteAnimations
 			var currentClipInfo = animator.GetCurrentAnimatorClipInfo(0);
 			var currentClipName = currentClipInfo[0].clip.name;
 
-			if (currentClipName == "Brow_Low" || currentClipName == "Brow_HighToLow" ||
-				currentClipName == "Brow_AngryToLow") currentBrow = BrowStates.low;
-			
+			if (currentClipName == "Brow_Low" || currentClipName == "Brow_HighToLow") 
+				currentBrow = BrowStates.low;
+
+			if (currentClipName == "Brow_Frown") currentBrow = BrowStates.frown;
+			if (currentClipName == "Brow_Angry") currentBrow = BrowStates.angry;			
 			if (currentClipName == "Brow_LowToHigh") currentBrow = BrowStates.high;
-			if (currentClipName == "Brow_LowToAngry") currentBrow = BrowStates.angry;
+			
 		}
 
 		private void ToBaseAnim()
 		{
 			if (currentBrow == BrowStates.low) return;
+
+			if (currentBrow == BrowStates.angry) 
+				ToFirstTierAnim(BrowStates.frown, BrowStates.angry, TO_FROWN);
 			
 			animator.SetTrigger(TO_LOW);
 			currentBrow = BrowStates.low;
 		}
 
-		private void ToFirstTierAnim(BrowStates state, string trigger)
+		private void ToFirstTierAnim(BrowStates state1, BrowStates state2, string trigger)
 		{
-			if (currentBrow == state) return;
+			if (currentBrow == state1) return;
 
-			if (currentBrow != BrowStates.low) ToBaseAnim();
+			if (state2 == BrowStates.nullz)
+			{
+				if (currentBrow != BrowStates.low) ToBaseAnim();
+			}
+			else
+			{
+				if (currentBrow != BrowStates.low && currentBrow != state2) ToBaseAnim();
+			}
 
 			animator.SetTrigger(trigger);
-			currentBrow = state;
+			currentBrow = state1;
+		}
+
+		private void ToSecondTierAnim(BrowStates state1, BrowStates state2, string trigger)
+		{
+			if (currentBrow == state1) return;
+
+			if (currentBrow != BrowStates.low && currentBrow != state2)
+			{
+				ToBaseAnim();
+				ToFirstTierAnim(state1, state2, TO_ANGRY);
+			}
+
+			animator.SetTrigger(trigger);
+			currentBrow = state1;
 		}
 	}
 }

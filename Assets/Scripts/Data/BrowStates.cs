@@ -1,4 +1,4 @@
 public enum BrowStates
 {
-	high, low, angry, nullz
+	high, low, frown, angry, nullz
 }

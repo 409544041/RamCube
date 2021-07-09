@@ -148,12 +148,12 @@ namespace Qbism.Cubes
 						{
 							playerFlipJuicer.PlayLandClip();
 							playerFlipJuicer.PlayPostFlipJuice();
-							expressHandler.SetFace(ExpressionSituations.flip, .5f);
+							expressHandler.SetSituationFace(ExpressionSituations.flip, .5f);
 						}
 						else
 						{
 							playerBoostJuicer.PlayPostBoostJuice();
-							expressHandler.SetFace(ExpressionSituations.wallHit, .5f);
+							expressHandler.SetSituationFace(ExpressionSituations.wallHit, .5f);
 						}
 						
 					}

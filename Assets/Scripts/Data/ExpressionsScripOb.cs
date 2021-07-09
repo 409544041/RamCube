@@ -1,20 +1,21 @@
-﻿using UnityEngine;
+
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Expression Scip Obj", menuName = "ScriptableObjects/Expressions")]
 public class ExpressionsScripOb : ScriptableObject
 {
-	//Config Parameters
-	public Expression[] expressions;
+	//Config parameters
+	public ExpressionFaces[] expressionFaces;
 
 	[System.Serializable]
-	public class Expression
+	public class ExpressionFaces
 	{
-		public ExpressionSituations situation;
-		public FacialState[] facialStates;
+		public Expressions expression;
+		public Face face;
 	}
 
 	[System.Serializable]
-	public class FacialState
+	public class Face
 	{
 		public BrowStates brows;
 		public EyesStates eyes;

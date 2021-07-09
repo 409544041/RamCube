@@ -148,13 +148,11 @@ namespace Qbism.SpriteAnimations
 
 				if (currentMouth == state3)
 				{
-					if (state1 == MouthStates.sad) 
-						ToSecondTierAnim(MouthStates.wail, MouthStates.sad, MouthStates.cry,
-						TO_WAIL);
+					string newTrigger = null;
+					if (state1 == MouthStates.sad) newTrigger = TO_WAIL;
+					if (state1 == MouthStates.smile) newTrigger = TO_HAPPY;
 
-					if (state1 == MouthStates.smile) 
-						ToSecondTierAnim(MouthStates.happyOpen, MouthStates.smile,
-						MouthStates.laugh, TO_HAPPY);
+					ToSecondTierAnim(state2, state1, state3, newTrigger);
 				}
 
 				animator.SetTrigger(trigger1);

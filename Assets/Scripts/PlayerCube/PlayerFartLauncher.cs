@@ -85,16 +85,16 @@ namespace Qbism.PlayerCube
 			preFartJuice.PlayFeedbacks();
 			fartCharge.Play();
 
-			exprHandler.SetFace(ExpressionSituations.fartCharge, -1);
+			exprHandler.SetFace(Expressions.pushing, -1);
 
 			float feedbackDuration = preFartMMWiggle.WigglePositionDuration;
 			yield return new WaitForSeconds(feedbackDuration);
 
-			exprHandler.SetFace(ExpressionSituations.preFartBlast, -1);
+			exprHandler.SetFace(Expressions.toothyLaugh, -1);
 			onMoveCam();
 
 			yield return new WaitForSeconds(.5f);
-			exprHandler.SetFace(ExpressionSituations.endSeqFart, -1);
+			exprHandler.SetFace(Expressions.gleeful, -1);
 			fartBeam.Play();
 			onStartFarting();
 			StartCoroutine(LaunchPlayer(target));
@@ -149,7 +149,7 @@ namespace Qbism.PlayerCube
 		{
 			bulletFart.Play();
 			GetComponentInChildren<ExpressionHandler>().
-				SetFace(ExpressionSituations.fart, .75f);
+				SetSituationFace(ExpressionSituations.fart, .75f);
 		}
 
 		private void StopFartHit()

@@ -10,6 +10,7 @@ namespace Qbism.SpriteAnimations
 	{
 		//Config parameters
 		[SerializeField] ExpressionsScripOb expressionsSO;
+		[SerializeField] SituationsExprsScripOb situationsExprsSO;
 		[SerializeField] bool isPlayer;
 		[SerializeField] bool hasBrows;
 		[SerializeField] Vector2 minMaxExpressionTime;
@@ -36,18 +37,31 @@ namespace Qbism.SpriteAnimations
 			if (isPlayer && !hasFinished) HandleExpressionTimer();
 		}
 
-		public void SetFace(ExpressionSituations incSituation, float incTime)
+		public void SetSituationFace(ExpressionSituations incSituation, float incTime)
 		{
-			foreach (var expression in expressionsSO.expressions)
+			if (isPlayer)
 			{
-				if (expression.situation != incSituation) continue;
+				foreach (var situationExpr in situationsExprsSO.situationExpressions)
+				{
+					if (situationExpr.situation != incSituation) continue;
 
-				int index = UnityEngine.Random.Range(0, expression.facialStates.Length);
-				var expressionToSet = expression.facialStates[index];
+					int index = UnityEngine.Random.Range(0, situationExpr.expressions.Length);
+					var expressionToSet = situationExpr.expressions[index];
 
-				if (hasBrows) browAnim.SetBrows(expressionToSet.brows);
-				eyesAnim.SetEyes(expressionToSet.eyes);
-				mouthAnim.SetMouth(expressionToSet.mouth);
+					SetFace(expressionToSet, incTime);
+				}
+			}
+		}
+
+		public void SetFace(Expressions incExpression, float incTime)
+		{
+			foreach (var expressionFace in expressionsSO.expressionFaces)
+			{
+				if (expressionFace.expression != incExpression) continue;
+
+				if (hasBrows) browAnim.SetBrows(expressionFace.face.brows);
+				eyesAnim.SetEyes(expressionFace.face.eyes);
+				mouthAnim.SetMouth(expressionFace.face.mouth);
 			}
 			
 			if (isPlayer)
@@ -65,22 +79,47 @@ namespace Qbism.SpriteAnimations
 			expressionTimer += Time.deltaTime;
 
 			if (expressionTimer >= timeToExpress)
-				SetFace(ExpressionSituations.play, -1f);
+				SetSituationFace(ExpressionSituations.play, -1f);
+		}
+
+		private void SetNeutralFace()
+		{
+			SetFace(Expressions.neutral, -1);
 		}
 
 		private void SetGleefulFace()
 		{
-			SetFace(ExpressionSituations.endSeqFart, -1);
+			SetFace(Expressions.gleeful, -1);
 		}
 
 		private void SetOuchFace()
 		{
-			SetFace(ExpressionSituations.wallHit, -1);
+			SetFace(Expressions.ouch, -1);
 		}
 
 		private void SetSmileFace()
 		{
-			SetFace(ExpressionSituations.play, -1);
+			SetFace(Expressions.smiling, -1);
+		}
+
+		private void SetToothyLaughFace()
+		{
+			SetFace(Expressions.toothyLaugh, -1);
+		}
+
+		private void SetVeryHappyFace()
+		{
+			SetFace(Expressions.veryHappy, -1);
+		}
+
+		private void SetShockedFace()
+		{
+			SetFace(Expressions.shocked, -1);
+		}
+
+		private void SetAnnoyedFace()
+		{
+			SetFace(Expressions.annoyed, -1);
 		}
 	}
 }

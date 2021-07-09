@@ -157,12 +157,12 @@ namespace Qbism.SpriteAnimations
 			if (currentEyes != EyesStates.normal && currentEyes != state2)
 			{
 				ToBaseAnim();
+				
+				string newTrigger = null;
+				if (state1 == EyesStates.laughShut) newTrigger = TO_SHUT;
+				if (state1 == EyesStates.laughArched) newTrigger = TO_ARCH;
 
-				if (state1 == EyesStates.laughShut)
-					ToFirstTierAnim(EyesStates.shut, EyesStates.laughShut, TO_SHUT);
-
-				if (state1 == EyesStates.laughArched)
-					ToFirstTierAnim(EyesStates.arched, EyesStates.laughArched, TO_ARCH);
+				ToFirstTierAnim(state2, state1, newTrigger);
 			}
 
 			animator.SetTrigger(trigger);

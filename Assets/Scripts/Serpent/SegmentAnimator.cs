@@ -82,22 +82,7 @@ namespace Qbism.Serpent
 		{
 			playerAnim.TriggerWiggle();
 		}
-
-		private void SetCelebrateExpr()
-		{
-			exprHandler.SetFace(ExpressionSituations.celebrating, -1);
-		}
-
-		private void SetOofExpr()
-		{
-			exprHandler.SetFace(ExpressionSituations.landing, -1);
-		}
-
-		private void SetShockedExpr()
-		{
-			exprHandler.SetFace(ExpressionSituations.serpPickUp, -1);
-		}
-
+		
 		private void OnDisable()
 		{
 			if (playerAnim != null) playerAnim.onTriggerLandingReaction -= TriggerSquish;
