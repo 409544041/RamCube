@@ -1,5 +1,5 @@
 public enum EyesStates
 {
-	normal, wink, shut, laughShut, arched, laughArched, twitch, shock, cross, 
+	normal, wink, shut, arched, twitch, shock, cross, 
 	sparkle, squint, annoyed, looking, nullz
 }

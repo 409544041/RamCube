@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Qbism.Serpent;
 using UnityEngine;
 
 namespace Qbism.SpriteAnimations
@@ -19,6 +18,7 @@ namespace Qbism.SpriteAnimations
 		SpriteBrowAnimator browAnim = null;
 		SpriteEyesAnimator eyesAnim = null;
 		SpriteMouthAnimator mouthAnim = null;
+		FaceJuicer faceJuice = null;
 
 		//States
 		float expressionTimer = 0f;
@@ -30,6 +30,7 @@ namespace Qbism.SpriteAnimations
 			browAnim = GetComponentInChildren<SpriteBrowAnimator>();
 			eyesAnim = GetComponentInChildren<SpriteEyesAnimator>();
 			mouthAnim = GetComponentInChildren<SpriteMouthAnimator>();
+			faceJuice = GetComponent<FaceJuicer>();
 		}
 
 		private void Update()
@@ -130,6 +131,11 @@ namespace Qbism.SpriteAnimations
 		private void SetCalmFace()
 		{
 			SetFace(Expressions.calm, -1);
+		}
+
+		private void StartLaughingWiggle()
+		{
+			faceJuice.WiggleFace();
 		}
 	}
 }
