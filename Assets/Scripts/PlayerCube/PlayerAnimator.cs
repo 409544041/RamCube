@@ -9,6 +9,8 @@ namespace Qbism.PlayerCube
 	{
 		//Config parameters
 		[SerializeField] float altWiggleDelay = 1f;
+		[SerializeField] BoxCollider coll = null;
+
 		//Cache
 		Animator animator;
 
@@ -20,6 +22,7 @@ namespace Qbism.PlayerCube
 		public event Action onTriggerLandingReaction;
 		public event Action onTriggerShapieShock;
 		public event Action onTriggerSerpent;
+		public event Action onChildSegmentToPlayer;
 
 		public delegate Vector3 FinishPosDel();
 		public FinishPosDel onGetFinishPos;
@@ -48,7 +51,9 @@ namespace Qbism.PlayerCube
 		{
 			fallen = true;
 
-			GameObject player = this.gameObject;
+			var mover = GetComponentInParent<PlayerCubeMover>();
+			GameObject player = mover.gameObject;
+			
 			player.transform.position = new Vector3(playerLandPos.x,
 				playerLandPos.y + addedY, playerLandPos.z);
 
@@ -96,6 +101,9 @@ namespace Qbism.PlayerCube
 
 		private void ActivateSerpent() //Called from animation
 		{
+			onChildSegmentToPlayer();
+			coll.size = new Vector3(coll.size.x, 3, coll.size.z);
+			
 			onTriggerSerpent(); 
 			//TO DO: activate straight to serpent instead of via finish?
 		}

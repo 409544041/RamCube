@@ -81,7 +81,7 @@ namespace Qbism.Serpent
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.GetComponent<FinishCube>()) other.transform.parent = transform;
+			if (other.tag == "Player") other.transform.parent = transform;
 		}
 
 		private void OnDisable()

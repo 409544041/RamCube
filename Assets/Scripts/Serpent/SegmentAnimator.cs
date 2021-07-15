@@ -31,7 +31,11 @@ namespace Qbism.Serpent
 
 		private void OnEnable() 
 		{
-			if (playerAnim != null) playerAnim.onTriggerLandingReaction += TriggerSquish;	
+			if (playerAnim != null)
+			{
+				playerAnim.onTriggerLandingReaction += TriggerSquish;
+				playerAnim.onChildSegmentToPlayer += ChildToPlayer;
+			} 	
 		}
 
 		public void Spawn()
@@ -40,6 +44,16 @@ namespace Qbism.Serpent
 			spawnJuice.Initialization();
 			spawnJuice.PlayFeedbacks();
 			animator.SetTrigger("SpawnWiggle");
+		}
+
+		private void ChildToPlayer()
+		{
+			if (justSpawned)
+			{
+				var player = playerAnim.GetComponentInParent<PlayerCubeMover>().transform;
+				var myParent = transform.parent;
+				myParent.transform.parent = player;
+			}
 		}
 
 		private IEnumerator TriggerLookAround() //Called from animation event
@@ -83,7 +97,11 @@ namespace Qbism.Serpent
 		
 		private void OnDisable()
 		{
-			if (playerAnim != null) playerAnim.onTriggerLandingReaction -= TriggerSquish;
+			if (playerAnim != null)
+			{
+				playerAnim.onTriggerLandingReaction -= TriggerSquish;
+				playerAnim.onChildSegmentToPlayer -= ChildToPlayer;
+			}
 		}
 	}
 }
