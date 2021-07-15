@@ -20,7 +20,6 @@ namespace Qbism.Serpent
 
 		//Cache
 		PlayerAnimator playerAnim = null;
-		ExpressionHandler exprHandler;
 
 		//States
 		bool justSpawned = false;
@@ -28,7 +27,6 @@ namespace Qbism.Serpent
 		private void Awake() 
 		{
 			playerAnim = FindObjectOfType<PlayerAnimator>();
-			exprHandler = GetComponent<ExpressionHandler>();
 		}
 
 		private void OnEnable() 

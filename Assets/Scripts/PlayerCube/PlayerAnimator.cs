@@ -41,7 +41,7 @@ namespace Qbism.PlayerCube
 
 		public void TriggerFall(float addedY, string fallType)
 		{
-			StartCoroutine(Fall(addedY, fallType));
+			if (!fallen) StartCoroutine(Fall(addedY, fallType));
 		}
 
 		private IEnumerator Fall(float addedY, string fallType)
