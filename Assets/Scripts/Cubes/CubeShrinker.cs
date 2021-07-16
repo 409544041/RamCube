@@ -16,14 +16,25 @@ namespace Qbism.Cubes
 		//Cache
 		MeshRenderer mesh = null;
 		MeshRenderer shrinkMesh = null;
+		LineRenderer laserLine = null;
 
 		//States
 		public bool hasShrunk { get; set; } = false;
 		Vector3 resetPos;
 		Quaternion resetRot;
 		Vector3 resetScale;
+		
+		private void Awake() 
+		{
+			laserLine = GetComponent<FloorCube>().laserLine;
+		}
 
-		private void Start() 
+		private void Start()
+		{
+			SetResetData();
+		}
+
+		private void SetResetData()
 		{
 			MeshRenderer[] meshes = GetComponentsInChildren<MeshRenderer>();
 			mesh = meshes[0];
@@ -44,6 +55,7 @@ namespace Qbism.Cubes
 		{
 			mesh.enabled = false;
 			shrinkMesh.enabled = true;
+			laserLine.enabled = false;
 
 			hasShrunk = true;
 
