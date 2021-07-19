@@ -56,7 +56,12 @@ namespace Qbism.PlayerCube
 			}
 		}
 
-		public IEnumerator ShowFeedForward()
+		public void ShowFeedForward()
+		{
+			StartCoroutine(FeedForward());
+		}
+
+		private IEnumerator FeedForward()
 		{
 			yield return null; //This is dirty fix so laser hits before FF is shown
 
