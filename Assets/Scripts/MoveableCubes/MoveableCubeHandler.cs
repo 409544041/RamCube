@@ -13,8 +13,8 @@ namespace Qbism.MoveableCubes
 		public Dictionary<Vector2Int, MoveableCube> moveableCubeDic = 
 			new Dictionary<Vector2Int, MoveableCube>();
 
-		public Dictionary<Vector3Int, GameObject> wallCubeDic =
-			new Dictionary<Vector3Int, GameObject>();
+		public Dictionary<Vector2Int, GameObject> wallCubeDic =
+			new Dictionary<Vector2Int, GameObject>(); //TO DO: Move this to a separate script
 
 		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
@@ -23,7 +23,7 @@ namespace Qbism.MoveableCubes
 			moveableCubes = FindObjectsOfType<MoveableCube>();
 			
 			LoadMoveableCubeDictionary();
-			LoadWallCubeDictionary(); //----- TO DO: Why do we have this here? Has nothing to do with moveables?
+			LoadWallCubeDictionary(); 
 		}
 
 		private void OnEnable() 
@@ -58,18 +58,18 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		private void LoadWallCubeDictionary() //TO DO: Check why this is here. Is it still relevant?
+		private void LoadWallCubeDictionary() //This is used by moveable cubes to detect walls
 		{
-			GameObject[] cubes = GameObject.FindGameObjectsWithTag("Wall");
-			foreach (GameObject cube in cubes)
-			{
-				Vector3Int cubePos = new Vector3Int(Mathf.RoundToInt(cube.transform.position.x),
-					Mathf.RoundToInt(cube.transform.position.y),
-					Mathf.RoundToInt(cube.transform.position.z));
+			GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
 
-				if (wallCubeDic.ContainsKey(cubePos))
-					print("Overlapping cube " + cube);
-				else wallCubeDic.Add(cubePos, cube);
+			foreach (var wall in walls)
+			{
+				Vector2Int wallPos = new Vector2Int(Mathf.RoundToInt(wall.transform.position.x),
+					Mathf.RoundToInt(wall.transform.position.z));
+
+				if (wallCubeDic.ContainsKey(wallPos))
+						print("Overlapping wall " + wall);
+					else wallCubeDic.Add(wallPos, wall);
 			}
 		}
 
@@ -153,7 +153,7 @@ namespace Qbism.MoveableCubes
 			else return false;
 		}
 
-		public bool CheckWallCubeDicKey(Vector3Int cubePos)
+		public bool CheckWallCubeDicKey(Vector2Int cubePos)
 		{
 			if (wallCubeDic.ContainsKey(cubePos)) return true;
 			else return false;

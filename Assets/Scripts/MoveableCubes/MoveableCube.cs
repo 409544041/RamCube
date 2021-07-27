@@ -39,7 +39,7 @@ namespace Qbism.MoveableCubes
 		Quaternion resetRot;
 
 		//Actions, events, delegates etc
-		public delegate bool KeyCheckDel(Vector3Int pos);
+		public delegate bool KeyCheckDel(Vector2Int pos);
 		public KeyCheckDel onWallKeyCheck;
 		public delegate bool CheckDel(Vector2Int pos);
 		public CheckDel onFloorKeyCheck, onMoveableKeyCheck, onShrunkCheck, onMovingCheck;
@@ -175,10 +175,7 @@ namespace Qbism.MoveableCubes
 
 		private bool CheckForWallAhead(Vector2Int pos)
 		{
-			Vector3Int posAhead = 
-				new Vector3Int(pos.x, Mathf.RoundToInt(yPos), pos.y);
-
-			return onWallKeyCheck(posAhead);
+			return onWallKeyCheck(pos);
 		}
 
 		public void UpdateCenterPosition()

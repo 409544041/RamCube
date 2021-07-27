@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1506778528955927106
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9210512268476055042}
-  m_Layer: 0
-  m_Name: WallTag (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9210512268476055042
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1506778528955927106}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.5, z: 0.000000059604645}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8380903875141662847}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2454470096885064144
 GameObject:
   m_ObjectHideFlags: 0
@@ -39,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1881313318959472235}
-  m_Layer: 0
-  m_Name: WallTag
+  m_Layer: 8
+  m_Name: Wall Tag Object (1)
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2454470096885064144}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 1.5, z: 0.000000059604645}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8380903875141662847}
@@ -67,10 +37,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 281234074576243543, guid: 62b73729f6443574b940dca60f05fc07,
+        type: 3}
+      propertyPath: wallTagTrans.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 281234074576243543, guid: 62b73729f6443574b940dca60f05fc07,
+        type: 3}
+      propertyPath: wallTagTrans.Array.data[1]
+      value: 
+      objectReference: {fileID: 1881313318959472235}
     - target: {fileID: 3863657441718100578, guid: 62b73729f6443574b940dca60f05fc07,
         type: 3}
       propertyPath: m_Name
       value: Wall 1x2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589043587913802004, guid: 62b73729f6443574b940dca60f05fc07,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589043587913802004, guid: 62b73729f6443574b940dca60f05fc07,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5652572701872649906, guid: 62b73729f6443574b940dca60f05fc07,
         type: 3}

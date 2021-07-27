@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8863307656716993013}
-  m_Layer: 0
-  m_Name: WallTag (1)
+  m_Layer: 8
+  m_Name: Wall Tag Object (1)
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064322691842899863}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.5, z: 0.000000059604645}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7014938395996933009}
@@ -39,8 +39,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1628454546020051250}
-  m_Layer: 0
-  m_Name: WallTag
+  m_Layer: 8
+  m_Name: Wall Tag Object (2)
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2368908137809178713}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 1.5, z: 0.000000059604645}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7014938395996933009}
@@ -67,10 +67,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 281234074576243543, guid: 62b73729f6443574b940dca60f05fc07,
+        type: 3}
+      propertyPath: wallTagTrans.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 281234074576243543, guid: 62b73729f6443574b940dca60f05fc07,
+        type: 3}
+      propertyPath: wallTagTrans.Array.data[1]
+      value: 
+      objectReference: {fileID: 8863307656716993013}
+    - target: {fileID: 281234074576243543, guid: 62b73729f6443574b940dca60f05fc07,
+        type: 3}
+      propertyPath: wallTagTrans.Array.data[2]
+      value: 
+      objectReference: {fileID: 1628454546020051250}
     - target: {fileID: 3863657441718100578, guid: 62b73729f6443574b940dca60f05fc07,
         type: 3}
       propertyPath: m_Name
       value: Wall 1x3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589043587913802004, guid: 62b73729f6443574b940dca60f05fc07,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5652572701872649906, guid: 62b73729f6443574b940dca60f05fc07,
         type: 3}
