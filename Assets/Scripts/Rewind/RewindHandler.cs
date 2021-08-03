@@ -91,7 +91,7 @@ namespace Qbism.Rewind
 			
 			foreach (TimeBody timeBody in timeBodies)
 			{
-				timeBody.Rewind();
+				timeBody.StartRewind();
 			}
 
 			//To stop rewind UI element from pulsing if rewinding off finish. Here bc finish doesn't have timebody component

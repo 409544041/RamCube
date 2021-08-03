@@ -57,6 +57,8 @@ namespace Qbism.General
 
 		private void InitiatePulse(InterfaceIDs id)
 		{
+			if (pulser.IsPlaying) return; 
+			
 			if (id == interfaceID)
 			{
 				pulser.Initialization();

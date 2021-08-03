@@ -64,10 +64,14 @@ namespace Qbism.Rewind
 			}
 		}
 
-		public void Rewind()
-		{	
-			if(rewindList.Count <= 0) return;
+		public void StartRewind()
+		{
+			if (rewindList.Count <= 0) return;
+			StartCoroutine(Rewind());
+		}
 
+		public IEnumerator Rewind()
+		{	
 			transform.position = rewindList[0].position;
 			transform.rotation = rewindList[0].rotation;
 			transform.localScale = rewindList[0].scale;
@@ -88,6 +92,8 @@ namespace Qbism.Rewind
 				
 				if (mover.isStunned)
 				{
+					//yield here bc otherwise laser detects cube collider again and player stays stunned
+					yield return null;
 					mover.isStunned = false;
 					onStopRewindPulse(InterfaceIDs.Rewind);
 					mover.GetComponent<PlayerStunJuicer>().StopStunVFX();
