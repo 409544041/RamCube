@@ -8,7 +8,7 @@ namespace Qbism.SpriteAnimations
 	public class SpriteMouthAnimator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] bool hasCircle, hasTeeth, hasWail;
+		[SerializeField] bool hasCircle, hasTeeth, hasWail, hasCry;
 
 		//Cache
 		Animator animator;
@@ -22,6 +22,7 @@ namespace Qbism.SpriteAnimations
 		const string TO_WAIL = "ToWail";
 		const string TO_SMILE = "ToSmile";
 		const string TO_HAPPY = "ToHappyOpen";
+		const string TO_CRY = "ToCry";
 
 		List<string> animStringList = new List<string>();
 
@@ -39,6 +40,7 @@ namespace Qbism.SpriteAnimations
 			animStringList.Add(TO_WAIL);
 			animStringList.Add(TO_SMILE);
 			animStringList.Add(TO_HAPPY);
+			animStringList.Add(TO_CRY);
 		}
 
 		//state1 is always the state you're going to.
@@ -68,7 +70,7 @@ namespace Qbism.SpriteAnimations
 				MouthStates.nullz, MouthStates.nullz, TO_TEETH);
 
 			else if (state == MouthStates.teeth && !hasTeeth) 
-				Debug.LogError("Segment does not have teeth mouth animation.");
+				Debug.LogError("Character does not have teeth mouth animation.");
 
 			if (state == MouthStates.sad) ToFirstTierAnim(MouthStates.sad,
 				MouthStates.wail, MouthStates.cry, TO_SAD);
@@ -79,11 +81,17 @@ namespace Qbism.SpriteAnimations
 			else if (state == MouthStates.wail && !hasWail) ToFirstTierAnim(MouthStates.sad,
 				MouthStates.wail, MouthStates.cry, TO_SAD);
 
-			if(state == MouthStates.smile) ToFirstTierAnim(MouthStates.smile,
+			if (state == MouthStates.smile) ToFirstTierAnim(MouthStates.smile,
 				MouthStates.happyOpen, MouthStates.laugh, TO_SMILE);
 
-			if(state == MouthStates.happyOpen) ToSecondTierAnim(MouthStates.happyOpen,
+			if (state == MouthStates.happyOpen) ToSecondTierAnim(MouthStates.happyOpen,
 				MouthStates.smile, MouthStates.laugh, TO_HAPPY);
+			
+			if (state == MouthStates.cry && hasCry) ToThirdTierAnim(MouthStates.cry,
+				MouthStates.sad, MouthStates.wail, TO_CRY);
+
+			if (state == MouthStates.cry && !hasCry)
+				Debug.LogError("Character does not have cry mouth animation");
 		}
 
 		private void SetCurrentMouth()
@@ -100,11 +108,10 @@ namespace Qbism.SpriteAnimations
 			if (currentClipName == "Mouth_NormalToSad" || currentClipName == "Mouth_WailToSad") currentMouth = MouthStates.sad;
 			if (currentClipName == "Mouth_NormalToSmile" || currentClipName == "Mouth_HappyOpenToSmile") currentMouth = MouthStates.smile;
 
-			if (currentClipName == "Mouth_SadToWail") currentMouth = MouthStates.wail;
+			if (currentClipName == "Mouth_SadToWail" || currentClipName == "Mouth_Wail") currentMouth = MouthStates.wail;
 			if (currentClipName == "Mouth_SmileToHappyOpen") currentMouth = MouthStates.happyOpen;
 
 			if (currentClipName == "Mouth_Crying") currentMouth = MouthStates.cry;
-			if (currentClipName == "Mouth_Laughing") currentMouth = MouthStates.laugh;
 		}
 
 		private void ToBaseAnim()
@@ -182,43 +189,30 @@ namespace Qbism.SpriteAnimations
 			currentMouth = state1;
 		}
 
-		//TO DO: Reactive below once we have tier3 anims again
+		private void ToThirdTierAnim(MouthStates state1, MouthStates state2,
+			MouthStates state3, string trigger)
+		{
+			if (currentMouth == state1) return;
 
-		// private void ToThirdTierAnim(MouthStates state1, MouthStates state2,
-		// 	MouthStates state3, string trigger)
-		// {
-		// 	if (currentMouth == state1) return;
+			if (currentMouth != MouthStates.normal && currentMouth != state2 &&
+				currentMouth != state3)
+			{
+				ToBaseAnim();
 
-		// 	if (currentMouth != MouthStates.normal && currentMouth != state2 &&
-		// 		currentMouth != state3)
-		// 	{
-		// 		ToBaseAnim();
+				string newTrigger = null;
+				if (state1 == MouthStates.cry) newTrigger = TO_SAD;
+				// if (state1 == MouthStates.laugh) newTrigger = TO_SMILE;
 
-		// 		string newTrigger = null;
-		// 		if (state1 == MouthStates.cry) newTrigger = TO_SAD;
-		// 		if (state1 == MouthStates.laugh) newTrigger = TO_SMILE;
+				ToFirstTierAnim(state2, state3, state1, newTrigger);
 
-		// 		ToFirstTierAnim(state2, state3, state1, newTrigger);
+				if (state1 == MouthStates.cry) newTrigger = TO_WAIL;
+				// if (state1 == MouthStates.laugh) newTrigger = TO_LAUGH;
 
-		// 		if (state1 == MouthStates.cry) newTrigger = TO_WAIL;
-		// 		if (state1 == MouthStates.laugh) newTrigger = TO_LAUGH;
+				ToSecondTierAnim(state3, state2, state1, newTrigger);
+			}
 
-		// 		ToSecondTierAnim(state3, state2, state1, newTrigger);
-		// 	}
-
-		// 	if (currentMouth == state2)
-		// 	{
-		// 		if (state1 == MouthStates.cry)
-		// 			ToSecondTierAnim(MouthStates.wail, MouthStates.sad,
-		// 				MouthStates.cry, TO_WAIL);
-
-		// 		if (state1 == MouthStates.laugh)
-		// 			ToSecondTierAnim(MouthStates.happyOpen, MouthStates.smile,
-		// 			MouthStates.laugh, TO_HAPPY);
-		// 	}
-
-		// 	animator.SetTrigger(trigger);
-		// 	currentMouth = state1;
-		// }
+			animator.SetTrigger(trigger);
+			currentMouth = state1;
+		}
 	}
 }
