@@ -8,7 +8,7 @@ namespace Qbism.PlayerCube
 	public class PlayerAnimator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] float altWiggleDelay = 1f;
+		[SerializeField] float altWiggleDelay = 1f, introDelay = 1f;
 		[SerializeField] BoxCollider coll = null;
 
 		//Cache
@@ -23,6 +23,7 @@ namespace Qbism.PlayerCube
 		public event Action onTriggerShapieShock;
 		public event Action onTriggerSerpent;
 		public event Action onChildSegmentToPlayer;
+		public event Action<bool> onInputSet, onIntroSet;
 
 		public delegate Vector3 FinishPosDel();
 		public FinishPosDel onGetFinishPos;
@@ -35,11 +36,29 @@ namespace Qbism.PlayerCube
 		private void Start() 
 		{
 			playerLandPos = onGetFinishPos();
+			StartCoroutine(DisableInputForDrop());
 		}
 
 		private void TriggerLandingReaction() //Called from animation event
 		{
 			onTriggerLandingReaction();
+		}
+
+		private IEnumerator DisableInputForDrop()
+		{
+			onIntroSet(true);
+			onInputSet(false);
+
+			animator.speed = 0; //pauze intro animation
+			yield return new WaitForSeconds(introDelay);
+			animator.speed = 1;
+
+			var currentClipinfo = animator.GetCurrentAnimatorClipInfo(0);
+			float clipLength = currentClipinfo[0].clip.length;
+			yield return new WaitForSeconds(clipLength);
+
+			onInputSet(true);
+			onIntroSet(false);
 		}
 
 		public void TriggerFall(float addedY, string fallType)

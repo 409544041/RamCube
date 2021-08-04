@@ -30,6 +30,7 @@ namespace Qbism.PlayerCube
 		MoveableCubeHandler moveHandler;
 		MoveableCube[] moveableCubes;
 		PlayerCubeFlipJuicer playerFlipJuicer;
+		PlayerAnimator playerAnimator;
 
 		//States
 		public bool isInBoostPos { get; set; } = true;
@@ -42,6 +43,7 @@ namespace Qbism.PlayerCube
 		private Vector3 startScale = new Vector3(1, 1, 1);
 		public bool isStunned { get; set; }	= false;
 		public bool isOutOfBounds { get; set; } = false;
+		public bool isInIntroSeq { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
@@ -57,6 +59,7 @@ namespace Qbism.PlayerCube
 			moveHandler = FindObjectOfType<MoveableCubeHandler>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();
 			playerFlipJuicer = GetComponent<PlayerCubeFlipJuicer>();
+			playerAnimator = GetComponentInChildren<PlayerAnimator>();
 		}
 
 		private void OnEnable() 
@@ -69,6 +72,12 @@ namespace Qbism.PlayerCube
 					cube.onActivatePlayerMove += InitiateMoveFromOther;
 				}
 			}
+
+			if (playerAnimator != null)
+			{
+				playerAnimator.onInputSet += SetInput;
+				playerAnimator.onIntroSet += SetInIntro;
+			} 
 		}
 
 		private void Start()
@@ -226,6 +235,16 @@ namespace Qbism.PlayerCube
 			return roundedPos;
 		}
 
+		private void SetInput(bool value)
+		{
+			input = value;
+		}
+
+		private void SetInIntro(bool value)
+		{
+			isInIntroSeq = value;
+		}
+
 		private void SetSide(MoveableCube cube, ref Transform side, ref Vector2Int posAhead)
 		{
 			if (side == cube.up)
@@ -269,6 +288,12 @@ namespace Qbism.PlayerCube
 					cube.onPlayerPosCheck -= FetchGridPos;
 					cube.onActivatePlayerMove -= InitiateMoveFromOther;
 				}
+			}
+
+			if (playerAnimator != null)
+			{
+				playerAnimator.onInputSet -= SetInput;
+				playerAnimator.onIntroSet -= SetInIntro;
 			}
 		}
 	}

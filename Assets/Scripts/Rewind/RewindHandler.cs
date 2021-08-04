@@ -64,7 +64,8 @@ namespace Qbism.Rewind
 		//Makes sure that after moveables stopped moving they are added to correct dic
 		private void CheckForMovement() 
 		{
-			if(mover.isBoosting || mover.isMoving || mover.isTurning) return;
+			if(mover.isBoosting || mover.isMoving || mover.isTurning || 
+				mover.isInIntroSeq) return;
 
 			if(!moveHandler.CheckForMovingMoveables())
 			{
