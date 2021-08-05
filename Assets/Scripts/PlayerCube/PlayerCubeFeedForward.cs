@@ -56,7 +56,7 @@ namespace Qbism.PlayerCube
 			{
 				foreach (FeedForwardCube ffCube in feedForwardCubes)
 				{
-					ffCube.gameObject.SetActive(false);
+					ffCube.SwitchFF(false);
 				}
 			}
 		}
@@ -79,14 +79,14 @@ namespace Qbism.PlayerCube
 
 				if (onKeyCheck(onePosAhead) && onShrunkCheck(onePosAhead) == false)
 				{
-					ffCube.gameObject.SetActive(true);
+					ffCube.SwitchFF(true);
 					ffCube.transform.position = new Vector3
 						(onePosAhead.x, transform.position.y, onePosAhead.y);
 					ffCube.transform.Rotate(turnAxis[ffIndex], 90, Space.World);
 
 					ffCube.GetComponent<FeedForwardCube>().CheckFloorInNewPos();
 				}
-				else ffCube.gameObject.SetActive(false);
+				else ffCube.SwitchFF(false);
 			}
 		}
 

@@ -8,11 +8,20 @@ namespace Qbism.PlayerCube
 {
 	public class FeedForwardCube : MonoBehaviour, IActiveCube
 	{
+		//Cache
+		FFJuicer ffJuicer;
 
 		//States
 		public bool isBoosting { get; set; } = false;
 
+		//Actions, events, delegates etc
 		public event Action<Vector2Int, GameObject> onFeedForwardFloorCheck;
+		public event Action<bool> onSwitchVisuals;
+
+		private void Awake() 
+		{
+			ffJuicer = GetComponent<FFJuicer>();
+		}
 
 		public void CheckFloorInNewPos()
 		{
@@ -34,6 +43,16 @@ namespace Qbism.PlayerCube
 
 			Quaternion rotation = Quaternion.Euler(Mathf.RoundToInt(transform.rotation.x),
 				Mathf.RoundToInt(transform.rotation.y), Mathf.RoundToInt(transform.rotation.z));
+		}
+
+		public void SwitchFF(bool value)
+		{
+			if (value == true)
+			{
+				ffJuicer.TriggerJuice();
+				onSwitchVisuals(true);
+			}
+			else onSwitchVisuals(false);
 		}
 
 		private void OnDisable()

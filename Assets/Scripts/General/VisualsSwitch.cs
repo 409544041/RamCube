@@ -14,11 +14,13 @@ namespace Qbism.General
 		//Cache
 		PlayerFartLauncher farter;
 		PlayerAnimator playerAnimator;
+		FeedForwardCube[] ffCubes;
 
 		private void Awake() 
 		{
 			farter = GetComponent<PlayerFartLauncher>();
 			playerAnimator = GetComponentInChildren<PlayerAnimator>();
+			ffCubes = GetComponentsInParent<FeedForwardCube>();
 		}
 
 		private void OnEnable() 
@@ -34,6 +36,14 @@ namespace Qbism.General
 				playerAnimator.onSwitchVisuals += SwitchMeshes;
 				playerAnimator.onSwitchVisuals += SwitchSprites;
 			}
+
+			if (ffCubes != null)
+			{
+				foreach (var cube in ffCubes)
+				{
+					cube.onSwitchVisuals += SwitchMeshes;
+				}
+			} 
 		}
 
 		private void SwitchMeshes(bool value)
