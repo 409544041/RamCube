@@ -52,6 +52,7 @@ namespace Qbism.PlayerCube
 		public event Action onStartFarting;
 		public event Action onSwitchToEndCam;
 		public event Action onMoveCam;
+		public event Action<bool> onSwitchVisuals;
 
 		void Awake()
 		{
@@ -178,7 +179,7 @@ namespace Qbism.PlayerCube
 			}
 
 			transform.position = target.position;
-			SetVisuals(false);
+			onSwitchVisuals(false);
 			onDoneFarting();
 			fartBeam.Stop();
 		}
@@ -195,7 +196,7 @@ namespace Qbism.PlayerCube
 			transform.position = startPos;
 			transform.LookAt(transform.position - (endPos - transform.position));
 
-			SetVisuals(true);
+			onSwitchVisuals(true);
 			fartBeam.Play();
 
 			SetScale(flyByScaleMod);
@@ -206,7 +207,7 @@ namespace Qbism.PlayerCube
 				yield return null;
 			}
 
-			SetVisuals(false);
+			onSwitchVisuals(false);
 			SetScale(1);
 			fartBeam.Stop();
 		}
@@ -229,23 +230,6 @@ namespace Qbism.PlayerCube
 			float max2 = beamOriginalMax * multiplier;
 
 			main2.startSize = new ParticleSystem.MinMaxCurve(min2, max2);
-		}
-
-		private void SetVisuals(bool value)
-		{
-			SkinnedMeshRenderer[] meshes = playerVis.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-			foreach (var mesh in meshes)
-			{
-				mesh.enabled = value;
-			}
-
-			SpriteRenderer[] sprites = playerVis.GetComponentsInChildren<SpriteRenderer>();
-
-			foreach (var sprite in sprites)
-			{
-				sprite.enabled = value;
-			}
 		}
 
 		private void SaveOriginalScales()

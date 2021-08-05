@@ -13,17 +13,16 @@ namespace Qbism.PlayerCube
 
 		//Cache
 		Animator animator;
+		PlayerIntroJuicer introJuicer;
 
 		//States
-		Vector3 playerLandPos;
+		Vector3 playerFinishLandPos;
 		bool fallen = false;
 
 		//Actions, events, delegates etc
-		public event Action onTriggerLandingReaction;
-		public event Action onTriggerShapieShock;
-		public event Action onTriggerSerpent;
-		public event Action onChildSegmentToPlayer;
-		public event Action<bool> onInputSet, onIntroSet;
+		public event Action onTriggerLandingReaction, onTriggerShapieShock;
+		public event Action onShowFF, onTriggerSerpent, onChildSegmentToPlayer;
+		public event Action<bool> onInputSet, onIntroSet, onSwitchVisuals;
 
 		public delegate Vector3 FinishPosDel();
 		public FinishPosDel onGetFinishPos;
@@ -31,11 +30,13 @@ namespace Qbism.PlayerCube
 		private void Awake() 
 		{
 			animator = GetComponent<Animator>();
+			introJuicer = GetComponentInParent<PlayerIntroJuicer>();
 		}
 
 		private void Start() 
 		{
-			playerLandPos = onGetFinishPos();
+			onSwitchVisuals(false);
+			playerFinishLandPos = onGetFinishPos();
 			StartCoroutine(DisableInputForDrop());
 		}
 
@@ -52,6 +53,7 @@ namespace Qbism.PlayerCube
 			animator.speed = 0; //pauze intro animation
 			yield return new WaitForSeconds(introDelay);
 			animator.speed = 1;
+			onSwitchVisuals(true);
 
 			var currentClipinfo = animator.GetCurrentAnimatorClipInfo(0);
 			float clipLength = currentClipinfo[0].clip.length;
@@ -59,6 +61,7 @@ namespace Qbism.PlayerCube
 
 			onInputSet(true);
 			onIntroSet(false);
+			onShowFF();
 		}
 
 		public void TriggerFall(float addedY, string fallType)
@@ -73,33 +76,17 @@ namespace Qbism.PlayerCube
 			var mover = GetComponentInParent<PlayerCubeMover>();
 			GameObject player = mover.gameObject;
 			
-			player.transform.position = new Vector3(playerLandPos.x,
-				playerLandPos.y + addedY, playerLandPos.z);
+			player.transform.position = new Vector3(playerFinishLandPos.x,
+				playerFinishLandPos.y + addedY, playerFinishLandPos.z);
 
 			player.transform.rotation = Quaternion.Euler(0f, -45f, 0f);
 
 			yield return null; //This is to prevent cube from showing for 1 frame at wrong loc
 
-			EnableVisuals();
+			//visuals were switched off in playerfartlauncher
+			onSwitchVisuals(true);
 
 			animator.SetTrigger(fallType);
-		}
-
-		private void EnableVisuals()
-		{
-			SkinnedMeshRenderer[] meshes = GetComponentsInChildren<SkinnedMeshRenderer>();
-
-			foreach (var mesh in meshes)
-			{
-				mesh.enabled = true;
-			}
-
-			SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
-
-			foreach (var sprite in sprites)
-			{
-				sprite.enabled = true;
-			}
 		}
 
 		private IEnumerator TriggerDelayedWiggle() //Called from animation
@@ -125,6 +112,26 @@ namespace Qbism.PlayerCube
 			
 			onTriggerSerpent(); 
 			//TO DO: activate straight to serpent instead of via finish?
+		}
+
+		private void TriggerIntroSpeedJuice() //Called from animation
+		{
+			introJuicer.TriggerSpeedJuice();
+		}
+
+		private void TriggerIntroLandingJuice() //Called from animation
+		{
+			introJuicer.TriggerIntroLandingJuice();
+		}
+
+		private void TriggerButtPopVFX() //Called from animation
+		{
+			introJuicer.PlayButtPopFX();
+		}
+
+		private void TriggerPopVFX() //Called from animation
+		{
+			introJuicer.PlayPopVFX();
 		}
 	}
 }

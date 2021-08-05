@@ -12,6 +12,7 @@ namespace Qbism.PlayerCube
 
 		//Cache
 		PlayerCubeMover mover;
+		PlayerAnimator playerAnimator;
 
 		//States
 		Vector2Int[] neighbourDirs;
@@ -26,7 +27,13 @@ namespace Qbism.PlayerCube
 
 		private void Awake()
 		{
-			mover = FindObjectOfType<PlayerCubeMover>();
+			mover = GetComponent<PlayerCubeMover>();
+			playerAnimator = GetComponentInChildren<PlayerAnimator>();
+		}
+
+		private void OnEnable() 
+		{
+			if (playerAnimator != null) playerAnimator.onShowFF += ShowFeedForward;
 		}
 
 		private void Start()
@@ -36,8 +43,6 @@ namespace Qbism.PlayerCube
 
 			turnAxis = new Vector3[]
 				{ Vector3.right, Vector3.left, Vector3.forward, Vector3.back };
-
-			ShowFeedForward();
 		}
 
 		private void Update()
@@ -47,7 +52,7 @@ namespace Qbism.PlayerCube
 
 		private void DisableFeedForwardOnMove()
 		{
-			if (mover.isMoving || mover.isBoosting || mover.isTurning)
+			if (mover.isMoving || mover.isBoosting || mover.isTurning || mover.isInIntroSeq)
 			{
 				foreach (FeedForwardCube ffCube in feedForwardCubes)
 				{
@@ -83,6 +88,11 @@ namespace Qbism.PlayerCube
 				}
 				else ffCube.gameObject.SetActive(false);
 			}
+		}
+
+		private void OnDisable()
+		{
+			if (playerAnimator != null) playerAnimator.onShowFF -= ShowFeedForward;
 		}
 	}
 }
