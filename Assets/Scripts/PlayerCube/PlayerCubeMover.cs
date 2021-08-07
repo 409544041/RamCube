@@ -24,6 +24,8 @@ namespace Qbism.PlayerCube
 		[Header ("Wiggle")]
 		[SerializeField] int wiggleTurnStep = 18;
 		[SerializeField] int wiggleRotation = 8;
+		[Header ("Position")]
+		[SerializeField] float yDuringPlay = .9f, yWhenLowered = 0;
 		
 
 		//Cache
@@ -82,6 +84,7 @@ namespace Qbism.PlayerCube
 
 		private void Start()
 		{
+			RoundPosition();
 			UpdateCenterPosition();
 			startScale = transform.localScale;
 		}
@@ -202,8 +205,11 @@ namespace Qbism.PlayerCube
 
 		public void RoundPosition()
 		{
+			float yPos = 0;
+			if (transform.position.y > .5f) yPos = .9f;
+
 			transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
-				Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z));
+				yPos, Mathf.RoundToInt(transform.position.z));
 
 			Quaternion rotation = Quaternion.Euler(Mathf.RoundToInt(transform.rotation.x),
 				Mathf.RoundToInt(transform.rotation.y), Mathf.RoundToInt(transform.rotation.z));
