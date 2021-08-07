@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using Qbism.SpriteAnimations;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
@@ -18,6 +19,7 @@ namespace Qbism.PlayerCube
 		MMFeedbackScale[] postFlipMMScalers;
 		MMFeedbackScale[] flipMMScalers;
 		MMFeedbackPosition postFlipMMPos;
+		ExpressionHandler expresHandler;
 
 		//States
 		float postFlipCurveOneAtStart = 0;
@@ -27,7 +29,8 @@ namespace Qbism.PlayerCube
 			source = GetComponentInChildren<AudioSource>();
 			postFlipMMScalers = postFlipJuice.GetComponents<MMFeedbackScale>();
 			flipMMScalers = flipJuice.GetComponents<MMFeedbackScale>();
-			postFlipMMPos= postFlipJuice.GetComponent<MMFeedbackPosition>();
+			postFlipMMPos = postFlipJuice.GetComponent<MMFeedbackPosition>();
+			expresHandler = GetComponentInChildren<ExpressionHandler>();
 		}
 
 		private void Start() 
@@ -57,6 +60,8 @@ namespace Qbism.PlayerCube
 
 			postFlipJuice.Initialization();
 			postFlipJuice.PlayFeedbacks();
+
+			expresHandler.SetSituationFace(ExpressionSituations.flip, .5f);
 		}
 
 		private void CalculateFlipScaleAxis(int i, MMFeedbackScale[] scalers)

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
-using Qbism.SpriteAnimations;
 using UnityEngine;
 
 namespace Qbism.Cubes
@@ -142,18 +141,15 @@ namespace Qbism.Cubes
 					{
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
 						onLand();
-						var expressHandler = cube.GetComponentInChildren<ExpressionHandler>();
 
 						if(previousCube.FetchType() != CubeTypes.Boosting)
 						{
 							playerFlipJuicer.PlayLandClip();
 							playerFlipJuicer.PlayPostFlipJuice();
-							expressHandler.SetSituationFace(ExpressionSituations.flip, .5f);
 						}
 						else
 						{
 							playerBoostJuicer.PlayPostBoostJuice();
-							expressHandler.SetSituationFace(ExpressionSituations.wallHit, .5f);
 						}
 						
 					}

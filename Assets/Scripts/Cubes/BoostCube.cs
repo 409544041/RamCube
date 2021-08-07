@@ -50,8 +50,6 @@ namespace Qbism.Cubes
 
 			mover.GetComponent<PlayerCubeBoostJuicer>().
 				PlayBoostJuice(-boostObjDir.transform.forward);
-			mover.GetComponentInChildren<ExpressionHandler>().
-				SetSituationFace(ExpressionSituations.boosting, -1f);
 
 			while (mover.isBoosting)
 			{

@@ -65,8 +65,7 @@ namespace Qbism.PlayerCube
 			boostJuice.PlayFeedbacks();
 			boostTrailTimer = 0;
 			boostTrailCounting = true;
-			// expresHandler.SetGameplayExpression(expresHandler.
-			// 	expressionsSO.boostExpressions);
+			expresHandler.SetSituationFace(ExpressionSituations.boosting, -1f);
 		}
 
 		public void PlayPostBoostJuice()
@@ -89,8 +88,7 @@ namespace Qbism.PlayerCube
 			boostJuice.StopFeedbacks();
 			postBoostJuice.Initialization();
 			postBoostJuice.PlayFeedbacks();
-			// expresHandler.SetGameplayExpression(expresHandler.
-			// 	expressionsSO.wallHitExpressions);
+			expresHandler.SetSituationFace(ExpressionSituations.wallHit, 1f);
 		}
 
 		private void CalculatePostBoostScaleMoveDir()
