@@ -54,7 +54,7 @@ namespace Qbism.PlayerCube
 		public event Action onMoveCam;
 		public event Action<bool> onSwitchVisuals;
 
-		void Awake()
+		private void Awake()
 		{
 			preFartMMWiggle = preFartJuice.GetComponent<MMFeedbackWiggle>();
 			exprHandler = GetComponentInChildren<ExpressionHandler>();
@@ -250,6 +250,11 @@ namespace Qbism.PlayerCube
 			var main2 = fartBeam.main;
 			beamOriginalMin = main2.startSize.constantMin;
 			beamOriginalMax = main2.startSize.constantMax;
+		}
+
+		public void ResetFartCollided()
+		{
+			fartCollided = false;
 		}
 	}
 }

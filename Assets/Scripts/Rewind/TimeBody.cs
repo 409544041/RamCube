@@ -24,6 +24,7 @@ namespace Qbism.Rewind
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onStopRewindPulse;
+		public event Action onResetFartColliding;
 
 		private void Awake() 
 		{
@@ -100,6 +101,7 @@ namespace Qbism.Rewind
 				}
 
 				mover.gameObject.SendMessage("StartPostRewindJuice");
+				mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();
 			}
 
 			if (this.tag == "Environment" || this.tag == "Moveable")

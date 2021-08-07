@@ -128,8 +128,7 @@ namespace Qbism.Cubes
 				if (currentCube.FetchType() == CubeTypes.Boosting)
 					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 
-				else if ((currentCube.FetchType() == CubeTypes.Flipping ||
-					currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
+				else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
 				{
 					if (onLand != null) onLand();
 					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
@@ -155,8 +154,11 @@ namespace Qbism.Cubes
 					}
 					else
 					{
-						if (!mover.isStunned) cubeFF.ShowFeedForward(); //landing on same cube, like after having turned/flipped
+						//landing on same cube, like after having turned/flipped
+						if (!mover.isStunned) cubeFF.ShowFeedForward(); 
 					}
+
+					mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();
 				}
 			}
 			else
