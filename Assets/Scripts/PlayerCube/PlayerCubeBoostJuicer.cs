@@ -12,6 +12,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] MMFeedbacks boostJuice = null;
 		[SerializeField] MMFeedbacks postBoostJuice = null;
 		[SerializeField] float maxBoostTrailTime = 1f;
+		[SerializeField] AudioClip impactSFX = null;
 
 		//Cache
 		MMFeedbackScale[] postBoostMMScalers;
@@ -23,6 +24,8 @@ namespace Qbism.PlayerCube
 		Vector3 boostImpactDir = new Vector3(0, 0, 0);
 		float boostTrailTimer = 0f;
 		bool boostTrailCounting = false;
+		ParticleSystem particles;
+		AudioSource audioSource;
 
 		private void Awake() 
 		{
@@ -30,6 +33,8 @@ namespace Qbism.PlayerCube
 			postBoostMMPos = postBoostJuice.GetComponent<MMFeedbackPosition>();
 			boostMMScalers = boostJuice.GetComponents<MMFeedbackScale>();
 			expresHandler = GetComponentInChildren<ExpressionHandler>();
+			particles = boostJuice.GetComponent<MMFeedbackParticles>().BoundParticleSystem;
+			audioSource = postBoostJuice.GetComponent<MMFeedbackAudioSource>().TargetAudioSource;
 		}
 
 		private void Update()
@@ -50,9 +55,6 @@ namespace Qbism.PlayerCube
 
 		public void PlayBoostJuice(Vector3 direction)
 		{
-			ParticleSystem particles = boostJuice.
-				GetComponent<MMFeedbackParticles>().BoundParticleSystem;
-
 			particles.transform.forward = direction;
 			boostImpactDir = direction;
 
@@ -84,6 +86,8 @@ namespace Qbism.PlayerCube
 			}
 
 			CalculatePostBoostScaleMoveDir();
+
+			audioSource.clip = impactSFX;
 
 			boostJuice.StopFeedbacks();
 			postBoostJuice.Initialization();

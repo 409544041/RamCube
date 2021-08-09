@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 917238524091501798}
   - component: {fileID: -1162545223255538459}
   - component: {fileID: -7989568381259900414}
+  - component: {fileID: 4991907884071370202}
   m_Layer: 9
   m_Name: PostBoost Juice
   m_TagString: Untagged
@@ -54,6 +55,7 @@ MonoBehaviour:
   - {fileID: -2255377714875511939}
   - {fileID: 917238524091501798}
   - {fileID: -1162545223255538459}
+  - {fileID: 4991907884071370202}
   InitializationMode: 0
   SafeMode: 3
   AutoPlayOnStart: 0
@@ -600,3 +602,38 @@ MonoBehaviour:
     m_DissipationDistance: 1000
     m_PropagationSpeed: 343
   Velocity: {x: 1, y: 1, z: 1}
+--- !u!114 &4991907884071370202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988846353716387331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbeb74f1ccfa52540b6fd5784df42533, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: AudioSource
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  TargetAudioSource: {fileID: 0}
+  Mode: 0
+  RandomSfx: []
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 0.8
+  MaxPitch: 1.2
+  SfxAudioMixerGroup: {fileID: 0}
