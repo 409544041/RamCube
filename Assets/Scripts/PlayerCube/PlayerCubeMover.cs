@@ -25,7 +25,8 @@ namespace Qbism.PlayerCube
 		[SerializeField] int wiggleTurnStep = 18;
 		[SerializeField] int wiggleRotation = 8;
 		[Header ("Position")]
-		[SerializeField] float yDuringPlay = .9f, yWhenLowered = 0;
+		[SerializeField] float yDuringPlay = .9f;
+		[SerializeField] float yWhenLowered = 0;
 		
 
 		//Cache

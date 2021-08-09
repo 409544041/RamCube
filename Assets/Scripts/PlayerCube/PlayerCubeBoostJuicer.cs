@@ -51,9 +51,9 @@ namespace Qbism.PlayerCube
 		public void PlayBoostJuice(Vector3 direction)
 		{
 			ParticleSystem particles = boostJuice.
-				GetComponent<MMFeedbackParticlesInstantiation>().ParticlesPrefab;
+				GetComponent<MMFeedbackParticles>().BoundParticleSystem;
 
-			particles.transform.forward = transform.TransformDirection(direction);
+			particles.transform.forward = direction;
 			boostImpactDir = -direction;
 
 			for (int i = 0; i < boostMMScalers.Length; i++)

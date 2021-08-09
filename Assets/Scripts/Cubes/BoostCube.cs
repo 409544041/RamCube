@@ -49,7 +49,7 @@ namespace Qbism.Cubes
 			onBoostEvent.Invoke();
 
 			mover.GetComponent<PlayerCubeBoostJuicer>().
-				PlayBoostJuice(-boostObjDir.transform.forward);
+				PlayBoostJuice(boostObjDir.transform.forward);
 
 			while (mover.isBoosting)
 			{
