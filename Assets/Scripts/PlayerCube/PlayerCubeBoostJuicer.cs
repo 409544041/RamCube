@@ -54,7 +54,7 @@ namespace Qbism.PlayerCube
 				GetComponent<MMFeedbackParticles>().BoundParticleSystem;
 
 			particles.transform.forward = direction;
-			boostImpactDir = -direction;
+			boostImpactDir = direction;
 
 			for (int i = 0; i < boostMMScalers.Length; i++)
 			{
