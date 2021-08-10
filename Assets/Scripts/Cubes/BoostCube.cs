@@ -19,9 +19,6 @@ namespace Qbism.Cubes
 		[SerializeField] GameObject boostObjDir = null;
 		[SerializeField] LayerMask boostRayMask;
 
-		//Actions, events, delegates etc
-		public UnityEvent onBoostEvent = new UnityEvent();
-
 		public void PrepareAction(GameObject cube)
 		{
 			if (cube.GetComponent<PlayerCubeMover>()) StartCoroutine(ExecuteActionOnPlayer(cube));
@@ -45,8 +42,6 @@ namespace Qbism.Cubes
 
 			mover.input = false;
 			mover.isBoosting = true;
-
-			onBoostEvent.Invoke();
 
 			mover.GetComponent<PlayerCubeBoostJuicer>().
 				PlayBoostJuice(boostObjDir.transform.forward);

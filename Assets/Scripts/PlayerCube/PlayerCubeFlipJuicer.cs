@@ -9,13 +9,11 @@ namespace Qbism.PlayerCube
 	public class PlayerCubeFlipJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] AudioClip landClip = null;
 		[SerializeField] MMFeedbacks flipJuice = null;
 		public float preFlipJuiceDuration = 0f;
 		[SerializeField] MMFeedbacks postFlipJuice = null;
 
 		//Cache
-		AudioSource source;
 		MMFeedbackScale[] postFlipMMScalers;
 		MMFeedbackScale[] flipMMScalers;
 		MMFeedbackPosition postFlipMMPos;
@@ -26,7 +24,6 @@ namespace Qbism.PlayerCube
 
 		private void Awake() 
 		{
-			source = GetComponentInChildren<AudioSource>();
 			postFlipMMScalers = postFlipJuice.GetComponents<MMFeedbackScale>();
 			flipMMScalers = flipJuice.GetComponents<MMFeedbackScale>();
 			postFlipMMPos = postFlipJuice.GetComponent<MMFeedbackPosition>();
@@ -36,6 +33,7 @@ namespace Qbism.PlayerCube
 		private void Start() 
 		{
 			postFlipCurveOneAtStart = postFlipMMPos.RemapCurveOne;
+			postFlipJuice.Initialization();
 		}
 
 		public void PlayFlipJuice()
@@ -58,7 +56,6 @@ namespace Qbism.PlayerCube
 
 			CalculateScaleReposDir();
 
-			postFlipJuice.Initialization();
 			postFlipJuice.PlayFeedbacks();
 
 			expresHandler.SetSituationFace(ExpressionSituations.flip, .5f);
@@ -153,12 +150,6 @@ namespace Qbism.PlayerCube
 		{
 			return Vector3.SqrMagnitude(a - b) < 0.001;
 		}
-
-		public void PlayLandClip()
-		{
-			AudioSource.PlayClipAtPoint(landClip, Camera.main.transform.position, .2f);
-		}
-
 	}
 }
 

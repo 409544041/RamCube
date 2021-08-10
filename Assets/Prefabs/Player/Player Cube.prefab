@@ -300,7 +300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bf75e3ff9be9c4791702cb08b0ab5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  landClip: {fileID: 8300000, guid: 216733143506beb4aa2455d68078a4af, type: 3}
   flipJuice: {fileID: 6635693380891222110}
   preFlipJuiceDuration: 0.15
   postFlipJuice: {fileID: 858351246883004296}
@@ -319,7 +318,6 @@ MonoBehaviour:
   boostJuice: {fileID: 5263398275875843955}
   postBoostJuice: {fileID: 762758906432211995}
   maxBoostTrailTime: 0.75
-  impactSFX: {fileID: 8300000, guid: 3669834d29d22a24cae7c6d059851f52, type: 3}
 --- !u!114 &7636770465740133781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,8 +638,8 @@ MonoBehaviour:
   introLandingJuice: {fileID: 3001858045207716807}
   buttPopVFX: {fileID: 7273160807164164380}
   popVFX: {fileID: 222420596674519024}
-  landingSFX: {fileID: 8300000, guid: 3669834d29d22a24cae7c6d059851f52, type: 3}
   introPop: {fileID: 8300000, guid: 4aa634d0927d7ee459eebc8e9c4daaf1, type: 3}
+  audioSource: {fileID: 1324210861968108626}
 --- !u!1 &2096589824242152289
 GameObject:
   m_ObjectHideFlags: 0
@@ -2875,6 +2873,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7057894496660482911}
     m_Modifications:
+    - target: {fileID: -6898224391465355028, guid: db5ac7b2645190c41a54ae1d290d5a84,
+        type: 3}
+      propertyPath: BoundParticleSystem
+      value: 
+      objectReference: {fileID: 3065292015951441481}
     - target: {fileID: 51390697300142050, guid: db5ac7b2645190c41a54ae1d290d5a84,
         type: 3}
       propertyPath: m_RootOrder
@@ -2935,6 +2938,11 @@ PrefabInstance:
       propertyPath: AnimateScaleTarget
       value: 
       objectReference: {fileID: 1807421524612065334}
+    - target: {fileID: 911273077141898062, guid: db5ac7b2645190c41a54ae1d290d5a84,
+        type: 3}
+      propertyPath: ParticlesPrefab
+      value: 
+      objectReference: {fileID: 3065292015951441481}
     - target: {fileID: 1649659052148116531, guid: db5ac7b2645190c41a54ae1d290d5a84,
         type: 3}
       propertyPath: AnimatePositionTarget
@@ -3632,6 +3640,16 @@ PrefabInstance:
       propertyPath: BoundParticleSystem
       value: 
       objectReference: {fileID: 6944177141096274026}
+    - target: {fileID: 4751350523107435089, guid: 805664b510d577249bf17ab608598eec,
+        type: 3}
+      propertyPath: Feedbacks.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4751350523107435089, guid: 805664b510d577249bf17ab608598eec,
+        type: 3}
+      propertyPath: Feedbacks.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5400923864429618016, guid: 805664b510d577249bf17ab608598eec,
         type: 3}
       propertyPath: BoundParticleSystem
@@ -3988,6 +4006,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Post Rewind Juice
       objectReference: {fileID: 0}
+    - target: {fileID: 5509442309265117420, guid: 2fb61297bbbe2044dbb237843ba9d99d,
+        type: 3}
+      propertyPath: TargetAudioSource
+      value: 
+      objectReference: {fileID: 1324210861968108626}
     - target: {fileID: 7513540037562889285, guid: 2fb61297bbbe2044dbb237843ba9d99d,
         type: 3}
       propertyPath: AnimateScaleTarget

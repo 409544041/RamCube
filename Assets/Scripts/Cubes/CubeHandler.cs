@@ -142,14 +142,9 @@ namespace Qbism.Cubes
 						onLand();
 
 						if(previousCube.FetchType() != CubeTypes.Boosting)
-						{
-							playerFlipJuicer.PlayLandClip();
 							playerFlipJuicer.PlayPostFlipJuice();
-						}
-						else
-						{
-							playerBoostJuicer.PlayPostBoostJuice();
-						}
+							
+						else playerBoostJuicer.PlayPostBoostJuice();
 						
 					}
 					else

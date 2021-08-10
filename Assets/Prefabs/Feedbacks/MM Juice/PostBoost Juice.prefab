@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 917238524091501798}
   - component: {fileID: -1162545223255538459}
   - component: {fileID: -7989568381259900414}
-  - component: {fileID: 4991907884071370202}
+  - component: {fileID: -1399026765597850344}
   m_Layer: 9
   m_Name: PostBoost Juice
   m_TagString: Untagged
@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: -2255377714875511939}
   - {fileID: 917238524091501798}
   - {fileID: -1162545223255538459}
-  - {fileID: 4991907884071370202}
+  - {fileID: -1399026765597850344}
   InitializationMode: 0
   SafeMode: 3
   AutoPlayOnStart: 0
@@ -602,7 +602,7 @@ MonoBehaviour:
     m_DissipationDistance: 1000
     m_PropagationSpeed: 343
   Velocity: {x: 1, y: 1, z: 1}
---- !u!114 &4991907884071370202
+--- !u!114 &-1399026765597850344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -611,11 +611,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 988846353716387331}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbeb74f1ccfa52540b6fd5784df42533, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Label: AudioSource
+  Label: Sound
   Chance: 100
   Timing:
     TimescaleMode: 0
@@ -629,11 +629,14 @@ MonoBehaviour:
     Quantized: 0
     TargetBPM: 120
   DebugActive: 0
-  TargetAudioSource: {fileID: 0}
-  Mode: 0
+  Sfx: {fileID: 8300000, guid: 3669834d29d22a24cae7c6d059851f52, type: 3}
   RandomSfx: []
+  TestButton: 0
+  TestStopButton: 0
+  PlayMethod: 3
+  PoolSize: 1
   MinVolume: 1
   MaxVolume: 1
-  MinPitch: 0.8
-  MaxPitch: 1.2
+  MinPitch: 0.9
+  MaxPitch: 1.1
   SfxAudioMixerGroup: {fileID: 0}
