@@ -12,10 +12,9 @@ namespace Qbism.Cubes
 		public float timeStep = 0f;
 		public MMFeedbacks shrinkFeedback;
 		public float shrinkFeedbackDuration = 0f;
+		[SerializeField] MeshRenderer mesh, shrinkMesh;
 
 		//Cache
-		MeshRenderer mesh = null;
-		MeshRenderer shrinkMesh = null;
 		LineRenderer laserLine = null;
 
 		//States
@@ -36,10 +35,6 @@ namespace Qbism.Cubes
 
 		private void SetResetData()
 		{
-			MeshRenderer[] meshes = GetComponentsInChildren<MeshRenderer>();
-			mesh = meshes[0];
-			shrinkMesh = meshes[1];
-
 			resetPos = shrinkMesh.transform.position;
 			resetRot = shrinkMesh.transform.rotation;
 			resetScale = shrinkMesh.transform.localScale;

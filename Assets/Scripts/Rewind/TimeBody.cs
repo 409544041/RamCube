@@ -158,9 +158,7 @@ namespace Qbism.Rewind
 				cube.type == CubeTypes.Shrinking)
 			{
 				cube.type = CubeTypes.Static;
-
-				Material[] mats = GetComponentInChildren<Renderer>().materials;
-				mats[1].SetTexture("_BaseMap", GetComponent<StaticCube>().staticFaceTex);
+				cube.GetComponent<StaticCube>().face.SetActive(true);
 			}
 
 			isStaticList.RemoveAt(0);

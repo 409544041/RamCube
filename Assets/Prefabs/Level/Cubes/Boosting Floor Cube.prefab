@@ -489,21 +489,6 @@ MonoBehaviour:
   boostRayMask:
     serializedVersion: 2
     m_Bits: 256
-  onBoostEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 180905273285516697}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &-4631463742242727938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,6 +505,8 @@ MonoBehaviour:
   timeStep: 0.01
   shrinkFeedback: {fileID: 4546253702877459739}
   shrinkFeedbackDuration: 0.61
+  mesh: {fileID: 959772360695176713}
+  shrinkMesh: {fileID: 4479732722967651897}
 --- !u!1 &7666261262085957085
 GameObject:
   m_ObjectHideFlags: 0
