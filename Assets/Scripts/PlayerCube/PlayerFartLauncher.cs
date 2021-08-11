@@ -10,29 +10,16 @@ namespace Qbism.PlayerCube
 	public class PlayerFartLauncher : MonoBehaviour
 	{
 		//Config parameters
-		[Header ("Farts")]
-		// [SerializeField] float[] fartForces;
-		// [SerializeField] float[] intervals;
 		[SerializeField] float fartForce;
-		[SerializeField] float stopFartViewportPos = 1.2f;
 		[SerializeField] LayerMask fartRayCastLayers;
 		[SerializeField] Transform fartVFXParent;
-		[SerializeField] float impactBuffer;
-		[Header("Falling")]
-		[SerializeField] float fallMultiplier = 2.5f;
-		[SerializeField] float lowLaunchMultiplier = 2f;
-		[Header ("Juice")]
-		[SerializeField] MMFeedbacks preFartJuice = null;
-		[SerializeField] MMFeedbacks bulletFartJuice = null;
-		public ParticleSystem fartCharge, fartBeam, 
-			fartBeamImpact, bulletFartImpact;
 		[SerializeField] GameObject playerVis;
-		[SerializeField] float flyByScaleMod, flyBySpeedMod;
+		[SerializeField] float flyByScaleMod, flyBySpeedMod;	
 
 		//Cache
 		GameControls controls;
-		MMFeedbackWiggle preFartMMWiggle;
 		ExpressionHandler exprHandler;
+		PlayerFartJuicer juicer;
 
 		//States
 		Vector3 viewPos;
@@ -57,8 +44,8 @@ namespace Qbism.PlayerCube
 
 		private void Awake()
 		{
-			preFartMMWiggle = preFartJuice.GetComponent<MMFeedbackWiggle>();
 			exprHandler = GetComponentInChildren<ExpressionHandler>();
+			juicer = GetComponent<PlayerFartJuicer>();
 		}
 
 		private void Start()
@@ -82,14 +69,10 @@ namespace Qbism.PlayerCube
 		private IEnumerator FartSequence(Transform target)
 		{
 			transform.parent = null;
-			
-			preFartJuice.Initialization();
-			preFartJuice.PlayFeedbacks();
-			fartCharge.Play();
 
+			juicer.PreFartJuice();
 			exprHandler.SetFace(Expressions.pushing, -1);
-
-			float feedbackDuration = preFartMMWiggle.WigglePositionDuration;
+			float feedbackDuration = juicer.preFartMMWiggle.WigglePositionDuration;
 			yield return new WaitForSeconds(feedbackDuration);
 
 			exprHandler.SetFace(Expressions.toothyLaugh, -1);
@@ -97,20 +80,20 @@ namespace Qbism.PlayerCube
 
 			yield return new WaitForSeconds(.5f);
 			exprHandler.SetFace(Expressions.gleeful, -1);
-			fartBeam.Play();
+			juicer.BeamFartJuice();
 			onStartFarting();
 			StartCoroutine(LaunchPlayer(target));
 		}
 
 		public void StartBeamImpact()
 		{
-			currentFartImpact = fartBeamImpact;
+			currentFartImpact = juicer.fartBeamImpact;
 			ProcessFartRaycast();
 		}
 
 		public void StartLaserBulletImpact()
 		{
-			currentFartImpact = bulletFartImpact;
+			currentFartImpact = juicer.bulletFartImpact;
 			ProcessFartRaycast();
 		}
 
@@ -149,9 +132,8 @@ namespace Qbism.PlayerCube
 
 		public void FireBulletFart()
 		{
-			bulletFartJuice.PlayFeedbacks();
-			GetComponentInChildren<ExpressionHandler>().
-				SetSituationFace(ExpressionSituations.fart, .75f);
+			juicer.BulletFartJuice();
+			exprHandler.SetSituationFace(ExpressionSituations.fart, .75f);
 		}
 
 		private void StopFartHit()
@@ -182,7 +164,7 @@ namespace Qbism.PlayerCube
 			transform.position = target.position;
 			onSwitchVisuals(false);
 			onDoneFarting();
-			fartBeam.Stop();
+			juicer.StopBeamFartJuice();
 		}
 
 		public void InitiateFlyBy(Vector3 startPos, Vector3 endPos)
@@ -198,7 +180,7 @@ namespace Qbism.PlayerCube
 			transform.LookAt(transform.position - (endPos - transform.position));
 
 			onSwitchVisuals(true);
-			fartBeam.Play();
+			juicer.BeamFartJuice();
 
 			SetScale(flyByScaleMod);
 
@@ -210,7 +192,7 @@ namespace Qbism.PlayerCube
 
 			onSwitchVisuals(false);
 			SetScale(1);
-			fartBeam.Stop();
+			juicer.StopBeamFartJuice();
 		}
 
 		private void SetScale(float multiplier)
@@ -226,7 +208,7 @@ namespace Qbism.PlayerCube
 				main.startSize = new ParticleSystem.MinMaxCurve(min, max);
 			}
 
-			var main2 = fartBeam.main;
+			var main2 = juicer.fartBeam.main;
 			float min2 = beamOriginalMin * multiplier;
 			float max2 = beamOriginalMax * multiplier;
 
@@ -237,7 +219,7 @@ namespace Qbism.PlayerCube
 		{
 			originalScale = transform.localScale;
 
-			beamParticles = fartBeam.GetComponentsInChildren<ParticleSystem>();
+			beamParticles = juicer.fartBeam.GetComponentsInChildren<ParticleSystem>();
 			beamOriginalMins = new float[beamParticles.Length];
 			beamOriginalMaxs = new float[beamParticles.Length];
 
@@ -248,7 +230,7 @@ namespace Qbism.PlayerCube
 				beamOriginalMaxs[i] = main.startSize.constantMax;
 			}
 
-			var main2 = fartBeam.main;
+			var main2 = juicer.fartBeam.main;
 			beamOriginalMin = main2.startSize.constantMin;
 			beamOriginalMax = main2.startSize.constantMax;
 		}

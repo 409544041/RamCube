@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1195912263937337676}
   - component: {fileID: 1195912263937337666}
   - component: {fileID: 1195912263937337677}
+  - component: {fileID: 4342359300912237218}
   m_Layer: 9
   m_Name: PreFart Juice
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Feedbacks:
   - {fileID: 1195912263937337677}
+  - {fileID: 4342359300912237218}
   InitializationMode: 0
   SafeMode: 3
   AutoPlayOnStart: 0
@@ -84,3 +86,33 @@ MonoBehaviour:
   WiggleRotationDuration: 1
   WiggleScale: 0
   WiggleScaleDuration: 0
+--- !u!114 &4342359300912237218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195912263937337679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c27131831afa28b499cb120fc9059997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Particles Play
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  BoundParticleSystem: {fileID: 0}
+  MoveToPosition: 0
+  RandomParticleSystems: []
