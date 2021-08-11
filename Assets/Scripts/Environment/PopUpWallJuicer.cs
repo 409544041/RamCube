@@ -9,11 +9,23 @@ namespace Qbism.Environment
 	{
 		//Config parameters
 		[SerializeField] MMFeedbacks popUpJuice;
+		[SerializeField] AudioClip upClip, downClip;
+		[SerializeField] AudioSource source;
 
 		public void TriggerPopUpJuice()
 		{
 			popUpJuice.Initialization();
 			popUpJuice.PlayFeedbacks();
+		}
+
+		public void PlayUpSFX()
+		{
+			source.PlayOneShot(upClip);
+		}
+
+		public void PlayDownSFX()
+		{
+			source.PlayOneShot(downClip);
 		}
 	}
 }

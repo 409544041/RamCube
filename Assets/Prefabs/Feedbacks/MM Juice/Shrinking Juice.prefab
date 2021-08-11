@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6960136045234966662}
   - component: {fileID: 5905656839103565414}
   - component: {fileID: 2626956169009965369}
+  - component: {fileID: 4546936349345067838}
   m_Layer: 0
   m_Name: Shrinking Juice
   m_TagString: Untagged
@@ -54,6 +55,7 @@ MonoBehaviour:
   - {fileID: 8458354097703637930}
   - {fileID: 5905656839103565414}
   - {fileID: 2626956169009965369}
+  - {fileID: 4546936349345067838}
   InitializationMode: 0
   SafeMode: 3
   AutoPlayOnStart: 0
@@ -798,3 +800,41 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   DestinationScale: {x: 0.5, y: 0.5, z: 0.5}
+--- !u!114 &4546936349345067838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130094544623572204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Sound
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  Sfx: {fileID: 8300000, guid: dea5e09f6cd619947af12b4250caab84, type: 3}
+  RandomSfx: []
+  TestButton: 0
+  TestStopButton: 0
+  PlayMethod: 2
+  PoolSize: 10
+  MinVolume: 0.4
+  MaxVolume: 0.4
+  MinPitch: 0.8
+  MaxPitch: 1.2
+  SfxAudioMixerGroup: {fileID: 0}

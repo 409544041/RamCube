@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using Qbism.PlayerCube;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,10 +17,10 @@ namespace Qbism.Cubes
 		[Header("VFX")]
 		[SerializeField] GameObject glowEmitParticles;
 		[Header("Impact VFX")]
-		[SerializeField] ParticleSystem impactParticle;
+		[SerializeField] MMFeedbacks impactJuice;
 		[SerializeField] MeshRenderer[] meshes = null;
 		[Header("Charging VFX")]
-		[SerializeField] ParticleSystem chargingBeamsParticles;
+		[SerializeField] MMFeedbacks chargeJuice;
 		[SerializeField] float glowIncrease = .03f, glowIncreaseInterval = .05f;
 
 		//Cache
@@ -29,7 +30,6 @@ namespace Qbism.Cubes
 		PlayerCubeMover player;
 
 		//Actions, events, delegates etc
-		public UnityEvent onFinishEvent = new UnityEvent();
 		public event Action onSpawnFriends;
 
 		public delegate bool GetCompleteDel();
@@ -71,14 +71,12 @@ namespace Qbism.Cubes
 
 		public void PlaySuccesSound()
 		{
-			source.clip = succesClip;
-			onFinishEvent.Invoke();
+			source.PlayOneShot(succesClip);
 		}
 
 		public void PlayFailSound()
 		{
-			source.clip = failClip;
-			onFinishEvent.Invoke();
+			source.PlayOneShot(failClip);
 		}
 
 		private void StartBreakingAnimation() 
@@ -88,17 +86,17 @@ namespace Qbism.Cubes
 
 		private void StartChargeFX() //Called from animation event
 		{
-			chargingBeamsParticles.Play();
+			chargeJuice.PlayFeedbacks();
 		}
 
 		private void StopChargeFX() //Called from animation event
 		{
-			chargingBeamsParticles.Stop();
+			chargeJuice.StopFeedbacks();
 		}
 
 		private void Impact() //Called from animation event
 		{
-			impactParticle.Play();
+			impactJuice.PlayFeedbacks();
 
 			foreach (MeshRenderer mesh in meshes)
 			{

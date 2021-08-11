@@ -23,7 +23,8 @@ namespace Qbism.PlayerCube
 		[SerializeField] float lowLaunchMultiplier = 2f;
 		[Header ("Juice")]
 		[SerializeField] MMFeedbacks preFartJuice = null;
-		public ParticleSystem fartCharge, bulletFart, fartBeam, 
+		[SerializeField] MMFeedbacks bulletFartJuice = null;
+		public ParticleSystem fartCharge, fartBeam, 
 			fartBeamImpact, bulletFartImpact;
 		[SerializeField] GameObject playerVis;
 		[SerializeField] float flyByScaleMod, flyBySpeedMod;
@@ -148,7 +149,7 @@ namespace Qbism.PlayerCube
 
 		public void FireBulletFart()
 		{
-			bulletFart.Play();
+			bulletFartJuice.PlayFeedbacks();
 			GetComponentInChildren<ExpressionHandler>().
 				SetSituationFace(ExpressionSituations.fart, .75f);
 		}

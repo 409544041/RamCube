@@ -49,6 +49,8 @@ namespace Qbism.Environment
 
 			exprHandler.SetFace(Expressions.toothyLaugh, -1);
 
+			juicer.PlayUpSFX();
+
 			while (goingUp)
 			{
 				wallMesh.transform.position = Vector3.MoveTowards(wallMesh.transform.position, 
@@ -75,6 +77,8 @@ namespace Qbism.Environment
 			exprHandler.SetFace(Expressions.looking, -1);
 
 			float speed = (popUpHeight - startPos.y) / downwardDuration;
+
+			juicer.PlayDownSFX();
 
 			while (goingDown)
 			{
