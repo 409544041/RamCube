@@ -359,9 +359,6 @@ MonoBehaviour:
   fartBeam: {fileID: 9046272342194140262}
   fartBeamImpact: {fileID: 7016283604650742275}
   bulletFartImpact: {fileID: 33796855108541357}
-  beamFartsClips:
-  - {fileID: 8300000, guid: e7460d45bc9f0c740b7a6ed1380a2dfe, type: 3}
-  - {fileID: 8300000, guid: 2fce08a0ca190604596675d5cb5b71df, type: 3}
   dopplerSource: {fileID: 1444938546116730560}
 --- !u!114 &1745422041723140935
 MonoBehaviour:
@@ -698,7 +695,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -706,8 +703,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 3
-  MinDistance: 0.75
-  MaxDistance: 3
+  MinDistance: 1
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

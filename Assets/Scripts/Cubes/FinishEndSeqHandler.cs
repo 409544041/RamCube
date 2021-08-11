@@ -129,15 +129,15 @@ namespace Qbism.Cubes
 		private void CalculateStartEnd(out Vector3 startPos, out Vector3 endPos)
 		{
 			float[] possibleX = new float[2];
-			possibleX[0] = -.25f;
-			possibleX[1] = 1.25f;
+			possibleX[0] = -1f;
+			possibleX[1] = 2f;
 
 			var index = UnityEngine.Random.Range(0, possibleX.Length);
 			float startX = possibleX[index];
 
 			float targetX;
-			if (startX > 0) targetX = -1;
-			else targetX = 2;
+			if (startX > 0) targetX = -2;
+			else targetX = 3;
 
 			float startY = UnityEngine.Random.Range(.15f, .85f);
 			float targetY = UnityEngine.Random.Range(.15f, .85f);

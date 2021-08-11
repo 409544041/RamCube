@@ -11,6 +11,9 @@ namespace Qbism.Serpent
 		//Config parameters
 		[SerializeField] Transform head = null;
 		[SerializeField] float segmentSpacing = 1f;
+		[Header ("Juice")]
+		[SerializeField] AudioClip pickupClip;
+		[SerializeField] AudioSource source;
 		
 		//Cache
 		FinishEndSeqHandler finishEndSeq = null;
@@ -81,7 +84,11 @@ namespace Qbism.Serpent
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.tag == "Player") other.transform.parent = transform;
+			if (other.tag == "Player")
+			{
+				other.transform.parent = transform;
+				source.PlayOneShot(pickupClip);
+			} 		
 		}
 
 		private void OnDisable()
