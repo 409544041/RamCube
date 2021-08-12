@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5400923864429618016}
   - component: {fileID: 866603087890315473}
   - component: {fileID: 8443762916102253889}
+  - component: {fileID: -4123591826107928065}
+  - component: {fileID: -443962796388198371}
   m_Layer: 9
   m_Name: Player Intro Landing Juice
   m_TagString: Untagged
@@ -50,6 +52,8 @@ MonoBehaviour:
   - {fileID: 5400923864429618016}
   - {fileID: 866603087890315473}
   - {fileID: 8443762916102253889}
+  - {fileID: -443962796388198371}
+  - {fileID: -4123591826107928065}
   InitializationMode: 0
   SafeMode: 3
   AutoPlayOnStart: 0
@@ -155,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Label: Sound
+  Label: Impact Sound
   Chance: 100
   Timing:
     TimescaleMode: 0
@@ -179,4 +183,79 @@ MonoBehaviour:
   MaxVolume: 0.6
   MinPitch: 1.7
   MaxPitch: 1.7
+  SfxAudioMixerGroup: {fileID: 0}
+--- !u!114 &-4123591826107928065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7672833768061689857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbeb74f1ccfa52540b6fd5784df42533, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Stop Scream Voice
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  TargetAudioSource: {fileID: 0}
+  Mode: 3
+  RandomSfx: []
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 1
+  MaxPitch: 1
+  SfxAudioMixerGroup: {fileID: 0}
+--- !u!114 &-443962796388198371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7672833768061689857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Ouch Voice
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  Sfx: {fileID: 0}
+  RandomSfx:
+  - {fileID: 8300000, guid: 1c692e01600cae048a279d83eb5c77ae, type: 3}
+  - {fileID: 8300000, guid: 5498576da7a16884cb3b9ccfe47a022c, type: 3}
+  TestButton: 0
+  TestStopButton: 0
+  PlayMethod: 3
+  PoolSize: 2
+  MinVolume: 1.5
+  MaxVolume: 1.5
+  MinPitch: 1
+  MaxPitch: 1
   SfxAudioMixerGroup: {fileID: 0}

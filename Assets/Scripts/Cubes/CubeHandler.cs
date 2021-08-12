@@ -132,6 +132,7 @@ namespace Qbism.Cubes
 				{
 					if (onLand != null) onLand();
 					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+					mover.GetComponent<PlayerCubeTurnJuicer>().PlayTurningVoice();
 				}
 
 				else

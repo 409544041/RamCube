@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1195912263937337666}
   - component: {fileID: 1195912263937337677}
   - component: {fileID: 4342359300912237218}
+  - component: {fileID: 4731041162150494802}
   m_Layer: 9
   m_Name: PreFart Juice
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   Feedbacks:
   - {fileID: 1195912263937337677}
   - {fileID: 4342359300912237218}
+  - {fileID: 4731041162150494802}
   InitializationMode: 0
   SafeMode: 3
   AutoPlayOnStart: 0
@@ -116,3 +118,43 @@ MonoBehaviour:
   BoundParticleSystem: {fileID: 0}
   MoveToPosition: 0
   RandomParticleSystems: []
+--- !u!114 &4731041162150494802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195912263937337679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Push Voice Sound
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  Sfx: {fileID: 0}
+  RandomSfx:
+  - {fileID: 8300000, guid: 6fe236750213c6f4985fdb69a2c21773, type: 3}
+  - {fileID: 8300000, guid: c2b46de1c6db8df47a6790b263640087, type: 3}
+  TestButton: 0
+  TestStopButton: 0
+  PlayMethod: 3
+  PoolSize: 2
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 1
+  MaxPitch: 1
+  SfxAudioMixerGroup: {fileID: 0}

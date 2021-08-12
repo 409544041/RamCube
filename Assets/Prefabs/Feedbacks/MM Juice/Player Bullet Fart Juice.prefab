@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 470295931548591653}
   - component: {fileID: 7639219796342502486}
   - component: {fileID: 3732630241464775146}
+  - component: {fileID: 5013370782028814919}
   m_Layer: 9
   m_Name: Player Bullet Fart Juice
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   Feedbacks:
   - {fileID: 7639219796342502486}
   - {fileID: 3732630241464775146}
+  - {fileID: 5013370782028814919}
   InitializationMode: 2
   SafeMode: 3
   AutoPlayOnStart: 0
@@ -95,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Label: Sound
+  Label: Fart Sound
   Chance: 100
   Timing:
     TimescaleMode: 0
@@ -119,4 +121,46 @@ MonoBehaviour:
   MaxVolume: 0.6
   MinPitch: 0.9
   MaxPitch: 1.1
+  SfxAudioMixerGroup: {fileID: 0}
+--- !u!114 &5013370782028814919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8657508328879799772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Push Voice Sound
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  Sfx: {fileID: 0}
+  RandomSfx:
+  - {fileID: 8300000, guid: 5dcf519f7e57bf348bea1517c070ec51, type: 3}
+  - {fileID: 8300000, guid: 1be543c472532ce46b06b75c8f68fd3d, type: 3}
+  - {fileID: 8300000, guid: 7547444c0b486fb47acf3ef8d7ed519d, type: 3}
+  - {fileID: 8300000, guid: 5edaf3ccc51f20e44bbb7a93a1d100a5, type: 3}
+  TestButton: 0
+  TestStopButton: 0
+  PlayMethod: 3
+  PoolSize: 4
+  MinVolume: 1.2
+  MaxVolume: 1.2
+  MinPitch: 1
+  MaxPitch: 1
   SfxAudioMixerGroup: {fileID: 0}
