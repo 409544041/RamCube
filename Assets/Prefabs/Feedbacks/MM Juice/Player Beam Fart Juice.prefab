@@ -50,11 +50,11 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 3
   MaxDistance: 5
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -62,23 +62,23 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.6
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -1.6673356
+      outSlope: -1.6673356
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.100000024
+      inSlope: -0.60023963
+      outSlope: -0.60023963
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Label: Laughing Voice Doppler
+  Label: Screaming Voice Doppler
   Chance: 100
   Timing:
     TimescaleMode: 0
@@ -280,8 +280,7 @@ MonoBehaviour:
   TargetAudioSource: {fileID: 7150292370631279616}
   Mode: 0
   RandomSfx:
-  - {fileID: 8300000, guid: 485cee993e1e1934fafca8c154fb4de7, type: 3}
-  - {fileID: 8300000, guid: a8fc7ec61824b3c468a0e74521408f0d, type: 3}
+  - {fileID: 8300000, guid: 3b02640eb14e5f24095bf44f851f1ba3, type: 3}
   MinVolume: 3
   MaxVolume: 3
   MinPitch: 1

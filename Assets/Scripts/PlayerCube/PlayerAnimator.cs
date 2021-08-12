@@ -138,14 +138,29 @@ namespace Qbism.PlayerCube
 			introJuicer.PlayPopVFX();
 		}
 
-		private void PlayEndLevelLandingSound()
+		private void PlayEndLevelLandingSound() //Called from animation
 		{
 			outroJuicer.PlayLandingSound();
 		}
 
-		private void PlaySecondLendingSound()
+		private void PlaySecondLendingSound() //Called from animation
 		{
 			outroJuicer.PlaySmallLandingSound();
+		}
+
+		private void PlaySurpriseSound() //Called from animation
+		{
+			outroJuicer.PlaySurpriseSound();
+		}
+
+		private void PlayEndLaughSount() //Called from animation
+		{
+			outroJuicer.PlayEndLaughSound();
+		}
+
+		private void PlayToothyLaughSound() //Called from animation
+		{
+			outroJuicer.PlayToothyLaughSound();
 		}
 	}
 }
