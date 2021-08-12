@@ -142,5 +142,10 @@ namespace Qbism.PlayerCube
 		{
 			outroJuicer.PlayLandingSound();
 		}
+
+		private void PlaySecondLendingSound()
+		{
+			outroJuicer.PlaySmallLandingSound();
+		}
 	}
 }

@@ -7,7 +7,7 @@ namespace Qbism.PlayerCube
 	public class PlayerOutroJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] AudioClip screamingClip, ouchClip, hitFloorClip, hitSegClip;
+		[SerializeField] AudioClip screamingClip, ouchClip, boingShortClip, boingLongClip;
 		[SerializeField] AudioSource source;
 
 		public void PlayFallingSound()
@@ -20,7 +20,12 @@ namespace Qbism.PlayerCube
 		{
 			source.Stop();
 			source.PlayOneShot(ouchClip);
-			source.PlayOneShot(hitSegClip);
+			source.PlayOneShot(boingLongClip);
+		}
+
+		public void PlaySmallLandingSound()
+		{
+			source.PlayOneShot(boingShortClip);
 		}
 	}
 }
