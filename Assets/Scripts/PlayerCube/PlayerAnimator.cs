@@ -14,6 +14,7 @@ namespace Qbism.PlayerCube
 		//Cache
 		Animator animator;
 		PlayerIntroJuicer introJuicer;
+		PlayerOutroJuicer outroJuicer;
 
 		//States
 		Vector3 playerFinishLandPos;
@@ -31,6 +32,7 @@ namespace Qbism.PlayerCube
 		{
 			animator = GetComponent<Animator>();
 			introJuicer = GetComponentInParent<PlayerIntroJuicer>();
+			outroJuicer = GetComponentInParent<PlayerOutroJuicer>();
 		}
 
 		private void Start() 
@@ -87,6 +89,8 @@ namespace Qbism.PlayerCube
 			onSwitchVisuals(true);
 
 			animator.SetTrigger(fallType);
+
+			outroJuicer.PlayFallingSound();
 		}
 
 		private IEnumerator TriggerDelayedWiggle() //Called from animation
@@ -132,6 +136,11 @@ namespace Qbism.PlayerCube
 		private void TriggerPopVFX() //Called from animation
 		{
 			introJuicer.PlayPopVFX();
+		}
+
+		private void PlayEndLevelLandingSound()
+		{
+			outroJuicer.PlayLandingSound();
 		}
 	}
 }
