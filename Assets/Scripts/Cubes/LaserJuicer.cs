@@ -9,13 +9,19 @@ namespace Qbism.Cubes
 	public class LaserJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] Light laserTipLight;
-		[SerializeField] AudioClip passClip = null, denyClip = null;
-		[SerializeField] ParticleSystem laserBeam, denyBeam, denySunSpots, pinkEyeVFX;
 		[SerializeField] MMFeedbacks denyJuice;
+		[Header ("Laser")]
+		[SerializeField] Light laserTipLight;
+		[Header ("Particles")]
+		[SerializeField] ParticleSystem laserBeam; 
+		[SerializeField] ParticleSystem denyBeam, denySunSpots, pinkEyeVFX;
+		[Header ("Audio")]
+		[SerializeField] float stunSoundDelay = .2f;
+		[SerializeField] AudioClip passClip = null, denyClip = null;
+		[SerializeField] AudioClip[] stunClips;
+		[SerializeField] AudioSource passDenySource, stunSource;
 
 		//Cache
-		AudioSource source;
 		LaserMouthAnimator mouthAnim;
 		LaserEyeAnimator eyeAnim;
 		MMFeedbackWiggle denyMMWiggle;
@@ -24,22 +30,28 @@ namespace Qbism.Cubes
 		bool isDenying = false;
 		float shakeTimer = 0;
 		float shakeDur = 0;
+		float stunTimer = 0;
 
 		//Actions, events, delegates etc
 		public UnityEvent onLaserPassEvent = new UnityEvent();
 
 		private void Awake() 
 		{
-			source = GetComponentInChildren<AudioSource>();
 			eyeAnim = GetComponentInChildren<LaserEyeAnimator>();
 			mouthAnim = GetComponentInChildren<LaserMouthAnimator>();
 			denyMMWiggle = denyJuice.GetComponent<MMFeedbackWiggle>();
 			shakeDur = denyMMWiggle.WigglePositionDuration;
 		}
 
+		private void Start() 
+		{
+			stunTimer = stunSoundDelay;
+		}
+
 		private void Update()
 		{
 			HandleShakeTimer();
+			HandleStunSoundTimer();
 		}
 
 		public void AdjustBeamVisualLength(float dist)
@@ -67,7 +79,7 @@ namespace Qbism.Cubes
 			denyBeam.Stop();
 			pinkEyeVFX.Play();
 
-			source.clip = passClip;
+			passDenySource.clip = passClip;
 			onLaserPassEvent.Invoke();
 
 			eyeAnim.CloseEyes();
@@ -85,7 +97,7 @@ namespace Qbism.Cubes
 
 			Shake();
 
-			source.clip = denyClip;
+			passDenySource.clip = denyClip;
 			onLaserPassEvent.Invoke();
 
 			eyeAnim.ShootyEyes();
@@ -117,12 +129,36 @@ namespace Qbism.Cubes
 			if (isDenying)
 			{
 				shakeTimer += Time.deltaTime;
+
 				if (shakeTimer >= shakeDur + .1f)
 				{
 					Shake();
 					shakeTimer = 0;
 				}
 			}
+		}
+
+		private void HandleStunSoundTimer()
+		{
+			if (isDenying)
+			{
+				stunTimer += Time.deltaTime;
+
+				if (stunTimer > stunSoundDelay)
+				{
+					PlayDenySounds();
+					stunTimer = 0;
+				}
+			}
+		}
+
+		private void PlayDenySounds()
+		{
+			float pitchValue = Random.Range(.3f, .5f);
+			stunSource.pitch = pitchValue;
+
+			int i = Random.Range(0, stunClips.Length);
+			stunSource.PlayOneShot(stunClips[i]);
 		}
 
 		private void MoveTipLight(float dist)
