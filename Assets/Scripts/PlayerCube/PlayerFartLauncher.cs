@@ -75,7 +75,7 @@ namespace Qbism.PlayerCube
 			float feedbackDuration = juicer.preFartMMWiggle.WigglePositionDuration;
 			yield return new WaitForSeconds(feedbackDuration);
 
-			exprHandler.SetFace(Expressions.toothyLaugh, -1);
+			exprHandler.SetFace(Expressions.shocked, -1);
 			onMoveCam();
 
 			yield return new WaitForSeconds(.5f);
