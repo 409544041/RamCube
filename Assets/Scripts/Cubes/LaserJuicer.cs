@@ -144,7 +144,7 @@ namespace Qbism.Cubes
 			{
 				stunTimer += Time.deltaTime;
 
-				if (stunTimer > stunSoundDelay)
+				if (stunTimer >= stunSoundDelay)
 				{
 					PlayDenySounds();
 					stunTimer = 0;

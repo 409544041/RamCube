@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 686170297659356586}
   - component: {fileID: 686170297659356585}
   - component: {fileID: 6840463240887935277}
+  - component: {fileID: 7448447467282887867}
   m_Layer: 0
-  m_Name: Push Juice
+  m_Name: Shapie Push Juice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +49,7 @@ MonoBehaviour:
   Feedbacks:
   - {fileID: 686170297659356585}
   - {fileID: 6840463240887935277}
+  - {fileID: 7448447467282887867}
   InitializationMode: 0
   SafeMode: 3
   AutoPlayOnStart: 0
@@ -408,3 +410,44 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   DestinationScale: {x: 0.5, y: 0.5, z: 0.5}
+--- !u!114 &7448447467282887867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686170297659356583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Sound
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  Sfx: {fileID: 0}
+  RandomSfx:
+  - {fileID: 8300000, guid: f282dac6f4c67974898decc270b6410a, type: 3}
+  - {fileID: 8300000, guid: 88519c11f921e3343918f80d116435fe, type: 3}
+  - {fileID: 8300000, guid: ab6a5f2579674e04c93ca2babe00c762, type: 3}
+  TestButton: 0
+  TestStopButton: 0
+  PlayMethod: 2
+  PoolSize: 10
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 0.8
+  MaxPitch: 1.2
+  SfxAudioMixerGroup: {fileID: 0}

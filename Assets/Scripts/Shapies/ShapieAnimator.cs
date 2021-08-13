@@ -17,12 +17,14 @@ namespace Qbism.Shapies
 		Animator animator;
 		PlayerAnimator playerAnim;
 		MMFeedbackPosition pushMMPos;
+		ShapieSoundHandler soundHandler;
 
 		private void Awake() 
 		{
 			animator = GetComponent<Animator>();
 			playerAnim = FindObjectOfType<PlayerAnimator>();
 			pushMMPos = pushBackJuice.GetComponent<MMFeedbackPosition>();
+			soundHandler = GetComponentInParent<ShapieSoundHandler>();
 		}
 
 		private void OnEnable() 
@@ -49,6 +51,9 @@ namespace Qbism.Shapies
 			//if using the 'walking back' animation, make push back slower
 			if (randomPush == 2) pushMMPos.AnimatePositionDuration = 1.5f;
 			else pushMMPos.AnimatePositionDuration = .7f;
+
+			var soundMM = pushBackJuice.GetComponent<MMFeedbackSound>();
+			soundMM.SetInitialDelay(Random.Range(0, .2f));
 
 			pushBackJuice.Initialization();
 			pushBackJuice.PlayFeedbacks();
@@ -77,6 +82,18 @@ namespace Qbism.Shapies
 		{
 			yield return new WaitForSeconds(delay);
 			playerAnim.TriggerFall(0, "FallOnGround");
+		}
+
+		private void TriggerGibberishSlow()
+		{
+			soundHandler.currentIntervalMinMax = soundHandler.slowIntervalMinMax;
+			soundHandler.PlayGibberish(true);
+		}
+
+		private void TriggerGibberishCelebration()
+		{
+			soundHandler.currentIntervalMinMax = soundHandler.fastIntervalMinMax;
+			soundHandler.PlayGibberish(true);
 		}
 
 		private void OnDisable()
