@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.Cubes;
+using System;
 
 namespace Qbism.Serpent
 {
@@ -23,6 +24,9 @@ namespace Qbism.Serpent
 		List<Vector3> breadcrumbs = null;
 		bool isMoving = false;
 		Transform[] segments = null;
+
+		//Actions, events, delegates etc
+		public event Action onTriggerPlayerAudio;
 
 		private void Awake() 
 		{
@@ -87,6 +91,7 @@ namespace Qbism.Serpent
 			if (other.tag == "Player")
 			{
 				other.transform.parent = transform;
+				onTriggerPlayerAudio();
 				source.PlayOneShot(pickupClip);
 			} 		
 		}
