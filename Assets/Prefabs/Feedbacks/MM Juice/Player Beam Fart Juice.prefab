@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9082989464052859037}
   - component: {fileID: 7150292370631279616}
   m_Layer: 0
-  m_Name: Audiosource 2
+  m_Name: Audiosource Scream Doppler 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,8 +51,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 3
-  MaxDistance: 5
+  MinDistance: 5
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -62,22 +62,22 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.6
+      time: 0.16666667
       value: 1
-      inSlope: -1.6673356
-      outSlope: -1.6673356
+      inSlope: -2.6897533
+      outSlope: -2.6897533
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.11319646
     - serializedVersion: 3
       time: 1
-      value: 0.100000024
-      inSlope: -0.60023963
-      outSlope: -0.60023963
+      value: 0
+      inSlope: -0.029617056
+      outSlope: -0.029617056
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.5243402
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 6372460305889669410}
   - component: {fileID: 6667565371088261368}
   m_Layer: 0
-  m_Name: Audiosource 1
+  m_Name: Audiosource Fart Doppler 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,11 +336,11 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 3
-  MinDistance: 1
-  MaxDistance: 5
+  DopplerLevel: 1
+  MinDistance: 5
+  MaxDistance: 30
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -348,23 +348,23 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.16666667
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -2.6897533
+      outSlope: -2.6897533
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0.11319646
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.029617056
+      outSlope: -0.029617056
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.5243402
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

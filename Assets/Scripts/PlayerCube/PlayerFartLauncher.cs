@@ -79,6 +79,7 @@ namespace Qbism.PlayerCube
 			onMoveCam();
 
 			yield return new WaitForSeconds(.5f);
+
 			exprHandler.SetFace(Expressions.gleeful, -1);
 			juicer.BeamFartJuice();
 			onStartFarting();
