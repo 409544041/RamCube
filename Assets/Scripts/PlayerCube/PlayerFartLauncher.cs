@@ -156,6 +156,7 @@ namespace Qbism.PlayerCube
 				if(Vector3.Distance(transform.position, Camera.main.transform.position) < 2 && !endCam)
 				{
 					onSwitchToEndCam();
+					onDoneFarting();
 					endCam = true;
 				} 
 
@@ -164,7 +165,6 @@ namespace Qbism.PlayerCube
 
 			transform.position = target.position;
 			onSwitchVisuals(false);
-			onDoneFarting();
 			juicer.StopBeamFartJuice();
 		}
 

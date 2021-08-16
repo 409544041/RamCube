@@ -8,6 +8,8 @@ namespace Qbism.Serpent
 {
 	public class SegmentSpawner : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] float segSpawnY;
 		//States
 		GameObject segmentToSpawn = null;
 
@@ -38,7 +40,8 @@ namespace Qbism.Serpent
 
 		private void SpawnSegment()
 		{
-			GameObject spawnedSegment = Instantiate(segmentToSpawn, transform.position, 
+			Vector3 spawnPos = new Vector3(transform.position.x, segSpawnY, transform.position.z);
+			GameObject spawnedSegment = Instantiate(segmentToSpawn, spawnPos, 
 				Quaternion.Euler(0f, -45f, 0f));
 			segmentToSpawn.transform.position = transform.position;
 			spawnedSegment.GetComponentInChildren<SegmentAnimator>().Spawn();

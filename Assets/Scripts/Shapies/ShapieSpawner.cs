@@ -10,6 +10,7 @@ namespace Qbism.Shapies
 		//Config parameters
 		[SerializeField] GameObject[] shapies = null;
 		[SerializeField] int spawnAmount = 3;
+		[SerializeField] float shapieSpawnY = -.5f;
 
 		//Cache
 		FinishEndSeqHandler finishEndSeq;
@@ -30,7 +31,7 @@ namespace Qbism.Shapies
 		private void SpawnShapie()
 		{
 			var spawnPos = new Vector3(transform.position.x,
-				transform.position.y - .5f, transform.position.z);
+				shapieSpawnY, transform.position.z);
 
 			for (int i = 0; i < spawnAmount; i++)
 			{

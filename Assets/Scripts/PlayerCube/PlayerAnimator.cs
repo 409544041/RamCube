@@ -10,6 +10,7 @@ namespace Qbism.PlayerCube
 		//Config parameters
 		[SerializeField] float altWiggleDelay = 1f, introDelay = 1f;
 		[SerializeField] BoxCollider coll = null;
+		[SerializeField] float impactGroundY, impactSegY;
 
 		//Cache
 		Animator animator;
@@ -66,9 +67,11 @@ namespace Qbism.PlayerCube
 			onShowFF();
 		}
 
-		public void TriggerFall(float addedY, string fallType)
+		public void TriggerFall(bool hasSeg, string fallType)
 		{
-			if (!fallen) StartCoroutine(Fall(addedY, fallType));
+			if (fallen) return;
+			if (hasSeg) StartCoroutine(Fall(impactSegY, fallType));
+			else StartCoroutine(Fall(impactGroundY,fallType));
 		}
 
 		private IEnumerator Fall(float addedY, string fallType)
