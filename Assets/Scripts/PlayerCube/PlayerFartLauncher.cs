@@ -15,6 +15,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] Transform fartVFXParent;
 		[SerializeField] GameObject playerVis;
 		[SerializeField] float flyByScaleMod, flyBySpeedMod;	
+		[SerializeField] float beamImpactAddedY = .55f;
 
 		//Cache
 		GameControls controls;
@@ -22,7 +23,6 @@ namespace Qbism.PlayerCube
 		PlayerFartJuicer juicer;
 
 		//States
-		Vector3 viewPos;
 		bool fartCollided = false;
 		bool fartCounting = false;
 		int fartCount = 0;
@@ -34,6 +34,7 @@ namespace Qbism.PlayerCube
 		float beamOriginalMin;
 		float beamOriginalMax;
 		ParticleSystem[] beamParticles;
+		bool impactOnFinish = false;
 
 		//Actions, events, delegates etc
 		public event Action onDoneFarting;
@@ -41,6 +42,9 @@ namespace Qbism.PlayerCube
 		public event Action onSwitchToEndCam;
 		public event Action onMoveCam;
 		public event Action<bool> onSwitchVisuals;
+
+		public delegate Vector3 FinishPosFetchDel();
+		public FinishPosFetchDel onCheckFinishPos;
 
 		private void Awake()
 		{
@@ -53,12 +57,27 @@ namespace Qbism.PlayerCube
 			SaveOriginalScales();
 		}
 
-		private void Update() 
+		private void Update()
 		{
-			if(fartCounting) fartCount++;
-			if(fartCount > 10) StopFartHit();
+			HandleFartCounting();
+			KeepImpactOnFinishPos();
+		}
 
-			viewPos = Camera.main.WorldToViewportPoint(transform.position);
+		private void KeepImpactOnFinishPos()
+		{
+			if (impactOnFinish)
+			{
+				var glowFinishPos = onCheckFinishPos();
+				var impactPos = new Vector3(glowFinishPos.x,
+					glowFinishPos.y + beamImpactAddedY, glowFinishPos.z);
+				currentFartImpact.transform.position = impactPos;
+			}
+		}
+
+		private void HandleFartCounting() //Not sure why this
+		{
+			if (fartCounting) fartCount++;
+			if (fartCount > 10) StopFartHit();
 		}
 
 		public void InitiateFartSequence(Transform target)
@@ -89,16 +108,16 @@ namespace Qbism.PlayerCube
 		public void StartBeamImpact()
 		{
 			currentFartImpact = juicer.fartBeamImpact;
-			ProcessFartRaycast();
+			ProcessFartRaycast(true);
 		}
 
 		public void StartLaserBulletImpact()
 		{
 			currentFartImpact = juicer.bulletFartImpact;
-			ProcessFartRaycast();
+			ProcessFartRaycast(false);
 		}
 
-		private void ProcessFartRaycast()
+		private void ProcessFartRaycast(bool isBeam)
 		{
 			bool hasHit = false;
 			RaycastHit hit = FireRayCast(out hasHit);
@@ -108,7 +127,11 @@ namespace Qbism.PlayerCube
 				if(!fartCollided)
 				{
 					currentFartImpact.transform.parent = null;
-					currentFartImpact.transform.position = Vector3.Lerp(hit.point, transform.position, .05f);
+
+					if (isBeam) impactOnFinish = true;
+					else currentFartImpact.transform.position = 
+						Vector3.Lerp(hit.point, transform.position, .05f);
+					
 					currentFartImpact.Play();
 					fartCollided = true;
 				}
@@ -139,6 +162,7 @@ namespace Qbism.PlayerCube
 
 		private void StopFartHit()
 		{
+			impactOnFinish = false;
 			var module = currentFartImpact.main;
 			if (module.loop) currentFartImpact.Stop();
 			currentFartImpact.transform.parent = fartVFXParent;

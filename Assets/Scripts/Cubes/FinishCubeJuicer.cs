@@ -18,7 +18,7 @@ namespace Qbism.Cubes
 		[SerializeField] GameObject glowEmitParticles;
 		[Header("Impact VFX")]
 		[SerializeField] MMFeedbacks impactJuice;
-		[SerializeField] MeshRenderer[] meshes = null;
+		[SerializeField] MeshRenderer mesh, glowMesh;
 		[Header("Charging VFX")]
 		[SerializeField] MMFeedbacks chargeJuice;
 		[SerializeField] float glowIncrease = .03f, glowIncreaseInterval = .05f;
@@ -49,6 +49,7 @@ namespace Qbism.Cubes
 			{
 				farter.onDoneFarting += StartBreakingAnimation;
 				farter.onStartFarting += StartGlowing;
+				farter.onCheckFinishPos += FetchFinishPos;
 			} 
 		}
 
@@ -98,10 +99,8 @@ namespace Qbism.Cubes
 		{
 			impactJuice.PlayFeedbacks();
 
-			foreach (MeshRenderer mesh in meshes)
-			{
-				mesh.enabled = false;
-			}
+			mesh.enabled = false;
+			glowMesh.enabled = false;
 
 			onSpawnFriends();
 		}
@@ -113,11 +112,11 @@ namespace Qbism.Cubes
 
 		private IEnumerator EnableGlowMesh() 
 		{
-			meshes[1].enabled = true;
+			glowMesh.enabled = true;
 
-			while (meshes[1].materials[3].GetFloat("Glow_Alpha") < 1)
+			while (glowMesh.materials[3].GetFloat("Glow_Alpha") < 1)
 			{
-				foreach (Material mat in meshes[1].materials)
+				foreach (Material mat in glowMesh.materials)
 				{
 					float current = mat.GetFloat("Glow_Alpha");
 					mat.SetFloat("Glow_Alpha", current + glowIncrease);
@@ -125,7 +124,12 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(glowIncreaseInterval);
 			}
 
-			meshes[0].enabled = false;
+			mesh.enabled = false;
+		}
+
+		private Vector3 FetchFinishPos()
+		{
+			return glowMesh.transform.position;
 		}
 
 		private void OnDisable()
@@ -134,6 +138,7 @@ namespace Qbism.Cubes
 			{
 				farter.onDoneFarting -= StartBreakingAnimation;
 				farter.onStartFarting -= StartGlowing;
+				farter.onCheckFinishPos -= FetchFinishPos;
 			}
 		}
 	}
