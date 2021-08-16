@@ -67,9 +67,8 @@ namespace Qbism.MoveableCubes
 				Vector2Int wallPos = new Vector2Int(Mathf.RoundToInt(wall.transform.position.x),
 					Mathf.RoundToInt(wall.transform.position.z));
 
-				if (wallCubeDic.ContainsKey(wallPos))
-						print("Overlapping wall " + wall);
-					else wallCubeDic.Add(wallPos, wall);
+				if (!wallCubeDic.ContainsKey(wallPos))
+					wallCubeDic.Add(wallPos, wall);
 			}
 		}
 
