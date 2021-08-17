@@ -18,6 +18,7 @@ namespace Qbism.PlayerCube
 		MMFeedbackScale[] flipMMScalers;
 		MMFeedbackPosition postFlipMMPos;
 		ExpressionHandler expresHandler;
+		ParticleSystem postFlipParticles;
 
 		//States
 		float postFlipCurveOneAtStart = 0;
@@ -28,6 +29,7 @@ namespace Qbism.PlayerCube
 			flipMMScalers = flipJuice.GetComponents<MMFeedbackScale>();
 			postFlipMMPos = postFlipJuice.GetComponent<MMFeedbackPosition>();
 			expresHandler = GetComponentInChildren<ExpressionHandler>();
+			postFlipParticles = postFlipJuice.GetComponent<MMFeedbackParticles>().BoundParticleSystem;
 		}
 
 		private void Start() 
@@ -55,6 +57,7 @@ namespace Qbism.PlayerCube
 			}
 
 			CalculateScaleReposDir();
+			SetParticle();
 
 			postFlipJuice.PlayFeedbacks();
 
@@ -90,6 +93,13 @@ namespace Qbism.PlayerCube
 				if (scalers[i].Label == "WidthScale")
 					SetFlipScaleValues(i, scalers, true, false, true);
 			}
+		}
+
+		private void SetParticle()
+		{
+			postFlipParticles.transform.forward = Vector3.up;
+			postFlipParticles.transform.position = new Vector3
+				(transform.position.x, .5f, transform.position.z);
 		}
 
 		//below needs to be done bc we're repositioning this MMJuice local and not world

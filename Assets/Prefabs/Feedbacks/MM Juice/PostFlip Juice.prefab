@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 109426877921652584}
   - component: {fileID: 3994581738760660491}
   - component: {fileID: -4998687266067539779}
-  - component: {fileID: 911273077141898062}
+  - component: {fileID: 5721314768408336983}
   m_Layer: 9
   m_Name: PostFlip Juice
   m_TagString: Untagged
@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: 3994581738760660491}
   - {fileID: 109426877921652584}
   - {fileID: -4998687266067539779}
-  - {fileID: 911273077141898062}
+  - {fileID: 5721314768408336983}
   InitializationMode: 0
   SafeMode: 3
   AutoPlayOnStart: 0
@@ -613,7 +613,7 @@ MonoBehaviour:
   MinPitch: 0.8
   MaxPitch: 1.2
   SfxAudioMixerGroup: {fileID: 0}
---- !u!114 &911273077141898062
+--- !u!114 &5721314768408336983
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -622,11 +622,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1762630433775790215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdfe4b9b079619143a9748eeee75e698, type: 3}
+  m_Script: {fileID: 11500000, guid: c27131831afa28b499cb120fc9059997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Label: Particles Instantiation
+  Label: Particles Play
   Chance: 100
   Timing:
     TimescaleMode: 0
@@ -640,12 +640,6 @@ MonoBehaviour:
     Quantized: 0
     TargetBPM: 120
   DebugActive: 0
-  Mode: 0
-  CachedRecycle: 1
-  ParticlesPrefab: {fileID: 0}
-  RandomParticlePrefabs: []
-  PositionMode: 0
-  InstantiateParticlesPosition: {fileID: 0}
-  TargetWorldPosition: {x: 0, y: 0, z: 0}
-  Offset: {x: 0, y: -0.5, z: 0}
-  NestParticles: 1
+  BoundParticleSystem: {fileID: 0}
+  MoveToPosition: 0
+  RandomParticleSystems: []
