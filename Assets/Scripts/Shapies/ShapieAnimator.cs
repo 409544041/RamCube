@@ -42,14 +42,16 @@ namespace Qbism.Shapies
 			//Leaving 3rd push animation out on purpose bc it breaks end seq
 			//bc it doesn't get to 'get up' which triggers player falling
 			//TO DO: Fix this
-			int randomPush = Random.Range(0, 2);
-			animator.SetInteger("PushInt", randomPush);
+			
+			//Ensure default int in controller = -1 to avoid instant transitions
+			int pushAnim = Random.Range(0, 2);
+			animator.SetInteger("PushInt", pushAnim);
 
-			float randomPushDis = Random.Range(minMaxPush.x, minMaxPush.y);
-			pushBackTarget.localPosition = new Vector3(0, 0, randomPushDis);
+			float push = Random.Range(minMaxPush.x, minMaxPush.y);
+			pushBackTarget.localPosition = new Vector3(0, 0, push);
 
 			//if using the 'walking back' animation, make push back slower
-			if (randomPush == 2) pushMMPos.AnimatePositionDuration = 1.5f;
+			if (pushAnim == 2) pushMMPos.AnimatePositionDuration = 1.5f;
 			else pushMMPos.AnimatePositionDuration = .7f;
 
 			var soundMM = pushBackJuice.GetComponent<MMFeedbackSound>();
@@ -73,9 +75,11 @@ namespace Qbism.Shapies
 
 		private IEnumerator TriggerCelebration() //Called from animation event
 		{
+			//Ensure default int in controller = -1 to avoid instant transitions
 			var delay = Random.Range(minMaxCelebrateDelay.x, minMaxCelebrateDelay.y);
+			int celebAnim = Random.Range(0,2);
 			yield return new WaitForSeconds(delay);
-			animator.SetTrigger("Celebrate");
+			animator.SetInteger("Celebrate", celebAnim);
 		}
 
 		private IEnumerator TriggerPlayerFalling(float delay) //Called from animation event
