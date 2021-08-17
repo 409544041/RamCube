@@ -11,7 +11,7 @@ namespace Qbism.SpriteAnimations
 		[SerializeField] ExpressionsScripOb expressionsSO;
 		[SerializeField] SituationsExprsScripOb situationsExprsSO;
 		[SerializeField] bool isPlayer;
-		[SerializeField] bool hasBrows;
+		[SerializeField] bool hasBrows = true, hasMouth = true;
 		[SerializeField] Vector2 minMaxExpressionTime;
 
 		//Cache
@@ -62,7 +62,7 @@ namespace Qbism.SpriteAnimations
 
 				if (hasBrows) browAnim.SetBrows(expressionFace.face.brows);
 				eyesAnim.SetEyes(expressionFace.face.eyes);
-				mouthAnim.SetMouth(expressionFace.face.mouth);
+				if (hasMouth) mouthAnim.SetMouth(expressionFace.face.mouth);
 			}
 			
 			if (isPlayer)

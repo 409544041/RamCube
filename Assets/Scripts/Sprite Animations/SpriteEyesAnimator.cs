@@ -7,7 +7,7 @@ namespace Qbism.SpriteAnimations
 	public class SpriteEyesAnimator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] bool hasTwitch, hasSquint, hasAnnoyed, hasLooking;
+		[SerializeField] bool hasTwitch, hasSquint, hasAnnoyed, hasLooking, hasSparkling, hasCrossShut, hasWink;
 
 		//Cache
 		Animator animator;
@@ -66,8 +66,11 @@ namespace Qbism.SpriteAnimations
 			else if (state == EyesStates.annoyed && !hasAnnoyed)
 				ToFirstTierAnim(EyesStates.cross, EyesStates.nullz, TO_CROSS);
 
-			if (state == EyesStates.wink) 
+			if (state == EyesStates.wink && hasWink) 
 				ToFirstTierAnim(EyesStates.wink, EyesStates.nullz, TO_WINK);
+
+			if (state == EyesStates.wink && !hasWink)
+				Debug.LogError("Character does not have wink eye animation.");
 
 			if (state == EyesStates.shut) 
 				ToFirstTierAnim(EyesStates.shut, EyesStates.nullz, TO_SHUT);
@@ -84,11 +87,17 @@ namespace Qbism.SpriteAnimations
 			if (state == EyesStates.shock) 
 				ToFirstTierAnim(EyesStates.shock, EyesStates.nullz, TO_SHOCKED);
 
-			if (state == EyesStates.cross) 
+			if (state == EyesStates.cross && hasCrossShut) 
 				ToFirstTierAnim(EyesStates.cross, EyesStates.nullz, TO_CROSS);
 
-			if (state == EyesStates.sparkle) 
+			if (state == EyesStates.cross && !hasCrossShut)
+				Debug.LogError("Character does not have cross-shut eye animation.");
+
+			if (state == EyesStates.sparkle && hasSparkling) 
 				ToFirstTierAnim(EyesStates.sparkle, EyesStates.nullz, TO_SPARKLE);
+
+			if (state == EyesStates.sparkle && !hasSparkling)
+				Debug.LogError("Character does not have sparkling eye animation.");
 
 			if (state == EyesStates.squint && hasSquint) 
 				ToFirstTierAnim(EyesStates.squint, EyesStates.nullz, TO_SQUINT);
