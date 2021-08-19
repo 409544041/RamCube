@@ -57,16 +57,18 @@ namespace Qbism.Cubes
 		public void AdjustBeamVisualLength(float dist)
 		{
 			var idleMain = laserBeam.main;
-			idleMain.startSizeZMultiplier = dist;
+			idleMain.startSizeZMultiplier = dist + .1f;
+			//The .1f is to ensure that the laser visuals don't stop before hitting rounded objects
 
 			var denyMain = denyBeam.main;
-			denyMain.startSizeZMultiplier = dist;
+			denyMain.startSizeZMultiplier = dist + .1f;
 
-			var shape = denySunSpots.shape;
+			var spotsShape = denySunSpots.shape;
 			var spotsMain = denySunSpots.main;
+			
 			//Ensures that sunspots stop at player even with the extra length it gets from its speed
 			var extraLength = spotsMain.startSpeedMultiplier * spotsMain.startLifetimeMultiplier;
-			shape.length = dist - extraLength;
+			spotsShape.length = dist - extraLength;
 
 			MoveTipLight(dist);
 		}
