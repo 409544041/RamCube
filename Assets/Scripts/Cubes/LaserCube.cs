@@ -13,6 +13,7 @@ namespace Qbism.Cubes
 		public float distance = 1;
 		[SerializeField] Transform laserOrigin = null;
 		[SerializeField] LayerMask chosenLayers;
+		[SerializeField] float idleLaserDelay = .5f;
 		
 		//Cache
 		PlayerCubeMover mover;
@@ -24,6 +25,8 @@ namespace Qbism.Cubes
 		//States
 		bool shouldTrigger = true;
 		float currentLength = 0f;
+		bool isClosed = false;
+		bool laserPause = false;
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onRewindPulse;
@@ -70,6 +73,7 @@ namespace Qbism.Cubes
 						bool hasHit = false;
 						RaycastHit hit = fartLauncher.FireRayCast(out hasHit);
 						if (hasHit) fartLauncher.FireBulletFart();
+						isClosed = true;
 					}
 				}
 
@@ -90,8 +94,22 @@ namespace Qbism.Cubes
 
 			else
 			{
-				juicer.TriggerIdleJuice();
+				if (isClosed && !laserPause)
+				{
+					isClosed = false;
+					laserPause = true;
+					StartCoroutine(TriggerIdleLaserOnDelay());
+				}
+				else if (!isClosed && !laserPause)
+					juicer.TriggerIdleJuice();				
 			}
+		}
+
+		private IEnumerator TriggerIdleLaserOnDelay()
+		{
+			yield return new WaitForSeconds(idleLaserDelay);
+			juicer.TriggerIdleJuice();
+			laserPause = false;
 		}
 
 		public void CloseEye() //Called from fart particle collision
