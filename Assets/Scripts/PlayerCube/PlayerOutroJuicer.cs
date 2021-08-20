@@ -25,7 +25,7 @@ namespace Qbism.PlayerCube
 			if (serpMover != null)
 			{
 				serpMover.onTriggerPlayerAudio += StopLaughing;
-				serpMover.onTriggerPlayerAudio += PlayOuchSound;
+				serpMover.onTriggerPlayerAudio += PlayOuchSoundFromPickup;
 			} 
 		}
 
@@ -38,7 +38,7 @@ namespace Qbism.PlayerCube
 		public void PlayLandingSound()
 		{
 			source.Stop();
-			source.PlayOneShot(ouchClip);
+			source.PlayOneShot(ouchClip, .75f);
 			source.PlayOneShot(boingLongClip);
 		}
 
@@ -55,6 +55,7 @@ namespace Qbism.PlayerCube
 		public void PlayEndLaughSound()
 		{
 			source.clip = endLaughClip;
+			source.volume = .3f;
 			source.Play();
 		}
 
@@ -69,9 +70,9 @@ namespace Qbism.PlayerCube
 			source.Stop();
 		}
 
-		private void PlayOuchSound()
+		private void PlayOuchSoundFromPickup()
 		{
-			source.PlayOneShot(ouchClipAlt);
+			source.PlayOneShot(ouchClipAlt, .75f);
 		}
 
 		private void OnDisable()
@@ -79,7 +80,7 @@ namespace Qbism.PlayerCube
 			if (serpMover != null)
 			{
 				serpMover.onTriggerPlayerAudio -= StopLaughing;
-				serpMover.onTriggerPlayerAudio -= PlayOuchSound;
+				serpMover.onTriggerPlayerAudio -= PlayOuchSoundFromPickup;
 			}
 		}
 	}

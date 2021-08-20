@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1620402144142370692
+--- !u!1 &3020698945278222587
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6084409084007525370}
-  - component: {fileID: 544267419993676164}
-  - component: {fileID: 4267723624191647719}
-  - component: {fileID: 1665076568943864122}
+  - component: {fileID: 7046515745500426292}
+  - component: {fileID: 4767520552935870561}
+  - component: {fileID: 5141903707225286921}
   m_Layer: 0
-  m_Name: Laser Deny Juice
+  m_Name: Laser Pass Juice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6084409084007525370
+--- !u!4 &7046515745500426292
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620402144142370692}
+  m_GameObject: {fileID: 3020698945278222587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,39 +32,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &544267419993676164
+--- !u!114 &4767520552935870561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620402144142370692}
+  m_GameObject: {fileID: 3020698945278222587}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Feedbacks:
-  - {fileID: 4267723624191647719}
-  - {fileID: 1665076568943864122}
+  - {fileID: 5141903707225286921}
   InitializationMode: 1
   SafeMode: 3
   AutoPlayOnStart: 0
   DebugActive: 0
---- !u!114 &4267723624191647719
+--- !u!114 &5141903707225286921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620402144142370692}
+  m_GameObject: {fileID: 3020698945278222587}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Label: Laser Activation Sound
+  Label: Pass Grunt Voice
   Chance: 100
   Timing:
     TimescaleMode: 0
@@ -79,45 +77,7 @@ MonoBehaviour:
     Quantized: 0
     TargetBPM: 120
   DebugActive: 0
-  Sfx: {fileID: 8300000, guid: 4d19f8505e5f1ab43b9b3adead6a4b56, type: 3}
-  RandomSfx: []
-  TestButton: 0
-  TestStopButton: 0
-  PlayMethod: 3
-  PoolSize: 1
-  MinVolume: 0.6
-  MaxVolume: 0.6
-  MinPitch: 0.9
-  MaxPitch: 1.1
-  SfxAudioMixerGroup: {fileID: 0}
---- !u!114 &1665076568943864122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620402144142370692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Active: 1
-  Label: Grunt Voice Sound
-  Chance: 100
-  Timing:
-    TimescaleMode: 0
-    InitialDelay: 0.3
-    CooldownDuration: 0
-    NumberOfRepeats: 0
-    RepeatForever: 0
-    DelayBetweenRepeats: 1
-    Sequence: {fileID: 0}
-    TrackID: 0
-    Quantized: 0
-    TargetBPM: 120
-  DebugActive: 0
-  Sfx: {fileID: 8300000, guid: bc7e4d41382dc244a8f0d0e4421ec8b7, type: 3}
+  Sfx: {fileID: 8300000, guid: e68a7598563574a468e4d40b6ad88e72, type: 3}
   RandomSfx: []
   TestButton: 0
   TestStopButton: 0

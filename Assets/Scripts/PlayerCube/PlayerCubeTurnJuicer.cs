@@ -12,7 +12,7 @@ namespace Qbism.PlayerCube
 
 		public void PlayTurningVoice()
 		{
-			source.PlayOneShot(voiceClip);
+			source.PlayOneShot(voiceClip, .75f);
 		}
 	}
 }

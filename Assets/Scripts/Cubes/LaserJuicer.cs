@@ -9,7 +9,7 @@ namespace Qbism.Cubes
 	public class LaserJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks denyJuice;
+		[SerializeField] MMFeedbacks denyJuiceWiggle, denyJuice, passJuice;
 		[Header ("Laser")]
 		[SerializeField] Light laserTipLight;
 		[Header ("Particles")]
@@ -17,9 +17,8 @@ namespace Qbism.Cubes
 		[SerializeField] ParticleSystem denyBeam, denySunSpots, pinkEyeVFX;
 		[Header ("Audio")]
 		[SerializeField] float stunSoundDelay = .2f;
-		[SerializeField] AudioClip passClip = null, denyClip = null;
 		[SerializeField] AudioClip[] stunClips;
-		[SerializeField] AudioSource passDenySource, stunSource;
+		[SerializeField] AudioSource stunSource;
 
 		//Cache
 		LaserMouthAnimator mouthAnim;
@@ -32,14 +31,11 @@ namespace Qbism.Cubes
 		float shakeDur = 0;
 		float stunTimer = 0;
 
-		//Actions, events, delegates etc
-		public UnityEvent onLaserPassEvent = new UnityEvent();
-
 		private void Awake() 
 		{
 			eyeAnim = GetComponentInChildren<LaserEyeAnimator>();
 			mouthAnim = GetComponentInChildren<LaserMouthAnimator>();
-			denyMMWiggle = denyJuice.GetComponent<MMFeedbackWiggle>();
+			denyMMWiggle = denyJuiceWiggle.GetComponent<MMFeedbackWiggle>();
 			shakeDur = denyMMWiggle.WigglePositionDuration;
 		}
 
@@ -81,8 +77,7 @@ namespace Qbism.Cubes
 			denyBeam.Stop();
 			pinkEyeVFX.Play();
 
-			passDenySource.clip = passClip;
-			onLaserPassEvent.Invoke();
+			passJuice.PlayFeedbacks();
 
 			eyeAnim.CloseEyes();
 			mouthAnim.SadMouth();
@@ -98,9 +93,7 @@ namespace Qbism.Cubes
 			denyBeam.Play();
 
 			Shake();
-
-			passDenySource.clip = denyClip;
-			onLaserPassEvent.Invoke();
+			denyJuice.PlayFeedbacks();
 
 			eyeAnim.ShootyEyes();
 			mouthAnim.SadMouth();
@@ -120,8 +113,8 @@ namespace Qbism.Cubes
 
 		private void Shake()
 		{
-			denyJuice.Initialization();
-			denyJuice.PlayFeedbacks();
+			denyJuiceWiggle.Initialization();
+			denyJuiceWiggle.PlayFeedbacks();
 		}
 
 		private void HandleShakeTimer()
@@ -160,7 +153,7 @@ namespace Qbism.Cubes
 			stunSource.pitch = pitchValue;
 
 			int i = Random.Range(0, stunClips.Length);
-			stunSource.PlayOneShot(stunClips[i]);
+			stunSource.PlayOneShot(stunClips[i], .75f);
 		}
 
 		private void MoveTipLight(float dist)
