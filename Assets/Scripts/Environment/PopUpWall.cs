@@ -33,6 +33,8 @@ namespace Qbism.Environment
 			startPos = wallMesh.transform.position;
 			popUpTarget = new Vector3(transform.position.x, 
 				transform.position.y + popUpHeight, transform.position.z);
+
+			exprHandler.SetFace(Expressions.calm, -1);
 		}
 
 		public void InitiatePopUp()
@@ -47,7 +49,7 @@ namespace Qbism.Environment
 
 			float speed = (popUpHeight - startPos.y) / upwardDuration;
 
-			exprHandler.SetFace(Expressions.toothyLaugh, -1);
+			exprHandler.SetFace(Expressions.ouch, -1);
 
 			juicer.PlayUpSFX();
 

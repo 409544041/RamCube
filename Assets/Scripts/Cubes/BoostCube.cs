@@ -58,7 +58,6 @@ namespace Qbism.Cubes
 				{
 					mover.isBoosting = false;
 					cube.transform.position = boostTarget;
-					if (popWall) popWall.GetComponent<ExpressionHandler>().SetFace(Expressions.ouch, -1);
 				}
 			
 				yield return null;

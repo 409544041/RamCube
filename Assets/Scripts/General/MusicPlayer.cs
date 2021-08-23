@@ -28,7 +28,7 @@ namespace Qbism.General
 
 		private void Start() 
 		{
-			source.Play();
+			if (!mute) source.Play();
 		}
 
 		private void Update()
