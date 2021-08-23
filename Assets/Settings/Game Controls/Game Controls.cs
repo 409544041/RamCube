@@ -81,6 +81,22 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""Debug Shapie Dance"",
+                    ""type"": ""Button"",
+                    ""id"": ""6911e142-9c31-4e23-a257-64430a40a93e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Debug Shapie Lookaround"",
+                    ""type"": ""Button"",
+                    ""id"": ""e2d5e8eb-87d1-4092-9092-bac8ca02d7f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -310,7 +326,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Rewind"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -321,7 +337,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Rewind"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -332,7 +348,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Restart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -343,7 +359,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Restart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -402,6 +418,28 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""action"": ""Debug Fart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4ef3048-61a5-4f5d-bc1a-d35b05cd827d"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Debug Shapie Dance"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""490b77b6-d16c-4f4a-8c95-701292fd5a8b"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Debug Shapie Lookaround"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -441,6 +479,8 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Gameplay_DebugCompleteLevel = m_Gameplay.FindAction("Debug Complete Level", throwIfNotFound: true);
         m_Gameplay_DebugSceneSwitch01 = m_Gameplay.FindAction("Debug Scene Switch 01", throwIfNotFound: true);
         m_Gameplay_DebugFart = m_Gameplay.FindAction("Debug Fart", throwIfNotFound: true);
+        m_Gameplay_DebugShapieDance = m_Gameplay.FindAction("Debug Shapie Dance", throwIfNotFound: true);
+        m_Gameplay_DebugShapieLookaround = m_Gameplay.FindAction("Debug Shapie Lookaround", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -498,6 +538,8 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_DebugCompleteLevel;
     private readonly InputAction m_Gameplay_DebugSceneSwitch01;
     private readonly InputAction m_Gameplay_DebugFart;
+    private readonly InputAction m_Gameplay_DebugShapieDance;
+    private readonly InputAction m_Gameplay_DebugShapieLookaround;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -510,6 +552,8 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @DebugCompleteLevel => m_Wrapper.m_Gameplay_DebugCompleteLevel;
         public InputAction @DebugSceneSwitch01 => m_Wrapper.m_Gameplay_DebugSceneSwitch01;
         public InputAction @DebugFart => m_Wrapper.m_Gameplay_DebugFart;
+        public InputAction @DebugShapieDance => m_Wrapper.m_Gameplay_DebugShapieDance;
+        public InputAction @DebugShapieLookaround => m_Wrapper.m_Gameplay_DebugShapieLookaround;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -543,6 +587,12 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugFart.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugFart;
                 @DebugFart.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugFart;
                 @DebugFart.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugFart;
+                @DebugShapieDance.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieDance;
+                @DebugShapieDance.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieDance;
+                @DebugShapieDance.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieDance;
+                @DebugShapieLookaround.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieLookaround;
+                @DebugShapieLookaround.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieLookaround;
+                @DebugShapieLookaround.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieLookaround;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -571,6 +621,12 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugFart.started += instance.OnDebugFart;
                 @DebugFart.performed += instance.OnDebugFart;
                 @DebugFart.canceled += instance.OnDebugFart;
+                @DebugShapieDance.started += instance.OnDebugShapieDance;
+                @DebugShapieDance.performed += instance.OnDebugShapieDance;
+                @DebugShapieDance.canceled += instance.OnDebugShapieDance;
+                @DebugShapieLookaround.started += instance.OnDebugShapieLookaround;
+                @DebugShapieLookaround.performed += instance.OnDebugShapieLookaround;
+                @DebugShapieLookaround.canceled += instance.OnDebugShapieLookaround;
             }
         }
     }
@@ -603,5 +659,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnDebugCompleteLevel(InputAction.CallbackContext context);
         void OnDebugSceneSwitch01(InputAction.CallbackContext context);
         void OnDebugFart(InputAction.CallbackContext context);
+        void OnDebugShapieDance(InputAction.CallbackContext context);
+        void OnDebugShapieLookaround(InputAction.CallbackContext context);
     }
 }
