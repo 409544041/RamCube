@@ -30,10 +30,10 @@ namespace Qbism.Environment
 		{
 			if (spawnTimer >= timeToSpawn)
 			{
-				spawnTimer = 0;
 				int index = Random.Range(0, windVFX.Length);
 				PositionWind(windVFX[index]);
 				windVFX[index].Play();
+				spawnTimer = 0;
 				timeToSpawn = Random.Range(minMaxSpawnInterval.x, minMaxSpawnInterval.y);
 			}
 		}
