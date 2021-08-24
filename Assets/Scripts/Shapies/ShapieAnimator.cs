@@ -85,7 +85,7 @@ namespace Qbism.Shapies
 		private IEnumerator TriggerPlayerFalling(float delay) //Called from animation event
 		{
 			yield return new WaitForSeconds(delay);
-			// playerAnim.TriggerFall(false, "FallOnGround");
+			playerAnim.TriggerFall(false, "FallOnGround");
 		}
 
 		private void TriggerGibberishSlow()
@@ -98,31 +98,6 @@ namespace Qbism.Shapies
 		{
 			soundHandler.currentIntervalMinMax = soundHandler.fastIntervalMinMax;
 			soundHandler.PlayGibberish(true);
-		}
-
-		public void ForceLookingAround()
-		{
-			StartCoroutine(DebugLook());
-		}
-
-		public void ForceCelebrate()
-		{
-			animator.SetTrigger("Shock");
-			StartCoroutine(DebugCelebrate());
-		}
-
-		private IEnumerator DebugCelebrate()
-		{
-			var delay = Random.Range(minMaxCelebrateDelay.x, minMaxCelebrateDelay.y);
-			yield return new WaitForSeconds(delay);
-			animator.SetTrigger("Shock");
-		}
-
-		private IEnumerator DebugLook()
-		{
-			var delay = Random.Range(minMaxCelebrateDelay.x, minMaxCelebrateDelay.y);
-			yield return new WaitForSeconds(delay);
-			animator.SetTrigger("LookAround");
 		}
 
 		private void OnDisable()
