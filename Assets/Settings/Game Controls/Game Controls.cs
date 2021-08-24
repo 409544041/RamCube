@@ -67,7 +67,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press""
                 },
                 {
-                    ""name"": ""Debug Scene Switch 01"",
+                    ""name"": ""Debug Key 1"",
                     ""type"": ""Button"",
                     ""id"": ""607ce4e9-7ba6-44b4-9d0c-527befba9380"",
                     ""expectedControlType"": ""Button"",
@@ -75,7 +75,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press""
                 },
                 {
-                    ""name"": ""Debug Fart"",
+                    ""name"": ""Debug Key 2"",
                     ""type"": ""Button"",
                     ""id"": ""a606b6d3-6ac0-4a2b-96e4-44ec3c39c192"",
                     ""expectedControlType"": ""Button"",
@@ -83,7 +83,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(behavior=2)""
                 },
                 {
-                    ""name"": ""Debug Shapie Dance"",
+                    ""name"": ""Debug key 3"",
                     ""type"": ""Button"",
                     ""id"": ""6911e142-9c31-4e23-a257-64430a40a93e"",
                     ""expectedControlType"": ""Button"",
@@ -91,7 +91,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press""
                 },
                 {
-                    ""name"": ""Debug Shapie Lookaround"",
+                    ""name"": ""Debug Key 4"",
                     ""type"": ""Button"",
                     ""id"": ""e2d5e8eb-87d1-4092-9092-bac8ca02d7f3"",
                     ""expectedControlType"": ""Button"",
@@ -392,7 +392,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Debug Complete Level"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -400,44 +400,44 @@ public class @GameControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b8f5d0be-3a97-40c8-b431-720fd2816e05"",
-                    ""path"": ""<Keyboard>/p"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Debug Scene Switch 01"",
+                    ""action"": ""Debug Key 1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""b86ac861-fde8-458d-a07b-e861a6913238"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Debug Fart"",
+                    ""action"": ""Debug Key 2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""c4ef3048-61a5-4f5d-bc1a-d35b05cd827d"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Debug Shapie Dance"",
+                    ""action"": ""Debug key 3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""490b77b6-d16c-4f4a-8c95-701292fd5a8b"",
-                    ""path"": ""<Keyboard>/l"",
+                    ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Debug Shapie Lookaround"",
+                    ""action"": ""Debug Key 4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -477,10 +477,10 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Gameplay_Click = m_Gameplay.FindAction("Click", throwIfNotFound: true);
         m_Gameplay_DebugDeleteSaveData = m_Gameplay.FindAction("Debug Delete Save Data", throwIfNotFound: true);
         m_Gameplay_DebugCompleteLevel = m_Gameplay.FindAction("Debug Complete Level", throwIfNotFound: true);
-        m_Gameplay_DebugSceneSwitch01 = m_Gameplay.FindAction("Debug Scene Switch 01", throwIfNotFound: true);
-        m_Gameplay_DebugFart = m_Gameplay.FindAction("Debug Fart", throwIfNotFound: true);
-        m_Gameplay_DebugShapieDance = m_Gameplay.FindAction("Debug Shapie Dance", throwIfNotFound: true);
-        m_Gameplay_DebugShapieLookaround = m_Gameplay.FindAction("Debug Shapie Lookaround", throwIfNotFound: true);
+        m_Gameplay_DebugKey1 = m_Gameplay.FindAction("Debug Key 1", throwIfNotFound: true);
+        m_Gameplay_DebugKey2 = m_Gameplay.FindAction("Debug Key 2", throwIfNotFound: true);
+        m_Gameplay_Debugkey3 = m_Gameplay.FindAction("Debug key 3", throwIfNotFound: true);
+        m_Gameplay_DebugKey4 = m_Gameplay.FindAction("Debug Key 4", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -536,10 +536,10 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Click;
     private readonly InputAction m_Gameplay_DebugDeleteSaveData;
     private readonly InputAction m_Gameplay_DebugCompleteLevel;
-    private readonly InputAction m_Gameplay_DebugSceneSwitch01;
-    private readonly InputAction m_Gameplay_DebugFart;
-    private readonly InputAction m_Gameplay_DebugShapieDance;
-    private readonly InputAction m_Gameplay_DebugShapieLookaround;
+    private readonly InputAction m_Gameplay_DebugKey1;
+    private readonly InputAction m_Gameplay_DebugKey2;
+    private readonly InputAction m_Gameplay_Debugkey3;
+    private readonly InputAction m_Gameplay_DebugKey4;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -550,10 +550,10 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @Click => m_Wrapper.m_Gameplay_Click;
         public InputAction @DebugDeleteSaveData => m_Wrapper.m_Gameplay_DebugDeleteSaveData;
         public InputAction @DebugCompleteLevel => m_Wrapper.m_Gameplay_DebugCompleteLevel;
-        public InputAction @DebugSceneSwitch01 => m_Wrapper.m_Gameplay_DebugSceneSwitch01;
-        public InputAction @DebugFart => m_Wrapper.m_Gameplay_DebugFart;
-        public InputAction @DebugShapieDance => m_Wrapper.m_Gameplay_DebugShapieDance;
-        public InputAction @DebugShapieLookaround => m_Wrapper.m_Gameplay_DebugShapieLookaround;
+        public InputAction @DebugKey1 => m_Wrapper.m_Gameplay_DebugKey1;
+        public InputAction @DebugKey2 => m_Wrapper.m_Gameplay_DebugKey2;
+        public InputAction @Debugkey3 => m_Wrapper.m_Gameplay_Debugkey3;
+        public InputAction @DebugKey4 => m_Wrapper.m_Gameplay_DebugKey4;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -581,18 +581,18 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugCompleteLevel.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
                 @DebugCompleteLevel.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
                 @DebugCompleteLevel.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
-                @DebugSceneSwitch01.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugSceneSwitch01;
-                @DebugSceneSwitch01.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugSceneSwitch01;
-                @DebugSceneSwitch01.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugSceneSwitch01;
-                @DebugFart.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugFart;
-                @DebugFart.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugFart;
-                @DebugFart.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugFart;
-                @DebugShapieDance.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieDance;
-                @DebugShapieDance.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieDance;
-                @DebugShapieDance.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieDance;
-                @DebugShapieLookaround.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieLookaround;
-                @DebugShapieLookaround.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieLookaround;
-                @DebugShapieLookaround.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugShapieLookaround;
+                @DebugKey1.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey1;
+                @DebugKey1.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey1;
+                @DebugKey1.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey1;
+                @DebugKey2.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey2;
+                @DebugKey2.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey2;
+                @DebugKey2.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey2;
+                @Debugkey3.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugkey3;
+                @Debugkey3.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugkey3;
+                @Debugkey3.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugkey3;
+                @DebugKey4.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
+                @DebugKey4.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
+                @DebugKey4.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -615,18 +615,18 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugCompleteLevel.started += instance.OnDebugCompleteLevel;
                 @DebugCompleteLevel.performed += instance.OnDebugCompleteLevel;
                 @DebugCompleteLevel.canceled += instance.OnDebugCompleteLevel;
-                @DebugSceneSwitch01.started += instance.OnDebugSceneSwitch01;
-                @DebugSceneSwitch01.performed += instance.OnDebugSceneSwitch01;
-                @DebugSceneSwitch01.canceled += instance.OnDebugSceneSwitch01;
-                @DebugFart.started += instance.OnDebugFart;
-                @DebugFart.performed += instance.OnDebugFart;
-                @DebugFart.canceled += instance.OnDebugFart;
-                @DebugShapieDance.started += instance.OnDebugShapieDance;
-                @DebugShapieDance.performed += instance.OnDebugShapieDance;
-                @DebugShapieDance.canceled += instance.OnDebugShapieDance;
-                @DebugShapieLookaround.started += instance.OnDebugShapieLookaround;
-                @DebugShapieLookaround.performed += instance.OnDebugShapieLookaround;
-                @DebugShapieLookaround.canceled += instance.OnDebugShapieLookaround;
+                @DebugKey1.started += instance.OnDebugKey1;
+                @DebugKey1.performed += instance.OnDebugKey1;
+                @DebugKey1.canceled += instance.OnDebugKey1;
+                @DebugKey2.started += instance.OnDebugKey2;
+                @DebugKey2.performed += instance.OnDebugKey2;
+                @DebugKey2.canceled += instance.OnDebugKey2;
+                @Debugkey3.started += instance.OnDebugkey3;
+                @Debugkey3.performed += instance.OnDebugkey3;
+                @Debugkey3.canceled += instance.OnDebugkey3;
+                @DebugKey4.started += instance.OnDebugKey4;
+                @DebugKey4.performed += instance.OnDebugKey4;
+                @DebugKey4.canceled += instance.OnDebugKey4;
             }
         }
     }
@@ -657,9 +657,9 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnClick(InputAction.CallbackContext context);
         void OnDebugDeleteSaveData(InputAction.CallbackContext context);
         void OnDebugCompleteLevel(InputAction.CallbackContext context);
-        void OnDebugSceneSwitch01(InputAction.CallbackContext context);
-        void OnDebugFart(InputAction.CallbackContext context);
-        void OnDebugShapieDance(InputAction.CallbackContext context);
-        void OnDebugShapieLookaround(InputAction.CallbackContext context);
+        void OnDebugKey1(InputAction.CallbackContext context);
+        void OnDebugKey2(InputAction.CallbackContext context);
+        void OnDebugkey3(InputAction.CallbackContext context);
+        void OnDebugKey4(InputAction.CallbackContext context);
     }
 }

@@ -16,7 +16,7 @@ namespace Qbism.Control
 			controls = new GameControls();
 
 			controls.Gameplay.DebugDeleteSaveData.performed += ctx => DeleteSaveData();
-			controls.Gameplay.DebugSceneSwitch01.performed += ctx => LoadSerpentScreen();
+			controls.Gameplay.DebugKey4.performed += ctx => LoadSerpentScreen();
 		}
 
 		private void OnEnable()

@@ -18,7 +18,7 @@ namespace Qbism.Control
 		{
 			controls = new GameControls();
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
-			controls.Gameplay.DebugSceneSwitch01.performed += ctx => LoadWorldMap();
+			controls.Gameplay.DebugKey4.performed += ctx => LoadWorldMap();
 		}
 
 		private void OnEnable()
