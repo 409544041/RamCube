@@ -68,6 +68,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "Debug Shapie Dance",
+                    "type": "Button",
+                    "id": "6911e142-9c31-4e23-a257-64430a40a93e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Debug Shapie Lookaround",
+                    "type": "Button",
+                    "id": "e2d5e8eb-87d1-4092-9092-bac8ca02d7f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -297,7 +313,7 @@
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Rewind",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -308,7 +324,7 @@
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Rewind",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -319,7 +335,7 @@
                     "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Restart",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -330,7 +346,7 @@
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Restart",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -387,6 +403,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Debug Fart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4ef3048-61a5-4f5d-bc1a-d35b05cd827d",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Debug Shapie Dance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "490b77b6-d16c-4f4a-8c95-701292fd5a8b",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Debug Shapie Lookaround",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
