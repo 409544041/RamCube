@@ -51,20 +51,20 @@ namespace Qbism.SpriteAnimations
 		//state1 is always the state you're going to.
 		public void SetEyes(EyesStates state)
 		{
-			SetCurrentEyes();
-
 			foreach (var anim in animStringList)
 			{
 				animator.ResetTrigger(anim);
 			}
 
+			SetCurrentEyes();
+
 			if (state == EyesStates.normal) ToBaseAnim();
 
 			if (state == EyesStates.annoyed && hasAnnoyed)
-				ToFirstTierAnim(EyesStates.annoyed, EyesStates.nullz, TO_ANNOYED);
+				ToFirstTierAnim(EyesStates.annoyed, EyesStates.shut, TO_ANNOYED);
 				
 			else if (state == EyesStates.annoyed && !hasAnnoyed)
-				ToFirstTierAnim(EyesStates.cross, EyesStates.nullz, TO_CROSS);
+				Debug.LogError("Character does not have annoyed eye animation.");
 
 			if (state == EyesStates.wink && hasWink) 
 				ToFirstTierAnim(EyesStates.wink, EyesStates.nullz, TO_WINK);
@@ -73,10 +73,10 @@ namespace Qbism.SpriteAnimations
 				Debug.LogError("Character does not have wink eye animation.");
 
 			if (state == EyesStates.shut) 
-				ToFirstTierAnim(EyesStates.shut, EyesStates.nullz, TO_SHUT);
+				ToSecondTierAnim(EyesStates.shut, EyesStates.annoyed, TO_SHUT);
 
 			if (state == EyesStates.arched) 
-				ToFirstTierAnim(EyesStates.arched, EyesStates.nullz, TO_ARCH);
+				ToSecondTierAnim(EyesStates.arched, EyesStates.squint, TO_ARCH);
 
 			if (state == EyesStates.twitch && hasTwitch) 
 				ToFirstTierAnim(EyesStates.twitch, EyesStates.nullz, TO_TWITCH);
@@ -88,7 +88,7 @@ namespace Qbism.SpriteAnimations
 				ToFirstTierAnim(EyesStates.shock, EyesStates.nullz, TO_SHOCKED);
 
 			if (state == EyesStates.cross && hasCrossShut) 
-				ToFirstTierAnim(EyesStates.cross, EyesStates.nullz, TO_CROSS);
+				ToSecondTierAnim(EyesStates.cross, EyesStates.nullz, TO_CROSS);
 
 			if (state == EyesStates.cross && !hasCrossShut)
 				Debug.LogError("Character does not have cross-shut eye animation.");
@@ -100,7 +100,7 @@ namespace Qbism.SpriteAnimations
 				Debug.LogError("Character does not have sparkling eye animation.");
 
 			if (state == EyesStates.squint && hasSquint) 
-				ToFirstTierAnim(EyesStates.squint, EyesStates.nullz, TO_SQUINT);
+				ToFirstTierAnim(EyesStates.squint, EyesStates.arched, TO_SQUINT);
 
 			else if (state == EyesStates.squint && !hasSquint)
 				Debug.LogError("Character does not have squint eye animation.");
@@ -117,26 +117,33 @@ namespace Qbism.SpriteAnimations
 			var currentClipInfo = animator.GetCurrentAnimatorClipInfo(0);
 			var currentClipName = currentClipInfo[0].clip.name;
 
-			if (currentClipName == "Eyes_WinkToNormal" || currentClipName == "Eyes_ShutToNormal" ||
-				currentClipName == "Eyes_ArchedToNormal" || currentClipName == "Eyes_Normal" ||
-				currentClipName == "Eyes_CrossShutToNormal" || currentClipName == "Eyes_AnnoyedToNormal_Seg01")
+			if (currentClipName == "Eyes_WinkToNormal" || currentClipName == "Eyes_Normal")
 				currentEyes = EyesStates.normal;
 			
 			if (currentClipName == "Eyes_NormalToWink") currentEyes = EyesStates.wink;
-			if (currentClipName == "Eyes_NormalToShut") currentEyes = EyesStates.shut;
-			if (currentClipName == "Eyes_NormalToArched") currentEyes = EyesStates.arched;
+			if (currentClipName == "Eyes_Shut") currentEyes = EyesStates.shut;
+			if (currentClipName == "Eyes_Arched") currentEyes = EyesStates.arched;
 			if (currentClipName == "Eyes_Twitching") currentEyes = EyesStates.twitch;
 			if (currentClipName == "Eyes_Shocked") currentEyes = EyesStates.shock;
-			if (currentClipName == "Eyes_NormalToCrossShut") currentEyes = EyesStates.cross;
+			if (currentClipName == "Eyes_CrossShut") currentEyes = EyesStates.cross;
 			if (currentClipName == "Eyes_Sprakling") currentEyes = EyesStates.sparkle;
 			if (currentClipName == "Eyes_Squinted") currentEyes = EyesStates.squint;
 			if (currentClipName == "Eyes_Looking_Wall") currentEyes = EyesStates.looking;
-			if (currentClipName == "Eyes_NormalToAnnoyed_Seg01") currentEyes = EyesStates.annoyed;
+			if (currentClipName == "Eyes_Annoyed") currentEyes = EyesStates.annoyed;
 		}
 
 		private void ToBaseAnim()
 		{
 			if (currentEyes == EyesStates.normal) return;
+
+			if (currentEyes == EyesStates.shut)
+				ToFirstTierAnim(EyesStates.annoyed, EyesStates.shut, TO_ANNOYED);
+
+			if (currentEyes == EyesStates.cross)
+				ToFirstTierAnim(EyesStates.annoyed, EyesStates.cross, TO_ANNOYED);
+
+			if (currentEyes == EyesStates.arched)
+				ToFirstTierAnim(EyesStates.squint, EyesStates.arched, TO_SQUINT);
 
 			animator.SetTrigger(TO_NORMAL);
 			currentEyes = EyesStates.normal;
@@ -159,24 +166,23 @@ namespace Qbism.SpriteAnimations
 			currentEyes = state1;
 		}
 
-		//TO DO: Reactivate if we ever get tier2 anims again
-		// private void ToSecondTierAnim(EyesStates state1, EyesStates state2, string trigger)
-		// {
-		// 	if (currentEyes == state1) return;
+		private void ToSecondTierAnim(EyesStates state1, EyesStates state2, string trigger)
+		{
+			if (currentEyes == state1) return;
 
-		// 	if (currentEyes != EyesStates.normal && currentEyes != state2)
-		// 	{
-		// 		ToBaseAnim();
+			if (currentEyes != EyesStates.normal && currentEyes != state2)
+				ToBaseAnim();
 				
-		// 		string newTrigger = null;
-		// 		if (state1 == EyesStates.laughShut) newTrigger = TO_SHUT;
-		// 		if (state1 == EyesStates.laughArched) newTrigger = TO_ARCH;
+			string newTrigger = null;
+			if (state1 == EyesStates.arched) newTrigger = TO_SQUINT;
+			if (state1 == EyesStates.shut) newTrigger = TO_ANNOYED;
+			if (state1 == EyesStates.cross) newTrigger = TO_ANNOYED;
 
-		// 		ToFirstTierAnim(state2, state1, newTrigger);
-		// 	}
+			if (currentEyes == EyesStates.normal)
+				ToFirstTierAnim(state2, state1, newTrigger);
 
-		// 	animator.SetTrigger(trigger);
-		// 	currentEyes = state1;
-		// }
+			animator.SetTrigger(trigger);
+			currentEyes = state1;
+		}
 	}
 }
