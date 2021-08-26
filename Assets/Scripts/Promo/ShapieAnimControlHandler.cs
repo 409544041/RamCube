@@ -14,7 +14,8 @@ namespace Qbism.Promo
 		private void Awake()
 		{
 			controls = new GameControls();
-			controls.Gameplay.Debugkey3.performed += ctx => ForceDancing();
+			controls.Gameplay.DebugKey2.performed += ctx => ForceIdleBlink();
+			controls.Gameplay.DebugKey3.performed += ctx => ForceDancing();
 			controls.Gameplay.DebugKey4.performed += ctx => ForceLookAround();
 
 			shapies = FindObjectsOfType<ShapieAnimForcer>();
@@ -38,6 +39,14 @@ namespace Qbism.Promo
 			foreach (var shapie in shapies)
 			{
 				shapie.ForceLookingAround();
+			}
+		}
+
+		private void ForceIdleBlink()
+		{
+			foreach (var shapie in shapies)
+			{
+				shapie.ForceIdleBlink();
 			}
 		}
 

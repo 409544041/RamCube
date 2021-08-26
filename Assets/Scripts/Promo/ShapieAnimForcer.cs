@@ -9,7 +9,7 @@ namespace Qbism.Promo
 	{
 		//Config parameters
 		[SerializeField] Vector2 minMaxLookDelay, minMaxCelebrateDelay;
-		[SerializeField] bool forceCeleb01, forceCeleb02, forceLook;		
+		[SerializeField] bool forceCeleb01, forceCeleb02, forceLook, forceIdleBlink;		
 
 		//Cache
 		Animator animator;
@@ -50,6 +50,11 @@ namespace Qbism.Promo
 		{
 			soundHandler.currentIntervalMinMax = soundHandler.fastIntervalMinMax;
 			soundHandler.PlayGibberish(true);
+		}
+
+		public void ForceIdleBlink()
+		{
+			if (forceIdleBlink) animator.SetTrigger("Idle");
 		}
 	}
 }

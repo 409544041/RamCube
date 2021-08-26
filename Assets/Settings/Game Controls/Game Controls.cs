@@ -83,7 +83,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(behavior=2)""
                 },
                 {
-                    ""name"": ""Debug key 3"",
+                    ""name"": ""Debug Key 3"",
                     ""type"": ""Button"",
                     ""id"": ""6911e142-9c31-4e23-a257-64430a40a93e"",
                     ""expectedControlType"": ""Button"",
@@ -426,7 +426,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Debug key 3"",
+                    ""action"": ""Debug Key 3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -479,7 +479,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Gameplay_DebugCompleteLevel = m_Gameplay.FindAction("Debug Complete Level", throwIfNotFound: true);
         m_Gameplay_DebugKey1 = m_Gameplay.FindAction("Debug Key 1", throwIfNotFound: true);
         m_Gameplay_DebugKey2 = m_Gameplay.FindAction("Debug Key 2", throwIfNotFound: true);
-        m_Gameplay_Debugkey3 = m_Gameplay.FindAction("Debug key 3", throwIfNotFound: true);
+        m_Gameplay_DebugKey3 = m_Gameplay.FindAction("Debug Key 3", throwIfNotFound: true);
         m_Gameplay_DebugKey4 = m_Gameplay.FindAction("Debug Key 4", throwIfNotFound: true);
     }
 
@@ -538,7 +538,7 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_DebugCompleteLevel;
     private readonly InputAction m_Gameplay_DebugKey1;
     private readonly InputAction m_Gameplay_DebugKey2;
-    private readonly InputAction m_Gameplay_Debugkey3;
+    private readonly InputAction m_Gameplay_DebugKey3;
     private readonly InputAction m_Gameplay_DebugKey4;
     public struct GameplayActions
     {
@@ -552,7 +552,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @DebugCompleteLevel => m_Wrapper.m_Gameplay_DebugCompleteLevel;
         public InputAction @DebugKey1 => m_Wrapper.m_Gameplay_DebugKey1;
         public InputAction @DebugKey2 => m_Wrapper.m_Gameplay_DebugKey2;
-        public InputAction @Debugkey3 => m_Wrapper.m_Gameplay_Debugkey3;
+        public InputAction @DebugKey3 => m_Wrapper.m_Gameplay_DebugKey3;
         public InputAction @DebugKey4 => m_Wrapper.m_Gameplay_DebugKey4;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
@@ -587,9 +587,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugKey2.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey2;
                 @DebugKey2.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey2;
                 @DebugKey2.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey2;
-                @Debugkey3.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugkey3;
-                @Debugkey3.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugkey3;
-                @Debugkey3.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugkey3;
+                @DebugKey3.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey3;
+                @DebugKey3.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey3;
+                @DebugKey3.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey3;
                 @DebugKey4.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
                 @DebugKey4.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
                 @DebugKey4.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
@@ -621,9 +621,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugKey2.started += instance.OnDebugKey2;
                 @DebugKey2.performed += instance.OnDebugKey2;
                 @DebugKey2.canceled += instance.OnDebugKey2;
-                @Debugkey3.started += instance.OnDebugkey3;
-                @Debugkey3.performed += instance.OnDebugkey3;
-                @Debugkey3.canceled += instance.OnDebugkey3;
+                @DebugKey3.started += instance.OnDebugKey3;
+                @DebugKey3.performed += instance.OnDebugKey3;
+                @DebugKey3.canceled += instance.OnDebugKey3;
                 @DebugKey4.started += instance.OnDebugKey4;
                 @DebugKey4.performed += instance.OnDebugKey4;
                 @DebugKey4.canceled += instance.OnDebugKey4;
@@ -659,7 +659,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnDebugCompleteLevel(InputAction.CallbackContext context);
         void OnDebugKey1(InputAction.CallbackContext context);
         void OnDebugKey2(InputAction.CallbackContext context);
-        void OnDebugkey3(InputAction.CallbackContext context);
+        void OnDebugKey3(InputAction.CallbackContext context);
         void OnDebugKey4(InputAction.CallbackContext context);
     }
 }

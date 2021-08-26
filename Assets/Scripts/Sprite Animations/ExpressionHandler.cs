@@ -13,6 +13,7 @@ namespace Qbism.SpriteAnimations
 		[SerializeField] bool isPlayer;
 		[SerializeField] bool hasBrows = true, hasMouth = true;
 		[SerializeField] Vector2 minMaxExpressionTime;
+		[SerializeField] float blinkTime = .05f;
 
 		//Cache
 		SpriteBrowAnimator browAnim = null;
@@ -72,6 +73,28 @@ namespace Qbism.SpriteAnimations
 				else timeToExpress = incTime;
 
 				expressionTimer = 0;
+			}
+		}
+
+		private void InitiateBlinking()
+		{
+			StartCoroutine(Blink());
+		}
+
+		private IEnumerator Blink()
+		{
+			foreach (var expressionFace in expressionsSO.expressionFaces)
+			{
+				if (expressionFace.expression == Expressions.blink)
+					eyesAnim.SetEyes(expressionFace.face.eyes);
+			}
+
+			yield return new WaitForSeconds(blinkTime);
+
+			foreach (var expressionFace in expressionsSO.expressionFaces)
+			{
+				if (expressionFace.expression == Expressions.neutral)
+					eyesAnim.SetEyes(expressionFace.face.eyes);
 			}
 		}
 
