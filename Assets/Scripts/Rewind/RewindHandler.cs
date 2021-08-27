@@ -88,19 +88,29 @@ namespace Qbism.Rewind
 
 		public void StartRewinding()
 		{
-			if(mover.input == false) return; 
-			
+			if (mover.input == false) return;
+
 			foreach (TimeBody timeBody in timeBodies)
 			{
 				timeBody.StartRewind();
 			}
 
-			//To stop rewind UI element from pulsing if rewinding off finish. Here bc finish doesn't have timebody component
+			StartCoroutine(LaserRewindStuff());
+
+			StartCoroutine(ReloadDics());
+		}
+
+		private IEnumerator LaserRewindStuff()
+		{
+			yield return null; 
+			//to avoid laser reading player eventhough player already rewinded
+
+			//To stop rewind UI element from pulsing if rewinding off finish
 			var finish = FindObjectOfType<FinishCube>();
 			if (finish.wrongOnFinish)
 				onStopRewindPulse(InterfaceIDs.Rewind);
 
-			//To make sure lasers work correctly when rewinding into laser while still in laser
+			//To make sure lasers work correctly again.
 			LaserCube[] lasers = FindObjectsOfType<LaserCube>();
 			if (lasers.Length > 0)
 			{
@@ -109,8 +119,6 @@ namespace Qbism.Rewind
 					laser.SetLaserTrigger(true);
 				}
 			}
-
-			StartCoroutine(ReloadDics());
 		}
 
 		private void AddInitialPlayerRecording(Vector3 pos, Quaternion rot, Vector3 scale)
