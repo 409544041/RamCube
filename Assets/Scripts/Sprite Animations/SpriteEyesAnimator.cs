@@ -88,7 +88,7 @@ namespace Qbism.SpriteAnimations
 				ToFirstTierAnim(EyesStates.shock, EyesStates.nullz, TO_SHOCKED);
 
 			if (state == EyesStates.cross && hasCrossShut) 
-				ToSecondTierAnim(EyesStates.cross, EyesStates.nullz, TO_CROSS);
+				ToFirstTierAnim(EyesStates.cross, EyesStates.nullz, TO_CROSS);
 
 			if (state == EyesStates.cross && !hasCrossShut)
 				Debug.LogError("Character does not have cross-shut eye animation.");
