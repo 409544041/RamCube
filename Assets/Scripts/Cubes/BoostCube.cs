@@ -36,9 +36,10 @@ namespace Qbism.Cubes
 			var mover = cube.GetComponent<PlayerCubeMover>();
 			var launchPos = mover.FetchGridPos();
 
+			PopUpWall popWall = null;
 			GameObject wallObject = null;
 			Vector3 boostTarget = GetBoostTarget(out wallObject);
-			PopUpWall popWall = wallObject.GetComponent<PopUpWall>();
+			if (wallObject) popWall = wallObject.GetComponent<PopUpWall>();
 
 			mover.input = false;
 			mover.isBoosting = true;

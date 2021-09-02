@@ -16,6 +16,7 @@ namespace Qbism.Environment
 		//Cache
 		PopUpWallJuicer juicer;
 		ExpressionHandler exprHandler;
+		BoxCollider col;
 
 		//States
 		Vector3 startPos;
@@ -24,12 +25,15 @@ namespace Qbism.Environment
 
 		private void Awake() 
 		{
+			col = GetComponent<BoxCollider>();
 			juicer = GetComponent<PopUpWallJuicer>();
 			exprHandler = GetComponent<ExpressionHandler>();
 		}
 
 		private void Start() 
 		{
+			col.center = new Vector3(col.center.x, 1 - transform.position.y, col.center.z);
+
 			startPos = wallMesh.transform.position;
 			popUpTarget = new Vector3(transform.position.x, 
 				transform.position.y + popUpHeight, transform.position.z);
