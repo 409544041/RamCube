@@ -17,6 +17,8 @@ namespace Qbism.Rewind
 		List<FloorCube> floorCubes = new List<FloorCube>();
 		MoveableCubeHandler moveHandler = null;
 		MoveableCube[] moveableCubes;
+		LaserCube[] lasers;
+		FinishCube finish;
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onStopRewindPulse;
@@ -28,6 +30,8 @@ namespace Qbism.Rewind
 			handler = GetComponent<CubeHandler>();
 			moveHandler = handler.GetComponent<MoveableCubeHandler>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();
+			lasers = FindObjectsOfType<LaserCube>();
+			finish = FindObjectOfType<FinishCube>();
 
 			FloorCube[] floorCubesAtStart = FindObjectsOfType<FloorCube>(); //TO DO: What is up with this list? Doesn't seem to be used anywhere?
 			foreach (FloorCube cube in floorCubesAtStart)
@@ -90,33 +94,39 @@ namespace Qbism.Rewind
 		{
 			if (mover.input == false) return;
 
+			//To make sure there's no delay on turning on laser again upon rewind
+			if (lasers.Length > 0)
+			{
+				foreach (var laser in lasers)
+				{
+					laser.laserPause = false;
+				}
+			}
+
 			foreach (TimeBody timeBody in timeBodies)
 			{
 				timeBody.StartRewind();
 			}
 
-			StartCoroutine(LaserRewindStuff());
+			//To stop rewind UI element from pulsing if rewinding off finish
+			if (finish.wrongOnFinish)
+				onStopRewindPulse(InterfaceIDs.Rewind);
+
+			StartCoroutine(DelayedLaserRewindStuff());
 
 			StartCoroutine(ReloadDics());
 		}
 
-		private IEnumerator LaserRewindStuff()
+		private IEnumerator DelayedLaserRewindStuff()
 		{
-			yield return null; 
+			yield return new WaitForSeconds(.05f); 
 			//to avoid laser reading player eventhough player already rewinded
 
-			//To stop rewind UI element from pulsing if rewinding off finish
-			var finish = FindObjectOfType<FinishCube>();
-			if (finish.wrongOnFinish)
-				onStopRewindPulse(InterfaceIDs.Rewind);
-
-			//To make sure lasers work correctly again.
-			LaserCube[] lasers = FindObjectsOfType<LaserCube>();
 			if (lasers.Length > 0)
 			{
 				foreach (var laser in lasers)
 				{
-					laser.SetLaserTrigger(true);
+					laser.shouldTrigger = true;
 				}
 			}
 		}

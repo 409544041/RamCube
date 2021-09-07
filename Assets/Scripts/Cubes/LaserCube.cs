@@ -23,10 +23,10 @@ namespace Qbism.Cubes
 
 
 		//States
-		bool shouldTrigger = true;
+		public bool shouldTrigger { get; set; } = true;
 		float currentLength = 0f;
 		bool isClosed = false;
-		bool laserPause = false;
+		public bool laserPause { get; set; }= false;
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onRewindPulse;
@@ -90,23 +90,30 @@ namespace Qbism.Cubes
 						mover.isStunned = true;						
 					}
 				}
+
+				else GoIdle();
 			}
 
-			else
+			else GoIdle();
+		}
+
+		private void GoIdle()
+		{
+			if (isClosed && !laserPause)
 			{
-				if (isClosed && !laserPause)
-				{
-					isClosed = false;
-					laserPause = true;
-					StartCoroutine(TriggerIdleLaserOnDelay());
-				}
-				else if (!isClosed && !laserPause)
-					juicer.TriggerIdleJuice();				
+				isClosed = false;
+				laserPause = true;
+				StartCoroutine(TriggerIdleLaserOnDelay());
+			}
+			else if (!isClosed && !laserPause)
+			{
+				juicer.TriggerIdleJuice();
 			}
 		}
 
 		private IEnumerator TriggerIdleLaserOnDelay()
 		{
+			//So laser turns back on when player has had time to move on
 			yield return new WaitForSeconds(idleLaserDelay);
 			juicer.TriggerIdleJuice();
 			laserPause = false;
