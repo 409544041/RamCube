@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using Qbism.MoveableCubes;
 using Qbism.SceneTransition;
 using UnityEngine;
@@ -26,14 +27,14 @@ namespace Qbism.PlayerCube
 		[SerializeField] int wiggleRotation = 8;
 		[Header ("Position")]
 		[SerializeField] float yDuringPlay = .9f;
-		[SerializeField] float yWhenLowered = 0;
-		
+		[SerializeField] float yWhenLowered = 0;		
 
 		//Cache
 		MoveableCubeHandler moveHandler;
 		MoveableCube[] moveableCubes;
 		PlayerCubeFlipJuicer playerFlipJuicer;
 		PlayerAnimator playerAnimator;
+		PlayerCubeBoostJuicer boostJuicer;
 
 		//States
 		public bool isInBoostPos { get; set; } = true;
@@ -47,6 +48,7 @@ namespace Qbism.PlayerCube
 		public bool isStunned { get; set; }	= false;
 		public bool isOutOfBounds { get; set; } = false;
 		public bool isInIntroSeq { get; set; } = false;
+		public bool isLowered { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
@@ -54,8 +56,7 @@ namespace Qbism.PlayerCube
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action onInitialFloorCubeRecord;
 		public event Action<bool> onSetLaserTriggers;
-
-		public UnityEvent onLoweringEvent = new UnityEvent();
+		public event Action<InterfaceIDs> onRewindPulse;
 
 		private void Awake()
 		{
@@ -63,6 +64,7 @@ namespace Qbism.PlayerCube
 			moveableCubes = FindObjectsOfType<MoveableCube>();
 			playerFlipJuicer = GetComponent<PlayerCubeFlipJuicer>();
 			playerAnimator = GetComponentInChildren<PlayerAnimator>();
+			boostJuicer = GetComponent<PlayerCubeBoostJuicer>();
 		}
 
 		private void OnEnable() 
@@ -176,7 +178,7 @@ namespace Qbism.PlayerCube
 		public void InitiateLowering(Vector2Int cubePos)
 		{
 			Vector3 targetPos = new Vector3(transform.position.x,
-				transform.position.y - 1, transform.position.z);
+				transform.position.y - .95f, transform.position.z);
 			float step = lowerStep * Time.deltaTime;
 
 			StartCoroutine(LowerCube(targetPos, step, cubePos));
@@ -186,7 +188,14 @@ namespace Qbism.PlayerCube
 		{
 			isMoving = true;
 			input = false;
-			onLoweringEvent.Invoke();
+			
+			var juiceDur = boostJuicer.FetchJuiceDur();
+			boostJuicer.PlayPostBoostJuice();
+			yield return new WaitForSeconds(juiceDur);
+
+			transform.localScale = new Vector3(.95f, .95f, .95f);
+
+			boostJuicer.PlayLoweringSFX();
 
 			while (transform.position.y > targetPos.y)
 			{
@@ -194,14 +203,10 @@ namespace Qbism.PlayerCube
 				yield return timeStep;
 			}
 
-			transform.localScale = new Vector3(1, 1, 1);
-
+			isLowered = true;
+			input = true;
 			RoundPosition();
-
-			AudioSource source = GetComponentInChildren<AudioSource>();
-			yield return new WaitWhile(() => source.isPlaying);
-
-			FindObjectOfType<SceneHandler>().RestartLevel();
+			onRewindPulse(InterfaceIDs.Rewind);
 		}
 
 		public void RoundPosition()

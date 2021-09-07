@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using Qbism.Cubes;
+using Qbism.PlayerCube;
 using Qbism.Rewind;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace Qbism.General
 		LaserCube[] lasers = null;
 		TimeBody[] bodies = null;
 		OutOfBounds[] outOfBounds = null;
+		PlayerCubeMover playerMover;
 
 		private void Awake()
 		{
@@ -27,6 +29,7 @@ namespace Qbism.General
 			lasers = FindObjectsOfType<LaserCube>();
 			bodies = FindObjectsOfType<TimeBody>();
 			outOfBounds = FindObjectsOfType<OutOfBounds>();
+			playerMover = FindObjectOfType<PlayerCubeMover>();
 		}
 
 		private void OnEnable()
@@ -53,6 +56,8 @@ namespace Qbism.General
 			{
 				if (oob != null) oob.onRewindPulse += InitiatePulse;
 			}
+
+			if (playerMover != null) playerMover.onRewindPulse += InitiatePulse;
 		}
 
 		private void InitiatePulse(InterfaceIDs id)
@@ -95,6 +100,8 @@ namespace Qbism.General
 			{
 				if (oob != null) oob.onRewindPulse -= InitiatePulse;
 			}
+
+			if (playerMover != null) playerMover.onRewindPulse -= InitiatePulse;
 		}
 	}
 

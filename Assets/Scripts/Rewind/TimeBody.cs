@@ -85,9 +85,10 @@ namespace Qbism.Rewind
 				mover.GetComponent<PlayerCubeFeedForward>().ShowFeedForward();
 				handler.currentCube = handler.FetchCube(mover.FetchGridPos());
 
-				if (mover.isOutOfBounds)
+				if (mover.isOutOfBounds || mover.isLowered)
 				{
 					mover.isOutOfBounds = false;
+					mover.isLowered = false;
 					onStopRewindPulse(InterfaceIDs.Rewind);
 				}
 				

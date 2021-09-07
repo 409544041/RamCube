@@ -92,7 +92,7 @@ namespace Qbism.Rewind
 
 		public void StartRewinding()
 		{
-			if (mover.input == false) return;
+			if (!mover.input) return;
 
 			//To make sure there's no delay on turning on laser again upon rewind
 			if (lasers.Length > 0)

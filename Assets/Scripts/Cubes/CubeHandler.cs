@@ -142,7 +142,7 @@ namespace Qbism.Cubes
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
 						onLand();
 
-						if(previousCube.FetchType() != CubeTypes.Boosting)
+						if (previousCube.FetchType() != CubeTypes.Boosting)
 							playerFlipJuicer.PlayPostFlipJuice();
 							
 						else playerBoostJuicer.PlayPostBoostJuice();
@@ -159,7 +159,9 @@ namespace Qbism.Cubes
 			}
 			else
 			{
-				mover.InitiateLowering(cubePos);
+				//lowering
+				if (previousCube.FetchType() == CubeTypes.Boosting)
+					mover.InitiateLowering(cubePos);
 			}
 		}
 

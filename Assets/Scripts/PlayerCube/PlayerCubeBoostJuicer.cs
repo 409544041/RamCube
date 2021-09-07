@@ -12,6 +12,10 @@ namespace Qbism.PlayerCube
 		[SerializeField] MMFeedbacks boostJuice = null;
 		[SerializeField] MMFeedbacks postBoostJuice = null;
 		[SerializeField] float maxBoostTrailTime = 1f;
+		[Header ("Audio")]
+		[SerializeField] AudioSource source;
+		[SerializeField] AudioClip loweringClip;
+		[SerializeField] float loweringVolume;
 
 		//Cache
 		MMFeedbackScale[] postBoostMMScalers;
@@ -88,6 +92,16 @@ namespace Qbism.PlayerCube
 			postBoostJuice.Initialization();
 			postBoostJuice.PlayFeedbacks();
 			expresHandler.SetSituationFace(ExpressionSituations.wallHit, 1f);
+		}
+
+		public float FetchJuiceDur()
+		{
+			return postBoostMMPos.AnimatePositionDuration;
+		}
+
+		public void PlayLoweringSFX()
+		{
+			source.PlayOneShot(loweringClip, loweringVolume);
 		}
 
 		private void CalculatePostBoostScaleMoveDir()

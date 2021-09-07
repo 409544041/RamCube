@@ -68,10 +68,12 @@ namespace Qbism.Control
 
 		private void MoveUp()
 		{
+			if (mover.isOutOfBounds) return;
+
 			inputting = true;
 			var posAhead = mover.FetchGridPos() + Vector2Int.up;
 			
-			if (mover.isStunned) mover.InitiateWiggle(mover.up, Vector3.right);
+			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.up, Vector3.right);
 
 			else if (handler.floorCubeDic.ContainsKey(posAhead)
 				&& handler.FetchShrunkStatus(posAhead) == false)
@@ -82,10 +84,12 @@ namespace Qbism.Control
 
 		private void MoveDown()
 		{
+			if (mover.isOutOfBounds) return;
+
 			inputting = true;
 			var posAhead = mover.FetchGridPos() + Vector2Int.down;
 
-			if (mover.isStunned) mover.InitiateWiggle(mover.down, Vector3.left);
+			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.down, Vector3.left);
 
 			else if (handler.floorCubeDic.ContainsKey(posAhead)
 				&& handler.FetchShrunkStatus(posAhead) == false)
@@ -96,10 +100,12 @@ namespace Qbism.Control
 
 		private void MoveLeft()
 		{
+			if (mover.isOutOfBounds) return;
+
 			inputting = true;
 			var posAhead = mover.FetchGridPos() + Vector2Int.left;
 
-			if (mover.isStunned) mover.InitiateWiggle(mover.left, Vector3.forward);
+			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.left, Vector3.forward);
 
 			else if (handler.floorCubeDic.ContainsKey(posAhead)
 				&& handler.FetchShrunkStatus(posAhead) == false)
@@ -110,10 +116,12 @@ namespace Qbism.Control
 
 		private void MoveRight()
 		{
+			if (mover.isOutOfBounds) return;
+
 			inputting = true;
 			var posAhead = mover.FetchGridPos() + Vector2Int.right;
 
-			if (mover.isStunned) mover.InitiateWiggle(mover.right, Vector3.back);
+			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.right, Vector3.back);
 
 			else if (handler.floorCubeDic.ContainsKey(posAhead)
 				&& handler.FetchShrunkStatus(posAhead) == false)

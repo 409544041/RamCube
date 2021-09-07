@@ -252,21 +252,6 @@ MonoBehaviour:
   wiggleRotation: 8
   yDuringPlay: 0.9
   yWhenLowered: 0
-  onLoweringEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1324210861968108626}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &7696613664066083821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,6 +311,9 @@ MonoBehaviour:
   boostJuice: {fileID: 5263398275875843955}
   postBoostJuice: {fileID: 762758906432211995}
   maxBoostTrailTime: 0.75
+  source: {fileID: 1324210861968108626}
+  loweringClip: {fileID: 8300000, guid: b264fc38c36ef4a49b19bfc61e250bbb, type: 3}
+  loweringVolume: 2.25
 --- !u!114 &7636770465740133781
 MonoBehaviour:
   m_ObjectHideFlags: 0
