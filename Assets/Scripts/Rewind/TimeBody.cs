@@ -124,8 +124,10 @@ namespace Qbism.Rewind
 			}
 		}
 
-		//isFindable is removed from a floorcube if a moveable becomes a floorcube on a location of the old (shrunk) floorcube
-		//floor cubes with isFindable are added to floorcubedic after moveables get docked. So the old shrunk floorcube isn't added to avoid dic overlap
+		//isFindable is removed from a floorcube if a moveable becomes a floorcube on a 
+		//location of the old (shrunk) floorcube. floor cubes with isFindable are added to 
+		//floorcubedic after moveables get docked. So the old shrunk floorcube isn't added 
+		//to avoid dic overlap
 		private void SetIsFindable(FloorCube cube)
 		{
 			if(isFindableList.Count <= 0) return;

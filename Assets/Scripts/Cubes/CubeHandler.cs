@@ -125,38 +125,49 @@ namespace Qbism.Cubes
 				currentCube = FetchCube(cubePos);
 				bool differentCubes = currentCube != previousCube;
 
-				if (currentCube.FetchType() == CubeTypes.Boosting)
-					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-
-				else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
+				if (!currentCube.GetComponent<CubeShrinker>().hasShrunk)
 				{
-					if (onLand != null) onLand();
-					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-					mover.GetComponent<PlayerCubeTurnJuicer>().PlayTurningVoice();
-				}
+					if (currentCube.FetchType() == CubeTypes.Boosting)
+						currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 
-				else
-				{
-					if (differentCubes && onLand != null)
+					else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
 					{
-						if (!mover.isStunned) cubeFF.ShowFeedForward();
-						onLand();
-
-						if (previousCube.FetchType() != CubeTypes.Boosting)
-							playerFlipJuicer.PlayPostFlipJuice();
-							
-						else playerBoostJuicer.PlayPostBoostJuice();
-						
+						if (onLand != null) onLand();
+						currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+						mover.GetComponent<PlayerCubeTurnJuicer>().PlayTurningVoice();
 					}
+
 					else
 					{
-						//landing on same cube, like after having turned/flipped
-						if (!mover.isStunned) cubeFF.ShowFeedForward(); 
-					}
+						if (differentCubes && onLand != null)
+						{
+							if (!mover.isStunned) cubeFF.ShowFeedForward();
+							onLand();
 
-					mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();
+							if (previousCube.FetchType() != CubeTypes.Boosting)
+								playerFlipJuicer.PlayPostFlipJuice();
+
+							else playerBoostJuicer.PlayPostBoostJuice();
+
+						}
+						else
+						{
+							//landing on same cube, like after having turned/flipped
+							if (!mover.isStunned) cubeFF.ShowFeedForward();
+						}
+
+						mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();
+					}
+				}
+				
+				else
+				{
+					//lowering
+					if (previousCube.FetchType() == CubeTypes.Boosting)
+						mover.InitiateLowering(cubePos);
 				}
 			}
+			 
 			else
 			{
 				//lowering
@@ -182,28 +193,36 @@ namespace Qbism.Cubes
 				FloorCube currentCube = FetchCube(cubePos);
 				FloorCube prevCube = FetchCube(prevPos);
 
-				if (currentCube.FetchType() == CubeTypes.Boosting ||
+				if (!currentCube.GetComponent<CubeShrinker>().hasShrunk)
+				{
+					if (currentCube.FetchType() == CubeTypes.Boosting ||
 					(currentCube.FetchType() == CubeTypes.Turning))
-				{
-					if (prevCube.type == CubeTypes.Boosting &&
-						moveHandler.CheckMoveableCubeDicKey(posAhead))
-						moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-
-					currentCube.GetComponent<ICubeInfluencer>().
-					PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, originPos, prevCube);
-				}
-					
-				else if(currentCube.FetchType() == CubeTypes.Shrinking ||
-					currentCube.FetchType() == CubeTypes.Static)
-				{
-					if(prevCube.type == CubeTypes.Boosting && 
-						moveHandler.CheckMoveableCubeDicKey(posAhead))
 					{
-						moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-						cube.hasBumped = true;
+						if (prevCube.type == CubeTypes.Boosting &&
+							moveHandler.CheckMoveableCubeDicKey(posAhead))
+							moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
+
+						currentCube.GetComponent<ICubeInfluencer>().
+						PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, originPos, prevCube);
 					}
-						
-					cube.InitiateMove(side, turnAxis, posAhead, originPos);
+
+					else if (currentCube.FetchType() == CubeTypes.Shrinking ||
+						currentCube.FetchType() == CubeTypes.Static)
+					{
+						if (prevCube.type == CubeTypes.Boosting &&
+							moveHandler.CheckMoveableCubeDicKey(posAhead))
+						{
+							moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
+							cube.hasBumped = true;
+						}
+
+						cube.InitiateMove(side, turnAxis, posAhead, originPos);
+					}
+				}
+				
+				else
+				{
+					cube.InitiateLowering(cubePos);
 				}
 			}
 
