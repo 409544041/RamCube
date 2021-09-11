@@ -15,19 +15,19 @@ namespace Qbism.General
 		[SerializeField] bool scrollAlways = false;
 
 		//Cache
-		CubeHandler handler;
+		FloorCubeChecker floorChecker;
 
 		//States
 		Vector2 offSet;
 
 		private void Awake()
 		{
-			handler = FindObjectOfType<CubeHandler>();
+			floorChecker = FindObjectOfType<FloorCubeChecker>();
 		}
 
 		private void OnEnable()
 		{
-			if (handler != null) handler.onLand += InitiateScroll;
+			if (floorChecker != null) floorChecker.onLand += InitiateScroll;
 		}
 
 		private void Update() 
@@ -56,7 +56,7 @@ namespace Qbism.General
 
 		private void OnDisable()
 		{
-			if (handler != null) handler.onLand -= InitiateScroll;
+			if (floorChecker != null) floorChecker.onLand -= InitiateScroll;
 			material.mainTextureOffset = new Vector2(0, 0);
 		}
 	}

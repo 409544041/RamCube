@@ -17,6 +17,7 @@ namespace Qbism.Cubes
 		ProgressHandler progHandler;
 		SerpentProgress serpProg;
 		FinishEndSeqHandler finishEndSeq;
+		FloorCubeChecker floorChecker;
 
 		//States
 		Vector2Int myPosition;
@@ -39,11 +40,12 @@ namespace Qbism.Cubes
 			progHandler = FindObjectOfType<ProgressHandler>();
 			serpProg = FindObjectOfType<SerpentProgress>();
 			finishEndSeq = GetComponent<FinishEndSeqHandler>();
+			floorChecker = mover.GetComponent<FloorCubeChecker>();
 		}
 
 		private void OnEnable()
 		{
-			if (handler != null) handler.onLand += CheckForFinish;
+			if (floorChecker != null) floorChecker.onLand += CheckForFinish;
 			if (juicer != null) juicer.onFinishCheck += FetchFinishStatus;
 		}
 
@@ -117,7 +119,7 @@ namespace Qbism.Cubes
 
 		private void OnDisable()
 		{
-			if (handler != null) handler.onLand -= CheckForFinish;
+			if (floorChecker != null) floorChecker.onLand -= CheckForFinish;
 			if (juicer != null) juicer.onFinishCheck -= FetchFinishStatus;
 		}
 	}

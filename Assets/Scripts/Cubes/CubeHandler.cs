@@ -11,33 +11,24 @@ namespace Qbism.Cubes
 	public class CubeHandler : MonoBehaviour
 	{
 		//Cache
-		FeedForwardCube[] ffCubes = null;
 		PlayerCubeFeedForward cubeFF = null;
 		PlayerCubeMover mover = null;
 		MoveableCube[] moveableCubes = null;
-		MoveableCubeHandler moveHandler;
-		PlayerCubeFlipJuicer playerFlipJuicer;
-		PlayerCubeBoostJuicer playerBoostJuicer;
+		FloorComponentAdder[] compAdders = null;
 
-		//States
-		public FloorCube currentCube { get; set; } = null;
-		
+		//States		
 		public Dictionary<Vector2Int, FloorCube> floorCubeDic = 
 			new Dictionary<Vector2Int, FloorCube>();
-		
-		public event Action onLand;
+
+		//Actions, events, delegates etc
 		public event Action<FloorCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
-			ffCubes = FindObjectsOfType<FeedForwardCube>();
 			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();
-			moveHandler = GetComponent<MoveableCubeHandler>();
-			playerFlipJuicer = mover.GetComponent<PlayerCubeFlipJuicer>();
-			playerBoostJuicer = mover.GetComponent<PlayerCubeBoostJuicer>();
-
+			compAdders = FindObjectsOfType<FloorComponentAdder>();
 			LoadFloorCubeDictionary();
 		}
 
@@ -45,7 +36,6 @@ namespace Qbism.Cubes
 		{
 			if (mover != null)
 			{
-				mover.onFloorCheck += CheckFloorType;
 				mover.onCubeShrink += ShrinkCube;
 				mover.onInitialFloorCubeRecord += InitialRecordCubes;
 			} 
@@ -56,32 +46,25 @@ namespace Qbism.Cubes
 				cubeFF.onShrunkCheck += FetchShrunkStatus;
 			} 
 
-			if (ffCubes != null)
-			{
-				foreach (FeedForwardCube ffCube in ffCubes)
-				{
-					ffCube.onFeedForwardFloorCheck += CheckFloorTypeForFF;
-				}
-			}
-
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onFloorKeyCheck += CheckFloorCubeDicKey;
-					cube.onComponentAdd += AddComponent;
-					cube.onFloorCheck += CheckFloorTypeForMoveable;
 					cube.onShrunkCheck += FetchShrunkStatus;
 					cube.onSetFindable += SetFindableStatus;
 					cube.onDicRemove += RemoveFromDictionary;
 					cube.onSetShrunk += SetShrunkStatus;
 				}
 			}
-		}
 
-		private void Start() 
-		{
-			currentCube = FetchCube(mover.FetchGridPos());
+			if (compAdders != null)
+			{
+				foreach (var adder in compAdders)
+				{
+					adder.onAddToDic += AddToDictionary;
+				}
+			}
 		}
 
 		public void LoadFloorCubeDictionary()
@@ -104,131 +87,6 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private void CheckFloorType(Vector2Int cubePos, GameObject cube, 
-			Transform side, Vector3 turnAxis, Vector2Int posAhead)
-		{
-			FloorCube previousCube;
-
-			previousCube = currentCube;
-
-			if(previousCube.FetchType() == CubeTypes.Static)
-				previousCube.GetComponent<StaticCube>().BecomeShrinkingCube(cube);
-			
-			if(previousCube.FetchType() == CubeTypes.Boosting && 
-				moveHandler.CheckMoveableCubeDicKey(posAhead))
-			{
-				moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-			}
-
-			if (floorCubeDic.ContainsKey(cubePos))
-			{
-				currentCube = FetchCube(cubePos);
-				bool differentCubes = currentCube != previousCube;
-
-				if (!currentCube.GetComponent<CubeShrinker>().hasShrunk)
-				{
-					if (currentCube.FetchType() == CubeTypes.Boosting)
-						currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-
-					else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
-					{
-						if (onLand != null) onLand();
-						currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-						mover.GetComponent<PlayerCubeTurnJuicer>().PlayTurningVoice();
-					}
-
-					else
-					{
-						if (differentCubes && onLand != null)
-						{
-							if (!mover.isStunned) cubeFF.ShowFeedForward();
-							onLand();
-
-							if (previousCube.FetchType() != CubeTypes.Boosting)
-								playerFlipJuicer.PlayPostFlipJuice();
-
-							else playerBoostJuicer.PlayPostBoostJuice();
-
-						}
-						else
-						{
-							//landing on same cube, like after having turned/flipped
-							if (!mover.isStunned) cubeFF.ShowFeedForward();
-						}
-
-						mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();
-					}
-				}
-				
-				else
-				{
-					//lowering
-					if (previousCube.FetchType() == CubeTypes.Boosting)
-						mover.InitiateLowering(cubePos);
-				}
-			}
-			 
-			else
-			{
-				//lowering
-				if (previousCube.FetchType() == CubeTypes.Boosting)
-					mover.InitiateLowering(cubePos);
-			}
-		}
-
-		private void CheckFloorTypeForFF(Vector2Int cubePos, GameObject cube)
-		{
-			FloorCube currentCube = FetchCube(cubePos);
-
-			if(currentCube.FetchType() == CubeTypes.Boosting ||
-				currentCube.FetchType() == CubeTypes.Turning)
-				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-		}
-
-		private void CheckFloorTypeForMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead,
-			MoveableCube cube, Vector2Int cubePos, Vector2Int originPos, Vector2Int prevPos)
-		{
-			if(floorCubeDic.ContainsKey(cubePos))
-			{
-				FloorCube currentCube = FetchCube(cubePos);
-				FloorCube prevCube = FetchCube(prevPos);
-
-				if (!currentCube.GetComponent<CubeShrinker>().hasShrunk)
-				{
-					if (currentCube.FetchType() == CubeTypes.Boosting ||
-					(currentCube.FetchType() == CubeTypes.Turning))
-					{
-						if (prevCube.type == CubeTypes.Boosting &&
-							moveHandler.CheckMoveableCubeDicKey(posAhead))
-							moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-
-						currentCube.GetComponent<ICubeInfluencer>().
-						PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, originPos, prevCube);
-					}
-
-					else if (currentCube.FetchType() == CubeTypes.Shrinking ||
-						currentCube.FetchType() == CubeTypes.Static)
-					{
-						if (prevCube.type == CubeTypes.Boosting &&
-							moveHandler.CheckMoveableCubeDicKey(posAhead))
-						{
-							moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-							cube.hasBumped = true;
-						}
-
-						cube.InitiateMove(side, turnAxis, posAhead, originPos);
-					}
-				}
-				
-				else
-				{
-					cube.InitiateLowering(cubePos);
-				}
-			}
-
-			else cube.InitiateLowering(cubePos);
-		}
-
 		private void InitialRecordCubes()
 		{
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in floorCubeDic)
@@ -245,40 +103,6 @@ namespace Qbism.Cubes
 		{
 			if(floorCubeDic.ContainsKey(cubePos)) return true;
 			else return false;
-		}
-
-		private void AddComponent(Vector2Int cubePos, GameObject cube, float shrinkStep, 
-			float shrinkTimeStep, MMFeedbacks shrinkFeedback, float shrinkDuration, 
-			MeshRenderer mesh, MeshRenderer shrinkMesh, LineRenderer laserLine)
-		{
-			FloorCube newFloor = cube.AddComponent<FloorCube>();
-			CubeShrinker newShrinker = cube.AddComponent<CubeShrinker>();
-
-			newFloor.tag = "Environment";
-			newFloor.type = CubeTypes.Shrinking;
-			newFloor.laserLine = laserLine;
-
-			newShrinker.shrinkStep = shrinkStep;
-			newShrinker.timeStep = shrinkTimeStep;
-			newShrinker.mesh = mesh;
-			newShrinker.shrinkMesh = shrinkMesh;
-			newShrinker.shrinkFeedback = shrinkFeedback;
-			newShrinker.shrinkFeedbackDuration = shrinkDuration;
-
-			AddToDictionary(cubePos, newFloor);
-			LaserDottedLineCheck();
-		}
-
-		private void LaserDottedLineCheck()
-		{
-			LaserCube[] lasers = FindObjectsOfType<LaserCube>();
-			if (lasers.Length > 0)
-			{
-				foreach (var laser in lasers)
-				{
-					laser.CastDottedLines(laser.dist, laser.distance);
-				}
-			}
 		}
 
 		public void AddToDictionary(Vector2Int cubePos, FloorCube cube)
@@ -320,7 +144,6 @@ namespace Qbism.Cubes
 		{
 			if (mover != null)
 			{
-				mover.onFloorCheck -= CheckFloorType;
 				mover.onCubeShrink -= ShrinkCube;
 				mover.onInitialFloorCubeRecord -= InitialRecordCubes;
 			}
@@ -331,25 +154,23 @@ namespace Qbism.Cubes
 				cubeFF.onShrunkCheck -= FetchShrunkStatus;
 			}
 
-			if (ffCubes != null)
-			{
-				foreach (FeedForwardCube ffCube in ffCubes)
-				{
-					ffCube.onFeedForwardFloorCheck -= CheckFloorTypeForFF;
-				}
-			}
-
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onFloorKeyCheck -= CheckFloorCubeDicKey;
-					cube.onComponentAdd -= AddComponent;
-					cube.onFloorCheck -= CheckFloorTypeForMoveable;
 					cube.onShrunkCheck -= FetchShrunkStatus;
 					cube.onSetFindable -= SetFindableStatus;
 					cube.onDicRemove -= RemoveFromDictionary;
 					cube.onSetShrunk -= SetShrunkStatus;
+				}
+			}
+
+			if (compAdders != null)
+			{
+				foreach (var adder in compAdders)
+				{
+					adder.onAddToDic -= AddToDictionary;
 				}
 			}
 		}

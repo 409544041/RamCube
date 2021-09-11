@@ -31,6 +31,9 @@ namespace Qbism.MoveableCubes
 		[SerializeField] float shrinkFeedbackDuration;
 		public MeshRenderer mesh;
 
+		//Cache
+		FloorComponentAdder compAdder = null;
+
 		//States
 		public bool isMoving { get; set;} = false;
 		private float yPos = 1f;
@@ -48,8 +51,6 @@ namespace Qbism.MoveableCubes
 		public delegate Vector2Int PlayerPosDelegate();
 		public PlayerPosDelegate onPlayerPosCheck;
 		
-
-		public event Action<Vector2Int, GameObject, float, float, MMFeedbacks, float, MeshRenderer, MeshRenderer, LineRenderer> onComponentAdd;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
 		public event Action onCheckForNewFloorCubes;
 		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
@@ -57,6 +58,11 @@ namespace Qbism.MoveableCubes
 		public event Action<Vector2Int> onDicRemove;
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
 		public event Action<Vector2Int, bool> onSetShrunk;
+
+		private void Awake() 
+		{
+			compAdder = GetComponent<FloorComponentAdder>();
+		}
 
 		private void Start()
 		{
@@ -141,7 +147,7 @@ namespace Qbism.MoveableCubes
 					onDicRemove(cubePos);
 				} 
 
-				onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
+				compAdder.AddComponent(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
 					shrinkFeedback, shrinkFeedbackDuration, mesh, shrinkingmesh, laserLine);
 				onCheckForNewFloorCubes();
 				UpdateCenterPosition();
@@ -173,7 +179,7 @@ namespace Qbism.MoveableCubes
 			isMoving = false;
 			isDocked = true;
 
-			onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
+			compAdder.AddComponent(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
 				shrinkFeedback, shrinkFeedbackDuration, mesh, shrinkingmesh, laserLine);
 			onCheckForNewFloorCubes();
 			UpdateCenterPosition();
