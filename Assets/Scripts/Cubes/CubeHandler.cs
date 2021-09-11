@@ -14,6 +14,7 @@ namespace Qbism.Cubes
 		PlayerCubeFeedForward cubeFF = null;
 		PlayerCubeMover mover = null;
 		MoveableCube[] moveableCubes = null;
+		FloorComponentAdder[] compAdders = null;
 
 		//States		
 		public Dictionary<Vector2Int, FloorCube> floorCubeDic = 
@@ -27,6 +28,7 @@ namespace Qbism.Cubes
 			mover = FindObjectOfType<PlayerCubeMover>();
 			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();
+			compAdders = FindObjectsOfType<FloorComponentAdder>();
 			LoadFloorCubeDictionary();
 		}
 
@@ -49,11 +51,18 @@ namespace Qbism.Cubes
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onFloorKeyCheck += CheckFloorCubeDicKey;
-					cube.onComponentAdd += AddComponent;
 					cube.onShrunkCheck += FetchShrunkStatus;
 					cube.onSetFindable += SetFindableStatus;
 					cube.onDicRemove += RemoveFromDictionary;
 					cube.onSetShrunk += SetShrunkStatus;
+				}
+			}
+
+			if (compAdders != null)
+			{
+				foreach (var adder in compAdders)
+				{
+					adder.onAddToDic += AddToDictionary;
 				}
 			}
 		}
@@ -94,40 +103,6 @@ namespace Qbism.Cubes
 		{
 			if(floorCubeDic.ContainsKey(cubePos)) return true;
 			else return false;
-		}
-
-		private void AddComponent(Vector2Int cubePos, GameObject cube, float shrinkStep, 
-			float shrinkTimeStep, MMFeedbacks shrinkFeedback, float shrinkDuration, 
-			MeshRenderer mesh, MeshRenderer shrinkMesh, LineRenderer laserLine)
-		{
-			FloorCube newFloor = cube.AddComponent<FloorCube>();
-			CubeShrinker newShrinker = cube.AddComponent<CubeShrinker>();
-
-			newFloor.tag = "Environment";
-			newFloor.type = CubeTypes.Shrinking;
-			newFloor.laserLine = laserLine;
-
-			newShrinker.shrinkStep = shrinkStep;
-			newShrinker.timeStep = shrinkTimeStep;
-			newShrinker.mesh = mesh;
-			newShrinker.shrinkMesh = shrinkMesh;
-			newShrinker.shrinkFeedback = shrinkFeedback;
-			newShrinker.shrinkFeedbackDuration = shrinkDuration;
-
-			AddToDictionary(cubePos, newFloor);
-			LaserDottedLineCheck();
-		}
-
-		private void LaserDottedLineCheck()
-		{
-			LaserCube[] lasers = FindObjectsOfType<LaserCube>();
-			if (lasers.Length > 0)
-			{
-				foreach (var laser in lasers)
-				{
-					laser.CastDottedLines(laser.dist, laser.distance);
-				}
-			}
 		}
 
 		public void AddToDictionary(Vector2Int cubePos, FloorCube cube)
@@ -184,11 +159,18 @@ namespace Qbism.Cubes
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onFloorKeyCheck -= CheckFloorCubeDicKey;
-					cube.onComponentAdd -= AddComponent;
 					cube.onShrunkCheck -= FetchShrunkStatus;
 					cube.onSetFindable -= SetFindableStatus;
 					cube.onDicRemove -= RemoveFromDictionary;
 					cube.onSetShrunk -= SetShrunkStatus;
+				}
+			}
+
+			if (compAdders != null)
+			{
+				foreach (var adder in compAdders)
+				{
+					adder.onAddToDic -= AddToDictionary;
 				}
 			}
 		}
