@@ -20,6 +20,9 @@ namespace Qbism.Cubes
 		public Dictionary<Vector2Int, FloorCube> floorCubeDic = 
 			new Dictionary<Vector2Int, FloorCube>();
 
+		public Dictionary<Vector2Int, FloorCube> shrunkFloorCubeDic =
+			new Dictionary<Vector2Int, FloorCube>();
+
 		//Actions, events, delegates etc
 		public event Action<FloorCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
@@ -84,6 +87,20 @@ namespace Qbism.Cubes
 			if (floorCubeDic[cubeToShrink].FetchType() == CubeTypes.Shrinking)
 			{
 				floorCubeDic[cubeToShrink].GetComponent<CubeShrinker>().StartShrinking();
+			}
+		}
+
+		public void FloorCubeDicSwap(Vector2Int cubePos, FloorCube cube)
+		{
+			if (floorCubeDic.ContainsKey(cubePos))
+			{
+				floorCubeDic.Remove(cubePos);
+				shrunkFloorCubeDic.Add(cubePos, cube);
+			}
+			else if (shrunkFloorCubeDic.ContainsKey(cubePos))
+			{
+				shrunkFloorCubeDic.Remove(cubePos);
+				floorCubeDic.Add(cubePos, cube);
 			}
 		}
 

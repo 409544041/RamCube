@@ -150,6 +150,10 @@ namespace Qbism.Rewind
 				{
 					shrinker.hasShrunk = false;
 					shrinker.EnableMesh();
+					
+					var floorCube = GetComponent<FloorCube>();
+					var cubePos = floorCube.FetchGridPos();
+					handler.FloorCubeDicSwap(cubePos, floorCube);
 				}
 		
 			hasShrunkList.RemoveAt(0);
