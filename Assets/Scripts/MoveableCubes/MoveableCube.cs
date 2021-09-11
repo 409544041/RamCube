@@ -48,7 +48,6 @@ namespace Qbism.MoveableCubes
 		public delegate Vector2Int PlayerPosDelegate();
 		public PlayerPosDelegate onPlayerPosCheck;
 		
-
 		public event Action<Vector2Int, GameObject, float, float, MMFeedbacks, float, MeshRenderer, MeshRenderer, LineRenderer> onComponentAdd;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
 		public event Action onCheckForNewFloorCubes;

@@ -14,6 +14,7 @@ namespace Qbism.Rewind
 		PlayerCubeMover mover;
 		MoveableCubeHandler moveHandler;
 		CubeHandler handler;
+		FloorCubeChecker floorChecker;
 
 		private List<PointInTime> rewindList = new List<PointInTime>(); 
 		private List<bool> isFindableList = new List<bool>();
@@ -29,8 +30,9 @@ namespace Qbism.Rewind
 		private void Awake() 
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
-			moveHandler = FindObjectOfType<MoveableCubeHandler>();
 			handler = FindObjectOfType<CubeHandler>();
+			moveHandler = handler.GetComponent<MoveableCubeHandler>();
+			floorChecker = handler.GetComponent<FloorCubeChecker>();
 		}
 
 		//Is initiated by player move
@@ -83,7 +85,7 @@ namespace Qbism.Rewind
 				mover.RoundPosition();
 				mover.UpdateCenterPosition();
 				mover.GetComponent<PlayerCubeFeedForward>().ShowFeedForward();
-				handler.currentCube = handler.FetchCube(mover.FetchGridPos());
+				floorChecker.currentCube = handler.FetchCube(mover.FetchGridPos());
 
 				if (mover.isOutOfBounds || mover.isLowered)
 				{
