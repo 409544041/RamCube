@@ -12,7 +12,7 @@ namespace Qbism.Cubes
 		public float timeStep = 0f;
 		public MMFeedbacks shrinkFeedback;
 		public float shrinkFeedbackDuration = 0f;
-		[SerializeField] MeshRenderer mesh, shrinkMesh;
+		public MeshRenderer mesh, shrinkMesh;
 
 		//Cache
 		LineRenderer laserLine = null;
@@ -22,15 +22,12 @@ namespace Qbism.Cubes
 		Vector3 resetPos;
 		Quaternion resetRot;
 		Vector3 resetScale;
-		
-		private void Awake() 
-		{
-			laserLine = GetComponent<FloorCube>().laserLine;
-		}
 
 		private void Start()
 		{
 			SetResetData();
+			laserLine = GetComponent<FloorCube>().laserLine; 
+			//Here instead of awake bc for when moveable becomes floor and components get added after awake
 		}
 
 		private void SetResetData()

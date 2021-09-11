@@ -81,6 +81,8 @@ namespace Qbism.General
 		{
 			foreach (KeyValuePair<Vector2Int, FloorCube> cube in handler.floorCubeDic)
 			{
+				if (cube.Value == null) return;
+				
 				Vector2 viewPortPos = Camera.main.WorldToViewportPoint(cube.Value.transform.position);
 
 				if (!firstValueAssigned)

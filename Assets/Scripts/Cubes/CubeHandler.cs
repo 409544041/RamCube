@@ -248,18 +248,37 @@ namespace Qbism.Cubes
 		}
 
 		private void AddComponent(Vector2Int cubePos, GameObject cube, float shrinkStep, 
-			float shrinkTimeStep, MMFeedbacks shrinkFeedback, float shrinkDuration)
+			float shrinkTimeStep, MMFeedbacks shrinkFeedback, float shrinkDuration, 
+			MeshRenderer mesh, MeshRenderer shrinkMesh, LineRenderer laserLine)
 		{
 			FloorCube newFloor = cube.AddComponent<FloorCube>();
 			CubeShrinker newShrinker = cube.AddComponent<CubeShrinker>();
-			newShrinker.shrinkStep = shrinkStep;
-			newShrinker.timeStep = shrinkTimeStep;
+
 			newFloor.tag = "Environment";
 			newFloor.type = CubeTypes.Shrinking;
+			newFloor.laserLine = laserLine;
+
+			newShrinker.shrinkStep = shrinkStep;
+			newShrinker.timeStep = shrinkTimeStep;
+			newShrinker.mesh = mesh;
+			newShrinker.shrinkMesh = shrinkMesh;
 			newShrinker.shrinkFeedback = shrinkFeedback;
 			newShrinker.shrinkFeedbackDuration = shrinkDuration;
 
 			AddToDictionary(cubePos, newFloor);
+			LaserDottedLineCheck();
+		}
+
+		private void LaserDottedLineCheck()
+		{
+			LaserCube[] lasers = FindObjectsOfType<LaserCube>();
+			if (lasers.Length > 0)
+			{
+				foreach (var laser in lasers)
+				{
+					laser.CastDottedLines(laser.dist, laser.distance);
+				}
+			}
 		}
 
 		public void AddToDictionary(Vector2Int cubePos, FloorCube cube)

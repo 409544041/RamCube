@@ -94,19 +94,9 @@ namespace Qbism.Rewind
 		{
 			if (!mover.input) return;
 
-			//To make sure there's no delay on turning on laser again upon rewind
-			if (lasers.Length > 0)
-			{
-				foreach (var laser in lasers)
-				{
-					laser.laserPause = false;
-				}
-			}
-
-			foreach (TimeBody timeBody in timeBodies)
-			{
-				timeBody.StartRewind();
-			}
+			LaserRewindStuff();
+			
+			RewindTimeBodies();
 
 			//To stop rewind UI element from pulsing if rewinding off finish
 			if (finish.wrongOnFinish)
@@ -115,6 +105,26 @@ namespace Qbism.Rewind
 			StartCoroutine(DelayedLaserRewindStuff());
 
 			StartCoroutine(ReloadDics());
+		}
+
+		private void RewindTimeBodies()
+		{
+			foreach (TimeBody timeBody in timeBodies)
+			{
+				timeBody.StartRewind();
+			}
+		}
+
+		private void LaserRewindStuff()
+		{
+			if (lasers.Length > 0)
+			{
+				foreach (var laser in lasers)
+				{
+					//To make sure there's no delay on turning on laser again upon rewind
+					laser.laserPause = false;
+				}
+			}
 		}
 
 		private IEnumerator DelayedLaserRewindStuff()

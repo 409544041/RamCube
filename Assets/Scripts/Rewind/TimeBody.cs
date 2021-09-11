@@ -179,6 +179,7 @@ namespace Qbism.Rewind
 				moveable.isDocked = false;
 				Destroy(GetComponent<FloorCube>());
 				Destroy(GetComponent<CubeShrinker>());
+				moveable.laserLine.enabled = false;
 				moveable.gameObject.SendMessage("StartPostRewindJuice");
 			}
 

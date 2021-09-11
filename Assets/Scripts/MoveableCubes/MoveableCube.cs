@@ -9,9 +9,11 @@ namespace Qbism.MoveableCubes
 	public class MoveableCube : MonoBehaviour, IActiveCube
 	{
 		//Config parameters
-		[Header("Shrinking")]
+		[Header("Becoming Floor")]
 		[SerializeField] float shrinkStep = 0f;
 		[SerializeField] float shrinkTimeStep = 0f;
+		[SerializeField] MeshRenderer shrinkingmesh;
+		public LineRenderer laserLine = null;
 		[Header("Flip Center")]
 		[SerializeField] Transform center = null;
 		public Transform up = null;
@@ -27,7 +29,7 @@ namespace Qbism.MoveableCubes
 		[SerializeField] Vector3 moveScale = new Vector3( .9f, .9f, .9f);
 		[SerializeField] MMFeedbacks shrinkFeedback;
 		[SerializeField] float shrinkFeedbackDuration;
-		public Renderer mesh;
+		public MeshRenderer mesh;
 
 		//States
 		public bool isMoving { get; set;} = false;
@@ -47,7 +49,7 @@ namespace Qbism.MoveableCubes
 		public PlayerPosDelegate onPlayerPosCheck;
 		
 
-		public event Action<Vector2Int, GameObject, float, float, MMFeedbacks, float> onComponentAdd;
+		public event Action<Vector2Int, GameObject, float, float, MMFeedbacks, float, MeshRenderer, MeshRenderer, LineRenderer> onComponentAdd;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
 		public event Action onCheckForNewFloorCubes;
 		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
@@ -139,8 +141,10 @@ namespace Qbism.MoveableCubes
 					onDicRemove(cubePos);
 				} 
 
-				onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, shrinkFeedback, shrinkFeedbackDuration);
+				onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
+					shrinkFeedback, shrinkFeedbackDuration, mesh, shrinkingmesh, laserLine);
 				onCheckForNewFloorCubes();
+				UpdateCenterPosition();
 			}
 		}
 
@@ -169,8 +173,10 @@ namespace Qbism.MoveableCubes
 			isMoving = false;
 			isDocked = true;
 
-			onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, shrinkFeedback, shrinkFeedbackDuration);
+			onComponentAdd(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
+				shrinkFeedback, shrinkFeedbackDuration, mesh, shrinkingmesh, laserLine);
 			onCheckForNewFloorCubes();
+			UpdateCenterPosition();
 		}
 
 		private bool CheckForWallAhead(Vector2Int pos)
@@ -181,6 +187,8 @@ namespace Qbism.MoveableCubes
 		public void UpdateCenterPosition()
 		{
 			center.position = transform.position;
+			laserLine.transform.position = new Vector3 (transform.position.x, 
+				laserLine.transform.position.y, transform.position.z);
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead,

@@ -27,6 +27,7 @@ namespace Qbism.Cubes
 		float currentLength = 0f;
 		bool isClosed = false;
 		public bool laserPause { get; set; }= false;
+		public float dist { get; set; }
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onRewindPulse;
@@ -146,7 +147,6 @@ namespace Qbism.Cubes
 
 		private void AdjustBeamLength(RaycastHit[] hits)
 		{
-			float dist;
 			if (hits.Length <= 0) dist = distance;
 			else dist = hits[0].distance;
 
@@ -158,7 +158,7 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private void CastDottedLines(float dist, float startDist)
+		public void CastDottedLines(float dist, float startDist)
 		{
 			int distRoundDown = (int)(Math.Floor(dist));
 			int startDistRoundDown = (int)(Math.Floor(startDist));
