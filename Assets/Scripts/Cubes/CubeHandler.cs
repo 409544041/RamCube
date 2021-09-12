@@ -43,21 +43,15 @@ namespace Qbism.Cubes
 				mover.onInitialFloorCubeRecord += InitialRecordCubes;
 			} 
 
-			if (cubeFF != null)
-			{
-				cubeFF.onKeyCheck += CheckFloorCubeDicKey;
-				cubeFF.onShrunkCheck += FetchShrunkStatus;
-			} 
+			if (cubeFF != null) cubeFF.onKeyCheck += CheckFloorCubeDicKey;
 
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onFloorKeyCheck += CheckFloorCubeDicKey;
-					cube.onShrunkCheck += FetchShrunkStatus;
 					cube.onSetFindable += SetFindableStatus;
 					cube.onDicRemove += RemoveFromDictionary;
-					cube.onSetShrunk += SetShrunkStatus;
 				}
 			}
 
@@ -75,9 +69,11 @@ namespace Qbism.Cubes
 			FloorCube[] cubes = FindObjectsOfType<FloorCube>();
 			foreach (FloorCube cube in cubes)
 			{
+				if (shrunkFloorCubeDic.ContainsKey(cube.FetchGridPos())) continue;
+
 				Vector2Int pos = cube.FetchGridPos();
 				if (floorCubeDic.ContainsKey(pos))
-					print("Overlapping cube " + cube + " & " + floorCubeDic[pos]);
+					Debug.Log("Overlapping cube " + cube + " & " + floorCubeDic[pos]);
 				else floorCubeDic.Add(cube.FetchGridPos(), cube);
 			}
 		}
@@ -90,14 +86,18 @@ namespace Qbism.Cubes
 			}
 		}
 
-		public void FloorCubeDicSwap(Vector2Int cubePos, FloorCube cube)
+		public void FromFloorToShrunkDic(Vector2Int cubePos, FloorCube cube)
 		{
 			if (floorCubeDic.ContainsKey(cubePos))
 			{
 				floorCubeDic.Remove(cubePos);
 				shrunkFloorCubeDic.Add(cubePos, cube);
 			}
-			else if (shrunkFloorCubeDic.ContainsKey(cubePos))
+		}
+
+		public void FromShrunkToFloorDic(Vector2Int cubePos, FloorCube cube)
+		{
+			if (shrunkFloorCubeDic.ContainsKey(cubePos))
 			{
 				shrunkFloorCubeDic.Remove(cubePos);
 				floorCubeDic.Add(cubePos, cube);
@@ -108,12 +108,21 @@ namespace Qbism.Cubes
 		{
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in floorCubeDic)
 			{
-				var cube = pair.Value;
-				CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
-				
-				onInitialCubeRecording(cube, cube.transform.position, 
-					cube.transform.rotation, cube.transform.localScale);
+				TriggerRecord(pair);
 			}
+
+			foreach (KeyValuePair<Vector2Int, FloorCube> pair in shrunkFloorCubeDic)
+			{
+				TriggerRecord(pair);
+			}
+		}
+
+		private void TriggerRecord(KeyValuePair<Vector2Int, FloorCube> pair)
+		{
+			var cube = pair.Value;
+
+			onInitialCubeRecording(cube, cube.transform.position,
+				cube.transform.rotation, cube.transform.localScale);
 		}
 
 		public bool CheckFloorCubeDicKey(Vector2Int cubePos)
@@ -129,32 +138,19 @@ namespace Qbism.Cubes
 
 		private void RemoveFromDictionary(Vector2Int cubePos)
 		{
-			floorCubeDic.Remove(cubePos);
+			floorCubeDic.Remove(cubePos); //TO DO: Remove bc new dic system?
 		}
 
 		public FloorCube FetchCube(Vector2Int cubePos)
 		{
-			return floorCubeDic[cubePos];
-		}
-
-		public bool FetchShrunkStatus(Vector2Int cubePos)
-		{
-			FloorCube cube = FetchCube(cubePos);
-			CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
-
-			if (shrinker && shrinker.hasShrunk) return true;
-			else return false;
+			if (floorCubeDic.ContainsKey(cubePos))
+				return floorCubeDic[cubePos];
+			else return shrunkFloorCubeDic[cubePos];
 		}
 
 		private void SetFindableStatus(Vector2Int cubePos, bool value)
 		{
 			FetchCube(cubePos).isFindable = value;
-		}
-
-		private void SetShrunkStatus(Vector2Int cubePos, bool value)
-		{
-			if(FetchCube(cubePos).type == CubeTypes.Shrinking)
-				FetchCube(cubePos).GetComponent<CubeShrinker>().hasShrunk = value;
 		}
 
 		private void OnDisable()
@@ -165,21 +161,15 @@ namespace Qbism.Cubes
 				mover.onInitialFloorCubeRecord -= InitialRecordCubes;
 			}
 
-			if (cubeFF != null)
-			{
-				cubeFF.onKeyCheck -= CheckFloorCubeDicKey;
-				cubeFF.onShrunkCheck -= FetchShrunkStatus;
-			}
+			if (cubeFF != null) cubeFF.onKeyCheck -= CheckFloorCubeDicKey;
 
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onFloorKeyCheck -= CheckFloorCubeDicKey;
-					cube.onShrunkCheck -= FetchShrunkStatus;
 					cube.onSetFindable -= SetFindableStatus;
 					cube.onDicRemove -= RemoveFromDictionary;
-					cube.onSetShrunk -= SetShrunkStatus;
 				}
 			}
 

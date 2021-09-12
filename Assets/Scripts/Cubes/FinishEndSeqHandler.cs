@@ -82,8 +82,7 @@ namespace Qbism.Cubes
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.floorCubeDic)
 			{
 				var cube = pair.Value;
-				if (cube.type == CubeTypes.Finish ||
-					cube.GetComponent<CubeShrinker>().hasShrunk == true) continue;
+				if (cube.type == CubeTypes.Finish) continue;
 
 				floorCubeList.Add(cube);
 

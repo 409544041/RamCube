@@ -20,7 +20,6 @@ namespace Qbism.Cubes
 		CubeHandler handler = null;
 
 		//States
-		public bool hasShrunk { get; set; } = false;
 		Vector3 resetPos;
 		Quaternion resetRot;
 		Vector3 resetScale;
@@ -56,10 +55,9 @@ namespace Qbism.Cubes
 			shrinkMesh.enabled = true;
 			laserLine.enabled = false;
 
-			hasShrunk = true;
 			var cube = GetComponent<FloorCube>();
 			var cubePos = cube.FetchGridPos();
-			handler.FloorCubeDicSwap(cubePos, cube);
+			handler.FromFloorToShrunkDic(cubePos, cube);
 
 			//Makes sure all values are reset in case this is the second shrink
 			shrinkMesh.transform.position = resetPos;

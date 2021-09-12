@@ -103,7 +103,6 @@ namespace Qbism.Rewind
 				onStopRewindPulse(InterfaceIDs.Rewind);
 
 			StartCoroutine(DelayedLaserRewindStuff());
-
 			StartCoroutine(ReloadDics());
 		}
 

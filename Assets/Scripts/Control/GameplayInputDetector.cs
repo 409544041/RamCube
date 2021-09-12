@@ -75,8 +75,7 @@ namespace Qbism.Control
 			
 			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.up, Vector3.right);
 
-			else if (handler.floorCubeDic.ContainsKey(posAhead)
-				&& handler.FetchShrunkStatus(posAhead) == false)
+			else if (handler.floorCubeDic.ContainsKey(posAhead))
 				mover.HandleKeyInput(mover.up, Vector3.right, posAhead);
 
 			else mover.InitiateWiggle(mover.up, Vector3.right);
@@ -91,8 +90,7 @@ namespace Qbism.Control
 
 			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.down, Vector3.left);
 
-			else if (handler.floorCubeDic.ContainsKey(posAhead)
-				&& handler.FetchShrunkStatus(posAhead) == false)
+			else if (handler.floorCubeDic.ContainsKey(posAhead))
 				mover.HandleKeyInput(mover.down, Vector3.left, posAhead);
 
 			else mover.InitiateWiggle(mover.down, Vector3.left);
@@ -107,8 +105,7 @@ namespace Qbism.Control
 
 			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.left, Vector3.forward);
 
-			else if (handler.floorCubeDic.ContainsKey(posAhead)
-				&& handler.FetchShrunkStatus(posAhead) == false)
+			else if (handler.floorCubeDic.ContainsKey(posAhead))
 				mover.HandleKeyInput(mover.left, Vector3.forward, posAhead);
 
 			else mover.InitiateWiggle(mover.left, Vector3.forward);
@@ -123,8 +120,7 @@ namespace Qbism.Control
 
 			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.right, Vector3.back);
 
-			else if (handler.floorCubeDic.ContainsKey(posAhead)
-				&& handler.FetchShrunkStatus(posAhead) == false)
+			else if (handler.floorCubeDic.ContainsKey(posAhead))
 				mover.HandleKeyInput(mover.right, Vector3.back, posAhead);
 				
 			else mover.InitiateWiggle(mover.right, Vector3.back);

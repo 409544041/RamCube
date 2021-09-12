@@ -51,9 +51,8 @@ namespace Qbism.Rewind
 				if (cube.type == CubeTypes.Static) isStaticList.Insert(0, CubeTypes.Static);
 				else if (cube.type == CubeTypes.Shrinking) isStaticList.Insert(0, CubeTypes.Shrinking);
 
-				CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
-				if (shrinker && shrinker.hasShrunk == true) 
-					hasShrunkList.Insert(0, true);
+				if (handler.shrunkFloorCubeDic.ContainsKey(cube.FetchGridPos()))
+					hasShrunkList.Insert(0, true);	
 				else hasShrunkList.Insert(0, false);
 			}
 							
@@ -143,17 +142,14 @@ namespace Qbism.Rewind
 		private void ResetShrunkStatus(FloorCube cube)
 		{
 			if (hasShrunkList.Count <= 0) return;
-			CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
+			var cubePos = cube.FetchGridPos();
 
 			if(hasShrunkList[0] == false 
-				&& shrinker.hasShrunk == true)
+				&& handler.shrunkFloorCubeDic.ContainsKey(cubePos))
 				{
-					shrinker.hasShrunk = false;
+					CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
 					shrinker.EnableMesh();
-					
-					var floorCube = GetComponent<FloorCube>();
-					var cubePos = floorCube.FetchGridPos();
-					handler.FloorCubeDicSwap(cubePos, floorCube);
+					handler.FromShrunkToFloorDic(cubePos, cube);
 				}
 		
 			hasShrunkList.RemoveAt(0);

@@ -67,8 +67,7 @@ namespace Qbism.Control
 				{
 					var posAhead = mover.FetchGridPos() + Vector2Int.up;
 
-					if (handler.floorCubeDic.ContainsKey(posAhead)
-						&& handler.FetchShrunkStatus(posAhead) == false)
+					if (handler.floorCubeDic.ContainsKey(posAhead))
 						mover.HandleSwipeInput(mover.up, Vector3.right, posAhead);
 				}
 
@@ -76,8 +75,7 @@ namespace Qbism.Control
 				{
 					var posAhead = mover.FetchGridPos() + Vector2Int.down;
 
-					if (handler.floorCubeDic.ContainsKey(posAhead)
-						&& handler.FetchShrunkStatus(posAhead) == false)
+					if (handler.floorCubeDic.ContainsKey(posAhead))
 						mover.HandleSwipeInput(mover.down, Vector3.left, posAhead);
 				}
 
@@ -85,8 +83,7 @@ namespace Qbism.Control
 				{
 					var posAhead = mover.FetchGridPos() + Vector2Int.left;
 
-					if (handler.floorCubeDic.ContainsKey(posAhead)
-						&& handler.FetchShrunkStatus(posAhead) == false)
+					if (handler.floorCubeDic.ContainsKey(posAhead))
 						mover.HandleSwipeInput(mover.left, Vector3.forward, posAhead);
 				}
 
@@ -94,8 +91,7 @@ namespace Qbism.Control
 				{
 					var posAhead = mover.FetchGridPos() + Vector2Int.right;
 
-					if (handler.floorCubeDic.ContainsKey(posAhead)
-						&& handler.FetchShrunkStatus(posAhead) == false)
+					if (handler.floorCubeDic.ContainsKey(posAhead))
 						mover.HandleSwipeInput(mover.right, Vector3.back, posAhead);
 				}
 			}

@@ -22,9 +22,6 @@ namespace Qbism.PlayerCube
 		public delegate bool KeyCheckDel(Vector2Int pos);
 		public KeyCheckDel onKeyCheck;
 
-		public delegate bool ShrunkCheckDelegate(Vector2Int pos);
-		public ShrunkCheckDelegate onShrunkCheck;
-
 		private void Awake()
 		{
 			mover = GetComponent<PlayerCubeMover>();
@@ -77,7 +74,7 @@ namespace Qbism.PlayerCube
 
 				var onePosAhead = mover.FetchGridPos() + neighbourDirs[ffIndex];
 
-				if (onKeyCheck(onePosAhead) && onShrunkCheck(onePosAhead) == false)
+				if (onKeyCheck(onePosAhead))
 				{
 					ffCube.SwitchFF(true);
 					ffCube.transform.position = new Vector3

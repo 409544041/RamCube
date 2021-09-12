@@ -74,46 +74,36 @@ namespace Qbism.Cubes
 				currentCube = handler.FetchCube(cubePos);
 				bool differentCubes = currentCube != previousCube;
 
-				if (!currentCube.GetComponent<CubeShrinker>().hasShrunk)
+				if (currentCube.FetchType() == CubeTypes.Boosting)
+					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+
+				else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
 				{
-					if (currentCube.FetchType() == CubeTypes.Boosting)
-						currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-
-					else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
-					{
-						if (onLand != null) onLand();
-						currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-						mover.GetComponent<PlayerCubeTurnJuicer>().PlayTurningVoice();
-					}
-
-					else
-					{
-						if (differentCubes && onLand != null)
-						{
-							if (!mover.isStunned) cubeFF.ShowFeedForward();
-							onLand();
-
-							if (previousCube.FetchType() != CubeTypes.Boosting)
-								playerFlipJuicer.PlayPostFlipJuice();
-
-							else playerBoostJuicer.PlayPostBoostJuice();
-
-						}
-						else
-						{
-							//landing on same cube, like after having turned/flipped
-							if (!mover.isStunned) cubeFF.ShowFeedForward();
-						}
-
-						mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();
-					}
+					if (onLand != null) onLand();
+					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+					mover.GetComponent<PlayerCubeTurnJuicer>().PlayTurningVoice();
 				}
 
 				else
 				{
-					//lowering
-					if (previousCube.FetchType() == CubeTypes.Boosting)
-						mover.InitiateLowering(cubePos);
+					if (differentCubes && onLand != null)
+					{
+						if (!mover.isStunned) cubeFF.ShowFeedForward();
+						onLand();
+
+						if (previousCube.FetchType() != CubeTypes.Boosting)
+							playerFlipJuicer.PlayPostFlipJuice();
+
+						else playerBoostJuicer.PlayPostBoostJuice();
+
+					}
+					else
+					{
+						//landing on same cube, like after having turned/flipped
+						if (!mover.isStunned) cubeFF.ShowFeedForward();
+					}
+
+					mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();
 				}
 			}
 

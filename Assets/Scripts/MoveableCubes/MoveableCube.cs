@@ -47,7 +47,7 @@ namespace Qbism.MoveableCubes
 		public delegate bool KeyCheckDel(Vector2Int pos);
 		public KeyCheckDel onWallKeyCheck;
 		public delegate bool CheckDel(Vector2Int pos);
-		public CheckDel onFloorKeyCheck, onMoveableKeyCheck, onShrunkCheck, onMovingCheck;
+		public CheckDel onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;
 		public delegate Vector2Int PlayerPosDelegate();
 		public PlayerPosDelegate onPlayerPosCheck;
 		
@@ -57,7 +57,6 @@ namespace Qbism.MoveableCubes
 		public event Action<Vector2Int, bool> onSetFindable;
 		public event Action<Vector2Int> onDicRemove;
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
-		public event Action<Vector2Int, bool> onSetShrunk;
 
 		private void Awake() 
 		{
@@ -99,11 +98,10 @@ namespace Qbism.MoveableCubes
 			if(posAhead == onPlayerPosCheck())	//Checking if it bumps into player
 			{
 				onActivatePlayerMove(this, side, turnAxis, posAhead);
-				onSetShrunk(posAhead, true);
 				hasBumped = true;
 			}
 
-			if(onFloorKeyCheck(posAhead) && !onShrunkCheck(posAhead)) //Normal movement
+			if(onFloorKeyCheck(posAhead)) //Normal movement
 			{
 				for (int i = 0; i < (90 / turnStep); i++)
 				{
@@ -123,7 +121,7 @@ namespace Qbism.MoveableCubes
 			}
 
 			//Docking
-			else if(!onFloorKeyCheck(posAhead) || (onFloorKeyCheck(posAhead) && onShrunkCheck(posAhead))) 
+			else if(!onFloorKeyCheck(posAhead) || (onFloorKeyCheck(posAhead))) 
 			{
 				for (int i = 0; i < (180 / turnStep); i++)
 				{
@@ -144,7 +142,7 @@ namespace Qbism.MoveableCubes
 				if(onFloorKeyCheck(cubePos))
 				{
 					onSetFindable(cubePos, false);
-					onDicRemove(cubePos);
+					onDicRemove(cubePos); //TO DO: Remove? bc of new dic system?
 				} 
 
 				compAdder.AddComponent(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
