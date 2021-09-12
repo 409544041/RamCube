@@ -33,7 +33,8 @@ namespace Qbism.Cubes
 		private void CheckFloorTypeForMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead,
 			MoveableCube cube, Vector2Int cubePos, Vector2Int originPos, Vector2Int prevPos)
 		{
-			if (handler.floorCubeDic.ContainsKey(cubePos))
+			if (handler.floorCubeDic.ContainsKey(cubePos)
+				|| handler.movFloorCubeDic.ContainsKey(cubePos))
 			{
 				FloorCube currentCube = handler.FetchCube(cubePos);
 				FloorCube prevCube = handler.FetchCube(prevPos);

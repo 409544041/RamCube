@@ -55,7 +55,6 @@ namespace Qbism.MoveableCubes
 		public event Action onCheckForNewFloorCubes;
 		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
 		public event Action<Vector2Int, bool> onSetFindable;
-		public event Action<Vector2Int> onDicRemove;
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
 
 		private void Awake() 
@@ -121,7 +120,7 @@ namespace Qbism.MoveableCubes
 			}
 
 			//Docking
-			else if(!onFloorKeyCheck(posAhead) || (onFloorKeyCheck(posAhead))) 
+			else if(!onFloorKeyCheck(posAhead))
 			{
 				for (int i = 0; i < (180 / turnStep); i++)
 				{
@@ -138,17 +137,7 @@ namespace Qbism.MoveableCubes
 				isDocked = true;
 
 				var cubePos = FetchGridPos();
-
-				if(onFloorKeyCheck(cubePos))
-				{
-					onSetFindable(cubePos, false);
-					onDicRemove(cubePos); //TO DO: Remove? bc of new dic system?
-				} 
-
-				compAdder.AddComponent(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
-					shrinkFeedback, shrinkFeedbackDuration, mesh, shrinkingmesh, laserLine);
-				onCheckForNewFloorCubes();
-				UpdateCenterPosition();
+				AddComponents(cubePos);
 			}
 		}
 
@@ -177,8 +166,13 @@ namespace Qbism.MoveableCubes
 			isMoving = false;
 			isDocked = true;
 
-			compAdder.AddComponent(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
-				shrinkFeedback, shrinkFeedbackDuration, mesh, shrinkingmesh, laserLine);
+			AddComponents(cubePos);
+		}
+
+		private void AddComponents(Vector2Int cubePos)
+		{
+			compAdder.AddComponent(cubePos, this.gameObject, shrinkStep, shrinkTimeStep,
+								shrinkFeedback, shrinkFeedbackDuration, mesh, shrinkingmesh, laserLine);
 			onCheckForNewFloorCubes();
 			UpdateCenterPosition();
 		}

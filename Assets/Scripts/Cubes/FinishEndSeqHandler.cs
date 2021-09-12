@@ -83,9 +83,14 @@ namespace Qbism.Cubes
 			{
 				var cube = pair.Value;
 				if (cube.type == CubeTypes.Finish) continue;
-
 				floorCubeList.Add(cube);
+			}
 
+			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.movFloorCubeDic)
+			{
+				var cube = pair.Value;
+				if (cube.type == CubeTypes.Finish) continue;
+				floorCubeList.Add(cube);
 			}
 
 			for (int i = 0; i < floorCubeList.Count; i++)

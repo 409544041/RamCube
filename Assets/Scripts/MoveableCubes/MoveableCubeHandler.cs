@@ -9,6 +9,7 @@ namespace Qbism.MoveableCubes
 	{
 		//Cache
 		MoveableCube[] moveableCubes = null;
+		FloorComponentAdder[] compAdders = null;
 
 		public Dictionary<Vector2Int, MoveableCube> moveableCubeDic = 
 			new Dictionary<Vector2Int, MoveableCube>();
@@ -21,6 +22,7 @@ namespace Qbism.MoveableCubes
 		private void Awake() 
 		{
 			moveableCubes = FindObjectsOfType<MoveableCube>();
+			compAdders = FindObjectsOfType<FloorComponentAdder>();
 			
 			LoadMoveableCubeDictionary();
 			LoadWallCubeDictionary(); 
@@ -38,6 +40,14 @@ namespace Qbism.MoveableCubes
 					cube.onMovingCheck += FetchMovingStatus;
 				}
 			}
+
+			if (compAdders != null)
+			{
+				foreach (var adder in compAdders)
+				{
+					adder.onRemoveFromMovDic += RemoveFromMoveableDic;
+				}
+			}
 		}
 
 		private void Update()
@@ -53,7 +63,7 @@ namespace Qbism.MoveableCubes
 				if(cube.isDocked) continue;
 
 				if (moveableCubeDic.ContainsKey(cube.FetchGridPos()))
-					print("Overlapping cube " + cube);
+					Debug.Log("Overlapping moveable cube " + cube);
 				else moveableCubeDic.Add(cube.FetchGridPos(), cube);
 			}
 		}
@@ -188,6 +198,14 @@ namespace Qbism.MoveableCubes
 					cube.onMoveableKeyCheck -= CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable -= ActivateMoveableCube;
 					cube.onMovingCheck -= FetchMovingStatus;
+				}
+			}
+
+			if (compAdders != null)
+			{
+				foreach (var adder in compAdders)
+				{
+					adder.onRemoveFromMovDic -= RemoveFromMoveableDic;
 				}
 			}
 		}

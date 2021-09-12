@@ -23,6 +23,12 @@ namespace Qbism.Cubes
 		public Dictionary<Vector2Int, FloorCube> shrunkFloorCubeDic =
 			new Dictionary<Vector2Int, FloorCube>();
 
+		public Dictionary<Vector2Int, FloorCube> movFloorCubeDic =
+			new Dictionary<Vector2Int, FloorCube>();
+
+		public Dictionary<Vector2Int, FloorCube> shrunkMovFloorCubeDic =
+			new Dictionary<Vector2Int, FloorCube>();
+
 		//Actions, events, delegates etc
 		public event Action<FloorCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
@@ -39,7 +45,7 @@ namespace Qbism.Cubes
 		{
 			if (mover != null)
 			{
-				mover.onCubeShrink += ShrinkCube;
+				mover.onCubeShrink += DicCheckForShrinking;
 				mover.onInitialFloorCubeRecord += InitialRecordCubes;
 			} 
 
@@ -51,7 +57,6 @@ namespace Qbism.Cubes
 				{
 					cube.onFloorKeyCheck += CheckFloorCubeDicKey;
 					cube.onSetFindable += SetFindableStatus;
-					cube.onDicRemove += RemoveFromDictionary;
 				}
 			}
 
@@ -59,7 +64,7 @@ namespace Qbism.Cubes
 			{
 				foreach (var adder in compAdders)
 				{
-					adder.onAddToDic += AddToDictionary;
+					adder.onAddToMovFloorDic += AddToMovFloorCubeDic;
 				}
 			}
 		}
@@ -78,17 +83,32 @@ namespace Qbism.Cubes
 			}
 		}
 
-		public void ShrinkCube(Vector2Int cubeToShrink)
+		private void DicCheckForShrinking(Vector2Int cubeToShrink)
 		{
-			if (floorCubeDic[cubeToShrink].FetchType() == CubeTypes.Shrinking)
+			if (floorCubeDic.ContainsKey(cubeToShrink))
+				StartShrinking(cubeToShrink, floorCubeDic);
+			else if (movFloorCubeDic.ContainsKey(cubeToShrink))
+				StartShrinking(cubeToShrink, movFloorCubeDic);
+		}
+
+		private void StartShrinking(Vector2Int cubeToShrink, Dictionary<Vector2Int, FloorCube> dic)
+		{
+			if (dic[cubeToShrink].FetchType() == CubeTypes.Shrinking)
 			{
-				floorCubeDic[cubeToShrink].GetComponent<CubeShrinker>().StartShrinking();
+				dic[cubeToShrink].GetComponent<CubeShrinker>().StartShrinking();
 			}
 		}
 
 		public void FromFloorToShrunkDic(Vector2Int cubePos, FloorCube cube)
 		{
-			if (floorCubeDic.ContainsKey(cubePos))
+			//Check movDics first
+			if (movFloorCubeDic.ContainsKey(cubePos))
+			{
+				movFloorCubeDic.Remove(cubePos);
+				shrunkMovFloorCubeDic.Add(cubePos, cube);
+			}
+
+			else if (floorCubeDic.ContainsKey(cubePos))
 			{
 				floorCubeDic.Remove(cubePos);
 				shrunkFloorCubeDic.Add(cubePos, cube);
@@ -97,7 +117,14 @@ namespace Qbism.Cubes
 
 		public void FromShrunkToFloorDic(Vector2Int cubePos, FloorCube cube)
 		{
-			if (shrunkFloorCubeDic.ContainsKey(cubePos))
+			//Check movDics first
+			if (shrunkMovFloorCubeDic.ContainsKey(cubePos))
+			{
+				shrunkMovFloorCubeDic.Remove(cubePos);
+				movFloorCubeDic.Add(cubePos, cube);
+			}
+
+			else if (shrunkFloorCubeDic.ContainsKey(cubePos))
 			{
 				shrunkFloorCubeDic.Remove(cubePos);
 				floorCubeDic.Add(cubePos, cube);
@@ -115,6 +142,16 @@ namespace Qbism.Cubes
 			{
 				TriggerRecord(pair);
 			}
+
+			foreach (KeyValuePair<Vector2Int, FloorCube> pair in movFloorCubeDic)
+			{
+				TriggerRecord(pair);
+			}
+
+			foreach (KeyValuePair<Vector2Int, FloorCube> pair in shrunkMovFloorCubeDic)
+			{
+				TriggerRecord(pair);
+			}
 		}
 
 		private void TriggerRecord(KeyValuePair<Vector2Int, FloorCube> pair)
@@ -127,25 +164,24 @@ namespace Qbism.Cubes
 
 		public bool CheckFloorCubeDicKey(Vector2Int cubePos)
 		{
-			if(floorCubeDic.ContainsKey(cubePos)) return true;
+			if(floorCubeDic.ContainsKey(cubePos) || movFloorCubeDic.ContainsKey(cubePos)) return true;
 			else return false;
 		}
 
-		public void AddToDictionary(Vector2Int cubePos, FloorCube cube)
+		private void AddToMovFloorCubeDic(Vector2Int cubePos, FloorCube cube)
 		{
-			floorCubeDic.Add(cubePos, cube);
-		}
-
-		private void RemoveFromDictionary(Vector2Int cubePos)
-		{
-			floorCubeDic.Remove(cubePos); //TO DO: Remove bc new dic system?
+			movFloorCubeDic.Add(cubePos, cube);
 		}
 
 		public FloorCube FetchCube(Vector2Int cubePos)
 		{
 			if (floorCubeDic.ContainsKey(cubePos))
 				return floorCubeDic[cubePos];
-			else return shrunkFloorCubeDic[cubePos];
+			else if (movFloorCubeDic.ContainsKey(cubePos))
+				return movFloorCubeDic[cubePos];
+			else if (shrunkFloorCubeDic.ContainsKey(cubePos))
+				return shrunkFloorCubeDic[cubePos];
+			else return shrunkMovFloorCubeDic[cubePos];
 		}
 
 		private void SetFindableStatus(Vector2Int cubePos, bool value)
@@ -157,7 +193,7 @@ namespace Qbism.Cubes
 		{
 			if (mover != null)
 			{
-				mover.onCubeShrink -= ShrinkCube;
+				mover.onCubeShrink -= DicCheckForShrinking;
 				mover.onInitialFloorCubeRecord -= InitialRecordCubes;
 			}
 
@@ -169,7 +205,6 @@ namespace Qbism.Cubes
 				{
 					cube.onFloorKeyCheck -= CheckFloorCubeDicKey;
 					cube.onSetFindable -= SetFindableStatus;
-					cube.onDicRemove -= RemoveFromDictionary;
 				}
 			}
 
@@ -177,7 +212,7 @@ namespace Qbism.Cubes
 			{
 				foreach (var adder in compAdders)
 				{
-					adder.onAddToDic -= AddToDictionary;
+					adder.onAddToMovFloorDic -= AddToMovFloorCubeDic;
 				}
 			}
 		}

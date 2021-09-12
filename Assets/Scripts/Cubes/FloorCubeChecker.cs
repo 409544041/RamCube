@@ -69,7 +69,8 @@ namespace Qbism.Cubes
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
 			}
 
-			if (handler.floorCubeDic.ContainsKey(cubePos))
+			if (handler.floorCubeDic.ContainsKey(cubePos)
+				|| handler.movFloorCubeDic.ContainsKey(cubePos))
 			{
 				currentCube = handler.FetchCube(cubePos);
 				bool differentCubes = currentCube != previousCube;

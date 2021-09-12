@@ -51,15 +51,25 @@ namespace Qbism.Rewind
 				if (cube.type == CubeTypes.Static) isStaticList.Insert(0, CubeTypes.Static);
 				else if (cube.type == CubeTypes.Shrinking) isStaticList.Insert(0, CubeTypes.Shrinking);
 
-				if (handler.shrunkFloorCubeDic.ContainsKey(cube.FetchGridPos()))
-					hasShrunkList.Insert(0, true);	
-				else hasShrunkList.Insert(0, false);
+				if (moveable)
+				{
+					if (handler.shrunkMovFloorCubeDic.ContainsKey(cube.FetchGridPos()))
+						hasShrunkList.Insert(0, true);
+					else hasShrunkList.Insert(0, false);
+				}
+				else
+				{
+					if (handler.shrunkFloorCubeDic.ContainsKey(cube.FetchGridPos()))
+						hasShrunkList.Insert(0, true);
+					else hasShrunkList.Insert(0, false);
+				}
 			}
 							
 			if(moveable)
 			{
-				if (moveable.isDocked == true) isDockedList.Insert(0, true);
-				else isDockedList.Insert(0, false); 
+				if (moveHandler.moveableCubeDic.ContainsKey(moveable.FetchGridPos()))
+					isDockedList.Insert(0, false);
+				else isDockedList.Insert(0, true); 
 
 				if (moveable.isOutOfBounds == true) isOutOfBoundsList.Insert(0, true);
 				else isOutOfBoundsList.Insert(0, false);
@@ -73,7 +83,11 @@ namespace Qbism.Rewind
 		}
 
 		public IEnumerator Rewind()
-		{	
+		{
+			var moveable = GetComponent<MoveableCube>();
+
+			if (moveable) ResetDocked(moveable);
+
 			transform.position = rewindList[0].position;
 			transform.rotation = rewindList[0].rotation;
 			transform.localScale = rewindList[0].scale;
@@ -116,11 +130,11 @@ namespace Qbism.Rewind
 					SetIsFindable(cube);
 				}
 
-				var moveable = GetComponent<MoveableCube>();
 				if (moveable)
 				{
-					ResetDocked(moveable);
 					ResetOutOfBounds(moveable);
+					moveable.RoundPosition();
+					moveable.UpdateCenterPosition();
 				}
 			}
 		}
@@ -144,15 +158,31 @@ namespace Qbism.Rewind
 			if (hasShrunkList.Count <= 0) return;
 			var cubePos = cube.FetchGridPos();
 
-			if(hasShrunkList[0] == false 
-				&& handler.shrunkFloorCubeDic.ContainsKey(cubePos))
+			if (cube.GetComponent<MoveableCube>())
+			{
+				if (hasShrunkList[0] == false
+					&& handler.shrunkMovFloorCubeDic.ContainsKey(cubePos))
 				{
-					CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
-					shrinker.EnableMesh();
-					handler.FromShrunkToFloorDic(cubePos, cube);
+					ResetShrinking(cube, cubePos);
 				}
-		
+			}
+			else
+			{
+				if (hasShrunkList[0] == false
+					&& handler.shrunkFloorCubeDic.ContainsKey(cubePos))
+				{
+					ResetShrinking(cube, cubePos);
+				}
+			}
+			
 			hasShrunkList.RemoveAt(0);
+		}
+
+		private void ResetShrinking(FloorCube cube, Vector2Int cubePos)
+		{
+			CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
+			shrinker.EnableMesh();
+			handler.FromShrunkToFloorDic(cubePos, cube);
 		}
 
 		private void ResetStatic(FloorCube cube)
@@ -171,17 +201,18 @@ namespace Qbism.Rewind
 
 		private void ResetDocked(MoveableCube moveable) 
 		{
-			moveable.RoundPosition();
-			moveable.UpdateCenterPosition();
+			var cubePos = moveable.FetchGridPos();
 
 			if(isDockedList.Count > 0 && isDockedList[0] == false 
-				&& moveable.isDocked == true)
+				&& handler.movFloorCubeDic.ContainsKey(cubePos))
 			{
 				this.tag = "Moveable";
 				moveable.isDocked = false;
 				Destroy(GetComponent<FloorCube>());
 				Destroy(GetComponent<CubeShrinker>());
 				moveable.laserLine.enabled = false;
+				handler.movFloorCubeDic.Remove(cubePos);
+				moveHandler.moveableCubeDic.Add(cubePos, moveable);
 				moveable.gameObject.SendMessage("StartPostRewindJuice");
 			}
 

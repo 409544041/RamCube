@@ -79,17 +79,6 @@ namespace Qbism.Rewind
 			}
 		}
 
-		private IEnumerator ReloadDics() 
-		{
-			yield return new WaitForSeconds(.1f); 
-			//Without this extra time floorcubedic would register just rewinded moveables as floorcubes
-			
-			handler.floorCubeDic.Clear();
-			handler.LoadFloorCubeDictionary();
-			moveHandler.moveableCubeDic.Clear();
-			moveHandler.LoadMoveableCubeDictionary();
-		}
-
 		public void StartRewinding()
 		{
 			if (!mover.input) return;
@@ -103,7 +92,6 @@ namespace Qbism.Rewind
 				onStopRewindPulse(InterfaceIDs.Rewind);
 
 			StartCoroutine(DelayedLaserRewindStuff());
-			StartCoroutine(ReloadDics());
 		}
 
 		private void RewindTimeBodies()
