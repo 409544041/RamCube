@@ -57,6 +57,7 @@ namespace Qbism.Cubes
 						moveHandler.CheckMoveableCubeDicKey(posAhead))
 					{
 						moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
+						moveHandler.movingMoveables++;
 						cube.hasBumped = true;
 					}
 
