@@ -66,7 +66,6 @@ namespace Qbism.Cubes
 				if (hits[0].transform.gameObject.tag == "Player" &&
 				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
 				{
-					// shouldTrigger is to prevent laser from triggering if boosting along laser correct-way-facing
 					if(shouldTrigger)
 					{
 						shouldTrigger = false;
@@ -87,7 +86,6 @@ namespace Qbism.Cubes
 						juicer.TriggerDenyJuice(currentLength);
 						onRewindPulse(InterfaceIDs.Rewind);
 						mover.GetComponent<PlayerStunJuicer>().PlayStunVFX();
-						mover.input = false;
 						mover.isStunned = true;						
 					}
 				}

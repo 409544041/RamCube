@@ -33,45 +33,51 @@ namespace Qbism.Cubes
 		private void CheckFloorTypeForMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead,
 			MoveableCube cube, Vector2Int cubePos, Vector2Int originPos, Vector2Int prevPos)
 		{
-			if (handler.floorCubeDic.ContainsKey(cubePos))
+			if (handler.floorCubeDic.ContainsKey(cubePos)
+				|| handler.movFloorCubeDic.ContainsKey(cubePos))
 			{
 				FloorCube currentCube = handler.FetchCube(cubePos);
 				FloorCube prevCube = handler.FetchCube(prevPos);
 
-				if (!currentCube.GetComponent<CubeShrinker>().hasShrunk)
-				{
-					if (currentCube.FetchType() == CubeTypes.Boosting ||
+				if (currentCube.FetchType() == CubeTypes.Boosting ||
 					(currentCube.FetchType() == CubeTypes.Turning))
-					{
-						if (prevCube.type == CubeTypes.Boosting &&
-							moveHandler.CheckMoveableCubeDicKey(posAhead))
-							moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-
-						currentCube.GetComponent<ICubeInfluencer>().
-						PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, originPos, prevCube);
-					}
-
-					else if (currentCube.FetchType() == CubeTypes.Shrinking ||
-						currentCube.FetchType() == CubeTypes.Static)
-					{
-						if (prevCube.type == CubeTypes.Boosting &&
-							moveHandler.CheckMoveableCubeDicKey(posAhead))
+				{
+					if (prevCube.type == CubeTypes.Boosting &&
+						moveHandler.CheckMoveableCubeDicKey(posAhead))
 						{
 							moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-							cube.hasBumped = true;
+							moveHandler.movingMoveables++;
+							moveHandler.RemoveFromMoveableDic(posAhead);
 						}
 
-						cube.InitiateMove(side, turnAxis, posAhead, originPos);
-					}
+					currentCube.GetComponent<ICubeInfluencer>().
+					PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, originPos, prevCube);
 				}
 
-				else
+				else if (currentCube.FetchType() == CubeTypes.Shrinking ||
+					currentCube.FetchType() == CubeTypes.Static)
 				{
-					cube.InitiateLowering(cubePos);
+					if (prevCube.type == CubeTypes.Boosting &&
+						moveHandler.CheckMoveableCubeDicKey(posAhead))
+					{
+						moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
+						moveHandler.movingMoveables++;
+						moveHandler.RemoveFromMoveableDic(posAhead);
+						cube.hasBumped = true;
+					}
+
+					cube.InitiateMove(side, turnAxis, posAhead, originPos);
+				}
+
+				else if (currentCube.FetchType() == CubeTypes.Finish)
+				{
+					moveHandler.movingMoveables--;
+					moveHandler.CheckForMovingMoveables();
+					moveHandler.AddToMoveableDic(cubePos, cube);
 				}
 			}
 
-			else cube.InitiateLowering(cubePos);
+			else cube.InitiateLowering(cubePos, originPos);
 		}
 
 		private void OnDisable()

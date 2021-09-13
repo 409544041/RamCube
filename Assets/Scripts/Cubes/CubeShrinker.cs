@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -16,12 +17,17 @@ namespace Qbism.Cubes
 
 		//Cache
 		LineRenderer laserLine = null;
+		CubeHandler handler = null;
 
 		//States
-		public bool hasShrunk { get; set; } = false;
 		Vector3 resetPos;
 		Quaternion resetRot;
 		Vector3 resetScale;
+
+		private void Awake() 
+		{
+			handler = FindObjectOfType<CubeHandler>();
+		}
 
 		private void Start()
 		{
@@ -49,7 +55,9 @@ namespace Qbism.Cubes
 			shrinkMesh.enabled = true;
 			laserLine.enabled = false;
 
-			hasShrunk = true;
+			var cube = GetComponent<FloorCube>();
+			var cubePos = cube.FetchGridPos();
+			handler.FromFloorToShrunkDic(cubePos, cube);
 
 			//Makes sure all values are reset in case this is the second shrink
 			shrinkMesh.transform.position = resetPos;

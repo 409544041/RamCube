@@ -106,6 +106,13 @@ namespace Qbism.Cubes
 
 			if(prevCube.FetchType() != CubeTypes.Boosting)
 				moveable.InitiateMove(side, movingTurnAxis, posAhead, originPos);
+			else 
+			{
+				var moveHandler = FindObjectOfType<MoveableCubeHandler>();
+				moveHandler.movingMoveables--;
+				moveHandler.CheckForMovingMoveables();
+				moveHandler.AddToMoveableDic(cubePos, moveable);
+			}
 
 		}
 

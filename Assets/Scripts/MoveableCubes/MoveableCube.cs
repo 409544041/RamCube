@@ -35,11 +35,9 @@ namespace Qbism.MoveableCubes
 		FloorComponentAdder compAdder = null;
 
 		//States
-		public bool isMoving { get; set;} = false;
 		private float yPos = 1f;
 		public bool isBoosting { get; set; } = false;
 		public bool hasBumped { get; set; } = false;
-		public bool isDocked { get; set; } = false;
 		public bool isOutOfBounds { get; set; } = false;
 		Quaternion resetRot;
 
@@ -47,17 +45,17 @@ namespace Qbism.MoveableCubes
 		public delegate bool KeyCheckDel(Vector2Int pos);
 		public KeyCheckDel onWallKeyCheck;
 		public delegate bool CheckDel(Vector2Int pos);
-		public CheckDel onFloorKeyCheck, onMoveableKeyCheck, onShrunkCheck, onMovingCheck;
+		public CheckDel onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;
 		public delegate Vector2Int PlayerPosDelegate();
 		public PlayerPosDelegate onPlayerPosCheck;
 		
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
-		public event Action onCheckForNewFloorCubes;
 		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
-		public event Action<Vector2Int, bool> onSetFindable;
-		public event Action<Vector2Int> onDicRemove;
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
-		public event Action<Vector2Int, bool> onSetShrunk;
+		public event Action<Vector2Int> onRemoveFromMovDic;
+		public event Action<Vector2Int, MoveableCube> onAddToMovDic;
+		public event Action<int> onEditMovingMoveables;
+		public event Action onMovingMoveablesCheck;
 
 		private void Awake() 
 		{
@@ -74,36 +72,38 @@ namespace Qbism.MoveableCubes
 
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
 		{
+			Vector2Int currentPos = FetchGridPos();
+
 			if (CheckForWallAhead(posAhead) || hasBumped)
 			{
-				isMoving = false;
 				hasBumped = false;
+				onAddToMovDic(currentPos, this);
+				onEditMovingMoveables(-1);
+				onMovingMoveablesCheck();
 				return;
 			}
 
-			Vector2Int prevPos = FetchGridPos();
-			StartCoroutine(Move(side, turnAxis, posAhead, originPos, prevPos));
+			StartCoroutine(Move(side, turnAxis, posAhead, originPos, currentPos));
 		}
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead, 
 			Vector2Int originPos, Vector2Int prevPos)
 		{	
-			isMoving = true;	
-
-			if(onMoveableKeyCheck(posAhead) && !onMovingCheck(posAhead)) //Checking if it's not moving to ensure it's not checking itself in his origin pos
+			if(onMoveableKeyCheck(posAhead))
 			{
 				onActivateOtherMoveable(posAhead, turnAxis, FetchGridPos());
 				hasBumped = true;
+				onEditMovingMoveables(1);
+				onRemoveFromMovDic(posAhead);
 			} 	
 
 			if(posAhead == onPlayerPosCheck())	//Checking if it bumps into player
 			{
 				onActivatePlayerMove(this, side, turnAxis, posAhead);
-				onSetShrunk(posAhead, true);
 				hasBumped = true;
 			}
 
-			if(onFloorKeyCheck(posAhead) && !onShrunkCheck(posAhead)) //Normal movement
+			if(onFloorKeyCheck(posAhead)) //Normal movement
 			{
 				for (int i = 0; i < (90 / turnStep); i++)
 				{
@@ -123,7 +123,7 @@ namespace Qbism.MoveableCubes
 			}
 
 			//Docking
-			else if(!onFloorKeyCheck(posAhead) || (onFloorKeyCheck(posAhead) && onShrunkCheck(posAhead))) 
+			else if(!onFloorKeyCheck(posAhead))
 			{
 				for (int i = 0; i < (180 / turnStep); i++)
 				{
@@ -135,36 +135,26 @@ namespace Qbism.MoveableCubes
 				transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
 				RoundPosition();
-				isMoving = false;
 				hasBumped = false;
-				isDocked = true;
+				onEditMovingMoveables(-1);
+				onMovingMoveablesCheck();				
 
 				var cubePos = FetchGridPos();
-
-				if(onFloorKeyCheck(cubePos))
-				{
-					onSetFindable(cubePos, false);
-					onDicRemove(cubePos);
-				} 
-
-				compAdder.AddComponent(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
-					shrinkFeedback, shrinkFeedbackDuration, mesh, shrinkingmesh, laserLine);
-				onCheckForNewFloorCubes();
-				UpdateCenterPosition();
+				AddComponents(cubePos, originPos);
 			}
 		}
 
-		public void InitiateLowering(Vector2Int cubePos)
+		public void InitiateLowering(Vector2Int cubePos, Vector2Int originPos)
 		{
 			Vector3 targetPos = new Vector3(transform.position.x,
 				transform.position.y - 1, transform.position.z);
 			float step = lowerStep * Time.deltaTime;
 
-			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos));
+			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos, originPos));
 		}
 
 		private IEnumerator BecomeFloorByLowering(Vector3 targetPos, float step, 
-			Vector2Int cubePos)
+			Vector2Int cubePos, Vector2Int originPos)
 		{
 			while(transform.position.y > targetPos.y)
 			{
@@ -176,12 +166,17 @@ namespace Qbism.MoveableCubes
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
 			RoundPosition();
-			isMoving = false;
-			isDocked = true;
+			onEditMovingMoveables(-1);
+			onMovingMoveablesCheck();
 
-			compAdder.AddComponent(cubePos, this.gameObject, shrinkStep, shrinkTimeStep, 
-				shrinkFeedback, shrinkFeedbackDuration, mesh, shrinkingmesh, laserLine);
-			onCheckForNewFloorCubes();
+			AddComponents(cubePos, originPos);
+		}
+
+		private void AddComponents(Vector2Int cubePos, Vector2Int originPos)
+		{
+			compAdder.AddComponent(cubePos, this.gameObject, shrinkStep, shrinkTimeStep,
+								shrinkFeedback, shrinkFeedbackDuration, mesh, 
+								shrinkingmesh, laserLine, originPos);
 			UpdateCenterPosition();
 		}
 

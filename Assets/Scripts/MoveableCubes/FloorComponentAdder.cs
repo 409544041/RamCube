@@ -10,11 +10,12 @@ namespace Qbism.MoveableCubes
 	public class FloorComponentAdder : MonoBehaviour
 	{
 		//Actions, events, delegates etc
-		public event Action<Vector2Int, FloorCube> onAddToDic;
+		public event Action<Vector2Int, FloorCube> onAddToMovFloorDic;
+		public event Action<Vector2Int> onRemoveFromMovDic;
 
 		public void AddComponent(Vector2Int cubePos, GameObject cube, float shrinkStep,
 			float shrinkTimeStep, MMFeedbacks shrinkFeedback, float shrinkDuration,
-			MeshRenderer mesh, MeshRenderer shrinkMesh, LineRenderer laserLine)
+			MeshRenderer mesh, MeshRenderer shrinkMesh, LineRenderer laserLine, Vector2Int originPos)
 		{
 			FloorCube newFloor = cube.AddComponent<FloorCube>();
 			CubeShrinker newShrinker = cube.AddComponent<CubeShrinker>();
@@ -30,7 +31,7 @@ namespace Qbism.MoveableCubes
 			newShrinker.shrinkFeedback = shrinkFeedback;
 			newShrinker.shrinkFeedbackDuration = shrinkDuration;
 
-			onAddToDic(cubePos, newFloor);
+			onAddToMovFloorDic(cubePos, newFloor);
 			LaserDottedLineCheck();
 		}
 

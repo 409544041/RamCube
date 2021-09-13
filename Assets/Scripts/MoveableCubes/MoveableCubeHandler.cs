@@ -9,6 +9,10 @@ namespace Qbism.MoveableCubes
 	{
 		//Cache
 		MoveableCube[] moveableCubes = null;
+		FloorComponentAdder[] compAdders = null;
+
+		//States
+		public int movingMoveables { get; set; } = 0;
 
 		public Dictionary<Vector2Int, MoveableCube> moveableCubeDic = 
 			new Dictionary<Vector2Int, MoveableCube>();
@@ -17,10 +21,12 @@ namespace Qbism.MoveableCubes
 			new Dictionary<Vector2Int, GameObject>(); //TO DO: Move this to a separate script
 
 		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
+		public event Action<bool> onSetPlayerInput;
 
 		private void Awake() 
 		{
 			moveableCubes = FindObjectsOfType<MoveableCube>();
+			compAdders = FindObjectsOfType<FloorComponentAdder>();
 			
 			LoadMoveableCubeDictionary();
 			LoadWallCubeDictionary(); 
@@ -35,14 +41,20 @@ namespace Qbism.MoveableCubes
 					cube.onWallKeyCheck += CheckWallCubeDicKey;
 					cube.onMoveableKeyCheck += CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable += ActivateMoveableCube;
-					cube.onMovingCheck += FetchMovingStatus;
+					cube.onAddToMovDic += AddToMoveableDic;
+					cube.onRemoveFromMovDic += RemoveFromMoveableDic;
+					cube.onMovingMoveablesCheck += CheckForMovingMoveables;
+					cube.onEditMovingMoveables += AddOrRemoveFromMovingMovables;
 				}
 			}
-		}
 
-		private void Update()
-		{
-			CheckForMovingMoveables();
+			if (compAdders != null)
+			{
+				foreach (var adder in compAdders)
+				{
+					adder.onRemoveFromMovDic += RemoveFromMoveableDic;
+				}
+			}
 		}
 
 		public void LoadMoveableCubeDictionary()
@@ -50,11 +62,10 @@ namespace Qbism.MoveableCubes
 			MoveableCube[] cubes = FindObjectsOfType<MoveableCube>();
 			foreach (MoveableCube cube in cubes)
 			{
-				if(cube.isDocked) continue;
-
-				if (moveableCubeDic.ContainsKey(cube.FetchGridPos()))
-					print("Overlapping cube " + cube);
-				else moveableCubeDic.Add(cube.FetchGridPos(), cube);
+				var cubePos = cube.FetchGridPos();
+				if (moveableCubeDic.ContainsKey(cubePos))
+					Debug.Log("Overlapping moveable cube " + cubePos);
+				else moveableCubeDic.Add(cubePos, cube);
 			}
 		}
 
@@ -108,22 +119,14 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		public bool CheckForMovingMoveables()
+		public void CheckForMovingMoveables()
 		{
-			if (moveableCubeDic.Count == 0) return false;
+			if (movingMoveables == 0) onSetPlayerInput(true);
+		}
 
-			int amountNotMoving = 0;
-
-			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
-			{
-				var cube = pair.Value;
-
-				if (!cube.isMoving) amountNotMoving++;
-			}
-
-			if (amountNotMoving == moveableCubeDic.Count)
-				return false;
-			else return true;
+		private void AddOrRemoveFromMovingMovables(int Value)
+		{
+			movingMoveables += Value;
 		}
 
 		public void InitialRecordMoveables()
@@ -165,17 +168,15 @@ namespace Qbism.MoveableCubes
 
 		public void AddToMoveableDic(Vector2Int pos, MoveableCube cube)
 		{
-			moveableCubeDic.Add(pos, cube);
+			if (!moveableCubeDic.ContainsKey(pos))
+				moveableCubeDic.Add(pos, cube);
+			else Debug.Log("moveableDic already contains cube " + pos);
 		}
 
 		public void RemoveFromMoveableDic(Vector2Int pos)
 		{
-			moveableCubeDic.Remove(pos);
-		}
-
-		private bool FetchMovingStatus(Vector2Int cubePos)
-		{
-			return moveableCubeDic[cubePos].isMoving;
+			if (moveableCubeDic.ContainsKey(pos))
+				moveableCubeDic.Remove(pos);
 		}
 
 		private void OnDisable()
@@ -187,7 +188,18 @@ namespace Qbism.MoveableCubes
 					cube.onWallKeyCheck -= CheckWallCubeDicKey;
 					cube.onMoveableKeyCheck -= CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable -= ActivateMoveableCube;
-					cube.onMovingCheck -= FetchMovingStatus;
+					cube.onAddToMovDic -= AddToMoveableDic;
+					cube.onRemoveFromMovDic -= RemoveFromMoveableDic;
+					cube.onMovingMoveablesCheck -= CheckForMovingMoveables;
+					cube.onEditMovingMoveables -= AddOrRemoveFromMovingMovables;
+				}
+			}
+
+			if (compAdders != null)
+			{
+				foreach (var adder in compAdders)
+				{
+					adder.onRemoveFromMovDic -= RemoveFromMoveableDic;
 				}
 			}
 		}
