@@ -15,7 +15,7 @@ namespace Qbism.MoveableCubes
 
 		public void AddComponent(Vector2Int cubePos, GameObject cube, float shrinkStep,
 			float shrinkTimeStep, MMFeedbacks shrinkFeedback, float shrinkDuration,
-			MeshRenderer mesh, MeshRenderer shrinkMesh, LineRenderer laserLine)
+			MeshRenderer mesh, MeshRenderer shrinkMesh, LineRenderer laserLine, Vector2Int originPos)
 		{
 			FloorCube newFloor = cube.AddComponent<FloorCube>();
 			CubeShrinker newShrinker = cube.AddComponent<CubeShrinker>();
@@ -31,7 +31,6 @@ namespace Qbism.MoveableCubes
 			newShrinker.shrinkFeedback = shrinkFeedback;
 			newShrinker.shrinkFeedbackDuration = shrinkDuration;
 
-			onRemoveFromMovDic(cubePos);
 			onAddToMovFloorDic(cubePos, newFloor);
 			LaserDottedLineCheck();
 		}

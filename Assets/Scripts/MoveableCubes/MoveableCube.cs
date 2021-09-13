@@ -39,7 +39,6 @@ namespace Qbism.MoveableCubes
 		private float yPos = 1f;
 		public bool isBoosting { get; set; } = false;
 		public bool hasBumped { get; set; } = false;
-		public bool isDocked { get; set; } = false;
 		public bool isOutOfBounds { get; set; } = false;
 		Quaternion resetRot;
 
@@ -52,10 +51,10 @@ namespace Qbism.MoveableCubes
 		public PlayerPosDelegate onPlayerPosCheck;
 		
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
-		public event Action onCheckForNewFloorCubes;
 		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
-		public event Action<Vector2Int, bool> onSetFindable;
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
+		public event Action<Vector2Int> onRemoveFromMovDic;
+		public event Action<Vector2Int, MoveableCube> onAddToMovDic;
 
 		private void Awake() 
 		{
@@ -72,15 +71,18 @@ namespace Qbism.MoveableCubes
 
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
 		{
+			Vector2Int currentPos = FetchGridPos();
+			onRemoveFromMovDic(originPos);
+
 			if (CheckForWallAhead(posAhead) || hasBumped)
 			{
 				isMoving = false;
 				hasBumped = false;
+				onAddToMovDic(currentPos, this);
 				return;
 			}
 
-			Vector2Int prevPos = FetchGridPos();
-			StartCoroutine(Move(side, turnAxis, posAhead, originPos, prevPos));
+			StartCoroutine(Move(side, turnAxis, posAhead, originPos, currentPos));
 		}
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead, 
@@ -134,24 +136,23 @@ namespace Qbism.MoveableCubes
 				RoundPosition();
 				isMoving = false;
 				hasBumped = false;
-				isDocked = true;
 
 				var cubePos = FetchGridPos();
-				AddComponents(cubePos);
+				AddComponents(cubePos, originPos);
 			}
 		}
 
-		public void InitiateLowering(Vector2Int cubePos)
+		public void InitiateLowering(Vector2Int cubePos, Vector2Int originPos)
 		{
 			Vector3 targetPos = new Vector3(transform.position.x,
 				transform.position.y - 1, transform.position.z);
 			float step = lowerStep * Time.deltaTime;
 
-			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos));
+			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos, originPos));
 		}
 
 		private IEnumerator BecomeFloorByLowering(Vector3 targetPos, float step, 
-			Vector2Int cubePos)
+			Vector2Int cubePos, Vector2Int originPos)
 		{
 			while(transform.position.y > targetPos.y)
 			{
@@ -164,16 +165,15 @@ namespace Qbism.MoveableCubes
 
 			RoundPosition();
 			isMoving = false;
-			isDocked = true;
 
-			AddComponents(cubePos);
+			AddComponents(cubePos, originPos);
 		}
 
-		private void AddComponents(Vector2Int cubePos)
+		private void AddComponents(Vector2Int cubePos, Vector2Int originPos)
 		{
 			compAdder.AddComponent(cubePos, this.gameObject, shrinkStep, shrinkTimeStep,
-								shrinkFeedback, shrinkFeedbackDuration, mesh, shrinkingmesh, laserLine);
-			onCheckForNewFloorCubes();
+								shrinkFeedback, shrinkFeedbackDuration, mesh, 
+								shrinkingmesh, laserLine, originPos);
 			UpdateCenterPosition();
 		}
 

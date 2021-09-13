@@ -14,7 +14,6 @@ namespace Qbism.Rewind
 		TimeBody[] timeBodies = null;
 		PlayerCubeMover mover = null;
 		CubeHandler handler = null;
-		List<FloorCube> floorCubes = new List<FloorCube>();
 		MoveableCubeHandler moveHandler = null;
 		MoveableCube[] moveableCubes;
 		LaserCube[] lasers;
@@ -32,12 +31,6 @@ namespace Qbism.Rewind
 			moveableCubes = FindObjectsOfType<MoveableCube>();
 			lasers = FindObjectsOfType<LaserCube>();
 			finish = FindObjectOfType<FinishCube>();
-
-			FloorCube[] floorCubesAtStart = FindObjectsOfType<FloorCube>(); //TO DO: What is up with this list? Doesn't seem to be used anywhere?
-			foreach (FloorCube cube in floorCubesAtStart)
-			{
-				floorCubes.Add(cube);
-			}
 		}
 
 		private void OnEnable() 
@@ -50,14 +43,6 @@ namespace Qbism.Rewind
 
 			if(moveHandler != null)
 				moveHandler.onInitialCubeRecording += AddInitialMoveableRecording;
-
-			if(moveableCubes != null)
-			{
-				foreach (MoveableCube cube in moveableCubes)
-				{
-					cube.onCheckForNewFloorCubes += CheckForNewFloorCubes;
-				}
-			}
 		}
 
 		private void Update()
@@ -73,8 +58,6 @@ namespace Qbism.Rewind
 
 			if(!moveHandler.CheckForMovingMoveables())
 			{
-				moveHandler.moveableCubeDic.Clear();
-				moveHandler.LoadMoveableCubeDictionary();
 				mover.input = true;
 			}
 		}
@@ -153,18 +136,6 @@ namespace Qbism.Rewind
 			}
 		}
 
-		private void CheckForNewFloorCubes()
-		{
-			FloorCube[] floorCubesAtCheck = FindObjectsOfType<FloorCube>();
-			foreach (FloorCube cube in floorCubesAtCheck)
-			{
-				if(!floorCubes.Contains(cube) && cube.isFindable)
-				{
-					floorCubes.Add(cube);
-				}
-			}
-		}
-
 		private void OnDisable()
 		{
 			if (mover != null)
@@ -175,14 +146,6 @@ namespace Qbism.Rewind
 
 			if (moveHandler != null)
 				moveHandler.onInitialCubeRecording -= AddInitialMoveableRecording;
-
-			if (moveableCubes != null)
-			{
-				foreach (MoveableCube cube in moveableCubes)
-				{
-					cube.onCheckForNewFloorCubes -= CheckForNewFloorCubes;
-				}
-			}
 		}
 	}
 }

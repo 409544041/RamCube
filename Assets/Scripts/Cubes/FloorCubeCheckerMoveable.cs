@@ -64,7 +64,7 @@ namespace Qbism.Cubes
 				}
 			}
 
-			else cube.InitiateLowering(cubePos);
+			else cube.InitiateLowering(cubePos, originPos);
 		}
 
 		private void OnDisable()

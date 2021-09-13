@@ -11,9 +11,6 @@ namespace Qbism.Cubes
 		public CubeTypes type = CubeTypes.Shrinking;
 		public LineRenderer laserLine = null;
 
-		//States
-		public bool isFindable { get; set; } = true;
-
 		public Vector2Int FetchGridPos()
 		{
 			Vector2Int roundedPos = new Vector2Int

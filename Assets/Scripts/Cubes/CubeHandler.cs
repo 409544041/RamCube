@@ -54,10 +54,7 @@ namespace Qbism.Cubes
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
-				{
 					cube.onFloorKeyCheck += CheckFloorCubeDicKey;
-					cube.onSetFindable += SetFindableStatus;
-				}
 			}
 
 			if (compAdders != null)
@@ -79,7 +76,7 @@ namespace Qbism.Cubes
 				Vector2Int pos = cube.FetchGridPos();
 				if (floorCubeDic.ContainsKey(pos))
 					Debug.Log("Overlapping cube " + cube + " & " + floorCubeDic[pos]);
-				else floorCubeDic.Add(cube.FetchGridPos(), cube);
+				else floorCubeDic.Add(pos, cube);
 			}
 		}
 
@@ -170,7 +167,9 @@ namespace Qbism.Cubes
 
 		private void AddToMovFloorCubeDic(Vector2Int cubePos, FloorCube cube)
 		{
-			movFloorCubeDic.Add(cubePos, cube);
+			if (!movFloorCubeDic.ContainsKey(cubePos))
+				movFloorCubeDic.Add(cubePos, cube);
+			else Debug.Log("movFloorCubeDic already contains cube " + cubePos);
 		}
 
 		public FloorCube FetchCube(Vector2Int cubePos)
@@ -182,11 +181,6 @@ namespace Qbism.Cubes
 			else if (shrunkFloorCubeDic.ContainsKey(cubePos))
 				return shrunkFloorCubeDic[cubePos];
 			else return shrunkMovFloorCubeDic[cubePos];
-		}
-
-		private void SetFindableStatus(Vector2Int cubePos, bool value)
-		{
-			FetchCube(cubePos).isFindable = value;
 		}
 
 		private void OnDisable()
@@ -202,10 +196,7 @@ namespace Qbism.Cubes
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
-				{
 					cube.onFloorKeyCheck -= CheckFloorCubeDicKey;
-					cube.onSetFindable -= SetFindableStatus;
-				}
 			}
 
 			if (compAdders != null)

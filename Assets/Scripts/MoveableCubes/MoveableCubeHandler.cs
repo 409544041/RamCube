@@ -38,6 +38,8 @@ namespace Qbism.MoveableCubes
 					cube.onMoveableKeyCheck += CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable += ActivateMoveableCube;
 					cube.onMovingCheck += FetchMovingStatus;
+					cube.onAddToMovDic += AddToMoveableDic;
+					cube.onRemoveFromMovDic += RemoveFromMoveableDic;
 				}
 			}
 
@@ -60,11 +62,10 @@ namespace Qbism.MoveableCubes
 			MoveableCube[] cubes = FindObjectsOfType<MoveableCube>();
 			foreach (MoveableCube cube in cubes)
 			{
-				if(cube.isDocked) continue;
-
-				if (moveableCubeDic.ContainsKey(cube.FetchGridPos()))
-					Debug.Log("Overlapping moveable cube " + cube);
-				else moveableCubeDic.Add(cube.FetchGridPos(), cube);
+				var cubePos = cube.FetchGridPos();
+				if (moveableCubeDic.ContainsKey(cubePos))
+					Debug.Log("Overlapping moveable cube " + cubePos);
+				else moveableCubeDic.Add(cubePos, cube);
 			}
 		}
 
@@ -175,12 +176,15 @@ namespace Qbism.MoveableCubes
 
 		public void AddToMoveableDic(Vector2Int pos, MoveableCube cube)
 		{
-			moveableCubeDic.Add(pos, cube);
+			if (!moveableCubeDic.ContainsKey(pos))
+				moveableCubeDic.Add(pos, cube);
+			else Debug.Log("moveableDic already contains cube " + pos);
 		}
 
 		public void RemoveFromMoveableDic(Vector2Int pos)
 		{
-			moveableCubeDic.Remove(pos);
+			if (moveableCubeDic.ContainsKey(pos))
+				moveableCubeDic.Remove(pos);
 		}
 
 		private bool FetchMovingStatus(Vector2Int cubePos)
@@ -198,6 +202,8 @@ namespace Qbism.MoveableCubes
 					cube.onMoveableKeyCheck -= CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable -= ActivateMoveableCube;
 					cube.onMovingCheck -= FetchMovingStatus;
+					cube.onAddToMovDic -= AddToMoveableDic;
+					cube.onRemoveFromMovDic -= RemoveFromMoveableDic;
 				}
 			}
 
