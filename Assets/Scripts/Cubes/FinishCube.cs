@@ -40,7 +40,7 @@ namespace Qbism.Cubes
 			progHandler = FindObjectOfType<ProgressHandler>();
 			serpProg = FindObjectOfType<SerpentProgress>();
 			finishEndSeq = GetComponent<FinishEndSeqHandler>();
-			floorChecker = mover.GetComponent<FloorCubeChecker>();
+			floorChecker = handler.GetComponent<FloorCubeChecker>();
 		}
 
 		private void OnEnable()

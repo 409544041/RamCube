@@ -90,8 +90,8 @@ namespace Qbism.Cubes
 					if (differentCubes && onLand != null)
 					{
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
-						onLand();
 						if (moveHandler.movingMoveables == 0) mover.input = true;
+						onLand();
 
 						if (previousCube.FetchType() != CubeTypes.Boosting)
 							playerFlipJuicer.PlayPostFlipJuice();
