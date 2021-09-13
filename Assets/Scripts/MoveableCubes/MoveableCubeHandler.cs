@@ -119,7 +119,7 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		private void CheckForMovingMoveables()
+		public void CheckForMovingMoveables()
 		{
 			if (movingMoveables == 0) onSetPlayerInput(true);
 		}

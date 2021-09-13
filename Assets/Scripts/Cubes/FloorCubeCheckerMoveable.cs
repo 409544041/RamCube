@@ -63,6 +63,13 @@ namespace Qbism.Cubes
 
 					cube.InitiateMove(side, turnAxis, posAhead, originPos);
 				}
+
+				else if (currentCube.FetchType() == CubeTypes.Finish)
+				{
+					moveHandler.movingMoveables--;
+					moveHandler.CheckForMovingMoveables();
+					moveHandler.AddToMoveableDic(cubePos, cube);
+				}
 			}
 
 			else cube.InitiateLowering(cubePos, originPos);
