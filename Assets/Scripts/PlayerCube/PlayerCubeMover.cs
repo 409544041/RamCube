@@ -229,6 +229,7 @@ namespace Qbism.PlayerCube
 			{
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, FetchGridPos());
 				moveHandler.movingMoveables++; 
+				moveHandler.RemoveFromMoveableDic(posAhead);
 			}
 		}
 

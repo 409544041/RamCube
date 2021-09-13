@@ -83,7 +83,6 @@ namespace Qbism.MoveableCubes
 				return;
 			}
 
-			onRemoveFromMovDic(originPos);
 			StartCoroutine(Move(side, turnAxis, posAhead, originPos, currentPos));
 		}
 
@@ -95,6 +94,7 @@ namespace Qbism.MoveableCubes
 				onActivateOtherMoveable(posAhead, turnAxis, FetchGridPos());
 				hasBumped = true;
 				onEditMovingMoveables(1);
+				onRemoveFromMovDic(posAhead);
 			} 	
 
 			if(posAhead == onPlayerPosCheck())	//Checking if it bumps into player

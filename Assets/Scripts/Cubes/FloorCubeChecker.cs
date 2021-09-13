@@ -68,6 +68,7 @@ namespace Qbism.Cubes
 			{
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
 				moveHandler.movingMoveables++;
+				moveHandler.RemoveFromMoveableDic(posAhead);
 			}
 
 			if (handler.floorCubeDic.ContainsKey(cubePos)

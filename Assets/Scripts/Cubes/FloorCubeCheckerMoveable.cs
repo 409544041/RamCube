@@ -44,7 +44,11 @@ namespace Qbism.Cubes
 				{
 					if (prevCube.type == CubeTypes.Boosting &&
 						moveHandler.CheckMoveableCubeDicKey(posAhead))
-						moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
+						{
+							moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
+							moveHandler.movingMoveables++;
+							moveHandler.RemoveFromMoveableDic(posAhead);
+						}
 
 					currentCube.GetComponent<ICubeInfluencer>().
 					PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, originPos, prevCube);
@@ -58,6 +62,7 @@ namespace Qbism.Cubes
 					{
 						moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
 						moveHandler.movingMoveables++;
+						moveHandler.RemoveFromMoveableDic(posAhead);
 						cube.hasBumped = true;
 					}
 
