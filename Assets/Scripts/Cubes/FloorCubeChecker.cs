@@ -91,6 +91,7 @@ namespace Qbism.Cubes
 					{
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
 						onLand();
+						if (moveHandler.movingMoveables == 0) mover.input = true;
 
 						if (previousCube.FetchType() != CubeTypes.Boosting)
 							playerFlipJuicer.PlayPostFlipJuice();
@@ -102,6 +103,7 @@ namespace Qbism.Cubes
 					{
 						//landing on same cube, like after having turned/flipped
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
+						if (moveHandler.movingMoveables == 0) mover.input = true;
 					}
 
 					mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();

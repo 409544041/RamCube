@@ -11,6 +11,9 @@ namespace Qbism.MoveableCubes
 		MoveableCube[] moveableCubes = null;
 		FloorComponentAdder[] compAdders = null;
 
+		//States
+		public int movingMoveables { get; set; } = 0;
+
 		public Dictionary<Vector2Int, MoveableCube> moveableCubeDic = 
 			new Dictionary<Vector2Int, MoveableCube>();
 
@@ -18,6 +21,7 @@ namespace Qbism.MoveableCubes
 			new Dictionary<Vector2Int, GameObject>(); //TO DO: Move this to a separate script
 
 		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
+		public event Action<bool> onSetPlayerInput;
 
 		private void Awake() 
 		{
@@ -37,9 +41,10 @@ namespace Qbism.MoveableCubes
 					cube.onWallKeyCheck += CheckWallCubeDicKey;
 					cube.onMoveableKeyCheck += CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable += ActivateMoveableCube;
-					cube.onMovingCheck += FetchMovingStatus;
 					cube.onAddToMovDic += AddToMoveableDic;
 					cube.onRemoveFromMovDic += RemoveFromMoveableDic;
+					cube.onMovingMoveablesCheck += CheckForMovingMoveables;
+					cube.onEditMovingMoveables += AddOrRemoveFromMovingMovables;
 				}
 			}
 
@@ -50,11 +55,6 @@ namespace Qbism.MoveableCubes
 					adder.onRemoveFromMovDic += RemoveFromMoveableDic;
 				}
 			}
-		}
-
-		private void Update()
-		{
-			CheckForMovingMoveables();
 		}
 
 		public void LoadMoveableCubeDictionary()
@@ -119,22 +119,14 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		public bool CheckForMovingMoveables()
+		private void CheckForMovingMoveables()
 		{
-			if (moveableCubeDic.Count == 0) return false;
+			if (movingMoveables == 0) onSetPlayerInput(true);
+		}
 
-			int amountNotMoving = 0;
-
-			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
-			{
-				var cube = pair.Value;
-
-				if (!cube.isMoving) amountNotMoving++;
-			}
-
-			if (amountNotMoving == moveableCubeDic.Count)
-				return false;
-			else return true;
+		private void AddOrRemoveFromMovingMovables(int Value)
+		{
+			movingMoveables += Value;
 		}
 
 		public void InitialRecordMoveables()
@@ -187,11 +179,6 @@ namespace Qbism.MoveableCubes
 				moveableCubeDic.Remove(pos);
 		}
 
-		private bool FetchMovingStatus(Vector2Int cubePos)
-		{
-			return moveableCubeDic[cubePos].isMoving;
-		}
-
 		private void OnDisable()
 		{
 			if (moveableCubes != null)
@@ -201,9 +188,10 @@ namespace Qbism.MoveableCubes
 					cube.onWallKeyCheck -= CheckWallCubeDicKey;
 					cube.onMoveableKeyCheck -= CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable -= ActivateMoveableCube;
-					cube.onMovingCheck -= FetchMovingStatus;
 					cube.onAddToMovDic -= AddToMoveableDic;
 					cube.onRemoveFromMovDic -= RemoveFromMoveableDic;
+					cube.onMovingMoveablesCheck -= CheckForMovingMoveables;
+					cube.onEditMovingMoveables -= AddOrRemoveFromMovingMovables;
 				}
 			}
 

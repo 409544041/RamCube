@@ -45,23 +45,6 @@ namespace Qbism.Rewind
 				moveHandler.onInitialCubeRecording += AddInitialMoveableRecording;
 		}
 
-		private void Update()
-		{
-			CheckForMovement();
-		}
-
-		//Makes sure that after moveables stopped moving they are added to correct dic
-		private void CheckForMovement() 
-		{
-			if(mover.isBoosting || mover.isMoving || mover.isTurning || 
-				mover.isInIntroSeq) return;
-
-			if(!moveHandler.CheckForMovingMoveables())
-			{
-				mover.input = true;
-			}
-		}
-
 		public void StartRewinding()
 		{
 			if (!mover.input) return;

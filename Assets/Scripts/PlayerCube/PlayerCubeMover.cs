@@ -69,6 +69,8 @@ namespace Qbism.PlayerCube
 
 		private void OnEnable() 
 		{
+			if (moveHandler != null) moveHandler.onSetPlayerInput += SetInput;
+
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
@@ -204,7 +206,7 @@ namespace Qbism.PlayerCube
 			}
 
 			isLowered = true;
-			input = true;
+			if (moveHandler.movingMoveables == 0) input = true;
 			RoundPosition();
 			onRewindPulse(InterfaceIDs.Rewind);
 		}
@@ -226,6 +228,7 @@ namespace Qbism.PlayerCube
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
 				moveHandler.ActivateMoveableCube(posAhead, turnAxis, FetchGridPos());
+				moveHandler.movingMoveables++; 
 			}
 		}
 
@@ -293,6 +296,8 @@ namespace Qbism.PlayerCube
 
 		private void OnDisable()
 		{
+			if (moveHandler != null) moveHandler.onSetPlayerInput -= SetInput;
+
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)

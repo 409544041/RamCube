@@ -35,7 +35,6 @@ namespace Qbism.MoveableCubes
 		FloorComponentAdder compAdder = null;
 
 		//States
-		public bool isMoving { get; set;} = false;
 		private float yPos = 1f;
 		public bool isBoosting { get; set; } = false;
 		public bool hasBumped { get; set; } = false;
@@ -55,6 +54,8 @@ namespace Qbism.MoveableCubes
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
 		public event Action<Vector2Int> onRemoveFromMovDic;
 		public event Action<Vector2Int, MoveableCube> onAddToMovDic;
+		public event Action<int> onEditMovingMoveables;
+		public event Action onMovingMoveablesCheck;
 
 		private void Awake() 
 		{
@@ -76,9 +77,10 @@ namespace Qbism.MoveableCubes
 
 			if (CheckForWallAhead(posAhead) || hasBumped)
 			{
-				isMoving = false;
 				hasBumped = false;
 				onAddToMovDic(currentPos, this);
+				onEditMovingMoveables(-1);
+				onMovingMoveablesCheck();
 				return;
 			}
 
@@ -88,12 +90,11 @@ namespace Qbism.MoveableCubes
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead, 
 			Vector2Int originPos, Vector2Int prevPos)
 		{	
-			isMoving = true;	
-
-			if(onMoveableKeyCheck(posAhead) && !onMovingCheck(posAhead)) //Checking if it's not moving to ensure it's not checking itself in his origin pos
+			if(onMoveableKeyCheck(posAhead))
 			{
 				onActivateOtherMoveable(posAhead, turnAxis, FetchGridPos());
 				hasBumped = true;
+				onEditMovingMoveables(1);
 			} 	
 
 			if(posAhead == onPlayerPosCheck())	//Checking if it bumps into player
@@ -134,8 +135,9 @@ namespace Qbism.MoveableCubes
 				transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
 				RoundPosition();
-				isMoving = false;
 				hasBumped = false;
+				onEditMovingMoveables(-1);
+				onMovingMoveablesCheck();				
 
 				var cubePos = FetchGridPos();
 				AddComponents(cubePos, originPos);
@@ -164,7 +166,8 @@ namespace Qbism.MoveableCubes
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
 			RoundPosition();
-			isMoving = false;
+			onEditMovingMoveables(-1);
+			onMovingMoveablesCheck();
 
 			AddComponents(cubePos, originPos);
 		}
