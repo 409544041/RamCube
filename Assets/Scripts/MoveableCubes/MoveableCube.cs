@@ -73,7 +73,6 @@ namespace Qbism.MoveableCubes
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
 		{
 			Vector2Int currentPos = FetchGridPos();
-			onRemoveFromMovDic(originPos);
 
 			if (CheckForWallAhead(posAhead) || hasBumped)
 			{
@@ -84,6 +83,7 @@ namespace Qbism.MoveableCubes
 				return;
 			}
 
+			onRemoveFromMovDic(originPos);
 			StartCoroutine(Move(side, turnAxis, posAhead, originPos, currentPos));
 		}
 
