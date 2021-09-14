@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using MoreMountains.Feedbacks;
 using Qbism.MoveableCubes;
-using Qbism.SceneTransition;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Qbism.PlayerCube
 {
@@ -134,7 +131,7 @@ namespace Qbism.PlayerCube
 
 			if(lasersInLevel) onSetLaserTriggers(true);
 
-			CheckPosAhead(posAhead, turnAxis);
+			ActivateMoveableAhead(posAhead, turnAxis);
 
 			input = false;
 
@@ -223,7 +220,19 @@ namespace Qbism.PlayerCube
 				Mathf.RoundToInt(transform.rotation.y), Mathf.RoundToInt(transform.rotation.z));
 		}
 
-		private void CheckPosAhead(Vector2Int posAhead, Vector3 turnAxis)
+		public bool CheckForWallAhead(Vector2Int posAhead)
+		{
+			var currentPos = FetchGridPos();
+
+			if (moveHandler.CheckMoveableCubeDicKey(posAhead))
+			{
+				var posAheadOfAhead = posAhead + (posAhead - currentPos);
+				return moveHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead);
+			}
+			else return moveHandler.wallCubeDic.ContainsKey(posAhead);
+		}
+
+		private void ActivateMoveableAhead(Vector2Int posAhead, Vector3 turnAxis)
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{

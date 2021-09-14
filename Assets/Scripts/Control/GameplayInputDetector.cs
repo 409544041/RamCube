@@ -6,7 +6,6 @@ using Qbism.PlayerCube;
 using Qbism.Rewind;
 using Qbism.SceneTransition;
 
-
 namespace Qbism.Control
 {
 	public class GameplayInputDetector : MonoBehaviour
@@ -54,76 +53,40 @@ namespace Qbism.Control
 		private void HandleStickValues()
 		{
 			if((stickValue.x > .1 && stickValue.y > .1) ||
-				(stickValue.x > -.05 && stickValue.x < .05 && stickValue.y > .5)) MoveUp();
+				(stickValue.x > -.05 && stickValue.x < .05 && stickValue.y > .5))
+				HandleMove(mover.up, Vector2Int.up, Vector3.right);
 
 			if((stickValue.x < -.1 && stickValue.y < -.1) ||
-				(stickValue.x > -.05 && stickValue.x < .05 && stickValue.y < -.5)) MoveDown();
+				(stickValue.x > -.05 && stickValue.x < .05 && stickValue.y < -.5))
+				HandleMove(mover.down, Vector2Int.down, Vector3.left);
 
 			if((stickValue.x < -.1 && stickValue.y > .1) ||
-				(stickValue.y > -.05 && stickValue.y < .05 && stickValue.x < -.5)) MoveLeft();
+				(stickValue.y > -.05 && stickValue.y < .05 && stickValue.x < -.5))
+				HandleMove(mover.left, Vector2Int.left, Vector3.forward);
 
 			if((stickValue.x > .1 && stickValue.y < -.1) ||
-				(stickValue.y > -.05 && stickValue.y < .05 && stickValue.x > .5)) MoveRight();
+				(stickValue.y > -.05 && stickValue.y < .05 && stickValue.x > .5))
+				HandleMove(mover.right, Vector2Int.right, Vector3.back);
 		}
 
-		private void MoveUp()
+		private void HandleMove(Transform turnSide, Vector2Int posAheadDir, Vector3 turnAxis)
 		{
 			if (mover.isOutOfBounds) return;
 
 			inputting = true;
-			var posAhead = mover.FetchGridPos() + Vector2Int.up;
-			
-			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.up, Vector3.right);
+			var posAhead = mover.FetchGridPos() + posAheadDir;
 
-			else if (handler.floorCubeDic.ContainsKey(posAhead) || handler.movFloorCubeDic.ContainsKey(posAhead))
-				mover.HandleKeyInput(mover.up, Vector3.right, posAhead);
+			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(turnSide, turnAxis);
 
-			else mover.InitiateWiggle(mover.up, Vector3.right);
-		}
+			else if (handler.floorCubeDic.ContainsKey(posAhead) || 
+				handler.movFloorCubeDic.ContainsKey(posAhead))
+			{
+				if (mover.CheckForWallAhead(posAhead))
+					mover.InitiateWiggle(turnSide, turnAxis);
+				else mover.HandleKeyInput(turnSide, turnAxis, posAhead);
+			}
 
-		private void MoveDown()
-		{
-			if (mover.isOutOfBounds) return;
-
-			inputting = true;
-			var posAhead = mover.FetchGridPos() + Vector2Int.down;
-
-			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.down, Vector3.left);
-
-			else if (handler.floorCubeDic.ContainsKey(posAhead) || handler.movFloorCubeDic.ContainsKey(posAhead))
-				mover.HandleKeyInput(mover.down, Vector3.left, posAhead);
-
-			else mover.InitiateWiggle(mover.down, Vector3.left);
-		}
-
-		private void MoveLeft()
-		{
-			if (mover.isOutOfBounds) return;
-
-			inputting = true;
-			var posAhead = mover.FetchGridPos() + Vector2Int.left;
-
-			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.left, Vector3.forward);
-
-			else if (handler.floorCubeDic.ContainsKey(posAhead) || handler.movFloorCubeDic.ContainsKey(posAhead))
-				mover.HandleKeyInput(mover.left, Vector3.forward, posAhead);
-
-			else mover.InitiateWiggle(mover.left, Vector3.forward);
-		}
-
-		private void MoveRight()
-		{
-			if (mover.isOutOfBounds) return;
-
-			inputting = true;
-			var posAhead = mover.FetchGridPos() + Vector2Int.right;
-
-			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(mover.right, Vector3.back);
-
-			else if (handler.floorCubeDic.ContainsKey(posAhead) || handler.movFloorCubeDic.ContainsKey(posAhead))
-				mover.HandleKeyInput(mover.right, Vector3.back, posAhead);
-				
-			else mover.InitiateWiggle(mover.right, Vector3.back);
+			else mover.InitiateWiggle(turnSide, turnAxis);
 		}
 
 		private void FinishLevel()

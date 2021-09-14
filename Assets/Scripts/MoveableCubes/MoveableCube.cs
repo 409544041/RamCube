@@ -48,6 +48,8 @@ namespace Qbism.MoveableCubes
 		public CheckDel onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;
 		public delegate Vector2Int PlayerPosDelegate();
 		public PlayerPosDelegate onPlayerPosCheck;
+		public delegate bool MovAheadDel(Vector2Int posAhead, Vector2Int posAheadofAhead);
+		public MovAheadDel onWallForCubeAheadCheck;
 		
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
 		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
@@ -74,7 +76,7 @@ namespace Qbism.MoveableCubes
 		{
 			Vector2Int currentPos = FetchGridPos();
 
-			if (CheckForWallAhead(posAhead) || hasBumped)
+			if (CheckForWallAhead(currentPos, posAhead) || hasBumped)
 			{
 				hasBumped = false;
 				onAddToMovDic(currentPos, this);
@@ -180,9 +182,14 @@ namespace Qbism.MoveableCubes
 			UpdateCenterPosition();
 		}
 
-		private bool CheckForWallAhead(Vector2Int pos)
+		public bool CheckForWallAhead(Vector2Int currentPos, Vector2Int posAhead)
 		{
-			return onWallKeyCheck(pos);
+			if (onMoveableKeyCheck(posAhead))
+			{
+				var posAheadOfAhead = posAhead + (posAhead - currentPos);
+				return onWallForCubeAheadCheck(posAhead, posAheadOfAhead);
+			}
+			else return onWallKeyCheck(posAhead);
 		}
 
 		public void UpdateCenterPosition()

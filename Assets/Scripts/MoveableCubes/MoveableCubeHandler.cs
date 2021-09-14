@@ -45,6 +45,7 @@ namespace Qbism.MoveableCubes
 					cube.onRemoveFromMovDic += RemoveFromMoveableDic;
 					cube.onMovingMoveablesCheck += CheckForMovingMoveables;
 					cube.onEditMovingMoveables += AddOrRemoveFromMovingMovables;
+					cube.onWallForCubeAheadCheck += CheckForWallAheadOfAhead;
 				}
 			}
 
@@ -166,6 +167,11 @@ namespace Qbism.MoveableCubes
 			return moveableCubeDic[cubePos];
 		}
 
+		public bool CheckForWallAheadOfAhead(Vector2Int posAhead, Vector2Int posAheadofAhead)
+		{
+			return moveableCubeDic[posAhead].CheckForWallAhead(posAhead, posAheadofAhead);
+		}
+
 		public void AddToMoveableDic(Vector2Int pos, MoveableCube cube)
 		{
 			if (!moveableCubeDic.ContainsKey(pos))
@@ -192,6 +198,7 @@ namespace Qbism.MoveableCubes
 					cube.onRemoveFromMovDic -= RemoveFromMoveableDic;
 					cube.onMovingMoveablesCheck -= CheckForMovingMoveables;
 					cube.onEditMovingMoveables -= AddOrRemoveFromMovingMovables;
+					cube.onWallForCubeAheadCheck -= CheckForWallAheadOfAhead;
 				}
 			}
 
