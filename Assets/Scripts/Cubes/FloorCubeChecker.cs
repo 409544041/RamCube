@@ -66,9 +66,14 @@ namespace Qbism.Cubes
 			if (previousCube.FetchType() == CubeTypes.Boosting &&
 				moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
-				moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-				moveHandler.movingMoveables++;
-				moveHandler.RemoveFromMoveableDic(posAhead);
+				var posAheadOfAhead = posAhead + (posAhead - cubePos);
+
+				if (!moveHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead))
+				{
+					moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
+					moveHandler.movingMoveables++;
+					moveHandler.RemoveFromMoveableDic(posAhead);
+				}
 			}
 
 			if (handler.floorCubeDic.ContainsKey(cubePos)

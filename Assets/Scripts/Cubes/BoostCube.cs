@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using Qbism.Environment;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
-using Qbism.SpriteAnimations;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Qbism.Cubes
 {
