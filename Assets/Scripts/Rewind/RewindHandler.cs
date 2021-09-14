@@ -58,6 +58,8 @@ namespace Qbism.Rewind
 				onStopRewindPulse(InterfaceIDs.Rewind);
 
 			StartCoroutine(DelayedLaserRewindStuff());
+
+			handler.shrunkToFloorThisRewind = new Vector2Int(99, 99);
 		}
 
 		private void RewindTimeBodies()
@@ -103,7 +105,7 @@ namespace Qbism.Rewind
 		{
 			var body = cube.GetComponent<TimeBody>();
 
-			if(body != null)
+			if (body != null)
 			{
 				body.InitialRecord(pos, rot, scale);
 			}

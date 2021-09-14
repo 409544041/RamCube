@@ -184,7 +184,7 @@ namespace Qbism.Cubes
 				//checks if point has a cube
 				if (cubeHandler.CheckFloorCubeDicKey(roundedCheckPos))
 				{
-					var cube = cubeHandler.FetchCube(roundedCheckPos);
+					var cube = cubeHandler.FetchCube(roundedCheckPos, true);
 					cube.CastDottedLines(transform.position, enable);
 				}
 			}

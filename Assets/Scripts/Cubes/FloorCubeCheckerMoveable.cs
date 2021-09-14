@@ -36,8 +36,8 @@ namespace Qbism.Cubes
 			if (handler.floorCubeDic.ContainsKey(cubePos)
 				|| handler.movFloorCubeDic.ContainsKey(cubePos))
 			{
-				FloorCube currentCube = handler.FetchCube(cubePos);
-				FloorCube prevCube = handler.FetchCube(prevPos);
+				FloorCube currentCube = handler.FetchCube(cubePos, true);
+				FloorCube prevCube = handler.FetchCube(prevPos, true);
 
 				if (currentCube.FetchType() == CubeTypes.Boosting ||
 					(currentCube.FetchType() == CubeTypes.Turning))

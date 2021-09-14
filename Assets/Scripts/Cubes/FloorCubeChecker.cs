@@ -53,7 +53,7 @@ namespace Qbism.Cubes
 
 		private void Start()
 		{
-			currentCube = handler.FetchCube(mover.FetchGridPos());
+			currentCube = handler.FetchCube(mover.FetchGridPos(), true);
 		}
 
 		private void CheckFloorType(Vector2Int cubePos, GameObject cube,
@@ -82,7 +82,7 @@ namespace Qbism.Cubes
 			if (handler.floorCubeDic.ContainsKey(cubePos)
 				|| handler.movFloorCubeDic.ContainsKey(cubePos))
 			{
-				currentCube = handler.FetchCube(cubePos);
+				currentCube = handler.FetchCube(cubePos, true);
 				bool differentCubes = currentCube != previousCube;
 
 				if (currentCube.FetchType() == CubeTypes.Boosting)
@@ -130,7 +130,7 @@ namespace Qbism.Cubes
 
 		private void CheckFloorTypeForFF(Vector2Int cubePos, GameObject cube)
 		{
-			FloorCube currentCube = handler.FetchCube(cubePos);
+			FloorCube currentCube = handler.FetchCube(cubePos, true);
 
 			if (currentCube.FetchType() == CubeTypes.Boosting ||
 				currentCube.FetchType() == CubeTypes.Turning)

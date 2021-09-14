@@ -34,7 +34,6 @@ namespace Qbism.Rewind
 			floorChecker = handler.GetComponent<FloorCubeChecker>();
 		}
 
-		//Is initiated by player move
 		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale)
 		{
 			var cube = GetComponent<FloorCube>();
@@ -44,32 +43,66 @@ namespace Qbism.Rewind
 
 			if (cube)
 			{
-				if (cube.type == CubeTypes.Static) isStaticList.Insert(0, CubeTypes.Static);
-				else if (cube.type == CubeTypes.Shrinking) isStaticList.Insert(0, CubeTypes.Shrinking);
-
-				if (moveable)
-				{
-					if (handler.shrunkMovFloorCubeDic.ContainsKey(cube.FetchGridPos()))
-						hasShrunkList.Insert(0, true);
-					else hasShrunkList.Insert(0, false);
-				}
-				else
-				{
-					if (handler.shrunkFloorCubeDic.ContainsKey(cube.FetchGridPos()))
-						hasShrunkList.Insert(0, true);
-					else hasShrunkList.Insert(0, false);
-				}
+				var cubePos = cube.FetchGridPos();
+				AddToStaticList(cube);
+				AddToShrunkList(cube, moveable, cubePos);
 			}
-							
-			if(moveable)
+
+			if (moveable)
 			{
-				if (moveHandler.moveableCubeDic.ContainsKey(moveable.FetchGridPos()))
-					isDockedList.Insert(0, false);
-				else isDockedList.Insert(0, true); 
-
-				if (moveable.isOutOfBounds == true) isOutOfBoundsList.Insert(0, true);
-				else isOutOfBoundsList.Insert(0, false);
+				AddToDockedList(moveable);
+				AddToOutOfBoundsList(moveable);
 			}
+		}
+
+		private void AddToStaticList(FloorCube cube)
+		{
+			if (cube.type == CubeTypes.Static) isStaticList.Insert(0, CubeTypes.Static);
+			else if (cube.type == CubeTypes.Shrinking) isStaticList.Insert(0, CubeTypes.Shrinking);
+		}
+
+		private void AddToShrunkList(FloorCube cube, MoveableCube moveable, Vector2Int cubePos)
+		{
+			if (moveable)
+			{
+				var shrunkMovFound = false;
+
+				if (handler.shrunkMovFloorCubeDic.ContainsKey(cubePos))
+				{
+					foreach (var floorCube in handler.shrunkMovFloorCubeDic[cubePos])
+					{
+						if (floorCube == cube)
+						{
+							hasShrunkList.Insert(0, true);
+							shrunkMovFound = true;
+							break;
+						}
+					}
+
+					if (!shrunkMovFound) hasShrunkList.Insert(0, false);
+				}
+				else hasShrunkList.Insert(0, false);
+			}
+			else
+			{
+				if (handler.shrunkFloorCubeDic.ContainsKey(cubePos))
+					hasShrunkList.Insert(0, true);
+				else hasShrunkList.Insert(0, false);
+			}
+		}
+
+		private void AddToDockedList(MoveableCube moveable)
+		{
+			var cubePos = moveable.FetchGridPos();
+			if (moveHandler.moveableCubeDic.ContainsKey(cubePos))
+				isDockedList.Insert(0, false);
+			else isDockedList.Insert(0, true);
+		}
+
+		private void AddToOutOfBoundsList(MoveableCube moveable)
+		{
+			if (moveable.isOutOfBounds == true) isOutOfBoundsList.Insert(0, true);
+			else isOutOfBoundsList.Insert(0, false);
 		}
 
 		public void StartRewind()
@@ -100,7 +133,7 @@ namespace Qbism.Rewind
 				mover.RoundPosition();
 				mover.UpdateCenterPosition();
 				mover.GetComponent<PlayerCubeFeedForward>().ShowFeedForward();
-				floorChecker.currentCube = handler.FetchCube(mover.FetchGridPos());
+				floorChecker.currentCube = handler.FetchCube(mover.FetchGridPos(), false);
 
 				if (mover.isOutOfBounds || mover.isLowered)
 				{
@@ -135,10 +168,10 @@ namespace Qbism.Rewind
 				{
 					moveable.RoundPosition();
 					moveable.UpdateCenterPosition();
+					ResetOutOfBounds(moveable);
 					
 					if (!cube)
 					{
-						ResetOutOfBounds(moveable);
 						moveHandler.RemoveFromMoveableDic(preRewPos);
 						moveHandler.AddToMoveableDic(moveable.FetchGridPos(), moveable);
 					}
@@ -156,7 +189,8 @@ namespace Qbism.Rewind
 				if (hasShrunkList[0] == false
 					&& handler.shrunkMovFloorCubeDic.ContainsKey(cubePos))
 				{
-					ResetShrinking(cube, cubePos);
+					if (handler.shrunkMovFloorCubeDic[cubePos][0] == cube)
+						ResetShrinking(cube, cubePos);
 				}
 			}
 			else

@@ -57,7 +57,7 @@ namespace Qbism.Cubes
 
 		private void CheckForFinish()
 		{
-			if (handler.FetchCube(myPosition) == handler.FetchCube(mover.FetchGridPos()))
+			if (handler.FetchCube(myPosition, true) == handler.FetchCube(mover.FetchGridPos(), true))
 			{
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.up), -1))
 					Finish();	

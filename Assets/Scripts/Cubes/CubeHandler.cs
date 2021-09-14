@@ -16,18 +16,20 @@ namespace Qbism.Cubes
 		MoveableCube[] moveableCubes = null;
 		FloorComponentAdder[] compAdders = null;
 
-		//States		
+		//States	
+		public Vector2Int shrunkToFloorThisRewind { get; set; } = new Vector2Int(99, 99);
+
 		public Dictionary<Vector2Int, FloorCube> floorCubeDic = 
 			new Dictionary<Vector2Int, FloorCube>();
 
-		public Dictionary<Vector2Int, FloorCube> shrunkFloorCubeDic =
-			new Dictionary<Vector2Int, FloorCube>();
+		public Dictionary<Vector2Int, List<FloorCube>> shrunkFloorCubeDic =
+			new Dictionary<Vector2Int, List<FloorCube>>();
 
 		public Dictionary<Vector2Int, FloorCube> movFloorCubeDic =
 			new Dictionary<Vector2Int, FloorCube>();
 
-		public Dictionary<Vector2Int, FloorCube> shrunkMovFloorCubeDic =
-			new Dictionary<Vector2Int, FloorCube>();
+		public Dictionary<Vector2Int, List<FloorCube>> shrunkMovFloorCubeDic =
+			new Dictionary<Vector2Int, List<FloorCube>>();
 
 		//Actions, events, delegates etc
 		public event Action<FloorCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
@@ -71,8 +73,6 @@ namespace Qbism.Cubes
 			FloorCube[] cubes = FindObjectsOfType<FloorCube>();
 			foreach (FloorCube cube in cubes)
 			{
-				if (shrunkFloorCubeDic.ContainsKey(cube.FetchGridPos())) continue;
-
 				Vector2Int pos = cube.FetchGridPos();
 				if (floorCubeDic.ContainsKey(pos))
 					Debug.Log("Overlapping cube " + cube + " & " + floorCubeDic[pos]);
@@ -98,33 +98,60 @@ namespace Qbism.Cubes
 
 		public void FromFloorToShrunkDic(Vector2Int cubePos, FloorCube cube)
 		{
-			//Check movDics first
+			//Always check movDic before checking floorDic
 			if (movFloorCubeDic.ContainsKey(cubePos))
 			{
-				movFloorCubeDic.Remove(cubePos);
-				shrunkMovFloorCubeDic.Add(cubePos, cube);
+				HandleFromFloorToShrunk(cubePos, cube, movFloorCubeDic, shrunkMovFloorCubeDic);
 			}
 
 			else if (floorCubeDic.ContainsKey(cubePos))
 			{
-				floorCubeDic.Remove(cubePos);
-				shrunkFloorCubeDic.Add(cubePos, cube);
+				HandleFromFloorToShrunk(cubePos, cube, floorCubeDic, shrunkFloorCubeDic);
 			}
+		}
+
+		private void HandleFromFloorToShrunk(Vector2Int cubePos, FloorCube cube, 
+			Dictionary<Vector2Int, FloorCube> dic, Dictionary<Vector2Int, List<FloorCube>> shrunkDic)
+		{
+			dic.Remove(cubePos);
+
+			if (!shrunkDic.ContainsKey(cubePos))
+			{
+				List<FloorCube> floorCubeList = new List<FloorCube>();
+				shrunkDic.Add(cubePos, floorCubeList);
+			}
+
+			shrunkDic[cubePos].Insert(0, cube);
 		}
 
 		public void FromShrunkToFloorDic(Vector2Int cubePos, FloorCube cube)
 		{
-			//Check movDics first
+			//Always check movDic before checking floorDic
 			if (shrunkMovFloorCubeDic.ContainsKey(cubePos))
 			{
-				shrunkMovFloorCubeDic.Remove(cubePos);
-				movFloorCubeDic.Add(cubePos, cube);
+				HandleFromShrunkToFloor(cubePos, cube, shrunkMovFloorCubeDic, movFloorCubeDic);
 			}
 
 			else if (shrunkFloorCubeDic.ContainsKey(cubePos))
 			{
-				shrunkFloorCubeDic.Remove(cubePos);
-				floorCubeDic.Add(cubePos, cube);
+				HandleFromShrunkToFloor(cubePos, cube, shrunkFloorCubeDic, floorCubeDic);
+			}
+		}
+
+		private void HandleFromShrunkToFloor(Vector2Int cubePos, FloorCube cube,
+		Dictionary<Vector2Int, List<FloorCube>> shrunkDic, Dictionary<Vector2Int, FloorCube> dic)
+		{
+			//checking 'thisRewind' to make sure only the top floorcube off the
+			//shrunkdic.value list is taken. Else all get taken
+			if (shrunkToFloorThisRewind != cubePos)
+			{
+				shrunkToFloorThisRewind = cubePos;
+
+				if (shrunkDic[cubePos].Count > 1)
+					shrunkDic[cubePos].RemoveAt(0);
+				else shrunkDic.Remove(cubePos);
+
+				dic.Add(cubePos, cube);
 			}
 		}
 
@@ -132,29 +159,35 @@ namespace Qbism.Cubes
 		{
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in floorCubeDic)
 			{
-				TriggerRecord(pair);
+				var cube = pair.Value;
+				TriggerRecord(cube);
 			}
 
-			foreach (KeyValuePair<Vector2Int, FloorCube> pair in shrunkFloorCubeDic)
+			foreach (KeyValuePair<Vector2Int, List<FloorCube>> pair in shrunkFloorCubeDic)
 			{
-				TriggerRecord(pair);
+				foreach (var cube in pair.Value)
+				{
+					TriggerRecord(cube);
+				}
 			}
 
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in movFloorCubeDic)
 			{
-				TriggerRecord(pair);
+				var cube = pair.Value;
+				TriggerRecord(cube);
 			}
 
-			foreach (KeyValuePair<Vector2Int, FloorCube> pair in shrunkMovFloorCubeDic)
+			foreach (KeyValuePair<Vector2Int, List<FloorCube>> pair in shrunkMovFloorCubeDic)
 			{
-				TriggerRecord(pair);
+				foreach (var cube in pair.Value)
+				{
+					TriggerRecord(cube);
+				}
 			}
 		}
 
-		private void TriggerRecord(KeyValuePair<Vector2Int, FloorCube> pair)
+		private void TriggerRecord(FloorCube cube)
 		{
-			var cube = pair.Value;
-
 			onInitialCubeRecording(cube, cube.transform.position,
 				cube.transform.rotation, cube.transform.localScale);
 		}
@@ -172,15 +205,19 @@ namespace Qbism.Cubes
 			else Debug.Log("movFloorCubeDic already contains cube " + cubePos);
 		}
 
-		public FloorCube FetchCube(Vector2Int cubePos)
+		public FloorCube FetchCube(Vector2Int cubePos, bool onlyNonShrunk)
 		{
+			if (!onlyNonShrunk)
+			{
+				if (shrunkFloorCubeDic.ContainsKey(cubePos))
+					return shrunkFloorCubeDic[cubePos][0];
+				else if (shrunkMovFloorCubeDic.ContainsKey(cubePos)) 
+					return shrunkMovFloorCubeDic[cubePos][0];
+			}
+
 			if (floorCubeDic.ContainsKey(cubePos))
 				return floorCubeDic[cubePos];
-			else if (movFloorCubeDic.ContainsKey(cubePos))
-				return movFloorCubeDic[cubePos];
-			else if (shrunkFloorCubeDic.ContainsKey(cubePos))
-				return shrunkFloorCubeDic[cubePos];
-			else return shrunkMovFloorCubeDic[cubePos];
+			else return movFloorCubeDic[cubePos];
 		}
 
 		private void OnDisable()
