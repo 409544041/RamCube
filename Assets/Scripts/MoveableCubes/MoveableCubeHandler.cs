@@ -17,9 +17,6 @@ namespace Qbism.MoveableCubes
 		public Dictionary<Vector2Int, MoveableCube> moveableCubeDic = 
 			new Dictionary<Vector2Int, MoveableCube>();
 
-		public Dictionary<Vector2Int, GameObject> wallCubeDic =
-			new Dictionary<Vector2Int, GameObject>(); //TO DO: Move this to a separate script
-
 		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 		public event Action<bool> onSetPlayerInput;
 
@@ -28,8 +25,7 @@ namespace Qbism.MoveableCubes
 			moveableCubes = FindObjectsOfType<MoveableCube>();
 			compAdders = FindObjectsOfType<FloorComponentAdder>();
 			
-			LoadMoveableCubeDictionary();
-			LoadWallCubeDictionary(); 
+			LoadMoveableCubeDictionary(); 
 		}
 
 		private void OnEnable() 
@@ -38,14 +34,12 @@ namespace Qbism.MoveableCubes
 			{
 				foreach (MoveableCube cube in moveableCubes)
 				{
-					cube.onWallKeyCheck += CheckWallCubeDicKey;
 					cube.onMoveableKeyCheck += CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable += ActivateMoveableCube;
 					cube.onAddToMovDic += AddToMoveableDic;
 					cube.onRemoveFromMovDic += RemoveFromMoveableDic;
 					cube.onMovingMoveablesCheck += CheckForMovingMoveables;
 					cube.onEditMovingMoveables += AddOrRemoveFromMovingMovables;
-					cube.onWallForCubeAheadCheck += CheckForWallAheadOfAhead;
 				}
 			}
 
@@ -67,20 +61,6 @@ namespace Qbism.MoveableCubes
 				if (moveableCubeDic.ContainsKey(cubePos))
 					Debug.Log("Overlapping moveable cube " + cubePos);
 				else moveableCubeDic.Add(cubePos, cube);
-			}
-		}
-
-		private void LoadWallCubeDictionary() //This is used by moveable cubes to detect walls
-		{
-			GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
-
-			foreach (var wall in walls)
-			{
-				Vector2Int wallPos = new Vector2Int(Mathf.RoundToInt(wall.transform.position.x),
-					Mathf.RoundToInt(wall.transform.position.z));
-
-				if (!wallCubeDic.ContainsKey(wallPos))
-					wallCubeDic.Add(wallPos, wall);
 			}
 		}
 
@@ -156,20 +136,9 @@ namespace Qbism.MoveableCubes
 			else return false;
 		}
 
-		public bool CheckWallCubeDicKey(Vector2Int cubePos)
-		{
-			if (wallCubeDic.ContainsKey(cubePos)) return true;
-			else return false;
-		}
-
 		private MoveableCube FetchMoveableCube(Vector2Int cubePos)
 		{
 			return moveableCubeDic[cubePos];
-		}
-
-		public bool CheckForWallAheadOfAhead(Vector2Int posAhead, Vector2Int posAheadofAhead)
-		{
-			return moveableCubeDic[posAhead].CheckForWallAhead(posAhead, posAheadofAhead);
 		}
 
 		public void AddToMoveableDic(Vector2Int pos, MoveableCube cube)
@@ -191,14 +160,12 @@ namespace Qbism.MoveableCubes
 			{
 				foreach (MoveableCube cube in moveableCubes)
 				{
-					cube.onWallKeyCheck -= CheckWallCubeDicKey;
 					cube.onMoveableKeyCheck -= CheckMoveableCubeDicKey;
 					cube.onActivateOtherMoveable -= ActivateMoveableCube;
 					cube.onAddToMovDic -= AddToMoveableDic;
 					cube.onRemoveFromMovDic -= RemoveFromMoveableDic;
 					cube.onMovingMoveablesCheck -= CheckForMovingMoveables;
 					cube.onEditMovingMoveables -= AddOrRemoveFromMovingMovables;
-					cube.onWallForCubeAheadCheck -= CheckForWallAheadOfAhead;
 				}
 			}
 

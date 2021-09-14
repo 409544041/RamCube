@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.Environment;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace Qbism.Cubes
 		PlayerCubeBoostJuicer playerBoostJuicer = null;
 		PlayerCubeMover mover = null;
 		CubeHandler handler = null;
+		WallHandler wallHandler = null;
 		MoveableCubeHandler moveHandler = null;
 		PlayerCubeFeedForward cubeFF = null;
 		PlayerCubeFlipJuicer playerFlipJuicer = null;
@@ -28,6 +30,7 @@ namespace Qbism.Cubes
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
 			handler = GetComponent<CubeHandler>();
+			wallHandler = GetComponent<WallHandler>();
 			moveHandler = GetComponent<MoveableCubeHandler>();
 			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
 			playerFlipJuicer = mover.GetComponent<PlayerCubeFlipJuicer>();
@@ -68,7 +71,7 @@ namespace Qbism.Cubes
 			{
 				var posAheadOfAhead = posAhead + (posAhead - cubePos);
 
-				if (!moveHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead))
+				if (!wallHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead))
 				{
 					moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
 					moveHandler.movingMoveables++;

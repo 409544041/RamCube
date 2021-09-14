@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.Environment;
 using Qbism.MoveableCubes;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ namespace Qbism.PlayerCube
 
 		//Cache
 		MoveableCubeHandler moveHandler;
+		WallHandler wallHandler;
 		MoveableCube[] moveableCubes;
 		PlayerCubeFlipJuicer playerFlipJuicer;
 		PlayerAnimator playerAnimator;
@@ -58,6 +60,7 @@ namespace Qbism.PlayerCube
 		private void Awake()
 		{
 			moveHandler = FindObjectOfType<MoveableCubeHandler>();
+			wallHandler = moveHandler.GetComponent<WallHandler>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();
 			playerFlipJuicer = GetComponent<PlayerCubeFlipJuicer>();
 			playerAnimator = GetComponentInChildren<PlayerAnimator>();
@@ -227,9 +230,9 @@ namespace Qbism.PlayerCube
 			if (moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
 				var posAheadOfAhead = posAhead + (posAhead - currentPos);
-				return moveHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead);
+				return wallHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead);
 			}
-			else return moveHandler.wallCubeDic.ContainsKey(posAhead);
+			else return wallHandler.wallCubeDic.ContainsKey(posAhead);
 		}
 
 		private void ActivateMoveableAhead(Vector2Int posAhead, Vector3 turnAxis)
