@@ -45,7 +45,7 @@ namespace Qbism.Cubes
 
 		private void OnEnable()
 		{
-			if (floorChecker != null) floorChecker.onLand += CheckForFinish;
+			if (floorChecker != null) floorChecker.onCheckForFinish += CheckForFinish;
 			if (juicer != null) juicer.onFinishCheck += FetchFinishStatus;
 		}
 
@@ -119,7 +119,7 @@ namespace Qbism.Cubes
 
 		private void OnDisable()
 		{
-			if (floorChecker != null) floorChecker.onLand -= CheckForFinish;
+			if (floorChecker != null) floorChecker.onCheckForFinish -= CheckForFinish;
 			if (juicer != null) juicer.onFinishCheck -= FetchFinishStatus;
 		}
 	}

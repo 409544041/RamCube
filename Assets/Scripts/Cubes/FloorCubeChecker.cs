@@ -24,7 +24,7 @@ namespace Qbism.Cubes
 		public FloorCube currentCube { get; set; } = null;
 
 		//Actions, events, delegates etc
-		public event Action onLand;
+		public event Action onCheckForFinish;
 
 		private void Awake() 
 		{
@@ -66,14 +66,7 @@ namespace Qbism.Cubes
 			if (previousCube.FetchType() == CubeTypes.Static)
 				previousCube.GetComponent<StaticCube>().BecomeShrinkingCube(cube);
 
-			if (previousCube.FetchType() == CubeTypes.Boosting &&
-				moveHandler.CheckMoveableCubeDicKey(posAhead))
-			{
-				var posAheadOfAhead = posAhead + (posAhead - cubePos);
-
-				if (!wallHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead))
-					moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos);
-			}
+			HandleMovingMoveableFromBoost(cubePos, turnAxis, posAhead, previousCube);
 
 			if (handler.floorCubeDic.ContainsKey(cubePos)
 				|| handler.movFloorCubeDic.ContainsKey(cubePos))
@@ -85,26 +78,11 @@ namespace Qbism.Cubes
 					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 
 				else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
-				{
-					if (onLand != null) onLand();
-					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
-					mover.GetComponent<PlayerCubeTurnJuicer>().PlayTurningVoice();
-				}
+					StartCoroutine(HandleTurning(cube, previousCube));
 
 				else
 				{
-					if (differentCubes && onLand != null)
-					{
-						if (!mover.isStunned) cubeFF.ShowFeedForward();
-						if (moveHandler.movingMoveables == 0) mover.input = true;
-						onLand();
-
-						if (previousCube.FetchType() != CubeTypes.Boosting)
-							playerFlipJuicer.PlayPostFlipJuice();
-
-						else playerBoostJuicer.PlayPostBoostJuice();
-
-					}
+					if (differentCubes) HandleLandingOnFinalPos(previousCube);
 					else
 					{
 						//landing on same cube, like after having turned/flipped
@@ -122,6 +100,43 @@ namespace Qbism.Cubes
 				if (previousCube.FetchType() == CubeTypes.Boosting)
 					mover.InitiateLowering(cubePos);
 			}
+		}
+
+		private void HandleMovingMoveableFromBoost(Vector2Int cubePos, Vector3 turnAxis, Vector2Int posAhead, FloorCube previousCube)
+		{
+			if (previousCube.FetchType() == CubeTypes.Boosting &&
+				moveHandler.CheckMoveableCubeDicKey(posAhead))
+			{
+				var posAheadOfAhead = posAhead + (posAhead - cubePos);
+
+				if (!wallHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead))
+					moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos);
+			}
+		}
+
+		private IEnumerator HandleTurning(GameObject cube, FloorCube previousCube)
+		{
+			if (previousCube.FetchType() == CubeTypes.Boosting)
+			{
+				playerBoostJuicer.PlayPostBoostJuice();
+				var feedbackDur = playerBoostJuicer.feedbackDur;
+				yield return new WaitForSeconds(feedbackDur);
+			}
+
+			currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+			mover.GetComponent<PlayerCubeTurnJuicer>().PlayTurningVoice();
+		}
+
+		private void HandleLandingOnFinalPos(FloorCube previousCube)
+		{
+			if (!mover.isStunned) cubeFF.ShowFeedForward();
+			if (moveHandler.movingMoveables == 0) mover.input = true;
+			onCheckForFinish();
+
+			if (previousCube.FetchType() != CubeTypes.Boosting)
+				playerFlipJuicer.PlayPostFlipJuice();
+
+			else playerBoostJuicer.PlayPostBoostJuice();
 		}
 
 		private void CheckFloorTypeForFF(Vector2Int cubePos, GameObject cube)

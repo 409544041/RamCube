@@ -28,6 +28,7 @@ namespace Qbism.PlayerCube
 		float boostTrailTimer = 0f;
 		bool boostTrailCounting = false;
 		ParticleSystem particles;
+		public float feedbackDur { get; set; } = 0;
 
 		private void Awake() 
 		{
@@ -36,6 +37,11 @@ namespace Qbism.PlayerCube
 			boostMMScalers = boostJuice.GetComponents<MMFeedbackScale>();
 			expresHandler = GetComponentInChildren<ExpressionHandler>();
 			particles = boostJuice.GetComponent<MMFeedbackParticles>().BoundParticleSystem;
+		}
+
+		private void Start() 
+		{
+			feedbackDur = postBoostMMPos.AnimatePositionDuration;
 		}
 
 		private void Update()

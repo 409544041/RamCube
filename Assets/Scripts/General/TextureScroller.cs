@@ -25,11 +25,6 @@ namespace Qbism.General
 			floorChecker = FindObjectOfType<FloorCubeChecker>();
 		}
 
-		private void OnEnable()
-		{
-			if (floorChecker != null) floorChecker.onLand += InitiateScroll;
-		}
-
 		private void Update() 
 		{
 			offSet = new Vector2(-scrollSpeed, 0); 
@@ -51,12 +46,6 @@ namespace Qbism.General
 				yield return null;
 			}
 
-			material.mainTextureOffset = new Vector2(0, 0);
-		}
-
-		private void OnDisable()
-		{
-			if (floorChecker != null) floorChecker.onLand -= InitiateScroll;
 			material.mainTextureOffset = new Vector2(0, 0);
 		}
 	}
