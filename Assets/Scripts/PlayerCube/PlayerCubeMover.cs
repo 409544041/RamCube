@@ -118,9 +118,6 @@ namespace Qbism.PlayerCube
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			//Added to ensure laser has time to register presence. Can possibly remove when using spherecast instead of raycast
-			yield return new WaitForSeconds(.1f); 
-	
 			var cubeToShrink = FetchGridPos();
 			moveHandler.ResetMovedMoveables();
 
@@ -139,8 +136,11 @@ namespace Qbism.PlayerCube
 
 			input = false;
 
-			playerFlipJuicer.PlayFlipJuice();
-			yield return new WaitForSeconds(playerFlipJuicer.preFlipJuiceDuration);
+			if (initiatedByPlayer)
+			{
+				playerFlipJuicer.PlayFlipJuice();
+				yield return new WaitForSeconds(playerFlipJuicer.preFlipJuiceDuration);
+			}
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{

@@ -15,7 +15,7 @@ namespace Qbism.Cubes
 		[SerializeField] float boostSpeed = 30f;
 		[SerializeField] Transform boostRayOrigin = null;
 		[SerializeField] GameObject boostObjDir = null;
-		[SerializeField] LayerMask boostRayMask;
+		[SerializeField] LayerMask boostMaskPlayer, boostMaskMoveable;
 
 		public void PrepareAction(GameObject cube)
 		{
@@ -36,7 +36,7 @@ namespace Qbism.Cubes
 
 			PopUpWall popWall = null;
 			GameObject wallObject = null;
-			Vector3 boostTarget = GetBoostTarget(out wallObject);
+			Vector3 boostTarget = GetBoostTarget(boostMaskPlayer, out wallObject);
 			if (wallObject) popWall = wallObject.GetComponent<PopUpWall>();
 
 			mover.input = false;
@@ -73,19 +73,82 @@ namespace Qbism.Cubes
 				Vector3 turnAxis = new Vector3(0, 0, 0);
 				Vector2Int posAhead = new Vector2Int(0, 0);
 
-				CalculateSide(mover, launchPos, cubePos, ref side, ref turnAxis, ref posAhead);
+				CalculateSideForPlayer(mover, launchPos, cubePos, ref side, ref turnAxis, ref posAhead);
 
 				mover.CheckFloorInNewPos(side, turnAxis, posAhead);
 			}
 		}
 
-		private Vector3 GetBoostTarget(out GameObject wallObject)
+		public IEnumerator ExecuteActionOnFF(GameObject ffCube)
+		{
+			var ff = ffCube.GetComponent<FeedForwardCube>();
+
+			ff.isBoosting = true;
+
+			GameObject wallObject = null;
+			Vector3 boostTarget = GetBoostTarget(boostMaskPlayer, out wallObject);
+
+			while (ff.isBoosting)
+			{
+				ffCube.transform.position = Vector3.MoveTowards(ffCube.transform.position,
+					boostTarget, boostSpeed * Time.deltaTime);
+
+				if (Vector3.Distance(ffCube.transform.position, boostTarget) < 0.001f)
+					ff.isBoosting = false;
+
+				yield return null;
+			}
+
+			if (ff.gameObject.activeSelf)
+			{
+				ff.RoundPosition();
+				ff.isBoosting = false;
+				ff.CheckFloorInNewPos();
+			}
+		}
+
+		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, 
+			Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
+		{
+			var moveable = cube.GetComponent<MoveableCube>();
+			Vector2Int launchPos = moveable.FetchGridPos();
+
+			moveable.isBoosting = true;
+
+			GameObject wallObject = null;
+			Vector3 boostTarget = GetBoostTarget(boostMaskMoveable, out wallObject);
+
+			while (moveable.isBoosting)
+			{
+
+				cube.transform.position = Vector3.MoveTowards(cube.transform.position,
+					boostTarget, boostSpeed * Time.deltaTime);
+
+				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.001f)
+					moveable.isBoosting = false;
+
+				yield return null;
+			}
+
+			moveable.RoundPosition();
+			moveable.UpdateCenterPosition();
+
+			Vector2Int cubePos = moveable.FetchGridPos();
+
+			MoveableCubeHandler moveHandler = FindObjectOfType<MoveableCubeHandler>();
+
+			CalculateSideForMoveable(ref side, ref turnAxis, ref posAhead, moveable, launchPos, cubePos, moveHandler);
+
+			moveable.CheckFloorInNewPos(side, turnAxis, posAhead, moveable, cubePos, originPos, launchPos);
+		}
+
+		private Vector3 GetBoostTarget(LayerMask mask, out GameObject wallObject)
 		{
 			RaycastHit wallHit;
 			Vector3 target = new Vector3(0, 0, 0);
 
 			if (Physics.Raycast(boostRayOrigin.position,
-				boostObjDir.transform.TransformDirection(Vector3.forward), out wallHit, 20, boostRayMask))
+				boostObjDir.transform.TransformDirection(Vector3.forward), out wallHit, 20, mask))
 			{
 				//For this to work, wall or other blocker objects needs to be placed on 'the grid', just like cubes
 				float distance = Vector3.Distance(boostRayOrigin.position, wallHit.point) - .5f;
@@ -98,11 +161,12 @@ namespace Qbism.Cubes
 			{
 				target = boostRayOrigin.position + (boostObjDir.transform.TransformDirection(Vector3.forward) * 20);
 				wallObject = null;
-			} 
+			}
 			return target;
 		}
 
-		private static void CalculateSide(PlayerCubeMover mover, Vector2Int launchPos, Vector2Int cubePos, ref Transform side, ref Vector3 turnAxis, ref Vector2Int posAhead)
+		private void CalculateSideForPlayer(PlayerCubeMover mover, Vector2Int launchPos,
+		Vector2Int cubePos, ref Transform side, ref Vector3 turnAxis, ref Vector2Int posAhead)
 		{
 			if (mover.CheckDeltaY(cubePos, launchPos) > 0)
 			{
@@ -130,71 +194,9 @@ namespace Qbism.Cubes
 			}
 		}
 
-		public IEnumerator ExecuteActionOnFF(GameObject ffCube)
-		{
-			var ff = ffCube.GetComponent<FeedForwardCube>();
-
-			ff.isBoosting = true;
-
-			GameObject wallObject = null;
-			Vector3 boostTarget = GetBoostTarget(out wallObject);
-
-			while (ff.isBoosting)
-			{
-				ffCube.transform.position = Vector3.MoveTowards(ffCube.transform.position,
-					boostTarget, boostSpeed * Time.deltaTime);
-
-				if (Vector3.Distance(ffCube.transform.position, boostTarget) < 0.001f)
-					ff.isBoosting = false;
-
-				yield return null;
-			}
-
-			if (ff.gameObject.activeSelf)
-			{
-				ff.RoundPosition();
-				ff.isBoosting = false;
-
-				ff.CheckFloorInNewPos();
-			}
-		}
-
-		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, 
-			Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
-		{
-			var moveable = cube.GetComponent<MoveableCube>();
-			Vector2Int launchPos = moveable.FetchGridPos();
-
-			moveable.isBoosting = true;
-
-			GameObject wallObject = null;
-			Vector3 boostTarget = GetBoostTarget(out wallObject);
-
-			while (moveable.isBoosting)
-			{
-
-				cube.transform.position = Vector3.MoveTowards(cube.transform.position,
-					boostTarget, boostSpeed * Time.deltaTime);
-
-				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.001f)
-					moveable.isBoosting = false;
-
-				yield return null;
-			}
-
-			moveable.RoundPosition();
-			moveable.UpdateCenterPosition();
-
-			Vector2Int cubePos = moveable.FetchGridPos();
-
-			MoveableCubeHandler moveHandler = FindObjectOfType<MoveableCubeHandler>();
-
-			CalculateSide(ref side, ref turnAxis, ref posAhead, moveable, launchPos, cubePos, moveHandler);
-
-			moveable.CheckFloorInNewPos(side, turnAxis, posAhead, moveable, cubePos, originPos, launchPos);
-		}
-
-		private static void CalculateSide(ref Transform side, ref Vector3 turnAxis, ref Vector2Int posAhead, MoveableCube moveable, Vector2Int launchPos, Vector2Int cubePos, MoveableCubeHandler moveHandler)
+		private void CalculateSideForMoveable(ref Transform side, ref Vector3 turnAxis, 
+			ref Vector2Int posAhead, MoveableCube moveable, Vector2Int launchPos, 
+			Vector2Int cubePos, MoveableCubeHandler moveHandler)
 		{
 			if (moveHandler.CheckDeltaY(cubePos, launchPos) > 0)
 			{
