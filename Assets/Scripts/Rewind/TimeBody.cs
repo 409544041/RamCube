@@ -15,12 +15,17 @@ namespace Qbism.Rewind
 		MoveableCubeHandler moveHandler;
 		CubeHandler handler;
 		FloorCubeChecker floorChecker;
+		MoveableCube myMoveable;
+
+		//States
+		public bool priorityRewind { get; set; } = false;
 
 		private List<PointInTime> rewindList = new List<PointInTime>(); 
 		private List<bool> hasShrunkList = new List<bool>();
 		private List<CubeTypes> isStaticList = new List<CubeTypes>();
 		private List<bool> isDockedList = new List<bool>();
 		private List<bool> isOutOfBoundsList = new List<bool>();
+		public List<int> movementOrderList { get; set; } = new List<int>();
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onStopRewindPulse;
@@ -32,6 +37,12 @@ namespace Qbism.Rewind
 			handler = FindObjectOfType<CubeHandler>();
 			moveHandler = handler.GetComponent<MoveableCubeHandler>();
 			floorChecker = handler.GetComponent<FloorCubeChecker>();
+			myMoveable = GetComponent<MoveableCube>();
+		}
+
+		private void OnEnable() 
+		{
+			if (myMoveable != null) myMoveable.onUpdateOrderInTimebody += AddToMoveOrderList;
 		}
 
 		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale)
@@ -52,6 +63,7 @@ namespace Qbism.Rewind
 			{
 				AddToDockedList(moveable);
 				AddToOutOfBoundsList(moveable);
+				AddToMoveOrderList(-1, moveable);
 			}
 		}
 
@@ -103,6 +115,12 @@ namespace Qbism.Rewind
 		{
 			if (moveable.isOutOfBounds == true) isOutOfBoundsList.Insert(0, true);
 			else isOutOfBoundsList.Insert(0, false);
+		}
+
+		private void AddToMoveOrderList(int order, MoveableCube moveable)
+		{
+			if (order == -1) movementOrderList.Insert(0, moveable.orderOfMovement);
+			else movementOrderList[0] = order;
 		}
 
 		public void StartRewind()
@@ -169,6 +187,7 @@ namespace Qbism.Rewind
 					moveable.RoundPosition();
 					moveable.UpdateCenterPosition();
 					ResetOutOfBounds(moveable);
+					movementOrderList.RemoveAt(0);
 					
 					if (!cube)
 					{

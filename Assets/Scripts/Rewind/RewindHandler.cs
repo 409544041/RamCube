@@ -64,9 +64,52 @@ namespace Qbism.Rewind
 
 		private void RewindTimeBodies()
 		{
-			foreach (TimeBody timeBody in timeBodies)
+			SortedDictionary<int, TimeBody> rewindFirstDic = CreateRewindFirstDic();
+			PriorityRewind(rewindFirstDic);
+			NormalRewind();
+			ResetPriorityRewindValue(rewindFirstDic);
+		}
+
+		private SortedDictionary<int, TimeBody> CreateRewindFirstDic()
+		{
+			SortedDictionary<int, TimeBody> rewindFirstDic =
+							new SortedDictionary<int, TimeBody>();
+
+			//Order in which moveables get rewinded is important to avoid dic errors
+			foreach (TimeBody body in timeBodies)
 			{
-				timeBody.StartRewind();
+				var moveable = body.GetComponent<MoveableCube>();
+
+				if (moveable && moveable.orderOfMovement != -1)
+				{
+					rewindFirstDic.Add(moveable.orderOfMovement, body);
+					body.priorityRewind = true;
+				}
+			}
+			return rewindFirstDic;
+		}
+
+		private static void PriorityRewind(SortedDictionary<int, TimeBody> rewindFirstDic)
+		{
+			for (int j = 0; j < rewindFirstDic.Count; j++)
+			{
+				rewindFirstDic[j].StartRewind();
+			}
+		}
+
+		private void NormalRewind()
+		{
+			foreach (var body in timeBodies)
+			{
+				if (!body.priorityRewind) body.StartRewind();
+			}
+		}
+
+		private static void ResetPriorityRewindValue(SortedDictionary<int, TimeBody> rewindFirstDic)
+		{
+			foreach (var pair in rewindFirstDic)
+			{
+				pair.Value.priorityRewind = false;
 			}
 		}
 

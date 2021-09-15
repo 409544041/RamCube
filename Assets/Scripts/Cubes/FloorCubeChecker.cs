@@ -72,11 +72,7 @@ namespace Qbism.Cubes
 				var posAheadOfAhead = posAhead + (posAhead - cubePos);
 
 				if (!wallHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead))
-				{
-					moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-					moveHandler.movingMoveables++;
-					moveHandler.RemoveFromMoveableDic(posAhead);
-				}
+					moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos);
 			}
 
 			if (handler.floorCubeDic.ContainsKey(cubePos)

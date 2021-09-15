@@ -122,6 +122,7 @@ namespace Qbism.PlayerCube
 			yield return new WaitForSeconds(.1f); 
 	
 			var cubeToShrink = FetchGridPos();
+			moveHandler.ResetMovedMoveables();
 
 			isMoving = true;
 
@@ -238,11 +239,7 @@ namespace Qbism.PlayerCube
 		private void ActivateMoveableAhead(Vector2Int posAhead, Vector3 turnAxis)
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
-			{
-				moveHandler.ActivateMoveableCube(posAhead, turnAxis, FetchGridPos());
-				moveHandler.movingMoveables++; 
-				moveHandler.RemoveFromMoveableDic(posAhead);
-			}
+				moveHandler.StartMovingMoveable(posAhead, turnAxis, FetchGridPos());
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead)
