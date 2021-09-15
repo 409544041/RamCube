@@ -109,9 +109,7 @@ namespace Qbism.Cubes
 			else 
 			{
 				var moveHandler = FindObjectOfType<MoveableCubeHandler>();
-				moveHandler.movingMoveables--;
-				moveHandler.CheckForMovingMoveables();
-				moveHandler.AddToMoveableDic(cubePos, moveable);
+				moveHandler.StopMovingMoveables(cubePos, moveable, false);
 			}
 
 		}

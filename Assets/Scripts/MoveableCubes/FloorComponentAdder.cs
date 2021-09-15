@@ -11,7 +11,6 @@ namespace Qbism.MoveableCubes
 	{
 		//Actions, events, delegates etc
 		public event Action<Vector2Int, FloorCube> onAddToMovFloorDic;
-		public event Action<Vector2Int> onRemoveFromMovDic;
 
 		public void AddComponent(Vector2Int cubePos, GameObject cube, float shrinkStep,
 			float shrinkTimeStep, MMFeedbacks shrinkFeedback, float shrinkDuration,

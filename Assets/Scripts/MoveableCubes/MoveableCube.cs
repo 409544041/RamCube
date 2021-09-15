@@ -40,6 +40,7 @@ namespace Qbism.MoveableCubes
 		public bool hasBumped { get; set; } = false;
 		public bool isOutOfBounds { get; set; } = false;
 		Quaternion resetRot;
+		public int orderOfMovement { get; set; } = -1;
 
 		//Actions, events, delegates etc
 		public delegate bool KeyCheckDel(Vector2Int pos);
@@ -52,12 +53,10 @@ namespace Qbism.MoveableCubes
 		public MovAheadDel onWallForCubeAheadCheck;
 		
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
-		public event Action<Vector2Int, Vector3, Vector2Int> onActivateOtherMoveable;
+		public event Action<Vector2Int, Vector3, Vector2Int> onStartMovingMoveable;
+		public event Action<Vector2Int, MoveableCube, bool> onStopMovingMoveable;
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
-		public event Action<Vector2Int> onRemoveFromMovDic;
-		public event Action<Vector2Int, MoveableCube> onAddToMovDic;
-		public event Action<int> onEditMovingMoveables;
-		public event Action onMovingMoveablesCheck;
+		public event Action<int, MoveableCube> onUpdateOrderInTimebody;
 
 		private void Awake() 
 		{
@@ -79,9 +78,7 @@ namespace Qbism.MoveableCubes
 			if (CheckForWallAhead(currentPos, posAhead) || hasBumped)
 			{
 				hasBumped = false;
-				onAddToMovDic(currentPos, this);
-				onEditMovingMoveables(-1);
-				onMovingMoveablesCheck();
+				onStopMovingMoveable(currentPos, this, false);
 				return;
 			}
 
@@ -93,10 +90,8 @@ namespace Qbism.MoveableCubes
 		{	
 			if(onMoveableKeyCheck(posAhead))
 			{
-				onActivateOtherMoveable(posAhead, turnAxis, FetchGridPos());
 				hasBumped = true;
-				onEditMovingMoveables(1);
-				onRemoveFromMovDic(posAhead);
+				onStartMovingMoveable(posAhead, turnAxis, FetchGridPos());
 			} 	
 
 			if(posAhead == onPlayerPosCheck())	//Checking if it bumps into player
@@ -138,10 +133,8 @@ namespace Qbism.MoveableCubes
 
 				RoundPosition();
 				hasBumped = false;
-				onEditMovingMoveables(-1);
-				onMovingMoveablesCheck();				
-
 				var cubePos = FetchGridPos();
+				onStopMovingMoveable(cubePos, this, true);				
 				AddComponents(cubePos, originPos);
 			}
 		}
@@ -168,9 +161,7 @@ namespace Qbism.MoveableCubes
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
 			RoundPosition();
-			onEditMovingMoveables(-1);
-			onMovingMoveablesCheck();
-
+			onStopMovingMoveable(cubePos, this, true);
 			AddComponents(cubePos, originPos);
 		}
 
@@ -190,6 +181,12 @@ namespace Qbism.MoveableCubes
 				return onWallForCubeAheadCheck(posAhead, posAheadOfAhead);
 			}
 			else return onWallKeyCheck(posAhead);
+		}
+
+		public void ApplyOrderOfMovement(int order)
+		{
+			orderOfMovement = order;
+			onUpdateOrderInTimebody(order, this);
 		}
 
 		public void UpdateCenterPosition()

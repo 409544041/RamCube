@@ -13,6 +13,7 @@ namespace Qbism.MoveableCubes
 
 		//States
 		public int movingMoveables { get; set; } = 0;
+		public int moveablesMovedThisTurn { get; set; } = 0;
 
 		public Dictionary<Vector2Int, MoveableCube> moveableCubeDic = 
 			new Dictionary<Vector2Int, MoveableCube>();
@@ -35,19 +36,8 @@ namespace Qbism.MoveableCubes
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onMoveableKeyCheck += CheckMoveableCubeDicKey;
-					cube.onActivateOtherMoveable += ActivateMoveableCube;
-					cube.onAddToMovDic += AddToMoveableDic;
-					cube.onRemoveFromMovDic += RemoveFromMoveableDic;
-					cube.onMovingMoveablesCheck += CheckForMovingMoveables;
-					cube.onEditMovingMoveables += AddOrRemoveFromMovingMovables;
-				}
-			}
-
-			if (compAdders != null)
-			{
-				foreach (var adder in compAdders)
-				{
-					adder.onRemoveFromMovDic += RemoveFromMoveableDic;
+					cube.onStartMovingMoveable += StartMovingMoveable;
+					cube.onStopMovingMoveable += StopMovingMoveables;
 				}
 			}
 		}
@@ -105,11 +95,6 @@ namespace Qbism.MoveableCubes
 			if (movingMoveables == 0) onSetPlayerInput(true);
 		}
 
-		private void AddOrRemoveFromMovingMovables(int Value)
-		{
-			movingMoveables += Value;
-		}
-
 		public void InitialRecordMoveables()
 		{
 			foreach(KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
@@ -154,6 +139,34 @@ namespace Qbism.MoveableCubes
 				moveableCubeDic.Remove(pos);
 		}
 
+		public void StartMovingMoveable(Vector2Int posAhead, Vector3 turnAxis, 
+			Vector2Int pos)
+		{
+			moveableCubeDic[posAhead].ApplyOrderOfMovement(moveablesMovedThisTurn);
+			moveablesMovedThisTurn++;
+			movingMoveables++;
+			ActivateMoveableCube(posAhead, turnAxis, pos);
+			RemoveFromMoveableDic(posAhead);
+		}
+
+		public void StopMovingMoveables(Vector2Int cubePos, MoveableCube moveable,
+			bool becomeFloor)
+		{
+			movingMoveables--;
+			if (!becomeFloor) AddToMoveableDic(cubePos, moveable);
+			CheckForMovingMoveables();
+		}
+
+		public void ResetMovedMoveables()
+		{
+			moveablesMovedThisTurn = 0;
+
+			foreach (var cube in moveableCubes)
+			{
+				cube.orderOfMovement = -1;
+			}
+		}
+
 		private void OnDisable()
 		{
 			if (moveableCubes != null)
@@ -161,19 +174,8 @@ namespace Qbism.MoveableCubes
 				foreach (MoveableCube cube in moveableCubes)
 				{
 					cube.onMoveableKeyCheck -= CheckMoveableCubeDicKey;
-					cube.onActivateOtherMoveable -= ActivateMoveableCube;
-					cube.onAddToMovDic -= AddToMoveableDic;
-					cube.onRemoveFromMovDic -= RemoveFromMoveableDic;
-					cube.onMovingMoveablesCheck -= CheckForMovingMoveables;
-					cube.onEditMovingMoveables -= AddOrRemoveFromMovingMovables;
-				}
-			}
-
-			if (compAdders != null)
-			{
-				foreach (var adder in compAdders)
-				{
-					adder.onRemoveFromMovDic -= RemoveFromMoveableDic;
+					cube.onStartMovingMoveable -= StartMovingMoveable;
+					cube.onStopMovingMoveable -= StopMovingMoveables;
 				}
 			}
 		}

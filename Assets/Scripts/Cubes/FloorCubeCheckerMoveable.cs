@@ -44,11 +44,7 @@ namespace Qbism.Cubes
 				{
 					if (prevCube.type == CubeTypes.Boosting &&
 						moveHandler.CheckMoveableCubeDicKey(posAhead))
-						{
-							moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-							moveHandler.movingMoveables++;
-							moveHandler.RemoveFromMoveableDic(posAhead);
-						}
+							moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos);
 
 					currentCube.GetComponent<ICubeInfluencer>().
 					PrepareActionForMoveable(side, turnAxis, posAhead, cube.gameObject, originPos, prevCube);
@@ -60,9 +56,7 @@ namespace Qbism.Cubes
 					if (prevCube.type == CubeTypes.Boosting &&
 						moveHandler.CheckMoveableCubeDicKey(posAhead))
 					{
-						moveHandler.ActivateMoveableCube(posAhead, turnAxis, cubePos);
-						moveHandler.movingMoveables++;
-						moveHandler.RemoveFromMoveableDic(posAhead);
+						moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos);
 						cube.hasBumped = true;
 					}
 
@@ -70,11 +64,7 @@ namespace Qbism.Cubes
 				}
 
 				else if (currentCube.FetchType() == CubeTypes.Finish)
-				{
-					moveHandler.movingMoveables--;
-					moveHandler.CheckForMovingMoveables();
-					moveHandler.AddToMoveableDic(cubePos, cube);
-				}
+					moveHandler.StopMovingMoveables(cubePos, cube, false);
 			}
 
 			else cube.InitiateLowering(cubePos, originPos);
