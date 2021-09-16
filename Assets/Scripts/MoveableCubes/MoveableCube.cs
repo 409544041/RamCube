@@ -161,6 +161,7 @@ namespace Qbism.MoveableCubes
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
 			RoundPosition();
+			hasBumped = false;
 			onStopMovingMoveable(cubePos, this, true);
 			AddComponents(cubePos, originPos);
 		}

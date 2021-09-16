@@ -54,6 +54,19 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
+		public void AddToMoveableDic(Vector2Int pos, MoveableCube cube)
+		{
+			if (!moveableCubeDic.ContainsKey(pos))
+				moveableCubeDic.Add(pos, cube);
+			else Debug.Log("moveableDic already contains cube " + pos);
+		}
+
+		public void RemoveFromMoveableDic(Vector2Int pos)
+		{
+			if (moveableCubeDic.ContainsKey(pos))
+				moveableCubeDic.Remove(pos);
+		}
+
 		public void ActivateMoveableCube(Vector2Int cubePos, Vector3 turnAxis, Vector2Int activatorPos)
 		{
 			var cube = FetchMoveableCube(cubePos);
@@ -62,37 +75,30 @@ namespace Qbism.MoveableCubes
 			Vector2Int originPos = cubePos;
 
 			CalculateSide(cubePos, activatorPos, cube, ref side, ref posAhead);
-
 			cube.InitiateMove(side, turnAxis, posAhead, originPos);
-		}
-
-		private void CalculateSide(Vector2Int cubePos, Vector2Int activatorPos, MoveableCube cube, ref Transform side, ref Vector2Int posAhead)
-		{
-			if (CheckDeltaY(cubePos, activatorPos) > 0)
-			{
-				side = cube.up;
-				posAhead = cubePos + Vector2Int.up;
-			}
-			else if (CheckDeltaY(cubePos, activatorPos) < 0)
-			{
-				side = cube.down;
-				posAhead = cubePos + Vector2Int.down;
-			}
-			else if (CheckDeltaX(cubePos, activatorPos) < 0)
-			{
-				side = cube.left;
-				posAhead = cubePos + Vector2Int.left;
-			}
-			else if (CheckDeltaX(cubePos, activatorPos) > 0)
-			{
-				side = cube.right;
-				posAhead = cubePos + Vector2Int.right;
-			}
 		}
 
 		public void CheckForMovingMoveables()
 		{
 			if (movingMoveables == 0) onSetPlayerInput(true);
+		}
+
+		public void StartMovingMoveable(Vector2Int posAhead, Vector3 turnAxis,
+			Vector2Int pos)
+		{
+			moveableCubeDic[posAhead].ApplyOrderOfMovement(moveablesMovedThisTurn);
+			moveablesMovedThisTurn++;
+			movingMoveables++;
+			ActivateMoveableCube(posAhead, turnAxis, pos);
+			RemoveFromMoveableDic(posAhead);
+		}
+
+		public void StopMovingMoveables(Vector2Int cubePos, MoveableCube moveable,
+			bool becomeFloor)
+		{
+			movingMoveables--;
+			if (!becomeFloor) AddToMoveableDic(cubePos, moveable);
+			CheckForMovingMoveables();
 		}
 
 		public void InitialRecordMoveables()
@@ -126,35 +132,28 @@ namespace Qbism.MoveableCubes
 			return moveableCubeDic[cubePos];
 		}
 
-		public void AddToMoveableDic(Vector2Int pos, MoveableCube cube)
+		private void CalculateSide(Vector2Int cubePos, Vector2Int activatorPos, MoveableCube cube, ref Transform side, ref Vector2Int posAhead)
 		{
-			if (!moveableCubeDic.ContainsKey(pos))
-				moveableCubeDic.Add(pos, cube);
-			else Debug.Log("moveableDic already contains cube " + pos);
-		}
-
-		public void RemoveFromMoveableDic(Vector2Int pos)
-		{
-			if (moveableCubeDic.ContainsKey(pos))
-				moveableCubeDic.Remove(pos);
-		}
-
-		public void StartMovingMoveable(Vector2Int posAhead, Vector3 turnAxis, 
-			Vector2Int pos)
-		{
-			moveableCubeDic[posAhead].ApplyOrderOfMovement(moveablesMovedThisTurn);
-			moveablesMovedThisTurn++;
-			movingMoveables++;
-			ActivateMoveableCube(posAhead, turnAxis, pos);
-			RemoveFromMoveableDic(posAhead);
-		}
-
-		public void StopMovingMoveables(Vector2Int cubePos, MoveableCube moveable,
-			bool becomeFloor)
-		{
-			movingMoveables--;
-			if (!becomeFloor) AddToMoveableDic(cubePos, moveable);
-			CheckForMovingMoveables();
+			if (CheckDeltaY(cubePos, activatorPos) > 0)
+			{
+				side = cube.up;
+				posAhead = cubePos + Vector2Int.up;
+			}
+			else if (CheckDeltaY(cubePos, activatorPos) < 0)
+			{
+				side = cube.down;
+				posAhead = cubePos + Vector2Int.down;
+			}
+			else if (CheckDeltaX(cubePos, activatorPos) < 0)
+			{
+				side = cube.left;
+				posAhead = cubePos + Vector2Int.left;
+			}
+			else if (CheckDeltaX(cubePos, activatorPos) > 0)
+			{
+				side = cube.right;
+				posAhead = cubePos + Vector2Int.right;
+			}
 		}
 
 		public void ResetMovedMoveables()

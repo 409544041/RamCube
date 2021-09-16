@@ -53,7 +53,7 @@ namespace Qbism.General
 			foreach (var data in musicSO.musicData)
 			{
 				var clipSampleDur = data.track.samples;
-				print(data.track.name + "'s sample duration = " + clipSampleDur 
+				Debug.Log(data.track.name + "'s sample duration = " + clipSampleDur 
 					+ " and it's sampling rate = " + data.track.frequency);
 			}
 		}
