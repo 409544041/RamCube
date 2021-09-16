@@ -7,78 +7,40 @@ namespace Qbism.General
 {
 	public class PositionCenterpoint : MonoBehaviour
 	{
-		//Config parameters
-		[SerializeField] bool isDynamicCam;
-
 		//Cache
 		CubeHandler handler;
 
 		//States
-		float highest, lowest, leftest, rightest;
 		bool firstValueAssigned;
 		Vector3 centerPoint = new Vector3(0, 0, 0);
-		Vector2 highestCube, lowestCube, leftestCube, rightestCube;
+		Vector3 highCube, lowCube, leftCube, rightCube;
 
 		private void Awake() 
 		{
 			handler = FindObjectOfType<CubeHandler>();
 		}
-		
-		private void Start()
+
+		private void Start() 
 		{
-			FindEdges();
-			PositionCenterPoint();
+			FindEdgeCubes();
 		}
 
 		private void Update() 
 		{
-			if (isDynamicCam) 
-			{
-				FindEdgeCubes();
-				PositionCenterPoint();
-			}
+			CalculateAvgPoint(highCube, lowCube, leftCube, rightCube);
+			PositionCenterPoint();
 		}
 
 		private void PositionCenterPoint()
 		{
 			transform.position = centerPoint;
-
-			if (!isDynamicCam)
-			{
-				CamCentralizer centralizer = GetComponent<CamCentralizer>();
-				if (centralizer) centralizer.PositionCam();
-			}
-		}
-
-		private void FindEdges()
-		{
-			foreach (KeyValuePair<Vector2Int, FloorCube> cube in handler.floorCubeDic)
-			{
-				Vector2 viewPortPos = Camera.main.WorldToViewportPoint(cube.Value.transform.position);
-
-				if (!firstValueAssigned)
-				{
-					highest = viewPortPos.y;
-					lowest = viewPortPos.y;
-					leftest = viewPortPos.x;
-					rightest = viewPortPos.x;
-
-					firstValueAssigned = true;
-				}
-
-				if (viewPortPos.y > highest) highest = viewPortPos.y;
-				if (viewPortPos.y < lowest) lowest = viewPortPos.y;
-				if (viewPortPos.x < leftest) leftest = viewPortPos.x;
-				if (viewPortPos.x > rightest) rightest = viewPortPos.x;
-
-				CalculateCenterpoint();
-			}
-
-			firstValueAssigned = false;
 		}
 
 		private void FindEdgeCubes()
 		{
+			Vector2 highCubePort = new Vector2(0, 0), lowCubePort = new Vector2(0, 0), 
+				leftCubePort = new Vector2(0, 0), rightCubePort = new Vector2(0, 0);	
+
 			foreach (KeyValuePair<Vector2Int, FloorCube> cube in handler.floorCubeDic)
 			{
 				if (cube.Value == null) return;
@@ -87,43 +49,55 @@ namespace Qbism.General
 
 				if (!firstValueAssigned)
 				{
-					highestCube = viewPortPos;
-					lowestCube = viewPortPos;
-					leftestCube = viewPortPos;
-					rightestCube = viewPortPos;
+					highCube = cube.Value.transform.position;
+					lowCube = cube.Value.transform.position;
+					leftCube = cube.Value.transform.position;
+					rightCube = cube.Value.transform.position;
+
+					highCubePort = viewPortPos;
+					lowCubePort = viewPortPos;
+					leftCubePort = viewPortPos;
+					rightCubePort = viewPortPos;
 
 					firstValueAssigned = true;
 				}
 
-				if (viewPortPos.y > highestCube.y) highestCube = viewPortPos;
-				if (viewPortPos.y < lowestCube.y) lowestCube = viewPortPos;
-				if (viewPortPos.x < leftestCube.x) leftestCube = viewPortPos;
-				if (viewPortPos.x > rightestCube.x) rightestCube = viewPortPos;
-
-				CalculateAvgPoint(highestCube, lowestCube, leftestCube, rightestCube);
+				if (viewPortPos.y > highCubePort.y)
+				{
+					highCubePort = viewPortPos;
+					highCube = cube.Value.transform.position;
+				} 
+				if (viewPortPos.y < lowCubePort.y)
+				{
+					lowCubePort = viewPortPos;
+					lowCube = cube.Value.transform.position;
+				} 
+				if (viewPortPos.x < leftCubePort.x)
+				{
+					leftCubePort = viewPortPos;
+					leftCube = cube.Value.transform.position;
+				} 
+				if (viewPortPos.x > rightCubePort.x)
+				{
+					rightCubePort = viewPortPos;
+					rightCube = cube.Value.transform.position;
+				} 
 			}
 
 			firstValueAssigned = false;
 		}
 
-		private void CalculateCenterpoint()
+		private void CalculateAvgPoint(Vector3 highCube, Vector3 lowCube, Vector3 leftCube, Vector3 rightCube)
 		{
-			float deltaX = rightest - leftest;
-			float deltaY = highest - lowest;
+			Vector2 highCubePort = Camera.main.WorldToViewportPoint(highCube); 
+			Vector2 lowCubePort = Camera.main.WorldToViewportPoint(lowCube);
+			Vector2 leftCubePort = Camera.main.WorldToViewportPoint(leftCube);
+			Vector2 rightCubePort = Camera.main.WorldToViewportPoint(rightCube);			
 
-			float xPos = leftest + (deltaX / 2);
-			float yPos = lowest + (deltaY / 2);
-
-			centerPoint = Camera.main.ViewportToWorldPoint(new Vector3(xPos, yPos, 15)); 
-			centerPoint = new Vector3(centerPoint.x, 0, centerPoint.z);
-		}
-
-		private void CalculateAvgPoint(Vector2 highCube, Vector2 lowCube, Vector2 leftCube, Vector2 rightCube)
-		{
 			GameObject player = GameObject.FindGameObjectWithTag("Player");
 			Vector2 PlayerPortPos = Camera.main.WorldToViewportPoint(player.transform.position);
 
-			Vector2[] PortPositions = {highCube, lowCube, leftCube, rightCube, PlayerPortPos};
+			Vector2[] PortPositions = {highCubePort, lowCubePort, leftCubePort, rightCubePort, PlayerPortPos};
 
 			var totalX = 0f;
 			var totalY = 0f;
