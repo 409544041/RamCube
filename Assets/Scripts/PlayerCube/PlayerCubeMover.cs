@@ -298,16 +298,6 @@ namespace Qbism.PlayerCube
 			}
 		}
 
-		public int CheckDeltaX(Vector2Int posA, Vector2Int posB)
-		{
-			return posA.x - posB.x;
-		}
-
-		public int CheckDeltaY(Vector2Int posA, Vector2Int posB)
-		{
-			return posA.y - posB.y;
-		}
-
 		private void OnDisable()
 		{
 			if (moveHandler != null) moveHandler.onSetPlayerInput -= SetInput;

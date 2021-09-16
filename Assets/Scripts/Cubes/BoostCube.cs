@@ -32,7 +32,6 @@ namespace Qbism.Cubes
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
 			var mover = cube.GetComponent<PlayerCubeMover>();
-			var launchPos = mover.FetchGridPos();
 
 			PopUpWall popWall = null;
 			GameObject wallObject = null;
@@ -74,7 +73,7 @@ namespace Qbism.Cubes
 				Vector3 turnAxis = new Vector3(0, 0, 0);
 				Vector2Int posAhead = new Vector2Int(0, 0);
 
-				CalculateSideForPlayer(mover, launchPos, cubePos, ref side, ref turnAxis, ref posAhead);
+				CalculateSide(mover, null, cubePos, ref side, ref turnAxis, ref posAhead);
 
 				mover.CheckFloorInNewPos(side, turnAxis, posAhead);
 			}
@@ -140,7 +139,7 @@ namespace Qbism.Cubes
 
 			MoveableCubeHandler moveHandler = FindObjectOfType<MoveableCubeHandler>();
 
-			CalculateSideForMoveable(ref side, ref turnAxis, ref posAhead, moveable, launchPos, cubePos, moveHandler);
+			CalculateSide(null, moveable, cubePos, ref side, ref turnAxis, ref posAhead);
 
 			moveable.CheckFloorInNewPos(side, turnAxis, posAhead, moveable, cubePos, originPos, launchPos);
 		}
@@ -170,63 +169,42 @@ namespace Qbism.Cubes
 			return target;
 		}
 
-		private void CalculateSideForPlayer(PlayerCubeMover mover, Vector2Int launchPos,
-		Vector2Int cubePos, ref Transform side, ref Vector3 turnAxis, ref Vector2Int posAhead)
+		private void CalculateSide(PlayerCubeMover mover, MoveableCube moveable, Vector2Int cubePos, 
+			ref Transform side, ref Vector3 turnAxis, ref Vector2Int posAhead)
 		{
-			if (mover.CheckDeltaY(cubePos, launchPos) > 0)
+			if (V3Equal(transform.forward, Vector3.forward))
 			{
-				side = mover.up;
+				if (mover) side = mover.up;
+				if (moveable) side = moveable.up;
 				turnAxis = Vector3.right;
 				posAhead = cubePos + Vector2Int.up;
 			}
-			else if (mover.CheckDeltaY(cubePos, launchPos) < 0)
+			else if (V3Equal(transform.forward, Vector3.back))
 			{
-				side = mover.down;
+				if (mover) side = mover.down;
+				if (moveable) side = moveable.down;
 				turnAxis = Vector3.left;
 				posAhead = cubePos + Vector2Int.down;
 			}
-			else if (mover.CheckDeltaX(cubePos, launchPos) < 0)
+			else if (V3Equal(transform.forward, Vector3.left))
 			{
-				side = mover.left;
+				if (mover) side = mover.left;
+				if (moveable) side = moveable.left;
 				turnAxis = Vector3.forward;
 				posAhead = cubePos + Vector2Int.left;
 			}
-			else if (mover.CheckDeltaX(cubePos, launchPos) > 0)
+			else if (V3Equal(transform.forward, Vector3.right))
 			{
-				side = mover.right;
+				if (mover) side = mover.right;
+				if (moveable) side = moveable.right;
 				turnAxis = Vector3.back;
 				posAhead = cubePos + Vector2Int.right;
 			}
 		}
 
-		private void CalculateSideForMoveable(ref Transform side, ref Vector3 turnAxis, 
-			ref Vector2Int posAhead, MoveableCube moveable, Vector2Int launchPos, 
-			Vector2Int cubePos, MoveableCubeHandler moveHandler)
+		private bool V3Equal(Vector3 a, Vector3 b)
 		{
-			if (moveHandler.CheckDeltaY(cubePos, launchPos) > 0)
-			{
-				side = moveable.up;
-				turnAxis = Vector3.right;
-				posAhead = cubePos + Vector2Int.up;
-			}
-			else if (moveHandler.CheckDeltaY(cubePos, launchPos) < 0)
-			{
-				side = moveable.down;
-				turnAxis = Vector3.left;
-				posAhead = cubePos + Vector2Int.down;
-			}
-			else if (moveHandler.CheckDeltaX(cubePos, launchPos) < 0)
-			{
-				side = moveable.left;
-				turnAxis = Vector3.forward;
-				posAhead = cubePos + Vector2Int.left;
-			}
-			else if (moveHandler.CheckDeltaX(cubePos, launchPos) > 0)
-			{
-				side = moveable.right;
-				turnAxis = Vector3.back;
-				posAhead = cubePos + Vector2Int.right;
-			}
+			return Vector3.SqrMagnitude(a - b) < 0.001;
 		}
 	}
 }

@@ -85,7 +85,7 @@ namespace Qbism.Cubes
 					if (differentCubes) HandleLandingOnFinalPos(previousCube);
 					else
 					{
-						//landing on same cube, like after having turned/flipped
+						//landing on same cube, like after having turned
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
 						if (moveHandler.movingMoveables == 0) mover.input = true;
 						if (previousCube.FetchType() == CubeTypes.Boosting)
