@@ -13,6 +13,7 @@ namespace Qbism.PlayerCube
 
 		//States
 		public bool isBoosting { get; set; } = false;
+		public bool isOutOfBounds { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int, GameObject> onFeedForwardFloorCheck;
@@ -58,6 +59,7 @@ namespace Qbism.PlayerCube
 		private void OnDisable()
 		{
 			isBoosting = false;
+			isOutOfBounds = false;
 		}
 	}
 }

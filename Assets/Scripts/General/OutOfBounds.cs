@@ -15,7 +15,7 @@ namespace Qbism.General
 
 		private void OnTriggerEnter(Collider other) 
 		{
-			if(other.tag == "Player")
+			if (other.tag == "Player")
 			{
 				var player = other.GetComponent<PlayerCubeMover>();
 				player.isOutOfBounds = true;
@@ -23,8 +23,14 @@ namespace Qbism.General
 					player.input = true; //This here else wont let you rewind
 				onRewindPulse(InterfaceIDs.Rewind);				
 			}
+
+			if (other.tag == "FFCube")
+			{
+				var ffCube = other.GetComponent<FeedForwardCube>();
+				ffCube.isOutOfBounds = true;
+			}
 			
-			if(other.tag == "Moveable")
+			if (other.tag == "Moveable")
 			{
 				var moveable = other.GetComponent<MoveableCube>();
 				moveable.isBoosting = false;

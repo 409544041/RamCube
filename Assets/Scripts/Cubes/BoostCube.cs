@@ -93,16 +93,18 @@ namespace Qbism.Cubes
 				ffCube.transform.position = Vector3.MoveTowards(ffCube.transform.position,
 					boostTarget, boostSpeed * Time.deltaTime);
 
-				if (Vector3.Distance(ffCube.transform.position, boostTarget) < 0.001f)
+				if (Vector3.Distance(ffCube.transform.position, boostTarget) < .5f)
+				{
 					ff.isBoosting = false;
+					ff.transform.position = boostTarget;
+				}
 
 				yield return null;
 			}
 
-			if (ff.gameObject.activeSelf)
+			if (!ff.isOutOfBounds)
 			{
 				ff.RoundPosition();
-				ff.isBoosting = false;
 				ff.CheckFloorInNewPos();
 			}
 		}
@@ -150,16 +152,18 @@ namespace Qbism.Cubes
 			if (Physics.Raycast(boostRayOrigin.position,
 				boostObjDir.transform.TransformDirection(Vector3.forward), out wallHit, 20, mask))
 			{
-				//For this to work, wall or other blocker objects needs to be placed on 'the grid', just like cubes
+				//For this to work, wall or other blocker objects needs to be placed on 
+				//'the grid', just like cubes
 				float distance = Vector3.Distance(boostRayOrigin.position, wallHit.point) - .5f;
-				target = boostRayOrigin.position + (boostObjDir.transform.TransformDirection(Vector3.forward) * distance);
+				target = boostRayOrigin.position + 
+					(boostObjDir.transform.TransformDirection(Vector3.forward) * distance);
 				wallObject = wallHit.transform.gameObject;
 			}
 
 			//this else is for when it flies out of bounds
 			else
 			{
-				target = boostRayOrigin.position + (boostObjDir.transform.TransformDirection(Vector3.forward) * 20);
+				target = boostRayOrigin.position + (boostObjDir.transform.TransformDirection(Vector3.forward) * 30);
 				wallObject = null;
 			}
 			return target;
