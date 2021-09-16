@@ -41,6 +41,7 @@ namespace Qbism.Cubes
 
 			mover.input = false;
 			mover.isBoosting = true;
+			mover.justBoosted = true;
 
 			mover.GetComponent<PlayerCubeBoostJuicer>().
 				PlayBoostJuice(boostObjDir.transform.forward);

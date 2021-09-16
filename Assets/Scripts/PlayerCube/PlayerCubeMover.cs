@@ -36,7 +36,6 @@ namespace Qbism.PlayerCube
 		PlayerCubeBoostJuicer boostJuicer;
 
 		//States
-		public bool isInBoostPos { get; set; } = true;
 		public bool input { get; set; } = true;
 		public bool isBoosting { get; set; } = false;
 		public bool isTurning { get; set; } = false;
@@ -48,6 +47,7 @@ namespace Qbism.PlayerCube
 		public bool isOutOfBounds { get; set; } = false;
 		public bool isInIntroSeq { get; set; } = false;
 		public bool isLowered { get; set; } = false;
+		public bool justBoosted { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;

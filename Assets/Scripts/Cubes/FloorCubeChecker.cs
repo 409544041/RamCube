@@ -74,7 +74,7 @@ namespace Qbism.Cubes
 				currentCube = handler.FetchCube(cubePos, true);
 				bool differentCubes = currentCube != previousCube;
 
-				if (currentCube.FetchType() == CubeTypes.Boosting)
+				if (currentCube.FetchType() == CubeTypes.Boosting && differentCubes)
 					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
 
 				else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
@@ -88,9 +88,12 @@ namespace Qbism.Cubes
 						//landing on same cube, like after having turned/flipped
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
 						if (moveHandler.movingMoveables == 0) mover.input = true;
+						if (previousCube.FetchType() == CubeTypes.Boosting)
+							playerBoostJuicer.PlayPostBoostJuice();
 					}
 
 					mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();
+					mover.justBoosted = false;
 				}
 			}
 
@@ -100,6 +103,8 @@ namespace Qbism.Cubes
 				if (previousCube.FetchType() == CubeTypes.Boosting)
 					mover.InitiateLowering(cubePos, true);
 				else mover.InitiateLowering(cubePos, false);
+
+				mover.justBoosted = false;
 			}
 		}
 
@@ -136,8 +141,7 @@ namespace Qbism.Cubes
 
 			if (previousCube.FetchType() != CubeTypes.Boosting)
 				playerFlipJuicer.PlayPostFlipJuice();
-
-			else playerBoostJuicer.PlayPostBoostJuice();
+			else if (mover.justBoosted) playerBoostJuicer.PlayPostBoostJuice();
 		}
 
 		private void CheckFloorTypeForFF(Vector2Int cubePos, GameObject cube)
