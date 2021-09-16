@@ -67,7 +67,8 @@ namespace Qbism.MoveableCubes
 				moveableCubeDic.Remove(pos);
 		}
 
-		public void ActivateMoveableCube(Vector2Int cubePos, Vector3 turnAxis, Vector2Int activatorPos)
+		public void ActivateMoveableCube(Vector2Int cubePos,
+			Vector3 turnAxis, Vector2Int activatorPos)
 		{
 			var cube = FetchMoveableCube(cubePos);
 			Transform side = null;
@@ -76,6 +77,9 @@ namespace Qbism.MoveableCubes
 
 			CalculateSide(cubePos, activatorPos, cube, ref side, ref posAhead);
 			cube.InitiateMove(side, turnAxis, posAhead, originPos);
+
+			if (!cube.CheckForWallAhead(cubePos, posAhead)) 
+				RemoveFromMoveableDic(cubePos);
 		}
 
 		public void CheckForMovingMoveables()
@@ -90,7 +94,6 @@ namespace Qbism.MoveableCubes
 			moveablesMovedThisTurn++;
 			movingMoveables++;
 			ActivateMoveableCube(posAhead, turnAxis, pos);
-			RemoveFromMoveableDic(posAhead);
 		}
 
 		public void StopMovingMoveables(Vector2Int cubePos, MoveableCube moveable,
