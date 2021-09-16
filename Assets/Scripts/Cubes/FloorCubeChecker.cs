@@ -98,7 +98,8 @@ namespace Qbism.Cubes
 			{
 				//lowering
 				if (previousCube.FetchType() == CubeTypes.Boosting)
-					mover.InitiateLowering(cubePos);
+					mover.InitiateLowering(cubePos, true);
+				else mover.InitiateLowering(cubePos, false);
 			}
 		}
 

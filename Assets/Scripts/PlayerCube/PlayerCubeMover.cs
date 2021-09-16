@@ -178,23 +178,27 @@ namespace Qbism.PlayerCube
 			}
 		}
 
-		public void InitiateLowering(Vector2Int cubePos)
+		public void InitiateLowering(Vector2Int cubePos, bool fromBoost)
 		{
 			Vector3 targetPos = new Vector3(transform.position.x,
 				transform.position.y - .95f, transform.position.z);
 			float step = lowerStep * Time.deltaTime;
 
-			StartCoroutine(LowerCube(targetPos, step, cubePos));
+			StartCoroutine(LowerCube(targetPos, step, cubePos, fromBoost));
 		}
 
-		private IEnumerator LowerCube(Vector3 targetPos, float step, Vector2Int cubePos)
+		private IEnumerator LowerCube(Vector3 targetPos, float step, 
+			Vector2Int cubePos, bool fromBoost)
 		{
 			isMoving = true;
 			input = false;
 			
-			var juiceDur = boostJuicer.FetchJuiceDur();
-			boostJuicer.PlayPostBoostJuice();
-			yield return new WaitForSeconds(juiceDur);
+			if (fromBoost)
+			{
+				var juiceDur = boostJuicer.FetchJuiceDur();
+				boostJuicer.PlayPostBoostJuice();
+				yield return new WaitForSeconds(juiceDur);
+			}
 
 			transform.localScale = new Vector3(.95f, .95f, .95f);
 
