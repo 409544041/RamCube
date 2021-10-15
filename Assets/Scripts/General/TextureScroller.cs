@@ -48,5 +48,10 @@ namespace Qbism.General
 
 			material.mainTextureOffset = new Vector2(0, 0);
 		}
+
+		private void OnDisable() 
+		{
+			material.mainTextureOffset = new Vector2(0, 0);
+		}
 	}
 }
