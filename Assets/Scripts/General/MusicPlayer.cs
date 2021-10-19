@@ -7,11 +7,11 @@ namespace Qbism.General
 	public class MusicPlayer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] bool mute;
 		[SerializeField] MusicTracksScripOb musicSO;
 
 		//Cache
 		AudioSource source;
+		MusicOrderHandler orderHandler;
 
 		//States
 		float loopLength, loopEnd;
@@ -19,16 +19,27 @@ namespace Qbism.General
 		private void Awake() 
 		{
 			source = GetComponent<AudioSource>();
+			orderHandler = FindObjectOfType<MusicOrderHandler>();
 
-			int i = Random.Range(0, musicSO.musicData.Length);
-			loopLength = musicSO.musicData[i].loopLength;
-			loopEnd = musicSO.musicData[i].loopEnd;
-			source.clip = musicSO.musicData[i].track;
+			if (orderHandler)
+			{
+				int i = orderHandler.currentTrack;
+				loopLength = musicSO.musicData[i].loopLength;
+				loopEnd = musicSO.musicData[i].loopEnd;
+				source.clip = musicSO.musicData[i].track; 
+			}
+			else
+			{
+				int i = Random.Range(0, musicSO.musicData.Length);
+				loopLength = musicSO.musicData[i].loopLength;
+				loopEnd = musicSO.musicData[i].loopEnd;
+				source.clip = musicSO.musicData[i].track;
+			}
 		}
 
 		private void Start() 
 		{
-			if (!mute) source.Play();
+			source.Play();
 		}
 
 		private void Update()
@@ -56,6 +67,16 @@ namespace Qbism.General
 				Debug.Log(data.track.name + "'s sample duration = " + clipSampleDur 
 					+ " and it's sampling rate = " + data.track.frequency);
 			}
+		}
+
+		private void OnDisable() 
+		{
+			if (orderHandler)
+			{
+				if (orderHandler.currentTrack > musicSO.musicData.Length - 1)
+					orderHandler.currentTrack = 0;
+				else orderHandler.currentTrack++;
+			} 
 		}
 	}
 }
