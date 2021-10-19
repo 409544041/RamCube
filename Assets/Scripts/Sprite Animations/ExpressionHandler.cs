@@ -12,8 +12,8 @@ namespace Qbism.SpriteAnimations
 		[SerializeField] SituationsExprsScripOb situationsExprsSO;
 		[SerializeField] bool isPlayer;
 		[SerializeField] bool hasBrows = true, hasMouth = true;
-		[SerializeField] Vector2 minMaxExpressionTime;
-		[SerializeField] float blinkTime = .05f;
+		[SerializeField] Vector2 minMaxExpressionTime, minMaxBlinkTime;
+		[SerializeField] float blinkDur = .2f;
 
 		//Cache
 		SpriteBrowAnimator browAnim = null;
@@ -22,9 +22,10 @@ namespace Qbism.SpriteAnimations
 		FaceJuicer faceJuice = null;
 
 		//States
-		float expressionTimer = 0f;
-		float timeToExpress = 0f;
+		float expressionTimer = 0f, blinkTimer = 0f;
+		float timeToExpress = 0f, timeToBlink = 0f;
 		public bool hasFinished { get; set; } = false;
+		bool isIdling = true;
 
 		private void Awake()
 		{
@@ -36,13 +37,20 @@ namespace Qbism.SpriteAnimations
 
 		private void Update()
 		{
-			if (isPlayer && !hasFinished) HandleExpressionTimer();
+			if (isPlayer && !hasFinished)
+			{
+				HandleBlinkTimer();
+				HandleExpressionTimer(); 
+			}
 		}
 
 		public void SetSituationFace(ExpressionSituations incSituation, float incTime)
 		{
 			if (isPlayer)
 			{
+				if (incSituation == ExpressionSituations.play) isIdling = true;
+				else isIdling = false;
+
 				foreach (var situationExpr in situationsExprsSO.situationExpressions)
 				{
 					if (situationExpr.situation != incSituation) continue;
@@ -78,11 +86,13 @@ namespace Qbism.SpriteAnimations
 			}
 		}
 
-		private void InitiateBlinking()
+		private void InitiateBlinking() //In case blink is called from animations
 		{
 			StartCoroutine(Blink());
 		}
 
+		//Can only do this from idle states that use neutral eyes bc it will
+		//always go back to neutral
 		private IEnumerator Blink()
 		{
 			foreach (var expressionFace in expressionsSO.expressionFaces)
@@ -91,12 +101,23 @@ namespace Qbism.SpriteAnimations
 					eyesAnim.SetEyes(expressionFace.face.eyes);
 			}
 
-			yield return new WaitForSeconds(blinkTime);
+			yield return new WaitForSeconds(blinkDur);
 
 			foreach (var expressionFace in expressionsSO.expressionFaces)
 			{
 				if (expressionFace.expression == Expressions.neutral)
 					eyesAnim.SetEyes(expressionFace.face.eyes);
+			}
+		}
+
+		private void HandleBlinkTimer()
+		{
+			blinkTimer += Time.deltaTime;
+			if (blinkTimer >= timeToBlink)
+			{
+				StartCoroutine(Blink());
+				timeToBlink = UnityEngine.Random.Range(minMaxBlinkTime.x, minMaxBlinkTime.y);
+				blinkTimer = 0;
 			}
 		}
 
