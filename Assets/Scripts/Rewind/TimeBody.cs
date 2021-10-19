@@ -276,5 +276,10 @@ namespace Qbism.Rewind
 
 			isOutOfBoundsList.RemoveAt(0);
 		}
+
+		private void OnDisable()
+		{
+			if (myMoveable != null) myMoveable.onUpdateOrderInTimebody -= AddToMoveOrderList;
+		}
 	}
 }
