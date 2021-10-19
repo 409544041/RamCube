@@ -15,8 +15,9 @@ namespace Qbism.PlayerCube
 		{
 			stunVFX.Play();
 			stunMesh.SetActive(true);
-			GetComponentInChildren<ExpressionHandler>().
-				SetSituationFace(ExpressionSituations.laserHit, -1f);
+			var expressHandler = GetComponentInChildren<ExpressionHandler>();
+			expressHandler.SetSituationFace(ExpressionSituations.laserHit, 
+				expressHandler.GetRandomTime());
 		}
 
 		public void StopStunVFX()

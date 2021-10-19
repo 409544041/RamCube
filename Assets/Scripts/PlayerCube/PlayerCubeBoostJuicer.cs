@@ -74,7 +74,8 @@ namespace Qbism.PlayerCube
 			boostJuice.PlayFeedbacks();
 			boostTrailTimer = 0;
 			boostTrailCounting = true;
-			expresHandler.SetSituationFace(ExpressionSituations.boosting, -1f);
+			expresHandler.SetSituationFace(ExpressionSituations.boosting, 
+				expresHandler.GetRandomTime());
 		}
 
 		public void PlayPostBoostJuice()
@@ -97,7 +98,7 @@ namespace Qbism.PlayerCube
 			boostJuice.StopFeedbacks();
 			postBoostJuice.Initialization();
 			postBoostJuice.PlayFeedbacks();
-			expresHandler.SetSituationFace(ExpressionSituations.wallHit, 1f);
+			expresHandler.SetSituationFace(ExpressionSituations.wallHit, .5f);
 		}
 
 		public float FetchJuiceDur()

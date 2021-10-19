@@ -55,6 +55,11 @@ namespace Qbism.SpriteAnimations
 			}
 		}
 
+		public float GetRandomTime()
+		{
+			return UnityEngine.Random.Range(minMaxExpressionTime.x, minMaxExpressionTime.y);
+		}
+
 		public void SetFace(Expressions incExpression, float incTime)
 		{
 			foreach (var expressionFace in expressionsSO.expressionFaces)
@@ -68,10 +73,7 @@ namespace Qbism.SpriteAnimations
 			
 			if (isPlayer)
 			{
-				if (incTime < 0) timeToExpress =
-				UnityEngine.Random.Range(minMaxExpressionTime.x, minMaxExpressionTime.y);
-				else timeToExpress = incTime;
-
+				timeToExpress = incTime;
 				expressionTimer = 0;
 			}
 		}
@@ -103,57 +105,57 @@ namespace Qbism.SpriteAnimations
 			expressionTimer += Time.deltaTime;
 
 			if (expressionTimer >= timeToExpress)
-				SetSituationFace(ExpressionSituations.play, -1f);
+				SetSituationFace(ExpressionSituations.play, GetRandomTime());
 		}
 
 		private void SetNeutralFace()
 		{
-			SetFace(Expressions.neutral, -1);
+			SetFace(Expressions.neutral, GetRandomTime());
 		}
 
 		private void SetGleefulFace()
 		{
-			SetFace(Expressions.gleeful, -1);
+			SetFace(Expressions.gleeful, GetRandomTime());
 		}
 
 		private void SetOuchFace()
 		{
-			SetFace(Expressions.ouch, -1);
+			SetFace(Expressions.ouch, GetRandomTime());
 		}
 
 		private void SetSmileFace()
 		{
-			SetFace(Expressions.smiling, -1);
+			SetFace(Expressions.smiling, GetRandomTime());
 		}
 
 		private void SetToothyLaughFace()
 		{
-			SetFace(Expressions.toothyLaugh, -1);
+			SetFace(Expressions.toothyLaugh, GetRandomTime());
 		}
 
 		private void SetVeryHappyFace()
 		{
-			SetFace(Expressions.veryHappy, -1);
+			SetFace(Expressions.veryHappy, GetRandomTime());
 		}
 
 		private void SetShockedFace()
 		{
-			SetFace(Expressions.shocked, -1);
+			SetFace(Expressions.shocked, GetRandomTime());
 		}
 
 		private void SetAnnoyedFace()
 		{
-			SetFace(Expressions.annoyed, -1);
+			SetFace(Expressions.annoyed, GetRandomTime());
 		}
 
 		private void SetLookingFace()
 		{
-			SetFace(Expressions.looking, -1);
+			SetFace(Expressions.looking, GetRandomTime());
 		}
 
 		private void SetCalmFace()
 		{
-			SetFace(Expressions.calm, -1);
+			SetFace(Expressions.calm, GetRandomTime());
 		}
 
 		private void StartLaughingWiggle()
