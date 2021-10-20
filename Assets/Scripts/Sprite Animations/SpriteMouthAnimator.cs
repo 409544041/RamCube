@@ -8,7 +8,7 @@ namespace Qbism.SpriteAnimations
 	public class SpriteMouthAnimator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] bool hasCircle, hasTeeth, hasWail, hasCry;
+		[SerializeField] bool hasCircle, hasTeeth, hasWail, hasCry, hasBoop, hasYawn;
 
 		//Cache
 		Animator animator;
@@ -23,6 +23,8 @@ namespace Qbism.SpriteAnimations
 		const string TO_SMILE = "ToSmile";
 		const string TO_HAPPY = "ToHappyOpen";
 		const string TO_CRY = "ToCry";
+		const string TO_BOOP = "ToIdleBooping";
+		const string TO_YAWN = "ToIdleYawn";
 
 		List<string> animStringList = new List<string>();
 
@@ -41,6 +43,8 @@ namespace Qbism.SpriteAnimations
 			animStringList.Add(TO_SMILE);
 			animStringList.Add(TO_HAPPY);
 			animStringList.Add(TO_CRY);
+			animStringList.Add(TO_BOOP);
+			animStringList.Add(TO_YAWN);
 		}
 
 		//state1 is always the state you're going to.
@@ -92,6 +96,18 @@ namespace Qbism.SpriteAnimations
 
 			if (state == MouthStates.cry && !hasCry)
 				Debug.LogError("Character does not have cry mouth animation");
+
+			if (state == MouthStates.boop && hasBoop) ToFirstTierAnim(MouthStates.boop, 
+					MouthStates.nullz, MouthStates.nullz, TO_BOOP);
+
+			else if (state == MouthStates.boop && !hasBoop)
+				Debug.LogError("Character does not have booping mouth animation.");
+
+			if (state == MouthStates.yawn && hasYawn) ToFirstTierAnim(MouthStates.yawn, 
+				MouthStates.nullz, MouthStates.nullz, TO_YAWN);
+
+			else if (state == MouthStates.yawn && !hasYawn)
+				Debug.LogError("Character does not have yawning mouth animation.");
 		}
 
 		private void SetCurrentMouth()
@@ -112,6 +128,8 @@ namespace Qbism.SpriteAnimations
 			if (currentClipName == "Mouth_SmileToHappyOpen") currentMouth = MouthStates.happyOpen;
 
 			if (currentClipName == "Mouth_Crying") currentMouth = MouthStates.cry;
+			if (currentClipName == "Mouth_IdleBooping") currentMouth = MouthStates.boop;
+			if (currentClipName == "Mouth_IdleYawning")	currentMouth = MouthStates.yawn;
 		}
 
 		private void ToBaseAnim()

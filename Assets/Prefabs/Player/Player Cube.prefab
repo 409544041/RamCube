@@ -51,7 +51,7 @@ MonoBehaviour:
   hasMouth: 1
   minMaxExpressionTime: {x: 2, y: 3}
   minMaxBlinkTime: {x: 1, y: 4}
-  blinkTime: 0.2
+  blinkDur: 0.2
 --- !u!1 &958577028606683431
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,8 +251,7 @@ MonoBehaviour:
   lowerStep: 2.5
   wiggleTurnStep: 2
   wiggleRotation: 8
-  yDuringPlay: 0.9
-  yWhenLowered: 0
+  loweredYDelta: 0.95
 --- !u!114 &7696613664066083821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +335,7 @@ MonoBehaviour:
   flyByScaleMod: 3
   flyBySpeedMod: 3
   beamImpactAddedY: 1
+  camDisForCamSwitch: 7
 --- !u!114 &2499511305187383396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,6 +1057,8 @@ MonoBehaviour:
   hasTeeth: 1
   hasWail: 1
   hasCry: 1
+  hasBoop: 1
+  hasYawn: 1
 --- !u!1 &3443763629099444222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,7 +1661,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3401577390596151631, guid: 4fcdb0ba5b32ff54fb51014fd065eb9b,
+  m_Sprite: {fileID: -8252549931640105318, guid: 4fcdb0ba5b32ff54fb51014fd065eb9b,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1709,6 +1711,8 @@ MonoBehaviour:
   hasSparkling: 1
   hasCrossShut: 1
   hasWink: 1
+  hasBoop: 1
+  hasYawn: 1
 --- !u!1 &6185834205700780041
 GameObject:
   m_ObjectHideFlags: 0

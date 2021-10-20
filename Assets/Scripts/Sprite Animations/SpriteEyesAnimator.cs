@@ -7,7 +7,8 @@ namespace Qbism.SpriteAnimations
 	public class SpriteEyesAnimator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] bool hasTwitch, hasSquint, hasAnnoyed, hasLooking, hasSparkling, hasCrossShut, hasWink;
+		[SerializeField] bool hasTwitch, hasSquint, hasAnnoyed, hasLooking, 
+			hasSparkling, hasCrossShut, hasWink, hasBoop, hasYawn;
 
 		//Cache
 		Animator animator;
@@ -25,6 +26,8 @@ namespace Qbism.SpriteAnimations
 		const string TO_SQUINT = "ToSquint";
 		const string TO_ANNOYED = "ToAnnoyed";
 		const string TO_LOOKING = "ToLooking";
+		const string TO_BOOP = "ToIdleBooping";
+		const string TO_YAWN = "ToIdleYawn";
 
 		List<string> animStringList = new List<string>();
 
@@ -46,6 +49,8 @@ namespace Qbism.SpriteAnimations
 			animStringList.Add(TO_SQUINT);
 			animStringList.Add(TO_ANNOYED);
 			animStringList.Add(TO_LOOKING);
+			animStringList.Add(TO_BOOP);
+			animStringList.Add(TO_YAWN);
 		}
 
 		//state1 is always the state you're going to.
@@ -110,6 +115,18 @@ namespace Qbism.SpriteAnimations
 			
 			else if (state == EyesStates.looking & !hasLooking)
 				Debug.LogError("Character does not have looking eye animation.");
+
+			if (state == EyesStates.boop && hasBoop)
+				ToFirstTierAnim(EyesStates.boop, EyesStates.nullz, TO_BOOP);
+			
+			else if (state == EyesStates.boop && !hasBoop)
+				Debug.LogError("Character does not have booping eye animation.");
+
+			if (state == EyesStates.yawn && hasYawn)
+				ToFirstTierAnim(EyesStates.yawn, EyesStates.nullz, TO_YAWN);
+
+			else if (state == EyesStates.yawn && !hasYawn)
+				Debug.LogError("Character does not have yawning eye animation.");
 		}
 
 		private void SetCurrentEyes()
@@ -130,6 +147,8 @@ namespace Qbism.SpriteAnimations
 			if (currentClipName == "Eyes_Squinted") currentEyes = EyesStates.squint;
 			if (currentClipName == "Eyes_Looking_Wall") currentEyes = EyesStates.looking;
 			if (currentClipName == "Eyes_Annoyed") currentEyes = EyesStates.annoyed;
+			if (currentClipName == "Eyes_IdleBooping") currentEyes = EyesStates.boop;
+			if (currentClipName == "Eyes_IdleYawn") currentEyes = EyesStates.yawn;
 		}
 
 		private void ToBaseAnim()

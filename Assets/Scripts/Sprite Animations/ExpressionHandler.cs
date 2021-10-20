@@ -25,7 +25,7 @@ namespace Qbism.SpriteAnimations
 		float expressionTimer = 0f, blinkTimer = 0f;
 		float timeToExpress = 0f, timeToBlink = 0f;
 		public bool hasFinished { get; set; } = false;
-		bool isIdling = true;
+		bool isIdling = true, canBlink = true;
 
 		private void Awake()
 		{
@@ -70,6 +70,11 @@ namespace Qbism.SpriteAnimations
 
 		public void SetFace(Expressions incExpression, float incTime)
 		{
+			// smiling is currently the only idle face that doesn't have it's own eye movement
+			// so only in that face can we activate blink
+			if (incExpression == Expressions.smiling) canBlink = true;
+			else canBlink = false;
+			
 			foreach (var expressionFace in expressionsSO.expressionFaces)
 			{
 				if (expressionFace.expression != incExpression) continue;
@@ -95,7 +100,7 @@ namespace Qbism.SpriteAnimations
 		//always go back to neutral
 		private IEnumerator Blink()
 		{
-			if (isIdling)
+			if (isIdling && canBlink)
 			{
 				foreach (var expressionFace in expressionsSO.expressionFaces)
 				{
