@@ -17,6 +17,7 @@ namespace Qbism.Cubes
 		[SerializeField] CinemachineVirtualCamera closeUpCam, endCam;
 		[SerializeField] Transform fartTowardsTarget;
 		[SerializeField] float fartDelay, flyByDelay;
+		[SerializeField] float fadeTime = .2f;
 
 		//Cache
 		CubeHandler handler;
@@ -104,11 +105,11 @@ namespace Qbism.Cubes
 		{
 			fader = FindObjectOfType<Fader>();
 			onAlignCam();
-			yield return fader.FadeOut(fader.endSeqTransTime);
+			yield return fader.FadeOut(fadeTime);
 			closeUpCam.Priority = 11;
 			Camera.main.orthographic = false;
 			closeUpCam.transform.parent = null;
-			fader.FadeIn(fader.endSeqTransTime);
+			fader.FadeIn(fadeTime);
 		}
 
 		private void InitiateEndCamSwitch()
@@ -118,11 +119,11 @@ namespace Qbism.Cubes
 
 		private IEnumerator SwitchToEndCam()
 		{
-			yield return fader.FadeOut(fader.endSeqTransTime);
+			yield return fader.FadeOut(fadeTime);
 			endCam.Priority = 12;
 			Camera.main.orthographic = true;
 			endCam.transform.parent = null;
-			fader.FadeIn(fader.endSeqTransTime);
+			fader.FadeIn(fadeTime);
 			yield return new WaitForSeconds(flyByDelay);
 
 			// flyby disabled if rescuing segment

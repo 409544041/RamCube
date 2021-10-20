@@ -16,6 +16,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] GameObject playerVis;
 		[SerializeField] float flyByScaleMod, flyBySpeedMod;	
 		[SerializeField] float beamImpactAddedY = .55f;
+		[SerializeField] float camDisForCamSwitch = 7f;
 
 		//Cache
 		GameControls controls;
@@ -177,7 +178,8 @@ namespace Qbism.PlayerCube
 			{
 				transform.position = Vector3.MoveTowards(transform.position, target.position, step);
 
-				if(Vector3.Distance(transform.position, Camera.main.transform.position) < 2 && !endCam)
+				if(Vector3.Distance(transform.position, Camera.main.transform.position) < 
+					camDisForCamSwitch && !endCam)
 				{
 					onSwitchToEndCam();
 					onDoneFarting();
