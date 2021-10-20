@@ -139,9 +139,6 @@ namespace Qbism.SpriteAnimations
 			if (currentEyes == EyesStates.shut)
 				ToFirstTierAnim(EyesStates.annoyed, EyesStates.shut, TO_ANNOYED);
 
-			if (currentEyes == EyesStates.cross)
-				ToFirstTierAnim(EyesStates.annoyed, EyesStates.cross, TO_ANNOYED);
-
 			if (currentEyes == EyesStates.arched)
 				ToFirstTierAnim(EyesStates.squint, EyesStates.arched, TO_SQUINT);
 
