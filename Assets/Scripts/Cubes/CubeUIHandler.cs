@@ -82,7 +82,7 @@ namespace Qbism.Cubes
 			if (turner)
 			{
 				if (turner.isLeftTurning)
-					uiElement.transform.localScale = new Vector3(1, -1, 1);
+					uiElement.transform.localScale = new Vector3(-1, 1, 1);
 			}
 		}
 	}
