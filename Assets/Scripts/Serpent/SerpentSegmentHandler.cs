@@ -35,7 +35,7 @@ namespace Qbism.Serpent
 
 		private void Start()
 		{
-			if (splineHandler == null) //Checking if we're in serpent screen or not
+			if (!splineHandler) //Checking if we're in serpent screen or not
 			{
 				for (int i = 0; i < segments.Length; i++)
 				{
@@ -57,23 +57,31 @@ namespace Qbism.Serpent
 			for (int i = 0; i < segments.Length; i++)
 			{
 				var mRender = segments[i].GetComponentInChildren<SkinnedMeshRenderer>();
-				var sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
+				SpriteRenderer[] sRenders = segments[i].GetComponentsInChildren<SpriteRenderer>();
 				var follower = segments[i].GetComponent<SplineFollower>();
 
-				if (!mRender || !sRender) Debug.LogError
+				if (!mRender || sRenders.Length == 0) Debug.LogError
 						(segments[i] + " is missing either a meshrenderer or spriterenderer!");
 
 				if (serpDataList[i] == true)
 				{
 					mRender.enabled = true;
-					sRender.enabled = true;
 					if (follower) follower.useTriggers = true;
+
+					foreach (var sRender in sRenders)
+					{
+						sRender.enabled = true;
+					}
 				}
 				else
 				{
 					mRender.enabled = false;
-					sRender.enabled = false;
 					if (follower) follower.useTriggers = false;
+
+					foreach (var sRender in sRenders)
+					{
+						sRender.enabled = false;
+					}
 				}
 			}
 		}

@@ -125,9 +125,13 @@ namespace Qbism.Cubes
 			fader.FadeIn(fader.endSeqTransTime);
 			yield return new WaitForSeconds(flyByDelay);
 
-			Vector3 startPos, endPos;
-			CalculateStartEnd(out startPos, out endPos);
-			farter.InitiateFlyBy(startPos, endPos);
+			// flyby disabled if rescuing segment
+			if (!FetchHasSegment())
+			{
+				Vector3 startPos, endPos;
+				CalculateStartEnd(out startPos, out endPos);
+				farter.InitiateFlyBy(startPos, endPos);
+			}
 		}
 
 		private void CalculateStartEnd(out Vector3 startPos, out Vector3 endPos)
