@@ -29,7 +29,8 @@ namespace Qbism.Rewind
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onStopRewindPulse;
-		public event Action onResetFartColliding;
+		// public event Action onResetFartColliding; Can't remember removing this
+		// Check if it causes bugs at some point?
 
 		private void Awake() 
 		{

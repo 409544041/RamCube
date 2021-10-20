@@ -22,7 +22,7 @@ namespace Qbism.PlayerCube
 		bool fallen = false;
 
 		//Actions, events, delegates etc
-		public event Action onTriggerLandingReaction, onTriggerShapieShock;
+		public event Action onTriggerLandingReaction;
 		public event Action onShowFF, onTriggerSerpent, onChildSegmentToPlayer;
 		public event Action<bool> onInputSet, onIntroSet, onSwitchVisuals;
 

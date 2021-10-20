@@ -24,8 +24,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] int wiggleTurnStep = 18;
 		[SerializeField] int wiggleRotation = 8;
 		[Header ("Position")]
-		[SerializeField] float yDuringPlay = .9f;
-		[SerializeField] float yWhenLowered = 0;		
+		[SerializeField] float loweredYDelta = .95f;		
 
 		//Cache
 		MoveableCubeHandler moveHandler;
@@ -181,7 +180,7 @@ namespace Qbism.PlayerCube
 		public void InitiateLowering(Vector2Int cubePos, bool fromBoost)
 		{
 			Vector3 targetPos = new Vector3(transform.position.x,
-				transform.position.y - .95f, transform.position.z);
+				transform.position.y - loweredYDelta, transform.position.z);
 			float step = lowerStep * Time.deltaTime;
 
 			StartCoroutine(LowerCube(targetPos, step, cubePos, fromBoost));

@@ -95,18 +95,21 @@ namespace Qbism.SpriteAnimations
 		//always go back to neutral
 		private IEnumerator Blink()
 		{
-			foreach (var expressionFace in expressionsSO.expressionFaces)
+			if (isIdling)
 			{
-				if (expressionFace.expression == Expressions.blink)
-					eyesAnim.SetEyes(expressionFace.face.eyes);
-			}
+				foreach (var expressionFace in expressionsSO.expressionFaces)
+				{
+					if (expressionFace.expression == Expressions.blink)
+						eyesAnim.SetEyes(expressionFace.face.eyes);
+				}
 
-			yield return new WaitForSeconds(blinkDur);
+				yield return new WaitForSeconds(blinkDur);
 
-			foreach (var expressionFace in expressionsSO.expressionFaces)
-			{
-				if (expressionFace.expression == Expressions.neutral)
-					eyesAnim.SetEyes(expressionFace.face.eyes);
+				foreach (var expressionFace in expressionsSO.expressionFaces)
+				{
+					if (expressionFace.expression == Expressions.neutral)
+						eyesAnim.SetEyes(expressionFace.face.eyes);
+				}
 			}
 		}
 
