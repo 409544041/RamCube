@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Qbism.Cubes;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
+using Qbism.SpriteAnimations;
 using UnityEngine;
 
 namespace Qbism.Rewind
@@ -16,6 +17,7 @@ namespace Qbism.Rewind
 		CubeHandler handler;
 		FloorCubeChecker floorChecker;
 		MoveableCube myMoveable;
+		ExpressionHandler expresHandler;
 
 		//States
 		public bool priorityRewind { get; set; } = false;
@@ -29,16 +31,19 @@ namespace Qbism.Rewind
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onStopRewindPulse;
-		// public event Action onResetFartColliding; Can't remember removing this
-		// Check if it causes bugs at some point?
 
 		private void Awake() 
 		{
-			mover = FindObjectOfType<PlayerCubeMover>();
+			if (this.tag == "Player")
+			{
+				mover = FindObjectOfType<PlayerCubeMover>();
+				expresHandler = GetComponentInChildren<ExpressionHandler>();
+			}
+
 			handler = FindObjectOfType<CubeHandler>();
 			moveHandler = handler.GetComponent<MoveableCubeHandler>();
 			floorChecker = handler.GetComponent<FloorCubeChecker>();
-			myMoveable = GetComponent<MoveableCube>();
+			if (this.tag == "Moveable") myMoveable = GetComponent<MoveableCube>();
 		}
 
 		private void OnEnable() 
@@ -172,6 +177,7 @@ namespace Qbism.Rewind
 
 				mover.gameObject.SendMessage("StartPostRewindJuice");
 				mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();
+				expresHandler.SetFace(Expressions.smiling, expresHandler.GetRandomTime());
 			}
 
 			if (this.tag == "Environment" || this.tag == "Moveable")

@@ -27,6 +27,11 @@ namespace Qbism.SpriteAnimations
 		public bool hasFinished { get; set; } = false;
 		bool isIdling = true, canBlink = true;
 
+		//Actions, events, delegates etc
+		public Func<bool> onFetchStunned;
+		// Func works same as delegates but shorter. The last parameter 
+		// is always the return type. Any in front of that are just paramaters
+
 		private void Awake()
 		{
 			browAnim = GetComponentInChildren<SpriteBrowAnimator>();
@@ -134,7 +139,11 @@ namespace Qbism.SpriteAnimations
 			expressionTimer += Time.deltaTime;
 
 			if (expressionTimer >= timeToExpress)
-				SetSituationFace(ExpressionSituations.play, GetRandomTime());
+			{
+				if (!onFetchStunned())
+					SetSituationFace(ExpressionSituations.play, GetRandomTime());
+				else SetSituationFace(ExpressionSituations.laserHit, GetRandomTime());
+			}
 		}
 
 		private void SetNeutralFace()

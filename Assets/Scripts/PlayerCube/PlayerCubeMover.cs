@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.Environment;
 using Qbism.MoveableCubes;
+using Qbism.SpriteAnimations;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
@@ -33,6 +34,7 @@ namespace Qbism.PlayerCube
 		PlayerCubeFlipJuicer playerFlipJuicer;
 		PlayerAnimator playerAnimator;
 		PlayerCubeBoostJuicer boostJuicer;
+		ExpressionHandler expresHandler;
 
 		//States
 		public bool input { get; set; } = true;
@@ -64,6 +66,7 @@ namespace Qbism.PlayerCube
 			playerFlipJuicer = GetComponent<PlayerCubeFlipJuicer>();
 			playerAnimator = GetComponentInChildren<PlayerAnimator>();
 			boostJuicer = GetComponent<PlayerCubeBoostJuicer>();
+			expresHandler = GetComponentInChildren<ExpressionHandler>();
 		}
 
 		private void OnEnable() 
@@ -84,6 +87,8 @@ namespace Qbism.PlayerCube
 				playerAnimator.onInputSet += SetInput;
 				playerAnimator.onIntroSet += SetInIntro;
 			} 
+
+			if (expresHandler != null) expresHandler.onFetchStunned += FetchIsStunned;
 		}
 
 		private void Start()
@@ -273,6 +278,11 @@ namespace Qbism.PlayerCube
 			isInIntroSeq = value;
 		}
 
+		private bool FetchIsStunned()
+		{
+			return isStunned;
+		}
+
 		private void SetSide(MoveableCube cube, ref Transform side, ref Vector2Int posAhead)
 		{
 			if (side == cube.up)
@@ -315,6 +325,8 @@ namespace Qbism.PlayerCube
 				playerAnimator.onInputSet -= SetInput;
 				playerAnimator.onIntroSet -= SetInIntro;
 			}
+
+			if (expresHandler != null) expresHandler.onFetchStunned += FetchIsStunned;
 		}
 	}
 }
