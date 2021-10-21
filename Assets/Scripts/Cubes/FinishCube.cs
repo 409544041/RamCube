@@ -5,6 +5,7 @@ using UnityEngine;
 using Qbism.Saving;
 using System;
 using Qbism.SpriteAnimations;
+using Qbism.General;
 
 namespace Qbism.Cubes
 {
@@ -18,6 +19,7 @@ namespace Qbism.Cubes
 		SerpentProgress serpProg;
 		FinishEndSeqHandler finishEndSeq;
 		FloorCubeChecker floorChecker;
+		FeatureSwitchBoard switchBoard;
 
 		//States
 		Vector2Int myPosition;
@@ -25,9 +27,6 @@ namespace Qbism.Cubes
 		bool hasFinished = false;
 		
 		//Actions, events, delegates etc
-		public delegate bool GetConnectionDel();
-		public GetConnectionDel onSerpentCheck;
-		public GetConnectionDel onMapCheck;
 		public event Action onSetSegment;
 		public event Action<InterfaceIDs> onRewindPulse;
 		public event Action<InterfaceIDs> onStopRewindPulse;
@@ -38,9 +37,13 @@ namespace Qbism.Cubes
 			handler = FindObjectOfType<CubeHandler>();
 			juicer = GetComponent<FinishCubeJuicer>();
 			progHandler = FindObjectOfType<ProgressHandler>();
-			serpProg = FindObjectOfType<SerpentProgress>();
+			if (progHandler) serpProg = progHandler.GetComponent<SerpentProgress>();
 			finishEndSeq = GetComponent<FinishEndSeqHandler>();
 			floorChecker = handler.GetComponent<FloorCubeChecker>();
+			if (progHandler) switchBoard = progHandler.
+				GetComponent<FeatureSwitchBoard>();
+			else switchBoard = handler.
+				GetComponent<FeatureSwitchBoard>();
 		}
 
 		private void OnEnable()
@@ -77,14 +80,14 @@ namespace Qbism.Cubes
 
 		public void Finish()
 		{
-			if (onMapCheck()) //TO DO: eventually these checks should be obsolete bc map should always be available and a level is always started via map
+			if (switchBoard.worldMapConnected) //TO DO: eventually these checks should be obsolete bc map should always be available and a level is always started via map
 			{
 				progHandler.SetLevelToComplete(progHandler.currentLevelID, true);
 			}
 
 			if (progHandler.currentHasSegment)
 			{
-				if (onSerpentCheck())
+				if (switchBoard.serpentConnected)
 				{
 					onSetSegment(); //Needs to be done before AddSegment
 					serpProg.AddSegment();
@@ -112,7 +115,7 @@ namespace Qbism.Cubes
 			onStopRewindPulse(InterfaceIDs.Rewind);
 		}
 
-		private bool FetchFinishStatus()
+		public bool FetchFinishStatus()
 		{
 			return hasFinished;
 		}

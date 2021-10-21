@@ -17,6 +17,7 @@ namespace Qbism.Cubes
 		LineRenderer lRender = null;
 		PlayerCubeMover mover = null;
 		FloorCube floorCube = null;
+		FinishCube finishCube = null;
 
 		//States
 		float disToPlayer = 0;
@@ -26,6 +27,7 @@ namespace Qbism.Cubes
 			lRender = GetComponent<LineRenderer>();
 			mover = FindObjectOfType<PlayerCubeMover>();
 			floorCube = GetComponentInParent<FloorCube>();
+			finishCube = FindObjectOfType<FinishCube>();
 		}
 
 		private void Start()
@@ -37,7 +39,7 @@ namespace Qbism.Cubes
 
 		private void Update()
 		{
-			ShowOrHideUI();
+			if (!finishCube.FetchFinishStatus()) ShowOrHideUI();
 		}
 
 		private void ShowOrHideUI()

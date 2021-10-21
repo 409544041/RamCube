@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using Dreamteck.Splines;
+using Qbism.General;
 using Qbism.PlayerCube;
 using Qbism.Saving;
 using Qbism.SceneTransition;
@@ -27,11 +28,9 @@ namespace Qbism.Cubes
 		ProgressHandler progHandler;
 		PlayerFartLauncher farter;
 		Fader fader;
+		FeatureSwitchBoard switchBoard;
 
 		//Actions, events, delegates etc
-		public delegate bool GetConnectionDel();
-		public GetConnectionDel onSerpentCheck;
-		public GetConnectionDel onMapCheck;
 		public event Action<bool> onSetSerpentMove;
 		public event Action onShowSegments;
 		public event Action onAlignCam;
@@ -47,6 +46,10 @@ namespace Qbism.Cubes
 			loader = FindObjectOfType<SceneHandler>();
 			progHandler = FindObjectOfType<ProgressHandler>();
 			farter = FindObjectOfType<PlayerFartLauncher>();
+			if (progHandler) switchBoard = progHandler.
+				GetComponent<FeatureSwitchBoard>();
+			else switchBoard = handler.
+				GetComponent<FeatureSwitchBoard>();
 		}
 
 		private void OnEnable() 
@@ -162,10 +165,10 @@ namespace Qbism.Cubes
 
 		private IEnumerator SerpentSequence()
 		{
-			if (onSerpentCheck()) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
+			if (switchBoard.serpentConnected) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
 			yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
 
-			if (onMapCheck()) StartCoroutine(LevelTransition(true, false));
+			if (switchBoard.worldMapConnected) StartCoroutine(LevelTransition(true, false));
 			else StartCoroutine(LevelTransition(false, false));
 		}
 

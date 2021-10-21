@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using Qbism.General;
 
 namespace Qbism.SceneTransition
 {
 	public class SplashSceneLoading : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] int sceneIndex = -1;
+		[SerializeField] int worldMapIndex, firstLevelIndex;
 		[SerializeField] float splashTime = 1f;
 
 		private void Start() 
@@ -18,12 +19,6 @@ namespace Qbism.SceneTransition
 
 		private IEnumerator SceneTransition()
 		{
-			if (sceneIndex < 0)
-			{
-				Debug.LogError("sceneIndex is not set");
-				yield break;
-			}
-
 			Fader fader = FindObjectOfType<Fader>();
 
 			transform.parent = null;
@@ -32,7 +27,12 @@ namespace Qbism.SceneTransition
 			yield return new WaitForSeconds(splashTime);
 			yield return fader.FadeOut(fader.sceneTransTime);
 
-			yield return SceneManager.LoadSceneAsync(sceneIndex);
+			var switchBoard = FindObjectOfType<FeatureSwitchBoard>();
+
+			if (switchBoard.worldMapConnected)
+				yield return SceneManager.LoadSceneAsync(worldMapIndex);
+
+			else yield return SceneManager.LoadSceneAsync(firstLevelIndex);
 			
 			yield return fader.FadeIn(fader.sceneTransTime); 
 			Destroy(gameObject);

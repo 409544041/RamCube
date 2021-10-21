@@ -53,9 +53,7 @@ namespace Qbism.General
 			{
 				//sec duration * sampling rate (frequency) = sample duration
 				if (source.timeSamples >= loopEnd * source.clip.frequency)
-				{
 					source.timeSamples -= Mathf.RoundToInt(loopLength * source.clip.frequency);
-				}
 			}
 		}
 
@@ -73,7 +71,7 @@ namespace Qbism.General
 		{
 			if (orderHandler)
 			{
-				if (orderHandler.currentTrack > musicSO.musicData.Length - 1)
+				if (orderHandler.currentTrack == musicSO.musicData.Length - 1)
 					orderHandler.currentTrack = 0;
 				else orderHandler.currentTrack++;
 			} 
