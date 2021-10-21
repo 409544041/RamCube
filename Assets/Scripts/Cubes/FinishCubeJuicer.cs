@@ -31,9 +31,7 @@ namespace Qbism.Cubes
 
 		//Actions, events, delegates etc
 		public event Action onSpawnFriends;
-
-		public delegate bool GetCompleteDel();
-		public GetCompleteDel onFinishCheck;
+		public Func<bool> onFinishCheck;
 
 		private void Awake() 
 		{

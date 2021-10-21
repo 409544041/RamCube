@@ -37,10 +37,13 @@ namespace Qbism.Cubes
 			handler = FindObjectOfType<CubeHandler>();
 			juicer = GetComponent<FinishCubeJuicer>();
 			progHandler = FindObjectOfType<ProgressHandler>();
-			serpProg = progHandler.GetComponent<SerpentProgress>();
-			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
+			if (progHandler) serpProg = progHandler.GetComponent<SerpentProgress>();
 			finishEndSeq = GetComponent<FinishEndSeqHandler>();
 			floorChecker = handler.GetComponent<FloorCubeChecker>();
+			if (progHandler) switchBoard = progHandler.
+				GetComponent<FeatureSwitchBoard>();
+			else switchBoard = handler.
+				GetComponent<FeatureSwitchBoard>();
 		}
 
 		private void OnEnable()
@@ -112,7 +115,7 @@ namespace Qbism.Cubes
 			onStopRewindPulse(InterfaceIDs.Rewind);
 		}
 
-		private bool FetchFinishStatus()
+		public bool FetchFinishStatus()
 		{
 			return hasFinished;
 		}

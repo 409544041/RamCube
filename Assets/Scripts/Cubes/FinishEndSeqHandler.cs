@@ -45,8 +45,11 @@ namespace Qbism.Cubes
 			juicer = GetComponent<FinishCubeJuicer>();
 			loader = FindObjectOfType<SceneHandler>();
 			progHandler = FindObjectOfType<ProgressHandler>();
-			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
 			farter = FindObjectOfType<PlayerFartLauncher>();
+			if (progHandler) switchBoard = progHandler.
+				GetComponent<FeatureSwitchBoard>();
+			else switchBoard = handler.
+				GetComponent<FeatureSwitchBoard>();
 		}
 
 		private void OnEnable() 
