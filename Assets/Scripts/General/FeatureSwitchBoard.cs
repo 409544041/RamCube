@@ -10,5 +10,6 @@ namespace Qbism.General
 		//Config parameters
 		public bool serpentConnected;
 		public bool worldMapConnected;
+		public bool demoSplashConnected;
 	}
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.General;
 using Qbism.SceneTransition;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,7 @@ namespace Qbism.Demo
 		[SerializeField] GameObject[] screens;
 		[SerializeField] float fadeTime;
 		[SerializeField] Color fadeColor;
+		[SerializeField] int worldMapIndex, firstLevelIndex;
 
 		//Cache
 		Fader fader;
@@ -62,8 +64,11 @@ namespace Qbism.Demo
 				yield return fader.FadeOut(fader.sceneTransTime);
 				screens[currentScreen].SetActive(false);
 
-				int i = SceneManager.GetActiveScene().buildIndex;
-				yield return SceneManager.LoadSceneAsync(i + 1);
+				var switchBoard = FindObjectOfType<FeatureSwitchBoard>();
+
+				if (switchBoard.worldMapConnected)
+					yield return SceneManager.LoadSceneAsync(worldMapIndex);
+				else yield return SceneManager.LoadSceneAsync(firstLevelIndex);
 
 				yield return fader.FadeIn(fader.sceneTransTime);
 				Destroy(gameObject);
