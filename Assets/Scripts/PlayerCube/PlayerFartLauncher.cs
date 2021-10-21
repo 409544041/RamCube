@@ -174,7 +174,7 @@ namespace Qbism.PlayerCube
 		{
 			float step = fartForce * Time.deltaTime;
 
-			while (Vector3.Distance(transform.position, target.position) > 0.01f)
+			while (Vector3.Distance(transform.position, target.position) > 0.1f)
 			{
 				transform.position = Vector3.MoveTowards(transform.position, target.position, step);
 
@@ -211,12 +211,13 @@ namespace Qbism.PlayerCube
 
 			SetScale(flyByScaleMod);
 
-			while (Vector3.Distance(transform.position, endPos) > .1f)
+			while (Vector3.Distance(transform.position, endPos) > .5f)
 			{
 				transform.position = Vector3.MoveTowards(transform.position, endPos, step);
 				yield return null;
 			}
 
+			transform.position = endPos;
 			onSwitchVisuals(false);
 			SetScale(1);
 			juicer.StopBeamFartJuice();
