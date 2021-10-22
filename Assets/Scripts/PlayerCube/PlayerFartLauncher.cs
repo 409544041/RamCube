@@ -36,6 +36,8 @@ namespace Qbism.PlayerCube
 		float beamOriginalMax;
 		ParticleSystem[] beamParticles;
 		bool impactOnFinish = false;
+		bool launching = false;
+		public bool flyingBy { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action onDoneFarting;
@@ -43,9 +45,7 @@ namespace Qbism.PlayerCube
 		public event Action onSwitchToEndCam;
 		public event Action onMoveCam;
 		public event Action<bool> onSwitchVisuals;
-
-		public delegate Vector3 FinishPosFetchDel();
-		public FinishPosFetchDel onCheckFinishPos;
+		public Func<Vector3> onCheckFinishPos;
 
 		private void Awake()
 		{
@@ -173,8 +173,9 @@ namespace Qbism.PlayerCube
 		private IEnumerator LaunchPlayer(Transform target)
 		{
 			float step = fartForce * Time.deltaTime;
+			launching = true;
 
-			while (Vector3.Distance(transform.position, target.position) > 0.1f)
+			while (Vector3.Distance(transform.position, target.position) > 0.1f && launching)
 			{
 				transform.position = Vector3.MoveTowards(transform.position, target.position, step);
 
@@ -189,6 +190,7 @@ namespace Qbism.PlayerCube
 				yield return null;
 			}
 
+			launching = false;
 			transform.position = target.position;
 			onSwitchVisuals(false);
 			juicer.StopBeamFartJuice();
@@ -196,12 +198,14 @@ namespace Qbism.PlayerCube
 
 		public void InitiateFlyBy(Vector3 startPos, Vector3 endPos)
 		{
+			launching = false;
 			StartCoroutine(FlyBy(startPos, endPos));
 		}
 
 		private IEnumerator FlyBy(Vector3 startPos, Vector3 endPos)
 		{
 			var step = fartForce * flyBySpeedMod * Time.deltaTime;
+			flyingBy = true;
 
 			transform.position = startPos;
 			transform.LookAt(transform.position - (endPos - transform.position));
@@ -211,12 +215,13 @@ namespace Qbism.PlayerCube
 
 			SetScale(flyByScaleMod);
 
-			while (Vector3.Distance(transform.position, endPos) > .5f)
+			while (Vector3.Distance(transform.position, endPos) > .5f && flyingBy)
 			{
 				transform.position = Vector3.MoveTowards(transform.position, endPos, step);
 				yield return null;
 			}
 
+			flyingBy = false;
 			transform.position = endPos;
 			onSwitchVisuals(false);
 			SetScale(1);

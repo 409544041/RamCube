@@ -19,8 +19,8 @@ namespace Qbism.PlayerCube
 		Vector3[] turnAxis;
 
 		//Actions, events, delegates etc
-		public delegate bool KeyCheckDel(Vector2Int pos);
-		public KeyCheckDel onKeyCheck;
+		public Func<Vector2Int, bool> onKeyCheck;
+		public Func<bool> onFinishCheck;
 
 		private void Awake()
 		{
@@ -49,7 +49,8 @@ namespace Qbism.PlayerCube
 
 		private void DisableFeedForwardOnMove()
 		{
-			if (mover.isMoving || mover.isBoosting || mover.isTurning || mover.isInIntroSeq)
+			if (mover.isMoving || mover.isBoosting || mover.isTurning || 
+				mover.isInIntroSeq || onFinishCheck())
 			{
 				foreach (FeedForwardCube ffCube in feedForwardCubes)
 				{

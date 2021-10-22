@@ -20,6 +20,7 @@ namespace Qbism.Cubes
 		FinishEndSeqHandler finishEndSeq;
 		FloorCubeChecker floorChecker;
 		FeatureSwitchBoard switchBoard;
+		PlayerCubeFeedForward playerFF;
 
 		//States
 		Vector2Int myPosition;
@@ -34,6 +35,7 @@ namespace Qbism.Cubes
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
+			playerFF = mover.GetComponent<PlayerCubeFeedForward>();
 			handler = FindObjectOfType<CubeHandler>();
 			juicer = GetComponent<FinishCubeJuicer>();
 			progHandler = FindObjectOfType<ProgressHandler>();
@@ -50,6 +52,7 @@ namespace Qbism.Cubes
 		{
 			if (floorChecker != null) floorChecker.onCheckForFinish += CheckForFinish;
 			if (juicer != null) juicer.onFinishCheck += FetchFinishStatus;
+			if (playerFF != null) playerFF.onFinishCheck += FetchFinishStatus;
 		}
 
 		private void Start()
@@ -124,6 +127,7 @@ namespace Qbism.Cubes
 		{
 			if (floorChecker != null) floorChecker.onCheckForFinish -= CheckForFinish;
 			if (juicer != null) juicer.onFinishCheck -= FetchFinishStatus;
+			if (playerFF != null) playerFF.onFinishCheck -= FetchFinishStatus;
 		}
 	}
 }
