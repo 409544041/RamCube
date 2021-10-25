@@ -21,6 +21,7 @@ namespace Qbism.Cubes
 
 		//States
 		float disToPlayer = 0;
+		bool hiddenForFinish = false;
 
 		private void Awake() 
 		{
@@ -39,10 +40,12 @@ namespace Qbism.Cubes
 
 		private void Update()
 		{
-			if (!finishCube.FetchFinishStatus()) ShowOrHideUI();
+			if (!finishCube.FetchFinishStatus()) ShowUICheck();
+			if (finishCube.FetchFinishStatus() && !hiddenForFinish)	
+				HideUIForFinish();
 		}
 
-		private void ShowOrHideUI()
+		private void ShowUICheck()
 		{
 			disToPlayer = Vector3.Distance
 				(floorCube.transform.position, mover.transform.position);
@@ -51,8 +54,7 @@ namespace Qbism.Cubes
 			if (mover.isMoving || mover.isBoosting || mover.isTurning ||
 				disToPlayer < triggerDis || floorCube.type == CubeTypes.Shrinking) 
 			{
-				uiElement.SetActive(false);
-				lRender.enabled = false;
+				ShowOrHideUI(false);
 				return;
 			} 
 
@@ -65,16 +67,26 @@ namespace Qbism.Cubes
 
 				if (Physics.Linecast(lineOrigin, point.position, lineLayers))
 				{
-					uiElement.SetActive(true);
-					lRender.enabled = true;
+					ShowOrHideUI(true);
 					return;
 				}
 				else
 				{
-					uiElement.SetActive(false);
-					lRender.enabled = false;
+					ShowOrHideUI(false);
 				} 
 			}
+		}
+
+		private void HideUIForFinish()
+		{
+			hiddenForFinish = true;
+			ShowOrHideUI(false);
+		}
+
+		private void ShowOrHideUI(bool value)
+		{
+			uiElement.SetActive(value);
+			lRender.enabled = value;
 		}
 
 		private void CheckForMirror()
