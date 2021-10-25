@@ -73,10 +73,15 @@ namespace Qbism.Cubes
 		private IEnumerator EndSequence()
 		{
 			yield return DestroyAllFloorCubes();
-			StartCoroutine(SwitchToCloseupCam());
-			onUIFade(0);
-			yield return new WaitForSeconds(fartDelay);
-			farter.InitiateFartSequence(fartTowardsTarget);
+
+			if (switchBoard.showEndLevelSeq)
+			{
+				StartCoroutine(SwitchToCloseupCam());
+				onUIFade(0);
+				yield return new WaitForSeconds(fartDelay);
+				farter.InitiateFartSequence(fartTowardsTarget);
+			}
+			else StartCoroutine(LevelTransition(false, false));
 		}
 
 		private IEnumerator DestroyAllFloorCubes()
