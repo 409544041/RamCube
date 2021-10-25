@@ -97,6 +97,22 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Debug Next Level"",
+                    ""type"": ""Button"",
+                    ""id"": ""58c59055-1079-482e-a655-0965e526f5f8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Debug Prev Level"",
+                    ""type"": ""Button"",
+                    ""id"": ""414e89f8-27ab-455b-9967-dcc804407536"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -440,6 +456,28 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""action"": ""Debug Key 4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc2d8dec-7bfe-4694-9b09-5dfe1342c8eb"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Debug Next Level"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2822041-f7e9-41a8-92e0-90848a21638e"",
+                    ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Debug Prev Level"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -481,6 +519,8 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Gameplay_DebugKey2 = m_Gameplay.FindAction("Debug Key 2", throwIfNotFound: true);
         m_Gameplay_DebugKey3 = m_Gameplay.FindAction("Debug Key 3", throwIfNotFound: true);
         m_Gameplay_DebugKey4 = m_Gameplay.FindAction("Debug Key 4", throwIfNotFound: true);
+        m_Gameplay_DebugNextLevel = m_Gameplay.FindAction("Debug Next Level", throwIfNotFound: true);
+        m_Gameplay_DebugPrevLevel = m_Gameplay.FindAction("Debug Prev Level", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -540,6 +580,8 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_DebugKey2;
     private readonly InputAction m_Gameplay_DebugKey3;
     private readonly InputAction m_Gameplay_DebugKey4;
+    private readonly InputAction m_Gameplay_DebugNextLevel;
+    private readonly InputAction m_Gameplay_DebugPrevLevel;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -554,6 +596,8 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @DebugKey2 => m_Wrapper.m_Gameplay_DebugKey2;
         public InputAction @DebugKey3 => m_Wrapper.m_Gameplay_DebugKey3;
         public InputAction @DebugKey4 => m_Wrapper.m_Gameplay_DebugKey4;
+        public InputAction @DebugNextLevel => m_Wrapper.m_Gameplay_DebugNextLevel;
+        public InputAction @DebugPrevLevel => m_Wrapper.m_Gameplay_DebugPrevLevel;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -593,6 +637,12 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugKey4.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
                 @DebugKey4.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
                 @DebugKey4.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
+                @DebugNextLevel.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugNextLevel;
+                @DebugNextLevel.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugNextLevel;
+                @DebugNextLevel.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugNextLevel;
+                @DebugPrevLevel.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugPrevLevel;
+                @DebugPrevLevel.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugPrevLevel;
+                @DebugPrevLevel.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugPrevLevel;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -627,6 +677,12 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @DebugKey4.started += instance.OnDebugKey4;
                 @DebugKey4.performed += instance.OnDebugKey4;
                 @DebugKey4.canceled += instance.OnDebugKey4;
+                @DebugNextLevel.started += instance.OnDebugNextLevel;
+                @DebugNextLevel.performed += instance.OnDebugNextLevel;
+                @DebugNextLevel.canceled += instance.OnDebugNextLevel;
+                @DebugPrevLevel.started += instance.OnDebugPrevLevel;
+                @DebugPrevLevel.performed += instance.OnDebugPrevLevel;
+                @DebugPrevLevel.canceled += instance.OnDebugPrevLevel;
             }
         }
     }
@@ -661,5 +717,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnDebugKey2(InputAction.CallbackContext context);
         void OnDebugKey3(InputAction.CallbackContext context);
         void OnDebugKey4(InputAction.CallbackContext context);
+        void OnDebugNextLevel(InputAction.CallbackContext context);
+        void OnDebugPrevLevel(InputAction.CallbackContext context);
     }
 }
