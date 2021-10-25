@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using Qbism.MoveableCubes;
 using UnityEngine;
 
 namespace Qbism.Cubes
@@ -9,14 +10,15 @@ namespace Qbism.Cubes
 	public class CubeShrinker : MonoBehaviour
 	{
 		//Config parameters
-		public float shrinkStep = 0f;
-		public float timeStep = 0f;
-		public MMFeedbacks shrinkFeedback;
-		public float shrinkFeedbackDuration = 0f;
-		public MeshRenderer mesh, shrinkMesh;
+		[SerializeField] float shrinkStep = 0f;
+		[SerializeField] float timeStep = 0f;
+		[SerializeField] MMFeedbacks shrinkFeedback;
+		[SerializeField] float shrinkFeedbackDuration = 0f;
+		[SerializeField] MeshRenderer mesh, shrinkMesh;
+		[SerializeField] LineRenderer laserLine = null;
+
 
 		//Cache
-		LineRenderer laserLine = null;
 		CubeHandler handler = null;
 
 		//States
@@ -32,8 +34,6 @@ namespace Qbism.Cubes
 		private void Start()
 		{
 			SetResetData();
-			laserLine = GetComponent<FloorCube>().laserLine; 
-			//Here instead of awake bc for when moveable becomes floor and components get added after awake
 		}
 
 		private void SetResetData()
@@ -55,14 +55,18 @@ namespace Qbism.Cubes
 			shrinkMesh.enabled = true;
 			laserLine.enabled = false;
 
-			var cube = GetComponent<FloorCube>();
-			var cubePos = cube.FetchGridPos();
-			handler.FromFloorToShrunkDic(cubePos, cube);
+			// checking for floor bc it might be moveable that gets shrunk at end of level
+			var floorCube = GetComponent<FloorCube>();
+			if (floorCube)
+			{
+				var cubePos = floorCube.FetchGridPos();
+				handler.FromFloorToShrunkDic(cubePos, floorCube);
 
-			//Makes sure all values are reset in case this is the second shrink
-			shrinkMesh.transform.position = resetPos;
-			shrinkMesh.transform.rotation = resetRot;
-			shrinkMesh.transform.localScale = resetScale;
+				//Makes sure all values are reset in case this is the second shrink
+				shrinkMesh.transform.position = resetPos;
+				shrinkMesh.transform.rotation = resetRot;
+				shrinkMesh.transform.localScale = resetScale;
+			}
 
 			MMFeedbackPosition[] posFeedbacks =
 				shrinkFeedback.GetComponents<MMFeedbackPosition>();
