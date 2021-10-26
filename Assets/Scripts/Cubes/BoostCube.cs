@@ -45,7 +45,7 @@ namespace Qbism.Cubes
 			mover.GetComponent<PlayerCubeBoostJuicer>().
 				PlayBoostJuice(boostObjDir.transform.forward);
 
-			while (mover.isBoosting)
+			while (mover.isBoosting && !mover.isOutOfBounds)
 			{
 				cube.transform.position = Vector3.MoveTowards(cube.transform.position, 
 					boostTarget, boostSpeed * Time.deltaTime);

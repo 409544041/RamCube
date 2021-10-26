@@ -19,6 +19,7 @@ namespace Qbism.General
 			{
 				var player = other.GetComponent<PlayerCubeMover>();
 				player.isOutOfBounds = true;
+				player.isBoosting = false;
 				if (FindObjectOfType<MoveableCubeHandler>().movingMoveables == 0)
 					player.input = true; //This here else wont let you rewind
 				onRewindPulse(InterfaceIDs.Rewind);				
