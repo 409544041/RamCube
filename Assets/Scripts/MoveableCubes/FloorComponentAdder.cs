@@ -9,6 +9,9 @@ namespace Qbism.MoveableCubes
 {
 	public class FloorComponentAdder : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] CubeShrinker shrinker = null;
+
 		//Actions, events, delegates etc
 		public event Action<Vector2Int, FloorCube> onAddToMovFloorDic;
 
@@ -22,6 +25,7 @@ namespace Qbism.MoveableCubes
 
 			onAddToMovFloorDic(cubePos, newFloor);
 			LaserDottedLineCheck();
+			shrinker.SetResetData();
 		}
 
 		private void LaserDottedLineCheck()

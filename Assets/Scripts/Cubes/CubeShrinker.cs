@@ -33,10 +33,10 @@ namespace Qbism.Cubes
 
 		private void Start()
 		{
-			SetResetData();
+			if (GetComponent<FloorCube>()) SetResetData();
 		}
 
-		private void SetResetData()
+		public void SetResetData()
 		{
 			resetPos = shrinkMesh.transform.position;
 			resetRot = shrinkMesh.transform.rotation;
