@@ -143,6 +143,7 @@ namespace Qbism.Cubes
 			endCam.Priority = 12;
 			Camera.main.orthographic = true;
 			endCam.transform.parent = null;
+			FindObjectOfType<DisableAtEndCam>().DisableMeshes();
 			fader.FadeIn(fadeTime);
 			yield return new WaitForSeconds(flyByDelay);
 
