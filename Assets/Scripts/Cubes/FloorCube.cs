@@ -10,14 +10,7 @@ namespace Qbism.Cubes
 		//Config parameters
 		public CubeTypes type = CubeTypes.Shrinking;
 		public LineRenderer laserLine = null;
-
-		public Vector2Int FetchGridPos()
-		{
-			Vector2Int roundedPos = new Vector2Int
-				(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
-
-			return roundedPos;
-		}
+		public CubePositioner cubePoser = null;
 
 		public void CastDottedLines(Vector3 laserPos, bool enableValue)
 		{

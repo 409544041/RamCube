@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using Qbism.Cubes;
 using UnityEngine;
 
 namespace Qbism.MoveableCubes
 {
-	public class MoveableCube : MonoBehaviour, IActiveCube
+	public class MoveableCube : MonoBehaviour
 	{
 		//Config parameters
+		public CubePositioner cubePoser;
 		[Header("Becoming Floor")]
 		[SerializeField] float shrinkStep = 0f;
 		[SerializeField] float shrinkTimeStep = 0f;
@@ -43,15 +45,9 @@ namespace Qbism.MoveableCubes
 		public int orderOfMovement { get; set; } = -1;
 
 		//Actions, events, delegates etc
-		public delegate bool KeyCheckDel(Vector2Int pos);
-		public KeyCheckDel onWallKeyCheck;
-		public delegate bool CheckDel(Vector2Int pos);
-		public CheckDel onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;
-		public delegate Vector2Int PlayerPosDelegate();
-		public PlayerPosDelegate onPlayerPosCheck;
-		public delegate bool MovAheadDel(Vector2Int posAhead, Vector2Int posAheadofAhead);
-		public MovAheadDel onWallForCubeAheadCheck;
-		
+		public Func<Vector2Int, bool> onWallKeyCheck, onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;
+		public Func<Vector2Int> onPlayerPosCheck;
+		public Func<Vector2Int, Vector2Int, bool> onWallForCubeAheadCheck;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
 		public event Action<Vector2Int, Vector3, Vector2Int> onStartMovingMoveable;
 		public event Action<Vector2Int, MoveableCube, bool> onStopMovingMoveable;
@@ -73,7 +69,7 @@ namespace Qbism.MoveableCubes
 
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
 		{
-			Vector2Int currentPos = FetchGridPos();
+			Vector2Int currentPos = cubePoser.FetchGridPos();
 
 			if (CheckForWallAhead(currentPos, posAhead) || hasBumped)
 			{
@@ -91,7 +87,7 @@ namespace Qbism.MoveableCubes
 			if(onMoveableKeyCheck(posAhead))
 			{
 				hasBumped = true;
-				onStartMovingMoveable(posAhead, turnAxis, FetchGridPos());
+				onStartMovingMoveable(posAhead, turnAxis, cubePoser.FetchGridPos());
 			} 	
 
 			if(posAhead == onPlayerPosCheck())	//Checking if it bumps into player
@@ -108,7 +104,7 @@ namespace Qbism.MoveableCubes
 					yield return new WaitForSeconds(timeStep);
 				}
 
-				RoundPosition();
+				cubePoser.RoundPosition();
 				UpdateCenterPosition();
 
 				if (side == up) posAhead += Vector2Int.up;
@@ -116,7 +112,7 @@ namespace Qbism.MoveableCubes
 				else if (side == left) posAhead += Vector2Int.left;
 				else if (side == right) posAhead += Vector2Int.right;
 
-				CheckFloorInNewPos(side, turnAxis, posAhead, this, FetchGridPos(), originPos, prevPos);
+				CheckFloorInNewPos(side, turnAxis, posAhead, this, cubePoser.FetchGridPos(), originPos, prevPos);
 			}
 
 			//Docking
@@ -131,9 +127,9 @@ namespace Qbism.MoveableCubes
 				transform.localScale = new Vector3(1, 1, 1);
 				transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
-				RoundPosition();
+				cubePoser.RoundPosition();
 				hasBumped = false;
-				var cubePos = FetchGridPos();
+				var cubePos = cubePoser.FetchGridPos();
 				onStopMovingMoveable(cubePos, this, true);				
 				AddComponents(cubePos);
 			}
@@ -160,7 +156,7 @@ namespace Qbism.MoveableCubes
 			transform.localScale = new Vector3(1, 1, 1);
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
-			RoundPosition();
+			cubePoser.RoundPosition();
 			hasBumped = false;
 			onStopMovingMoveable(cubePos, this, true);
 			AddComponents(cubePos);
@@ -168,7 +164,7 @@ namespace Qbism.MoveableCubes
 
 		private void AddComponents(Vector2Int cubePos)
 		{
-			compAdder.AddComponent(cubePos, this.gameObject, laserLine);
+			compAdder.AddComponent(cubePos, this.gameObject, laserLine, cubePoser);
 			UpdateCenterPosition();
 		}
 
@@ -198,24 +194,7 @@ namespace Qbism.MoveableCubes
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead,
 			MoveableCube cube, Vector2Int cubePos, Vector2Int originPos, Vector2Int prevPos)
 		{
-			onFloorCheck(side, turnAxis, posAhead, this, FetchGridPos(), originPos, prevPos);
-		}
-
-		public Vector2Int FetchGridPos()
-		{
-			Vector2Int roundedPos = new Vector2Int
-				(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
-
-			return roundedPos;
-		}
-
-		public void RoundPosition()
-		{
-			transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
-				Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z));
-
-			Quaternion rotation = Quaternion.Euler(Mathf.RoundToInt(transform.rotation.x),
-				Mathf.RoundToInt(transform.rotation.y), Mathf.RoundToInt(transform.rotation.z));
+			onFloorCheck(side, turnAxis, posAhead, this, cubePoser.FetchGridPos(), originPos, prevPos);
 		}
 
 		public void PlayLandClip()

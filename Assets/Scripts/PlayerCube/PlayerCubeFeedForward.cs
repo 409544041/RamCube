@@ -73,7 +73,7 @@ namespace Qbism.PlayerCube
 				var ffCube = feedForwardCubes[ffIndex];
 				ffCube.transform.rotation = transform.rotation;
 
-				var onePosAhead = mover.FetchGridPos() + neighbourDirs[ffIndex];
+				var onePosAhead = mover.cubePoser.FetchGridPos() + neighbourDirs[ffIndex];
 
 				if (onKeyCheck(onePosAhead))
 				{

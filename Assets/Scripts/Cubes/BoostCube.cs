@@ -64,10 +64,10 @@ namespace Qbism.Cubes
 
 			if (!mover.isOutOfBounds)
 			{
-				mover.RoundPosition();
+				mover.cubePoser.RoundPosition();
 				mover.UpdateCenterPosition();
 
-				var cubePos = mover.FetchGridPos();
+				var cubePos = mover.cubePoser.FetchGridPos();
 
 				Transform side = null;
 				Vector3 turnAxis = new Vector3(0, 0, 0);
@@ -104,7 +104,7 @@ namespace Qbism.Cubes
 
 			if (!ff.isOutOfBounds)
 			{
-				ff.RoundPosition();
+				ff.cubePoser.RoundPosition();
 				ff.CheckFloorInNewPos();
 			}
 		}
@@ -113,7 +113,7 @@ namespace Qbism.Cubes
 			Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
 			var moveable = cube.GetComponent<MoveableCube>();
-			Vector2Int launchPos = moveable.FetchGridPos();
+			Vector2Int launchPos = moveable.cubePoser.FetchGridPos();
 
 			moveable.isBoosting = true;
 
@@ -132,10 +132,10 @@ namespace Qbism.Cubes
 				yield return null;
 			}
 
-			moveable.RoundPosition();
+			moveable.cubePoser.RoundPosition();
 			moveable.UpdateCenterPosition();
 
-			Vector2Int cubePos = moveable.FetchGridPos();
+			Vector2Int cubePos = moveable.cubePoser.FetchGridPos();
 
 			MoveableCubeHandler moveHandler = FindObjectOfType<MoveableCubeHandler>();
 

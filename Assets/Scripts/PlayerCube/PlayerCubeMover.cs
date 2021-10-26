@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.Cubes;
 using Qbism.Environment;
 using Qbism.MoveableCubes;
 using Qbism.SpriteAnimations;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Qbism.PlayerCube
 {
-	public class PlayerCubeMover : MonoBehaviour, IActiveCube
+	public class PlayerCubeMover : MonoBehaviour
 	{
 		//Config parameters
 		[Header ("Turn Axis")]
@@ -26,6 +27,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] int wiggleRotation = 8;
 		[Header ("Position")]
 		[SerializeField] float loweredYDelta = .95f;		
+		public CubePositioner cubePoser = null;
 
 		//Cache
 		MoveableCubeHandler moveHandler;
@@ -77,8 +79,8 @@ namespace Qbism.PlayerCube
 			{
 				foreach (MoveableCube cube in moveableCubes)
 				{
-					cube.onPlayerPosCheck += FetchGridPos;
 					cube.onActivatePlayerMove += InitiateMoveFromOther;
+					cube.onPlayerPosCheck += FetchPos;
 				}
 			}
 
@@ -93,7 +95,7 @@ namespace Qbism.PlayerCube
 
 		private void Start()
 		{
-			RoundPosition();
+			cubePoser.RoundPosition();
 			UpdateCenterPosition();
 			startScale = transform.localScale;
 		}
@@ -122,7 +124,7 @@ namespace Qbism.PlayerCube
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			var cubeToShrink = FetchGridPos();
+			var cubeToShrink = cubePoser.FetchGridPos();
 			moveHandler.ResetMovedMoveables();
 
 			isMoving = true;
@@ -152,7 +154,7 @@ namespace Qbism.PlayerCube
 				yield return new WaitForSeconds(timeStep);
 			}
 
-			RoundPosition();
+			cubePoser.RoundPosition();
 			UpdateCenterPosition();
 			isMoving = false;
 			onCubeShrink(cubeToShrink);
@@ -216,25 +218,13 @@ namespace Qbism.PlayerCube
 
 			isLowered = true;
 			if (moveHandler.movingMoveables == 0) input = true;
-			RoundPosition();
+			cubePoser.RoundPosition();
 			onRewindPulse(InterfaceIDs.Rewind);
-		}
-
-		public void RoundPosition()
-		{
-			float yPos = 0;
-			if (transform.position.y > .5f) yPos = .9f;
-
-			transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
-				yPos, Mathf.RoundToInt(transform.position.z));
-
-			Quaternion rotation = Quaternion.Euler(Mathf.RoundToInt(transform.rotation.x),
-				Mathf.RoundToInt(transform.rotation.y), Mathf.RoundToInt(transform.rotation.z));
 		}
 
 		public bool CheckForWallAhead(Vector2Int posAhead)
 		{
-			var currentPos = FetchGridPos();
+			var currentPos = cubePoser.FetchGridPos();
 
 			if (moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
@@ -247,25 +237,17 @@ namespace Qbism.PlayerCube
 		private void ActivateMoveableAhead(Vector2Int posAhead, Vector3 turnAxis)
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
-				moveHandler.StartMovingMoveable(posAhead, turnAxis, FetchGridPos());
+				moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePoser.FetchGridPos());
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			onFloorCheck(FetchGridPos(), this.gameObject, side, turnAxis, posAhead);
+			onFloorCheck(cubePoser.FetchGridPos(), this.gameObject, side, turnAxis, posAhead);
 		}
 
 		public void UpdateCenterPosition()
 		{
 			center.position = transform.position;
-		}
-
-		public Vector2Int FetchGridPos()
-		{
-			Vector2Int roundedPos = new Vector2Int
-				(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
-
-			return roundedPos;
 		}
 
 		private void SetInput(bool value)
@@ -281,6 +263,11 @@ namespace Qbism.PlayerCube
 		private bool FetchIsStunned()
 		{
 			return isStunned;
+		}
+
+		private Vector2Int FetchPos()
+		{
+			return cubePoser.FetchGridPos();
 		}
 
 		private void SetSide(MoveableCube cube, ref Transform side, ref Vector2Int posAhead)
@@ -315,8 +302,8 @@ namespace Qbism.PlayerCube
 			{
 				foreach (MoveableCube cube in moveableCubes)
 				{
-					cube.onPlayerPosCheck -= FetchGridPos;
 					cube.onActivatePlayerMove -= InitiateMoveFromOther;
+					cube.onPlayerPosCheck -= FetchPos;
 				}
 			}
 

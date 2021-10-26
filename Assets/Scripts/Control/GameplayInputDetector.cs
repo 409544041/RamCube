@@ -76,7 +76,7 @@ namespace Qbism.Control
 			if (mover.isOutOfBounds) return;
 
 			inputting = true;
-			var posAhead = mover.FetchGridPos() + posAheadDir;
+			var posAhead = mover.cubePoser.FetchGridPos() + posAheadDir;
 
 			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(turnSide, turnAxis);
 

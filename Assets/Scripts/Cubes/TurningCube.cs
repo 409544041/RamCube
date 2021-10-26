@@ -15,6 +15,7 @@ namespace Qbism.Cubes
 		[SerializeField] int turnStep = 9;
 		[SerializeField] float timeStep = 0.01f;
 		public bool isLeftTurning = false;
+		[SerializeField] CubePositioner cubePoser = null;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -59,7 +60,7 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(timeStep);
 			}
 
-			mover.RoundPosition();
+			mover.cubePoser.RoundPosition();
 			mover.UpdateCenterPosition();
 
 			Transform side = null;
@@ -77,18 +78,22 @@ namespace Qbism.Cubes
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
-				ffCube.transform.Rotate(axis, turnStep, Space.World);
-				yield return null;
+				if (ff.cubePoser.FetchGridPos() == cubePoser.FetchGridPos())
+				{
+					ffCube.transform.Rotate(axis, turnStep, Space.World);
+					yield return null;
+				}
+				else yield break;
 			}
 
-			ff.RoundPosition();
+			ff.cubePoser.RoundPosition();
 		}
 
 		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 movingTurnAxis,
 		Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
 			var moveable = cube.GetComponent<MoveableCube>();
-			var cubePos = moveable.FetchGridPos();
+			var cubePos = moveable.cubePoser.FetchGridPos();
 
 			var axis = transform.TransformDirection(turnAxis);
 
@@ -100,7 +105,7 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(timeStep);
 			}
 
-			moveable.RoundPosition();
+			moveable.cubePoser.RoundPosition();
 			moveable.UpdateCenterPosition();
 			CalculateSide(ref side, ref movingTurnAxis, ref posAhead, moveable, cubePos);
 

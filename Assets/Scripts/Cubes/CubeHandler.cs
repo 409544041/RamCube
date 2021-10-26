@@ -73,7 +73,7 @@ namespace Qbism.Cubes
 			FloorCube[] cubes = FindObjectsOfType<FloorCube>();
 			foreach (FloorCube cube in cubes)
 			{
-				Vector2Int pos = cube.FetchGridPos();
+				Vector2Int pos = cube.cubePoser.FetchGridPos();
 				if (floorCubeDic.ContainsKey(pos))
 					Debug.Log("Overlapping cube " + cube + " & " + floorCubeDic[pos]);
 				else floorCubeDic.Add(pos, cube);

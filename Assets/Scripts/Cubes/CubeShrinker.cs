@@ -59,7 +59,7 @@ namespace Qbism.Cubes
 			var floorCube = GetComponent<FloorCube>();
 			if (floorCube)
 			{
-				var cubePos = floorCube.FetchGridPos();
+				var cubePos = floorCube.cubePoser.FetchGridPos();
 				handler.FromFloorToShrunkDic(cubePos, floorCube);
 
 				//Makes sure all values are reset in case this is the second shrink

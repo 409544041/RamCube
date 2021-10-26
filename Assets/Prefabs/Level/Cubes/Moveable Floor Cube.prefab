@@ -209,6 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8028607793029448007}
   - component: {fileID: 3213176448746098887}
+  - component: {fileID: 8650881215713484142}
   - component: {fileID: 5508458773026103034}
   - component: {fileID: 4515865334334731891}
   - component: {fileID: 8028607793029448003}
@@ -251,6 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a3e89b5083c0e44b30582c3fd4b301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubePoser: {fileID: 8650881215713484142}
   shrinkStep: 0.5
   shrinkTimeStep: 0.01
   shrinkingmesh: {fileID: 8421745259192764266}
@@ -268,6 +270,18 @@ MonoBehaviour:
   shrinkFeedback: {fileID: 9158600549025654425}
   shrinkFeedbackDuration: 0.4
   mesh: {fileID: 7123817644234092039}
+--- !u!114 &8650881215713484142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028607793029448002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5516e84b9c2e1d4eae51d0e4a85f60c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5508458773026103034
 MonoBehaviour:
   m_ObjectHideFlags: 0

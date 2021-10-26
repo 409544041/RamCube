@@ -47,7 +47,7 @@ namespace Qbism.MoveableCubes
 			MoveableCube[] cubes = FindObjectsOfType<MoveableCube>();
 			foreach (MoveableCube cube in cubes)
 			{
-				var cubePos = cube.FetchGridPos();
+				var cubePos = cube.cubePoser.FetchGridPos();
 				if (moveableCubeDic.ContainsKey(cubePos))
 					Debug.Log("Overlapping moveable cube " + cubePos);
 				else moveableCubeDic.Add(cubePos, cube);

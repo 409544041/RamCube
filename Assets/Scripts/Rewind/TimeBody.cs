@@ -60,7 +60,7 @@ namespace Qbism.Rewind
 
 			if (cube)
 			{
-				var cubePos = cube.FetchGridPos();
+				var cubePos = cube.cubePoser.FetchGridPos();
 				AddToStaticList(cube);
 				AddToShrunkList(cube, moveable, cubePos);
 			}
@@ -111,7 +111,7 @@ namespace Qbism.Rewind
 
 		private void AddToDockedList(MoveableCube moveable)
 		{
-			var cubePos = moveable.FetchGridPos();
+			var cubePos = moveable.cubePoser.FetchGridPos();
 			if (moveHandler.moveableCubeDic.ContainsKey(cubePos))
 				isDockedList.Insert(0, false);
 			else isDockedList.Insert(0, true);
@@ -154,10 +154,10 @@ namespace Qbism.Rewind
 
 			if (this.tag == "Player")
 			{
-				mover.RoundPosition();
+				mover.cubePoser.RoundPosition();
 				mover.UpdateCenterPosition();
 				mover.GetComponent<PlayerCubeFeedForward>().ShowFeedForward();
-				floorChecker.currentCube = handler.FetchCube(mover.FetchGridPos(), false);
+				floorChecker.currentCube = handler.FetchCube(mover.cubePoser.FetchGridPos(), false);
 
 				if (mover.isOutOfBounds || mover.isLowered)
 				{
@@ -191,7 +191,7 @@ namespace Qbism.Rewind
 
 				if (moveable)
 				{
-					moveable.RoundPosition();
+					moveable.cubePoser.RoundPosition();
 					moveable.UpdateCenterPosition();
 					ResetOutOfBounds(moveable);
 					movementOrderList.RemoveAt(0);
@@ -199,7 +199,7 @@ namespace Qbism.Rewind
 					if (!cube)
 					{
 						moveHandler.RemoveFromMoveableDic(preRewPos);
-						moveHandler.AddToMoveableDic(moveable.FetchGridPos(), moveable);
+						moveHandler.AddToMoveableDic(moveable.cubePoser.FetchGridPos(), moveable);
 					}
 				}
 			}
@@ -208,7 +208,7 @@ namespace Qbism.Rewind
 		private void ResetShrunkStatus(FloorCube cube)
 		{
 			if (hasShrunkList.Count <= 0) return;
-			var cubePos = cube.FetchGridPos();
+			var cubePos = cube.cubePoser.FetchGridPos();
 
 			if (cube.GetComponent<MoveableCube>())
 			{
@@ -254,7 +254,7 @@ namespace Qbism.Rewind
 
 		private void ResetDocked(MoveableCube moveable, Vector3 rewindPos) 
 		{
-			var cubePos = moveable.FetchGridPos();
+			var cubePos = moveable.cubePoser.FetchGridPos();
 			var rewPos = new Vector2Int(Mathf.RoundToInt(rewindPos.x), Mathf.RoundToInt(rewindPos.z));
 
 			if(isDockedList.Count > 0 && isDockedList[0] == false 

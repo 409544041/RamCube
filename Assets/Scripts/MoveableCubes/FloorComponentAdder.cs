@@ -15,13 +15,15 @@ namespace Qbism.MoveableCubes
 		//Actions, events, delegates etc
 		public event Action<Vector2Int, FloorCube> onAddToMovFloorDic;
 
-		public void AddComponent(Vector2Int cubePos, GameObject cube, LineRenderer laserLine)
+		public void AddComponent(Vector2Int cubePos, GameObject cube, 
+			LineRenderer laserLine, CubePositioner cubePoser)
 		{
 			FloorCube newFloor = cube.AddComponent<FloorCube>();
 
 			newFloor.tag = "Environment";
 			newFloor.type = CubeTypes.Shrinking;
 			newFloor.laserLine = laserLine;
+			newFloor.cubePoser = cubePoser;
 
 			onAddToMovFloorDic(cubePos, newFloor);
 			LaserDottedLineCheck();

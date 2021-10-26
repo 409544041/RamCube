@@ -400,6 +400,7 @@ GameObject:
   - component: {fileID: 3170938458239633729}
   - component: {fileID: 6387899755342672437}
   - component: {fileID: 2134249337782816407}
+  - component: {fileID: 3188276181541915990}
   - component: {fileID: 1927752752540622594}
   - component: {fileID: 4765442448934840136}
   m_Layer: 0
@@ -453,6 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 4
   laserLine: {fileID: 4982530462283413556}
+  cubePoser: {fileID: 3188276181541915990}
 --- !u!114 &2134249337782816407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,6 +470,7 @@ MonoBehaviour:
   turnStep: 6
   timeStep: 0.01
   isLeftTurning: 0
+  cubePoser: {fileID: 3188276181541915990}
   onTurnEvent:
     m_PersistentCalls:
       m_Calls:
@@ -483,6 +486,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3188276181541915990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7821491857819746057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5516e84b9c2e1d4eae51d0e4a85f60c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer: 0
 --- !u!114 &1927752752540622594
 MonoBehaviour:
   m_ObjectHideFlags: 0

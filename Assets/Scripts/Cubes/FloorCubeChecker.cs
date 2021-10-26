@@ -53,7 +53,7 @@ namespace Qbism.Cubes
 
 		private void Start()
 		{
-			currentCube = handler.FetchCube(mover.FetchGridPos(), true);
+			currentCube = handler.FetchCube(mover.cubePoser.FetchGridPos(), true);
 		}
 
 		private void CheckFloorType(Vector2Int cubePos, GameObject cube,
