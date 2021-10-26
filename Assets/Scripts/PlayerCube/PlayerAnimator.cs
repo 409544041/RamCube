@@ -77,6 +77,7 @@ namespace Qbism.PlayerCube
 		private IEnumerator Fall(float addedY, string fallType)
 		{
 			fallen = true;
+			GetComponentInParent<PlayerFartLauncher>().flyingBy = false;
 
 			var mover = GetComponentInParent<PlayerCubeMover>();
 			GameObject player = mover.gameObject;

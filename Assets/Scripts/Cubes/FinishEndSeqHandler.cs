@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using Dreamteck.Splines;
 using Qbism.General;
+using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
 using Qbism.Saving;
 using Qbism.SceneTransition;
@@ -22,6 +23,7 @@ namespace Qbism.Cubes
 
 		//Cache
 		CubeHandler handler;
+		MoveableCubeHandler movHandler;
 		PlayerAnimator playerAnim;
 		FinishCubeJuicer juicer;
 		SceneHandler loader;
@@ -41,6 +43,7 @@ namespace Qbism.Cubes
 		private void Awake()
 		{
 			handler = FindObjectOfType<CubeHandler>();
+			movHandler = handler.GetComponent<MoveableCubeHandler>();
 			playerAnim = FindObjectOfType<PlayerAnimator>();
 			juicer = GetComponent<FinishCubeJuicer>();
 			loader = FindObjectOfType<SceneHandler>();
@@ -73,33 +76,47 @@ namespace Qbism.Cubes
 		private IEnumerator EndSequence()
 		{
 			yield return DestroyAllFloorCubes();
-			StartCoroutine(SwitchToCloseupCam());
-			onUIFade(0);
-			yield return new WaitForSeconds(fartDelay);
-			farter.InitiateFartSequence(fartTowardsTarget);
+
+			if (switchBoard.showEndLevelSeq)
+			{
+				StartCoroutine(SwitchToCloseupCam());
+				onUIFade(0);
+				yield return new WaitForSeconds(fartDelay);
+				farter.InitiateFartSequence(fartTowardsTarget);
+			}
+			else StartCoroutine(LevelTransition(false, false));
 		}
 
 		private IEnumerator DestroyAllFloorCubes()
 		{
-			List<FloorCube> floorCubeList = new List<FloorCube>();
+			List<CubeShrinker> cubesToShrinkList = new List<CubeShrinker>();
+
+			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in movHandler.moveableCubeDic)
+			{
+				var cube = pair.Value;
+				var pos = pair.Key;
+				if (!handler.movFloorCubeDic.ContainsKey(pos) &&
+					!handler.shrunkMovFloorCubeDic.ContainsKey(pos))
+					cubesToShrinkList.Add(cube.GetComponent<CubeShrinker>());
+			}
 
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.floorCubeDic)
 			{
 				var cube = pair.Value;
 				if (cube.type == CubeTypes.Finish) continue;
-				floorCubeList.Add(cube);
+				cubesToShrinkList.Add(cube.GetComponent<CubeShrinker>());
 			}
 
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.movFloorCubeDic)
 			{
 				var cube = pair.Value;
 				if (cube.type == CubeTypes.Finish) continue;
-				floorCubeList.Add(cube);
+				cubesToShrinkList.Add(cube.GetComponent<CubeShrinker>());
 			}
 
-			for (int i = 0; i < floorCubeList.Count; i++)
+			for (int i = 0; i < cubesToShrinkList.Count; i++)
 			{
-				floorCubeList[i].GetComponent<CubeShrinker>().StartShrinking();
+				cubesToShrinkList[i].StartShrinking();
 				yield return new WaitForSeconds(shrinkInterval);
 			}
 		}
@@ -126,6 +143,7 @@ namespace Qbism.Cubes
 			endCam.Priority = 12;
 			Camera.main.orthographic = true;
 			endCam.transform.parent = null;
+			FindObjectOfType<DisableAtEndCam>().DisableMeshes();
 			fader.FadeIn(fadeTime);
 			yield return new WaitForSeconds(flyByDelay);
 

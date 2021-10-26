@@ -39,7 +39,7 @@ namespace Qbism.General
 
 		private void Start() 
 		{
-			source.Play();
+			if (!orderHandler.muteMusic) source.Play();
 		}
 
 		private void Update()

@@ -262,7 +262,6 @@ namespace Qbism.Rewind
 			{
 				this.tag = "Moveable";
 				Destroy(GetComponent<FloorCube>());
-				Destroy(GetComponent<CubeShrinker>());
 				moveable.laserLine.enabled = false;
 				handler.movFloorCubeDic.Remove(cubePos);
 				moveHandler.moveableCubeDic.Add(rewPos, moveable);

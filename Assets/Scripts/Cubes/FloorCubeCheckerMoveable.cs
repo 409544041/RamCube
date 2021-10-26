@@ -67,7 +67,7 @@ namespace Qbism.Cubes
 					moveHandler.StopMovingMoveables(cubePos, cube, false);
 			}
 
-			else cube.InitiateLowering(cubePos, originPos);
+			else cube.InitiateLowering(cubePos);
 		}
 
 		private void OnDisable()
