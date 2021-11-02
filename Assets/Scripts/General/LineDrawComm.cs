@@ -55,36 +55,12 @@ namespace Qbism.General
 
 					if(lineType == LineTypes.dotted)
 					{
-						print("Drawing from " + pin.name + " to " + destination.transform.parent.name);
 						LineDrawer drawer = dotRender.GetComponent<LineDrawer>();
 						drawer.pointToMove = 1;
 						drawer.drawing = true;
 						drawer.SetPositions(pin.pathPoint.transform, destination, false);
 						dotRender.enabled = true;
 					}
-				}
-				else
-				{
-					// for (int i = 0; i < progHandler.levelDataList.Count; i++)
-					// {
-					// 	if(progHandler.levelDataList[i].levelID != pin.levelID) continue;
-					// 	if(!progHandler.levelDataList[i].completed) continue;
-
-						// //retracting dotted line?
-						// LineDrawer dotDrawer = dotRender.GetComponent<LineDrawer>();
-						// dotDrawer.pointToMove = 0;
-						// dotDrawer.drawing = true;
-						// dotDrawer.SetPositions(pin.pathPoint.transform, destination, true);
-						// dotRender.enabled = true;
-
-						// //Make sure that the path to 'second' unlock is always unlock02 in sheets
-						// //To make sure it'll always use the second line renderer
-						// LineDrawer fullDrawer = fullRenders[1].GetComponent<LineDrawer>();
-						// fullDrawer.pointToMove = 1;
-						// fullDrawer.drawing = true;
-						// fullDrawer.SetPositions(pin.pathPoint.transform, destination, false);
-						// fullRenders[1].enabled = true;
-					// }
 				}
 			}
 		}

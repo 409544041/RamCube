@@ -369,8 +369,7 @@ namespace Qbism.Saving
 				serpProg.serpentDataList[i] = false;
 			}
 
-			SavingSystem.SaveProgData(levelDataList, currentPin.f_name.ToString(),
-				serpProg.serpentDataList);
+			SaveProgData();
 		}
 
 		private void OnDisable()
