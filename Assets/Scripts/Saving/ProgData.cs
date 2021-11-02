@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using Qbism.Saving;
 using UnityEngine;
+using BansheeGz.BGDatabase;
 
 [System.Serializable]
 public class ProgData
 {
 	//States
-	public List<LevelStatusData> savedLevelDataList;
-	public LevelIDs currentLevelID;
+	public List<LevelStatusData> savedLevelData;
+	public string savedCurrentPin;
 	public List<bool> savedSerpentDataList;
 
-	public ProgData(ProgressHandler progHandler, SerpentProgress serpProg)
+	public ProgData(List<LevelStatusData> levelDataList, string currentPin,
+		List<bool> serpentDataList)
 	{
-		savedLevelDataList = progHandler.levelDataList;
-		currentLevelID = progHandler.currentLevelID;
-		savedSerpentDataList = serpProg.serpentDataList;
+		savedLevelData = levelDataList;
+		savedCurrentPin = currentPin;
+		savedSerpentDataList = serpentDataList;
 	}
 }

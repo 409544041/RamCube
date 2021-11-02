@@ -23,7 +23,7 @@ namespace Qbism.Saving
 		private void Awake() 
 		{
 			BuildSerpentList();
-			LoadSerpentData();
+			// LoadSerpentData();
 		}
 
 		private void BuildSerpentList()

@@ -56,6 +56,28 @@ public partial class M_Biome : BGEntityGo
 			return ___Variety;
 		}
 	}
+	public System.Single f_MinZ
+	{
+		get
+		{
+			return _f_MinZ[Entity.Index];
+		}
+		set
+		{
+			_f_MinZ[Entity.Index] = value;
+		}
+	}
+	public System.Single f_MaxZ
+	{
+		get
+		{
+			return _f_MaxZ[Entity.Index];
+		}
+		set
+		{
+			_f_MaxZ[Entity.Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -72,6 +94,24 @@ public partial class M_Biome : BGEntityGo
 		{
 			if(__f_Variety==null || __f_Variety.IsDeleted) __f_Variety=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5722706716172130075UL,12926031450509768577UL));
 			return __f_Variety;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldFloat __f_MinZ;
+	public static BansheeGz.BGDatabase.BGFieldFloat _f_MinZ
+	{
+		get
+		{
+			if(__f_MinZ==null || __f_MinZ.IsDeleted) __f_MinZ=(BansheeGz.BGDatabase.BGFieldFloat) MetaDefault.GetField(new BGId(5374342133323149295UL,17281580155556473531UL));
+			return __f_MinZ;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldFloat __f_MaxZ;
+	public static BansheeGz.BGDatabase.BGFieldFloat _f_MaxZ
+	{
+		get
+		{
+			if(__f_MaxZ==null || __f_MaxZ.IsDeleted) __f_MaxZ=(BansheeGz.BGDatabase.BGFieldFloat) MetaDefault.GetField(new BGId(5628989294326945906UL,9389870997533305998UL));
+			return __f_MaxZ;
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();

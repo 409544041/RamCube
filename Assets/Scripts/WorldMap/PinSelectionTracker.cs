@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using BansheeGz.BGDatabase;
 
 namespace Qbism.WorldMap
 {
@@ -10,13 +11,13 @@ namespace Qbism.WorldMap
 	{
 		//States
 		public LevelPin selectedPin { get; set; } = null;
-		public Biomes currentBiome { get; set; }
-		Biomes prevBiome;
+		public E_Biome currentBiome { get; set; }
+		E_Biome prevBiome;
 		LevelPin prevPin;
 
 		//Actions, events, delegates etc
 		public event Action<GameObject> onPinFetch;
-		public event Action<Biomes, LevelPin> onSetCenterPos;
+		public event Action<E_Biome, LevelPin> onSetCenterPos;
 		public event Action onSavedPinFetch;
 
 		private IEnumerator Start() 
@@ -38,7 +39,7 @@ namespace Qbism.WorldMap
 
 			GameObject selected = EventSystem.current.currentSelectedGameObject;
 			onPinFetch(selected); //Sets new selectedPin
-			currentBiome = selectedPin.GetComponent<EditorSetPinValues>().biome;
+			currentBiome = selectedPin.m_Pin.f_Biome;
 			if(selectedPin != prevPin) onSetCenterPos(currentBiome, selectedPin);
 		}
 	}

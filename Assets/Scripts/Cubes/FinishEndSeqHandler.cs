@@ -84,7 +84,7 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(fartDelay);
 				farter.InitiateFartSequence(fartTowardsTarget);
 			}
-			else StartCoroutine(LevelTransition(false, false));
+			else StartCoroutine(SerpentSequence());
 		}
 
 		private IEnumerator DestroyAllFloorCubes()

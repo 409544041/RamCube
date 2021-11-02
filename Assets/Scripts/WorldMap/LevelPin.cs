@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.SceneTransition;
 using UnityEngine;
+using BansheeGz.BGDatabase;
 
 namespace Qbism.WorldMap
 {
 	public class LevelPin : MonoBehaviour
 	{
 		//Config parameters
-		public LevelIDs levelID;
 		public LevelPinUI pinUI;
 		[Header ("Unlocking")]
 		[SerializeField] float lockedYPos;
@@ -20,6 +20,9 @@ namespace Qbism.WorldMap
 		public Transform pathPoint;
 		public LineRenderer[] fullLineRenderers;
 		public LineRenderer dottedLineRenderer;
+		[Header ("References")]
+		public M_LevelData m_levelData;
+		public M_Pin m_Pin;
 
 		//Cache
 		MeshRenderer mRender;
@@ -27,10 +30,13 @@ namespace Qbism.WorldMap
 		//Actions, events, delegates etc
 		public event Action<Transform, LineTypes, List<LevelPin>> onPathDrawing;
 		public event Action<Transform, List<LineDrawData>, LineRenderer[], LineRenderer> onPathCreation;
+		public Func<E_Pin, LevelPin> onGetPin;
 
 		//States
 		public bool justCompleted { get; set; } = false;
 		bool raising = false;
+		int amountInDrawList = 0;
+		List<LineDrawData> lineDestList = new List<LineDrawData>();
 
 		private void Awake() 
 		{
@@ -53,32 +59,29 @@ namespace Qbism.WorldMap
 			}
 		}
 
-		public void CheckPathStatus(LevelStatusData unlock1Data, 
-			LevelStatusData unlock2Data, bool completed)
+		public void CheckPathStatus(E_Pin uPin, bool uUnlocked, bool uUnlockAnimPlayed, int uLocksLeft, bool completed,
+			int listCount)
 		{
-			List<LineDrawData> lineDestList = new List<LineDrawData>();
-			AddToList(completed, unlock1Data.unlocked, unlock1Data.unlockAnimPlayed,
-				unlock1Data.levelID, unlock1Data.locks, lineDestList);
-			AddToList(completed, unlock2Data.unlocked, unlock2Data.unlockAnimPlayed,
-			unlock2Data.levelID, unlock2Data.locks, lineDestList);
+			AddToList(uPin, completed, uUnlocked, uUnlockAnimPlayed, uLocksLeft, lineDestList);
+			amountInDrawList++;
 
-			onPathCreation(pathPoint, lineDestList, fullLineRenderers, dottedLineRenderer);
+			if (amountInDrawList == listCount)
+				onPathCreation(pathPoint, lineDestList, fullLineRenderers, dottedLineRenderer);
 		}
 
-		private void AddToList(bool completed, bool unlockStatus, bool unlockAnim, 
-			LevelIDs id, int locks, List<LineDrawData> lineDestList)
+		private void AddToList(E_Pin uPin, bool completed, bool unlockStatus, bool unlockAnim, 
+			int locks, List<LineDrawData> lineDestList)
 		{
-			if (id == LevelIDs.empty) return;
-			LevelPin pin = GetPin(id);
+			LevelPin destPin = onGetPin(uPin);
 
-			int sheetLocks = pin.GetComponent<EditorSetPinValues>().locks;
-			bool lessLocks = sheetLocks > locks && locks > 0;
-			bool noLocks = sheetLocks > locks && locks == 0;
+			int locksAmount = destPin.m_levelData.f_LocksAmount;
+			bool lessLocks = locksAmount > locks && locks > 0;
+			bool noLocks = locksAmount > locks && locks == 0;
 
 			if((completed && lessLocks) || (!justCompleted && completed && noLocks && !unlockAnim))
 			{
 				LineDrawData drawData = new LineDrawData();
-				drawData.destination = pin.pathPoint;
+				drawData.destination = destPin.pathPoint;
 				drawData.lineType = LineTypes.dotted;
 				lineDestList.Add(drawData);
 			}
@@ -86,23 +89,10 @@ namespace Qbism.WorldMap
 			if (completed && unlockStatus && unlockAnim)
 			{
 				LineDrawData drawData = new LineDrawData();
-				drawData.destination = pin.pathPoint;
+				drawData.destination = destPin.pathPoint;
 				drawData.lineType = LineTypes.full;
 				lineDestList.Add(drawData);
 			}
-		}
-
-		private LevelPin GetPin(LevelIDs id)
-		{
-			LevelPin[] pins = FindObjectsOfType<LevelPin>();
-			LevelPin foundPin = null;
-
-			foreach (LevelPin pin in pins)
-			{
-				if (pin.levelID != id) continue;
-				foundPin = pin;
-			}
-			return foundPin;
 		}
 
 		public void InitiateRaising(bool unlocked, bool unlockAnimPlayed, List<LevelPin> originPins)
@@ -117,7 +107,8 @@ namespace Qbism.WorldMap
 		private IEnumerator RaiseCliff(MeshRenderer mRender, List<LevelPin> originPins)
 		{
 			mRender.enabled = true;
-			GetComponent<LevelPinRaiseJuicer>().PlayRaiseJuice();
+			var raiser = GetComponent<LevelPinRaiseJuicer>();
+			raiser.PlayRaiseJuice();
 
 			while(raising)
 			{
@@ -125,20 +116,18 @@ namespace Qbism.WorldMap
 
 				yield return new WaitForSeconds(raiseSpeed);
 
-				if (mRender.transform.position.y >= unlockedYPos)
-				{
-					raising = false;
-					mRender.transform.position = new Vector3(
-						transform.position.x, unlockedYPos, transform.position.z);
+				if (mRender.transform.position.y >= unlockedYPos) raising = false;
 
-					GetComponent<LevelPinRaiseJuicer>().StopRaiseJuice();
-					pinUI.ShowOrHideUI(true);
-					onPathDrawing(pathPoint, LineTypes.full, originPins);
-				}
+				mRender.transform.position = new Vector3
+					(transform.position.x, unlockedYPos, transform.position.z);
+
+				raiser.StopRaiseJuice();
+				pinUI.ShowOrHideUI(true);
+				onPathDrawing(pathPoint, LineTypes.full, originPins);
 			}
 		}
 
-		public void DrawPath(List<LevelPin> originPins)
+		public void DrawDottedPath(List<LevelPin> originPins)
 		{
 			onPathDrawing(pathPoint, LineTypes.dotted, originPins);
 		}

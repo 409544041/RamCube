@@ -66,6 +66,17 @@ public partial class M_LevelData : BGEntityGo
 			_f_Level[Entity.Index] = value;
 		}
 	}
+	public System.Boolean f_InMap
+	{
+		get
+		{
+			return _f_InMap[Entity.Index];
+		}
+		set
+		{
+			_f_InMap[Entity.Index] = value;
+		}
+	}
 	public System.Int32 f_LocksAmount
 	{
 		get
@@ -132,6 +143,15 @@ public partial class M_LevelData : BGEntityGo
 		{
 			if(__f_Level==null || __f_Level.IsDeleted) __f_Level=(BansheeGz.BGDatabase.BGFieldString) MetaDefault.GetField(new BGId(4793347658190675977UL,5994557562632312988UL));
 			return __f_Level;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool __f_InMap;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_InMap
+	{
+		get
+		{
+			if(__f_InMap==null || __f_InMap.IsDeleted) __f_InMap=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4858229157076024160UL,2433292969023106195UL));
+			return __f_InMap;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldInt __f_LocksAmount;

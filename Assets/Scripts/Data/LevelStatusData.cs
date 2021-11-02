@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class LevelStatusData
 {
-	public LevelIDs levelID;
-	public int locks;
+	public string pin;
+	public int locksLeft;
 	public bool dottedAnimPlayed;
 	public bool unlocked;
 	public bool unlockAnimPlayed;

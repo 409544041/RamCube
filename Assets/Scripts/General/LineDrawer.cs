@@ -20,7 +20,7 @@ namespace Qbism.General
 		float counter = 0;
 		float distance = 0;
 		public Transform origin { get; set; }
-		public LevelIDs destinationID { get; private set; }
+		public E_Pin destPin { get; private set; }
 		public Transform destination { get; set; }
 		Vector3 pointAlongLine;
 		public int pointToMove = 0;
@@ -60,7 +60,7 @@ namespace Qbism.General
 
 				foreach (LevelPinUI pinUI in pinUIs)
 				{
-					if(pinUI.levelPin.levelID == destinationID)
+					if(pinUI.levelPin.m_levelData.f_Pin == destPin)
 						pinUI.DisableLockIcon(); 
 				}
 			}
@@ -71,7 +71,7 @@ namespace Qbism.General
 		{
 			origin = incOrigin;
 			destination = incDestination;
-			destinationID = incDestination.GetComponentInParent<LevelPin>().levelID;
+			destPin = incDestination.GetComponentInParent<LevelPin>().m_levelData.f_Pin;
 
 			lRender.positionCount = 2;
 			lRender.SetPosition(0, origin.position);

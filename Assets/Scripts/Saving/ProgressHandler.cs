@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.WorldMap;
 using UnityEngine;
+using BansheeGz.BGDatabase;
 
 namespace Qbism.Saving
 {
@@ -15,25 +16,26 @@ namespace Qbism.Saving
 		LevelPinUI[] pinUIs = null;
 
 		//States
-		public LevelIDs currentLevelID { get; set; }
-		public Biomes currentBiome { get; set ; }
+		public E_Pin currentPin { get; set; }
+		public E_Biome currentBiome { get; set ; }
 		public bool currentHasSegment { get ; set ; }
+
 		public List<LevelStatusData> levelDataList;
 		public List<LevelPin> levelPinList;
 
 		private void Awake() 
 		{
 			serpProg = GetComponent<SerpentProgress>();
+			currentPin = E_LevelData.GetEntity(0).f_Pin;
 			BuildLevelDataList();
 			LoadProgHandlerData();
 		}
 
 		private void BuildLevelDataList()
 		{
-			foreach (LevelIDs ID in Enum.GetValues(typeof(LevelIDs)))
+			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
 			{
 				LevelStatusData newData = new LevelStatusData();
-				newData.levelID = ID;
 				levelDataList.Add(newData);
 			}
 		}
@@ -50,11 +52,16 @@ namespace Qbism.Saving
 			foreach (LevelPinUI pinUI in pinUIs)
 			{
 				if (pinUI != null)
-				{
 					pinUI.onSetCurrentData += SetCurrentData;
-					pinUI.onFetchLevelData += FetchLevelDataList;
-					pinUI.onFetchLevelPins += FetchLevelPinList;
-				} 
+			}
+
+			levelPinList.Clear();
+			BuildLevelPinList();
+
+			for (int i = 0; i < levelPinList.Count; i++)
+			{
+				if (levelPinList[i] != null)
+					levelPinList[i].onGetPin += FetchPin;
 			}
 		}
 
@@ -70,15 +77,13 @@ namespace Qbism.Saving
 
 		private int PinsByID(LevelPin A, LevelPin B)
 		{
-			if(A.levelID < B.levelID) return -1;
-			else if(A.levelID > B.levelID) return 1;
+			if(A.m_Pin.f_Index < B.m_Pin.f_Index) return -1;
+			else if(A.m_Pin.f_Index > B.m_Pin.f_Index) return 1;
 			return 0;
 		}
 
 		public void InitiatePins() //Done every time world map is loaded
 		{
-			levelPinList.Clear();
-			BuildLevelPinList();
 			HandleLevelPins();
 		}
 
@@ -86,71 +91,44 @@ namespace Qbism.Saving
 		{
 			for (int i = 0; i < levelPinList.Count; i++)
 			{
-				if (levelPinList[i].levelID != levelDataList[i].levelID)
-				{
-					Debug.LogError("levelPinList " + levelPinList[i].levelID + " and levelDataList "
-					+ levelDataList[i].levelID + " are not in the same order.");
-					continue;
-				}
-
-				if(levelDataList[i].levelID == LevelIDs.a_01)
-				{
-					if (!levelDataList[i].unlocked) levelDataList[i].unlocked = true;
-					if (!levelDataList[i].unlockAnimPlayed) levelDataList[i].unlockAnimPlayed = true; 
-				}
-
-				EditorSetPinValues pinValues = levelPinList[i].GetComponent<EditorSetPinValues>();
-				LevelIDs unlock1ID = pinValues.levelUnlock_1;
-				LevelIDs unlock2ID = pinValues.levelUnlock_2;
-				LevelStatusData unlock1Data = FetchUnlockStatusData(unlock1ID);
-				LevelStatusData unlock2Data = FetchUnlockStatusData(unlock2ID);
+				var pin = levelPinList[i];
 				List<LevelPin> originPins = new List<LevelPin>();
-				AddOriginPins(levelPinList[i], originPins);
-				
-				var sheetLocks = pinValues.locks;
-				var savedLocks = levelDataList[i].locks;
-				var dottedAnimPlayed = levelDataList[i].dottedAnimPlayed;
-				var unlockAnimPlayed = levelDataList[i].unlockAnimPlayed;
-				var unlocked = levelDataList[i].unlocked;
-				var completed = levelDataList[i].completed;
-				var pathDrawn = levelDataList[i].pathDrawn;
-				
-				levelPinList[i].justCompleted = false;
-				if (completed && !pathDrawn) levelPinList[i].justCompleted = true;
-				bool lessLocks = (sheetLocks > savedLocks) && savedLocks != 0;
+				AddOriginPins(pin, originPins);
 
-				levelPinList[i].CheckRaiseStatus(unlocked, unlockAnimPlayed);
-				levelPinList[i].CheckPathStatus(unlock1Data, unlock2Data, completed);
+				var levelEntity = E_LevelData.FindEntity(entity => 
+					entity.f_Pin == pin.m_levelData.f_Pin);
+				var gameplayEntity = E_LevelGameplayData.FindEntity(entity => 
+					entity.f_Pin == pin.m_levelData.f_Pin);
 
-				levelPinList[i].pinUI.SelectPinUI();
+				int locksAmount, locksLeft;
+				bool dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn;
 
-				if(unlockAnimPlayed) levelPinList[i].pinUI.ShowOrHideUI(true);
-				else levelPinList[i].pinUI.ShowOrHideUI(false);
+				FetchPinValues(levelEntity, gameplayEntity, out locksAmount, out locksLeft, 
+					out dottedAnimPlayed, out unlockAnimPlayed, out unlocked, out completed, out pathDrawn);
 
-				if (completed) levelPinList[i].pinUI.SetUIComplete();
+				pin.justCompleted = false;
+				if (completed && !pathDrawn) pin.justCompleted = true;
 
-				levelPinList[i].pinUI.DisableLockIcon();
+				bool uUnlocked, uUnlockAnimPlayed;
+				int uLocksLeft;
+				bool checkedRaiseStatus = false;
+				List<E_Pin> unlockPins = levelEntity.f_UnlocksPins;
 
-				if(lessLocks && !dottedAnimPlayed)
+				for (int j = 0; j < unlockPins.Count; j++)
 				{
-					levelDataList[i].dottedAnimPlayed = true;
-					levelPinList[i].DrawPath(originPins);
-				}
+					FetchUnlockData(unlockPins[j], out uUnlocked, out uUnlockAnimPlayed,
+						out uLocksLeft);
 
-				if(unlocked && !unlockAnimPlayed)
-				{
-					if(savedLocks == 0)
-					{
-						levelPinList[i].InitiateRaising(unlocked, unlockAnimPlayed, originPins);
-						levelDataList[i].unlockAnimPlayed = true;
-					}
-					else
-					{
-						levelPinList[i].DrawPath(originPins);
-					}
-				}
+					if (!checkedRaiseStatus) pin.CheckRaiseStatus(unlocked, unlockAnimPlayed);
+					checkedRaiseStatus = true;
 
-				if(completed && !pathDrawn) levelDataList[i].pathDrawn = true;
+					pin.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft, completed, 
+						unlockPins.Count);
+				}
+			
+				SetPinUI(i, unlockAnimPlayed, completed);
+				HandlePaths(i, gameplayEntity, originPins, locksAmount, locksLeft, dottedAnimPlayed, 
+					unlockAnimPlayed, unlocked, completed, pathDrawn);
 			}
 
 			SaveProgData();
@@ -158,94 +136,137 @@ namespace Qbism.Saving
 
 		private void AddOriginPins(LevelPin incomingPin, List<LevelPin> originPins)
 		{
-			foreach (LevelPin pin in levelPinList)
+			for (int i = 0; i < levelPinList.Count; i++)
 			{
-				var editValues = pin.GetComponent<EditorSetPinValues>();
-				if (editValues.levelUnlock_1 == incomingPin.levelID ||
-					editValues.levelUnlock_2 == incomingPin.levelID)
-					originPins.Add(pin);
-			}
-		}
+				var unlockPins = levelPinList[i].m_levelData.f_UnlocksPins;
 
-		private LevelStatusData FetchUnlockStatusData(LevelIDs ID)
-		{
-			foreach (LevelStatusData data in levelDataList)
-			{
-				if (data.levelID == ID)
+				if (unlockPins != null)
 				{
-					return data;
-				} 
-			}
-			Debug.LogWarning("Can't fetch unlock data");
-			return null;
-		}
-
-		public void SetLevelToComplete(LevelIDs id, bool value)
-		{
-			foreach (LevelStatusData data in levelDataList)
-			{
-				if (data.levelID == id)
-					data.completed = value;	
-			}
-
-			CheckLevelsToUnlock(id);
-		}
-
-		private void CheckLevelsToUnlock(LevelIDs incomingID)
-		{
-			//Need to get this from sheets bc EditorSetPinValues is not available during gameplay
-			var sheetID = QbismDataSheets.levelData[incomingID.ToString()];
-
-			LevelIDs levelToUnlock_1 = LevelIDs.empty;
-			LevelIDs levelToUnlock_2 = LevelIDs.empty;
-			bool unlock1Found = false;
-			bool unlock2Found = false;
-
-			foreach (LevelIDs ID in Enum.GetValues(typeof(LevelIDs)))
-			{
-				if (ID.ToString() == sheetID.lVL_Unlock_1)
-				{
-					levelToUnlock_1 = ID;
-					unlock1Found = true;
-				}
-				if (ID.ToString() == sheetID.lVL_Unlock_2)
-				{
-					levelToUnlock_2 = ID;
-					unlock2Found = true;
+					for (int j = 0; j < unlockPins.Count; j++)
+					{
+						if (unlockPins[j] == incomingPin.m_levelData.f_Pin)
+							originPins.Add(levelPinList[i]);									
+					}
 				}
 			}
-
-			if(unlock1Found) SetUnlockedStatus(levelToUnlock_1, true);
-			else levelToUnlock_1 = LevelIDs.empty;
-
-			if(unlock2Found) SetUnlockedStatus(levelToUnlock_2, true);
-			else levelToUnlock_2 = LevelIDs.empty;
 		}
 
-		public void SetUnlockedStatus(LevelIDs id, bool value)
+		private void FetchPinValues(E_LevelData levelEntity, E_LevelGameplayData gameplayEntity,
+			out int locksAmount, out int locksLeft, out bool dottedAnimPlayed, out bool unlockAnimPlayed,
+			out bool unlocked, out bool completed, out bool pathDrawn)
 		{
-			foreach (LevelStatusData data in levelDataList)
+			locksAmount = levelEntity.f_LocksAmount;
+			locksLeft = gameplayEntity.f_LocksLeft;
+			dottedAnimPlayed = gameplayEntity.f_DottedAnimPlayed;
+			unlockAnimPlayed = gameplayEntity.f_UnlockAnimPlayed;
+			unlocked = gameplayEntity.f_Unlocked;
+			completed = gameplayEntity.f_Completed;
+			pathDrawn = gameplayEntity.f_PathDrawn;
+		}
+
+		private void FetchUnlockData(E_Pin unlockPin, out bool uUnlocked,
+			out bool uUnlockAnimPlayed, out int uLocksLeft)
+		{
+			var entity = E_LevelGameplayData.FindEntity(entity =>
+			entity.f_Pin == unlockPin);
+			
+			uUnlocked = entity.f_Unlocked; uUnlockAnimPlayed = entity.f_UnlockAnimPlayed;
+			uLocksLeft = entity.f_LocksLeft;
+		}
+
+		private void SetPinUI(int i, bool unlockAnimPlayed, bool completed)
+		{
+			levelPinList[i].pinUI.SelectPinUI(); //Why this? Remove?
+
+			if (unlockAnimPlayed) levelPinList[i].pinUI.ShowOrHideUI(true);
+			else levelPinList[i].pinUI.ShowOrHideUI(false);
+
+			if (completed) levelPinList[i].pinUI.SetUIComplete();
+
+			levelPinList[i].pinUI.DisableLockIcon();
+		}
+
+		private void HandlePaths(int i, E_LevelGameplayData entity, List<LevelPin> originPins, int locksAmount, int locksLeft, 
+			bool dottedAnimPlayed, bool unlockAnimPlayed, bool unlocked, bool completed, bool pathDrawn)
+		{
+			bool lessLocks = (locksAmount > locksLeft) && locksLeft != 0;
+			if (lessLocks && !dottedAnimPlayed)
 			{
-				if (data.levelID == id)
+				entity.f_DottedAnimPlayed = true;
+				levelPinList[i].DrawDottedPath(originPins);
+			}
+
+			if (unlocked && !unlockAnimPlayed)
+			{
+				if (locksLeft == 0)
 				{
-					if(data.locks > 0) data.locks--;
-					if(data.locks == 0) data.unlocked = value;
-				}	
+					levelPinList[i].InitiateRaising(unlocked, unlockAnimPlayed, originPins);
+					entity.f_UnlockAnimPlayed = true;
+				}
+				else
+				{
+					levelPinList[i].DrawDottedPath(originPins);
+				}
+			}
+
+			if (completed && !pathDrawn) entity.f_PathDrawn = true;
+		}		
+
+		public void SetLevelToComplete(E_Pin pin, bool value)
+		{
+			var entity = E_LevelGameplayData.FindEntity(entity =>
+			entity.f_Pin == pin);
+
+			entity.f_Completed = value;
+
+			if (pin == null)
+				Debug.LogError("Couldn't find correct entity");
+
+			CheckLevelsToUnlock(pin);
+		}
+
+		private void CheckLevelsToUnlock(E_Pin pin)
+		{
+			for (int i = 0; i < E_LevelData.CountEntities; i++)
+			{
+				var entity = E_LevelData.GetEntity(i);
+				if (entity.f_Pin == pin)
+				{
+					for (int j = 0; j < entity.f_UnlocksPins.Count; j++)
+					{
+						SetUnlockedStatus(entity.f_UnlocksPins[j], true);
+					}
+				}
+			}
+		}
+
+		public void SetUnlockedStatus(E_Pin pin, bool value)
+		{
+			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
+			{
+				var entity = E_LevelGameplayData.GetEntity(i);
+				if (entity.f_Pin == pin)
+				{
+					if (entity.f_LocksLeft > 0) entity.f_LocksLeft--;
+					if (entity.f_LocksLeft == 0) entity.f_Unlocked = value;
+				}
 			}			
 		}
 
-		public void SetUnlockAnimPlayedStatus(LevelIDs id, bool value)
+		private void SetCurrentData(E_Pin pin, bool hasSegment, E_Biome biome)
 		{
-			foreach (LevelStatusData data in levelDataList)
-			{
-				if (data.levelID == id)
-					data.unlockAnimPlayed = value;
-			}
-		}
+			currentPin = pin;
+			currentBiome = biome;
 
-		private List<LevelStatusData> FetchLevelDataList()
-		{
-			return levelDataList;
+			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
+			{
+				var entity = E_LevelGameplayData.GetEntity(i);
+				if (entity.f_Pin == pin)
+				{
+					if (entity.f_Completed) currentHasSegment = false;
+					else currentHasSegment = hasSegment;
+				}
+			}
 		}
 
 		private List<LevelPin> FetchLevelPinList()
@@ -253,64 +274,103 @@ namespace Qbism.Saving
 			return levelPinList;
 		}
 
-		private void SetCurrentData(LevelIDs id, bool serpent, Biomes biome)
+		private LevelPin FetchPin(E_Pin pin)
 		{
-			currentLevelID = id;
-			currentBiome = biome;
-			foreach (LevelStatusData data in levelDataList)
+			LevelPin foundPin = null;
+
+			for (int i = 0; i < levelPinList.Count; i++)
 			{
-				if(data.levelID != id) continue;
-				
-				if(data.completed) currentHasSegment = false;
-				else currentHasSegment = serpent;
+				if (levelPinList[i].m_levelData.f_Pin == pin)
+				return levelPinList[i];
 			}
+			Debug.LogError("Couldn't find correct levelPin");
+			return foundPin;
 		}
 
 		private void FetchCurrentPin()
 		{
-			foreach (LevelPin pin in levelPinList)
+			for (int i = 0; i < levelPinList.Count; i++)
 			{
-				if (pin.levelID != currentLevelID) continue;
-				pinSelTrack.selectedPin = pin;
-				pinSelTrack.currentBiome = pin.GetComponent<EditorSetPinValues>().biome;
+				if (levelPinList[i].m_Pin.Entity != currentPin) continue;
+
+				pinSelTrack.selectedPin = levelPinList[i];
+				pinSelTrack.currentBiome = levelPinList[i].m_Pin.f_Biome;
 			}
 		}
 
 		public void SaveProgData()
 		{
-			SavingSystem.SaveProgData(this, serpProg);
+			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
+			{
+				var entity = E_LevelGameplayData.GetEntity(i);
+				var levelData = levelDataList[i];
+
+				levelData.pin = entity.f_Pin.f_name.ToString(); levelData.locksLeft = entity.f_LocksLeft;
+				levelData.dottedAnimPlayed = entity.f_DottedAnimPlayed;
+				levelData.unlocked = entity.f_Unlocked; levelData.completed = entity.f_Completed;
+				levelData.unlockAnimPlayed = entity.f_UnlockAnimPlayed;
+				levelData.pathDrawn = entity.f_PathDrawn;
+			}
+
+			SavingSystem.SaveProgData(levelDataList, currentPin.f_name.ToString(),
+				serpProg.serpentDataList);
 		}
 
 		public void LoadProgHandlerData()
 		{
 			ProgData data = SavingSystem.LoadProgData();
 
-			levelDataList = data.savedLevelDataList;
-			currentLevelID = data.currentLevelID;
+			levelDataList = data.savedLevelData;
+			string currentPinString = data.savedCurrentPin;
+			currentPin = E_Pin.FindEntity(entity =>
+					entity.f_name == currentPinString);
+
+			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
+			{
+				var entity = E_LevelGameplayData.GetEntity(i);
+				var levelData = levelDataList[i];
+				E_Pin pin = E_LevelData.FindEntity(entity =>
+					entity.f_Pin.f_name.ToString() == levelData.pin).f_Pin;
+				entity.f_Pin = pin;
+				entity.f_LocksLeft = levelData.locksLeft;
+				entity.f_DottedAnimPlayed = levelData.dottedAnimPlayed;
+				entity.f_Unlocked = levelData.unlocked; entity.f_Completed = levelData.completed;
+				entity.f_UnlockAnimPlayed = levelData.unlockAnimPlayed;
+				entity.f_PathDrawn = levelData.pathDrawn;
+			}
 		}
 
 		public void WipeProgData() //TO DO: Make this debug only
 		{
-			for (int i = 0; i < levelDataList.Count; i++)
+			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
 			{
-				var sheetID = QbismDataSheets.levelData[levelDataList[i].levelID.ToString()];
-				//If errors when deleting: Check if sheet.count and leveldatalist.count are similar and that sheet has an 'empty'
-				levelDataList[i].locks = sheetID.locks;
-				levelDataList[i].dottedAnimPlayed = false;
-				levelDataList[i].unlocked = false;
-				levelDataList[i].unlockAnimPlayed = false;
-				levelDataList[i].completed = false;		
-				levelDataList[i].pathDrawn = false;		
+				var levelData = E_LevelGameplayData.GetEntity(i);
+
+				levelData.f_LocksLeft = E_LevelData.GetEntity(i).f_LocksAmount;
+				levelData.f_DottedAnimPlayed = false; levelData.f_Completed = false;
+				levelData.f_PathDrawn = false;
+
+				if (i == 0)
+				{
+					levelData.f_Unlocked = true;
+					levelData.f_UnlockAnimPlayed = true;
+				}
+				else
+				{
+					levelData.f_Unlocked = false;
+					levelData.f_UnlockAnimPlayed = false;
+				}			
 			}
 
-			currentLevelID = LevelIDs.a_01;
+			currentPin = E_LevelData.GetEntity(0).f_Pin;
 
 			for (int i = 0; i < serpProg.serpentDataList.Count; i++)
 			{
 				serpProg.serpentDataList[i] = false;
 			}
 
-			SavingSystem.SaveProgData(this, serpProg);
+			SavingSystem.SaveProgData(levelDataList, currentPin.f_name.ToString(),
+				serpProg.serpentDataList);
 		}
 
 		private void OnDisable()
@@ -320,11 +380,12 @@ namespace Qbism.Saving
 			foreach (LevelPinUI pinUI in pinUIs)
 			{
 				if (pinUI != null)
-				{
 					pinUI.onSetCurrentData -= SetCurrentData;
-					pinUI.onFetchLevelData -= FetchLevelDataList;
-					pinUI.onFetchLevelPins -= FetchLevelPinList;
-				}
+			}
+			for (int i = 0; i < levelPinList.Count; i++)
+			{
+				if (levelPinList[i] != null)
+					levelPinList[i].onGetPin -= FetchPin;
 			}
 		}
 	}

@@ -19,7 +19,7 @@ namespace Qbism.Environment
 		ProgressHandler progHandler;
 
 		//States
-		Biomes currentBiome = Biomes.Biome01;
+		E_Biome currentBiome;
 
 		private void Awake() 
 		{
@@ -30,9 +30,9 @@ namespace Qbism.Environment
 		{
 			FetchBiome();
 
-			if (isSkyBox) SetSkybox();
-			else if (isVolume) SetVolume();
-			else SetVisuals();
+			// if (isSkyBox) SetSkybox();
+			// else if (isVolume) SetVolume();
+			// else SetVisuals();
 		}
 
 		private void FetchBiome()
@@ -48,68 +48,68 @@ namespace Qbism.Environment
 			}
 		}
 
-		private void SetVisuals()
-		{
-			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
-			{
-				if (biomeVariety.biome != currentBiome) continue;
+		// private void SetVisuals()
+		// {
+		// 	foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
+		// 	{
+		// 		if (biomeVariety.biome != currentBiome) continue;
 
-				for (int i = 0; i < meshParts.Length; i++)
-				{
-					MeshFilter mFilter = meshParts[i].GetComponent<MeshFilter>();
+		// 		for (int i = 0; i < meshParts.Length; i++)
+		// 		{
+		// 			MeshFilter mFilter = meshParts[i].GetComponent<MeshFilter>();
 
-					//Create new mats array
-					var newMats = new Material[biomeVariety.parts[i].mats.Length];
+		// 			//Create new mats array
+		// 			var newMats = new Material[biomeVariety.parts[i].mats.Length];
 
-					//Fill new mats array with correct mats from SO
-					for (int j = 0; j < newMats.Length; j++)
-					{
-						newMats[j] = biomeVariety.parts[i].mats[j];
-					}
+		// 			//Fill new mats array with correct mats from SO
+		// 			for (int j = 0; j < newMats.Length; j++)
+		// 			{
+		// 				newMats[j] = biomeVariety.parts[i].mats[j];
+		// 			}
 
-					meshParts[i].GetComponent<Renderer>().materials = newMats;
+		// 			meshParts[i].GetComponent<Renderer>().materials = newMats;
 
-					//Change mesh
-					if (biomeVariety.parts[i].mesh != null)
-					{
-						mFilter.mesh = biomeVariety.parts[i].mesh;
-					}
+		// 			//Change mesh
+		// 			if (biomeVariety.parts[i].mesh != null)
+		// 			{
+		// 				mFilter.mesh = biomeVariety.parts[i].mesh;
+		// 			}
 
-					if (recalculate)
-					{
-						mFilter.mesh.RecalculateTangents();
-						mFilter.mesh.RecalculateNormals();
-					}
-				}
-			}
-		}
+		// 			if (recalculate)
+		// 			{
+		// 				mFilter.mesh.RecalculateTangents();
+		// 				mFilter.mesh.RecalculateNormals();
+		// 			}
+		// 		}
+		// 	}
+		// }
 
-		private void SetSkybox()
-		{
-			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
-			{
-				if (biomeVariety.biome != currentBiome) continue;
+		// private void SetSkybox()
+		// {
+		// 	foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
+		// 	{
+		// 		if (biomeVariety.biome != currentBiome) continue;
 
-				RenderSettings.skybox = biomeVariety.parts[0].mats[0];
-			}
-		}
+		// 		RenderSettings.skybox = biomeVariety.parts[0].mats[0];
+		// 	}
+		// }
 
-		private void SetVolume()
-		{
-			//Not sure how it works is but it works
-			UnityEngine.Rendering.VolumeProfile volProf = GetComponent<UnityEngine.Rendering.Volume>()?.profile;
-			if (!volProf) throw new System.NullReferenceException(nameof(UnityEngine.Rendering.VolumeProfile));
-			UnityEngine.Rendering.Universal.Vignette vignette;
-			if (!volProf.TryGet(out vignette)) throw new System.NullReferenceException(nameof(vignette));
+		// private void SetVolume()
+		// {
+		// 	//Not sure how it works is but it works
+		// 	UnityEngine.Rendering.VolumeProfile volProf = GetComponent<UnityEngine.Rendering.Volume>()?.profile;
+		// 	if (!volProf) throw new System.NullReferenceException(nameof(UnityEngine.Rendering.VolumeProfile));
+		// 	UnityEngine.Rendering.Universal.Vignette vignette;
+		// 	if (!volProf.TryGet(out vignette)) throw new System.NullReferenceException(nameof(vignette));
 
-			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
-			{
-				if (biomeVariety.biome != currentBiome) continue;
+		// 	foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
+		// 	{
+		// 		if (biomeVariety.biome != currentBiome) continue;
 
-				var vigColor = biomeVariety.parts[0].mats[0].color;
+		// 		var vigColor = biomeVariety.parts[0].mats[0].color;
 
-				vignette.color.Override(vigColor);
-			}
-		}
+		// 		vignette.color.Override(vigColor);
+		// 	}
+		// }
 	}
 }
