@@ -45,17 +45,6 @@ public partial class M_Biome : BGEntityGo
 			_f_name[Entity.Index] = value;
 		}
 	}
-	public List<E_Variety> f_Variety
-	{
-		get
-		{
-			var val = _f_Variety[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___Variety = new List<E_Variety>();
-			for (var i = 0; i < val.Count; i++) ___Variety.Add((E_Variety) val[i]);
-			return ___Variety;
-		}
-	}
 	public System.Single f_MinZ
 	{
 		get
@@ -85,15 +74,6 @@ public partial class M_Biome : BGEntityGo
 		{
 			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(4811910356762317652UL,6316590992709792654UL));
 			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldNested __f_Variety;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_Variety
-	{
-		get
-		{
-			if(__f_Variety==null || __f_Variety.IsDeleted) __f_Variety=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5722706716172130075UL,12926031450509768577UL));
-			return __f_Variety;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldFloat __f_MinZ;
