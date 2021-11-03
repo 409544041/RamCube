@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Qbism.WorldMap;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.WorldMap
 {
 	public class LineDrawer : MonoBehaviour
 	{

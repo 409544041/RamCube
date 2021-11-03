@@ -155,6 +155,8 @@ GameObject:
   - component: {fileID: 4435121214177497342}
   - component: {fileID: 1521552297238041292}
   - component: {fileID: 739622578570481642}
+  - component: {fileID: 4695560977583735414}
+  - component: {fileID: 4786416544500624892}
   - component: {fileID: 1248485919370541080}
   - component: {fileID: 5977258536694838276}
   - component: {fileID: 4542655730225729277}
@@ -207,19 +209,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda3621b7f36de449523ea4cee7020b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelID: 0
   pinUI: {fileID: 0}
-  lockedYPos: -14
-  unlockedYPos: -9
-  raiseStep: 0.25
-  raiseSpeed: 0.05
+  pinPather: {fileID: 4695560977583735414}
+  pinRaiser: {fileID: 4786416544500624892}
+  m_levelData: {fileID: 5977258536694838276}
+  m_Pin: {fileID: 4542655730225729277}
+--- !u!114 &4695560977583735414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3947237476793911876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c025f20c8cfd784a9801a2ae4891656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pin: {fileID: 739622578570481642}
   pathPoint: {fileID: 8218998986718881874}
   fullLineRenderers:
   - {fileID: 1317782278086270706}
   - {fileID: 3739235377293064332}
   dottedLineRenderer: {fileID: 3238538961594103020}
-  m_levelData: {fileID: 5977258536694838276}
-  m_Pin: {fileID: 4542655730225729277}
+--- !u!114 &4786416544500624892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3947237476793911876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf051ac0c0c5a7c489c1e25e15cc97d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pin: {fileID: 739622578570481642}
+  lockedYPos: -14
+  unlockedYPos: -9
+  raiseStep: 0.25
+  raiseSpeed: 0.05
+  raiseJuicer: {fileID: 1248485919370541080}
 --- !u!114 &1248485919370541080
 MonoBehaviour:
   m_ObjectHideFlags: 0

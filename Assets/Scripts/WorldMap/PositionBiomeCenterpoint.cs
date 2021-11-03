@@ -47,7 +47,7 @@ namespace Qbism.General
 			if(currentBiome != prevBiome) xPos = FindXPos(biome);
 			else xPos = transform.position.x;
 
-			float yPos = selPin.unlockedYPos;
+			float yPos = selPin.pinRaiser.unlockedYPos;
 			float zPos = FindZPos(biome, selPin);
 
 			transform.position = new Vector3(xPos, yPos, zPos);
@@ -83,7 +83,7 @@ namespace Qbism.General
 
 		private float FindZPos(E_Biome biome, LevelPin selPin)
 		{
-			Vector3 selPos = selPin.pathPoint.transform.position;
+			Vector3 selPos = selPin.pinPather.pathPoint.transform.position;
 			float zPos = selPos.z;
 
 			if(zPos <= biome.f_MinZ) zPos = biome.f_MinZ;
