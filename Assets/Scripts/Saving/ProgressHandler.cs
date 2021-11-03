@@ -19,7 +19,7 @@ namespace Qbism.Saving
 		public bool currentHasSegment { get ; set ; }
 
 		List<LevelStatusData> levelDataList = new List<LevelStatusData>();
-		public List<LevelPin> levelPinList;
+		public List<LevelPin> levelPinList { get; set; } = new List<LevelPin>();
 		List<LevelPinPathHandler> pinPathers = new List<LevelPinPathHandler>();
 
 
