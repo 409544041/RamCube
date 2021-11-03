@@ -12,4 +12,5 @@ public class LevelStatusData
 	public bool unlockAnimPlayed;
 	public bool completed;
 	public bool pathDrawn;
+	public bool lockDisabled;
 }

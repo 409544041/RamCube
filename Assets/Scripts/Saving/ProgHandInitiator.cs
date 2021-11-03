@@ -8,9 +8,11 @@ namespace Qbism.Saving
 	{
 		//Cache
 		ProgressHandler progHandler;
+		
 		private void Awake() 
 		{
 			progHandler = FindObjectOfType<ProgressHandler>();
+
 			progHandler.FixMapUILinks();
 			progHandler.BuildLevelPinList();
 			progHandler.FixMapPinLinks();

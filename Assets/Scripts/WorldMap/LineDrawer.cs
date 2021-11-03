@@ -9,7 +9,7 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public LineTypes lineType = LineTypes.full;
-		[SerializeField] float drawSpeed = 5f;
+		[SerializeField] float drawStep = 100f;
 		[SerializeField] float lineWidth = .15f;
 
 		//Cache
@@ -22,6 +22,7 @@ namespace Qbism.WorldMap
 		public Transform origin { get; set; }
 		public E_Pin destPin { get; private set; }
 		public Transform destination { get; set; }
+		LevelPin destLevelPin;
 		Vector3 pointAlongLine;
 		public int pointToMove = 0;
 
@@ -42,6 +43,7 @@ namespace Qbism.WorldMap
 
 			if (counter < distance)
 			{
+				var drawSpeed = drawStep * Time.deltaTime;
 				counter += .1f / drawSpeed;
 				float x = Mathf.Lerp(0, distance, counter);
 
@@ -56,13 +58,13 @@ namespace Qbism.WorldMap
 
 			if (Vector3.Distance(pointAlongLine, destination.position) <= .1) 
 			{
-				LevelPinUI[] pinUIs = FindObjectsOfType<LevelPinUI>();
+				var ent = E_LevelGameplayData.FindEntity(entity =>
+				entity.f_Pin == destLevelPin.m_levelData.f_Pin);
+				if (ent.f_LocksLeft == 0) ent.f_LockIconDisabled = true;
 
-				foreach (LevelPinUI pinUI in pinUIs)
-				{
-					if(pinUI.levelPin.m_levelData.f_Pin == destPin)
-						pinUI.DisableLockIcon(); 
-				}
+				var pinUI = destLevelPin.GetComponentInParent<LevelPin>().pinUI;
+				pinUI.DisableLockIcon(); 
+
 			}
 		}
 
@@ -71,7 +73,8 @@ namespace Qbism.WorldMap
 		{
 			origin = incOrigin;
 			destination = incDestination;
-			destPin = incDestination.GetComponentInParent<LevelPin>().m_levelData.f_Pin;
+			destLevelPin = incDestination.GetComponentInParent<LevelPin>();
+			destPin = destLevelPin.m_levelData.f_Pin;
 
 			lRender.positionCount = 2;
 			lRender.SetPosition(0, origin.position);

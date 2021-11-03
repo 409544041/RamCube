@@ -308,6 +308,7 @@ namespace Qbism.Saving
 				levelData.unlocked = entity.f_Unlocked; levelData.completed = entity.f_Completed;
 				levelData.unlockAnimPlayed = entity.f_UnlockAnimPlayed;
 				levelData.pathDrawn = entity.f_PathDrawn;
+				levelData.lockDisabled = entity.f_LockIconDisabled;
 			}
 
 			SavingSystem.SaveProgData(levelDataList, currentPin.f_name.ToString(),
@@ -336,6 +337,7 @@ namespace Qbism.Saving
 				entity.f_Unlocked = levelData.unlocked; entity.f_Completed = levelData.completed;
 				entity.f_UnlockAnimPlayed = levelData.unlockAnimPlayed;
 				entity.f_PathDrawn = levelData.pathDrawn;
+				entity.f_LockIconDisabled = levelData.lockDisabled;
 			}
 		}
 
@@ -348,6 +350,7 @@ namespace Qbism.Saving
 				levelData.f_LocksLeft = E_LevelData.GetEntity(i).f_LocksAmount;
 				levelData.f_DottedAnimPlayed = false; levelData.f_Completed = false;
 				levelData.f_PathDrawn = false;
+				levelData.f_LockIconDisabled = false;
 
 				if (i == 0)
 				{
