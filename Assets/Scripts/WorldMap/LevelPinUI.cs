@@ -86,8 +86,6 @@ namespace Qbism.WorldMap
 
 		public void DisableLockIcon()
 		{	
-			if (!lockIcon.isActiveAndEnabled) return;	
-
 			var ent = E_LevelGameplayData.FindEntity(entity =>
 				entity.f_Pin == levelPin.m_levelData.f_Pin);
 			int locksLeft = ent.f_LocksLeft;
@@ -95,8 +93,7 @@ namespace Qbism.WorldMap
 			
 			if(locksLeft == levelPin.m_levelData.f_LocksAmount || 
 				(locksLeft == 0 && lockDisabled))
-				lockIcon.enabled = false;
-				
+				lockIcon.enabled = false;	
 		}
 
 		private void OnDisable() 

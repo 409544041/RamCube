@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Qbism.WorldMap;
 using UnityEngine;
@@ -25,6 +26,9 @@ namespace Qbism.WorldMap
 		LevelPin destLevelPin;
 		Vector3 pointAlongLine;
 		public int pointToMove = 0;
+
+		//Actions, events, delegates etc
+		public event Action onSaveData;
 
 		private void Awake()
 		{
@@ -64,7 +68,7 @@ namespace Qbism.WorldMap
 
 				var pinUI = destLevelPin.GetComponentInParent<LevelPin>().pinUI;
 				pinUI.DisableLockIcon(); 
-
+				onSaveData();
 			}
 		}
 

@@ -21,6 +21,7 @@ namespace Qbism.Saving
 		List<LevelStatusData> levelDataList = new List<LevelStatusData>();
 		public List<LevelPin> levelPinList { get; set; } = new List<LevelPin>();
 		List<LevelPinPathHandler> pinPathers = new List<LevelPinPathHandler>();
+		List<LineDrawer> lineDrawers = new List<LineDrawer>();
 
 
 		private void Awake() 
@@ -56,13 +57,26 @@ namespace Qbism.Saving
 		public void FixMapPinLinks()
 		{
 			pinPathers.Clear();
+			lineDrawers.Clear();
 
 			for (int i = 0; i < levelPinList.Count; i++)
 			{
 				pinPathers.Add(levelPinList[i].pinPather);
 
+				LineDrawer[] drawers = levelPinList[i].GetComponentsInChildren<LineDrawer>();
+				for (int j = 0; j < drawers.Length; j++)
+				{
+					lineDrawers.Add(drawers[j]);
+				}
+
 				if (pinPathers[i] != null)
 					pinPathers[i].onGetPin += FetchPin;
+			}
+
+			for (int i = 0; i < lineDrawers.Count; i++)
+			{
+				if (lineDrawers[i] != null)
+					lineDrawers[i].onSaveData += SaveProgData;
 			}
 		}
 
@@ -388,6 +402,12 @@ namespace Qbism.Saving
 			{
 				if (pinPathers[i] != null)
 					pinPathers[i].onGetPin -= FetchPin;
+			}
+
+			for (int i = 0; i < lineDrawers.Count; i++)
+			{
+				if (lineDrawers[i] != null)
+					lineDrawers[i].onSaveData -= SaveProgData;
 			}
 		}
 	}
