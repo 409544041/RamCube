@@ -45,45 +45,10 @@ namespace Qbism.WorldMap
 
 			raiseJuicer.StopRaiseJuice();
 			pin.pinUI.ShowOrHideUI(true);
-			DrawNewPath(LineTypes.full, originPins);
-		}
 
-		public void DrawNewPath(LineTypes lineType, List<LevelPin> originPins)
-		{
-			var progHandler = FindObjectOfType<ProgressHandler>();
-
-			foreach (LevelPin originPin in originPins)
+			for (int i = 0; i < originPins.Count; i++)
 			{
-				LineRenderer[] fullRenders = originPin.pinPather.fullLineRenderers;
-				LineRenderer dotRender = originPin.pinPather.dottedLineRenderer;
-
-				if (originPin.justCompleted)
-				{
-					if (lineType == LineTypes.full)
-					{
-						for (int i = 0; i < fullRenders.Length; i++)
-						{
-							LineDrawer drawer = fullRenders[i].GetComponent<LineDrawer>();
-							if (drawer.drawing) continue;
-							drawer.pointToMove = 1;
-							drawer.drawing = true;
-							drawer.SetPositions(originPin.pinPather.pathPoint, 
-								pin.pinPather.pathPoint, false);
-							fullRenders[i].enabled = true;
-							return;
-						}
-					}
-
-					if (lineType == LineTypes.dotted)
-					{
-						LineDrawer drawer = dotRender.GetComponent<LineDrawer>();
-						drawer.pointToMove = 1;
-						drawer.drawing = true;
-						drawer.SetPositions(originPin.pinPather.pathPoint, 
-							pin.pinPather.pathPoint.transform, false);
-						dotRender.enabled = true;
-					}
-				}
+				originPins[i].pinPather.DrawNewPath(LineTypes.full, pin);
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.Saving;
 using UnityEngine;
 
 namespace Qbism.WorldMap
@@ -75,6 +76,39 @@ namespace Qbism.WorldMap
 						dotDrawer.SetPositions(pathPoint, lineDestList[i].destination, false);
 						dottedLineRenderer.enabled = true;
 					}
+				}
+			}
+		}
+
+		public void DrawNewPath(LineTypes lineType, LevelPin destPin)
+		{
+			var progHandler = FindObjectOfType<ProgressHandler>();
+
+			if (pin.justCompleted)
+			{
+				if (lineType == LineTypes.full)
+				{
+					for (int i = 0; i < fullLineRenderers.Length; i++)
+					{
+						LineDrawer drawer = fullLineRenderers[i].GetComponent<LineDrawer>();
+						if (drawer.drawing) continue;
+						drawer.pointToMove = 1;
+						drawer.drawing = true;
+						drawer.SetPositions(pin.pinPather.pathPoint,
+							destPin.pinPather.pathPoint, false);
+						fullLineRenderers[i].enabled = true;
+						return;
+					}
+				}
+
+				if (lineType == LineTypes.dotted)
+				{
+					LineDrawer drawer = dottedLineRenderer.GetComponent<LineDrawer>();
+					drawer.pointToMove = 1;
+					drawer.drawing = true;
+					drawer.SetPositions(pin.pinPather.pathPoint,
+						destPin.pinPather.pathPoint.transform, false);
+				dottedLineRenderer.enabled = true;
 				}
 			}
 		}

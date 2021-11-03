@@ -137,8 +137,8 @@ namespace Qbism.Saving
 						completed, unlockPins.Count);
 				}
 			
-				SetPinUI(i, unlockAnimPlayed, completed);
-				RaiseAndDrawPaths(i, gameplayEntity, originPins, locksAmount, locksLeft, dottedAnimPlayed, 
+				SetPinUI(pin, unlockAnimPlayed, completed);
+				RaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft, dottedAnimPlayed, 
 					unlockAnimPlayed, unlocked, completed, pathDrawn);
 			}
 
@@ -185,41 +185,56 @@ namespace Qbism.Saving
 			uLocksLeft = entity.f_LocksLeft;
 		}
 
-		private void SetPinUI(int i, bool unlockAnimPlayed, bool completed)
+		private void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed)
 		{
-			levelPinList[i].pinUI.SelectPinUI(); //Why this? Remove?
+			pin.pinUI.SelectPinUI(); //Why this? Remove?
 
-			if (unlockAnimPlayed) levelPinList[i].pinUI.ShowOrHideUI(true);
-			else levelPinList[i].pinUI.ShowOrHideUI(false);
+			if (unlockAnimPlayed) pin.pinUI.ShowOrHideUI(true);
+			else pin.pinUI.ShowOrHideUI(false);
 
-			if (completed) levelPinList[i].pinUI.SetUIComplete();
+			if (completed) pin.pinUI.SetUIComplete();
 
-			levelPinList[i].pinUI.DisableLockIcon();
+			pin.pinUI.DisableLockIcon();
 		}
 
-		private void RaiseAndDrawPaths(int i, E_LevelGameplayData entity, List<LevelPin> originPins, 
-			int locksAmount, int locksLeft, bool dottedAnimPlayed, bool unlockAnimPlayed, 
-			bool unlocked, bool completed, bool pathDrawn)
+		private void RaiseAndDrawPaths(E_LevelGameplayData entity, LevelPin pin, 
+			List<LevelPin> originPins, int locksAmount, int locksLeft, bool dottedAnimPlayed, 
+			bool unlockAnimPlayed, bool unlocked, bool completed, bool pathDrawn)
 		{
 			bool lessLocks = (locksAmount > locksLeft) && locksLeft != 0;
 
 			if (lessLocks && !dottedAnimPlayed)
 			{
 				entity.f_DottedAnimPlayed = true;
-				levelPinList[i].pinRaiser.DrawNewPath(LineTypes.dotted, originPins);
+
+				for (int i = 0; i < originPins.Count; i++)
+				{
+					originPins[i].pinPather.DrawNewPath(LineTypes.dotted, pin);
+				}
 			}
 
 			if (unlocked && !unlockAnimPlayed)
 			{
 				if (locksLeft == 0)
 				{
-					levelPinList[i].pinRaiser.InitiateRaising(originPins);
+					pin.pinRaiser.InitiateRaising(originPins);
 					entity.f_UnlockAnimPlayed = true;
 				}
-				else levelPinList[i].pinRaiser.DrawNewPath(LineTypes.dotted, originPins);
+				else
+				{
+					for (int i = 0; i < originPins.Count; i++)
+					{
+						originPins[i].pinPather.DrawNewPath(LineTypes.dotted, pin);
+					}
+				}
 			}
 			else if (unlocked && unlockAnimPlayed)
-				levelPinList[i].pinRaiser.DrawNewPath(LineTypes.full, originPins);
+			{
+				for (int i = 0; i < originPins.Count; i++)
+				{
+					originPins[i].pinPather.DrawNewPath(LineTypes.full, pin);
+				}
+			}
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;
 		}		
