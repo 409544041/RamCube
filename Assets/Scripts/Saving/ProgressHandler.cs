@@ -119,8 +119,8 @@ namespace Qbism.Saving
 					if (!checkedRaiseStatus) pin.CheckRaiseStatus(unlocked, unlockAnimPlayed);
 					checkedRaiseStatus = true;
 
-					pin.pinPather.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft, completed, 
-						unlockPins.Count);
+					pin.pinPather.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft, 
+						completed, unlockPins.Count);
 				}
 			
 				SetPinUI(i, unlockAnimPlayed, completed);
@@ -204,6 +204,8 @@ namespace Qbism.Saving
 				}
 				else levelPinList[i].pinRaiser.DrawNewPath(LineTypes.dotted, originPins);
 			}
+			else if (unlocked && unlockAnimPlayed)
+				levelPinList[i].pinRaiser.DrawNewPath(LineTypes.full, originPins);
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;
 		}		

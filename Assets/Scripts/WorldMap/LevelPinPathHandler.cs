@@ -31,16 +31,16 @@ namespace Qbism.WorldMap
 				CreatePath(lineDestList);
 		}
 
-		private void AddToList(E_Pin uPin, bool completed, bool unlockStatus, bool unlockAnim,
-			int locks, List<LineDrawData> lineDestList)
+		private void AddToList(E_Pin uPin, bool completed, bool uUnlocked, bool uUnlockAnimPlayed,
+			int uLocksLeft, List<LineDrawData> lineDestList)
 		{
 			LevelPin destPin = onGetPin(uPin);
 
 			int locksAmount = destPin.m_levelData.f_LocksAmount;
-			bool lessLocks = locksAmount > locks && locks > 0;
-			bool noLocks = locksAmount > locks && locks == 0;
+			bool lessLocks = locksAmount > uLocksLeft && uLocksLeft > 0;
+			bool noLocks = locksAmount > uLocksLeft && uLocksLeft == 0;
 
-			if ((completed && lessLocks) || (!pin.justCompleted && completed && noLocks && !unlockAnim))
+			if ((completed && lessLocks) || (!pin.justCompleted && completed && noLocks && !uUnlockAnimPlayed))
 			{
 				LineDrawData drawData = new LineDrawData();
 				drawData.destination = destPin.pinPather.pathPoint;
@@ -48,7 +48,7 @@ namespace Qbism.WorldMap
 				lineDestList.Add(drawData);
 			}
 
-			if (completed && unlockStatus && unlockAnim)
+			if (!pin.justCompleted && completed && uUnlocked && uUnlockAnimPlayed)
 			{
 				LineDrawData drawData = new LineDrawData();
 				drawData.destination = destPin.pinPather.pathPoint;
