@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Dreamteck.Splines;
 using UnityEngine;
 using Qbism.Cubes;
+using System;
 
 namespace Qbism.Serpent
 {
@@ -19,8 +20,7 @@ namespace Qbism.Serpent
 		List<bool> serpDataList = new List<bool>();
 
 		//Actions, events, delegates etc
-		public delegate List<bool> GetSerpDataDel();
-		public GetSerpDataDel onFetchSerpDataList;
+		public Func<List<bool>> onFetchSerpDataList;
 
 		private void Awake() 
 		{

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.WorldMap;
 using UnityEngine;
-using BansheeGz.BGDatabase;
 
 namespace Qbism.Saving
 {
@@ -12,7 +11,6 @@ namespace Qbism.Saving
 		//Cache
 		SerpentProgress serpProg = null;
 		PinSelectionTracker pinSelTrack = null;
-		LevelPinInitiator initiator = null;
 		LevelPinUI[] pinUIs = null;
 
 		//States
@@ -40,11 +38,8 @@ namespace Qbism.Saving
 			}
 		}
 
-		public void FixMapDelegateLinks()
+		public void FixMapUILinks()
 		{
-			initiator = FindObjectOfType<LevelPinInitiator>();
-			if (initiator != null) initiator.onPinInitation += InitiatePins;
-
 			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
 			if (pinSelTrack != null) pinSelTrack.onSavedPinFetch += FetchCurrentPin;
 
@@ -54,10 +49,10 @@ namespace Qbism.Saving
 				if (pinUI != null)
 					pinUI.onSetCurrentData += SetCurrentData;
 			}
+		}
 
-			levelPinList.Clear();
-			BuildLevelPinList();
-
+		public void FixMapPinLinks()
+		{
 			for (int i = 0; i < levelPinList.Count; i++)
 			{
 				if (levelPinList[i] != null)
@@ -67,6 +62,8 @@ namespace Qbism.Saving
 
 		public void BuildLevelPinList()
 		{
+			levelPinList.Clear();
+
 			foreach (LevelPin pin in FindObjectsOfType<LevelPin>())
 			{
 				levelPinList.Add(pin);
@@ -80,11 +77,6 @@ namespace Qbism.Saving
 			if(A.m_Pin.f_Index < B.m_Pin.f_Index) return -1;
 			else if(A.m_Pin.f_Index > B.m_Pin.f_Index) return 1;
 			return 0;
-		}
-
-		public void InitiatePins() //Done every time world map is loaded
-		{
-			HandleLevelPins();
 		}
 
 		public void HandleLevelPins()
@@ -321,6 +313,7 @@ namespace Qbism.Saving
 			ProgData data = SavingSystem.LoadProgData();
 
 			levelDataList = data.savedLevelData;
+			
 			string currentPinString = data.savedCurrentPin;
 			currentPin = E_Pin.FindEntity(entity =>
 					entity.f_name == currentPinString);
@@ -374,13 +367,14 @@ namespace Qbism.Saving
 
 		private void OnDisable()
 		{
-			if (initiator != null) initiator.onPinInitation -= InitiatePins;
 			if (pinSelTrack != null) pinSelTrack.onSavedPinFetch -= FetchCurrentPin;
+
 			foreach (LevelPinUI pinUI in pinUIs)
 			{
 				if (pinUI != null)
 					pinUI.onSetCurrentData -= SetCurrentData;
 			}
+
 			for (int i = 0; i < levelPinList.Count; i++)
 			{
 				if (levelPinList[i] != null)

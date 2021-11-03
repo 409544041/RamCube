@@ -143,7 +143,7 @@ namespace Qbism.Cubes
 			endCam.Priority = 12;
 			Camera.main.orthographic = true;
 			endCam.transform.parent = null;
-			FindObjectOfType<DisableAtEndCam>().DisableMeshes();
+			DisableForegroundObjects();
 			fader.FadeIn(fadeTime);
 			yield return new WaitForSeconds(flyByDelay);
 
@@ -153,6 +153,18 @@ namespace Qbism.Cubes
 				Vector3 startPos, endPos;
 				CalculateStartEnd(out startPos, out endPos);
 				farter.InitiateFlyBy(startPos, endPos);
+			}
+		}
+
+		private void DisableForegroundObjects()
+		{
+			DisableAtEndCam[] objectsToDisable = FindObjectsOfType<DisableAtEndCam>();
+			if (objectsToDisable.Length > 0)
+			{
+				for (int i = 0; i < objectsToDisable.Length; i++)
+				{
+					objectsToDisable[i].DisableMeshes();
+				}
 			}
 		}
 

@@ -8,7 +8,6 @@ namespace Qbism.Saving
 	public class SerpentProgress : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] int serpentLength = 20;
 		public GameObject[] segments;
 
 		//Cache
@@ -23,12 +22,12 @@ namespace Qbism.Saving
 		private void Awake() 
 		{
 			BuildSerpentList();
-			// LoadSerpentData();
+			LoadSerpentData();
 		}
 
 		private void BuildSerpentList()
 		{
-			for (int i = 0; i < serpentLength; i++)
+			for (int i = 0; i < segments.Length; i++)
 			{
 				serpentDataList.Add(false);
 			}
