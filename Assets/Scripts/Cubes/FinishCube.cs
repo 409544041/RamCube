@@ -85,7 +85,7 @@ namespace Qbism.Cubes
 		{
 			if (switchBoard.worldMapConnected) //TO DO: eventually these checks should be obsolete bc map should always be available and a level is always started via map
 			{
-				progHandler.SetLevelToComplete(progHandler.currentPin, true);
+				progHandler.SetLevelToComplete(progHandler.currentPin);
 			}
 
 			if (progHandler.currentHasSegment)

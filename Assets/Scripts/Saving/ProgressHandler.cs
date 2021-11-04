@@ -249,31 +249,29 @@ namespace Qbism.Saving
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;
 		}		
 
-		public void SetLevelToComplete(E_Pin pin, bool value)
+		public void SetLevelToComplete(E_Pin pin)
 		{
 			var entity = E_LevelGameplayData.FindEntity(entity =>
 			entity.f_Pin == pin);
 
-			entity.f_Completed = value;
-
 			if (pin == null)
 				Debug.LogError("Couldn't find correct entity");
 
-			CheckLevelsToUnlock(pin);
+			if (entity.f_Completed == false) 
+			{
+				entity.f_Completed = true;
+				CheckLevelsToUnlock(pin);
+			}
 		}
 
 		private void CheckLevelsToUnlock(E_Pin pin)
 		{
-			for (int i = 0; i < E_LevelData.CountEntities; i++)
+			var levelEntity = E_LevelData.FindEntity(entity =>
+				entity.f_Pin == pin);
+
+			for (int j = 0; j < levelEntity.f_UnlocksPins.Count; j++)
 			{
-				var entity = E_LevelData.GetEntity(i);
-				if (entity.f_Pin == pin)
-				{
-					for (int j = 0; j < entity.f_UnlocksPins.Count; j++)
-					{
-						SetUnlockedStatus(entity.f_UnlocksPins[j], true);
-					}
-				}
+				SetUnlockedStatus(levelEntity.f_UnlocksPins[j], true);
 			}
 		}
 
