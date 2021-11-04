@@ -12,5 +12,6 @@ namespace Qbism.General
 		public bool worldMapConnected;
 		public bool demoSplashConnected;
 		public bool showEndLevelSeq;
+		public bool allowDebugFinish;
 	}
 }
