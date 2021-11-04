@@ -80,37 +80,45 @@ namespace Qbism.WorldMap
 			}
 		}
 
-		public void DrawNewPath(LineTypes lineType, LevelPin destPin)
+		public void DrawNewPath(LineTypes lineType, LevelPin destPin, bool retracting)
 		{
-			var progHandler = FindObjectOfType<ProgressHandler>();
-
-			if (pin.justCompleted)
+			List<LineRenderer> lineRenders = new List<LineRenderer>();
+			if (lineType == LineTypes.full)
 			{
-				if (lineType == LineTypes.full)
+				for (int i = 0; i < fullLineRenderers.Length; i++)
 				{
-					for (int i = 0; i < fullLineRenderers.Length; i++)
-					{
-						LineDrawer drawer = fullLineRenderers[i].GetComponent<LineDrawer>();
-						if (drawer.drawing) continue;
-						drawer.pointToMove = 1;
-						drawer.drawing = true;
-						drawer.SetPositions(pin.pinPather.pathPoint,
-							destPin.pinPather.pathPoint, false);
-						fullLineRenderers[i].enabled = true;
-						return;
-					}
+					lineRenders.Add(fullLineRenderers[i]);
 				}
+			} 
+			else if (lineType == LineTypes.dotted) lineRenders.Add(dottedLineRenderer);
 
-				if (lineType == LineTypes.dotted)
-				{
-					LineDrawer drawer = dottedLineRenderer.GetComponent<LineDrawer>();
-					drawer.pointToMove = 1;
-					drawer.drawing = true;
-					drawer.SetPositions(pin.pinPather.pathPoint,
-						destPin.pinPather.pathPoint.transform, false);
-				dottedLineRenderer.enabled = true;
-				}
+			for (int i = 0; i < lineRenders.Count; i++)
+			{
+				LineDrawer drawer = lineRenders[i].GetComponent<LineDrawer>();
+				LineRenderer render = lineRenders[i];
+				if (drawer.drawing) continue; //if first path is already drawing, skips to second path
+				PrepareDrawer(destPin, retracting, render, drawer);
+				break;
 			}
+
+			// Draw new line over retracted dotted line
+			if (!pin.justCompleted)
+			{
+				//Make sure that the path to second (or dotted line) unlock is always 2nd in unlockList
+				//in sheets to make sure it'll always use the second line renderer
+				LineDrawer drawer = fullLineRenderers[1].GetComponent<LineDrawer>();
+				PrepareDrawer(destPin, false, fullLineRenderers[1], drawer);
+			}
+		}
+
+		private void PrepareDrawer(LevelPin destPin, bool retracting, LineRenderer render, LineDrawer drawer)
+		{
+			if (!retracting) drawer.pointToMove = 1;
+			else drawer.pointToMove = 0;
+			drawer.drawing = true;
+			drawer.SetPositions(pin.pinPather.pathPoint,
+				destPin.pinPather.pathPoint, retracting);
+			render.enabled = true;
 		}
 	}
 }

@@ -32,14 +32,15 @@ namespace Qbism.WorldMap
 			if (!unlocked)
 			{
 				mRender.enabled = false;
-				mRender.transform.position = new Vector3 (transform.position.x, pinRaiser.lockedYPos, transform.position.z);
+				mRender.transform.position = 
+					new Vector3 (transform.position.x, pinRaiser.lockedYPos, transform.position.z);
 			} 
 
 			else if (unlocked && unlockAnimPlayed)
 			{
 				mRender.enabled = true;
-				mRender.transform.position = new Vector3
-				(transform.position.x, pinRaiser.unlockedYPos, transform.position.z);
+				mRender.transform.position = 
+				new Vector3 (transform.position.x, pinRaiser.unlockedYPos, transform.position.z);
 			}
 		}
 	}

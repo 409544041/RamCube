@@ -21,7 +21,6 @@ namespace Qbism.WorldMap
 		float counter = 0;
 		float distance = 0;
 		public Transform origin { get; set; }
-		public E_Pin destPin { get; private set; }
 		public Transform destination { get; set; }
 		LevelPin destLevelPin;
 		Vector3 pointAlongLine;
@@ -29,6 +28,7 @@ namespace Qbism.WorldMap
 
 		//Actions, events, delegates etc
 		public event Action onSaveData;
+		public event Action<E_LevelGameplayData, bool> onDisableLockInSheet;
 
 		private void Awake()
 		{
@@ -64,7 +64,7 @@ namespace Qbism.WorldMap
 			{
 				var ent = E_LevelGameplayData.FindEntity(entity =>
 				entity.f_Pin == destLevelPin.m_levelData.f_Pin);
-				if (ent.f_LocksLeft == 0) ent.f_LockIconDisabled = true;
+				if (ent.f_LocksLeft == 0) onDisableLockInSheet(ent, true);
 
 				var pinUI = destLevelPin.GetComponentInParent<LevelPin>().pinUI;
 				pinUI.DisableLockIcon(); 
@@ -77,9 +77,7 @@ namespace Qbism.WorldMap
 		{
 			origin = incOrigin;
 			destination = incDestination;
-			destLevelPin = incDestination.GetComponentInParent<LevelPin>();
-			destPin = destLevelPin.m_levelData.f_Pin;
-
+			destLevelPin = destination.GetComponentInParent<LevelPin>();
 			lRender.positionCount = 2;
 			lRender.SetPosition(0, origin.position);
 
@@ -88,7 +86,6 @@ namespace Qbism.WorldMap
 				if(retracting) lRender.SetPosition(1, destination.position);
 				distance = Vector3.Distance(origin.position, destination.position);
 			}
-				
 			
 			if (!drawing)
 			{

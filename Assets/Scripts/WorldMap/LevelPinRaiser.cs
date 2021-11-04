@@ -17,15 +17,16 @@ namespace Qbism.WorldMap
 
 		bool raising = false;
 
-		public void InitiateRaising(List<LevelPin> originPins)
+		public void InitiateRaising(List<LevelPin> originPins, bool dottedAnimPlayed)
 		{
 			pin.mRender.transform.position = new Vector3
 				(transform.position.x, lockedYPos, transform.position.z);
 
-			StartCoroutine(RaiseCliff(pin.mRender, originPins));
+			StartCoroutine(RaiseCliff(pin.mRender, originPins, dottedAnimPlayed));
 		}
 
-		private IEnumerator RaiseCliff(MeshRenderer mRender, List<LevelPin> originPins)
+		private IEnumerator RaiseCliff(MeshRenderer mRender, List<LevelPin> originPins,
+			bool dottedAnimPlayed)
 		{
 			mRender.enabled = true;
 			raiseJuicer.PlayRaiseJuice();
@@ -48,7 +49,11 @@ namespace Qbism.WorldMap
 
 			for (int i = 0; i < originPins.Count; i++)
 			{
-				originPins[i].pinPather.DrawNewPath(LineTypes.full, pin);
+				if (originPins[i].justCompleted) 
+					originPins[i].pinPather.DrawNewPath(LineTypes.full, pin, false);
+					
+				if (!originPins[i].justCompleted && dottedAnimPlayed)
+					originPins[i].pinPather.DrawNewPath(LineTypes.dotted, pin, true);
 			}
 		}
 	}

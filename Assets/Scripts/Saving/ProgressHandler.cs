@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BansheeGz.BGDatabase;
 using Qbism.WorldMap;
 using UnityEngine;
 
@@ -76,7 +77,10 @@ namespace Qbism.Saving
 			for (int i = 0; i < lineDrawers.Count; i++)
 			{
 				if (lineDrawers[i] != null)
+				{
 					lineDrawers[i].onSaveData += SaveProgData;
+					lineDrawers[i].onDisableLockInSheet += SetLockDisabledValue;
+				}
 			}
 		}
 
@@ -202,38 +206,44 @@ namespace Qbism.Saving
 			bool unlockAnimPlayed, bool unlocked, bool completed, bool pathDrawn)
 		{
 			bool lessLocks = (locksAmount > locksLeft) && locksLeft != 0;
+			bool raised = false;
 
-			if (lessLocks && !dottedAnimPlayed)
+			for (int i = 0; i < originPins.Count; i++)
 			{
-				entity.f_DottedAnimPlayed = true;
+				var originPin = originPins[i];
 
-				for (int i = 0; i < originPins.Count; i++)
-				{
-					originPins[i].pinPather.DrawNewPath(LineTypes.dotted, pin);
-				}
-			}
+				bool originDottedAnimPlayed = E_LevelGameplayData.FindEntity(entity =>
+						entity.f_Pin == originPin.m_levelData.f_Pin).f_DottedAnimPlayed;
 
-			if (unlocked && !unlockAnimPlayed)
-			{
-				if (locksLeft == 0)
+				if (lessLocks)
 				{
-					pin.pinRaiser.InitiateRaising(originPins);
-					entity.f_UnlockAnimPlayed = true;
-				}
-				else
-				{
-					for (int i = 0; i < originPins.Count; i++)
+					//for pins with still one or more locks left
+					if (!originDottedAnimPlayed && originPin.justCompleted)
 					{
-						originPins[i].pinPather.DrawNewPath(LineTypes.dotted, pin);
+						originPin.pinPather.DrawNewPath(LineTypes.dotted, pin, false);
+
+						E_LevelGameplayData.FindEntity(entity =>
+							entity.f_Pin == originPin.m_levelData.f_Pin).f_DottedAnimPlayed = true;
 					}
 				}
-			}
-			else if (unlocked && unlockAnimPlayed)
-			{
-				for (int i = 0; i < originPins.Count; i++)
+
+				if (unlocked && !unlockAnimPlayed)
 				{
-					originPins[i].pinPather.DrawNewPath(LineTypes.full, pin);
+					//for newly unlocked pins that need to be raised
+					if (locksLeft == 0)
+					{
+						if (!raised) //bc this is not originPin specific and only needs to happen once
+						{
+							pin.pinRaiser.InitiateRaising(originPins, originDottedAnimPlayed);
+							entity.f_UnlockAnimPlayed = true;
+							raised = true;
+						}
+					}
 				}
+				// for pins that have already been unlocked by another level and a second path is 
+				// now coming towards it
+				else if (unlocked && unlockAnimPlayed && originPin.justCompleted) 
+					originPin.pinPather.DrawNewPath(LineTypes.full, pin, false);
 			}
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;
@@ -323,6 +333,11 @@ namespace Qbism.Saving
 				pinSelTrack.selectedPin = levelPinList[i];
 				pinSelTrack.currentBiome = levelPinList[i].m_Pin.f_Biome;
 			}
+		}
+
+		private void SetLockDisabledValue(E_LevelGameplayData entity ,bool value)
+		{
+			entity.f_LockIconDisabled = value;
 		}
 
 		public void SaveProgData()
@@ -422,7 +437,10 @@ namespace Qbism.Saving
 			for (int i = 0; i < lineDrawers.Count; i++)
 			{
 				if (lineDrawers[i] != null)
+				{
 					lineDrawers[i].onSaveData -= SaveProgData;
+					lineDrawers[i].onDisableLockInSheet -= SetLockDisabledValue;
+				}
 			}
 		}
 	}
