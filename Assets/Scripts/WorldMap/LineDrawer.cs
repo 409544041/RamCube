@@ -10,7 +10,7 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public LineTypes lineType = LineTypes.full;
-		[SerializeField] float drawStep = 100f;
+		[SerializeField] float drawStep = 7f;
 		[SerializeField] float lineWidth = .15f;
 
 		//Cache
@@ -36,43 +36,7 @@ namespace Qbism.WorldMap
 			SetLineWidth(0);
 		}
 
-		private void Update()
-		{
-			AnimateLineDrawing();
-		}
-
-		private void AnimateLineDrawing()
-		{
-			if (!drawing) return;
-
-			if (counter < distance)
-			{
-				var drawSpeed = drawStep * Time.deltaTime;
-				counter += .1f / drawSpeed;
-				float x = Mathf.Lerp(0, distance, counter);
-
-				pointAlongLine = x * Vector3.Normalize(destination.position - 
-				origin.position) + origin.position;
-
-				lRender.SetPosition(pointToMove, pointAlongLine);
-			}
-
-			if (lRender.startWidth == 0 && lRender.endWidth == 0)
-				SetLineWidth(lineWidth);
-
-			if (Vector3.Distance(pointAlongLine, destination.position) <= .1) 
-			{
-				var ent = E_LevelGameplayData.FindEntity(entity =>
-				entity.f_Pin == destLevelPin.m_levelData.f_Pin);
-				if (ent.f_LocksLeft == 0) onDisableLockInSheet(ent, true);
-
-				var pinUI = destLevelPin.GetComponentInParent<LevelPin>().pinUI;
-				pinUI.DisableLockIcon(); 
-				onSaveData();
-			}
-		}
-
-		public void SetPositions(Transform incOrigin, Transform incDestination, 
+		public void SetPositions(Transform incOrigin, Transform incDestination,
 			bool retracting)
 		{
 			origin = incOrigin;
@@ -83,15 +47,48 @@ namespace Qbism.WorldMap
 
 			if (drawing)
 			{
-				if(retracting) lRender.SetPosition(1, destination.position);
+				if (retracting) lRender.SetPosition(1, destination.position);
 				distance = Vector3.Distance(origin.position, destination.position);
 			}
-			
+
 			if (!drawing)
 			{
 				lRender.SetPosition(1, destination.position);
 				SetLineWidth(lineWidth);
 			}
+		}
+
+		public void InitiateLineDrawing()
+		{
+			StartCoroutine(AnimateLineDrawing());
+		}
+
+		private IEnumerator AnimateLineDrawing()
+		{
+			drawing = true;
+
+			if (lRender.startWidth == 0 && lRender.endWidth == 0)
+				SetLineWidth(lineWidth);
+			var drawSpeed = drawStep * Time.deltaTime;
+			pointAlongLine = origin.position;
+
+			while(Vector3.Distance(pointAlongLine, destination.position) > .1f)
+			{
+				pointAlongLine = Vector3.MoveTowards(pointAlongLine, destination.position, drawSpeed);
+				lRender.SetPosition(pointToMove, pointAlongLine);
+
+				yield return null;
+			}
+
+			drawing = false;
+
+			var ent = E_LevelGameplayData.FindEntity(entity =>
+					entity.f_Pin == destLevelPin.m_levelData.f_Pin);
+			if (ent.f_LocksLeft == 0) onDisableLockInSheet(ent, true);
+
+			var pinUI = destLevelPin.GetComponentInParent<LevelPin>().pinUI;
+			pinUI.DisableLockIcon();
+			onSaveData();
 		}
 
 		private void SetLineWidth(float width)

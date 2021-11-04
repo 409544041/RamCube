@@ -115,9 +115,9 @@ namespace Qbism.WorldMap
 		{
 			if (!retracting) drawer.pointToMove = 1;
 			else drawer.pointToMove = 0;
-			drawer.drawing = true;
 			drawer.SetPositions(pin.pinPather.pathPoint,
 				destPin.pinPather.pathPoint, retracting);
+			drawer.InitiateLineDrawing();
 			render.enabled = true;
 		}
 	}

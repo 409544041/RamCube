@@ -9,7 +9,7 @@ namespace Qbism.SceneTransition
 	public class SplashSceneLoading : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] int demoSplashIndex, worldMapIndex, firstLevelIndex;
+		[SerializeField] int firstLevelIndex;
 		[SerializeField] float splashTime = 1f;
 
 		private void Start() 
@@ -30,9 +30,9 @@ namespace Qbism.SceneTransition
 			var switchBoard = FindObjectOfType<FeatureSwitchBoard>();
 			
 			if (switchBoard.demoSplashConnected)
-				yield return SceneManager.LoadSceneAsync(demoSplashIndex);
+				yield return SceneManager.LoadSceneAsync("DemoSplashScene");
 			else if (switchBoard.worldMapConnected)
-				yield return SceneManager.LoadSceneAsync(worldMapIndex);
+				yield return SceneManager.LoadSceneAsync("WorldMap");
 			else yield return SceneManager.LoadSceneAsync(firstLevelIndex);
 			
 			yield return fader.FadeIn(fader.sceneTransTime); 
