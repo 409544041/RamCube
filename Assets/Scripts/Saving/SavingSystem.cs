@@ -6,15 +6,17 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Qbism.Saving
 {
+	// save location = C:\Users\Gebruiker\AppData\LocalLow\Frambosa\Billy Bumbum
 	public static class SavingSystem
 	{
-		public static void SaveProgData(ProgressHandler progHandler, SerpentProgress serpProg)
+		public static void SaveProgData(List<LevelStatusData> levelDataList,
+			string currentPin, List<bool> serpentDataList)
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
 			string path = Application.persistentDataPath + "/progression.sav";
 			FileStream stream = new FileStream(path, FileMode.Create);
 
-			ProgData data = new ProgData(progHandler, serpProg);
+			ProgData data = new ProgData(levelDataList, currentPin, serpentDataList);
 
 			formatter.Serialize(stream, data);
 			stream.Close();

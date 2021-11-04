@@ -33,7 +33,7 @@ namespace Qbism.Control
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
 			controls.Gameplay.Rewind.performed += ctx => Rewind();
 			controls.Gameplay.Restart.performed += ctx => RestartLevel();
-			// controls.Gameplay.DebugCompleteLevel.performed += ctx => FinishLevel();
+			controls.Gameplay.DebugCompleteLevel.performed += ctx => FinishLevel();
 			controls.Gameplay.DebugNextLevel.performed += ctx  => NextLevel();
 			controls.Gameplay.DebugPrevLevel.performed += ctx => PrevLevel();
 		}
@@ -101,11 +101,11 @@ namespace Qbism.Control
 			loader.PreviousLevel();
 		}
 
-		// private void FinishLevel()
-		// {
-		// 	FinishCube finish = FindObjectOfType<FinishCube>();
-		// 	if(finish) finish.Finish();
-		// }
+		private void FinishLevel()
+		{
+			FinishCube finish = FindObjectOfType<FinishCube>();
+			if(finish) finish.Finish();
+		}
 			
 		private void Rewind()
 		{

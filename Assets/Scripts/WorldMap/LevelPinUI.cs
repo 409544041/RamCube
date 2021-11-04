@@ -5,6 +5,7 @@ using Qbism.Saving;
 using Qbism.SceneTransition;
 using UnityEngine;
 using UnityEngine.UI;
+using BansheeGz.BGDatabase;
 
 namespace Qbism.WorldMap
 {
@@ -21,13 +22,7 @@ namespace Qbism.WorldMap
 		public Vector3 uiPos { get; set; }
 
 		//Actions, events, delegates etc
-		public event Action<LevelIDs, bool, Biomes> onSetCurrentData;
-		
-		public delegate List<LevelStatusData> LevelDataDel();
-		public LevelDataDel onFetchLevelData;
-
-		public delegate List<LevelPin> PinDataDel();
-		public PinDataDel onFetchLevelPins;
+		public event Action<E_Pin, bool, E_Biome> onSetCurrentData;
 
 		private void Awake() 
 		{
@@ -55,15 +50,11 @@ namespace Qbism.WorldMap
 
 		public void LoadAssignedLevel() //Called from Unity Event 
 		{				
-			LevelIDs id = levelPin.levelID;
-			var editorPinVal = levelPin.GetComponent<EditorSetPinValues>();
-			bool hasSerpent = editorPinVal.hasSerpentSegment;
-			Biomes biome = editorPinVal.biome;
-			onSetCurrentData(id, hasSerpent, biome);
+			onSetCurrentData(levelPin.m_levelData.f_Pin, levelPin.m_levelData.f_SegmentPresent,
+				levelPin.m_Pin.f_Biome);
 				
 			var handler = FindObjectOfType<SceneHandler>();
-			int indexToLoad = levelPin.GetComponent<EditorSetPinValues>().levelIndex;
-			handler.LoadBySceneIndex(indexToLoad);
+			handler.LoadBySceneIndex(levelPin.m_levelData.f_Pin.f_Index);
 		}
 
 		public void SetUIComplete()
@@ -94,26 +85,15 @@ namespace Qbism.WorldMap
 		}
 
 		public void DisableLockIcon()
-		{			
-			int locks = 0;
-			int sheetLocks = 0;
-
-			List<LevelStatusData> levelDataList = onFetchLevelData();
-			List<LevelPin> levelPinList = onFetchLevelPins();
-
-			foreach (LevelStatusData data in levelDataList)
-			{
-				if(data.levelID == levelPin.levelID)
-					locks = data.locks;
-			}
-
-			foreach (LevelPin pin in levelPinList)
-			{
-				if(pin.levelID == levelPin.levelID)
-					sheetLocks = pin.GetComponent<EditorSetPinValues>().locks;
-			}
+		{	
+			var ent = E_LevelGameplayData.FindEntity(entity =>
+				entity.f_Pin == levelPin.m_levelData.f_Pin);
+			int locksLeft = ent.f_LocksLeft;
+			bool lockDisabled = ent.f_LockIconDisabled;
 			
-			if(locks == sheetLocks) lockIcon.enabled = false;
+			if(locksLeft == levelPin.m_levelData.f_LocksAmount || 
+				(locksLeft == 0 && lockDisabled))
+				lockIcon.enabled = false;	
 		}
 
 		private void OnDisable() 

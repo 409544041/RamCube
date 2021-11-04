@@ -19,7 +19,7 @@ namespace Qbism.WorldMap
 
 		private string NameGameObject()
 		{
-			string pinID = GetComponent<LevelPinUI>().levelPin.levelID.ToString();
+			string pinID = GetComponent<LevelPinUI>().levelPin.m_levelData.f_Pin.f_name.ToString();
 			transform.gameObject.name = "pin UI " + pinID;
 			return pinID;
 		}

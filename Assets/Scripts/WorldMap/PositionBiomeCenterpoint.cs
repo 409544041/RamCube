@@ -8,24 +8,13 @@ namespace Qbism.General
 {
 	public class PositionBiomeCenterpoint : MonoBehaviour
 	{
-		//Config parameters
-		public BiomeLimit[] biomeCenterLimits = null;
-
-		[System.Serializable]
-		public class BiomeLimit
-		{
-			public Biomes biome;
-			public float minZ;
-			public float maxZ;
-		}
-
 		//Cache
 		ProgressHandler progHandler = null;
 		PinSelectionTracker selTracker = null;
 
 		//States
-		Biomes currentBiome;
-		Biomes prevBiome;
+		E_Biome currentBiome;
+		E_Biome prevBiome;
 		float leftest, rightest;
 		bool firstValueAssigned = false;
 
@@ -43,14 +32,14 @@ namespace Qbism.General
 			} 
 		}
 
-		private void StartPositionCenterPoint(Biomes biome, LevelPin selPin)
+		private void StartPositionCenterPoint(E_Biome biome, LevelPin selPin)
 		{
 			prevBiome = currentBiome;
 			currentBiome = biome;
 			StartCoroutine(PositionCenterPoint(biome, selPin));
 		}
 
-		private IEnumerator PositionCenterPoint(Biomes biome, LevelPin selPin)
+		private IEnumerator PositionCenterPoint(E_Biome biome, LevelPin selPin)
 		{
 			yield return new WaitForSeconds(.1f); //To avoid race condition
 
@@ -58,14 +47,13 @@ namespace Qbism.General
 			if(currentBiome != prevBiome) xPos = FindXPos(biome);
 			else xPos = transform.position.x;
 
-			float yPos = selPin.unlockedYPos;
-
+			float yPos = selPin.pinRaiser.unlockedYPos;
 			float zPos = FindZPos(biome, selPin);
 
 			transform.position = new Vector3(xPos, yPos, zPos);
 		}
 
-		private float FindXPos(Biomes biome)
+		private float FindXPos(E_Biome biome)
 		{
 			firstValueAssigned = false;
 			FindEdgePins(biome);
@@ -74,11 +62,11 @@ namespace Qbism.General
 			return xPos;
 		}
 
-		private void FindEdgePins(Biomes biome)
+		private void FindEdgePins(E_Biome biome)
 		{
 			foreach (LevelPin pin in progHandler.levelPinList)
 			{
-				if (pin.GetComponent<EditorSetPinValues>().biome != biome) continue;
+				if (pin.m_Pin.f_Biome != biome) continue;
 
 				if (!firstValueAssigned)
 				{
@@ -93,18 +81,13 @@ namespace Qbism.General
 			}
 		}
 
-		private float FindZPos(Biomes biome, LevelPin selPin)
+		private float FindZPos(E_Biome biome, LevelPin selPin)
 		{
-			Vector3 selPos = selPin.pathPoint.transform.position;
+			Vector3 selPos = selPin.pinPather.pathPoint.transform.position;
 			float zPos = selPos.z;
 
-			foreach (BiomeLimit limit in biomeCenterLimits)
-			{
-				if(limit.biome != biome) continue;
-
-				if(zPos <= limit.minZ) zPos = limit.minZ;
-				if(zPos >= limit.maxZ) zPos = limit.maxZ;
-			}
+			if(zPos <= biome.f_MinZ) zPos = biome.f_MinZ;
+			if(zPos >= biome.f_MaxZ) zPos = biome.f_MaxZ;
 
 			return zPos;
 		}

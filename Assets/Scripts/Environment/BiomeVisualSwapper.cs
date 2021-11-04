@@ -19,7 +19,7 @@ namespace Qbism.Environment
 		ProgressHandler progHandler;
 
 		//States
-		Biomes currentBiome = Biomes.Biome01;
+		E_Biome currentBiome;
 
 		private void Awake() 
 		{
@@ -43,7 +43,8 @@ namespace Qbism.Environment
 			else
 			{
 				var bOverWriter = FindObjectOfType<BiomeOverwriter>();
-				if (bOverWriter) currentBiome = bOverWriter.biomeOverwrite;
+				if (bOverWriter) currentBiome = E_Biome.FindEntity(entity =>
+					entity.f_name == bOverWriter.biomeOverwrite.ToString());
 				else Debug.LogError("Progression Handler or Biome Overwriter not Linked. Setting first biome visuals");
 			}
 		}
@@ -52,7 +53,7 @@ namespace Qbism.Environment
 		{
 			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
 			{
-				if (biomeVariety.biome != currentBiome) continue;
+				if (biomeVariety.biome.ToString() != currentBiome.f_name.ToString()) continue;
 
 				for (int i = 0; i < meshParts.Length; i++)
 				{
@@ -88,7 +89,7 @@ namespace Qbism.Environment
 		{
 			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
 			{
-				if (biomeVariety.biome != currentBiome) continue;
+				if (biomeVariety.biome.ToString() != currentBiome.f_name.ToString()) continue;
 
 				RenderSettings.skybox = biomeVariety.parts[0].mats[0];
 			}
@@ -104,7 +105,7 @@ namespace Qbism.Environment
 
 			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
 			{
-				if (biomeVariety.biome != currentBiome) continue;
+				if (biomeVariety.biome.ToString() != currentBiome.f_name.ToString()) continue;
 
 				var vigColor = biomeVariety.parts[0].mats[0].color;
 
