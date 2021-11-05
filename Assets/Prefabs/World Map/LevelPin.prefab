@@ -187,10 +187,10 @@ GameObject:
   - component: {fileID: 739622578570481642}
   - component: {fileID: 4695560977583735414}
   - component: {fileID: 4786416544500624892}
+  - component: {fileID: 8080895034753384437}
   - component: {fileID: 1248485919370541080}
   - component: {fileID: 5977258536694838276}
   - component: {fileID: 4542655730225729277}
-  - component: {fileID: 8080895034753384437}
   m_Layer: 0
   m_Name: LevelPin
   m_TagString: Untagged
@@ -287,6 +287,23 @@ MonoBehaviour:
   raiseStep: 0.25
   raiseSpeed: 0.05
   raiseJuicer: {fileID: 1248485919370541080}
+--- !u!114 &8080895034753384437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3947237476793911876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5390956218dcdb40aa3c8550b997ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasWall: 0
+  wall: {fileID: 0}
+  loweredYPos: -2
+  loweringSpeed: 3
+  pin: {fileID: 739622578570481642}
 --- !u!114 &1248485919370541080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,22 +353,6 @@ MonoBehaviour:
   entityIdString: 
   metaIdString: 
   initWithFirst: 0
---- !u!114 &8080895034753384437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3947237476793911876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5390956218dcdb40aa3c8550b997ff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasWall: 0
-  wall: {fileID: 0}
-  loweredYPos: -2
-  loweringSpeed: 3
 --- !u!1 &6634471909946147462
 GameObject:
   m_ObjectHideFlags: 0

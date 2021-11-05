@@ -126,7 +126,7 @@ namespace Qbism.Saving
 				if (completed && !pathDrawn) pin.justCompleted = true;
 
 				bool uUnlocked, uUnlockAnimPlayed; int uLocksLeft; List<E_MapWalls> uOriginWalls;
-				bool checkedRaiseStatus = false;
+				bool checkedRaiseAndWallStatus = false;
 				List<E_Pin> unlockPins = levelEntity.f_UnlocksPins;
 
 				for (int j = 0; j < unlockPins.Count; j++)
@@ -134,8 +134,12 @@ namespace Qbism.Saving
 					FetchUnlockData(unlockPins[j], out uUnlocked, out uUnlockAnimPlayed,
 						out uLocksLeft, out uOriginWalls);
 
-					if (!checkedRaiseStatus) pin.CheckRaiseStatus(unlocked, unlockAnimPlayed);
-					checkedRaiseStatus = true;
+					if (!checkedRaiseAndWallStatus)
+					{
+						pin.CheckRaiseStatus(unlocked, unlockAnimPlayed);
+						if (pin.wallLowerer.hasWall) pin.wallLowerer.CheckWallStatus(wallDown);
+						checkedRaiseAndWallStatus = true;
+					} 
 
 					pin.pinPather.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft, 
 						completed, unlockPins.Count, uOriginWalls, wallDown);
@@ -376,6 +380,7 @@ namespace Qbism.Saving
 				levelData.unlockAnimPlayed = entity.f_UnlockAnimPlayed;
 				levelData.pathDrawn = entity.f_PathDrawn;
 				levelData.lockDisabled = entity.f_LockIconDisabled;
+				levelData.wallDown = entity.f_wallDown;
 			}
 
 			SavingSystem.SaveProgData(levelDataList, currentPin.f_name.ToString(),
@@ -405,6 +410,7 @@ namespace Qbism.Saving
 				entity.f_UnlockAnimPlayed = levelData.unlockAnimPlayed;
 				entity.f_PathDrawn = levelData.pathDrawn;
 				entity.f_LockIconDisabled = levelData.lockDisabled;
+				entity.f_wallDown = levelData.wallDown;
 			}
 		}
 
@@ -418,6 +424,7 @@ namespace Qbism.Saving
 				levelData.f_DottedAnimPlayed = false; levelData.f_Completed = false;
 				levelData.f_PathDrawn = false;
 				levelData.f_LockIconDisabled = false;
+				levelData.f_wallDown = false;
 
 				if (i == 0)
 				{

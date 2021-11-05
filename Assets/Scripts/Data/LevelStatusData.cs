@@ -13,4 +13,5 @@ public class LevelStatusData
 	public bool completed;
 	public bool pathDrawn;
 	public bool lockDisabled;
+	public bool wallDown;
 }
