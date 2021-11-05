@@ -13,6 +13,7 @@ namespace Qbism.WorldMap
 		public LevelPinUI pinUI;
 		public LevelPinPathHandler pinPather;
 		public LevelPinRaiser pinRaiser;
+		public LevelPinWallLowerer wallLowerer;
 		public M_LevelData m_levelData;
 		public M_Pin m_Pin;
 
@@ -29,7 +30,7 @@ namespace Qbism.WorldMap
 
 		public void CheckRaiseStatus(bool unlocked, bool unlockAnimPlayed)
 		{
-			if (!unlocked)
+			if (!unlocked || (unlocked && !unlockAnimPlayed))
 			{
 				mRender.enabled = false;
 				mRender.transform.position = 

@@ -50,10 +50,12 @@ namespace Qbism.WorldMap
 			for (int i = 0; i < originPins.Count; i++)
 			{
 				if (originPins[i].justCompleted) 
-					originPins[i].pinPather.DrawNewPath(LineTypes.full, pin, false);
+					originPins[i].pinPather.DrawNewPath(LineTypes.full, 
+					pin.pinPather.pathPoint, false);
 					
 				if (!originPins[i].justCompleted && dottedAnimPlayed)
-					originPins[i].pinPather.DrawNewPath(LineTypes.dotted, pin, true);
+					originPins[i].pinPather.DrawNewPath(LineTypes.dotted, 
+					pin.pinPather.pathPoint, true);
 			}
 		}
 	}

@@ -118,6 +118,44 @@ public partial class M_LevelData : BGEntityGo
 			_f_UnlocksPins[Entity.Index] = val;
 		}
 	}
+	public List<E_MapWalls> f_WallsToDest
+	{
+		get
+		{
+			var val = _f_WallsToDest[Entity.Index];
+			if(val==null || val.Count==0) return null;
+			var ___WallsToDest = new List<E_MapWalls>();
+			for (var i = 0; i < val.Count; i++) ___WallsToDest.Add((E_MapWalls) val[i]);
+			return ___WallsToDest;
+		}
+		set
+		{
+			var val = _f_WallsToDest[Entity.Index];
+			if(val==null) val = new List<BGEntity>();
+			val.Clear();
+			if(value!=null) for (var i = 0; i < value.Count; i++) val.Add(value[i]);
+			_f_WallsToDest[Entity.Index] = val;
+		}
+	}
+	public List<E_MapWalls> f_WallsFromOrigin
+	{
+		get
+		{
+			var val = _f_WallsFromOrigin[Entity.Index];
+			if(val==null || val.Count==0) return null;
+			var ___WallsFromOrigin = new List<E_MapWalls>();
+			for (var i = 0; i < val.Count; i++) ___WallsFromOrigin.Add((E_MapWalls) val[i]);
+			return ___WallsFromOrigin;
+		}
+		set
+		{
+			var val = _f_WallsFromOrigin[Entity.Index];
+			if(val==null) val = new List<BGEntity>();
+			val.Clear();
+			if(value!=null) for (var i = 0; i < value.Count; i++) val.Add(value[i]);
+			_f_WallsFromOrigin[Entity.Index] = val;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -179,6 +217,24 @@ public partial class M_LevelData : BGEntityGo
 		{
 			if(__f_UnlocksPins==null || __f_UnlocksPins.IsDeleted) __f_UnlocksPins=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5421760005998256390UL,4758386679893286829UL));
 			return __f_UnlocksPins;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationMultiple __f_WallsToDest;
+	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_WallsToDest
+	{
+		get
+		{
+			if(__f_WallsToDest==null || __f_WallsToDest.IsDeleted) __f_WallsToDest=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5242919301705000379UL,3930519681876219828UL));
+			return __f_WallsToDest;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationMultiple __f_WallsFromOrigin;
+	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_WallsFromOrigin
+	{
+		get
+		{
+			if(__f_WallsFromOrigin==null || __f_WallsFromOrigin.IsDeleted) __f_WallsFromOrigin=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5300666196508900259UL,13485411823914233985UL));
+			return __f_WallsFromOrigin;
 		}
 	}
 }

@@ -121,6 +121,28 @@ public partial class M_LevelGameplayData : BGEntityGo
 			_f_PathDrawn[Entity.Index] = value;
 		}
 	}
+	public System.Boolean f_LockIconDisabled
+	{
+		get
+		{
+			return _f_LockIconDisabled[Entity.Index];
+		}
+		set
+		{
+			_f_LockIconDisabled[Entity.Index] = value;
+		}
+	}
+	public System.Boolean f_wallDown
+	{
+		get
+		{
+			return _f_wallDown[Entity.Index];
+		}
+		set
+		{
+			_f_wallDown[Entity.Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -191,6 +213,24 @@ public partial class M_LevelGameplayData : BGEntityGo
 		{
 			if(__f_PathDrawn==null || __f_PathDrawn.IsDeleted) __f_PathDrawn=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5562002716607721452UL,9876705488166721464UL));
 			return __f_PathDrawn;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool __f_LockIconDisabled;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_LockIconDisabled
+	{
+		get
+		{
+			if(__f_LockIconDisabled==null || __f_LockIconDisabled.IsDeleted) __f_LockIconDisabled=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5041402763999311649UL,14533767244693604751UL));
+			return __f_LockIconDisabled;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool __f_wallDown;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_wallDown
+	{
+		get
+		{
+			if(__f_wallDown==null || __f_wallDown.IsDeleted) __f_wallDown=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5421608937216315096UL,9085621000404421508UL));
+			return __f_wallDown;
 		}
 	}
 }

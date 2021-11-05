@@ -116,34 +116,34 @@ namespace Qbism.Saving
 				var gameplayEntity = E_LevelGameplayData.FindEntity(entity => 
 					entity.f_Pin == pin.m_levelData.f_Pin);
 
-				int locksAmount, locksLeft;
-				bool dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn;
+				int locksAmount, locksLeft; List<E_MapWalls> originWalls;
+				bool dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn, wallDown;
 
-				FetchPinValues(levelEntity, gameplayEntity, out locksAmount, out locksLeft, 
-					out dottedAnimPlayed, out unlockAnimPlayed, out unlocked, out completed, out pathDrawn);
+				FetchPinValues(levelEntity, gameplayEntity, out locksAmount, out locksLeft, out dottedAnimPlayed, 
+					out unlockAnimPlayed, out unlocked, out completed, out pathDrawn, out originWalls, out wallDown);
 
 				pin.justCompleted = false;
 				if (completed && !pathDrawn) pin.justCompleted = true;
 
-				bool uUnlocked, uUnlockAnimPlayed; int uLocksLeft;
+				bool uUnlocked, uUnlockAnimPlayed; int uLocksLeft; List<E_MapWalls> uOriginWalls;
 				bool checkedRaiseStatus = false;
 				List<E_Pin> unlockPins = levelEntity.f_UnlocksPins;
 
 				for (int j = 0; j < unlockPins.Count; j++)
 				{
 					FetchUnlockData(unlockPins[j], out uUnlocked, out uUnlockAnimPlayed,
-						out uLocksLeft);
+						out uLocksLeft, out uOriginWalls);
 
 					if (!checkedRaiseStatus) pin.CheckRaiseStatus(unlocked, unlockAnimPlayed);
 					checkedRaiseStatus = true;
 
 					pin.pinPather.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft, 
-						completed, unlockPins.Count);
+						completed, unlockPins.Count, uOriginWalls, wallDown);
 				}
 			
 				SetPinUI(pin, unlockAnimPlayed, completed);
-				RaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft, dottedAnimPlayed, 
-					unlockAnimPlayed, unlocked, completed, pathDrawn);
+				StartCoroutine(RaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft, dottedAnimPlayed, 
+					unlockAnimPlayed, unlocked, completed, pathDrawn, originWalls));
 			}
 
 			SaveProgData();
@@ -166,9 +166,9 @@ namespace Qbism.Saving
 			}
 		}
 
-		private void FetchPinValues(E_LevelData levelEntity, E_LevelGameplayData gameplayEntity,
-			out int locksAmount, out int locksLeft, out bool dottedAnimPlayed, out bool unlockAnimPlayed,
-			out bool unlocked, out bool completed, out bool pathDrawn)
+		private void FetchPinValues(E_LevelData levelEntity, E_LevelGameplayData gameplayEntity, out int locksAmount,
+			out int locksLeft, out bool dottedAnimPlayed, out bool unlockAnimPlayed, out bool unlocked, 
+			out bool completed, out bool pathDrawn, out List<E_MapWalls> originWallList, out bool wallDown)
 		{
 			locksAmount = levelEntity.f_LocksAmount;
 			locksLeft = gameplayEntity.f_LocksLeft;
@@ -177,16 +177,20 @@ namespace Qbism.Saving
 			unlocked = gameplayEntity.f_Unlocked;
 			completed = gameplayEntity.f_Completed;
 			pathDrawn = gameplayEntity.f_PathDrawn;
+			originWallList = levelEntity.f_WallsFromOrigin;
+			wallDown = gameplayEntity.f_wallDown;
 		}
 
 		private void FetchUnlockData(E_Pin unlockPin, out bool uUnlocked,
-			out bool uUnlockAnimPlayed, out int uLocksLeft)
+			out bool uUnlockAnimPlayed, out int uLocksLeft, out List<E_MapWalls> uOriginWalls)
 		{
 			var entity = E_LevelGameplayData.FindEntity(entity =>
-			entity.f_Pin == unlockPin);
+				entity.f_Pin == unlockPin);
+			var levelEntity = E_LevelData.FindEntity(entity =>
+				entity.f_Pin == unlockPin);
 			
 			uUnlocked = entity.f_Unlocked; uUnlockAnimPlayed = entity.f_UnlockAnimPlayed;
-			uLocksLeft = entity.f_LocksLeft;
+			uLocksLeft = entity.f_LocksLeft; uOriginWalls = levelEntity.f_WallsFromOrigin;
 		}
 
 		private void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed)
@@ -201,16 +205,30 @@ namespace Qbism.Saving
 			pin.pinUI.DisableLockIcon();
 		}
 
-		private void RaiseAndDrawPaths(E_LevelGameplayData entity, LevelPin pin, 
+		private IEnumerator RaiseAndDrawPaths(E_LevelGameplayData entity, LevelPin pin, 
 			List<LevelPin> originPins, int locksAmount, int locksLeft, bool dottedAnimPlayed, 
-			bool unlockAnimPlayed, bool unlocked, bool completed, bool pathDrawn)
+			bool unlockAnimPlayed, bool unlocked, bool completed, bool pathDrawn, List<E_MapWalls> originWalls)
 		{
 			bool lessLocks = (locksAmount > locksLeft) && locksLeft != 0;
 			bool raised = false;
 
+			var wallsFromOrigin = 0;
+			if (originWalls != null) wallsFromOrigin = originWalls.Count;
+			int loweredWalls = 0;
+
 			for (int i = 0; i < originPins.Count; i++)
 			{
 				var originPin = originPins[i];
+				var linkedWall = false;
+
+				if (originWalls != null)
+				{
+					for (int j = 0; j < originWalls.Count; j++)
+					{
+						if (originPin.m_levelData.f_Pin == originWalls[j].f_OriginPin)
+							linkedWall = true;
+					}
+				}
 
 				bool originDottedAnimPlayed = E_LevelGameplayData.FindEntity(entity =>
 						entity.f_Pin == originPin.m_levelData.f_Pin).f_DottedAnimPlayed;
@@ -220,10 +238,12 @@ namespace Qbism.Saving
 					//for pins with still one or more locks left
 					if (!originDottedAnimPlayed && originPin.justCompleted)
 					{
-						originPin.pinPather.DrawNewPath(LineTypes.dotted, pin, false);
+						if (linkedWall)
+							originPin.pinPather.DrawToGate(LineTypes.dotted, pin.pinPather.pathPoint, false);
+						
+						else originPin.pinPather.DrawNewPath(LineTypes.dotted, pin.pinPather.pathPoint, false);
 
-						E_LevelGameplayData.FindEntity(entity =>
-							entity.f_Pin == originPin.m_levelData.f_Pin).f_DottedAnimPlayed = true;
+						originDottedAnimPlayed = true;
 					}
 				}
 
@@ -232,7 +252,15 @@ namespace Qbism.Saving
 					//for newly unlocked pins that need to be raised
 					if (locksLeft == 0)
 					{
-						if (!raised) //bc this is not originPin specific and only needs to happen once
+						//if !biome same then first lower gates of origins. Afterwards raise pin
+						if (linkedWall)
+						{							
+							yield return originPin.wallLowerer.InitiateWallLowering();
+							loweredWalls++;
+						}
+
+						//the !raised is bc this is not originPin specific and only needs to happen once
+						if (!raised && loweredWalls == wallsFromOrigin)
 						{
 							pin.pinRaiser.InitiateRaising(originPins, originDottedAnimPlayed);
 							entity.f_UnlockAnimPlayed = true;
@@ -243,7 +271,7 @@ namespace Qbism.Saving
 				// for pins that have already been unlocked by another level and a second path is 
 				// now coming towards it
 				else if (unlocked && unlockAnimPlayed && originPin.justCompleted) 
-					originPin.pinPather.DrawNewPath(LineTypes.full, pin, false);
+					originPin.pinPather.DrawNewPath(LineTypes.full, pin.pinPather.pathPoint, false);
 			}
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;
@@ -277,15 +305,12 @@ namespace Qbism.Saving
 
 		public void SetUnlockedStatus(E_Pin pin, bool value)
 		{
-			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
-			{
-				var entity = E_LevelGameplayData.GetEntity(i);
-				if (entity.f_Pin == pin)
-				{
-					if (entity.f_LocksLeft > 0) entity.f_LocksLeft--;
-					if (entity.f_LocksLeft == 0) entity.f_Unlocked = value;
-				}
-			}			
+			var entity = E_LevelGameplayData.FindEntity(entity =>
+			entity.f_Pin == pin);
+
+			if (entity.f_LocksLeft > 0) entity.f_LocksLeft--;
+			if (entity.f_LocksLeft == 0) entity.f_Unlocked = value;
+
 		}
 
 		private void SetCurrentData(E_Pin pin, bool hasSegment, E_Biome biome)

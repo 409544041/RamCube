@@ -82,6 +82,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2949411983582854687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4478462746881087185}
+  m_Layer: 0
+  m_Name: Wall Path Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4478462746881087185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2949411983582854687}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.62, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children: []
+  m_Father: {fileID: 4435121214177497342}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2966341600812508704
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +172,7 @@ Transform:
   m_Children:
   - {fileID: 1983606305654223010}
   m_Father: {fileID: 4435121214177497342}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3947237476793911876
 GameObject:
@@ -160,6 +190,7 @@ GameObject:
   - component: {fileID: 1248485919370541080}
   - component: {fileID: 5977258536694838276}
   - component: {fileID: 4542655730225729277}
+  - component: {fileID: 8080895034753384437}
   m_Layer: 0
   m_Name: LevelPin
   m_TagString: Untagged
@@ -180,6 +211,7 @@ Transform:
   m_Children:
   - {fileID: 914814808531762062}
   - {fileID: 8218998986718881874}
+  - {fileID: 4478462746881087185}
   - {fileID: 3835403325807748277}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -212,6 +244,7 @@ MonoBehaviour:
   pinUI: {fileID: 0}
   pinPather: {fileID: 4695560977583735414}
   pinRaiser: {fileID: 4786416544500624892}
+  wallLowerer: {fileID: 8080895034753384437}
   m_levelData: {fileID: 5977258536694838276}
   m_Pin: {fileID: 4542655730225729277}
 --- !u!114 &4695560977583735414
@@ -228,10 +261,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pin: {fileID: 739622578570481642}
   pathPoint: {fileID: 8218998986718881874}
+  wallPathPoint: {fileID: 4478462746881087185}
   fullLineRenderers:
   - {fileID: 1317782278086270706}
   - {fileID: 3739235377293064332}
   dottedLineRenderer: {fileID: 3238538961594103020}
+  gateRayMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &4786416544500624892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,6 +336,22 @@ MonoBehaviour:
   entityIdString: 
   metaIdString: 
   initWithFirst: 0
+--- !u!114 &8080895034753384437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3947237476793911876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5390956218dcdb40aa3c8550b997ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasWall: 0
+  wall: {fileID: 0}
+  loweredYPos: -2
+  loweringSpeed: 3
 --- !u!1 &6634471909946147462
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +376,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6634471909946147462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0000019073486, y: 3.62, z: 0}
+  m_LocalPosition: {x: 0, y: 3.62, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 3094542345819858911}
