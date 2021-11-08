@@ -9,7 +9,7 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		[SerializeField] LevelPin pin;
-		[SerializeField] float lockedYPos = -14, biomeUnlockedYPos = -11;
+		[SerializeField] float biomeLockedYPos = -14, lockedYPos = -11;
 		public float unlockedYPos = -9;
 		[SerializeField] float raiseStep = .25f;
 		[SerializeField] float raiseSpeed = .05f;
@@ -26,21 +26,51 @@ namespace Qbism.WorldMap
 			mRender = pin.GetComponentInChildren<MeshRenderer>();
 		}
 
-		public void CheckRaiseStatus(bool unlocked, bool unlockAnimPlayed)
+		public void CheckRaiseStatus(bool unlocked, bool unlockAnimPlayed, bool biomeUnlocked)
 		{
-			if (!unlocked || (unlocked && !unlockAnimPlayed))
+			if (!biomeUnlocked)
 			{
 				mRender.enabled = false;
 				mRender.transform.position =
-					new Vector3(transform.position.x, lockedYPos, transform.position.z);
+					new Vector3(transform.position.x, biomeLockedYPos, transform.position.z);
 			}
 
-			else if (unlocked && unlockAnimPlayed)
+			else if (biomeUnlocked && (!unlocked || (unlocked && !unlockAnimPlayed)))
+			{
+				mRender.enabled = true;
+				mRender.transform.position =
+					new Vector3(transform.position.x, lockedYPos, transform.position.z);
+			}				
+
+			else if (biomeUnlocked && unlocked && unlockAnimPlayed)
 			{
 				mRender.enabled = true;
 				mRender.transform.position =
 				new Vector3(transform.position.x, unlockedYPos, transform.position.z);
 			}
+		}
+
+		public void InitiateBiomeUnlockRaising()
+		{
+			StartCoroutine(BiomeUnlockRaising());
+		}
+
+		public IEnumerator BiomeUnlockRaising()
+		{
+			mRender.enabled = true;
+			raising = true;
+
+			while (raising)
+			{
+				mRender.transform.position += new Vector3(0, raiseStep, 0);
+
+				yield return new WaitForSeconds(raiseSpeed);
+
+				if (mRender.transform.position.y >= lockedYPos) raising = false;
+			}
+
+			mRender.transform.position = new Vector3
+				(transform.position.x, lockedYPos, transform.position.z);
 		}
 
 		public void InitiateRaising(List<LevelPin> originPins)
