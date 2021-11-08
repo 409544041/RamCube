@@ -51,17 +51,28 @@ namespace Qbism.WorldMap
 			
 			int uLocksAmount = destPin.m_levelData.f_LocksAmount;
 			bool uLessLocks = uLocksAmount > uLocksLeft && uLocksLeft > 0;
-			bool uNoLocks = uLocksAmount > uLocksLeft && uLocksLeft == 0;
 			
+			//if uPin still has a lock left but wall between pins is down
 			if (completed && uLessLocks && linkedWall && !wallDown)
 			{
 				SetWallPathPoint(dest);
 				FillAndAddDrawData(lineDestList, wallPathPoint, LineTypes.dotted);
 			}
+
+			//same as below but now if there's a wall in between
+			else if (!pin.justCompleted && completed && uUnlocked && !uUnlockAnimPlayed && linkedWall)
+			{
+				SetWallPathPoint(dest);
+				FillAndAddDrawData(lineDestList, wallPathPoint, LineTypes.dotted);
+			}
+
+			//if uPin still has a lock left or if uPin has no locks left but on map load
+			//the uPin unlock anim hasn't been played yet so dotted line is still needed
 			else if ((completed && uLessLocks) || (!pin.justCompleted && completed && 
-				uNoLocks && !uUnlockAnimPlayed))
+				uUnlocked && !uUnlockAnimPlayed))
 				FillAndAddDrawData(lineDestList, dest, LineTypes.dotted);
 
+			//if uPin is unlocked and unlock anim played etc drawing full line
 			else if (!pin.justCompleted && completed && uUnlocked && uUnlockAnimPlayed)
 				FillAndAddDrawData(lineDestList, dest, LineTypes.full);
 		}
