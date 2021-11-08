@@ -9,14 +9,14 @@ namespace Qbism.Saving
 	// save location = C:\Users\Gebruiker\AppData\LocalLow\Frambosa\Billy Bumbum
 	public static class SavingSystem
 	{
-		public static void SaveProgData(List<LevelStatusData> levelDataList,
+		public static void SaveProgData(List<LevelStatusData> levelDataList, List<bool> biomeDataList,
 			string currentPin, List<bool> serpentDataList)
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
 			string path = Application.persistentDataPath + "/progression.sav";
 			FileStream stream = new FileStream(path, FileMode.Create);
 
-			ProgData data = new ProgData(levelDataList, currentPin, serpentDataList);
+			ProgData data = new ProgData(levelDataList, biomeDataList, currentPin, serpentDataList);
 
 			formatter.Serialize(stream, data);
 			stream.Close();

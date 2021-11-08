@@ -13,6 +13,7 @@ namespace Qbism.Saving
 		SerpentProgress serpProg = null;
 		PinSelectionTracker pinSelTrack = null;
 		LevelPinUI[] pinUIs = null;
+		PinChecker pinChecker = null;
 		
 		//States
 		public E_Pin currentPin { get; set; }
@@ -20,7 +21,7 @@ namespace Qbism.Saving
 		public bool currentHasSegment { get ; set ; }
 
 		List<LevelStatusData> levelDataList = new List<LevelStatusData>();
-		public List<LevelPin> levelPinList { get; set; } = new List<LevelPin>();
+		public List<bool> biomeDataList = new List<bool>();
 		List<LevelPinPathHandler> pinPathers = new List<LevelPinPathHandler>();
 		List<LineDrawer> lineDrawers = new List<LineDrawer>();
 
@@ -29,16 +30,21 @@ namespace Qbism.Saving
 		{
 			serpProg = GetComponent<SerpentProgress>();
 			currentPin = E_LevelData.GetEntity(0).f_Pin;
-			BuildLevelDataList();
+			BuildDataLists();
 			LoadProgHandlerData();
 		}
 
-		private void BuildLevelDataList()
+		private void BuildDataLists()
 		{
 			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
 			{
 				LevelStatusData newData = new LevelStatusData();
 				levelDataList.Add(newData);
+			}
+
+			for (int i = 0; i < E_BiomeGameplayData.CountEntities; i++)
+			{
+				biomeDataList.Add(false);
 			}
 		}
 
@@ -57,14 +63,16 @@ namespace Qbism.Saving
 
 		public void FixMapPinLinks()
 		{
+			pinChecker = FindObjectOfType<PinChecker>();
+
 			pinPathers.Clear();
 			lineDrawers.Clear();
 
-			for (int i = 0; i < levelPinList.Count; i++)
+			for (int i = 0; i < pinChecker.levelPins.Length; i++)
 			{
-				pinPathers.Add(levelPinList[i].pinPather);
+				pinPathers.Add(pinChecker.levelPins[i].pinPather);
 
-				LineDrawer[] drawers = levelPinList[i].GetComponentsInChildren<LineDrawer>();
+				LineDrawer[] drawers = pinChecker.levelPins[i].GetComponentsInChildren<LineDrawer>();
 				for (int j = 0; j < drawers.Length; j++)
 				{
 					lineDrawers.Add(drawers[j]);
@@ -83,234 +91,6 @@ namespace Qbism.Saving
 				}
 			}
 		}
-
-		public void BuildLevelPinList()
-		{
-			levelPinList.Clear();
-
-			foreach (LevelPin pin in FindObjectsOfType<LevelPin>())
-			{
-				levelPinList.Add(pin);
-			}
-
-			levelPinList.Sort(PinsByID);
-		}
-
-		private int PinsByID(LevelPin A, LevelPin B)
-		{
-			if(A.m_Pin.f_Index < B.m_Pin.f_Index) return -1;
-			else if(A.m_Pin.f_Index > B.m_Pin.f_Index) return 1;
-			return 0;
-		}
-
-		public void HandleLevelPins()
-		{
-			for (int i = 0; i < levelPinList.Count; i++)
-			{
-				var pin = levelPinList[i];
-				List<LevelPin> originPins = new List<LevelPin>();
-				AddOriginPins(pin, originPins);
-
-				var levelEntity = E_LevelData.FindEntity(entity => 
-					entity.f_Pin == pin.m_levelData.f_Pin);
-				var gameplayEntity = E_LevelGameplayData.FindEntity(entity => 
-					entity.f_Pin == pin.m_levelData.f_Pin);
-				var biomeGameplayEntity = E_BiomeGameplayData.FindEntity(entity =>
-					entity.f_Biome == pin.m_levelData.f_Pin.f_Biome);
-
-				int locksAmount, locksLeft; List<E_MapWalls> originWalls;
-				bool dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn, wallDown;
-				bool biomeUnlocked = biomeGameplayEntity.f_Unlocked;
-
-				FetchPinValues(levelEntity, gameplayEntity, out locksAmount, out locksLeft, 
-					out dottedAnimPlayed, out unlockAnimPlayed, out unlocked, out completed, out pathDrawn,
-					out originWalls, out wallDown);
-
-				pin.justCompleted = false;
-				if (completed && !pathDrawn) pin.justCompleted = true;
-
-				bool uUnlocked, uUnlockAnimPlayed; int uLocksLeft; List<E_MapWalls> uOriginWalls;
-				bool checkedRaiseAndWallStatus = false;
-				List<E_Pin> unlockPins = levelEntity.f_UnlocksPins;
-
-				for (int j = 0; j < unlockPins.Count; j++)
-				{
-					FetchUnlockData(unlockPins[j], out uUnlocked, out uUnlockAnimPlayed,
-						out uLocksLeft, out uOriginWalls);
-
-					if (!checkedRaiseAndWallStatus)
-					{
-						pin.pinRaiser.CheckRaiseStatus(unlocked, unlockAnimPlayed, biomeUnlocked);
-						if (pin.wallLowerer.hasWall) pin.wallLowerer.CheckWallStatus(wallDown);
-						checkedRaiseAndWallStatus = true;
-					} 
-
-					pin.pinPather.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft, 
-						completed, unlockPins.Count, uOriginWalls, wallDown, dottedAnimPlayed);
-				}
-			
-				SetPinUI(pin, unlockAnimPlayed, completed);
-				StartCoroutine(RaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft, 
-					dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn, originWalls, 
-					biomeUnlocked));
-			}
-
-			SaveProgData();
-		}
-
-		private void AddOriginPins(LevelPin incomingPin, List<LevelPin> originPins)
-		{
-			for (int i = 0; i < levelPinList.Count; i++)
-			{
-				var unlockPins = levelPinList[i].m_levelData.f_UnlocksPins;
-
-				if (unlockPins != null)
-				{
-					for (int j = 0; j < unlockPins.Count; j++)
-					{
-						if (unlockPins[j] == incomingPin.m_levelData.f_Pin)
-							originPins.Add(levelPinList[i]);									
-					}
-				}
-			}
-		}
-
-		private void FetchPinValues(E_LevelData levelEntity, E_LevelGameplayData gameplayEntity, 
-			out int locksAmount, out int locksLeft, out bool dottedAnimPlayed, out bool unlockAnimPlayed, 
-			out bool unlocked, out bool completed, out bool pathDrawn, out List<E_MapWalls> originWallList,
-			out bool wallDown)
-		{
-			locksAmount = levelEntity.f_LocksAmount;
-			locksLeft = gameplayEntity.f_LocksLeft;
-			dottedAnimPlayed = gameplayEntity.f_DottedAnimPlayed;
-			unlockAnimPlayed = gameplayEntity.f_UnlockAnimPlayed;
-			unlocked = gameplayEntity.f_Unlocked;
-			completed = gameplayEntity.f_Completed;
-			pathDrawn = gameplayEntity.f_PathDrawn;
-			originWallList = levelEntity.f_WallsFromOrigin;
-			wallDown = gameplayEntity.f_wallDown;
-		}
-
-		private void FetchUnlockData(E_Pin unlockPin, out bool uUnlocked,
-			out bool uUnlockAnimPlayed, out int uLocksLeft, out List<E_MapWalls> uOriginWalls)
-		{
-			var entity = E_LevelGameplayData.FindEntity(entity =>
-				entity.f_Pin == unlockPin);
-			var levelEntity = E_LevelData.FindEntity(entity =>
-				entity.f_Pin == unlockPin);
-			
-			uUnlocked = entity.f_Unlocked; uUnlockAnimPlayed = entity.f_UnlockAnimPlayed;
-			uLocksLeft = entity.f_LocksLeft; uOriginWalls = levelEntity.f_WallsFromOrigin;
-		}
-
-		private void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed)
-		{
-			pin.pinUI.SelectPinUI(); //Why this? Remove?
-
-			if (unlockAnimPlayed) pin.pinUI.ShowOrHideUI(true);
-			else pin.pinUI.ShowOrHideUI(false);
-
-			if (completed) pin.pinUI.SetUIComplete();
-
-			pin.pinUI.DisableLockIcon();
-		}
-
-		private IEnumerator RaiseAndDrawPaths(E_LevelGameplayData entity, LevelPin pin, 
-			List<LevelPin> originPins, int locksAmount, int locksLeft, bool dottedAnimPlayed, 
-			bool unlockAnimPlayed, bool unlocked, bool completed, bool pathDrawn, 
-			List<E_MapWalls> originWalls, bool biomeUnlocked)
-		{
-			bool lessLocks = (locksAmount > locksLeft) && locksLeft != 0;
-			bool raised = false;
-
-			var wallsFromOrigin = 0;
-			if (originWalls != null) wallsFromOrigin = originWalls.Count;
-			int loweredWalls = 0;
-
-			for (int i = 0; i < originPins.Count; i++)
-			{
-				var originPin = originPins[i];
-				var originGameplayEntity = E_LevelGameplayData.FindEntity(entity =>
-					entity.f_Pin == originPin.m_levelData.f_Pin);
-				var linkedWall = false;
-
-				//check for walls between pin and origin pin
-				if (originWalls != null)
-				{
-					for (int j = 0; j < originWalls.Count; j++)
-					{
-						if (originPin.m_levelData.f_Pin == originWalls[j].f_OriginPin)
-							linkedWall = true;
-					}
-				}
-
-				if (lessLocks)
-				{
-					//for pins with still one or more locks left
-					if (!originGameplayEntity.f_DottedAnimPlayed && originPin.justCompleted)
-					{
-						if (linkedWall)
-							originPin.pinPather.DrawToGate(LineTypes.dotted, pin.pinPather.pathPoint);
-						
-						else originPin.pinPather.DrawNewPath(LineTypes.dotted, pin.pinPather.pathPoint);
-
-						originGameplayEntity.f_DottedAnimPlayed = true;
-					}
-				}
-
-				if (unlocked && !unlockAnimPlayed)
-				{
-					//for newly unlocked pins that need to be raised
-					if (locksLeft == 0)
-					{
-						//if wall, lower it first. Afterwards raise pin
-						if (linkedWall)
-						{							
-							yield return originPin.wallLowerer.InitiateWallLowering();
-							loweredWalls++;
-						}
-
-						//the !raised is bc this is not originPin specific and only needs to happen once
-						if (!raised && loweredWalls == wallsFromOrigin)
-						{
-							pin.pinRaiser.InitiateRaising(originPins);
-							entity.f_UnlockAnimPlayed = true;
-
-							//if unlocking new biome, raise all pins in that biome to correct pos
-							if (!biomeUnlocked)
-							{
-								E_BiomeGameplayData.FindEntity(entity =>
-									entity.f_Biome == pin.m_levelData.f_Pin.f_Biome).f_Unlocked = true;
-
-								List<E_LevelData> pinsToRaise = E_LevelData.FindEntities(entity =>
-									entity.f_Pin.f_Biome == pin.m_levelData.f_Pin.f_Biome);
-								
-								for (int j = 0; j < levelPinList.Count; j++)
-								{
-									var gameplayEntity = E_LevelGameplayData.FindEntity(entity =>
-										entity.f_Pin == levelPinList[j].m_levelData.f_Pin);
-
-									for (int k = 0; k < pinsToRaise.Count; k++)
-									{
-										if (levelPinList[j].m_levelData.f_Pin == pinsToRaise[k].f_Pin &&
-											!gameplayEntity.f_Unlocked)
-											levelPinList[j].pinRaiser.InitiateBiomeUnlockRaising();
-									}
-								}
-							}
-
-							raised = true;
-						}
-					}
-				}
-				// for pins that have already been unlocked by another level and a second path is 
-				// now coming towards it
-				else if (unlocked && unlockAnimPlayed && originPin.justCompleted) 
-					originPin.pinPather.DrawNewPath(LineTypes.full, pin.pinPather.pathPoint);
-			}
-
-			if (completed && !pathDrawn) entity.f_PathDrawn = true;
-		}		
 
 		public void SetLevelToComplete(E_Pin pin)
 		{
@@ -348,6 +128,11 @@ namespace Qbism.Saving
 
 		}
 
+		public LevelPin[] FetchLevelPins()
+		{
+			return pinChecker.levelPins;
+		}
+
 		private void SetCurrentData(E_Pin pin, bool hasSegment, E_Biome biome)
 		{
 			currentPin = pin;
@@ -364,19 +149,14 @@ namespace Qbism.Saving
 			}
 		}
 
-		private List<LevelPin> FetchLevelPinList()
-		{
-			return levelPinList;
-		}
-
 		private LevelPin FetchPin(E_Pin pin)
 		{
 			LevelPin foundPin = null;
 
-			for (int i = 0; i < levelPinList.Count; i++)
+			for (int i = 0; i < pinChecker.levelPins.Length; i++)
 			{
-				if (levelPinList[i].m_levelData.f_Pin == pin)
-				return levelPinList[i];
+				if (pinChecker.levelPins[i].m_levelData.f_Pin == pin)
+				return pinChecker.levelPins[i];
 			}
 			Debug.LogError("Couldn't find correct levelPin");
 			return foundPin;
@@ -384,12 +164,12 @@ namespace Qbism.Saving
 
 		private void FetchCurrentPin()
 		{
-			for (int i = 0; i < levelPinList.Count; i++)
+			for (int i = 0; i < pinChecker.levelPins.Length; i++)
 			{
-				if (levelPinList[i].m_Pin.Entity != currentPin) continue;
+				if (pinChecker.levelPins[i].m_Pin.Entity != currentPin) continue;
 
-				pinSelTrack.selectedPin = levelPinList[i];
-				pinSelTrack.currentBiome = levelPinList[i].m_Pin.f_Biome;
+				pinSelTrack.selectedPin = pinChecker.levelPins[i];
+				pinSelTrack.currentBiome = pinChecker.levelPins[i].m_Pin.f_Biome;
 			}
 		}
 
@@ -402,19 +182,26 @@ namespace Qbism.Saving
 		{
 			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
 			{
-				var entity = E_LevelGameplayData.GetEntity(i);
+				var gameplayEntity = E_LevelGameplayData.GetEntity(i);
 				var levelData = levelDataList[i];
 
-				levelData.pin = entity.f_Pin.f_name.ToString(); levelData.locksLeft = entity.f_LocksLeft;
-				levelData.dottedAnimPlayed = entity.f_DottedAnimPlayed;
-				levelData.unlocked = entity.f_Unlocked; levelData.completed = entity.f_Completed;
-				levelData.unlockAnimPlayed = entity.f_UnlockAnimPlayed;
-				levelData.pathDrawn = entity.f_PathDrawn;
-				levelData.lockDisabled = entity.f_LockIconDisabled;
-				levelData.wallDown = entity.f_wallDown;
+				levelData.pin = gameplayEntity.f_Pin.f_name.ToString(); 
+				levelData.locksLeft = gameplayEntity.f_LocksLeft;
+				levelData.dottedAnimPlayed = gameplayEntity.f_DottedAnimPlayed;
+				levelData.unlocked = gameplayEntity.f_Unlocked; 
+				levelData.completed = gameplayEntity.f_Completed;
+				levelData.unlockAnimPlayed = gameplayEntity.f_UnlockAnimPlayed;
+				levelData.pathDrawn = gameplayEntity.f_PathDrawn;
+				levelData.lockDisabled = gameplayEntity.f_LockIconDisabled;
+				levelData.wallDown = gameplayEntity.f_wallDown;
 			}
 
-			SavingSystem.SaveProgData(levelDataList, currentPin.f_name.ToString(),
+			for (int i = 0; i < E_BiomeGameplayData.CountEntities; i++)
+			{
+				biomeDataList[i] = E_BiomeGameplayData.GetEntity(i).f_Unlocked;
+			}
+
+			SavingSystem.SaveProgData(levelDataList, biomeDataList, currentPin.f_name.ToString(),
 				serpProg.serpentDataList);
 		}
 
@@ -423,6 +210,7 @@ namespace Qbism.Saving
 			ProgData data = SavingSystem.LoadProgData();
 
 			levelDataList = data.savedLevelData;
+			biomeDataList = data.savedBiomeData;
 			
 			string currentPinString = data.savedCurrentPin;
 			currentPin = E_Pin.FindEntity(entity =>
@@ -442,6 +230,11 @@ namespace Qbism.Saving
 				entity.f_PathDrawn = levelData.pathDrawn;
 				entity.f_LockIconDisabled = levelData.lockDisabled;
 				entity.f_wallDown = levelData.wallDown;
+			}
+
+			for (int i = 0; i < E_BiomeGameplayData.CountEntities; i++)
+			{
+				E_BiomeGameplayData.GetEntity(i).f_Unlocked = biomeDataList[i];
 			}
 		}
 
@@ -467,6 +260,13 @@ namespace Qbism.Saving
 					levelData.f_Unlocked = false;
 					levelData.f_UnlockAnimPlayed = false;
 				}			
+			}
+
+			for (int i = 0; i < E_BiomeGameplayData.CountEntities; i++)
+			{
+				var biomeGameplayData = E_BiomeGameplayData.GetEntity(i);
+				if (i == 0) biomeGameplayData.f_Unlocked = true;
+				else biomeGameplayData.f_Unlocked = false;
 			}
 
 			currentPin = E_LevelData.GetEntity(0).f_Pin;

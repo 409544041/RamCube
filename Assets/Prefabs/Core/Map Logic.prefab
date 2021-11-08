@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1950273819648840867}
   - component: {fileID: 2014061972667829605}
   - component: {fileID: 6690316429583392318}
+  - component: {fileID: 5203563612074623394}
+  - component: {fileID: 5700768176840768305}
   - component: {fileID: 247718174117404322}
   m_Layer: 0
   m_Name: Map Logic
@@ -86,6 +88,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc478d464aab79a48bf0c268117f6cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5203563612074623394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9222558206552936691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b5acdc28a010f43908091226e5eded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelPins: []
+  pinHandler: {fileID: 5700768176840768305}
+--- !u!114 &5700768176840768305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9222558206552936691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41a02e0b1b1cbc4989682c0b439c39a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pinChecker: {fileID: 5203563612074623394}
 --- !u!114 &247718174117404322
 MonoBehaviour:
   m_ObjectHideFlags: 0

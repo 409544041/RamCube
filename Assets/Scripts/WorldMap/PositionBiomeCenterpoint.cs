@@ -64,7 +64,7 @@ namespace Qbism.General
 
 		private void FindEdgePins(E_Biome biome)
 		{
-			foreach (LevelPin pin in progHandler.levelPinList)
+			foreach (LevelPin pin in progHandler.FetchLevelPins())
 			{
 				if (pin.m_Pin.f_Biome != biome) continue;
 
