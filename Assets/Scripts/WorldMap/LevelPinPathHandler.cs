@@ -24,10 +24,10 @@ namespace Qbism.WorldMap
 		int amountInDrawList = 0;
 
 		public void CheckPathStatus(E_Pin uPin, bool uUnlocked, bool uUnlockAnimPlayed, int uLocksLeft,
-			bool completed, int listCount, List<E_MapWalls> originWalls, bool wallDown)
+			bool completed, int listCount, List<E_MapWalls> originWalls, bool wallDown, bool dottedAnimPlayed)
 		{
 			AddToList(uPin, completed, uUnlocked, uUnlockAnimPlayed, uLocksLeft, 
-				lineDestList, originWalls, wallDown);
+				lineDestList, originWalls, wallDown, dottedAnimPlayed);
 			amountInDrawList++;
 
 			if (amountInDrawList == listCount)
@@ -35,7 +35,7 @@ namespace Qbism.WorldMap
 		}
 
 		private void AddToList(E_Pin uPin, bool completed, bool uUnlocked, bool uUnlockAnimPlayed, int uLocksLeft,
-			List<LineDrawData> lineDestList, List<E_MapWalls> uOriginWalls, bool wallDown)
+			List<LineDrawData> lineDestList, List<E_MapWalls> uOriginWalls, bool wallDown, bool dottedAnimPlayed)
 		{
 			LevelPin destPin = onGetPin(uPin);
 			var dest = destPin.pinPather.pathPoint;
@@ -52,15 +52,16 @@ namespace Qbism.WorldMap
 			int uLocksAmount = destPin.m_levelData.f_LocksAmount;
 			bool uLessLocks = uLocksAmount > uLocksLeft && uLocksLeft > 0;
 			
-			//if uPin still has a lock left but wall between pins is down
-			if (completed && uLessLocks && linkedWall && !wallDown)
+			//if uPin still has a lock left but wall between pins is not down
+			if (completed && uLessLocks && linkedWall && !wallDown && dottedAnimPlayed)
 			{
 				SetWallPathPoint(dest);
 				FillAndAddDrawData(lineDestList, wallPathPoint, LineTypes.dotted);
 			}
 
 			//same as below but now if there's a wall in between
-			else if (!pin.justCompleted && completed && uUnlocked && !uUnlockAnimPlayed && linkedWall)
+			else if (!pin.justCompleted && completed && uUnlocked &&
+				!uUnlockAnimPlayed && linkedWall && dottedAnimPlayed)
 			{
 				SetWallPathPoint(dest);
 				FillAndAddDrawData(lineDestList, wallPathPoint, LineTypes.dotted);
@@ -68,8 +69,8 @@ namespace Qbism.WorldMap
 
 			//if uPin still has a lock left or if uPin has no locks left but on map load
 			//the uPin unlock anim hasn't been played yet so dotted line is still needed
-			else if ((completed && uLessLocks) || (!pin.justCompleted && completed && 
-				uUnlocked && !uUnlockAnimPlayed))
+			else if ((completed && uLessLocks && dottedAnimPlayed) || (!pin.justCompleted && completed && 
+				uUnlocked && !uUnlockAnimPlayed && dottedAnimPlayed))
 				FillAndAddDrawData(lineDestList, dest, LineTypes.dotted);
 
 			//if uPin is unlocked and unlock anim played etc drawing full line
@@ -95,24 +96,24 @@ namespace Qbism.WorldMap
 					if (lineDestList[i].lineType == LineTypes.full)
 					{
 						LineDrawer fullDrawer = fullLineRenderers[i].GetComponent<LineDrawer>();
-						fullDrawer.SetPositions(pathPoint, lineDestList[i].destination, false);
+						fullDrawer.SetPositions(pathPoint, lineDestList[i].destination);
 						fullLineRenderers[i].enabled = true;
 					}
 					else if (lineDestList[i].lineType == LineTypes.dotted)
 					{
 						LineDrawer dotDrawer = dottedLineRenderer.GetComponent<LineDrawer>();
-						dotDrawer.SetPositions(pathPoint, lineDestList[i].destination, false);
+						dotDrawer.SetPositions(pathPoint, lineDestList[i].destination);
 						dottedLineRenderer.enabled = true;
 					}
 				}
 			}
 		}
 
-		public void DrawToGate(LineTypes lineTypes, Transform destPoint, bool retracting)
+		public void DrawToGate(LineTypes lineTypes, Transform destPoint)
 		{
 			SetWallPathPoint(destPoint);
 
-			DrawNewPath(LineTypes.dotted, wallPathPoint, retracting);
+			DrawNewPath(LineTypes.dotted, wallPathPoint);
 		}
 
 		private void SetWallPathPoint(Transform destPoint)
@@ -127,7 +128,7 @@ namespace Qbism.WorldMap
 			}
 		}
 
-		public void DrawNewPath(LineTypes lineType, Transform destPoint, bool retracting)
+		public void DrawNewPath(LineTypes lineType, Transform destPoint)
 		{
 			List<LineRenderer> lineRenders = new List<LineRenderer>();
 			if (lineType == LineTypes.full)
@@ -143,27 +144,18 @@ namespace Qbism.WorldMap
 			{
 				LineRenderer render = lineRenders[i];
 				LineDrawer drawer = render.GetComponent<LineDrawer>();
-				
-				if (drawer.drawing) continue; //if first path is already drawing, skips to second path
-				PrepareDrawer(destPoint, retracting, render, drawer);
-				break;
-			}
 
-			// Draw new line over retracted dotted line
-			if (!pin.justCompleted)
-			{
-				//Make sure that the path to second (or dotted line) unlock is always 2nd in unlockList
-				//in sheets to make sure it'll always use the second line renderer
-				LineDrawer drawer = fullLineRenderers[1].GetComponent<LineDrawer>();
-				PrepareDrawer(destPoint, false, fullLineRenderers[1], drawer);
+				//if first path is already drawing or drawn skip to second renderer
+				if (drawer.drawing || render.enabled) continue; 
+				PrepareDrawer(destPoint, render, drawer);
+				break;
 			}
 		}
 
-		private void PrepareDrawer(Transform destPoint, bool retracting, LineRenderer render, LineDrawer drawer)
+		private void PrepareDrawer(Transform destPoint, LineRenderer render, LineDrawer drawer)
 		{
-			if (!retracting) drawer.pointToMove = 1;
-			else drawer.pointToMove = 0;
-			drawer.SetPositions(pin.pinPather.pathPoint, destPoint, retracting);
+			drawer.pointToMove = 1;
+			drawer.SetPositions(pin.pinPather.pathPoint, destPoint);
 			drawer.InitiateLineDrawing();
 			render.enabled = true;
 		}

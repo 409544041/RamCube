@@ -25,6 +25,7 @@ namespace Qbism.WorldMap
 		LevelPin destLevelPin;
 		Vector3 pointAlongLine;
 		public int pointToMove = 0;
+		LevelPin originPin = null;
 
 		//Actions, events, delegates etc
 		public event Action onSaveData;
@@ -36,20 +37,17 @@ namespace Qbism.WorldMap
 			SetLineWidth(0);
 		}
 
-		public void SetPositions(Transform incOrigin, Transform incDestination,
-			bool retracting)
+		public void SetPositions(Transform incOrigin, Transform incDestination)
 		{
 			origin = incOrigin;
 			destination = incDestination;
 			destLevelPin = destination.GetComponentInParent<LevelPin>();
 			lRender.positionCount = 2;
 			lRender.SetPosition(0, origin.position);
+			originPin = incOrigin.GetComponentInParent<LevelPin>();
 
 			if (drawing)
-			{
-				if (retracting) lRender.SetPosition(1, destination.position);
 				distance = Vector3.Distance(origin.position, destination.position);
-			}
 
 			if (!drawing)
 			{
@@ -84,10 +82,18 @@ namespace Qbism.WorldMap
 
 			var ent = E_LevelGameplayData.FindEntity(entity =>
 					entity.f_Pin == destLevelPin.m_levelData.f_Pin);
-			if (ent.f_LocksLeft == 0) onDisableLockInSheet(ent, true);
 
-			var pinUI = destLevelPin.GetComponentInParent<LevelPin>().pinUI;
-			pinUI.DisableLockIcon();
+			if (ent.f_LocksLeft == 0)
+			{
+				onDisableLockInSheet(ent, true);
+				var pinUI = destLevelPin.pinUI;
+				pinUI.DisableLockIcon();
+
+				//if locks = 0 but there were more locks means full lines are drawn.
+				//Remove any dotted lines after full lines are drawn
+				if (destLevelPin.m_levelData.f_LocksAmount > 0) 
+					originPin.pinPather.dottedLineRenderer.GetComponent<LineRenderer>().enabled = false;
+			} 
 			onSaveData();
 		}
 

@@ -142,12 +142,12 @@ namespace Qbism.Saving
 					} 
 
 					pin.pinPather.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft, 
-						completed, unlockPins.Count, uOriginWalls, wallDown);
+						completed, unlockPins.Count, uOriginWalls, wallDown, dottedAnimPlayed);
 				}
 			
 				SetPinUI(pin, unlockAnimPlayed, completed);
-				StartCoroutine(RaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft, dottedAnimPlayed, 
-					unlockAnimPlayed, unlocked, completed, pathDrawn, originWalls));
+				StartCoroutine(RaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft, 
+					dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn, originWalls));
 			}
 
 			SaveProgData();
@@ -243,9 +243,9 @@ namespace Qbism.Saving
 					if (!originGameplayEntity.f_DottedAnimPlayed && originPin.justCompleted)
 					{
 						if (linkedWall)
-							originPin.pinPather.DrawToGate(LineTypes.dotted, pin.pinPather.pathPoint, false);
+							originPin.pinPather.DrawToGate(LineTypes.dotted, pin.pinPather.pathPoint);
 						
-						else originPin.pinPather.DrawNewPath(LineTypes.dotted, pin.pinPather.pathPoint, false);
+						else originPin.pinPather.DrawNewPath(LineTypes.dotted, pin.pinPather.pathPoint);
 
 						originGameplayEntity.f_DottedAnimPlayed = true;
 					}
@@ -275,7 +275,7 @@ namespace Qbism.Saving
 				// for pins that have already been unlocked by another level and a second path is 
 				// now coming towards it
 				else if (unlocked && unlockAnimPlayed && originPin.justCompleted) 
-					originPin.pinPather.DrawNewPath(LineTypes.full, pin.pinPather.pathPoint, false);
+					originPin.pinPather.DrawNewPath(LineTypes.full, pin.pinPather.pathPoint);
 			}
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;
