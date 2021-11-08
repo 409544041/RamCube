@@ -223,8 +223,11 @@ namespace Qbism.Saving
 			for (int i = 0; i < originPins.Count; i++)
 			{
 				var originPin = originPins[i];
+				var originGameplayEntity = E_LevelGameplayData.FindEntity(entity =>
+					entity.f_Pin == originPin.m_levelData.f_Pin);
 				var linkedWall = false;
 
+				//check for walls between pin and origin pin
 				if (originWalls != null)
 				{
 					for (int j = 0; j < originWalls.Count; j++)
@@ -234,20 +237,17 @@ namespace Qbism.Saving
 					}
 				}
 
-				bool originDottedAnimPlayed = E_LevelGameplayData.FindEntity(entity =>
-						entity.f_Pin == originPin.m_levelData.f_Pin).f_DottedAnimPlayed;
-
 				if (lessLocks)
 				{
 					//for pins with still one or more locks left
-					if (!originDottedAnimPlayed && originPin.justCompleted)
+					if (!originGameplayEntity.f_DottedAnimPlayed && originPin.justCompleted)
 					{
 						if (linkedWall)
 							originPin.pinPather.DrawToGate(LineTypes.dotted, pin.pinPather.pathPoint, false);
 						
 						else originPin.pinPather.DrawNewPath(LineTypes.dotted, pin.pinPather.pathPoint, false);
 
-						originDottedAnimPlayed = true;
+						originGameplayEntity.f_DottedAnimPlayed = true;
 					}
 				}
 
@@ -266,7 +266,7 @@ namespace Qbism.Saving
 						//the !raised is bc this is not originPin specific and only needs to happen once
 						if (!raised && loweredWalls == wallsFromOrigin)
 						{
-							pin.pinRaiser.InitiateRaising(originPins, originDottedAnimPlayed);
+							pin.pinRaiser.InitiateRaising(originPins);
 							entity.f_UnlockAnimPlayed = true;
 							raised = true;
 						}

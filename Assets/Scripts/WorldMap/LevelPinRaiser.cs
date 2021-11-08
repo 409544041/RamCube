@@ -17,16 +17,15 @@ namespace Qbism.WorldMap
 
 		bool raising = false;
 
-		public void InitiateRaising(List<LevelPin> originPins, bool dottedAnimPlayed)
+		public void InitiateRaising(List<LevelPin> originPins)
 		{
 			pin.mRender.transform.position = new Vector3
 				(transform.position.x, lockedYPos, transform.position.z);
 
-			StartCoroutine(RaiseCliff(pin.mRender, originPins, dottedAnimPlayed));
+			StartCoroutine(RaiseCliff(pin.mRender, originPins));
 		}
 
-		private IEnumerator RaiseCliff(MeshRenderer mRender, List<LevelPin> originPins,
-			bool dottedAnimPlayed)
+		private IEnumerator RaiseCliff(MeshRenderer mRender, List<LevelPin> originPins)
 		{
 			mRender.enabled = true;
 			raiseJuicer.PlayRaiseJuice();
@@ -49,11 +48,14 @@ namespace Qbism.WorldMap
 
 			for (int i = 0; i < originPins.Count; i++)
 			{
+				bool originDottedAnimPlayed = E_LevelGameplayData.FindEntity(entity =>
+					entity.f_Pin == originPins[i].m_levelData.f_Pin).f_DottedAnimPlayed;
+
 				if (originPins[i].justCompleted) 
 					originPins[i].pinPather.DrawNewPath(LineTypes.full, 
 					pin.pinPather.pathPoint, false);
 					
-				if (!originPins[i].justCompleted && dottedAnimPlayed)
+				if (!originPins[i].justCompleted && originDottedAnimPlayed)
 					originPins[i].pinPather.DrawNewPath(LineTypes.dotted, 
 					pin.pinPather.pathPoint, true);
 			}
