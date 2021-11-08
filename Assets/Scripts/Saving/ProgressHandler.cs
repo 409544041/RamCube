@@ -136,7 +136,7 @@ namespace Qbism.Saving
 
 					if (!checkedRaiseAndWallStatus)
 					{
-						pin.CheckRaiseStatus(unlocked, unlockAnimPlayed);
+						pin.pinRaiser.CheckRaiseStatus(unlocked, unlockAnimPlayed);
 						if (pin.wallLowerer.hasWall) pin.wallLowerer.CheckWallStatus(wallDown);
 						checkedRaiseAndWallStatus = true;
 					} 

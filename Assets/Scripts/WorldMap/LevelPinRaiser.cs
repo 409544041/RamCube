@@ -9,23 +9,49 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		[SerializeField] LevelPin pin;
-		public float lockedYPos = -14;
+		[SerializeField] float lockedYPos = -14, biomeUnlockedYPos = -11;
 		public float unlockedYPos = -9;
 		[SerializeField] float raiseStep = .25f;
 		[SerializeField] float raiseSpeed = .05f;
 		[SerializeField] LevelPinRaiseJuicer raiseJuicer;
 
+		//Cache
+		public MeshRenderer mRender { get; private set; }
+
+		//States
 		bool raising = false;
+
+		private void Awake()
+		{
+			mRender = pin.GetComponentInChildren<MeshRenderer>();
+		}
+
+		public void CheckRaiseStatus(bool unlocked, bool unlockAnimPlayed)
+		{
+			if (!unlocked || (unlocked && !unlockAnimPlayed))
+			{
+				mRender.enabled = false;
+				mRender.transform.position =
+					new Vector3(transform.position.x, lockedYPos, transform.position.z);
+			}
+
+			else if (unlocked && unlockAnimPlayed)
+			{
+				mRender.enabled = true;
+				mRender.transform.position =
+				new Vector3(transform.position.x, unlockedYPos, transform.position.z);
+			}
+		}
 
 		public void InitiateRaising(List<LevelPin> originPins)
 		{
-			pin.mRender.transform.position = new Vector3
+			mRender.transform.position = new Vector3
 				(transform.position.x, lockedYPos, transform.position.z);
 
-			StartCoroutine(RaiseCliff(pin.mRender, originPins));
+			StartCoroutine(RaiseCliff(originPins));
 		}
 
-		private IEnumerator RaiseCliff(MeshRenderer mRender, List<LevelPin> originPins)
+		private IEnumerator RaiseCliff(List<LevelPin> originPins)
 		{
 			mRender.enabled = true;
 			raiseJuicer.PlayRaiseJuice();
