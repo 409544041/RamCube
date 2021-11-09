@@ -10,8 +10,8 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public LineTypes lineType = LineTypes.full;
-		[SerializeField] float drawStep = 7f;
-		[SerializeField] float lineWidth = .15f;
+		[SerializeField] float drawStep = 7f, lineWidth = .15f, linePinBuffer = 1;
+
 
 		//Cache
 		LineRenderer lRender;
@@ -19,12 +19,10 @@ namespace Qbism.WorldMap
 		//States
 		public bool drawing { get; set; } = false;
 		float counter = 0;
-		float distance = 0;
-		public Transform origin { get; set; }
-		public Transform destination { get; set; }
+		Vector3 originPos, destPos;
 		LevelPin destLevelPin;
 		Vector3 pointAlongLine;
-		public int pointToMove = 0;
+		public int pointToMove { get; set; } = 0;
 		LevelPin originPin = null;
 
 		//Actions, events, delegates etc
@@ -37,23 +35,34 @@ namespace Qbism.WorldMap
 			SetLineWidth(0);
 		}
 
-		public void SetPositions(Transform incOrigin, Transform incDestination)
+		public void SetPositions(Transform incOrigin, Transform incDest)
 		{
-			origin = incOrigin;
-			destination = incDestination;
-			destLevelPin = destination.GetComponentInParent<LevelPin>();
-			lRender.positionCount = 2;
-			lRender.SetPosition(0, origin.position);
+			destLevelPin = incDest.GetComponentInParent<LevelPin>();
 			originPin = incOrigin.GetComponentInParent<LevelPin>();
-
-			if (drawing)
-				distance = Vector3.Distance(origin.position, destination.position);
+			originPos = SetOriginPoint(incOrigin.position, incDest.position, linePinBuffer);
+			destPos = SetDestPoint(originPos, incDest.position, linePinBuffer);
+			lRender.positionCount = 2;
+			lRender.SetPosition(0, originPos);
 
 			if (!drawing)
 			{
-				lRender.SetPosition(1, destination.position);
+				lRender.SetPosition(1, destPos);
 				SetLineWidth(lineWidth);
 			}
+		}
+
+		public Vector3 SetOriginPoint(Vector3 origin, Vector3 dest, float x)
+		{
+			var point = x * Vector3.Normalize(dest - origin) + origin;
+			return point;
+		}
+
+		public Vector3 SetDestPoint(Vector3 origin, Vector3 dest, float x)
+		{
+			var lineDir = (dest - origin).normalized;
+			var dist = Vector3.Distance(origin, dest) - x;
+			var point = origin + (lineDir * dist);
+			return point;
 		}
 
 		public void InitiateLineDrawing()
@@ -67,12 +76,13 @@ namespace Qbism.WorldMap
 
 			if (lRender.startWidth == 0 && lRender.endWidth == 0)
 				SetLineWidth(lineWidth);
-			var drawSpeed = drawStep * Time.deltaTime;
-			pointAlongLine = origin.position;
 
-			while(Vector3.Distance(pointAlongLine, destination.position) > .1f)
+			var drawSpeed = drawStep * Time.deltaTime;
+			pointAlongLine = originPos;
+
+			while(Vector3.Distance(pointAlongLine, destPos) > .1f)
 			{
-				pointAlongLine = Vector3.MoveTowards(pointAlongLine, destination.position, drawSpeed);
+				pointAlongLine = Vector3.MoveTowards(pointAlongLine, destPos, drawSpeed);
 				lRender.SetPosition(pointToMove, pointAlongLine);
 
 				yield return null;
