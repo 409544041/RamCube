@@ -112,7 +112,6 @@ namespace Qbism.WorldMap
 		public void DrawToGate(LineTypes lineTypes, Transform destPoint)
 		{
 			SetWallPathPoint(destPoint);
-
 			DrawNewPath(LineTypes.dotted, wallPathPoint);
 		}
 

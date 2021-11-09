@@ -36,18 +36,11 @@ namespace Qbism.WorldMap
 
 		public void CheckWallStatus(bool wallDown)
 		{
-			if (wallDown)
-			{
-				// print(pin + "'s walls are down and setting pos to " + loweredPos);
-				wall.transform.position = new Vector3(wall.transform.position.x, 
-					loweredYPos, wall.transform.position.z);
-			} 
-			else
-			{
-				// print(pin + "'s walls are up and setting pos to " + raisedPos);
-				wall.transform.position = new Vector3(wall.transform.position.x,
-					0, wall.transform.position.z);
-			} 
+			if (wallDown) wall.transform.position = new Vector3(wall.transform.position.x, 
+				loweredYPos, wall.transform.position.z);
+				
+			else wall.transform.position = new Vector3(wall.transform.position.x,
+				0, wall.transform.position.z);
 		}
 	}
 }

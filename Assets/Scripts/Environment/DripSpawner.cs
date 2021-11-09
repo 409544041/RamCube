@@ -23,7 +23,7 @@ namespace Qbism.Environment
 
 		private void Start()
 		{
-			if (bOverwriter.respawnVariety) GenerateDrips();
+			if (bOverwriter && bOverwriter.respawnVariety) GenerateDrips();
 		}
 
 		private void GenerateDrips()
@@ -55,13 +55,13 @@ namespace Qbism.Environment
 				if (drips[j] == dripToShow)
 				{
 					drips[j].dripMesh.enabled = true;
-					florSpawn.SpawnFlora();
+					if (florSpawn) florSpawn.SpawnFlora();
 					prevHeight = drips[j].endHeight;
 				}
 				else
 				{
 					drips[j].dripMesh.enabled = false;
-					florSpawn.DespawnFlora();
+					if (florSpawn) florSpawn.DespawnFlora();
 				} 
 			}
 		}
@@ -90,13 +90,13 @@ namespace Qbism.Environment
 				if (drips[k] == dripToShow)
 				{
 					drips[k].dripMesh.enabled = true;
-					florSpawn.SpawnFlora();
+					if (florSpawn) florSpawn.SpawnFlora();
 					prevHeight = drips[k].endHeight;
 				}
 				else
 				{
 					drips[k].dripMesh.enabled = false;
-					florSpawn.DespawnFlora();
+					if (florSpawn) florSpawn.DespawnFlora();
 				} 
 			}
 		}

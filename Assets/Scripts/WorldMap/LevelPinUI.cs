@@ -15,6 +15,7 @@ namespace Qbism.WorldMap
 		public LevelPin levelPin = null;
 		[SerializeField] Button button = null;
 		[SerializeField] Image lockIcon = null;
+		[SerializeField] float uiHeight;
 
 		//Cache
 		EditorLevelPinUI editorPin = null;
@@ -28,7 +29,8 @@ namespace Qbism.WorldMap
 		{
 			editorPin = GetComponent<EditorLevelPinUI>();
 			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
-			uiPos = levelPin.GetComponentInChildren<LineRenderer>().transform.position;
+			var lrPos = levelPin.GetComponentInChildren<LineRenderer>().transform.position;
+			uiPos = new Vector3 (lrPos.x, lrPos.y + uiHeight, lrPos.z);
 		}
 
 		private void OnEnable() 

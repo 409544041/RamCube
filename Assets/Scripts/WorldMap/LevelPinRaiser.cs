@@ -13,41 +13,27 @@ namespace Qbism.WorldMap
 		public float unlockedYPos = -9;
 		[SerializeField] float raiseStep = .25f;
 		[SerializeField] float raiseSpeed = .05f;
+		[SerializeField] GameObject pinVisuals = null;
 		[SerializeField] LevelPinRaiseJuicer raiseJuicer;
-
-		//Cache
-		public MeshRenderer mRender { get; private set; }
 
 		//States
 		bool raising = false;
 
-		private void Awake()
-		{
-			mRender = pin.GetComponentInChildren<MeshRenderer>();
-		}
-
 		public void CheckRaiseStatus(bool unlocked, bool unlockAnimPlayed, bool biomeUnlocked)
 		{
-			if (!biomeUnlocked)
-			{
-				mRender.enabled = false;
-				mRender.transform.position =
-					new Vector3(transform.position.x, biomeLockedYPos, transform.position.z);
-			}
+			if (!biomeUnlocked) SetVisualValues(false, biomeLockedYPos);
 
 			else if (biomeUnlocked && (!unlocked || (unlocked && !unlockAnimPlayed)))
-			{
-				mRender.enabled = true;
-				mRender.transform.position =
-					new Vector3(transform.position.x, lockedYPos, transform.position.z);
-			}				
+				SetVisualValues(true, lockedYPos);
 
 			else if (biomeUnlocked && unlocked && unlockAnimPlayed)
-			{
-				mRender.enabled = true;
-				mRender.transform.position =
-				new Vector3(transform.position.x, unlockedYPos, transform.position.z);
-			}
+				SetVisualValues(true, unlockedYPos);
+		}
+
+		private void SetVisualValues(bool renderValue, float yPos)
+		{
+			pinVisuals.transform.position =
+				new Vector3(transform.position.x, yPos, transform.position.z);
 		}
 
 		public void InitiateBiomeUnlockRaising()
@@ -57,25 +43,24 @@ namespace Qbism.WorldMap
 
 		public IEnumerator BiomeUnlockRaising()
 		{
-			mRender.enabled = true;
 			raising = true;
 
 			while (raising)
 			{
-				mRender.transform.position += new Vector3(0, raiseStep, 0);
+				pinVisuals.transform.position += new Vector3(0, raiseStep, 0);
 
 				yield return new WaitForSeconds(raiseSpeed);
 
-				if (mRender.transform.position.y >= lockedYPos) raising = false;
+				if (pinVisuals.transform.position.y >= lockedYPos) raising = false;
 			}
 
-			mRender.transform.position = new Vector3
+			pinVisuals.transform.position = new Vector3
 				(transform.position.x, lockedYPos, transform.position.z);
 		}
 
 		public void InitiateRaising(List<LevelPin> originPins)
 		{
-			mRender.transform.position = new Vector3
+			pinVisuals.transform.position = new Vector3
 				(transform.position.x, lockedYPos, transform.position.z);
 
 			StartCoroutine(RaiseCliff(originPins));
@@ -83,20 +68,19 @@ namespace Qbism.WorldMap
 
 		private IEnumerator RaiseCliff(List<LevelPin> originPins)
 		{
-			mRender.enabled = true;
 			raiseJuicer.PlayRaiseJuice();
 			raising = true;
 
 			while (raising)
 			{
-				mRender.transform.position += new Vector3(0, raiseStep, 0);
+				pinVisuals.transform.position += new Vector3(0, raiseStep, 0);
 
 				yield return new WaitForSeconds(raiseSpeed);
 
-				if (mRender.transform.position.y >= unlockedYPos) raising = false;
+				if (pinVisuals.transform.position.y >= unlockedYPos) raising = false;
 			}
 
-			mRender.transform.position = new Vector3
+			pinVisuals.transform.position = new Vector3
 					(transform.position.x, unlockedYPos, transform.position.z);
 
 			raiseJuicer.StopRaiseJuice();
