@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.Saving;
+using Qbism.WorldMap;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -11,20 +12,12 @@ namespace Qbism.Environment
 		//Config parameters
 		[SerializeField] GameObject[] meshParts;
 		[SerializeField] BiomeVisualsScripOb biomeVarietySO;
-		[SerializeField] bool recalculate = false;
+		[SerializeField] bool recalculate = false, checkBiomeLocally = false;
 		[SerializeField] bool isSkyBox = false, isVolume = false;
 		//mesh and mat order should be same in scrip ob as in here
 
-		//Cache
-		ProgressHandler progHandler;
-
 		//States
 		E_Biome currentBiome;
-
-		private void Awake() 
-		{
-			progHandler = FindObjectOfType<ProgressHandler>();	
-		}
 
 		private void Start()
 		{
@@ -37,15 +30,25 @@ namespace Qbism.Environment
 
 		private void FetchBiome()
 		{
-			if (progHandler)
-				currentBiome = progHandler.currentBiome;
+			if (!checkBiomeLocally)
+			{
+				ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
 
+				if (progHandler)
+					currentBiome = progHandler.currentBiome;
+
+				else
+				{
+					var bOverWriter = FindObjectOfType<BiomeOverwriter>();
+					if (bOverWriter) currentBiome = E_Biome.FindEntity(entity =>
+						entity.f_name == bOverWriter.biomeOverwrite.ToString());
+					else Debug.LogError("Progression Handler or Biome Overwriter not Linked. Setting first biome visuals");
+				}
+			}
 			else
 			{
-				var bOverWriter = FindObjectOfType<BiomeOverwriter>();
-				if (bOverWriter) currentBiome = E_Biome.FindEntity(entity =>
-					entity.f_name == bOverWriter.biomeOverwrite.ToString());
-				else Debug.LogError("Progression Handler or Biome Overwriter not Linked. Setting first biome visuals");
+				M_MapBiomeIdentifier m_MapBiome = GetComponentInParent<M_MapBiomeIdentifier>();
+				if (m_MapBiome) currentBiome = m_MapBiome.f_Biome;
 			}
 		}
 
