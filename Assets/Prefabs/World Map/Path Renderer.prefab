@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 949558730147379135}
   - component: {fileID: 5568119865892419574}
   - component: {fileID: 3861330339856256658}
+  - component: {fileID: 7810286045987190577}
   m_Layer: 0
   m_Name: Path Renderer
   m_TagString: Untagged
@@ -48,7 +49,6 @@ MonoBehaviour:
   drawStep: 7
   lineWidth: 0.1
   linePinBuffer: 0.4
-  pointToMove: 0
 --- !u!120 &3861330339856256658
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -145,3 +145,23 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &7810286045987190577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9067160622809939223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshParts: []
+  lineRender: {fileID: 3861330339856256658}
+  biomeVarietySO: {fileID: 11400000, guid: 425cb8d0f90544240998847c2758d2e1, type: 2}
+  recalculate: 0
+  checkBiomeLocally: 1
+  isSkyBox: 0
+  isVolume: 0
+  isLine: 0

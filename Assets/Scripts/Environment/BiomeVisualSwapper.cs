@@ -11,9 +11,10 @@ namespace Qbism.Environment
 	{
 		//Config parameters
 		[SerializeField] GameObject[] meshParts;
+		[SerializeField] LineRenderer lineRender;
 		[SerializeField] BiomeVisualsScripOb biomeVarietySO;
 		[SerializeField] bool recalculate = false, checkBiomeLocally = false;
-		[SerializeField] bool isSkyBox = false, isVolume = false;
+		[SerializeField] bool isSkyBox = false, isVolume = false, isLine = false;
 		//mesh and mat order should be same in scrip ob as in here
 
 		//States
@@ -58,34 +59,49 @@ namespace Qbism.Environment
 			{
 				if (biomeVariety.biome.ToString() != currentBiome.f_name.ToString()) continue;
 
-				for (int i = 0; i < meshParts.Length; i++)
+				if (!lineRender)
 				{
-					MeshFilter mFilter = meshParts[i].GetComponent<MeshFilter>();
-
-					//Create new mats array
-					var newMats = new Material[biomeVariety.parts[i].mats.Length];
-
-					//Fill new mats array with correct mats from SO
-					for (int j = 0; j < newMats.Length; j++)
+					for (int i = 0; i < meshParts.Length; i++)
 					{
-						newMats[j] = biomeVariety.parts[i].mats[j];
-					}
+						MeshFilter mFilter = meshParts[i].GetComponent<MeshFilter>();
 
-					meshParts[i].GetComponent<Renderer>().materials = newMats;
+						Material[] newMats = CreateNewMatsArray(biomeVariety, i);
 
-					//Change mesh
-					if (biomeVariety.parts[i].mesh != null)
-					{
-						mFilter.mesh = biomeVariety.parts[i].mesh;
-					}
+						meshParts[i].GetComponent<Renderer>().materials = newMats;
 
-					if (recalculate)
-					{
-						mFilter.mesh.RecalculateTangents();
-						mFilter.mesh.RecalculateNormals();
+						//Change mesh
+						if (biomeVariety.parts[i].mesh != null)
+						{
+							mFilter.mesh = biomeVariety.parts[i].mesh;
+						}
+
+						if (recalculate)
+						{
+							mFilter.mesh.RecalculateTangents();
+							mFilter.mesh.RecalculateNormals();
+						}
 					}
 				}
+				else
+				{
+					Material[] newMats = CreateNewMatsArray(biomeVariety, 0);
+					lineRender.materials = newMats;
+				}
 			}
+		}
+
+		private static Material[] CreateNewMatsArray(BiomeVisualsScripOb.biomeVariety biomeVariety, int i)
+		{
+			//Create new mats array
+			var newMats = new Material[biomeVariety.parts[i].mats.Length];
+
+			//Fill new mats array with correct mats from SO
+			for (int j = 0; j < newMats.Length; j++)
+			{
+				newMats[j] = biomeVariety.parts[i].mats[j];
+			}
+
+			return newMats;
 		}
 
 		private void SetSkybox()
