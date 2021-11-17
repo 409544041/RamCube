@@ -23,9 +23,6 @@ namespace Qbism.Cubes
 
 			transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
 				yPos, Mathf.RoundToInt(transform.position.z));
-
-			Quaternion rotation = Quaternion.Euler(Mathf.RoundToInt(transform.rotation.x),
-				Mathf.RoundToInt(transform.rotation.y), Mathf.RoundToInt(transform.rotation.z));
 		}
 
 		public Vector2Int FetchGridPos()
