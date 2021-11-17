@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4049920004451621215}
-  m_Layer: 0
+  - component: {fileID: 6481012507408856505}
+  m_Layer: 8
   m_Name: Wall Pillar Large
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,9 +34,79 @@ Transform:
   - {fileID: 2281287343899431578}
   - {fileID: 2182223689003240293}
   - {fileID: 7618038218932712953}
+  - {fileID: 8859050268182162137}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6481012507408856505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183354136517190350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 585eb9937e2ee8c4c80b68883155f700, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pillars:
+  - {fileID: 8601941372521550798}
+  - {fileID: 8101029741304523318}
+  - {fileID: 8423698722176887702}
+  - {fileID: 1505066956494473248}
+  - {fileID: 1514054236911653343}
+  - {fileID: 7130154551141019459}
+  spawnRotations:
+  - 45
+  - 135
+  - 225
+  - 315
+  spawn: 0
+--- !u!1 &7428353244029002127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8859050268182162137}
+  - component: {fileID: 1027303833005692273}
+  m_Layer: 8
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8859050268182162137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7428353244029002127}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4049920004451621215}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!65 &1027303833005692273
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7428353244029002127}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 7, z: 1}
+  m_Center: {x: 0, y: -3.5, z: 0}
 --- !u!1001 &1739088461505574257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -100,21 +171,57 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8470879244843330815, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8470879244843330815, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 114e705d3dc4b5e418d5d2143e71da64, type: 2}
+    - target: {fileID: -3026214245538105380, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
         type: 3}
       propertyPath: m_Name
       value: Wall Pillar Large 04
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695506587157756093, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4695506587157756093, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 114e705d3dc4b5e418d5d2143e71da64, type: 2}
+    - target: {fileID: 4955339118645147937, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dadf13b8c0fed04e86dcd60b2fcb700, type: 3}
+--- !u!1 &1505066956494473248 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
+    type: 3}
+  m_PrefabInstance: {fileID: 1739088461505574257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2281287343899431578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3dadf13b8c0fed04e86dcd60b2fcb700,
@@ -128,6 +235,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4049920004451621215}
     m_Modifications:
+    - target: {fileID: -8759563846620204476, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8759563846620204476, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8759563846620204476, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8759563846620204476, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 12032a0178159f74d94307a1124118fd,
         type: 3}
       propertyPath: m_RootOrder
@@ -185,14 +312,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5544055083010150127, guid: 12032a0178159f74d94307a1124118fd,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5544055083010150127, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 114e705d3dc4b5e418d5d2143e71da64, type: 2}
     - target: {fileID: -2913263106369198886, guid: 12032a0178159f74d94307a1124118fd,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2913263106369198886, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 114e705d3dc4b5e418d5d2143e71da64, type: 2}
+    - target: {fileID: -1114059072584182819, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1114059072584182819, guid: 12032a0178159f74d94307a1124118fd,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -203,8 +345,74 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall Pillar Large 05
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3728769191774802020, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5035089896184185035, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5035089896184185035, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.000000029802322
+      objectReference: {fileID: 0}
+    - target: {fileID: 5035089896184185035, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5354946803255111207, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346068455665381381, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.000000029802319
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346068455665381381, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346068455665381381, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346068455665381381, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8208711168178519639, guid: 12032a0178159f74d94307a1124118fd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12032a0178159f74d94307a1124118fd, type: 3}
+--- !u!1 &1514054236911653343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 12032a0178159f74d94307a1124118fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1856162129758284942}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2182223689003240293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 12032a0178159f74d94307a1124118fd,
@@ -275,18 +483,58 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8010094577370720824, guid: 71852c4241a6b7c45a99ae53a14d8e28,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8010094577370720824, guid: 71852c4241a6b7c45a99ae53a14d8e28,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 114e705d3dc4b5e418d5d2143e71da64, type: 2}
+    - target: {fileID: -5500444930860713183, guid: 71852c4241a6b7c45a99ae53a14d8e28,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -1424711612553875605, guid: 71852c4241a6b7c45a99ae53a14d8e28,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1424711612553875605, guid: 71852c4241a6b7c45a99ae53a14d8e28,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 114e705d3dc4b5e418d5d2143e71da64, type: 2}
+    - target: {fileID: 861326846346572605, guid: 71852c4241a6b7c45a99ae53a14d8e28,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 71852c4241a6b7c45a99ae53a14d8e28,
         type: 3}
       propertyPath: m_Name
       value: Wall Pillar Large 06
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 71852c4241a6b7c45a99ae53a14d8e28,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 71852c4241a6b7c45a99ae53a14d8e28,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703464371678866075, guid: 71852c4241a6b7c45a99ae53a14d8e28,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107487189042294596, guid: 71852c4241a6b7c45a99ae53a14d8e28,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4107487189042294596, guid: 71852c4241a6b7c45a99ae53a14d8e28,
         type: 3}
@@ -295,6 +543,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 114e705d3dc4b5e418d5d2143e71da64, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71852c4241a6b7c45a99ae53a14d8e28, type: 3}
+--- !u!1 &7130154551141019459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 71852c4241a6b7c45a99ae53a14d8e28,
+    type: 3}
+  m_PrefabInstance: {fileID: 7940422392816865810}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7618038218932712953 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 71852c4241a6b7c45a99ae53a14d8e28,
@@ -363,11 +617,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6135824669260415311, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6135824669260415311, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.000000029802322
+      objectReference: {fileID: 0}
+    - target: {fileID: -6135824669260415311, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -699225382338397804, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -699225382338397804, guid: c38239e0576fe644f863443103e4d9cc,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 114e705d3dc4b5e418d5d2143e71da64, type: 2}
+    - target: {fileID: 575004353790988003, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 575004353790988003, guid: c38239e0576fe644f863443103e4d9cc,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -378,8 +657,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall Pillar Large 03
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784293034573275506, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7190849694015574080, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7190849694015574080, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.000000029802322
+      objectReference: {fileID: 0}
+    - target: {fileID: 7190849694015574080, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7485779766052648155, guid: c38239e0576fe644f863443103e4d9cc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c38239e0576fe644f863443103e4d9cc, type: 3}
+--- !u!1 &8423698722176887702 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c38239e0576fe644f863443103e4d9cc,
+    type: 3}
+  m_PrefabInstance: {fileID: 8658052131389888199}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9200060156777574700 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c38239e0576fe644f863443103e4d9cc,
@@ -450,6 +770,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 315bff0178b159f4895ecc9dcc32bb42,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 315bff0178b159f4895ecc9dcc32bb42,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 114e705d3dc4b5e418d5d2143e71da64, type: 2}
@@ -458,8 +783,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall Pillar Large 01
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 315bff0178b159f4895ecc9dcc32bb42,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 315bff0178b159f4895ecc9dcc32bb42,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 315bff0178b159f4895ecc9dcc32bb42, type: 3}
+--- !u!1 &8601941372521550798 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 315bff0178b159f4895ecc9dcc32bb42,
+    type: 3}
+  m_PrefabInstance: {fileID: 8908495870629981855}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8947505355245635956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 315bff0178b159f4895ecc9dcc32bb42,
@@ -530,6 +871,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 133dda2bd7506fe4ca6e1fe0ea2de4ab,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 133dda2bd7506fe4ca6e1fe0ea2de4ab,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 114e705d3dc4b5e418d5d2143e71da64, type: 2}
@@ -538,8 +884,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall Pillar Large 02
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 133dda2bd7506fe4ca6e1fe0ea2de4ab,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 133dda2bd7506fe4ca6e1fe0ea2de4ab,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 133dda2bd7506fe4ca6e1fe0ea2de4ab, type: 3}
+--- !u!1 &8101029741304523318 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 133dda2bd7506fe4ca6e1fe0ea2de4ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 8984059418510989159}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8874188088145145996 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 133dda2bd7506fe4ca6e1fe0ea2de4ab,
