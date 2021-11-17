@@ -9,7 +9,7 @@ namespace Qbism.WorldMap
 		//Config parameters
 		public bool hasWall;
 		[SerializeField] GameObject wall;
-		[SerializeField] float loweredYPos = -12;
+		[SerializeField] float normalYPos, loweredYPos = -12;
 		[SerializeField] float loweringSpeed = 1;
 		[SerializeField] LevelPin pin = null;
 
@@ -40,7 +40,7 @@ namespace Qbism.WorldMap
 				loweredYPos, wall.transform.position.z);
 				
 			else wall.transform.position = new Vector3(wall.transform.position.x,
-				0, wall.transform.position.z);
+				normalYPos, wall.transform.position.z);
 		}
 	}
 }

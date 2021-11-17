@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.Environment;
 using UnityEngine;
 
 namespace Qbism.General
@@ -10,15 +11,25 @@ namespace Qbism.General
 		//Config parameters
 		[SerializeField] GameObject[] pillars;
 		[SerializeField] float[] spawnRotations;
-		[SerializeField] bool spawn;
+		
+		//Cache
+		BiomeOverwriter bOverwriter;
 
 		//States
 		List<MeshRenderer> meshes = new List<MeshRenderer>();
 
+		private void Awake()
+		{
+			bOverwriter = FindObjectOfType<BiomeOverwriter>();
+		}
+
 		private void Start()
 		{
-			int i = Random.Range(0, pillars.Length);
-			EnableCorrectPillar(i);
+			if (bOverwriter && bOverwriter.respawnWallPillarVariety)
+			{
+				int i = Random.Range(0, pillars.Length);
+				EnableCorrectPillar(i);
+			}
 		}
 
 		private void EnableCorrectPillar(int i)

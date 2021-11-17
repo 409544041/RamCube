@@ -29,7 +29,7 @@ namespace Qbism.Environment
 
 		private void Start() 
 		{	
-			if (bOverwriter && bOverwriter.respawnVariety && generateOnStart) SpawnFlora();
+			if (bOverwriter && bOverwriter.respawnFloraVariety && generateOnStart) SpawnFlora();
 			else if (!bOverwriter && generateOnStart) SpawnFlora();
 		}
 

@@ -23,7 +23,7 @@ namespace Qbism.Environment
 
 		private void Start()
 		{
-			if (bOverwriter && bOverwriter.respawnVariety) GenerateDrips();
+			if (bOverwriter && bOverwriter.respawnFloraVariety) GenerateDrips();
 		}
 
 		private void GenerateDrips()
