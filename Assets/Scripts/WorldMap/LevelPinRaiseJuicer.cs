@@ -9,6 +9,7 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		[SerializeField] MMFeedbacks raiseJuice;
+		[SerializeField] ParticleSystem raisedDustFX;
 
 		public void PlayRaiseJuice()
 		{
@@ -19,6 +20,7 @@ namespace Qbism.WorldMap
 		public void StopRaiseJuice()
 		{
 			raiseJuice.StopFeedbacks();
+			raisedDustFX.Play();
 		}
 	}
 }
