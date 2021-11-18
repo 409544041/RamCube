@@ -11,8 +11,6 @@ namespace Qbism.WorldMap
 
 		public void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed)
 		{
-			pin.pinUI.SelectPinUI(); //Why this? Remove?
-
 			if (unlockAnimPlayed) pin.pinUI.ShowOrHideUI(true);
 			else pin.pinUI.ShowOrHideUI(false);
 
