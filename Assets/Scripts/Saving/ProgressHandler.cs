@@ -158,7 +158,7 @@ namespace Qbism.Saving
 				if (pinChecker.levelPins[i].m_levelData.f_Pin == pin)
 				return pinChecker.levelPins[i];
 			}
-			Debug.LogError("Couldn't find correct levelPin");
+			Debug.LogError("Couldn't find " + pin.f_name);
 			return foundPin;
 		}
 

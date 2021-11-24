@@ -50,14 +50,17 @@ namespace Qbism.WorldMap
 				pin.justCompleted = false;
 				if (completed && !pathDrawn) pin.justCompleted = true;
 
-				bool uUnlocked, uUnlockAnimPlayed; int uLocksLeft; List<E_MapWalls> uOriginWalls;
+				bool uUnlocked = false, uUnlockAnimPlayed = false; int uLocksLeft = 2; 
+				List<E_MapWalls> uOriginWalls = null; 
+				
 				bool checkedRaiseAndWallStatus = false;
 				List<E_Pin> unlockPins = levelEntity.f_UnlocksPins;
 
 				for (int j = 0; j < unlockPins.Count; j++)
 				{
-					FetchUnlockData(unlockPins[j], out uUnlocked, out uUnlockAnimPlayed,
-						out uLocksLeft, out uOriginWalls);
+					if (unlockPins[j].f_name != "_EMPTY")
+						FetchUnlockData(unlockPins[j], out uUnlocked, out uUnlockAnimPlayed,
+							out uLocksLeft, out uOriginWalls);
 
 					if (!checkedRaiseAndWallStatus)
 					{
@@ -66,8 +69,9 @@ namespace Qbism.WorldMap
 						checkedRaiseAndWallStatus = true;
 					}
 
-					pin.pinPather.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft,
-						completed, unlockPins.Count, uOriginWalls, wallDown, dottedAnimPlayed);
+					if (unlockPins[j].f_name != "_EMPTY")
+						pin.pinPather.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft,
+							completed, unlockPins.Count, uOriginWalls, wallDown, dottedAnimPlayed);
 				}
 
 				pinHandler.SetPinUI(pin, unlockAnimPlayed, completed);
