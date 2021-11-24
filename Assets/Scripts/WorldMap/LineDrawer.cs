@@ -11,6 +11,7 @@ namespace Qbism.WorldMap
 		//Config parameters
 		public LineTypes lineType = LineTypes.full;
 		[SerializeField] float drawStep = 7f, lineWidth = .15f, linePinBuffer = 1;
+		[SerializeField] ParticleSystem particle = null;
 
 
 		//Cache
@@ -73,22 +74,28 @@ namespace Qbism.WorldMap
 		private IEnumerator AnimateLineDrawing()
 		{
 			drawing = true;
+			particle.Play();
 
 			if (lRender.startWidth == 0 && lRender.endWidth == 0)
 				SetLineWidth(lineWidth);
 
 			var drawSpeed = drawStep * Time.deltaTime;
 			pointAlongLine = originPos;
+			particle.transform.position = originPos;
+			particle.transform.LookAt(destPos, Vector3.up);
 
 			while(Vector3.Distance(pointAlongLine, destPos) > .1f)
 			{
 				pointAlongLine = Vector3.MoveTowards(pointAlongLine, destPos, drawSpeed);
 				lRender.SetPosition(pointToMove, pointAlongLine);
 
+				particle.transform.position = pointAlongLine;
+
 				yield return null;
 			}
 
 			drawing = false;
+			particle.Stop();
 
 			var ent = E_LevelGameplayData.FindEntity(entity =>
 					entity.f_Pin == destLevelPin.m_levelData.f_Pin);
