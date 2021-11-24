@@ -12,9 +12,10 @@ namespace Qbism.Environment
 		//Config parameters
 		[SerializeField] GameObject[] meshParts;
 		[SerializeField] LineRenderer lineRender;
+		[SerializeField] ParticleSystem particle;
 		[SerializeField] BiomeVisualsScripOb biomeVarietySO;
 		[SerializeField] bool recalculate = false, checkBiomeLocally = false;
-		[SerializeField] bool isSkyBox = false, isVolume = false, isLine = false;
+		[SerializeField] bool isSkyBox = false, isVolume = false, isLine = false, isParticle = false;
 		//mesh and mat order should be same in scrip ob as in here
 
 		//States
@@ -24,9 +25,15 @@ namespace Qbism.Environment
 		{
 			FetchBiome();
 
-			if (isSkyBox) SetSkybox();
-			else if (isVolume) SetVolume();
-			else SetVisuals();
+			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
+			{
+				if (biomeVariety.biome.ToString() != currentBiome.f_name.ToString()) continue;
+
+				if (isSkyBox) RenderSettings.skybox = biomeVariety.parts[0].mats[0];
+				else if (isVolume) SetVolume(biomeVariety);
+				else if (isParticle) SetParticle(biomeVariety);
+				else SetVisuals(biomeVariety);
+			}
 		}
 
 		private void FetchBiome()
@@ -53,40 +60,35 @@ namespace Qbism.Environment
 			}
 		}
 
-		private void SetVisuals()
+		private void SetVisuals(BiomeVisualsScripOb.biomeVariety biomeVariety)
 		{
-			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
+			if (!lineRender)
 			{
-				if (biomeVariety.biome.ToString() != currentBiome.f_name.ToString()) continue;
-
-				if (!lineRender)
+				for (int i = 0; i < meshParts.Length; i++)
 				{
-					for (int i = 0; i < meshParts.Length; i++)
+					MeshFilter mFilter = meshParts[i].GetComponent<MeshFilter>();
+
+					Material[] newMats = CreateNewMatsArray(biomeVariety, i);
+
+					meshParts[i].GetComponent<Renderer>().materials = newMats;
+
+					//Change mesh
+					if (biomeVariety.parts[i].mesh != null)
 					{
-						MeshFilter mFilter = meshParts[i].GetComponent<MeshFilter>();
+						mFilter.mesh = biomeVariety.parts[i].mesh;
+					}
 
-						Material[] newMats = CreateNewMatsArray(biomeVariety, i);
-
-						meshParts[i].GetComponent<Renderer>().materials = newMats;
-
-						//Change mesh
-						if (biomeVariety.parts[i].mesh != null)
-						{
-							mFilter.mesh = biomeVariety.parts[i].mesh;
-						}
-
-						if (recalculate)
-						{
-							mFilter.mesh.RecalculateTangents();
-							mFilter.mesh.RecalculateNormals();
-						}
+					if (recalculate)
+					{
+						mFilter.mesh.RecalculateTangents();
+						mFilter.mesh.RecalculateNormals();
 					}
 				}
-				else
-				{
-					Material[] newMats = CreateNewMatsArray(biomeVariety, 0);
-					lineRender.materials = newMats;
-				}
+			}
+			else
+			{
+				Material[] newMats = CreateNewMatsArray(biomeVariety, 0);
+				lineRender.materials = newMats;
 			}
 		}
 
@@ -104,17 +106,7 @@ namespace Qbism.Environment
 			return newMats;
 		}
 
-		private void SetSkybox()
-		{
-			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
-			{
-				if (biomeVariety.biome.ToString() != currentBiome.f_name.ToString()) continue;
-
-				RenderSettings.skybox = biomeVariety.parts[0].mats[0];
-			}
-		}
-
-		private void SetVolume()
+		private void SetVolume(BiomeVisualsScripOb.biomeVariety biomeVariety)
 		{
 			//Not sure how it works is but it works
 			UnityEngine.Rendering.VolumeProfile volProf = GetComponent<UnityEngine.Rendering.Volume>()?.profile;
@@ -122,14 +114,14 @@ namespace Qbism.Environment
 			UnityEngine.Rendering.Universal.Vignette vignette;
 			if (!volProf.TryGet(out vignette)) throw new System.NullReferenceException(nameof(vignette));
 
-			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
-			{
-				if (biomeVariety.biome.ToString() != currentBiome.f_name.ToString()) continue;
+			var vigColor = biomeVariety.parts[0].mats[0].color;
+			vignette.color.Override(vigColor);
+		}
 
-				var vigColor = biomeVariety.parts[0].mats[0].color;
-
-				vignette.color.Override(vigColor);
-			}
+		private void SetParticle(BiomeVisualsScripOb.biomeVariety biomeVariety)
+		{
+			var renderMod = particle.GetComponent<ParticleSystemRenderer>();
+			renderMod.material = biomeVariety.parts[0].mats[0];
 		}
 	}
 }
