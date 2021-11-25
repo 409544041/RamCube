@@ -14,6 +14,7 @@ namespace Qbism.Saving
 		PinSelectionTracker pinSelTrack = null;
 		LevelPinUI[] pinUIs = null;
 		PinChecker pinChecker = null;
+		PositionBiomeCenterpoint centerPoint = null;
 		
 		//States
 		public E_Pin currentPin { get; set; }
@@ -51,13 +52,24 @@ namespace Qbism.Saving
 		public void FixMapUILinks()
 		{
 			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
-			if (pinSelTrack != null) pinSelTrack.onSavedPinFetch += FetchCurrentPin;
+			if (pinSelTrack != null)
+			{
+				pinSelTrack.onSavedPinFetch += FetchCurrentPin;
+				pinSelTrack.onSavedBiomeFetch += FetchCurrentBiome;
+			} 
 
 			pinUIs = FindObjectsOfType<LevelPinUI>();
 			foreach (LevelPinUI pinUI in pinUIs)
 			{
 				if (pinUI != null)
 					pinUI.onSetCurrentData += SetCurrentData;
+			}
+
+			centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
+			if (centerPoint != null)
+			{
+				centerPoint.onSavedPinFetch += FetchCurrentPin;
+				centerPoint.onSavedBiomeFetch += FetchCurrentBiome;
 			}
 		}
 
@@ -162,15 +174,30 @@ namespace Qbism.Saving
 			return foundPin;
 		}
 
-		private void FetchCurrentPin()
+		private LevelPin FetchCurrentPin()
 		{
 			for (int i = 0; i < pinChecker.levelPins.Length; i++)
 			{
 				if (pinChecker.levelPins[i].m_Pin.Entity != currentPin) continue;
 
-				pinSelTrack.selectedPin = pinChecker.levelPins[i];
-				pinSelTrack.currentBiome = pinChecker.levelPins[i].m_Pin.f_Biome;
+				return pinChecker.levelPins[i];
 			}
+
+			Debug.LogError("Couldn't fetch current pin");
+			return null;
+		}
+
+		private E_Biome FetchCurrentBiome()
+		{
+			for (int i = 0; i < pinChecker.levelPins.Length; i++)
+			{
+				if (pinChecker.levelPins[i].m_Pin.Entity != currentPin) continue;
+
+				return pinChecker.levelPins[i].m_Pin.f_Biome;
+			}
+
+			Debug.LogError("Couldn't fetch current biome");
+			return null;
 		}
 
 		private void SetLockDisabledValue(E_LevelGameplayData entity ,bool value)
@@ -281,8 +308,11 @@ namespace Qbism.Saving
 
 		private void OnDisable()
 		{
-			if (pinSelTrack != null) pinSelTrack.onSavedPinFetch -= FetchCurrentPin;
-
+			if (pinSelTrack != null)
+			{
+				pinSelTrack.onSavedPinFetch -= FetchCurrentPin;
+				pinSelTrack.onSavedBiomeFetch -= FetchCurrentBiome;
+			}
 			foreach (LevelPinUI pinUI in pinUIs)
 			{
 				if (pinUI != null)
@@ -302,6 +332,12 @@ namespace Qbism.Saving
 					lineDrawers[i].onSaveData -= SaveProgData;
 					lineDrawers[i].onDisableLockInSheet -= SetLockDisabledValue;
 				}
+			}
+
+			if (centerPoint != null)
+			{
+				centerPoint.onSavedPinFetch -= FetchCurrentPin;
+				centerPoint.onSavedBiomeFetch -= FetchCurrentBiome;
 			}
 		}
 	}

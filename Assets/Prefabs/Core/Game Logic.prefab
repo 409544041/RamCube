@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 5794705685702825650}
   - component: {fileID: 7034641184602976570}
   - component: {fileID: 8303605443065413252}
+  - component: {fileID: 3337399507372024400}
   m_Layer: 0
   m_Name: Game Logic
   m_TagString: Untagged
@@ -156,7 +157,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   biomeOverwrite: 0
-  respawnVariety: 0
+  respawnFloraVariety: 0
+  respawnWallPillarVariety: 0
 --- !u!114 &4771396763632375060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,10 +172,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshParts: []
+  lineRender: {fileID: 0}
+  particle: {fileID: 0}
   biomeVarietySO: {fileID: 11400000, guid: fe86ac17865a7b34aab40be6101f47df, type: 2}
   recalculate: 0
+  checkBiomeLocally: 0
   isSkyBox: 1
   isVolume: 0
+  isLine: 0
+  isParticle: 0
 --- !u!114 &7298168270807896021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,3 +231,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serpentConnected: 0
   worldMapConnected: 0
+  demoSplashConnected: 0
+  showEndLevelSeq: 0
+  allowDebugFinish: 0
+--- !u!114 &3337399507372024400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573582724643509009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6093adf1d9387ad449f2806bbd65830c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

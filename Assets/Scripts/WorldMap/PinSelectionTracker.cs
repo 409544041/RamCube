@@ -11,6 +11,9 @@ namespace Qbism.WorldMap
 		//Config parameters
 		[SerializeField] GameObject pinSelectionFX;
 
+		//Cache
+		PositionBiomeCenterpoint centerPoint;
+
 		//States
 		public LevelPin selectedPin { get; set; } = null;
 		public E_Biome currentBiome { get; set; }
@@ -19,16 +22,22 @@ namespace Qbism.WorldMap
 		
 		//Actions, events, delegates etc
 		public event Action<GameObject> onPinFetch;
-		public event Action<E_Biome, LevelPin> onSetCenterPos;
-		public event Action onSavedPinFetch;
+		public Func<LevelPin> onSavedPinFetch;
+		public Func<E_Biome> onSavedBiomeFetch;
 
-		private void Start() 
+		private void Awake() 
+		{
+			centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
+		}
+
+		private void Start()
 		{
 			//Sets pin and biome of saved 'currentLevelID' as selectedPin and currentBiome
-			onSavedPinFetch(); 
+			selectedPin = onSavedPinFetch();
+			currentBiome = onSavedBiomeFetch();
+
 			selectedPin.pinUI.SelectPinUI();
 			SetPinSelectionLoc();
-			onSetCenterPos(currentBiome, selectedPin);
 		}
 
 		private void Update() 
@@ -39,9 +48,10 @@ namespace Qbism.WorldMap
 			GameObject selected = EventSystem.current.currentSelectedGameObject;
 			onPinFetch(selected); //Sets new selectedPin
 			currentBiome = selectedPin.m_Pin.f_Biome;
+
 			if(selectedPin != prevPin)
 			{
-				onSetCenterPos(currentBiome, selectedPin);
+				centerPoint.StartPositionCenterPoint(currentBiome, selectedPin, false);
 				SetPinSelectionLoc();
 			} 
 		}

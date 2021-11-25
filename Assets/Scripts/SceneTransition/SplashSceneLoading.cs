@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using Qbism.General;
+using Qbism.WorldMap;
 
 namespace Qbism.SceneTransition
 {
@@ -31,8 +32,15 @@ namespace Qbism.SceneTransition
 			
 			if (switchBoard.demoSplashConnected)
 				yield return SceneManager.LoadSceneAsync("DemoSplashScene");
+
 			else if (switchBoard.worldMapConnected)
+			{
 				yield return SceneManager.LoadSceneAsync("WorldMap");
+
+				var centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
+				yield return centerPoint.PositionCenterPointOnMapLoad();
+			}
+
 			else yield return SceneManager.LoadSceneAsync(firstLevelIndex);
 			
 			yield return fader.FadeIn(fader.sceneTransTime); 

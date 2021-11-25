@@ -148,12 +148,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshParts: []
   lineRender: {fileID: 0}
+  particle: {fileID: 0}
   biomeVarietySO: {fileID: 11400000, guid: 6d1a33ff3e2b8994982dc0b8a0530f14, type: 2}
   recalculate: 0
   checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 1
   isLine: 0
+  isParticle: 0
 --- !u!1 &8324358988524104287
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,6 +492,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8324358988524104284}
     m_Modifications:
+    - target: {fileID: 3845706433914220480, guid: 26405bde6929b4c45b7c220b7be02b56,
+        type: 3}
+      propertyPath: m_TagString
+      value: MapCam
+      objectReference: {fileID: 0}
     - target: {fileID: 4847400476356365735, guid: 26405bde6929b4c45b7c220b7be02b56,
         type: 3}
       propertyPath: m_RootOrder

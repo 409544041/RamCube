@@ -229,7 +229,8 @@ namespace Qbism.Cubes
 				juicer.PlayFailSound();
 				loader.RestartLevel();
 			}
-			else if (mapConnected) loader.LoadWorldMap();
+			else if (mapConnected) FindObjectOfType<WorldMapLoading>().
+				StartLoadingWorldMap();
 			else loader.NextLevel();
 		}
 
