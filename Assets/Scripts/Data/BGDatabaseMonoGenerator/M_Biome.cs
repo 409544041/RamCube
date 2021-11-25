@@ -47,26 +47,26 @@ public partial class M_Biome : BGEntityGo
 			_f_name[Entity.Index] = value;
 		}
 	}
-	public System.Single f_MinZ
+	public UnityEngine.Vector2 f_MinMaxX
 	{
 		get
 		{
-			return _f_MinZ[Entity.Index];
+			return _f_MinMaxX[Entity.Index];
 		}
 		set
 		{
-			_f_MinZ[Entity.Index] = value;
+			_f_MinMaxX[Entity.Index] = value;
 		}
 	}
-	public System.Single f_MaxZ
+	public UnityEngine.Vector2 f_MinMaxZ
 	{
 		get
 		{
-			return _f_MaxZ[Entity.Index];
+			return _f_MinMaxZ[Entity.Index];
 		}
 		set
 		{
-			_f_MaxZ[Entity.Index] = value;
+			_f_MinMaxZ[Entity.Index] = value;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
@@ -78,22 +78,22 @@ public partial class M_Biome : BGEntityGo
 			return __f_name;
 		}
 	}
-	private static BansheeGz.BGDatabase.BGFieldFloat __f_MinZ;
-	public static BansheeGz.BGDatabase.BGFieldFloat _f_MinZ
+	private static BansheeGz.BGDatabase.BGFieldVector2 __f_MinMaxX;
+	public static BansheeGz.BGDatabase.BGFieldVector2 _f_MinMaxX
 	{
 		get
 		{
-			if(__f_MinZ==null || __f_MinZ.IsDeleted) __f_MinZ=(BansheeGz.BGDatabase.BGFieldFloat) MetaDefault.GetField(new BGId(5374342133323149295UL,17281580155556473531UL));
-			return __f_MinZ;
+			if(__f_MinMaxX==null || __f_MinMaxX.IsDeleted) __f_MinMaxX=(BansheeGz.BGDatabase.BGFieldVector2) MetaDefault.GetField(new BGId(5540830184506237896UL,8565432699577718708UL));
+			return __f_MinMaxX;
 		}
 	}
-	private static BansheeGz.BGDatabase.BGFieldFloat __f_MaxZ;
-	public static BansheeGz.BGDatabase.BGFieldFloat _f_MaxZ
+	private static BansheeGz.BGDatabase.BGFieldVector2 __f_MinMaxZ;
+	public static BansheeGz.BGDatabase.BGFieldVector2 _f_MinMaxZ
 	{
 		get
 		{
-			if(__f_MaxZ==null || __f_MaxZ.IsDeleted) __f_MaxZ=(BansheeGz.BGDatabase.BGFieldFloat) MetaDefault.GetField(new BGId(5628989294326945906UL,9389870997533305998UL));
-			return __f_MaxZ;
+			if(__f_MinMaxZ==null || __f_MinMaxZ.IsDeleted) __f_MinMaxZ=(BansheeGz.BGDatabase.BGFieldVector2) MetaDefault.GetField(new BGId(5028550124850018592UL,7548933405663777956UL));
+			return __f_MinMaxZ;
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();

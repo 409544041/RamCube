@@ -432,26 +432,26 @@ public partial class E_Biome : BGEntity
 			_f_name[Index] = value;
 		}
 	}
-	public System.Single f_MinZ
+	public UnityEngine.Vector2 f_MinMaxX
 	{
 		get
 		{
-			return _f_MinZ[Index];
+			return _f_MinMaxX[Index];
 		}
 		set
 		{
-			_f_MinZ[Index] = value;
+			_f_MinMaxX[Index] = value;
 		}
 	}
-	public System.Single f_MaxZ
+	public UnityEngine.Vector2 f_MinMaxZ
 	{
 		get
 		{
-			return _f_MaxZ[Index];
+			return _f_MinMaxZ[Index];
 		}
 		set
 		{
-			_f_MaxZ[Index] = value;
+			_f_MinMaxZ[Index] = value;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
@@ -463,22 +463,22 @@ public partial class E_Biome : BGEntity
 			return _ufle12jhs77_f_name;
 		}
 	}
-	private static BansheeGz.BGDatabase.BGFieldFloat _ufle12jhs77_f_MinZ;
-	public static BansheeGz.BGDatabase.BGFieldFloat _f_MinZ
+	private static BansheeGz.BGDatabase.BGFieldVector2 _ufle12jhs77_f_MinMaxX;
+	public static BansheeGz.BGDatabase.BGFieldVector2 _f_MinMaxX
 	{
 		get
 		{
-			if(_ufle12jhs77_f_MinZ==null || _ufle12jhs77_f_MinZ.IsDeleted) _ufle12jhs77_f_MinZ=(BansheeGz.BGDatabase.BGFieldFloat) MetaDefault.GetField(new BGId(5374342133323149295UL,17281580155556473531UL));
-			return _ufle12jhs77_f_MinZ;
+			if(_ufle12jhs77_f_MinMaxX==null || _ufle12jhs77_f_MinMaxX.IsDeleted) _ufle12jhs77_f_MinMaxX=(BansheeGz.BGDatabase.BGFieldVector2) MetaDefault.GetField(new BGId(5540830184506237896UL,8565432699577718708UL));
+			return _ufle12jhs77_f_MinMaxX;
 		}
 	}
-	private static BansheeGz.BGDatabase.BGFieldFloat _ufle12jhs77_f_MaxZ;
-	public static BansheeGz.BGDatabase.BGFieldFloat _f_MaxZ
+	private static BansheeGz.BGDatabase.BGFieldVector2 _ufle12jhs77_f_MinMaxZ;
+	public static BansheeGz.BGDatabase.BGFieldVector2 _f_MinMaxZ
 	{
 		get
 		{
-			if(_ufle12jhs77_f_MaxZ==null || _ufle12jhs77_f_MaxZ.IsDeleted) _ufle12jhs77_f_MaxZ=(BansheeGz.BGDatabase.BGFieldFloat) MetaDefault.GetField(new BGId(5628989294326945906UL,9389870997533305998UL));
-			return _ufle12jhs77_f_MaxZ;
+			if(_ufle12jhs77_f_MinMaxZ==null || _ufle12jhs77_f_MinMaxZ.IsDeleted) _ufle12jhs77_f_MinMaxZ=(BansheeGz.BGDatabase.BGFieldVector2) MetaDefault.GetField(new BGId(5028550124850018592UL,7548933405663777956UL));
+			return _ufle12jhs77_f_MinMaxZ;
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();

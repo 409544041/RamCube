@@ -33,17 +33,16 @@ namespace Qbism.WorldMap
 		{
 			prevBiome = currentBiome;
 			currentBiome = biome;
-			StartCoroutine(PositionCenterPoint(biome, selPin, onMapLoad));
+			StartCoroutine(PositionCenterPoint(selPin, onMapLoad));
 		}
 
 		public Coroutine PositionCenterPointOnMapLoad()
 		{
-			var biome = onSavedBiomeFetch();
 			var selPin = onSavedPinFetch();
-			return StartCoroutine(PositionCenterPoint(biome, selPin, true));
+			return StartCoroutine(PositionCenterPoint(selPin, true));
 		}
 
-		private IEnumerator PositionCenterPoint(E_Biome biome, LevelPin selPin, bool onMapLoad)
+		private IEnumerator PositionCenterPoint(LevelPin selPin, bool onMapLoad)
 		{
 			CinemachineVirtualCamera virtCam = null; 
 			CinemachineBrain brain = null;
@@ -54,11 +53,10 @@ namespace Qbism.WorldMap
 			if (onMapLoad) yield return new WaitForSeconds(.1f); //To avoid race condition
 
 			float xPos;
-			if(currentBiome != prevBiome || onMapLoad) xPos = FindXPos(biome);
-			else xPos = transform.position.x;
+			float zPos;
+			FindPos(selPin, out xPos, out zPos);
 
 			float yPos = selPin.pinRaiser.unlockedYPos;
-			float zPos = FindZPos(biome, selPin);
 			transform.position = new Vector3(xPos, yPos, zPos);
 
 			if (onMapLoad) FinishCamHardCut(virtCam, brain, camToPointDiff);
@@ -85,43 +83,57 @@ namespace Qbism.WorldMap
 			brain.enabled = true;
 		}
 
-		private float FindXPos(E_Biome biome)
+		private void FindPos(LevelPin selPin, out float xPos, out float zPos)
 		{
-			firstValueAssigned = false;
-			FindEdgePins(biome);
+			Vector3 selPos = selPin.pinPather.pathPoint.transform.position;
 
-			float xPos = leftest + (rightest - leftest) / 2;
-			return xPos;
+			var selPosX = selPos.x;
+			var selPosZ = selPos.z;
+
+			float minX, maxX, minZ, maxZ;
+			FetchMinMaxValues(out minX, out maxX, out minZ, out maxZ);
+			print(minX + " " + maxX + " " + minZ + " " + maxZ);
+
+			if(selPosX <= minX) xPos = minX;
+			else if(selPosX >= maxX) xPos = maxX;
+			else xPos = selPosX;
+
+			if(selPosZ <= minZ) zPos = minZ;
+			else if(selPosZ >= maxZ) zPos = maxZ;
+			else zPos = selPosZ;
 		}
 
-		private void FindEdgePins(E_Biome biome)
+		private void FetchMinMaxValues(out float minX, out float maxX, 
+			out float minZ, out float maxZ)
 		{
-			foreach (LevelPin pin in progHandler.FetchLevelPins())
+			bool firstValueAssigned = false;
+
+			float tempMinX = 0, tempMaxX = 0, tempMinZ = 0, tempMaxZ = 0;
+
+			for (int i = 0; i < E_Biome.CountEntities; i++)
 			{
-				if (pin.m_Pin.f_Biome != biome) continue;
+				var biomeEnt = E_Biome.GetEntity(i);
+				var biomeGameplayEnt = E_BiomeGameplayData.GetEntity(i);
+				
+				if (!biomeGameplayEnt.f_Unlocked) continue;
 
 				if (!firstValueAssigned)
 				{
-					leftest = pin.transform.position.x;
-					rightest = pin.transform.position.x;
+					tempMinX = biomeEnt.f_MinMaxX.x;
+					tempMaxX = biomeEnt.f_MinMaxX.y;
+					tempMinZ = biomeEnt.f_MinMaxZ.x;
+					tempMaxZ = biomeEnt.f_MinMaxZ.y;
 
 					firstValueAssigned = true;
 				}
 
-				if (pin.transform.position.x < leftest) leftest = pin.transform.position.x;
-				if (pin.transform.position.x > rightest) rightest = pin.transform.position.x;
+				if (biomeEnt.f_MinMaxX.x < tempMinX) tempMinX = biomeEnt.f_MinMaxX.x;
+				if (biomeEnt.f_MinMaxX.y > tempMaxX) tempMaxX = biomeEnt.f_MinMaxX.y;
+				if (biomeEnt.f_MinMaxZ.x < tempMinZ) tempMinZ = biomeEnt.f_MinMaxZ.x;
+				if (biomeEnt.f_MinMaxZ.y > tempMaxZ) tempMaxZ = biomeEnt.f_MinMaxZ.y;
 			}
-		}
 
-		private float FindZPos(E_Biome biome, LevelPin selPin)
-		{
-			Vector3 selPos = selPin.pinPather.pathPoint.transform.position;
-			float zPos = selPos.z;
-
-			if(zPos <= biome.f_MinZ) zPos = biome.f_MinZ;
-			if(zPos >= biome.f_MaxZ) zPos = biome.f_MaxZ;
-
-			return zPos;
+			minX = tempMinX; maxX = tempMaxX; minZ = tempMinZ; maxZ = tempMaxZ;
 		}
 	}
 }
