@@ -92,7 +92,6 @@ namespace Qbism.WorldMap
 
 			float minX, maxX, minZ, maxZ;
 			FetchMinMaxValues(out minX, out maxX, out minZ, out maxZ);
-			print(minX + " " + maxX + " " + minZ + " " + maxZ);
 
 			if(selPosX <= minX) xPos = minX;
 			else if(selPosX >= maxX) xPos = maxX;
