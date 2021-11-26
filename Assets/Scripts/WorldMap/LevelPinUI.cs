@@ -5,7 +5,7 @@ using Qbism.Saving;
 using Qbism.SceneTransition;
 using UnityEngine;
 using UnityEngine.UI;
-using BansheeGz.BGDatabase;
+using TMPro;
 
 namespace Qbism.WorldMap
 {
@@ -14,7 +14,7 @@ namespace Qbism.WorldMap
 		//Config parameters
 		public LevelPin levelPin = null;
 		[SerializeField] Button button = null;
-		[SerializeField] Image lockIcon = null;
+		[SerializeField] Image compIcon, compDiamond, unCompIcon, lockIcon;
 		[SerializeField] float uiHeight;
 
 		//Cache
@@ -76,7 +76,7 @@ namespace Qbism.WorldMap
 		public void ShowOrHideUI(bool value)
 		{
 			GetComponentInChildren<Image>().enabled = value;
-			GetComponentInChildren<Text>().enabled = value;
+			GetComponentInChildren<TextMeshProUGUI>().enabled = value;
 			GetComponentInChildren<Button>().enabled = value;
 		}
 
