@@ -19,6 +19,7 @@ namespace Qbism.Saving
 		//States
 		public E_Pin currentPin { get; set; }
 		public E_Biome currentBiome { get; set ; }
+		string debugCurrentPin, debugCurrentBiome;
 		public bool currentHasSegment { get ; set ; }
 
 		List<LevelStatusData> levelDataList = new List<LevelStatusData>();
@@ -31,8 +32,19 @@ namespace Qbism.Saving
 		{
 			serpProg = GetComponent<SerpentProgress>();
 			currentPin = E_LevelData.GetEntity(0).f_Pin;
+			currentBiome = currentPin.f_Biome;
 			BuildDataLists();
 			LoadProgHandlerData();
+		}
+
+		private void Update() 
+		{
+			//this is just for me to see current values in editor
+			if (debugCurrentPin != currentPin.f_name)
+				debugCurrentPin = currentPin.f_name;
+
+			if(debugCurrentBiome != currentBiome.f_name)
+				debugCurrentBiome = currentBiome.f_name;
 		}
 
 		private void BuildDataLists()
@@ -110,7 +122,7 @@ namespace Qbism.Saving
 			entity.f_Pin == pin);
 
 			if (pin == null)
-				Debug.LogError("Couldn't find correct entity");
+				Debug.LogError("Couldn't find " + pin.f_name);
 
 			if (entity.f_Completed == false) 
 			{
@@ -220,7 +232,7 @@ namespace Qbism.Saving
 				levelData.unlockAnimPlayed = gameplayEntity.f_UnlockAnimPlayed;
 				levelData.pathDrawn = gameplayEntity.f_PathDrawn;
 				levelData.lockDisabled = gameplayEntity.f_LockIconDisabled;
-				levelData.wallDown = gameplayEntity.f_wallDown;
+				levelData.wallDown = gameplayEntity.f_WallDown;
 			}
 
 			for (int i = 0; i < E_BiomeGameplayData.CountEntities; i++)
@@ -256,7 +268,7 @@ namespace Qbism.Saving
 				entity.f_UnlockAnimPlayed = levelData.unlockAnimPlayed;
 				entity.f_PathDrawn = levelData.pathDrawn;
 				entity.f_LockIconDisabled = levelData.lockDisabled;
-				entity.f_wallDown = levelData.wallDown;
+				entity.f_WallDown = levelData.wallDown;
 			}
 
 			for (int i = 0; i < E_BiomeGameplayData.CountEntities; i++)
@@ -275,7 +287,7 @@ namespace Qbism.Saving
 				levelData.f_DottedAnimPlayed = false; levelData.f_Completed = false;
 				levelData.f_PathDrawn = false;
 				levelData.f_LockIconDisabled = false;
-				levelData.f_wallDown = false;
+				levelData.f_WallDown = false;
 
 				if (i == 0)
 				{

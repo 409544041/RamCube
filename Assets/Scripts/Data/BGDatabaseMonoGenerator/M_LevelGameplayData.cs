@@ -132,15 +132,26 @@ public partial class M_LevelGameplayData : BGEntityGo
 			_f_LockIconDisabled[Entity.Index] = value;
 		}
 	}
-	public System.Boolean f_wallDown
+	public System.Boolean f_WallDown
 	{
 		get
 		{
-			return _f_wallDown[Entity.Index];
+			return _f_WallDown[Entity.Index];
 		}
 		set
 		{
-			_f_wallDown[Entity.Index] = value;
+			_f_WallDown[Entity.Index] = value;
+		}
+	}
+	public System.Boolean f_DebugComplete
+	{
+		get
+		{
+			return _f_DebugComplete[Entity.Index];
+		}
+		set
+		{
+			_f_DebugComplete[Entity.Index] = value;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
@@ -224,13 +235,22 @@ public partial class M_LevelGameplayData : BGEntityGo
 			return __f_LockIconDisabled;
 		}
 	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_wallDown;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_wallDown
+	private static BansheeGz.BGDatabase.BGFieldBool __f_WallDown;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_WallDown
 	{
 		get
 		{
-			if(__f_wallDown==null || __f_wallDown.IsDeleted) __f_wallDown=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5421608937216315096UL,9085621000404421508UL));
-			return __f_wallDown;
+			if(__f_WallDown==null || __f_WallDown.IsDeleted) __f_WallDown=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5421608937216315096UL,9085621000404421508UL));
+			return __f_WallDown;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool __f_DebugComplete;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_DebugComplete
+	{
+		get
+		{
+			if(__f_DebugComplete==null || __f_DebugComplete.IsDeleted) __f_DebugComplete=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5260964097523911809UL,9029259795278731182UL));
+			return __f_DebugComplete;
 		}
 	}
 }

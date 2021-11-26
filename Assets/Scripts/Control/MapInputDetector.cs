@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Qbism.Saving;
 using Qbism.SceneTransition;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Qbism.Control
 {
@@ -10,6 +11,7 @@ namespace Qbism.Control
 	{
 		//Cache
 		GameControls controls;
+		ProgressHandler progHandler;
 
 		void Awake()
 		{
@@ -17,6 +19,9 @@ namespace Qbism.Control
 
 			controls.Gameplay.DebugDeleteSaveData.performed += ctx => DeleteSaveData();
 			controls.Gameplay.DebugKey4.performed += ctx => LoadSerpentScreen();
+			controls.Gameplay.Restart.performed += ctx => ReloadScene();
+
+			progHandler = FindObjectOfType<ProgressHandler>();
 		}
 
 		private void OnEnable()
@@ -26,7 +31,6 @@ namespace Qbism.Control
 
 		private void DeleteSaveData()
 		{
-			ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
 			progHandler.WipeProgData();
 		}
 
@@ -34,6 +38,12 @@ namespace Qbism.Control
 		{
 			SceneHandler sceneHandler = GetComponent<SceneHandler>();
 			sceneHandler.LoadSerpentScreen();
+		}
+
+		private void ReloadScene()
+		{
+			progHandler.SaveProgData();
+			GetComponent<WorldMapLoading>().StartLoadingWorldMap();
 		}
 
 		private void OnDisable()

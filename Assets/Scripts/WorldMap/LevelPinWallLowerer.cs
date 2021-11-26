@@ -31,7 +31,7 @@ namespace Qbism.WorldMap
 			}
 
 			E_LevelGameplayData.FindEntity(entity =>
-				entity.f_Pin == GetComponent<LevelPin>().m_levelData.f_Pin).f_wallDown = true;
+				entity.f_Pin == GetComponent<LevelPin>().m_levelData.f_Pin).f_WallDown = true;
 		}
 
 		public void CheckWallStatus(bool wallDown)

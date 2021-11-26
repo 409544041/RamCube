@@ -10,6 +10,7 @@ namespace Qbism.WorldMap
 		//Config parameters
 		public LevelPin[] levelPins = null;
 		[SerializeField] PinHandler pinHandler = null;
+		[SerializeField] MapDebugCompleter debugComp;
 
 		//Cache
 		ProgressHandler progHandler = null;
@@ -21,6 +22,7 @@ namespace Qbism.WorldMap
 
 		private void Start() 
 		{
+			debugComp.CheckDebugCompletes();
 			CheckLevelPins();
 		}
 
@@ -113,7 +115,7 @@ namespace Qbism.WorldMap
 			completed = gameplayEntity.f_Completed;
 			pathDrawn = gameplayEntity.f_PathDrawn;
 			originWallList = levelEntity.f_WallsFromOrigin;
-			wallDown = gameplayEntity.f_wallDown;
+			wallDown = gameplayEntity.f_WallDown;
 		}
 
 		private void FetchUnlockData(E_Pin unlockPin, out bool uUnlocked,
