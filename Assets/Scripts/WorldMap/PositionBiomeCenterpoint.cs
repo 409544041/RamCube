@@ -29,20 +29,22 @@ namespace Qbism.WorldMap
 			selTracker = FindObjectOfType<PinSelectionTracker>();
 		}
 
-		public void StartPositionCenterPoint(E_Biome biome, LevelPin selPin, bool onMapLoad)
+		public void StartPositionCenterPoint(E_Biome biome, LevelPin selPin, bool onMapLoad,
+			bool specificPos, Vector2 pos)
 		{
 			prevBiome = currentBiome;
 			currentBiome = biome;
-			StartCoroutine(PositionCenterPoint(selPin, onMapLoad));
+			StartCoroutine(PositionCenterPoint(selPin, onMapLoad, specificPos, pos));
 		}
 
 		public Coroutine PositionCenterPointOnMapLoad()
 		{
 			var selPin = onSavedPinFetch();
-			return StartCoroutine(PositionCenterPoint(selPin, true));
+			return StartCoroutine(PositionCenterPoint(selPin, true, false, new Vector2(0, 0)));
 		}
 
-		private IEnumerator PositionCenterPoint(LevelPin selPin, bool onMapLoad)
+		private IEnumerator PositionCenterPoint(LevelPin selPin, bool onMapLoad, 
+			bool specificPos, Vector2 pos)
 		{
 			CinemachineVirtualCamera virtCam = null; 
 			CinemachineBrain brain = null;
@@ -52,12 +54,13 @@ namespace Qbism.WorldMap
 
 			if (onMapLoad) yield return new WaitForSeconds(.1f); //To avoid race condition
 
-			float xPos;
-			float zPos;
-			FindPos(selPin, out xPos, out zPos);
+			float xPos = 0;
+			float zPos = 0;
 
-			float yPos = selPin.pinRaiser.unlockedYPos;
-			transform.position = new Vector3(xPos, yPos, zPos);
+			if (!specificPos) FindPos(selPin, out xPos, out zPos);
+			else ComparePosToMinMaxValues(out xPos, out zPos, pos.x, pos.y);
+
+			transform.position = new Vector3(xPos, 0, zPos);
 
 			if (onMapLoad) FinishCamHardCut(virtCam, brain, camToPointDiff);
 		}
@@ -90,16 +93,21 @@ namespace Qbism.WorldMap
 			var selPosX = selPos.x;
 			var selPosZ = selPos.z;
 
+			ComparePosToMinMaxValues(out xPos, out zPos, selPosX, selPosZ);
+		}
+
+		private void ComparePosToMinMaxValues(out float xPos, out float zPos, float currentPosX, float currentPosZ)
+		{
 			float minX, maxX, minZ, maxZ;
 			FetchMinMaxValues(out minX, out maxX, out minZ, out maxZ);
 
-			if(selPosX <= minX) xPos = minX;
-			else if(selPosX >= maxX) xPos = maxX;
-			else xPos = selPosX;
+			if (currentPosX <= minX) xPos = minX;
+			else if (currentPosX >= maxX) xPos = maxX;
+			else xPos = currentPosX;
 
-			if(selPosZ <= minZ) zPos = minZ;
-			else if(selPosZ >= maxZ) zPos = maxZ;
-			else zPos = selPosZ;
+			if (currentPosZ <= minZ) zPos = minZ;
+			else if (currentPosZ >= maxZ) zPos = maxZ;
+			else zPos = currentPosZ;
 		}
 
 		private void FetchMinMaxValues(out float minX, out float maxX, 

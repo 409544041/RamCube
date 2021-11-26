@@ -51,7 +51,8 @@ namespace Qbism.WorldMap
 
 			if(selectedPin != prevPin)
 			{
-				centerPoint.StartPositionCenterPoint(currentBiome, selectedPin, false);
+				centerPoint.StartPositionCenterPoint(currentBiome, selectedPin, false, 
+					false, new Vector2(0, 0));
 				SetPinSelectionLoc();
 			} 
 		}

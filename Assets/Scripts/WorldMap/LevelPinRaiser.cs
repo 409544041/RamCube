@@ -11,8 +11,7 @@ namespace Qbism.WorldMap
 		[SerializeField] LevelPin pin;
 		[SerializeField] float biomeLockedYPos = -14, lockedYPos = -11;
 		public float unlockedYPos = -9;
-		[SerializeField] float raiseStep = .25f;
-		[SerializeField] float raiseSpeed = .05f;
+		[SerializeField] float raiseStep = .25f, raiseSpeed = .05f, raiseDelay = 1f;
 		[SerializeField] GameObject pinVisuals = null;
 		[SerializeField] LevelPinRaiseJuicer raiseJuicer;
 
@@ -43,6 +42,8 @@ namespace Qbism.WorldMap
 
 		public IEnumerator BiomeUnlockRaising()
 		{
+			yield return new WaitForSeconds(raiseDelay);
+
 			raising = true;
 
 			while (raising)
@@ -68,6 +69,8 @@ namespace Qbism.WorldMap
 
 		private IEnumerator RaiseCliff(List<LevelPin> originPins)
 		{
+			yield return new WaitForSeconds(raiseDelay);
+			
 			raiseJuicer.PlayRaiseJuice();
 			raising = true;
 

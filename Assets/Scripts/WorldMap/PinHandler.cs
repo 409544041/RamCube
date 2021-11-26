@@ -9,6 +9,14 @@ namespace Qbism.WorldMap
 		//Config parameters
 		[SerializeField] PinChecker pinChecker = null;
 
+		//Cache
+		PositionBiomeCenterpoint centerPoint = null;
+
+		private void Awake() 
+		{
+			centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
+		}
+
 		public void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed)
 		{
 			if (unlockAnimPlayed) pin.pinUI.ShowOrHideUI(true);
@@ -40,6 +48,8 @@ namespace Qbism.WorldMap
 			var wallsFromOrigin = 0;
 			if (originWalls != null) wallsFromOrigin = originWalls.Count;
 			int loweredWalls = 0;
+
+			Vector2 pointBetweenPins = CalculateCamMidPoint(pin, originPins);
 
 			for (int i = 0; i < originPins.Count; i++)
 			{
@@ -96,6 +106,8 @@ namespace Qbism.WorldMap
 								E_BiomeGameplayData.FindEntity(entity =>
 									entity.f_Biome == pin.m_levelData.f_Pin.f_Biome).f_Unlocked = true;
 
+								centerPoint.StartPositionCenterPoint(null, null, false, true, pointBetweenPins);
+
 								List<E_LevelData> pinsToRaise = E_LevelData.FindEntities(entity =>
 									entity.f_Pin.f_Biome == pin.m_levelData.f_Pin.f_Biome);
 
@@ -112,7 +124,7 @@ namespace Qbism.WorldMap
 									}
 								}
 							}
-							
+
 							raised = true;
 						}
 					}
@@ -124,6 +136,23 @@ namespace Qbism.WorldMap
 			}
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;
+		}
+
+		private Vector2 CalculateCamMidPoint(LevelPin pin, List<LevelPin> originPins)
+		{
+			var totalX = pin.transform.position.x;
+			var totalZ = pin.transform.position.z;
+
+			for (int i = 0; i < originPins.Count; i++)
+			{
+				totalX += originPins[i].transform.position.x;
+				totalZ += originPins[i].transform.position.z;
+			}
+
+			var centerX = totalX / (originPins.Count + 1);
+			var centerZ = totalZ / (originPins.Count + 1);
+
+			return new Vector2 (centerX, centerZ);
 		}
 	}
 }
