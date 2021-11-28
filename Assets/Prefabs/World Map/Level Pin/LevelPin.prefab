@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2949411983582854687}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -1.5, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 4435121214177497342}
@@ -203,9 +203,10 @@ MonoBehaviour:
   pin: {fileID: 739622578570481642}
   biomeLockedYPos: -4.5
   lockedYPos: -3
-  unlockedYPos: 0
+  unlockedYPos: -1
   raiseStep: 0.25
   raiseSpeed: 0.05
+  raiseDelay: 1
   pinVisuals: {fileID: 7889597844541611041}
   raiseJuicer: {fileID: 1248485919370541080}
 --- !u!114 &8080895034753384437
@@ -223,7 +224,7 @@ MonoBehaviour:
   hasWall: 0
   wall: {fileID: 0}
   normalYPos: 1.5
-  loweredYPos: -1.5
+  loweredYPos: -1.75
   loweringSpeed: 3
   pin: {fileID: 739622578570481642}
 --- !u!114 &1248485919370541080
@@ -300,7 +301,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6634471909946147462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -1.5, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 3094542345819858911}
