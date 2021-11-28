@@ -10,7 +10,7 @@ namespace Qbism.WorldMap
 	public class EditorLevelPinUI : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] TextMeshProUGUI buttonText;
+		[SerializeField] TextMeshProUGUI uiText;
 
 		//Cache 
 		LevelPinUI pinUI;
@@ -35,9 +35,9 @@ namespace Qbism.WorldMap
 		private void SetUIText()
 		{
 			var uiText = pinUI.levelPin.m_levelData.f_Pin.f_PinTextUI.ToString();
-			buttonText.text = uiText;
+			this.uiText.text = uiText;
 
-			var butRecTrans = buttonText.rectTransform;
+			var butRecTrans = this.uiText.rectTransform;
 			
 			if (uiText == "1" || uiText == "11") 
 				butRecTrans.anchoredPosition = new Vector3(-1.5f, butRecTrans.anchoredPosition.y, 0);

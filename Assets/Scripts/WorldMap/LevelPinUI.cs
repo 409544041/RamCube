@@ -15,7 +15,12 @@ namespace Qbism.WorldMap
 		public LevelPin levelPin = null;
 		[SerializeField] Button button = null;
 		[SerializeField] Image compIcon, compDiamond, unCompIcon, lockIcon;
+		[SerializeField] TextMeshProUGUI uiText;
+		[SerializeField] Color unCompText,  compText;
+		[ColorUsage(true, true)]
+		[SerializeField] Color unCompTextOutline, compTextOutline;
 		[SerializeField] float uiHeight;
+		public LevelPinUIJuicer pinUIJuice;
 
 		//Cache
 		EditorLevelPinUI editorPin = null;
@@ -59,25 +64,31 @@ namespace Qbism.WorldMap
 			handler.LoadBySceneIndex(levelPin.m_levelData.f_Pin.f_Index);
 		}
 
-		public void SetUIComplete()
+		public void SetUIState(bool compValue, bool diamondValue, bool unCompValue, 
+			bool textValue, bool buttonValue)
 		{
-			ColorBlock colors = button.colors;
-			colors.normalColor = new Color32(86, 235, 111, 255);
-			colors.highlightedColor = new Color32(137, 235, 156, 255);
-			colors.pressedColor = new Color32(76, 133, 106, 255);
-			button.colors = colors;
+			if (compValue == true)
+			{
+				uiText.color = compText;
+				uiText.outlineColor = compTextOutline;
+			}
+
+			else
+			{
+				uiText.color = unCompText; 
+				uiText.outlineColor = unCompTextOutline;
+			}
+
+			compIcon.enabled = compValue;
+			compDiamond.enabled = diamondValue;
+			unCompIcon.enabled = unCompValue;
+			uiText.enabled = textValue;
+			button.enabled = buttonValue;
 		}
 
 		public void SelectPinUI()
 		{
 			button.Select();
-		}
-
-		public void ShowOrHideUI(bool value)
-		{
-			GetComponentInChildren<Image>().enabled = value;
-			GetComponentInChildren<TextMeshProUGUI>().enabled = value;
-			GetComponentInChildren<Button>().enabled = value;
 		}
 
 		private void FetchPin(GameObject selected)

@@ -19,10 +19,9 @@ namespace Qbism.WorldMap
 
 		public void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed)
 		{
-			if (unlockAnimPlayed) pin.pinUI.ShowOrHideUI(true);
-			else pin.pinUI.ShowOrHideUI(false);
-
-			if (completed) pin.pinUI.SetUIComplete();
+			if (!unlockAnimPlayed) pin.pinUI.SetUIState(false, false, false, false, false);
+			else if (unlockAnimPlayed && !completed) pin.pinUI.SetUIState(false, false, true, true, true);
+			else if (completed) pin.pinUI.SetUIState(true, true, false, true, true);
 
 			pin.pinUI.DisableLockIcon();
 		}
