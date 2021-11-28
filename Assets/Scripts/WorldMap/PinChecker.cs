@@ -76,7 +76,7 @@ namespace Qbism.WorldMap
 							completed, unlockPins.Count, uOriginWalls, wallDown, dottedAnimPlayed);
 				}
 
-				pinHandler.SetPinUI(pin, unlockAnimPlayed, completed);
+				pinHandler.SetPinUI(pin, unlockAnimPlayed, completed, pin.justCompleted);
 				pinHandler.InitiateRaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft,
 					dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn, originWalls,
 					biomeUnlocked);

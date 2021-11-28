@@ -8,18 +8,66 @@ namespace Qbism.WorldMap
 	public class LevelPinUIJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks unCompJuice, CompJuice;
+		[SerializeField] MMFeedbacks unCompJuice, compJuice, compDiamondJuice;
+		[SerializeField] LevelPinUI pinUI;
+		public float compJuiceDelay, unCompJuiceDelay;
 
-		public void PlayUnCompJuice()
+		public void StartPlayingUnCompJuice()
 		{
-			unCompJuice.Initialization();
-			unCompJuice.PlayFeedbacks();
+			StartCoroutine(PlayUnCompJuice());
 		}
 
-		public void PlayCompJuice()
+		private IEnumerator PlayUnCompJuice()
 		{
-			CompJuice.Initialization();
-			CompJuice.PlayFeedbacks();
+			yield return new WaitForSeconds(unCompJuiceDelay);
+
+			unCompJuice.Initialization();
+			unCompJuice.PlayFeedbacks();
+			pinUI.SetUIState(false, false, true, true, true);
+		}
+
+		public void StartPlayingCompJuice()
+		{
+			StartCoroutine(PlayCompJuice());
+		}
+
+		private IEnumerator PlayCompJuice()
+		{
+			MMFeedbackScale scaleUnComp = null;
+			MMFeedbackScale scaleComp = null;
+
+			var scalers = compJuice.GetComponents<MMFeedbackScale>();			
+
+			for (int i = 0; i < scalers.Length; i++)
+			{
+				if (scalers[i].Label == "ScaleUncomp") scaleUnComp = scalers[i];
+				if (scalers[i].Label == "ScaleComp") scaleComp = scalers[i];
+			}
+
+			pinUI.SetUIState(false, false, true, true, false);
+
+			yield return new WaitForSeconds(compJuiceDelay);
+
+			compJuice.Initialization();
+			compJuice.PlayFeedbacks();
+
+			yield return new WaitForSeconds(scaleUnComp.AnimateScaleDuration + .05f);
+
+			pinUI.SetUIState(true, false, false, false, true);
+
+			var compJuiceDur = compJuice.GetComponent<MMFeedbackScale>().
+				AnimateScaleDuration;
+			yield return new WaitForSeconds(compJuiceDur);
+
+			compDiamondJuice.Initialization();
+			compDiamondJuice.PlayFeedbacks();
+
+			var diamondDelay = compDiamondJuice.GetComponent<MMFeedbackScale>().
+				Timing.InitialDelay;
+			yield return new WaitForSeconds(diamondDelay);
+
+			pinUI.compDiamond.enabled = true;
+			pinUI.uiText.enabled = true;
 		}
 	}
 

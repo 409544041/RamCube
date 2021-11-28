@@ -17,11 +17,14 @@ namespace Qbism.WorldMap
 			centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
 		}
 
-		public void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed)
+
+
+		public void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed, bool justCompleted)
 		{
 			if (!unlockAnimPlayed) pin.pinUI.SetUIState(false, false, false, false, false);
 			else if (unlockAnimPlayed && !completed) pin.pinUI.SetUIState(false, false, true, true, true);
-			else if (completed) pin.pinUI.SetUIState(true, true, false, true, true);
+			else if (completed && !justCompleted) pin.pinUI.SetUIState(true, true, false, true, true);
+			else if (completed && justCompleted) pin.pinUI.pinUIJuice.StartPlayingCompJuice();
 
 			pin.pinUI.DisableLockIcon();
 		}

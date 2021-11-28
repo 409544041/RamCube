@@ -14,11 +14,11 @@ namespace Qbism.WorldMap
 		//Config parameters
 		public LevelPin levelPin = null;
 		[SerializeField] Button button = null;
-		[SerializeField] Image compIcon, compDiamond, unCompIcon, lockIcon;
-		[SerializeField] TextMeshProUGUI uiText;
-		[SerializeField] Color unCompText,  compText;
+		public Image compIcon, compDiamond, unCompIcon, lockIcon;
+		public TextMeshProUGUI uiText;
+		public Color unCompText,  compText;
 		[ColorUsage(true, true)]
-		[SerializeField] Color unCompTextOutline, compTextOutline;
+		public Color unCompTextOutline, compTextOutline;
 		[SerializeField] float uiHeight;
 		public LevelPinUIJuicer pinUIJuice;
 

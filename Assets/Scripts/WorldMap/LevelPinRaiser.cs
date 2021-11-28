@@ -87,8 +87,9 @@ namespace Qbism.WorldMap
 					(transform.position.x, unlockedYPos, transform.position.z);
 
 			raiseJuicer.StopRaiseJuice();
-			pin.pinUI.pinUIJuice.PlayUnCompJuice();
-			pin.pinUI.SetUIState(false, false, true, true, true);
+			pin.pinUI.pinUIJuice.StartPlayingUnCompJuice();
+
+			yield return new WaitForSeconds(pin.pinUI.pinUIJuice.unCompJuiceDelay);
 
 			for (int i = 0; i < originPins.Count; i++)
 			{
