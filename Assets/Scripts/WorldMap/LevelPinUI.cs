@@ -19,13 +19,11 @@ namespace Qbism.WorldMap
 		public Color unCompText,  compText;
 		[ColorUsage(true, true)]
 		public Color unCompTextOutline, compTextOutline;
-		[SerializeField] float uiHeight;
 		public LevelPinUIJuicer pinUIJuice;
 
 		//Cache
 		EditorLevelPinUI editorPin = null;
 		PinSelectionTracker pinSelTrack = null;
-		public Vector3 uiPos { get; set; }
 
 		//Actions, events, delegates etc
 		public event Action<E_Pin, bool, E_Biome> onSetCurrentData;
@@ -34,25 +32,12 @@ namespace Qbism.WorldMap
 		{
 			editorPin = GetComponent<EditorLevelPinUI>();
 			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
-			var lrPos = levelPin.GetComponentInChildren<LineRenderer>().transform.position;
-			uiPos = new Vector3 (lrPos.x, lrPos.y + uiHeight, lrPos.z);
 		}
 
 		private void OnEnable() 
 		{
 			if (pinSelTrack != null)
 				pinSelTrack.onPinFetch += FetchPin;
-		}
-
-		private void Update() 
-		{
-			PositionElement();
-		}
-
-		private void PositionElement()
-		{
-			Vector2 screenPoint = Camera.main.WorldToScreenPoint(uiPos);
-			transform.position = screenPoint;
 		}
 
 		public void LoadAssignedLevel() //Called from Unity Event 
