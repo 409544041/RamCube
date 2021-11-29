@@ -38,6 +38,7 @@ namespace Qbism.WorldMap
 
 			selectedPin.pinUI.SelectPinUI();
 			SetPinSelectionLoc();
+			selectedPin.pinUI.pinUIJuice.SelectionEnlargen(1, selectedPin.pinUI.pinUIJuice.selectedSize);
 		}
 
 		private void Update() 
@@ -54,6 +55,8 @@ namespace Qbism.WorldMap
 				centerPoint.StartPositionCenterPoint(currentBiome, selectedPin, false, 
 					false, new Vector2(0, 0));
 				SetPinSelectionLoc();
+				selectedPin.pinUI.pinUIJuice.SelectionEnlargen(1, selectedPin.pinUI.pinUIJuice.selectedSize);
+				prevPin.pinUI.pinUIJuice.SelectionEnlargen(selectedPin.pinUI.pinUIJuice.selectedSize, 1);
 			} 
 		}
 

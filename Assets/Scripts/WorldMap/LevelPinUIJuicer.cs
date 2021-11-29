@@ -8,9 +8,15 @@ namespace Qbism.WorldMap
 	public class LevelPinUIJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks unCompJuice, compJuice, compDiamondJuice;
+		[SerializeField] MMFeedbacks unCompJuice, compJuice, compDiamondJuice, selectedJuice;
 		[SerializeField] LevelPinUI pinUI;
 		public float compJuiceDelay, unCompJuiceDelay;
+		public float selectedSize = 1.35f;
+
+		private void Awake() 
+		{
+			selectedJuice.Initialization();
+		}
 
 		public void StartPlayingUnCompJuice()
 		{
@@ -68,6 +74,16 @@ namespace Qbism.WorldMap
 
 			pinUI.compDiamond.enabled = true;
 			pinUI.uiText.enabled = true;
+		}
+
+		public void SelectionEnlargen(float curveZero, float curveOne)
+		{
+			var scaler = selectedJuice.GetComponent<MMFeedbackScale>();
+
+			scaler.RemapCurveZero = curveZero;
+			scaler.RemapCurveOne = curveOne;
+			
+			selectedJuice.PlayFeedbacks();
 		}
 	}
 
