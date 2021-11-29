@@ -31,7 +31,10 @@ namespace Qbism.Control
 
 			if(Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()),
 				out hit, Mathf.Infinity, layerMask))
-				hit.collider.GetComponent<ClickableObject>().ClickReaction();
+			{
+				var clicker = hit.collider.GetComponent<ClickableObject>();
+				if (clicker != null) clicker.ClickReaction();
+			}
 		}
 
 		private void OnDisable() 
