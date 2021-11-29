@@ -8,19 +8,11 @@ namespace Qbism.Control
 {
 	public class ClickableObject : MonoBehaviour
 	{
-		//Cache
-		ProgressHandler progHandler = null;
-
 		//States
-		public bool canClick { get; set; }
+		public bool canClick = true;
 
 		//Actions, events, delegates etc
 		public UnityEvent onClickEvent;
-
-		private void Awake() 
-		{
-			progHandler = FindObjectOfType<ProgressHandler>();
-		}
 
 		public void ClickReaction()
 		{
