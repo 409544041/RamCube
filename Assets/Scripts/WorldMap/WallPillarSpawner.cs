@@ -10,7 +10,9 @@ namespace Qbism.General
 	{
 		//Config parameters
 		[SerializeField] GameObject[] pillars;
+		[SerializeField] bool varyRotation = true, varyHeight = false;
 		[SerializeField] float[] spawnRotations;
+		[SerializeField] Vector2 minMaxHeight;
 		
 		//Cache
 		BiomeOverwriter bOverwriter;
@@ -44,12 +46,23 @@ namespace Qbism.General
 				for (int k = 0; k < meshes.Length; k++)
 				{
 					meshes[k].enabled = value;
-					if (j == i)
+
+					if (varyHeight) VaryHeight(pillars, j);
+
+					if (j == i && varyRotation)
 					{
 						RotateMeshes(meshes, k);
 					}
 				}
 			}
+		}
+
+		private void VaryHeight(GameObject[] pillars, int j)
+		{
+			float yPos = Random.Range(minMaxHeight.x, minMaxHeight.y);
+			
+			pillars[j].transform.position = new Vector3(pillars[j].transform.position.x,
+				yPos, pillars[j].transform.position.z);
 		}
 
 		private void RotateMeshes(MeshRenderer[] meshes, int k)
