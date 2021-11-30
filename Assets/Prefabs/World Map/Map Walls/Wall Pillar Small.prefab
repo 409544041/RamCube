@@ -69,7 +69,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5695005447793207324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.00999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4489392978163394757}
@@ -113,12 +113,14 @@ MonoBehaviour:
   - {fileID: 532750231138205534}
   - {fileID: 1333481360889184842}
   - {fileID: 4648757309100748321}
+  varyRotation: 1
+  varyHeight: 0
   spawnRotations:
   - 45
   - 135
   - 225
   - 315
-  spawn: 0
+  minMaxHeight: {x: 0, y: 0}
 --- !u!1001 &839319154026791439
 PrefabInstance:
   m_ObjectHideFlags: 0
