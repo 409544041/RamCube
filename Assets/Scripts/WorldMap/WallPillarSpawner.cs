@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Qbism.Environment;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.WorldMap
 {
 	[ExecuteInEditMode]
 	public class WallPillarSpawner : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] GameObject[] pillars;
+		public GameObject[] pillars;
 		[SerializeField] bool varyRotation = true, varyHeight = false;
 		[SerializeField] float[] spawnRotations;
 		[SerializeField] Vector2 minMaxHeight;
