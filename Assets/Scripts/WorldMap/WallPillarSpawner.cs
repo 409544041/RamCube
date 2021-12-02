@@ -9,16 +9,15 @@ namespace Qbism.WorldMap
 	public class WallPillarSpawner : MonoBehaviour
 	{
 		//Config parameters
+		public WallPillarID pillarSize;
 		public GameObject[] pillars;
 		[SerializeField] bool varyRotation = true, varyHeight = false;
 		[SerializeField] float[] spawnRotations;
 		[SerializeField] Vector2 minMaxHeight;
+		[SerializeField] WallPillarTopVariation topVariation;
 		
 		//Cache
 		BiomeOverwriter bOverwriter;
-
-		//States
-		List<MeshRenderer> meshes = new List<MeshRenderer>();
 
 		private void Awake()
 		{
@@ -38,39 +37,51 @@ namespace Qbism.WorldMap
 		{
 			for (int j = 0; j < pillars.Length; j++)
 			{
-				var value = false;
-				if (j == i) value = true;
+				var pillar = pillars[j];
+				var meshes = pillar.GetComponentsInChildren<MeshRenderer>();
 
-				var meshes = pillars[j].GetComponentsInChildren<MeshRenderer>();
-
-				for (int k = 0; k < meshes.Length; k++)
+				if (j == i)
 				{
-					meshes[k].enabled = value;
-
-					if (varyHeight) VaryHeight(pillars, j);
-
-					if (j == i && varyRotation)
+					for (int k = 0; k < meshes.Length; k++)
 					{
-						RotateMeshes(meshes, k);
+						var mesh = meshes[k];
+						mesh.enabled = true;
+
+						if (varyHeight) VaryHeight(pillar);
+
+						if (j == i && varyRotation)
+						{
+							RotateMeshes(mesh);
+						}
+
+						if (pillarSize == WallPillarID.large && topVariation != null)
+							topVariation.VaryTop(pillar);
+					}
+				}
+
+				else
+				{
+					for (int k = 0; k < meshes.Length; k++)
+					{
+						meshes[k].enabled = false;
 					}
 				}
 			}
 		}
 
-		private void VaryHeight(GameObject[] pillars, int j)
+		private void VaryHeight(GameObject pillar)
 		{
 			float yPos = Random.Range(minMaxHeight.x, minMaxHeight.y);
 			
-			pillars[j].transform.position = new Vector3(pillars[j].transform.position.x,
-				yPos, pillars[j].transform.position.z);
+			pillar.transform.position = new Vector3(pillar.transform.position.x,
+				yPos, pillar.transform.position.z);
 		}
 
-		private void RotateMeshes(MeshRenderer[] meshes, int k)
+		private void RotateMeshes(MeshRenderer mesh)
 		{
 			int l = Random.Range(0, spawnRotations.Length);
 
-			meshes[k].transform.rotation = Quaternion.Euler
-				(0, spawnRotations[l], 0);
+			mesh.transform.rotation = Quaternion.Euler(0, spawnRotations[l], 0);
 		}
 	}
 }

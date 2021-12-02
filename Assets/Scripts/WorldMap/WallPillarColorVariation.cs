@@ -8,9 +8,7 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		[SerializeField] Material[] mats;
-
-		//States
-		List<MeshRenderer> meshes = new List<MeshRenderer>();
+		[SerializeField] WallPillarTopVariation topVariation;
 
 		private void Start()
 		{
@@ -29,6 +27,24 @@ namespace Qbism.WorldMap
 				for (int k = 0; k < meshes.Length; k++)
 				{
 					meshes[k].material = mats[i];
+				}
+			}
+
+			VaryTopVarietyColor(i);
+		}
+
+		private void VaryTopVarietyColor(int i)
+		{
+			if (topVariation != null)
+			{
+				for (int j = 0; j < topVariation.tops.Length; j++)
+				{
+					var meshes = topVariation.tops[j].GetComponentsInChildren<MeshRenderer>();
+					
+					for (int k = 0; k < meshes.Length; k++)
+					{
+						meshes[k].material = mats[i];
+					}
 				}
 			}
 		}
