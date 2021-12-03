@@ -887,6 +887,17 @@ public partial class E_LevelGameplayData : BGEntity
 			_f_Pin[Index] = value;
 		}
 	}
+	public System.Boolean f_DebugComplete
+	{
+		get
+		{
+			return _f_DebugComplete[Index];
+		}
+		set
+		{
+			_f_DebugComplete[Index] = value;
+		}
+	}
 	public System.Int32 f_LocksLeft
 	{
 		get
@@ -975,17 +986,6 @@ public partial class E_LevelGameplayData : BGEntity
 			_f_WallDown[Index] = value;
 		}
 	}
-	public System.Boolean f_DebugComplete
-	{
-		get
-		{
-			return _f_DebugComplete[Index];
-		}
-		set
-		{
-			_f_DebugComplete[Index] = value;
-		}
-	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -1002,6 +1002,15 @@ public partial class E_LevelGameplayData : BGEntity
 		{
 			if(_ufle12jhs77_f_Pin==null || _ufle12jhs77_f_Pin.IsDeleted) _ufle12jhs77_f_Pin=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5611101511638644096UL,7289200097385794695UL));
 			return _ufle12jhs77_f_Pin;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_DebugComplete;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_DebugComplete
+	{
+		get
+		{
+			if(_ufle12jhs77_f_DebugComplete==null || _ufle12jhs77_f_DebugComplete.IsDeleted) _ufle12jhs77_f_DebugComplete=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5260964097523911809UL,9029259795278731182UL));
+			return _ufle12jhs77_f_DebugComplete;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldInt _ufle12jhs77_f_LocksLeft;
@@ -1074,15 +1083,6 @@ public partial class E_LevelGameplayData : BGEntity
 		{
 			if(_ufle12jhs77_f_WallDown==null || _ufle12jhs77_f_WallDown.IsDeleted) _ufle12jhs77_f_WallDown=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5421608937216315096UL,9085621000404421508UL));
 			return _ufle12jhs77_f_WallDown;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_DebugComplete;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_DebugComplete
-	{
-		get
-		{
-			if(_ufle12jhs77_f_DebugComplete==null || _ufle12jhs77_f_DebugComplete.IsDeleted) _ufle12jhs77_f_DebugComplete=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5260964097523911809UL,9029259795278731182UL));
-			return _ufle12jhs77_f_DebugComplete;
 		}
 	}
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();

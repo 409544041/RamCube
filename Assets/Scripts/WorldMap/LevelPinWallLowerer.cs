@@ -11,27 +11,40 @@ namespace Qbism.WorldMap
 		[SerializeField] GameObject wall;
 		[SerializeField] float normalYPos, loweredYPos = -12;
 		[SerializeField] float loweringSpeed = 1;
+		[SerializeField] float loweringInterval = .1f;
 		[SerializeField] LevelPin pin = null;
 
 		public Coroutine InitiateWallLowering()
 		{
-			return StartCoroutine(LowerWall());
+			return StartCoroutine(LowerWallOneByOne());
 		}
 
-		private IEnumerator LowerWall()
+		private IEnumerator LowerWallOneByOne()
+		{
+			E_LevelGameplayData.FindEntity(entity =>
+				entity.f_Pin == GetComponent<LevelPin>().m_levelData.f_Pin).f_WallDown = true;
+
+			var wallPillars = wall.GetComponentsInChildren<WallPillarSpawner>();
+
+			for (int i = 0; i < wallPillars.Length; i++)
+			{
+				StartCoroutine(LowerWallPillar(wallPillars[i].transform));
+
+				yield return new WaitForSeconds(loweringInterval);
+			}
+		}
+
+		private IEnumerator LowerWallPillar(Transform pillarTrans)
 		{
 			var step = loweringSpeed * Time.deltaTime;
 
-			while (wall.transform.position.y > loweredYPos)	
+			while (pillarTrans.transform.position.y > loweredYPos)
 			{
-				wall.transform.position = Vector3.MoveTowards(wall.transform.position,
-					new Vector3(wall.transform.position.x, loweredYPos, wall.transform.position.z), step);
-				
+				pillarTrans.position = Vector3.MoveTowards(pillarTrans.position,
+					new Vector3(pillarTrans.position.x, loweredYPos, pillarTrans.position.z), step);
+
 				yield return null;
 			}
-
-			E_LevelGameplayData.FindEntity(entity =>
-				entity.f_Pin == GetComponent<LevelPin>().m_levelData.f_Pin).f_WallDown = true;
 		}
 
 		public void CheckWallStatus(bool wallDown)
