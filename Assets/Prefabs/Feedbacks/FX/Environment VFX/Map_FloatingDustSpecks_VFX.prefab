@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2458687930889348501}
   - component: {fileID: 2458687930889348500}
   - component: {fileID: 2458687930889348503}
-  - component: {fileID: 3232783201015102623}
   m_Layer: 0
   m_Name: Map_FloatingDustSpecks_VFX
   m_TagString: Untagged
@@ -4768,7 +4767,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ea3e2d4a4a84335439294503ffce02e2, type: 2}
+  - {fileID: 2100000, guid: 63139fb86b6247f459bd642b71ead3a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4814,25 +4813,3 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &3232783201015102623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2458687930889348502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meshParts: []
-  lineRender: {fileID: 0}
-  particle: {fileID: 2458687930889348500}
-  biomeVarietySO: {fileID: 11400000, guid: eb7c0701f29a22d4eb6ed448615f0fea, type: 2}
-  recalculate: 0
-  checkBiomeLocally: 1
-  isSkyBox: 0
-  isVolume: 0
-  isLine: 0
-  isParticle: 1
