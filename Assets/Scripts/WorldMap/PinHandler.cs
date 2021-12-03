@@ -84,6 +84,8 @@ namespace Qbism.WorldMap
 
 				if (unlocked && !unlockAnimPlayed)
 				{
+					centerPoint.StartPositionCenterPoint(null, null, false, true, pointBetweenPins);
+
 					//for newly unlocked pins that need to be raised
 					if (locksLeft == 0)
 					{
@@ -105,8 +107,6 @@ namespace Qbism.WorldMap
 							{
 								E_BiomeGameplayData.FindEntity(entity =>
 									entity.f_Biome == pin.m_levelData.f_Pin.f_Biome).f_Unlocked = true;
-
-								centerPoint.StartPositionCenterPoint(null, null, false, true, pointBetweenPins);
 
 								List<E_LevelData> pinsToRaise = E_LevelData.FindEntities(entity =>
 									entity.f_Pin.f_Biome == pin.m_levelData.f_Pin.f_Biome);

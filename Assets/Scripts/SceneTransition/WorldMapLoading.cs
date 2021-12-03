@@ -24,7 +24,7 @@ namespace Qbism.SceneTransition
 
 			yield return SceneManager.LoadSceneAsync("WorldMap");
 			var centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
-			yield return centerPoint.PositionCenterPointOnMapLoad();
+			centerPoint.PositionCenterPointOnMapLoad();
 
 			yield return fader.FadeIn(fader.sceneTransTime);
 			Destroy(gameObject);

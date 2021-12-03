@@ -38,7 +38,7 @@ namespace Qbism.SceneTransition
 				yield return SceneManager.LoadSceneAsync("WorldMap");
 
 				var centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
-				yield return centerPoint.PositionCenterPointOnMapLoad();
+				centerPoint.PositionCenterPointOnMapLoad();
 			}
 
 			else yield return SceneManager.LoadSceneAsync(firstLevelIndex);

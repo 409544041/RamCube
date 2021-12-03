@@ -34,16 +34,16 @@ namespace Qbism.WorldMap
 		{
 			prevBiome = currentBiome;
 			currentBiome = biome;
-			StartCoroutine(PositionCenterPoint(selPin, onMapLoad, specificPos, pos));
+			PositionCenterPoint(selPin, onMapLoad, specificPos, pos);
 		}
 
-		public Coroutine PositionCenterPointOnMapLoad()
+		public void PositionCenterPointOnMapLoad()
 		{
 			var selPin = onSavedPinFetch();
-			return StartCoroutine(PositionCenterPoint(selPin, true, false, new Vector2(0, 0)));
+			PositionCenterPoint(selPin, true, false, new Vector2(0, 0));
 		}
 
-		private IEnumerator PositionCenterPoint(LevelPin selPin, bool onMapLoad, 
+		private void PositionCenterPoint(LevelPin selPin, bool onMapLoad, 
 			bool specificPos, Vector2 pos)
 		{
 			CinemachineVirtualCamera virtCam = null; 
@@ -52,13 +52,15 @@ namespace Qbism.WorldMap
 
 			if (onMapLoad) StartCamHardCut(out virtCam, out brain, out camToPointDiff);
 
-			if (onMapLoad) yield return new WaitForSeconds(.1f); //To avoid race condition
-
 			float xPos = 0;
 			float zPos = 0;
 
 			if (!specificPos) FindPos(selPin, out xPos, out zPos);
-			else ComparePosToMinMaxValues(out xPos, out zPos, pos.x, pos.y);
+			else
+			{
+				xPos = pos.x;
+				zPos = pos.y;
+			}
 
 			transform.position = new Vector3(xPos, 0, zPos);
 
