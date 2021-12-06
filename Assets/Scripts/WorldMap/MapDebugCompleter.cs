@@ -15,48 +15,133 @@ namespace Qbism.WorldMap
 			progHandler = FindObjectOfType<ProgressHandler>();
 		}
 
-		public void CheckDebugCompletes()
+		public void UnCompleteAll()
+		{
+			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
+			{
+				E_LevelGameplayData.GetEntity(i).f_DebugUncomplete = true;
+			}
+
+			progHandler.currentPin = E_Pin.GetEntity(0);
+		}
+
+		public void CompleteAll()
+		{
+			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
+			{
+				E_LevelGameplayData.GetEntity(i).f_DebugComplete = true;
+			}
+		}
+
+		public void UnlockAll()
+		{
+			for (int i = 0; i < E_BiomeGameplayData.CountEntities; i++)
+			{
+				E_BiomeGameplayData.GetEntity(i).f_Unlocked = true;	
+			}
+
+			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
+			{
+				var entity = E_LevelGameplayData.GetEntity(i);
+				entity.f_LocksLeft = 0;
+				entity.f_Unlocked = true;
+				entity.f_LockIconDisabled = true;
+				entity.f_UnlockAnimPlayed = true;
+
+				for (int j = 0; j < E_LevelData.CountEntities; j++)
+				{
+					var levelEntity = E_LevelData.GetEntity(j);
+					var unlockPins = levelEntity.f_UnlocksPins;
+
+					if (unlockPins == null) continue;
+
+					for (int k = 0; k < unlockPins.Count; k++)
+					{
+						var uPin = unlockPins[k];
+						var uLevelEntity = E_LevelData.FindEntity(entity =>
+							entity.f_Pin == uPin);
+						var uGameplayEntity = E_LevelGameplayData.FindEntity(entity =>
+							entity.f_Pin == uPin);
+
+						if (uPin == entity.f_Pin)
+						{
+							var originEntity = E_LevelGameplayData.FindEntity(entity =>
+								entity.f_Pin == levelEntity.f_Pin);
+							
+							originEntity.f_PathDrawn = true;
+							originEntity.f_DottedAnimPlayed = true;
+							originEntity.f_WallDown = true;
+						}
+
+						if (uGameplayEntity == null || uLevelEntity == null) continue;
+
+						if (uLevelEntity.f_LocksAmount > 0 && 
+							uGameplayEntity.f_LocksLeft != 0) uGameplayEntity.f_LocksLeft--;
+					}
+				}				
+			}
+
+			var pins = FindObjectOfType<PinChecker>().levelPins;
+
+			for (int i = 0; i < pins.Length; i++)
+			{
+				pins[i].justCompleted = true;
+			}
+		}
+
+		public void CheckDebugStatuses()
 		{
 			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
 			{
 				var gameplayEntity = E_LevelGameplayData.GetEntity(i);
 
-				if (gameplayEntity.f_DebugComplete)
+				DebugCompleteCheck(gameplayEntity);
+				DebugUncompleteCheck(gameplayEntity);
+			}
+		}
+
+		private static void DebugUncompleteCheck(E_LevelGameplayData gameplayEntity)
+		{
+			if (gameplayEntity.f_DebugUncomplete)
+			{
+				var levelEntity = E_LevelData.FindEntity(entity =>
+					entity.f_Pin == gameplayEntity.f_Pin);
+
+				gameplayEntity.f_Completed = false;
+				gameplayEntity.f_WallDown = false;
+				gameplayEntity.f_PathDrawn = false;
+				gameplayEntity.f_DottedAnimPlayed = false;
+
+				for (int j = 0; j < levelEntity.f_UnlocksPins.Count; j++)
 				{
-					if (!gameplayEntity.f_Unlocked) gameplayEntity.f_Unlocked = true;
-					progHandler.SetLevelToComplete(gameplayEntity.f_Pin);
-					gameplayEntity.f_DebugComplete = false;
+					var uPin = levelEntity.f_UnlocksPins[j];
+
+					var uGameplayEntity = E_LevelGameplayData.FindEntity(entity =>
+						entity.f_Pin == uPin);
+					var uLevelEntity = E_LevelData.FindEntity(entity =>
+						entity.f_Pin == uPin);
+
+					if (uGameplayEntity == null || uLevelEntity == null) continue;
+
+					uGameplayEntity.f_UnlockAnimPlayed = false;
+					uGameplayEntity.f_Unlocked = false;
+					uGameplayEntity.f_LockIconDisabled = false;
+
+					if (uLevelEntity.f_LocksAmount > 0 && uLevelEntity.f_LocksAmount !=
+						uGameplayEntity.f_LocksLeft) uGameplayEntity.f_LocksLeft++;
 				}
 
-				if (gameplayEntity.f_DebugUncomplete)
-				{
-					var levelEntity = E_LevelData.FindEntity(entity =>
-						entity.f_Pin == gameplayEntity.f_Pin);
+				gameplayEntity.f_DebugUncomplete = false;
+			}
+		}
 
-					gameplayEntity.f_Completed = false;
-					gameplayEntity.f_WallDown = false;
-					gameplayEntity.f_PathDrawn = false;
-					gameplayEntity.f_DottedAnimPlayed = false;
-
-					for (int j = 0; j < levelEntity.f_UnlocksPins.Count; j++)
-					{
-						var uPin = levelEntity.f_UnlocksPins[j];
-
-						var uGameplayEntity = E_LevelGameplayData.FindEntity(entity =>
-							entity.f_Pin == uPin);
-						var uLevelEntity = E_LevelData.FindEntity(entity =>
-							entity.f_Pin == uPin);
-												
-						uGameplayEntity.f_UnlockAnimPlayed = false;
-						uGameplayEntity.f_Unlocked = false;
-						uGameplayEntity.f_LockIconDisabled = false;
-
-						if (uLevelEntity.f_LocksAmount > 0 && uLevelEntity.f_LocksAmount !=
-							uGameplayEntity.f_LocksLeft) uGameplayEntity.f_LocksLeft++;
-					}
-
-					gameplayEntity.f_DebugUncomplete = false;
-				}
+		private void DebugCompleteCheck(E_LevelGameplayData gameplayEntity)
+		{
+			if (gameplayEntity.f_DebugComplete)
+			{
+				if (!gameplayEntity.f_Unlocked) gameplayEntity.f_Unlocked = true;
+				progHandler.SetLevelToComplete(gameplayEntity.f_Pin);
+				gameplayEntity.f_DebugComplete = false;
 			}
 		}
 	}

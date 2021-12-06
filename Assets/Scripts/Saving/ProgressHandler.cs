@@ -138,6 +138,7 @@ namespace Qbism.Saving
 
 			for (int j = 0; j < levelEntity.f_UnlocksPins.Count; j++)
 			{
+				if (levelEntity.f_UnlocksPins[j].f_name == "_EMPTY") continue;
 				SetUnlockedStatus(levelEntity.f_UnlocksPins[j], true);
 			}
 		}

@@ -22,7 +22,7 @@ namespace Qbism.WorldMap
 
 		private void Start() 
 		{
-			debugComp.CheckDebugCompletes();
+			debugComp.CheckDebugStatuses();
 			CheckLevelPins();
 		}
 

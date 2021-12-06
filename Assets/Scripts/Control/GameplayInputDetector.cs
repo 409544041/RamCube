@@ -29,13 +29,12 @@ namespace Qbism.Control
 			rewinder = GetComponent<RewindHandler>();
 			controls = new GameControls();
 
-			//from Brackeys gamepad setup tut. Don't actually understand Lambda Expressions
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
 			controls.Gameplay.Rewind.performed += ctx => Rewind();
 			controls.Gameplay.Restart.performed += ctx => RestartLevel();
 			controls.Gameplay.DebugCompleteLevel.performed += ctx => FinishLevel();
-			controls.Gameplay.DebugNextLevel.performed += ctx  => NextLevel();
-			controls.Gameplay.DebugPrevLevel.performed += ctx => PrevLevel();
+			// controls.Gameplay.DebugNextLevel.performed += ctx  => NextLevel();
+			// controls.Gameplay.DebugPrevLevel.performed += ctx => PrevLevel();
 		}
 		
 		private void OnEnable() 

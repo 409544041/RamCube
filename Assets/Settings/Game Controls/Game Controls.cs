@@ -121,6 +121,14 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Debug Key Z"",
+                    ""type"": ""Button"",
+                    ""id"": ""c9bb0c94-92b6-446e-b748-eadfaa322c55"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -497,6 +505,17 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""action"": ""Quit Game"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7a2751c-1206-4386-80b4-72ad08b7ddc1"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Debug Key Z"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -541,6 +560,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Gameplay_DebugNextLevel = m_Gameplay.FindAction("Debug Next Level", throwIfNotFound: true);
         m_Gameplay_DebugPrevLevel = m_Gameplay.FindAction("Debug Prev Level", throwIfNotFound: true);
         m_Gameplay_QuitGame = m_Gameplay.FindAction("Quit Game", throwIfNotFound: true);
+        m_Gameplay_DebugKeyZ = m_Gameplay.FindAction("Debug Key Z", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -603,6 +623,7 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_DebugNextLevel;
     private readonly InputAction m_Gameplay_DebugPrevLevel;
     private readonly InputAction m_Gameplay_QuitGame;
+    private readonly InputAction m_Gameplay_DebugKeyZ;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -620,6 +641,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @DebugNextLevel => m_Wrapper.m_Gameplay_DebugNextLevel;
         public InputAction @DebugPrevLevel => m_Wrapper.m_Gameplay_DebugPrevLevel;
         public InputAction @QuitGame => m_Wrapper.m_Gameplay_QuitGame;
+        public InputAction @DebugKeyZ => m_Wrapper.m_Gameplay_DebugKeyZ;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -668,6 +690,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @QuitGame.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuitGame;
                 @QuitGame.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuitGame;
                 @QuitGame.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuitGame;
+                @DebugKeyZ.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKeyZ;
+                @DebugKeyZ.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKeyZ;
+                @DebugKeyZ.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKeyZ;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -711,6 +736,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @QuitGame.started += instance.OnQuitGame;
                 @QuitGame.performed += instance.OnQuitGame;
                 @QuitGame.canceled += instance.OnQuitGame;
+                @DebugKeyZ.started += instance.OnDebugKeyZ;
+                @DebugKeyZ.performed += instance.OnDebugKeyZ;
+                @DebugKeyZ.canceled += instance.OnDebugKeyZ;
             }
         }
     }
@@ -748,5 +776,6 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnDebugNextLevel(InputAction.CallbackContext context);
         void OnDebugPrevLevel(InputAction.CallbackContext context);
         void OnQuitGame(InputAction.CallbackContext context);
+        void OnDebugKeyZ(InputAction.CallbackContext context);
     }
 }

@@ -76,6 +76,10 @@ namespace Qbism.WorldMap
 			//if uPin is unlocked and unlock anim played etc drawing full line
 			else if (!pin.justCompleted && completed && uUnlocked && uUnlockAnimPlayed)
 				FillAndAddDrawData(lineDestList, dest, LineTypes.full);
+
+			//when debug-unlocking
+			else if (!pin.justCompleted && uUnlocked && uUnlockAnimPlayed)
+				FillAndAddDrawData(lineDestList, dest, LineTypes.full);
 		}
 
 		private void FillAndAddDrawData(List<LineDrawData> lineDestList, Transform dest,
