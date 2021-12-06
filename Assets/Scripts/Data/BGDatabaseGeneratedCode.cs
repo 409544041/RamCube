@@ -898,6 +898,17 @@ public partial class E_LevelGameplayData : BGEntity
 			_f_DebugComplete[Index] = value;
 		}
 	}
+	public System.Boolean f_DebugUncomplete
+	{
+		get
+		{
+			return _f_DebugUncomplete[Index];
+		}
+		set
+		{
+			_f_DebugUncomplete[Index] = value;
+		}
+	}
 	public System.Int32 f_LocksLeft
 	{
 		get
@@ -1011,6 +1022,15 @@ public partial class E_LevelGameplayData : BGEntity
 		{
 			if(_ufle12jhs77_f_DebugComplete==null || _ufle12jhs77_f_DebugComplete.IsDeleted) _ufle12jhs77_f_DebugComplete=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5260964097523911809UL,9029259795278731182UL));
 			return _ufle12jhs77_f_DebugComplete;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_DebugUncomplete;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_DebugUncomplete
+	{
+		get
+		{
+			if(_ufle12jhs77_f_DebugUncomplete==null || _ufle12jhs77_f_DebugUncomplete.IsDeleted) _ufle12jhs77_f_DebugUncomplete=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5161727312814850684UL,327734231951520155UL));
+			return _ufle12jhs77_f_DebugUncomplete;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldInt _ufle12jhs77_f_LocksLeft;
