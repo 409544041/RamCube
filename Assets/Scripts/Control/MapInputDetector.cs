@@ -18,12 +18,12 @@ namespace Qbism.Control
 		{
 			controls = new GameControls();
 
-			controls.Gameplay.DebugDeleteSaveData.performed += ctx => DeleteSaveData();
-			controls.Gameplay.DebugKey4.performed += ctx => LoadSerpentScreen();
+			// controls.Gameplay.DebugDeleteSaveData.performed += ctx => DeleteSaveData();
+			// controls.Gameplay.DebugKey4.performed += ctx => LoadSerpentScreen();
 			controls.Gameplay.Restart.performed += ctx => UnCompleteAllAndReload();
 			// controls.Gameplay.DebugCompleteLevel.performed += ctx => CompleteAll();
 			controls.Gameplay.DebugKeyZ.performed += ctx => UnlockAllAndReload();
-			controls.Gameplay.Rewind.performed += ctx => ReloadMap();
+			// controls.Gameplay.Rewind.performed += ctx => ReloadMap();
 
 			progHandler = FindObjectOfType<ProgressHandler>();
 		}

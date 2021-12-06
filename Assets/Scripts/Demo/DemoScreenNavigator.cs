@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.General;
 using Qbism.SceneTransition;
+using Qbism.WorldMap;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -67,7 +68,12 @@ namespace Qbism.Demo
 				var switchBoard = FindObjectOfType<FeatureSwitchBoard>();
 
 				if (switchBoard.worldMapConnected)
-					yield return SceneManager.LoadSceneAsync(worldMapIndex);
+				{
+					yield return SceneManager.LoadSceneAsync("WorldMap");
+
+					var centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
+					centerPoint.PositionCenterPointOnMapLoad();
+				}
 				else yield return SceneManager.LoadSceneAsync(firstLevelIndex);
 
 				yield return fader.FadeIn(fader.sceneTransTime);
