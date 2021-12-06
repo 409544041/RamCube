@@ -43,7 +43,7 @@ namespace Qbism.Control
 		private void ReloadScene()
 		{
 			progHandler.SaveProgData();
-			GetComponent<WorldMapLoading>().StartLoadingWorldMap();
+			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap();
 		}
 
 		private void OnDisable()
