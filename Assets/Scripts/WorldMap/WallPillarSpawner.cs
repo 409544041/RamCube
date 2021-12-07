@@ -17,12 +17,7 @@ namespace Qbism.WorldMap
 		[SerializeField] WallPillarTopVariation topVariation;
 		
 		//Cache
-		BiomeOverwriter bOverwriter;
-
-		private void Awake()
-		{
-			bOverwriter = FindObjectOfType<BiomeOverwriter>();
-		}
+		public BiomeOverwriter bOverwriter { get; set; }
 
 		private void Start()
 		{
