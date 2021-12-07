@@ -73,7 +73,7 @@ namespace Qbism.WorldMap
 
 					if (unlockPins[j].f_name != "_EMPTY")
 						pin.pinPather.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft,
-							completed, unlockPins.Count, uOriginWalls, wallDown, dottedAnimPlayed);
+							completed, unlockPins.Count, uOriginWalls, wallDown, dottedAnimPlayed, unlocked);
 				}
 
 				pinHandler.SetPinUI(pin, unlockAnimPlayed, completed, pin.justCompleted);
