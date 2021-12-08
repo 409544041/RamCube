@@ -14,7 +14,7 @@ namespace Qbism.WorldMap
 		//Config parameters
 		public LevelPin levelPin = null;
 		[SerializeField] Button button = null;
-		public Image compIcon, compDiamond, unCompIcon, lockIcon;
+		public Image compIcon, compDiamond, unCompIcon;
 		public TextMeshProUGUI uiText;
 		public Color unCompText,  compText;
 		[ColorUsage(true, true)]
@@ -80,18 +80,6 @@ namespace Qbism.WorldMap
 		{
 			if(selected == button.gameObject)
 				pinSelTrack.selectedPin = levelPin;
-		}
-
-		public void DisableLockIcon()
-		{	
-			var ent = E_LevelGameplayData.FindEntity(entity =>
-				entity.f_Pin == levelPin.m_levelData.f_Pin);
-			int locksLeft = ent.f_LocksLeft;
-			bool lockDisabled = ent.f_LockIconDisabled;
-			
-			if(locksLeft == levelPin.m_levelData.f_LocksAmount || 
-				(locksLeft == 0 && lockDisabled))
-				lockIcon.enabled = false;	
 		}
 
 		private void OnDisable() 

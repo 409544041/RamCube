@@ -23,8 +23,6 @@ namespace Qbism.WorldMap
 			else if (unlockAnimPlayed && !completed) pin.pinUI.SetUIState(false, false, true, true, true);
 			else if (completed && !justCompleted) pin.pinUI.SetUIState(true, true, false, true, true);
 			else if (completed && justCompleted) pin.pinUI.pinUIJuice.StartPlayingCompJuice();
-
-			pin.pinUI.DisableLockIcon();
 		}
 
 		public void InitiateRaiseAndDrawPaths(E_LevelGameplayData entity, LevelPin pin,

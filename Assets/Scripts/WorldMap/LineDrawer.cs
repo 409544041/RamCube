@@ -104,7 +104,6 @@ namespace Qbism.WorldMap
 			{
 				onDisableLockInSheet(ent, true);
 				var pinUI = destLevelPin.pinUI;
-				pinUI.DisableLockIcon();
 
 				//if locks = 0 but there were more locks means full lines are drawn.
 				//Remove any dotted lines after full lines are drawn
