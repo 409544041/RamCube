@@ -230,7 +230,7 @@ namespace Qbism.Cubes
 				loader.RestartLevel();
 			}
 			else if (mapConnected) FindObjectOfType<WorldMapLoading>().
-				StartLoadingWorldMap();
+				StartLoadingWorldMap(true);
 			else loader.NextLevel();
 		}
 

@@ -45,8 +45,8 @@ namespace Qbism.WorldMap
 			onSetCurrentData(levelPin.m_levelData.f_Pin, levelPin.m_levelData.f_SegmentPresent,
 				levelPin.m_Pin.f_Biome);
 				
-			var handler = FindObjectOfType<SceneHandler>();
-			handler.LoadBySceneIndex(levelPin.m_levelData.f_Pin.f_Index);
+			var loader = FindObjectOfType<LevelLoading>();
+			loader.StartLoadingLevel(levelPin.m_levelData.f_Pin.f_Index);
 		}
 
 		public void SetUIState(bool compValue, bool diamondValue, bool unCompValue, 

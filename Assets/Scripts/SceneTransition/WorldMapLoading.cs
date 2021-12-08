@@ -8,25 +8,44 @@ namespace Qbism.SceneTransition
 {
 	public class WorldMapLoading : MonoBehaviour
 	{
-		public void StartLoadingWorldMap()
+		public void StartLoadingWorldMap(bool fromLevel)
 		{
-			StartCoroutine(LoadWorldMap());
+			StartCoroutine(LoadWorldMap(fromLevel));
 		}
 
-		private IEnumerator LoadWorldMap()
+		private IEnumerator LoadWorldMap(bool fromLevel)
 		{
-			Fader fader = FindObjectOfType<Fader>();
+			var fader = FindObjectOfType<Fader>();
+			var transition = FindObjectOfType<CircleTransition>();
+			
 
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
 			yield return fader.FadeOut(fader.sceneTransTime);
-
 			yield return SceneManager.LoadSceneAsync("WorldMap");
+			
 			var centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
 			centerPoint.PositionCenterPointOnMapLoad();
 
-			yield return fader.FadeIn(fader.sceneTransTime);
+			//need this yield return here to avoid race condition with selectedPinUI
+			yield return null;
+			var selectedPinUI = FindObjectOfType<PinSelectionTracker>().selectedPin.pinUI;
+
+			if (fromLevel)
+			{
+				transition.SetCirclePos(selectedPinUI.transform.position);
+				transition.SetCircleStartState(1);
+				transition.DebugFixCircleMask();
+				fader.FadeImmediate(0);
+				yield return transition.TransIn();
+			}
+			else
+			{
+				transition.ForceCircleSize(1);
+				yield return fader.FadeIn(fader.sceneTransTime);
+			} 
+
 			Destroy(gameObject);
 		}
 	}

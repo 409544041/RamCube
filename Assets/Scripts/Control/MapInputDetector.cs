@@ -47,28 +47,28 @@ namespace Qbism.Control
 		private void ReloadMap()
 		{
 			progHandler.SaveProgData();
-			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap();
+			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
 		}
 
 		private void UnCompleteAllAndReload()
 		{
 			FindObjectOfType<MapDebugCompleter>().UnCompleteAll();
 			progHandler.SaveProgData();
-			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap();
+			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
 		}
 
 		private void CompleteAllAndReload()
 		{
 			FindObjectOfType<MapDebugCompleter>().CompleteAll();
 			progHandler.SaveProgData();
-			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap();
+			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
 		}
 
 		private void UnlockAllAndReload()
 		{
 			FindObjectOfType<MapDebugCompleter>().UnlockAll();
 			progHandler.SaveProgData();
-			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap();
+			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
 		}
 
 		private void OnDisable()
