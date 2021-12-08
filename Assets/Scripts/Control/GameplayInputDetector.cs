@@ -17,6 +17,7 @@ namespace Qbism.Control
 		SceneHandler loader;
 		RewindHandler rewinder;
 		GameControls controls;
+		FeatureSwitchBoard switchBoard;
 
 		//States
 		Vector2 stickValue;
@@ -28,14 +29,15 @@ namespace Qbism.Control
 			mover = FindObjectOfType<PlayerCubeMover>();
 			loader = GetComponent<SceneHandler>();
 			rewinder = GetComponent<RewindHandler>();
+			switchBoard = FindObjectOfType<FeatureSwitchBoard>();
 			controls = new GameControls();
 
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
 			controls.Gameplay.Rewind.performed += ctx => Rewind();
 			controls.Gameplay.Restart.performed += ctx => RestartLevel();
 			controls.Gameplay.DebugCompleteLevel.performed += ctx => FinishLevel();
-			// controls.Gameplay.DebugNextLevel.performed += ctx  => NextLevel();
-			// controls.Gameplay.DebugPrevLevel.performed += ctx => PrevLevel();
+			controls.Gameplay.DebugNextLevel.performed += ctx  => NextLevel();
+			controls.Gameplay.DebugPrevLevel.performed += ctx => PrevLevel();
 		}
 		
 		private void OnEnable() 
@@ -93,19 +95,19 @@ namespace Qbism.Control
 
 		private void NextLevel()
 		{
-			loader.NextLevel();
+			if (switchBoard.allowDebugLevelNav)
+				loader.NextLevel();
 		}
 
 		private void PrevLevel()
 		{
-			loader.PreviousLevel();
+			if (switchBoard.allowDebugLevelNav)
+				loader.PreviousLevel();
 		}
 
 		private void FinishLevel()
-		{
-			var allowFinish = FindObjectOfType<FeatureSwitchBoard>().allowDebugFinish;
-			
-			if (allowFinish)
+		{			
+			if (switchBoard.allowDebugFinish)
 			{
 				FinishCube finish = FindObjectOfType<FinishCube>();
 				if (finish) finish.Finish();

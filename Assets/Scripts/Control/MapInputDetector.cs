@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Qbism.General;
 using Qbism.Saving;
 using Qbism.SceneTransition;
 using Qbism.WorldMap;
@@ -13,19 +14,20 @@ namespace Qbism.Control
 		//Cache
 		GameControls controls;
 		ProgressHandler progHandler;
+		FeatureSwitchBoard switchBoard;
 
 		void Awake()
 		{
+			progHandler = FindObjectOfType<ProgressHandler>();
+			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
 			controls = new GameControls();
 
 			// controls.Gameplay.DebugDeleteSaveData.performed += ctx => DeleteSaveData();
-			// controls.Gameplay.DebugKey4.performed += ctx => LoadSerpentScreen();
+			controls.Gameplay.DebugKey4.performed += ctx => LoadSerpentScreen();
 			controls.Gameplay.Restart.performed += ctx => UnCompleteAllAndReload();
 			// controls.Gameplay.DebugCompleteLevel.performed += ctx => CompleteAll();
 			controls.Gameplay.DebugKeyZ.performed += ctx => UnlockAllAndReload();
-			// controls.Gameplay.Rewind.performed += ctx => ReloadMap();
-
-			progHandler = FindObjectOfType<ProgressHandler>();
+			controls.Gameplay.Rewind.performed += ctx => ReloadMap();
 		}
 
 		private void OnEnable()
@@ -40,35 +42,50 @@ namespace Qbism.Control
 
 		private void LoadSerpentScreen()
 		{
-			SceneHandler sceneHandler = GetComponent<SceneHandler>();
-			sceneHandler.LoadSerpentScreen();
+			if (switchBoard.serpentScreenConnected)
+			{
+				SceneHandler sceneHandler = GetComponent<SceneHandler>();
+				sceneHandler.LoadSerpentScreen();
+			}
 		}
 
 		private void ReloadMap()
 		{
-			progHandler.SaveProgData();
-			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+			if (switchBoard.allowMapReload)
+			{
+				progHandler.SaveProgData();
+				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+			}
 		}
 
 		private void UnCompleteAllAndReload()
 		{
-			FindObjectOfType<MapDebugCompleter>().UnCompleteAll();
-			progHandler.SaveProgData();
-			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+			if (switchBoard.allowDebugCompleteAll)
+			{
+				FindObjectOfType<MapDebugCompleter>().UnCompleteAll();
+				progHandler.SaveProgData();
+				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+			}
 		}
 
 		private void CompleteAllAndReload()
 		{
-			FindObjectOfType<MapDebugCompleter>().CompleteAll();
-			progHandler.SaveProgData();
-			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+			if (switchBoard.allowDebugCompleteAll)
+			{
+				FindObjectOfType<MapDebugCompleter>().CompleteAll();
+				progHandler.SaveProgData();
+				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+			}
 		}
 
 		private void UnlockAllAndReload()
 		{
-			FindObjectOfType<MapDebugCompleter>().UnlockAll();
-			progHandler.SaveProgData();
-			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+			if (switchBoard.allowDebugCompleteAll)
+			{
+				FindObjectOfType<MapDebugCompleter>().UnlockAll();
+				progHandler.SaveProgData();
+				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+			}
 		}
 
 		private void OnDisable()
