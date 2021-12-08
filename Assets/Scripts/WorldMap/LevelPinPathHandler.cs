@@ -25,10 +25,10 @@ namespace Qbism.WorldMap
 
 		public void CheckPathStatus(E_Pin uPin, bool uUnlocked, bool uUnlockAnimPlayed, int uLocksLeft,
 			bool completed, int listCount, List<E_MapWalls> originWalls, bool wallDown, 
-			bool dottedAnimPlayed, bool unlocked)
+			bool dottedAnimPlayed, bool unlocked, bool unlockAnimPlayed)
 		{
 			AddToList(uPin, completed, uUnlocked, uUnlockAnimPlayed, uLocksLeft, 
-				lineDestList, originWalls, wallDown, dottedAnimPlayed, unlocked);
+				lineDestList, originWalls, wallDown, dottedAnimPlayed, unlocked, unlockAnimPlayed);
 			amountInDrawList++;
 
 			if (amountInDrawList == listCount)
@@ -37,7 +37,7 @@ namespace Qbism.WorldMap
 
 		private void AddToList(E_Pin uPin, bool completed, bool uUnlocked, bool uUnlockAnimPlayed, 
 			int uLocksLeft, List<LineDrawData> lineDestList, List<E_MapWalls> uOriginWalls, 
-			bool wallDown, bool dottedAnimPlayed, bool unlocked)
+			bool wallDown, bool dottedAnimPlayed, bool unlocked, bool unlockAnimPlayed)
 		{
 			LevelPin destPin = onGetPin(uPin);
 			var dest = destPin.pinPather.pathPoint;
@@ -80,7 +80,7 @@ namespace Qbism.WorldMap
 				FillAndAddDrawData(lineDestList, dest, LineTypes.full);
 
 			//when debug-unlocking
-			else if (!pin.justCompleted && unlocked && uUnlocked && uUnlockAnimPlayed)
+			else if (!pin.justCompleted && unlocked && unlockAnimPlayed && uUnlocked && uUnlockAnimPlayed)
 				FillAndAddDrawData(lineDestList, dest, LineTypes.full);
 		}
 
