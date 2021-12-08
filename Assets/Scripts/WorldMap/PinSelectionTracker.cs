@@ -53,7 +53,7 @@ namespace Qbism.WorldMap
 			if(selectedPin != prevPin)
 			{
 				centerPoint.StartPositionCenterPoint(currentBiome, selectedPin, false, 
-					false, new Vector2(0, 0));
+					false, true, new Vector2(0, 0));
 				SetPinSelectionLoc();
 				selectedPin.pinUI.pinUIJuice.SelectionEnlargen(1, selectedPin.pinUI.pinUIJuice.selectedSize);
 				prevPin.pinUI.pinUIJuice.SelectionEnlargen(selectedPin.pinUI.pinUIJuice.selectedSize, 1);

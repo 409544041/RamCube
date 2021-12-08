@@ -30,21 +30,21 @@ namespace Qbism.WorldMap
 		}
 
 		public void StartPositionCenterPoint(E_Biome biome, LevelPin selPin, bool onMapLoad,
-			bool specificPos, Vector2 pos)
+			bool specificPos, bool checkMinMax, Vector2 pos)
 		{
 			prevBiome = currentBiome;
 			currentBiome = biome;
-			PositionCenterPoint(selPin, onMapLoad, specificPos, pos);
+			PositionCenterPoint(selPin, onMapLoad, specificPos, checkMinMax, pos);
 		}
 
 		public void PositionCenterPointOnMapLoad()
 		{
 			var selPin = onSavedPinFetch();
-			PositionCenterPoint(selPin, true, false, new Vector2(0, 0));
+			PositionCenterPoint(selPin, true, false, true, new Vector2(0, 0));
 		}
 
 		private void PositionCenterPoint(LevelPin selPin, bool onMapLoad, 
-			bool specificPos, Vector2 pos)
+			bool specificPos, bool checkMinMax, Vector2 pos)
 		{
 			CinemachineVirtualCamera virtCam = null; 
 			CinemachineBrain brain = null;
@@ -56,7 +56,11 @@ namespace Qbism.WorldMap
 			float zPos = 0;
 
 			if (!specificPos) FindPos(selPin, out xPos, out zPos);
-			else
+
+			else if (specificPos && checkMinMax) 
+				ComparePosToMinMaxValues(out xPos, out zPos, pos.x, pos.y);
+				
+			else if (specificPos && !checkMinMax)
 			{
 				xPos = pos.x;
 				zPos = pos.y;

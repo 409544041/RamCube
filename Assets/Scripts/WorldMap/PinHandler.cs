@@ -84,7 +84,10 @@ namespace Qbism.WorldMap
 
 				if (unlocked && !unlockAnimPlayed)
 				{
-					centerPoint.StartPositionCenterPoint(null, null, false, true, pointBetweenPins);
+					if (biomeUnlocked) centerPoint.StartPositionCenterPoint
+						(null, null, false, true, true, pointBetweenPins);
+					else centerPoint.StartPositionCenterPoint
+	 					(null, null, false, true, false, pointBetweenPins);
 
 					//for newly unlocked pins that need to be raised
 					if (locksLeft == 0)
