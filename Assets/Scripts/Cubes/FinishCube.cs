@@ -84,7 +84,7 @@ namespace Qbism.Cubes
 		public void Finish()
 		{
 			if (switchBoard.allowDebugFinish) PositionPlayerForFinish();
-			if (switchBoard.worldMapConnected) //TO DO: eventually these checks should be obsolete bc map should always be available and a level is always started via map
+			if (switchBoard.worldMapConnected) 
 			{
 				progHandler.SetLevelToComplete(progHandler.currentPin);
 			}

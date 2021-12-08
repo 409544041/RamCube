@@ -195,8 +195,11 @@ namespace Qbism.Cubes
 
 		private IEnumerator SerpentSequence()
 		{
-			if (switchBoard.serpentConnected) ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
-			yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
+			if (switchBoard.serpentConnected)
+			{
+				ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
+				yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
+			} 
 
 			if (switchBoard.worldMapConnected) StartCoroutine(LevelTransition(true, false));
 			else StartCoroutine(LevelTransition(false, false));
