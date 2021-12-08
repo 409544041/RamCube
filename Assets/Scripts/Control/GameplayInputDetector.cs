@@ -5,6 +5,7 @@ using Qbism.Cubes;
 using Qbism.PlayerCube;
 using Qbism.Rewind;
 using Qbism.SceneTransition;
+using Qbism.General;
 
 namespace Qbism.Control
 {
@@ -102,8 +103,13 @@ namespace Qbism.Control
 
 		private void FinishLevel()
 		{
-			FinishCube finish = FindObjectOfType<FinishCube>();
-			if(finish) finish.Finish();
+			var allowFinish = FindObjectOfType<FeatureSwitchBoard>().allowDebugFinish;
+			
+			if (allowFinish)
+			{
+				FinishCube finish = FindObjectOfType<FinishCube>();
+				if (finish) finish.Finish();
+			}
 		}
 			
 		private void Rewind()

@@ -22,11 +22,22 @@ namespace Qbism.WorldMap
 				E_LevelGameplayData.GetEntity(i).f_DebugUncomplete = true;
 			}
 
+			for (int i = 0; i < E_BiomeGameplayData.CountEntities; i++)
+			{
+				if (i == 0) continue;
+				E_BiomeGameplayData.GetEntity(i).f_Unlocked = false;
+			}
+
 			progHandler.currentPin = E_Pin.GetEntity(0);
 		}
 
 		public void CompleteAll()
 		{
+			for (int i = 0; i < E_BiomeGameplayData.CountEntities; i++)
+			{
+				E_BiomeGameplayData.GetEntity(i).f_Unlocked = true;
+			}
+
 			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
 			{
 				E_LevelGameplayData.GetEntity(i).f_DebugComplete = true;
@@ -79,13 +90,6 @@ namespace Qbism.WorldMap
 							uGameplayEntity.f_LocksLeft != 0) uGameplayEntity.f_LocksLeft--;
 					}
 				}				
-			}
-
-			var pins = FindObjectOfType<PinChecker>().levelPins;
-
-			for (int i = 0; i < pins.Length; i++)
-			{
-				pins[i].justCompleted = true;
 			}
 		}
 
