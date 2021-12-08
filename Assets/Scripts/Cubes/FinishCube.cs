@@ -84,6 +84,7 @@ namespace Qbism.Cubes
 		public void Finish()
 		{
 			if (switchBoard.allowDebugFinish) PositionPlayerForFinish();
+			
 			if (switchBoard.worldMapConnected) 
 			{
 				progHandler.SetLevelToComplete(progHandler.currentPin);

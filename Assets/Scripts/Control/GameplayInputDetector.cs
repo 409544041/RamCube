@@ -6,6 +6,7 @@ using Qbism.PlayerCube;
 using Qbism.Rewind;
 using Qbism.SceneTransition;
 using Qbism.General;
+using Qbism.Saving;
 
 namespace Qbism.Control
 {
@@ -18,6 +19,7 @@ namespace Qbism.Control
 		RewindHandler rewinder;
 		GameControls controls;
 		FeatureSwitchBoard switchBoard;
+		ProgressHandler progHandler;
 
 		//States
 		Vector2 stickValue;
@@ -29,7 +31,8 @@ namespace Qbism.Control
 			mover = FindObjectOfType<PlayerCubeMover>();
 			loader = GetComponent<SceneHandler>();
 			rewinder = GetComponent<RewindHandler>();
-			switchBoard = FindObjectOfType<FeatureSwitchBoard>();
+			progHandler = FindObjectOfType<ProgressHandler>();
+			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
 			controls = new GameControls();
 
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
@@ -106,7 +109,7 @@ namespace Qbism.Control
 		}
 
 		private void FinishLevel()
-		{			
+		{	
 			if (switchBoard.allowDebugFinish)
 			{
 				FinishCube finish = FindObjectOfType<FinishCube>();
