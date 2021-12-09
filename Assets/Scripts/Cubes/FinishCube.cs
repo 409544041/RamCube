@@ -84,8 +84,8 @@ namespace Qbism.Cubes
 		public void Finish()
 		{
 			if (switchBoard.allowDebugFinish) PositionPlayerForFinish();
-			
-			if (switchBoard.worldMapConnected) 
+
+			if (switchBoard.worldMapConnected)
 			{
 				progHandler.SetLevelToComplete(progHandler.currentPin);
 			}
@@ -106,6 +106,8 @@ namespace Qbism.Cubes
 
 			juicer.DeactivateGlow();
 			juicer.PlaySuccesSound();
+
+			DisableOutOfBounds();
 
 			finishEndSeq.InitiateEndSeq();
 		}
@@ -130,6 +132,16 @@ namespace Qbism.Cubes
 		public bool FetchFinishStatus()
 		{
 			return hasFinished;
+		}
+
+		private void DisableOutOfBounds()
+		{
+			var oob = FindObjectsOfType<OutOfBounds>();
+
+			for (int i = 0; i < oob.Length; i++)
+			{
+				oob[i].gameObject.SetActive(false);
+			}
 		}
 
 		private void OnDisable()
