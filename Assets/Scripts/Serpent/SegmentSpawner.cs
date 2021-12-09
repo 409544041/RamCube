@@ -18,8 +18,7 @@ namespace Qbism.Serpent
 		FinishCube finish;
 
 		//Actions, events, delegates etc
-		public delegate GameObject GetSegDel();
-		public GetSegDel onFetchSegmentToSpawn;
+		public Func<GameObject> onFetchSegmentToSpawn;
 
 		private void Awake() 
 		{

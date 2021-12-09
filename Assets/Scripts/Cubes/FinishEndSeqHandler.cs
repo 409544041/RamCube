@@ -215,7 +215,7 @@ namespace Qbism.Cubes
 
 		private void SpawnFriends()
 		{
-			if (FetchHasSegment())
+			if (FetchHasSegment() && switchBoard.serpentConnected)
 			{
 				onSpawnSegment();
 			}

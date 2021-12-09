@@ -16,8 +16,7 @@ namespace Qbism.Saving
 		SegmentSpawner segSpawner = null;
 
 		//States
-		public List<bool> serpentDataList;
-		public GameObject nextSegmentToUnlock;
+		public List<bool> serpentDataList { get; set; }
 
 		private void Awake() 
 		{
@@ -27,6 +26,8 @@ namespace Qbism.Saving
 
 		private void BuildSerpentList()
 		{
+			serpentDataList = new List<bool>();
+
 			for (int i = 0; i < segments.Length; i++)
 			{
 				serpentDataList.Add(false);
@@ -36,7 +37,8 @@ namespace Qbism.Saving
 		public void LoadSerpentData()
 		{
 			ProgData data = SavingSystem.LoadProgData();
-			serpentDataList = data.savedSerpentDataList;
+			if (data.savedSerpentDataList != null)
+				serpentDataList = data.savedSerpentDataList;
 		}
 
 		public void AddSegment()
@@ -58,7 +60,7 @@ namespace Qbism.Saving
 			{
 				if(serpentDataList[i] == false)
 				{
-					nextSegmentToUnlock = segments[i];
+					var nextSegmentToUnlock = segments[i];
 					return nextSegmentToUnlock;
 				}
 			}
