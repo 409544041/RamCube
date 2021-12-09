@@ -25,7 +25,7 @@ namespace Qbism.Control
 			// controls.Gameplay.DebugDeleteSaveData.performed += ctx => DeleteSaveData();
 			controls.Gameplay.DebugKey4.performed += ctx => LoadSerpentScreen();
 			controls.Gameplay.Restart.performed += ctx => UnCompleteAllAndReload();
-			// controls.Gameplay.DebugCompleteLevel.performed += ctx => CompleteAll();
+			controls.Gameplay.DebugCompleteLevel.performed += ctx => CompleteAllAndReload();
 			controls.Gameplay.DebugKeyZ.performed += ctx => UnlockAllAndReload();
 			controls.Gameplay.Rewind.performed += ctx => ReloadMap();
 		}

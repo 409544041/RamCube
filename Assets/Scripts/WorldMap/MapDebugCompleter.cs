@@ -28,6 +28,13 @@ namespace Qbism.WorldMap
 				E_BiomeGameplayData.GetEntity(i).f_Unlocked = false;
 			}
 
+			var serpProg = progHandler.GetComponent<SerpentProgress>();
+			
+			for (int i = 0; i < serpProg.serpentDataList.Count; i++)
+			{
+				serpProg.serpentDataList[i] = false;
+			}
+
 			progHandler.currentPin = E_Pin.GetEntity(0);
 		}
 
@@ -41,6 +48,12 @@ namespace Qbism.WorldMap
 			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
 			{
 				E_LevelGameplayData.GetEntity(i).f_DebugComplete = true;
+
+				if (E_LevelData.GetEntity(i).f_SegmentPresent == true)
+				{
+					var serpProg = progHandler.GetComponent<SerpentProgress>();
+					serpProg.AddSegment();
+				}
 			}
 		}
 
