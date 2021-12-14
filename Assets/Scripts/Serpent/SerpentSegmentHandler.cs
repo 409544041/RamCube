@@ -39,11 +39,15 @@ namespace Qbism.Serpent
 			{
 				for (int i = 0; i < segments.Length; i++)
 				{
-					var mRender = segments[i].GetComponentInChildren<SkinnedMeshRenderer>();
+					var mRenders = segments[i].GetComponentsInChildren<Renderer>();
 					var sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
 
-					mRender.enabled = false;
-					sRender.enabled = false;
+					for (int j = 0; j < mRenders.Length; j++)
+					{
+						mRenders[j].enabled = false;
+					}
+
+					if (sRender) sRender.enabled = false;
 				}
 			}
 			else EnableSegments();
@@ -56,33 +60,32 @@ namespace Qbism.Serpent
 
 			for (int i = 0; i < segments.Length; i++)
 			{
-				var mRender = segments[i].GetComponentInChildren<SkinnedMeshRenderer>();
+				var mRenders = segments[i].GetComponentsInChildren<Renderer>();
 				SpriteRenderer[] sRenders = segments[i].GetComponentsInChildren<SpriteRenderer>();
 				var follower = segments[i].GetComponent<SplineFollower>();
 
-				if (!mRender || sRenders.Length == 0) Debug.LogError
+				if ((mRenders.Length == 0 || sRenders.Length == 0) && i != 0) Debug.Log
 						(segments[i] + " is missing either a meshrenderer or spriterenderer!");
 
-				if (serpDataList[i] == true)
-				{
-					mRender.enabled = true;
-					if (follower) follower.useTriggers = true;
+				if (serpDataList[i] == true) SwitchRenderers(mRenders, sRenders, follower, true);
+				else SwitchRenderers(mRenders, sRenders, follower, false);
+			}
+		}
 
-					foreach (var sRender in sRenders)
-					{
-						sRender.enabled = true;
-					}
-				}
-				else
-				{
-					mRender.enabled = false;
-					if (follower) follower.useTriggers = false;
+		private void SwitchRenderers(Renderer[] mRenders, SpriteRenderer[] sRenders, SplineFollower follower, bool value)
+		{
+			for (int i = 0; i < mRenders.Length; i++)
+			{
+				mRenders[i].enabled = value;
+			}
 
-					foreach (var sRender in sRenders)
-					{
-						sRender.enabled = false;
-					}
-				}
+			if (follower) follower.useTriggers = value;
+
+			if (sRenders.Length == 0) return;
+
+			for (int i = 0; i < sRenders.Length; i++)
+			{
+				sRenders[i].enabled = value;
 			}
 		}
 
