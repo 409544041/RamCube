@@ -11,16 +11,25 @@ namespace Qbism.Shapies
 		[SerializeField] GameObject[] shapies = null;
 		[SerializeField] int spawnAmount = 3;
 		[SerializeField] float shapieSpawnY = -.5f;
+		[SerializeField] float[] pushDegrees;
 
 		//Cache
 		FinishEndSeqHandler finishEndSeq;
 
 		//States
-		List<float> pushDegrees = new List<float> { 0, 45, 90, 135, 180, 225, 270, 315 };
+		List<float> pushDegreesList = new List<float>();
 
 		private void Awake()
 		{
 			finishEndSeq = GetComponent<FinishEndSeqHandler>();
+		}
+
+		private void Start() 
+		{
+			for (int i = 0; i < pushDegrees.Length; i++)
+			{
+				pushDegreesList.Add(pushDegrees[i]);
+			}
 		}
 
 		private void OnEnable()
@@ -37,9 +46,9 @@ namespace Qbism.Shapies
 			{
 				int shapeIndex = Random.Range(0, shapies.Length - 1);
 				GameObject toSpawn = shapies[shapeIndex];
-				int degreeIndex = Random.Range(0, pushDegrees.Count - 1);
-				Instantiate(toSpawn, spawnPos, Quaternion.Euler(0f, pushDegrees[degreeIndex], 0f));
-				pushDegrees.RemoveAt(degreeIndex);
+				int degreeIndex = Random.Range(0, pushDegreesList.Count - 1);
+				Instantiate(toSpawn, spawnPos, Quaternion.Euler(0f, pushDegreesList[degreeIndex], 0f));
+				pushDegreesList.RemoveAt(degreeIndex);
 			}
 		}
 
