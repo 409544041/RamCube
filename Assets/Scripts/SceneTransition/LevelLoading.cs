@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.Cubes;
 using Qbism.General;
 using Qbism.WorldMap;
 using UnityEngine;
@@ -35,9 +36,15 @@ namespace Qbism.SceneTransition
 
 			yield return SceneManager.LoadSceneAsync(index);
 
-			fader.FadeImmediate(1);
-			transition.ForceCircleSize(1);
-			yield return fader.FadeIn(fader.sceneTransTime);
+			//need this yield return here for debugFixCircle to work correctly
+			yield return null;
+			var finish = FindObjectOfType<FinishCube>();
+
+			transition.SetCirclePos(finish.transform.position);
+			transition.SetCircleStartState(1);
+			transition.DebugFixCircleMask();
+			fader.FadeImmediate(0);
+			yield return transition.TransIn();
 
 			Destroy(gameObject);
 		}
