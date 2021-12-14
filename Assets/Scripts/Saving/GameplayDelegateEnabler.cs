@@ -9,7 +9,8 @@ namespace Qbism.Saving
 		private void Awake()
 		{
 			SerpentProgress serpProg = FindObjectOfType<SerpentProgress>();
-			serpProg.FixGameplayDelegateLinks();
+			if (serpProg != null) serpProg.FixGameplayDelegateLinks();
+			else Debug.Log("Serpent Progress not found.");
 		}
 	}
 }

@@ -13,8 +13,12 @@ namespace Qbism.Saving
 		private void Awake() 
 		{
 			progHandler = FindObjectOfType<ProgressHandler>();
-			progHandler.FixMapUILinks();
-			progHandler.FixMapPinLinks();
+			if (progHandler != null)
+			{
+				progHandler.FixMapUILinks();
+				progHandler.FixMapPinLinks();
+			}
+			else Debug.Log("Progress Handler not found.");
 		}
 	}
 }
