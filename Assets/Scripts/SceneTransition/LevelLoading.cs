@@ -5,12 +5,16 @@ using Qbism.General;
 using Qbism.WorldMap;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using Dreamteck.Splines;
+using Qbism.Serpent;
 
 namespace Qbism.SceneTransition
 {
 	public class LevelLoading : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] float transDelay = .5f;
+
 		public void StartLoadingLevel(int index)
 		{
 			StartCoroutine(LoadLevel(index));
@@ -22,9 +26,17 @@ namespace Qbism.SceneTransition
 			var fader = FindObjectOfType<Fader>();
 			var selectedPinUI = FindObjectOfType<PinSelectionTracker>().selectedPin.pinUI;
 			var musicFader = FindObjectOfType<MusicFadeOut>();
+			var serpMapHandler = FindObjectOfType<SerpentMapHandler>();
+			var segHandler = serpMapHandler.GetComponent<SerpentSegmentHandler>();
 
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
+
+			segHandler.EnableSegments();
+			serpMapHandler.SetSplineDestinationPoint();
+			serpMapHandler.StartMovement();
+
+			yield return new WaitForSeconds(transDelay);
 
 			transition.SetCirclePos(selectedPinUI.transform.position);
 			transition.SetCircleStartState(0);

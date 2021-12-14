@@ -51,7 +51,6 @@ namespace Qbism.Serpent
 				}
 			}
 			else EnableSegments();
-			
 		}
 
 		public void EnableSegments()

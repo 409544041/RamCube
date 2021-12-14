@@ -81,22 +81,34 @@ namespace Qbism.Saving
 				serpSplineHandler.onFetchSerpDataList += FetchSerpentDataList;
 
 			serpSegHandlers = FindObjectsOfType<SerpentSegmentHandler>();
-			foreach (SerpentSegmentHandler handler in serpSegHandlers)
+			for (int i = 0; i < serpSegHandlers.Length; i++)
 			{
-				if (handler != null) handler.onFetchSerpDataList += FetchSerpentDataList;	
-			}			
+				var handler = serpSegHandlers[i];
+				if (handler != null) handler.onFetchSerpDataList += FetchSerpentDataList;
+			}		
 		}
 
 		public void FixGameplayDelegateLinks()
 		{
 			serpSegHandlers = FindObjectsOfType<SerpentSegmentHandler>();
-			foreach (SerpentSegmentHandler handler in serpSegHandlers)
+			for (int i = 0; i < serpSegHandlers.Length; i++)
 			{
+				var handler = serpSegHandlers[i];
 				if (handler != null) handler.onFetchSerpDataList += FetchSerpentDataList;
 			}
 
 			segSpawner = FindObjectOfType<SegmentSpawner>();
 			if (segSpawner != null) segSpawner.onFetchSegmentToSpawn += FetchSegmentToSpawn;
+		}
+
+		public void FixMapDelegateLinks()
+		{
+			serpSegHandlers = FindObjectsOfType<SerpentSegmentHandler>();
+			for (int i = 0; i < serpSegHandlers.Length; i++)
+			{
+				var handler = serpSegHandlers[i];
+				if (handler != null) handler.onFetchSerpDataList += FetchSerpentDataList;
+			}
 		}
 
 		private void OnDisable()
