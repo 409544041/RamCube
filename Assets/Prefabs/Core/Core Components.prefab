@@ -186,10 +186,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshParts: []
+  lineRender: {fileID: 0}
+  particle: {fileID: 0}
   biomeVarietySO: {fileID: 11400000, guid: 6d1a33ff3e2b8994982dc0b8a0530f14, type: 2}
   recalculate: 0
+  checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 1
+  isLine: 0
+  isParticle: 0
+--- !u!114 &221665115949508014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4904865621631395239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e19f439c8f4524caf4f17d7bc6af58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 785573994526582284}
+  fadeSpeed: 0.005
 --- !u!1001 &433210507423081224
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -319,9 +338,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ba5a9126f75c694da828973032f44e1, type: 3}
+--- !u!1 &4904865621631395239 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8256798027436874295, guid: 4ba5a9126f75c694da828973032f44e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3929284316589735824}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8879707928054342841 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5601510455861189417, guid: 4ba5a9126f75c694da828973032f44e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3929284316589735824}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &785573994526582284 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4350886422905002396, guid: 4ba5a9126f75c694da828973032f44e1,
     type: 3}
   m_PrefabInstance: {fileID: 3929284316589735824}
   m_PrefabAsset: {fileID: 0}

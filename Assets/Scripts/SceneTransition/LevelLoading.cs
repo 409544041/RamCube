@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.General;
 using Qbism.WorldMap;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,7 @@ namespace Qbism.SceneTransition
 			var transition = FindObjectOfType<CircleTransition>();
 			var fader = FindObjectOfType<Fader>();
 			var selectedPinUI = FindObjectOfType<PinSelectionTracker>().selectedPin.pinUI;
+			var musicFader = FindObjectOfType<MusicFadeOut>();
 
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
@@ -26,7 +28,10 @@ namespace Qbism.SceneTransition
 			transition.SetCirclePos(selectedPinUI.transform.position);
 			transition.SetCircleStartState(0);
 			transition.DebugFixCircleMask();
+
+			musicFader.FadeMusicOut();
 			yield return transition.TransOut();
+			musicFader.TurnMusicOff();
 
 			yield return SceneManager.LoadSceneAsync(index);
 

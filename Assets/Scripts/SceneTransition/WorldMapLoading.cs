@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.General;
 using Qbism.WorldMap;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,12 +18,15 @@ namespace Qbism.SceneTransition
 		{
 			var fader = FindObjectOfType<Fader>();
 			var transition = FindObjectOfType<CircleTransition>();
+			var musicFader = FindObjectOfType<MusicFadeOut>();
 			
 
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
+			if (musicFader) musicFader.FadeMusicOut();
 			yield return fader.FadeOut(fader.sceneTransTime);
+			if (musicFader) musicFader.TurnMusicOff();
 			yield return SceneManager.LoadSceneAsync("WorldMap");
 			
 			var centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
