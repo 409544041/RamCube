@@ -10,12 +10,19 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		[SerializeField] MMFeedbacks faceShrinkJuice;
-		public GameObject face;
+		public GameObject face, shrinkingFace;
 
 		public void BecomeShrinkingCube(GameObject cube)
 		{
+			faceShrinkJuice.Initialization();
 			faceShrinkJuice.PlayFeedbacks();
 			GetComponent<FloorCube>().type = CubeTypes.Shrinking;
+		}
+
+		public void SwitchFaces()
+		{
+			face.SetActive(false);
+			shrinkingFace.SetActive(true);
 		}
 	}
 }

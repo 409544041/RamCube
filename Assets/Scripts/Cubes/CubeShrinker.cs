@@ -54,6 +54,8 @@ namespace Qbism.Cubes
 			mesh.enabled = false;
 			shrinkMesh.enabled = true;
 			laserLine.enabled = false;
+			var staticCube = GetComponent<StaticCube>();
+			if (staticCube) staticCube.SwitchFaces();
 
 			// checking for floor bc it might be moveable that gets shrunk at end of level
 			var floorCube = GetComponent<FloorCube>();
