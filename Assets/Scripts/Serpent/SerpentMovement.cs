@@ -18,7 +18,7 @@ namespace Qbism.Serpent
 		
 		//Cache
 		FinishEndSeqHandler finishEndSeq = null;
-		SerpentSegmentHandler segmentHandler;
+		SerpentSegmentHandler segmentHandler = null;
 		
 		//States
 		List<Vector3> breadcrumbs = null;
@@ -36,7 +36,7 @@ namespace Qbism.Serpent
 
 		private void OnEnable() 
 		{
-			if(finishEndSeq != null) finishEndSeq.onSetSerpentMove += SetMoving;
+			if (finishEndSeq != null) finishEndSeq.onSetSerpentMove += SetMoving;
 		}
 
 		void Start()
@@ -81,7 +81,7 @@ namespace Qbism.Serpent
 			}
 		}
 
-		private void SetMoving(bool value)
+		public void SetMoving(bool value)
 		{
 			isMoving = value;
 		}

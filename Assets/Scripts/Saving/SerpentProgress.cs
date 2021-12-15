@@ -16,7 +16,7 @@ namespace Qbism.Saving
 		SegmentSpawner segSpawner = null;
 
 		//States
-		public List<bool> serpentDataList { get; set; }
+		public List<bool> serpentDataList;
 
 		private void Awake() 
 		{

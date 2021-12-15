@@ -13,40 +13,41 @@ namespace Qbism.Serpent
 		[SerializeField] SplineComputer spline;
 		public float mapFollowSpeed = 9f;
 		[SerializeField] SplineFollower follower;
+		[SerializeField] SerpentSegmentHandler segHandler;
+		[SerializeField] float sizeAtStart, sizeAtTarget;
 
-		public void StartShrinkingSerpent()
+		//States
+		Transform target;
+
+		public void ActivateSerpent()
 		{
-			StartCoroutine(ShrinkSerpent());
+			SetSplineToTarget();
+			SetShrinkingData();
+			StartMovement();
 		}
 
-		private IEnumerator ShrinkSerpent()
+		private void SetSplineToTarget()
 		{
-			var segHandler = GetComponent<SerpentSegmentHandler>();
+			target = FindObjectOfType<PinSelectionTracker>().selectedPin.
+				pinUI.levelPin.pinPather.pathPoint.transform;
+			spline.SetPointPosition(0, target.position);
+			spline.Rebuild();
+		}
 
+		private void SetShrinkingData()
+		{
 			for (int i = 0; i < segHandler.segments.Length; i++)
 			{
-				var segment = segHandler.segments[i];
-
-				while (!Mathf.Approximately(segment.transform.localScale.x, 0))
-				{
-					var size = Mathf.MoveTowards(segment.transform.localScale.x, 0, shrinkSpeed);
-					segment.transform.localScale = new Vector3(size, size, size);
-					yield return null;
-				}
+				segHandler.segments[i].GetComponent<SegmentShrinker>().SetTargetData(target,
+					sizeAtStart, sizeAtTarget);
 			}
 		}
 
-		public void StartMovement()
+		private void StartMovement()
 		{
 			follower.followSpeed = mapFollowSpeed;
-		}
-
-		public void SetSplineDestinationPoint()
-		{
-			var target = FindObjectOfType<PinSelectionTracker>().selectedPin.
-				pinUI.levelPin.pinPather.pathPoint;
-			spline.SetPointPosition(0, target.transform.position);
-			spline.Rebuild();
+			GetComponent<SerpentMovement>().SetMoving(true);
+			
 		}
 	}
 }
