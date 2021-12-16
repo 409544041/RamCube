@@ -27,12 +27,10 @@ namespace Qbism.SceneTransition
 			var selectedPinUI = FindObjectOfType<PinSelectionTracker>().selectedPin.pinUI;
 			var musicFader = FindObjectOfType<MusicFadeOut>();
 			var serpMapHandler = FindObjectOfType<SerpentMapHandler>();
-			var segHandler = serpMapHandler.GetComponent<SerpentSegmentHandler>();
 
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
-			segHandler.EnableSegments();
 			serpMapHandler.ActivateSerpent(selectedPinUI);
 
 			yield return new WaitForSeconds(transDelay);

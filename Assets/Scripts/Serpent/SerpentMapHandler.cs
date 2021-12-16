@@ -14,25 +14,30 @@ namespace Qbism.Serpent
 		[SerializeField] SplineFollower follower;
 		[SerializeField] SerpentSegmentHandler segHandler;
 		[SerializeField] float sizeAtStart, sizeAtTarget;
+		[SerializeField] SplineComputer[] splines;
 
 		//States
 		Transform target;
 		SplineComputer spline;
 
-		private void Start() 
-		{
-			spline = follower.spline;
-		}
-
 		public void ActivateSerpent(LevelPinUI pinUI)
 		{
+			SetSpline();
+			segHandler.EnableSegments();
 			SetSplineToTarget(pinUI);
 			SetShrinkingData();
 			StartMovement();
 		}
 
+		private void SetSpline()
+		{
+			var i = Random.Range(0, splines.Length - 1);
+			follower.spline = splines[i];
+		}
+
 		private void SetSplineToTarget(LevelPinUI pinUI)
 		{
+			spline = follower.spline;
 			target = pinUI.levelPin.pinPather.pathPoint.transform;
 			spline.SetPointPosition(0, target.position);
 			spline.Rebuild();

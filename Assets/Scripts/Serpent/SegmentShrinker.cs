@@ -6,6 +6,9 @@ namespace Qbism.Serpent
 {
 	public class SegmentShrinker : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] SerpentMovement mover;
+
 		//States
 		float targetDisToScreen;
 		bool resizing = false;
@@ -21,11 +24,12 @@ namespace Qbism.Serpent
 
 				var disToScreen = Vector3.Distance(worldScreenTrans, transform.position);
 
-				//Mathf.Clamp01((disToScreen - distanceStart) / (distanceEnd - distanceStart)) but start = 0
+				//formula is actually Mathf.Clamp01((disToScreen - distanceStart) / (distanceEnd - distanceStart)) 
 				var disNormalized = Mathf.Clamp01(disToScreen / targetDisToScreen);
 				var newSize = Mathf.Lerp(sizeAtStart, sizeAtTarget, disNormalized);
 				
 				transform.localScale = new Vector3(newSize, newSize, newSize);
+				mover.segmentSpacing = newSize;
 			}
 		}
 

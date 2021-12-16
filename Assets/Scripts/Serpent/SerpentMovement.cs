@@ -11,8 +11,8 @@ namespace Qbism.Serpent
 	{
 		//Config parameters
 		[SerializeField] Transform head = null;
-		[SerializeField] Transform[] followingSegments;
-		[SerializeField] float segmentSpacing = 1f;
+		[SerializeField] SerpentSegmentHandler segHandler;
+		public float segmentSpacing = 1f;
 		[Header ("Juice")]
 		[SerializeField] AudioClip pickupClip;
 		[SerializeField] AudioSource source;
@@ -42,7 +42,7 @@ namespace Qbism.Serpent
 
 		void Start()
 		{
-			segments = followingSegments;
+			segments = segHandler.segments;
 
 			breadcrumbs = new List<Vector3>();
 			breadcrumbs.Add(head.position);
