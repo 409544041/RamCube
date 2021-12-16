@@ -10,7 +10,6 @@ namespace Qbism.Serpent
 	{
 		//Config parameters
 		[SerializeField] float shrinkSpeed;
-		[SerializeField] SplineComputer spline;
 		public float mapFollowSpeed = 9f;
 		[SerializeField] SplineFollower follower;
 		[SerializeField] SerpentSegmentHandler segHandler;
@@ -18,18 +17,23 @@ namespace Qbism.Serpent
 
 		//States
 		Transform target;
+		SplineComputer spline;
 
-		public void ActivateSerpent()
+		private void Start() 
 		{
-			SetSplineToTarget();
+			spline = follower.spline;
+		}
+
+		public void ActivateSerpent(LevelPinUI pinUI)
+		{
+			SetSplineToTarget(pinUI);
 			SetShrinkingData();
 			StartMovement();
 		}
 
-		private void SetSplineToTarget()
+		private void SetSplineToTarget(LevelPinUI pinUI)
 		{
-			target = FindObjectOfType<PinSelectionTracker>().selectedPin.
-				pinUI.levelPin.pinPather.pathPoint.transform;
+			target = pinUI.levelPin.pinPather.pathPoint.transform;
 			spline.SetPointPosition(0, target.position);
 			spline.Rebuild();
 		}
@@ -38,8 +42,8 @@ namespace Qbism.Serpent
 		{
 			for (int i = 0; i < segHandler.segments.Length; i++)
 			{
-				segHandler.segments[i].GetComponent<SegmentShrinker>().SetTargetData(target,
-					sizeAtStart, sizeAtTarget);
+				var shrinker = segHandler.segments[i].GetComponent<SegmentShrinker>();
+				if (shrinker != null) shrinker.SetTargetData(target, sizeAtStart, sizeAtTarget);
 			}
 		}
 

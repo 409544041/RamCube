@@ -11,6 +11,7 @@ namespace Qbism.Serpent
 	{
 		//Config parameters
 		[SerializeField] Transform head = null;
+		[SerializeField] Transform[] followingSegments;
 		[SerializeField] float segmentSpacing = 1f;
 		[Header ("Juice")]
 		[SerializeField] AudioClip pickupClip;
@@ -41,7 +42,7 @@ namespace Qbism.Serpent
 
 		void Start()
 		{
-			segments = segmentHandler.segments;
+			segments = followingSegments;
 
 			breadcrumbs = new List<Vector3>();
 			breadcrumbs.Add(head.position);
@@ -70,13 +71,15 @@ namespace Qbism.Serpent
 			{
 				Vector3 pos = Vector3.Lerp(breadcrumbs[1], breadcrumbs[0], headDisplacement / segmentSpacing);
 				segments[0].position = pos;
-				segments[0].rotation = Quaternion.Slerp(Quaternion.LookRotation(breadcrumbs[0] - breadcrumbs[1]), Quaternion.LookRotation(head.position - breadcrumbs[0]), headDisplacement / segmentSpacing);
+				segments[0].rotation = Quaternion.Slerp(Quaternion.LookRotation(breadcrumbs[0] - breadcrumbs[1]), 
+					Quaternion.LookRotation(head.position - breadcrumbs[0]), headDisplacement / segmentSpacing);
 
 				for (int i = 1; i < segments.Length; i++)
 				{
 					pos = Vector3.Lerp(breadcrumbs[i + 1], breadcrumbs[i], headDisplacement / segmentSpacing);
 					segments[i].position = pos;
-					segments[i].rotation = Quaternion.Slerp(Quaternion.LookRotation(breadcrumbs[i] - breadcrumbs[i + 1]), Quaternion.LookRotation(breadcrumbs[i - 1] - breadcrumbs[i]), headDisplacement / segmentSpacing);
+					segments[i].rotation = Quaternion.Slerp(Quaternion.LookRotation(breadcrumbs[i] - breadcrumbs[i + 1]), 
+						Quaternion.LookRotation(breadcrumbs[i - 1] - breadcrumbs[i]), headDisplacement / segmentSpacing);
 				}
 			}
 		}

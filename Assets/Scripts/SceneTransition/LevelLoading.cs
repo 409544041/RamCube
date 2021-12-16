@@ -33,7 +33,7 @@ namespace Qbism.SceneTransition
 			DontDestroyOnLoad(gameObject);
 
 			segHandler.EnableSegments();
-			serpMapHandler.ActivateSerpent();
+			serpMapHandler.ActivateSerpent(selectedPinUI);
 
 			yield return new WaitForSeconds(transDelay);
 
