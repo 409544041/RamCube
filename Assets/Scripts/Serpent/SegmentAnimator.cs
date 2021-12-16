@@ -11,8 +11,9 @@ namespace Qbism.Serpent
 	public class SegmentAnimator : MonoBehaviour
 	{
 		//Config paramters
-		[Header ("Spawn Juice")]
-		[SerializeField] MMFeedbacks spawnJuice = null;
+		[Header ("Juice")]
+		[SerializeField] MMFeedbacks spawnJuice;
+		[SerializeField] MMFeedbacks flybyJuice;
 		[Header ("Animation")]
 		[SerializeField] Animator animator = null;
 		[SerializeField] float lookAroundAnimDelay = 0f, 
@@ -54,6 +55,12 @@ namespace Qbism.Serpent
 				var myParent = transform.parent;
 				myParent.transform.parent = player;
 			}
+		}
+
+		public void ActivateFlyByJuice()
+		{
+			flybyJuice.Initialization();
+			flybyJuice.PlayFeedbacks();
 		}
 
 		private IEnumerator TriggerLookAround() //Called from animation event
