@@ -25,6 +25,7 @@ namespace Qbism.Serpent
 		List<Vector3> breadcrumbs = null;
 		bool isMoving = false;
 		Transform[] segments = null;
+		bool firstCrumbs = false;
 
 		//Actions, events, delegates etc
 		public event Action onTriggerPlayerAudio;
@@ -33,22 +34,13 @@ namespace Qbism.Serpent
 		{
 			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
 			segmentHandler = GetComponent<SerpentSegmentHandler>();
+			segments = segHandler.segments;
+			breadcrumbs = new List<Vector3>();
 		}
 
 		private void OnEnable() 
 		{
 			if (finishEndSeq != null) finishEndSeq.onSetSerpentMove += SetMoving;
-		}
-
-		void Start()
-		{
-			segments = segHandler.segments;
-
-			breadcrumbs = new List<Vector3>();
-			breadcrumbs.Add(head.position);
-			
-			for (int i = 0; i < segments.Length; i++) 
-				breadcrumbs.Add(segments[i].position);
 		}
 
 		void Update()
@@ -58,6 +50,16 @@ namespace Qbism.Serpent
 
 		private void FollowHead()
 		{
+			if (!firstCrumbs)
+			{
+				breadcrumbs.Add(head.position);
+
+				for (int i = 0; i < segments.Length; i++)
+					breadcrumbs.Add(segments[i].position);
+				
+				firstCrumbs = true;
+			}
+
 			float headDisplacement = (head.position - breadcrumbs[0]).magnitude;
 
 			if (headDisplacement >= segmentSpacing)

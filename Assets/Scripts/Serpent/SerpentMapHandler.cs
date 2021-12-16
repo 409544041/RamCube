@@ -23,9 +23,10 @@ namespace Qbism.Serpent
 		public void ActivateSerpent(LevelPinUI pinUI)
 		{
 			SetSpline();
-			segHandler.EnableSegments();
 			SetSplineToTarget(pinUI);
 			SetShrinkingData();
+			PlaceSegments();
+			segHandler.EnableSegments();
 			StartMovement();
 		}
 
@@ -33,6 +34,18 @@ namespace Qbism.Serpent
 		{
 			var i = Random.Range(0, splines.Length - 1);
 			follower.spline = splines[i];
+		}
+
+		private void PlaceSegments()
+		{
+			Vector3 pos = spline.GetPoint(spline.pointCount -1).position;
+
+			segHandler.segments[0].transform.position = pos;
+
+			for (int i = 1; i < segHandler.segments.Length; i++)
+			{
+				segHandler.segments[i].position = transform.position;
+			}
 		}
 
 		private void SetSplineToTarget(LevelPinUI pinUI)
