@@ -17,7 +17,7 @@ namespace Qbism.Serpent
 		SerpentScreenSplineHandler splineHandler = null;
 
 		//States
-		List<bool> serpDataList = new List<bool>();
+		public List<bool> serpDataList { get; set; } = new List<bool>();
 
 		//Actions, events, delegates etc
 		public Func<List<bool>> onFetchSerpDataList;
@@ -25,7 +25,7 @@ namespace Qbism.Serpent
 		private void Awake() 
 		{
 			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
-			splineHandler = FindObjectOfType<SerpentScreenSplineHandler>();
+			splineHandler = FindObjectOfType<SerpentScreenSplineHandler>(); 
 		}
 
 		private void OnEnable() 

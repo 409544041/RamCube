@@ -28,6 +28,7 @@ namespace Qbism.Cubes
 		FinishCubeJuicer juicer;
 		SceneHandler loader;
 		ProgressHandler progHandler;
+		SerpentProgress serpProg;
 		PlayerFartLauncher farter;
 		Fader fader;
 		FeatureSwitchBoard switchBoard;
@@ -48,6 +49,7 @@ namespace Qbism.Cubes
 			juicer = GetComponent<FinishCubeJuicer>();
 			loader = FindObjectOfType<SceneHandler>();
 			progHandler = FindObjectOfType<ProgressHandler>();
+			serpProg = progHandler.GetComponent<SerpentProgress>();
 			farter = FindObjectOfType<PlayerFartLauncher>();
 			if (progHandler) switchBoard = progHandler.
 				GetComponent<FeatureSwitchBoard>();
@@ -195,7 +197,7 @@ namespace Qbism.Cubes
 
 		private IEnumerator SerpentSequence()
 		{
-			if (switchBoard.serpentConnected)
+			if (switchBoard.serpentConnected && serpProg.serpentDataList[0] == true)
 			{
 				ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
 				yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
