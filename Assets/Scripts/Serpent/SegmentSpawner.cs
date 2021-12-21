@@ -42,10 +42,12 @@ namespace Qbism.Serpent
 
 		private void SpawnSegment()
 		{
+			bool isMother = segmentToSpawn.GetComponent<SegmentIdentifier>().segmentID ==
+				SegmentIDs.segment_head;
+
 			float spawnY = segSpawnY; float spawnDegs = spawnDegrees;
 
-			if (segmentToSpawn.GetComponent<SegmentIdentifier>().segmentID ==
-				SegmentIDs.segment_head)
+			if (isMother)
             {
 				spawnY = headSegSpawnY;
 				spawnDegs = headSpawnDegrees;
@@ -56,7 +58,9 @@ namespace Qbism.Serpent
 				Quaternion.Euler(0f, spawnDegs, 0f));
 
 			segmentToSpawn.transform.position = transform.position;
-			spawnedSegment.GetComponentInChildren<SegmentAnimator>().Spawn();
+
+			if (isMother) spawnedSegment.GetComponentInChildren<MotherDragonAnimator>().Spawn();
+			else spawnedSegment.GetComponentInChildren<SegmentAnimator>().Spawn();
 		}
 
 		private void OnDisable()
