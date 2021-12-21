@@ -89,7 +89,7 @@ namespace Qbism.Serpent
 
 		private void TriggerPlayerLanding() //Called from animation event
 		{
-			playerAnim.TriggerFall(true, "FallOnSegment");
+			playerAnim.TriggerFall(true, "FallOnSegment", -45, false);
 		}
 
 		private void TriggerPlayerLookDown() //Called from animation event

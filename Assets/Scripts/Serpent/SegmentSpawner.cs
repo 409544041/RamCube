@@ -59,7 +59,8 @@ namespace Qbism.Serpent
 
 			segmentToSpawn.transform.position = transform.position;
 
-			if (isMother) spawnedSegment.GetComponentInChildren<MotherDragonAnimator>().Spawn();
+			if (isMother) spawnedSegment.GetComponentInChildren<MotherDragonAnimator>().
+					Spawn(headSpawnDegrees);
 			else spawnedSegment.GetComponentInChildren<SegmentAnimator>().Spawn();
 		}
 

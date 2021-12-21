@@ -85,7 +85,7 @@ namespace Qbism.Shapies
 		private IEnumerator TriggerPlayerFalling(float delay) //Called from animation event
 		{
 			yield return new WaitForSeconds(delay);
-			playerAnim.TriggerFall(false, "FallOnGround");
+			playerAnim.TriggerFall(false, "FallOnGround", Random.Range(-40, -50), false);
 		}
 
 		private void TriggerGibberishSlow()

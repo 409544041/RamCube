@@ -67,14 +67,18 @@ namespace Qbism.PlayerCube
 			onShowFF();
 		}
 
-		public void TriggerFall(bool hasSeg, string fallType)
+		public void TriggerFall(bool hasSeg, string fallType, float fallDeg, bool withMom)
 		{
 			if (fallen) return;
-			if (hasSeg) StartCoroutine(Fall(impactSegY, fallType));
-			else StartCoroutine(Fall(impactGroundY,fallType));
+
+			var impactY = impactGroundY;
+			if (withMom) impactY = 0;
+
+			if (hasSeg) StartCoroutine(Fall(impactSegY, fallType, fallDeg));
+			else StartCoroutine(Fall(impactY,fallType, fallDeg));
 		}
 
-		private IEnumerator Fall(float addedY, string fallType)
+		private IEnumerator Fall(float addedY, string fallType, float fallDeg)
 		{
 			fallen = true;
 			GetComponentInParent<PlayerFartLauncher>().flyingBy = false;
@@ -85,7 +89,7 @@ namespace Qbism.PlayerCube
 			player.transform.position = new Vector3(playerFinishLandPos.x,
 				playerFinishLandPos.y + addedY, playerFinishLandPos.z);
 
-			player.transform.rotation = Quaternion.Euler(0f, -45f, 0f);
+			player.transform.rotation = Quaternion.Euler(0f, fallDeg, 0f);
 
 			yield return null; //This is to prevent cube from showing for 1 frame at wrong loc
 
@@ -112,6 +116,16 @@ namespace Qbism.PlayerCube
 		{
 			animator.SetTrigger("Wiggle");
 		}
+
+		public void SetWithMother(bool value)
+        {
+			animator.SetBool("WithMother", value); 
+        }
+
+		public void TriggerCuddle()
+        {
+			animator.SetTrigger("Cuddle");
+        }
 
 		private void ActivateSerpent() //Called from animation
 		{

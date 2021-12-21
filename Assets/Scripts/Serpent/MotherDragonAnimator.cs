@@ -15,6 +15,9 @@ namespace Qbism.Serpent
 		//Cache
 		PlayerAnimator playerAnim = null;
 
+		//States
+		float headSpawnDegrees;
+
 		private void Awake()
 		{
 			playerAnim = FindObjectOfType<PlayerAnimator>();
@@ -26,8 +29,10 @@ namespace Qbism.Serpent
 			flybyJuice.PlayFeedbacks();
 		}
 
-		public void Spawn()
+		public void Spawn(float headSpawnDeg)
         {
+			headSpawnDegrees = headSpawnDeg;
+
 			int[] indexes = new int[] { 1, 2, 3, 4, 5 };
 			SetWeights(indexes, 0);
 
@@ -45,7 +50,13 @@ namespace Qbism.Serpent
 
 		private void TriggerPlayerLanding() //Called from animation event
 		{
-			playerAnim.TriggerFall(false, "FallOnGround");
+			playerAnim.TriggerFall(false, "FallOnGround", headSpawnDegrees + 180, true);
+			playerAnim.SetWithMother(true);
 		}
+
+		private void TriggerPlayerCuddle() // Called from animation event
+        {
+			playerAnim.TriggerCuddle();
+        }
 	}
 }
