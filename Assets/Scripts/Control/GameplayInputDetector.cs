@@ -32,8 +32,7 @@ namespace Qbism.Control
 			loader = GetComponent<SceneHandler>();
 			rewinder = GetComponent<RewindHandler>();
 			progHandler = FindObjectOfType<ProgressHandler>();
-			if (progHandler) switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
-			else switchBoard = FindObjectOfType<FeatureSwitchBoard>();
+			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
 			controls = new GameControls();
 
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();

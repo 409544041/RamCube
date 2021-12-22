@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using Qbism.General;
 using Qbism.PlayerCube;
+using Qbism.SceneTransition;
 using UnityEngine;
 
 namespace Qbism.Serpent
@@ -54,9 +56,17 @@ namespace Qbism.Serpent
 			playerAnim.SetWithMother(true);
 		}
 
-		private void TriggerPlayerCuddle() // Called from animation event
+		private void TriggerPlayerCuddle() //Called from animation event
         {
 			playerAnim.TriggerCuddle();
         }
+
+		private void LevelTransition() //Called from animation event
+        {
+			var switchBoard = FindObjectOfType<FeatureSwitchBoard>();
+			if (switchBoard.worldMapConnected)
+				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(true);
+			else FindObjectOfType<SceneHandler>().NextLevel();
+		}
 	}
 }

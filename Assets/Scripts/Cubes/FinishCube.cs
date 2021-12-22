@@ -42,10 +42,7 @@ namespace Qbism.Cubes
 			if (progHandler) serpProg = progHandler.GetComponent<SerpentProgress>();
 			finishEndSeq = GetComponent<FinishEndSeqHandler>();
 			floorChecker = handler.GetComponent<FloorCubeChecker>();
-			if (progHandler) switchBoard = progHandler.
-				GetComponent<FeatureSwitchBoard>();
-			else switchBoard = handler.
-				GetComponent<FeatureSwitchBoard>();
+			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
 		}
 
 		private void OnEnable()

@@ -51,10 +51,7 @@ namespace Qbism.Cubes
 			progHandler = FindObjectOfType<ProgressHandler>();
 			serpProg = progHandler.GetComponent<SerpentProgress>();
 			farter = FindObjectOfType<PlayerFartLauncher>();
-			if (progHandler) switchBoard = progHandler.
-				GetComponent<FeatureSwitchBoard>();
-			else switchBoard = handler.
-				GetComponent<FeatureSwitchBoard>();
+			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
 		}
 
 		private void OnEnable() 
@@ -198,7 +195,8 @@ namespace Qbism.Cubes
 		private IEnumerator SerpentSequence()
 		{
 			//checking if in level where head gets rescued
-			if (switchBoard.serpentConnected && FetchHasSegment() && serpProg.serpentDataList[1] == false)
+			if (switchBoard.serpentConnected && FetchHasSegment() &&
+				serpProg.serpentDataList[1] == false)
 				yield return new WaitForSeconds(4); //TO DO: Make this actual rescue anim length
 
 			else if (switchBoard.serpentConnected)
