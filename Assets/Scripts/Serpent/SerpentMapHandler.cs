@@ -22,7 +22,7 @@ namespace Qbism.Serpent
 
 		public void ActivateSerpent(LevelPinUI pinUI)
 		{
-			if (segHandler.serpDataList.Count == 0) return;
+			if (segHandler.serpDataList[0] == false) return;
 			
 			SetSpline();
 			SetSplineToTarget(pinUI);

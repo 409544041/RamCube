@@ -35,6 +35,8 @@ namespace Qbism.Serpent
 
 		private void Start()
 		{
+			serpDataList = onFetchSerpDataList();
+
 			if (!splineHandler) //Checking if we're in serpent screen or not
 			{
 				for (int i = 0; i < segments.Length; i++)
@@ -55,8 +57,6 @@ namespace Qbism.Serpent
 
 		public void EnableSegments()
 		{
-			serpDataList = onFetchSerpDataList();
-
 			for (int i = 0; i < segments.Length; i++)
 			{
 				var mRenders = segments[i].GetComponentsInChildren<Renderer>();
