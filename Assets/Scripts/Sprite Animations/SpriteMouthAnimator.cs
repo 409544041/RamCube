@@ -133,7 +133,7 @@ namespace Qbism.SpriteAnimations
 			if (currentClipName == "Mouth_NormalToSmile" || currentClipName == "Mouth_HappyOpenToSmile") currentMouth = MouthStates.smile;
 
 			if (currentClipName == "Mouth_SadToWail" || currentClipName == "Mouth_Wail") currentMouth = MouthStates.wail;
-			if (currentClipName == "Mouth_SmileToHappyOpen") currentMouth = MouthStates.happyOpen;
+			if (currentClipName == "Mouth_SmileToHappyOpen" || currentClipName == "Mouth_HappyOpen") currentMouth = MouthStates.happyOpen;
 			if (currentClipName == "Mouth_Laughing") currentMouth = MouthStates.laugh;
 
 			if (currentClipName == "Mouth_Crying") currentMouth = MouthStates.cry;

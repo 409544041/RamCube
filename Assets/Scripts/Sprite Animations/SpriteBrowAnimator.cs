@@ -15,6 +15,7 @@ namespace Qbism.SpriteAnimations
 		const string TO_HIGH = "ToHigh";
 		const string TO_FROWN = "ToFrown";
 		const string TO_ANGRY = "ToAngry";
+		const string TO_HIGHLAUGH = "ToHighLaugh";
 
 		List<string> animStringList = new List<string>();
 
@@ -29,6 +30,7 @@ namespace Qbism.SpriteAnimations
 			animStringList.Add(TO_HIGH);
 			animStringList.Add(TO_FROWN);
 			animStringList.Add(TO_ANGRY);
+			animStringList.Add(TO_HIGHLAUGH);
 		}
 
 		//state1 is always the state you're going to.
@@ -48,6 +50,8 @@ namespace Qbism.SpriteAnimations
 			if (state == BrowStates.frown) ToFirstTierAnim(BrowStates.frown, BrowStates.angry, TO_FROWN);
 
 			if (state == BrowStates.angry) ToSecondTierAnim(BrowStates.angry, BrowStates.frown, TO_ANGRY);
+
+			if (state == BrowStates.highLaugh) ToSecondTierAnim(BrowStates.highLaugh, BrowStates.high, TO_HIGHLAUGH);
 		}
 
 		private void SetCurrentBrow()
@@ -60,7 +64,8 @@ namespace Qbism.SpriteAnimations
 
 			if (currentClipName == "Brow_Frown") currentBrow = BrowStates.frown;
 			if (currentClipName == "Brow_Angry") currentBrow = BrowStates.angry;			
-			if (currentClipName == "Brow_LowToHigh") currentBrow = BrowStates.high;
+			if (currentClipName == "Brow_LowToHigh" || currentClipName == "Brow_High") currentBrow = BrowStates.high;
+			if (currentClipName == "Brow_HighLaugh") currentBrow = BrowStates.highLaugh;
 			
 		}
 
