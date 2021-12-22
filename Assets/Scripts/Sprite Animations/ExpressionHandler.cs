@@ -196,6 +196,11 @@ namespace Qbism.SpriteAnimations
 			SetFace(Expressions.calm, GetRandomTime());
 		}
 
+		public void SetLaughingFace()
+        {
+			SetFace(Expressions.laughing, GetRandomTime());
+        }
+
 		private void StartLaughingWiggle()
 		{
 			faceJuice.WiggleFace();

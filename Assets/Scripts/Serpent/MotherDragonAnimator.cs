@@ -4,6 +4,7 @@ using MoreMountains.Feedbacks;
 using Qbism.General;
 using Qbism.PlayerCube;
 using Qbism.SceneTransition;
+using Qbism.SpriteAnimations;
 using UnityEngine;
 
 namespace Qbism.Serpent
@@ -68,5 +69,10 @@ namespace Qbism.Serpent
 				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(true);
 			else FindObjectOfType<SceneHandler>().NextLevel();
 		}
+
+		private void SetPlayerLaughingFace() //Called from animation event
+        {
+			playerAnim.GetComponent<ExpressionHandler>().SetLaughingFace();
+        }
 	}
 }

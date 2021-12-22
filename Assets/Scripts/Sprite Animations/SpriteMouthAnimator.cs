@@ -8,7 +8,7 @@ namespace Qbism.SpriteAnimations
 	public class SpriteMouthAnimator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] bool hasCircle, hasTeeth, hasWail, hasCry, hasBoop, hasYawn;
+		[SerializeField] bool hasCircle, hasTeeth, hasWail, hasCry, hasBoop, hasYawn, hasLaugh;
 
 		//Cache
 		Animator animator;
@@ -25,6 +25,7 @@ namespace Qbism.SpriteAnimations
 		const string TO_CRY = "ToCry";
 		const string TO_BOOP = "ToIdleBooping";
 		const string TO_YAWN = "ToIdleYawn";
+		const string TO_LAUGH = "ToLaughing";
 
 		List<string> animStringList = new List<string>();
 
@@ -45,6 +46,7 @@ namespace Qbism.SpriteAnimations
 			animStringList.Add(TO_CRY);
 			animStringList.Add(TO_BOOP);
 			animStringList.Add(TO_YAWN);
+			animStringList.Add(TO_LAUGH); 
 		}
 
 		//state1 is always the state you're going to.
@@ -90,7 +92,13 @@ namespace Qbism.SpriteAnimations
 
 			if (state == MouthStates.happyOpen) ToSecondTierAnim(MouthStates.happyOpen,
 				MouthStates.smile, MouthStates.laugh, TO_HAPPY);
-			
+
+			if (state == MouthStates.laugh && hasLaugh) ToThirdTierAnim(MouthStates.laugh,
+				MouthStates.smile, MouthStates.happyOpen, TO_LAUGH);
+
+			else if (state == MouthStates.laugh && !hasLaugh)
+				Debug.LogError("Character does not have laughing mouth animation.");
+
 			if (state == MouthStates.cry && hasCry) ToThirdTierAnim(MouthStates.cry,
 				MouthStates.sad, MouthStates.wail, TO_CRY);
 
@@ -126,6 +134,7 @@ namespace Qbism.SpriteAnimations
 
 			if (currentClipName == "Mouth_SadToWail" || currentClipName == "Mouth_Wail") currentMouth = MouthStates.wail;
 			if (currentClipName == "Mouth_SmileToHappyOpen") currentMouth = MouthStates.happyOpen;
+			if (currentClipName == "Mouth_Laughing") currentMouth = MouthStates.laugh;
 
 			if (currentClipName == "Mouth_Crying") currentMouth = MouthStates.cry;
 			if (currentClipName == "Mouth_IdleBooping") currentMouth = MouthStates.boop;
@@ -214,20 +223,20 @@ namespace Qbism.SpriteAnimations
 
 			if (currentMouth != MouthStates.normal && currentMouth != state2 &&
 				currentMouth != state3)
-			{
 				ToBaseAnim();
 
-				string newTrigger = null;
-				if (state1 == MouthStates.cry) newTrigger = TO_SAD;
-				// if (state1 == MouthStates.laugh) newTrigger = TO_SMILE;
+			string newTrigger = null;
+			if (state1 == MouthStates.cry) newTrigger = TO_SAD;
+			if (state1 == MouthStates.laugh) newTrigger = TO_SMILE;
 
-				ToFirstTierAnim(state2, state3, state1, newTrigger);
+			if (currentMouth == MouthStates.normal)
+				ToFirstTierAnim(state2, state1, state3, newTrigger);
 
-				if (state1 == MouthStates.cry) newTrigger = TO_WAIL;
-				// if (state1 == MouthStates.laugh) newTrigger = TO_LAUGH;
+			if (state1 == MouthStates.cry) newTrigger = TO_WAIL;
+			if (state1 == MouthStates.laugh) newTrigger = TO_HAPPY;
 
+			if (currentMouth == state2)
 				ToSecondTierAnim(state3, state2, state1, newTrigger);
-			}
 
 			animator.SetTrigger(trigger);
 			currentMouth = state1;
