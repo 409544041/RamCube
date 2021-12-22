@@ -44,6 +44,8 @@ namespace Qbism.WorldMap
 		{				
 			onSetCurrentData(levelPin.m_levelData.f_Pin, levelPin.m_levelData.f_SegmentPresent,
 				levelPin.m_Pin.f_Biome);
+
+			pinUIJuice.PlayEnterLevelJuice();
 				
 			var loader = FindObjectOfType<LevelLoading>();
 			loader.StartLoadingLevel(levelPin.m_levelData.f_Pin.f_Index);

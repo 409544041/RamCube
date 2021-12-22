@@ -1,26 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!223 &1264749938110159723
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 925666672500516196}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 1442901941
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1 &954991953277364752
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,6 +664,7 @@ RectTransform:
   - {fileID: 119647610031334078}
   - {fileID: 7656719305671653478}
   - {fileID: 8805084378805069122}
+  - {fileID: 5916490793722431047}
   m_Father: {fileID: 9113648492447938283}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -785,6 +765,7 @@ MonoBehaviour:
   compJuice: {fileID: 1110888846321808264}
   compDiamondJuice: {fileID: 8670081392878031013}
   selectedJuice: {fileID: 5657190363950388271}
+  enterLevelJuice: {fileID: 749132697933765341}
   pinUI: {fileID: 3245430101569147753}
   compJuiceDelay: 0.7
   unCompJuiceDelay: 0.5
@@ -908,12 +889,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ba2e24c3e563674d8c8c9a15b8c4d96, type: 3}
---- !u!1 &925666672500516196 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3163612825495697954, guid: 1ba2e24c3e563674d8c8c9a15b8c4d96,
-    type: 3}
-  m_PrefabInstance: {fileID: 2828201146261561158}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &889606348627811998 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3127553918828102104, guid: 1ba2e24c3e563674d8c8c9a15b8c4d96,
@@ -926,6 +901,170 @@ ParticleSystem:
     type: 3}
   m_PrefabInstance: {fileID: 2828201146261561158}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &925666672500516196 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3163612825495697954, guid: 1ba2e24c3e563674d8c8c9a15b8c4d96,
+    type: 3}
+  m_PrefabInstance: {fileID: 2828201146261561158}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &1264749938110159723
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925666672500516196}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 1442901941
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!1001 &3687777761557622591
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3292636772852606461}
+    m_Modifications:
+    - target: {fileID: 861656499637995818, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_Name
+      value: Pin UI Enter Level Juice
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eecaacf7094b196478085d6ba840b00d, type: 3}
+--- !u!224 &5916490793722431047 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3687777761557622591}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &749132697933765341 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4127806816077936098, guid: eecaacf7094b196478085d6ba840b00d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3687777761557622591}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5532442641915015841
 PrefabInstance:
   m_ObjectHideFlags: 0

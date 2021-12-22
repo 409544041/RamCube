@@ -8,7 +8,7 @@ namespace Qbism.WorldMap
 	public class LevelPinUIJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks unCompJuice, compJuice, compDiamondJuice, selectedJuice;
+		[SerializeField] MMFeedbacks unCompJuice, compJuice, compDiamondJuice, selectedJuice, enterLevelJuice;
 		[SerializeField] LevelPinUI pinUI;
 		public float compJuiceDelay, unCompJuiceDelay;
 		public float selectedSize = 1.35f;
@@ -85,6 +85,12 @@ namespace Qbism.WorldMap
 			
 			selectedJuice.PlayFeedbacks();
 		}
+
+		public void PlayEnterLevelJuice()
+        {
+			enterLevelJuice.Initialization();
+			enterLevelJuice.PlayFeedbacks();
+        }
 	}
 
 }
