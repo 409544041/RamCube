@@ -45,8 +45,8 @@ namespace Qbism.Serpent
         {
 			var serpMapHandler = GetComponent<SerpentMapHandler>();
 
-		//	if (serpMapHandler != null) segments = segHandler.PrepareSegmentsInMap();
-			/*else*/ segments = segHandler.segments;
+			if (serpMapHandler != null) segments = segHandler.PrepareSegmentsInMap();
+			else segments = segHandler.segments;
 		}
 
         void Update()
@@ -58,8 +58,12 @@ namespace Qbism.Serpent
 		{
 			if (!firstCrumbs)
 			{
+				//populate the first set of crumbs by the initial positions of the segments.
+				//add head first, because that's where the segments will be going.
 				breadcrumbs.Add(head.position);
 
+				//we have an extra-crumb to mark where the last segment was...
+				//so it's segment.length and not segment.length - 1
 				for (int i = 0; i < segments.Length; i++)
 					breadcrumbs.Add(segments[i].position);
 				
@@ -79,14 +83,21 @@ namespace Qbism.Serpent
 			{
 				Vector3 pos = Vector3.Lerp(breadcrumbs[1], breadcrumbs[0], headDisplacement / segmentSpacing);
 				segments[0].position = pos;
-				segments[0].rotation = Quaternion.Slerp(Quaternion.LookRotation(breadcrumbs[0] - breadcrumbs[1]), 
+
+				//Need to check for != Vector3.zero to avoid Vector3.zero errors
+				if (breadcrumbs[0] - breadcrumbs[1] != Vector3.zero && head.position - breadcrumbs[0] != Vector3.zero)
+					segments[0].rotation = Quaternion.Slerp(Quaternion.LookRotation(breadcrumbs[0] - breadcrumbs[1]),
 					Quaternion.LookRotation(head.position - breadcrumbs[0]), headDisplacement / segmentSpacing);
+
 
 				for (int i = 1; i < segments.Length; i++)
 				{
 					pos = Vector3.Lerp(breadcrumbs[i + 1], breadcrumbs[i], headDisplacement / segmentSpacing);
 					segments[i].position = pos;
-					segments[i].rotation = Quaternion.Slerp(Quaternion.LookRotation(breadcrumbs[i] - breadcrumbs[i + 1]), 
+
+					//Need to check for != Vector3.zero to avoid Vector3.zero errors
+					if (breadcrumbs[i] - breadcrumbs[i + 1] != Vector3.zero && breadcrumbs[i - 1] - breadcrumbs[i] != Vector3.zero)
+						segments[i].rotation = Quaternion.Slerp(Quaternion.LookRotation(breadcrumbs[i] - breadcrumbs[i + 1]),
 						Quaternion.LookRotation(breadcrumbs[i - 1] - breadcrumbs[i]), headDisplacement / segmentSpacing);
 				}
 			}
