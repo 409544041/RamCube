@@ -19,12 +19,11 @@ namespace Qbism.Serpent
 		
 		//Cache
 		FinishEndSeqHandler finishEndSeq = null;
-		SerpentSegmentHandler segmentHandler = null;
 		
 		//States
 		List<Vector3> breadcrumbs = null;
 		bool isMoving = false;
-		Transform[] segments = null;
+		public Transform[] segments = null;
 		bool firstCrumbs = false;
 
 		//Actions, events, delegates etc
@@ -33,8 +32,7 @@ namespace Qbism.Serpent
 		private void Awake() 
 		{
 			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
-			segmentHandler = GetComponent<SerpentSegmentHandler>();
-			segments = segHandler.segments;
+
 			breadcrumbs = new List<Vector3>();
 		}
 
@@ -43,7 +41,15 @@ namespace Qbism.Serpent
 			if (finishEndSeq != null) finishEndSeq.onSetSerpentMove += SetMoving;
 		}
 
-		void Update()
+        private void Start()
+        {
+			var serpMapHandler = GetComponent<SerpentMapHandler>();
+
+		//	if (serpMapHandler != null) segments = segHandler.PrepareSegmentsInMap();
+			/*else*/ segments = segHandler.segments;
+		}
+
+        void Update()
 		{
 			if (isMoving) FollowHead();
 		}
