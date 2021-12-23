@@ -29,7 +29,7 @@ namespace Qbism.Serpent
 				var newSize = Mathf.Lerp(sizeAtStart, sizeAtTarget, disNormalized);
 				
 				transform.localScale = new Vector3(newSize, newSize, newSize);
-				mover.segmentSpacing = newSize;
+				if (mover != null) mover.segmentSpacing = newSize;
 			}
 		}
 
