@@ -194,12 +194,7 @@ namespace Qbism.Cubes
 
 		private IEnumerator SerpentSequence()
 		{
-			//checking if in level where head gets rescued
-			if (switchBoard.serpentConnected && FetchHasSegment() &&
-				serpProg.serpentDataList[1] == false)
-				yield return new WaitForSeconds(4); //TO DO: Make this actual rescue anim length
-
-			else if (switchBoard.serpentConnected)
+			if (switchBoard.serpentConnected)
 			{
 				ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
 				yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
