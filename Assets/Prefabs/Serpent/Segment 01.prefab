@@ -154,6 +154,7 @@ MonoBehaviour:
   hasCry: 0
   hasBoop: 0
   hasYawn: 0
+  hasLaugh: 0
 --- !u!1 &6786032767260363019
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +344,7 @@ MonoBehaviour:
   hasWink: 1
   hasBoop: 0
   hasYawn: 0
+  hasArchLaugh: 0
 --- !u!1 &8554115220973709344
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,7 +371,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8554115220973709344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 8}
+  m_LocalPosition: {x: -7, y: 0, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8159655035380119096}
@@ -403,63 +405,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.9, z: 0.9}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &6708227828586836224
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8824587593959042178}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ddf518120e3c9b247852ec4122a6626b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1077521818582539555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8824587593959042178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb9aa31c2604b6c4390d791ed869305e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  expressionsSO: {fileID: 11400000, guid: 94fc7571e79c0d3408cbf6cf8cebf3d9, type: 2}
-  situationsExprsSO: {fileID: 0}
-  isPlayer: 0
-  hasBrows: 0
-  hasMouth: 1
-  minMaxExpressionTime: {x: 0, y: 0}
-  minMaxBlinkTime: {x: 0, y: 0}
-  blinkDur: 0.2
---- !u!114 &3223442707762543998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8824587593959042178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 802b7b0c2e317e6498e773496021cd4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnJuice: {fileID: 1570939729246052504}
-  flybyJuice: {fileID: 3221079219657747159}
-  animator: {fileID: 6708227828586836224}
-  lookAroundAnimDelay: 1
-  lookUpAnimDelay: 1
-  happyWiggleAnimDelay: 0.5
 --- !u!1001 &556485354426371229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1013,3 +958,60 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8554115220257264083}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &6708227828586836224
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8824587593959042178}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ddf518120e3c9b247852ec4122a6626b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1077521818582539555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8824587593959042178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9aa31c2604b6c4390d791ed869305e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expressionsSO: {fileID: 11400000, guid: 94fc7571e79c0d3408cbf6cf8cebf3d9, type: 2}
+  situationsExprsSO: {fileID: 0}
+  isPlayer: 0
+  hasBrows: 0
+  hasMouth: 1
+  minMaxExpressionTime: {x: 0, y: 0}
+  minMaxBlinkTime: {x: 0, y: 0}
+  blinkDur: 0.2
+--- !u!114 &3223442707762543998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8824587593959042178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 802b7b0c2e317e6498e773496021cd4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnJuice: {fileID: 1570939729246052504}
+  flybyJuice: {fileID: 3221079219657747159}
+  animator: {fileID: 6708227828586836224}
+  lookAroundAnimDelay: 1
+  lookUpAnimDelay: 1
+  happyWiggleAnimDelay: 0.5

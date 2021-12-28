@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Dreamteck.Splines;
+using System;
 
 namespace Qbism.Serpent
 {
@@ -28,8 +29,7 @@ namespace Qbism.Serpent
 		List<bool> serpDataList = new List<bool>();
 
 		//Actions, events, delegates etc
-		public delegate List<bool> GetSerpDataDel();
-		public GetSerpDataDel onFetchSerpDataList;
+		public Func<List<bool>> onFetchSerpDataList;
 
 
 		private void Awake()
@@ -159,8 +159,8 @@ namespace Qbism.Serpent
 			//Ensure order is same in highlightSegments and followers arrays for this to work correctly
 			for (int i = 0; i < highlightSegments.Length; i++)
 			{
-				MeshRenderer mRender = highlightSegments[i].GetComponentInChildren<MeshRenderer>();
-				SpriteRenderer sRender = highlightSegments[i].GetComponentInChildren<SpriteRenderer>();
+				var mRender = highlightSegments[i].GetComponentInChildren<Renderer>();
+				var sRender = highlightSegments[i].GetComponentInChildren<SpriteRenderer>();
 
 				if (!mRender || !sRender) Debug.LogWarning
 					 (highlightSegments[i] + " is missing either a meshrenderer or spriterenderer!");

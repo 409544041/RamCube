@@ -32,13 +32,14 @@ namespace Qbism.Serpent
 
 		private void OnEnable() 
 		{
-			if (finishEndSeq != null) finishEndSeq.onShowSegments += EnableSegmentsForEndSeq;
+			if (finishEndSeq != null) finishEndSeq.onShowSegments += EnableSegmentsWithoutBilly;
 		}
 
 		private void Start()
 		{
 			serpDataList = onFetchSerpDataList();
-			DisableSegmentsAtStart();
+			if (GetComponent<SerpentScreenSplineHandler>() != null) DisableSegmentsAtStart();
+			else EnableSegmentsWithoutBilly();
 		}
 
         private void DisableSegmentsAtStart()
@@ -57,7 +58,7 @@ namespace Qbism.Serpent
             }
         }
 
-        public void EnableSegmentsForEndSeq()
+        public void EnableSegmentsWithoutBilly()
 		{
 			var segmentsWithoutBilly = new Transform[segments.Length - 1];
             for (int i = 0; i < segmentsWithoutBilly.Length; i++)
@@ -155,7 +156,7 @@ namespace Qbism.Serpent
 
 		private void OnDisable()
 		{
-			if (finishEndSeq != null) finishEndSeq.onShowSegments -= EnableSegmentsForEndSeq;
+			if (finishEndSeq != null) finishEndSeq.onShowSegments -= EnableSegmentsWithoutBilly;
 		}
 	}
 }

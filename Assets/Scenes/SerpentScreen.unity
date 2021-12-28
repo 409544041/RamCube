@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.17745957, g: 0.22216818, b: 0.30438256, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -623,6 +623,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1736601469414674365, guid: 2bf3e58c9fe0b0e469660add38c22fa1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1757462714351490343, guid: 2bf3e58c9fe0b0e469660add38c22fa1,
         type: 3}
@@ -29922,20 +29927,25 @@ PrefabInstance:
         type: 3}
       propertyPath: segments.Array.data[0]
       value: 
-      objectReference: {fileID: 1484797779}
+      objectReference: {fileID: 62467810}
     - target: {fileID: 8587559809536208760, guid: 4a6d5745fb310fe4490adab06fddabbc,
         type: 3}
       propertyPath: segments.Array.data[1]
       value: 
-      objectReference: {fileID: 254465634}
+      objectReference: {fileID: 1484797779}
     - target: {fileID: 8587559809536208760, guid: 4a6d5745fb310fe4490adab06fddabbc,
         type: 3}
       propertyPath: segments.Array.data[2]
       value: 
-      objectReference: {fileID: 580393068}
+      objectReference: {fileID: 254465634}
     - target: {fileID: 8587559809536208760, guid: 4a6d5745fb310fe4490adab06fddabbc,
         type: 3}
       propertyPath: segments.Array.data[3]
+      value: 
+      objectReference: {fileID: 580393068}
+    - target: {fileID: 8587559809536208760, guid: 4a6d5745fb310fe4490adab06fddabbc,
+        type: 3}
+      propertyPath: segments.Array.data[4]
       value: 
       objectReference: {fileID: 985693978}
     - target: {fileID: 8587559809536208760, guid: 4a6d5745fb310fe4490adab06fddabbc,
@@ -31295,6 +31305,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1716213161874382761, guid: 7638c5376a0b4bd44bfec33f97642754,
         type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1716213161874382761, guid: 7638c5376a0b4bd44bfec33f97642754,
+        type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.90198
       objectReference: {fileID: 0}
@@ -31317,7 +31332,7 @@ PrefabInstance:
         type: 3}
       propertyPath: spline
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1245086017}
     - target: {fileID: 4244003984211892840, guid: 7638c5376a0b4bd44bfec33f97642754,
         type: 3}
       propertyPath: followers.Array.size
@@ -31421,6 +31436,11 @@ PrefabInstance:
     - target: {fileID: 4244003984211892840, guid: 7638c5376a0b4bd44bfec33f97642754,
         type: 3}
       propertyPath: followers.Array.data[19]
+      value: 
+      objectReference: {fileID: 192424703}
+    - target: {fileID: 4244003984211892840, guid: 7638c5376a0b4bd44bfec33f97642754,
+        type: 3}
+      propertyPath: followers.Array.data[20]
       value: 
       objectReference: {fileID: 192424703}
     - target: {fileID: 4244003984211892840, guid: 7638c5376a0b4bd44bfec33f97642754,
