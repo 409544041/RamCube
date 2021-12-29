@@ -23,7 +23,7 @@ namespace Qbism.Serpent
 		//States
 		List<Vector3> breadcrumbs = null;
 		bool isMoving = false;
-		public Transform[] segments = null;
+		Transform[] segments = null;
 		bool firstCrumbs = false;
 
 		//Actions, events, delegates etc
@@ -45,7 +45,7 @@ namespace Qbism.Serpent
         {
 			var serpMapHandler = GetComponent<SerpentMapHandler>();
 
-			if (serpMapHandler != null) segments = segHandler.PrepareSegmentsInMap();
+			if (serpMapHandler != null) segments = segHandler.PrepareSegmentsWithBilly();
 			else segments = segHandler.segments;
 		}
 

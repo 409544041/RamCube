@@ -28,7 +28,7 @@ namespace Qbism.Serpent
 			SetSplineToTarget(pinUI);
 			SetShrinkingData();
 			PlaceSegments();
-			var segmentArray = segHandler.PrepareSegmentsInMap();
+			var segmentArray = segHandler.PrepareSegmentsWithBilly();
 			segHandler.EnableSegments(segmentArray); 
 			StartMovement();
 		}

@@ -14,20 +14,20 @@ namespace Qbism.Serpent
 
 		//Cache
 		FinishEndSeqHandler finishEndSeq = null;
-		SerpentScreenSplineHandler splineHandler = null;
 
 		//States
 		public List<bool> serpDataList { get; set; } = new List<bool>();
-		int BillyArrayIndex;
+		int billyArrayIndex;
+		Transform[] segmentsReordered = null;
+		Transform[] segmentsUpToBilly = null;
 
 		//Actions, events, delegates etc
 		public Func<List<bool>> onFetchSerpDataList;
-		public Transform[] segmentsReordered;
+
 
 		private void Awake() 
 		{
 			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
-			splineHandler = FindObjectOfType<SerpentScreenSplineHandler>(); 
 		}
 
 		private void OnEnable() 
@@ -38,7 +38,7 @@ namespace Qbism.Serpent
 		private void Start()
 		{
 			serpDataList = onFetchSerpDataList();
-			if (GetComponent<SerpentScreenSplineHandler>() != null) DisableSegmentsAtStart();
+			if (GetComponent<SerpentScreenScroller>() != null) DisableSegmentsAtStart();
 			else EnableSegmentsWithoutBilly();
 		}
 
@@ -69,49 +69,72 @@ namespace Qbism.Serpent
 			EnableSegments(segmentsWithoutBilly);
 		}
 
-		public Transform[] PrepareSegmentsInMap()
+		public Transform[] PrepareSegmentsWithBilly()
         {
             segmentsReordered = new Transform[segments.Length];
-            BillyArrayIndex = segments.Length - 1;
+            var billyIndex = segments.Length - 1;
 
-            BillyArrayIndex = GetBillyArrayIndex(BillyArrayIndex);
+			billyIndex = GetBillyArrayIndex(billyIndex);
+			billyArrayIndex = billyIndex;
 
-            PlaceBillyInNewArray(segmentsReordered, BillyArrayIndex);
+            PlaceBillyInNewArray(segmentsReordered, billyIndex);
 
 			return segmentsReordered;
 		}
 
-		private int GetBillyArrayIndex(int BillyArrayIndex)
+		public Transform[] PrepareSegmentsUpToBilly()
+        {
+			var billyIndex = segments.Length - 1;
+			billyIndex = GetBillyArrayIndex(billyIndex);
+			billyArrayIndex = billyIndex;
+
+			segmentsUpToBilly = new Transform[billyIndex + 1];
+			FillArrayUpToBilly(segmentsUpToBilly, billyIndex);
+
+			return segmentsUpToBilly;
+		}
+
+		private int GetBillyArrayIndex(int billyIndex)
 		{
 			for (int i = 0; i < serpDataList.Count; i++)
 			{
 				if (serpDataList[i] == false)
 				{
-					BillyArrayIndex = i;
+					billyIndex = i;
 					break;
 				}
 			}
-
-			return BillyArrayIndex;
+			return billyIndex;
 		}
 
-		private void PlaceBillyInNewArray(Transform[] segmentsReordered, int BillyArrayIndex)
+		private void PlaceBillyInNewArray(Transform[] segmentsReordered, int billyIndex)
         {
             for (int i = 0; i < segments.Length; i++)
             {
-                if (i < BillyArrayIndex) segmentsReordered[i] = segments[i];
+                if (i < billyIndex) segmentsReordered[i] = segments[i];
 
-                else if (i == BillyArrayIndex)
+                else if (i == billyIndex)
                     segmentsReordered[i] = segments[segments.Length - 1];
 
-                else if (i > BillyArrayIndex && i < segments.Length)
+                else if (i > billyIndex && i < segments.Length)
                     segmentsReordered[i] = segments[i - 1];
             }
         }
 
+		private void FillArrayUpToBilly(Transform[] array, int billyIndex)
+		{
+			for (int i = 0; i < segments.Length; i++)
+			{
+				if (i < billyIndex) array[i] = segments[i];
+
+				else if (i == billyIndex) array[i] = segments[segments.Length - 1];
+			}
+		}
+
 		public void EnableSegments(Transform[] segmentArray)
 		{
 			bool inMap = GetComponent<SerpentMapHandler>();
+			bool inSerpScreen = FindObjectOfType<SerpentScreenScroller>();
 
 			for (int i = 0; i < segmentArray.Length; i++)
 			{
@@ -122,14 +145,16 @@ namespace Qbism.Serpent
 				if ((mRenders.Length == 0 || sRenders.Length == 0) && i != 0) Debug.Log
 						(segmentArray[i] + " is missing either a meshrenderer or spriterenderer!");
 
-				//Are we in map, don't enable last segment unless last segment is billy
-				if (inMap && i == segmentArray.Length - 1 && BillyArrayIndex != segmentArray.Length - 1) 
+				//Are we in map, don't enable last segment (which is Billy) unless Billy is
+				//actually in the very last position
+				if ((inMap || inSerpScreen) && i == segmentArray.Length - 1 && 
+					billyArrayIndex != segmentArray.Length - 1) 
 					SwitchRenderers(mRenders, sRenders, follower, false);
 
 				else if (serpDataList[i] == true) 
 					SwitchRenderers(mRenders, sRenders, follower, true);
 
-				else if (inMap && i == BillyArrayIndex) 
+				else if ((inMap || inSerpScreen) && i == billyArrayIndex) 
 					SwitchRenderers(mRenders, sRenders, follower, true);
 
 				else SwitchRenderers(mRenders, sRenders, follower, false);

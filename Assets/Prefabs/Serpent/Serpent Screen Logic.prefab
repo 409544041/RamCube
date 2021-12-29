@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6464197962273393750}
   - component: {fileID: 6848565460736391748}
   - component: {fileID: 5066334370712784507}
-  - component: {fileID: 8580628205415344406}
   - component: {fileID: 8258875567120154169}
+  - component: {fileID: 1388425622416427950}
   m_Layer: 0
   m_Name: Serpent Screen Logic
   m_TagString: Untagged
@@ -58,64 +58,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18eefc24c42ee4f42bb828888b71edba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8580628205415344406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5255093603326727689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621d2190c3516744ab36e153bac4393c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spline: {fileID: 0}
-  moveSpeed: 5
-  spacing: 0.025
-  headSpacing: 0.015
-  followers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  highlightSegments:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &8258875567120154169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,3 +70,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a445164645d1e9e42ad93e3093756d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1388425622416427950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5255093603326727689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6a0d7b6dba6e84fa8958a20fb5778a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollLocs: []
+  segments: []
+  focusIndex: 0

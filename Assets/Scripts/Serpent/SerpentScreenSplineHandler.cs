@@ -31,7 +31,6 @@ namespace Qbism.Serpent
 		//Actions, events, delegates etc
 		public Func<List<bool>> onFetchSerpDataList;
 
-
 		private void Awake()
 		{
 			triggerPos = spline.EvaluatePosition(spline.triggerGroups[0].triggers[0].position);

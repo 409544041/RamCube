@@ -50,28 +50,29 @@ namespace Qbism.Control
 
 		void Update()
 		{	
-			if(stickValue.x > -.1 && stickValue.x < .1 && 
+			//inputting is to avoid multiple movement inputs at once
+			if (stickValue.x > -.1 && stickValue.x < .1 && 
 				stickValue.y > -.1 && stickValue.y < .1) 
 				inputting = false;
 
-			if(!inputting) HandleStickValues();
+			if (!inputting) HandleStickValues();
 		}
 
 		private void HandleStickValues()
 		{
-			if((stickValue.x > .1 && stickValue.y > .1) ||
+			if ((stickValue.x > .1 && stickValue.y > .1) ||
 				(stickValue.x > -.05 && stickValue.x < .05 && stickValue.y > .5))
 				HandleMove(mover.up, Vector2Int.up, Vector3.right);
 
-			if((stickValue.x < -.1 && stickValue.y < -.1) ||
+			if ((stickValue.x < -.1 && stickValue.y < -.1) ||
 				(stickValue.x > -.05 && stickValue.x < .05 && stickValue.y < -.5))
 				HandleMove(mover.down, Vector2Int.down, Vector3.left);
 
-			if((stickValue.x < -.1 && stickValue.y > .1) ||
+			if ((stickValue.x < -.1 && stickValue.y > .1) ||
 				(stickValue.y > -.05 && stickValue.y < .05 && stickValue.x < -.5))
 				HandleMove(mover.left, Vector2Int.left, Vector3.forward);
 
-			if((stickValue.x > .1 && stickValue.y < -.1) ||
+			if ((stickValue.x > .1 && stickValue.y < -.1) ||
 				(stickValue.y > -.05 && stickValue.y < .05 && stickValue.x > .5))
 				HandleMove(mover.right, Vector2Int.right, Vector3.back);
 		}
