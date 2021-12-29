@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,30 +7,77 @@ namespace Qbism.Serpent
 {
     public class SegmentScroll : MonoBehaviour
     {
+        //Config parameters
+        [SerializeField] MMFeedbacks scrollJuice;
+
         //Cache
         SerpentScreenScroller serpScroller;
+        MMFeedbackPosition mmPos;
 
         //States
         public int locIndex { get; set; } = -1;
+        float posOriginalCurveZero;
+		bool newInput = false;
 
         private void Awake()
         {
             serpScroller = FindObjectOfType<SerpentScreenScroller>();
+            mmPos = scrollJuice.GetComponent<MMFeedbackPosition>();
         }
 
         private void OnEnable()
         {
-            serpScroller.onScrollSegments += ScrollSegment;
+            if (serpScroller != null) serpScroller.onScrollSegments += ScrollSegment;
         }
 
-        public void SetSegmentToLoc(int loc)
+		private void Start()
+		{
+            posOriginalCurveZero = mmPos.RemapCurveZero;
+		}
+
+		public void SetSegmentsAtStart(int loc)
 		{
 			locIndex = loc;
 			transform.position = serpScroller.scrollLocs[loc].transform.position;
+			ScaleIfInFocus();
+			var rot = GetRotation(loc);
+			transform.rotation = Quaternion.Euler(rot.x, rot.y, rot.z);
+		}
 
+		private void ScrollSegment(int value)
+		{
+			//checks if segments is actually active or not
+			if (locIndex < 0) return;
+			newInput = true;
+			locIndex += value;
+			StartCoroutine(MoveSegmentToLoc(locIndex));
 			ScaleIfInFocus();
 
-			SetRotationTowardsCam();
+			//TriggerScrollJuice(value);
+		}
+
+		private IEnumerator MoveSegmentToLoc(int loc)
+		{
+			yield return null; //so the while registers newInput
+
+			var target = serpScroller.scrollLocs[loc].transform.position;
+			var step = serpScroller.scrollSpeed * Time.deltaTime;
+
+			var rot = GetRotation(loc);
+			var rotTarget = new Vector3(rot.x, rot.y, rot.z);
+			var rotStep = serpScroller.rotateSpeed * Time.deltaTime;
+			newInput = false;
+
+			while (Vector3.Distance(transform.position, target) > .1f && !newInput)
+			{
+				transform.position = Vector3.MoveTowards(transform.position, target, step);
+				transform.rotation = Quaternion.RotateTowards(transform.rotation,
+					Quaternion.Euler(rot.x, rot.y, rot.z), rotStep);
+				print(this.gameObject.name + " is moving");
+				yield return null;
+			}
+
+			transform.position = target;
 		}
 
         private void ScaleIfInFocus()
@@ -39,30 +87,29 @@ namespace Qbism.Serpent
             else transform.localScale = new Vector3(1, 1, 1);
         }
 
-        private void SetRotationTowardsCam()
+        private Vector3 GetRotation(int loc)
 		{
-			if (locIndex == serpScroller.focusIndex) transform.rotation =
-				Quaternion.Euler(0, 180, 0);
-			else if (locIndex == serpScroller.focusIndex + 1 ||
-				locIndex == serpScroller.focusIndex - 1) transform.rotation =
-					Quaternion.Euler(0, 150, 0);
-			else if (locIndex == serpScroller.focusIndex + 2 ||
-				locIndex == serpScroller.focusIndex - 2) transform.rotation =
-					Quaternion.Euler(0, 120, 0);
-			else transform.rotation = Quaternion.Euler(0, 90, 0);
+			Vector3 rot;
+			if (loc == serpScroller.focusIndex) rot = new Vector3(0, 180, 0);
+			else if (loc == serpScroller.focusIndex + 1 ||
+				loc == serpScroller.focusIndex - 1) rot = new Vector3(0, 150, 0);
+			else if (loc == serpScroller.focusIndex + 2 ||
+				loc == serpScroller.focusIndex - 2) rot = new Vector3(0, 120, 0);
+			else rot = new Vector3(0, 90, 0);
+
+			return rot;
 		}
 
-        private void ScrollSegment(int value)
-        {
-            //checks if segments is actually active or not
-            if (locIndex < 0) return;
-
-            SetSegmentToLoc(locIndex += value);
-        }
+        private void TriggerScrollJuice(int value)
+		{
+            mmPos.RemapCurveZero = value * posOriginalCurveZero;
+            scrollJuice.Initialization();
+            scrollJuice.PlayFeedbacks();
+		}
 
         private void OnDisable()
         {
-            serpScroller.onScrollSegments -= ScrollSegment;
+            if (serpScroller != null) serpScroller.onScrollSegments -= ScrollSegment;
         }
 
     }

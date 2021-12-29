@@ -12,6 +12,7 @@ namespace Qbism.Serpent
         [SerializeField] SerpentSegmentHandler segHandler;
         public int focusIndex;
         public float focusEnlargement = 2f;
+        public float scrollSpeed = 1f, rotateSpeed = 1f;
 
         //States
         SegmentScroll segInFocusAtStart = null;
@@ -55,7 +56,7 @@ namespace Qbism.Serpent
         {
             segToFocusOn = segments.Length - 1;
             segInFocusAtStart = segments[segToFocusOn];
-            segInFocusAtStart.SetSegmentToLoc(focusIndex);
+            segInFocusAtStart.SetSegmentsAtStart(focusIndex);
         }
 
         private void SetRestOfSegments()
@@ -63,7 +64,7 @@ namespace Qbism.Serpent
             int locIndex = focusIndex + 1;
             for (int i = segToFocusOn - 1; i >= 0; i--)
             {
-                segments[i].SetSegmentToLoc(locIndex);
+                segments[i].SetSegmentsAtStart(locIndex);
                 locIndex++;
                 if (locIndex > scrollLocs.Length - 1) locIndex = scrollLocs.Length - 1;
 
@@ -73,7 +74,7 @@ namespace Qbism.Serpent
             locIndex = focusIndex - 1;
             for (int i = segToFocusOn + 1; i < segments.Length; i++)
             {
-                segments[i].SetSegmentToLoc(locIndex);
+                segments[i].SetSegmentsAtStart(locIndex);
                 locIndex--;
                 if (locIndex < 0) locIndex = 0;
             }
