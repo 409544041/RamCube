@@ -22,13 +22,22 @@ namespace Qbism.Serpent
             serpScroller.onScrollSegments += ScrollSegment;
         }
 
+        public void SetSegmentToLoc(int loc)
+        {
+            locIndex = loc;
+            transform.position = serpScroller.scrollLocs[loc].transform.position;
+
+            var n = serpScroller.focusEnlargement;
+            if (locIndex == serpScroller.focusIndex) transform.localScale = new Vector3(n, n, n);
+            else transform.localScale = new Vector3(1, 1, 1);
+        }
+
         private void ScrollSegment(int value)
         {
             //checks if segments is actually active or not
             if (locIndex < 0) return;
 
-            locIndex += value;
-            transform.position = serpScroller.scrollLocs[locIndex].transform.position;
+            SetSegmentToLoc(locIndex += value);
         }
 
         private void OnDisable()
