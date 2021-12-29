@@ -12,7 +12,8 @@ namespace Qbism.Serpent
         [SerializeField] SerpentSegmentHandler segHandler;
         public int focusIndex;
         public float focusEnlargement = 2f;
-        public float scrollSpeed = 1f, rotateSpeed = 1f;
+		public float scrollDur = .2f;
+		public float scaleJuiceBounce = .3f;
 
         //States
         SegmentScroll segInFocusAtStart = null;
@@ -20,7 +21,7 @@ namespace Qbism.Serpent
         SegmentScroll[] segments = null;
 
         //Actions, events, delegates etc
-        public event Action<int> onScrollSegments;
+        public event Action<int, bool> onScrollSegments;
 
         private IEnumerator Start()
         {
@@ -83,13 +84,13 @@ namespace Qbism.Serpent
         public void ScrollLeft()
         {
             if (segments[0].locIndex == focusIndex) return;
-            onScrollSegments(-1);
+            onScrollSegments(-1, false);
         }
 
         public void ScrollRight()
         {
             if (segments[segments.Length - 1].locIndex == focusIndex) return;
-            onScrollSegments(1);
+            onScrollSegments(1, false);
         }
     }
 }
