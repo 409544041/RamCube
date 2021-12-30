@@ -43,11 +43,9 @@ namespace Qbism.Serpent
 		{
 			Vector3 pos = spline.GetPoint(spline.pointCount -1).position;
 
-			segHandler.segments[0].transform.position = pos;
-
-			for (int i = 1; i < segHandler.segments.Length; i++)
+			for (int i = 0; i < segHandler.segments.Length; i++)
 			{
-				segHandler.segments[i].position = transform.position;
+				segHandler.segments[i].position = pos;
 			}
 		}
 

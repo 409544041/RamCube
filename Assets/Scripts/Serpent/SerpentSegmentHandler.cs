@@ -38,8 +38,7 @@ namespace Qbism.Serpent
 		private void Start()
 		{
 			serpDataList = onFetchSerpDataList();
-			if (GetComponent<SerpentScreenScroller>() != null) DisableSegmentsAtStart();
-			else EnableSegmentsWithoutBilly();
+			DisableSegmentsAtStart();
 		}
 
         private void DisableSegmentsAtStart()
@@ -61,11 +60,12 @@ namespace Qbism.Serpent
         public void EnableSegmentsWithoutBilly()
 		{
 			var segmentsWithoutBilly = new Transform[segments.Length - 1];
+
             for (int i = 0; i < segmentsWithoutBilly.Length; i++)
             {
 				segmentsWithoutBilly[i] = segments[i];
             }
-			
+
 			EnableSegments(segmentsWithoutBilly);
 		}
 
@@ -133,6 +133,7 @@ namespace Qbism.Serpent
 
 		public void EnableSegments(Transform[] segmentArray)
 		{
+			print("Enabling Segments");
 			bool inMap = GetComponent<SerpentMapHandler>();
 			bool inSerpScreen = FindObjectOfType<SerpentScreenScroller>();
 
