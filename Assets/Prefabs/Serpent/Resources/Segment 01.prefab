@@ -355,9 +355,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8554115220973713375}
-  - component: {fileID: -8787589194336391386}
   - component: {fileID: 330268405134670463}
   - component: {fileID: 1225204154015398306}
+  - component: {fileID: 6473104114235639864}
   m_Layer: 0
   m_Name: Segment 01
   m_TagString: Segment
@@ -381,19 +381,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8787589194336391386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8554115220973709344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb69a8f0d58f33142a13d316b54f7160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  segmentID: 1
 --- !u!65 &330268405134670463
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -420,6 +407,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollJuice: {fileID: 4972252815281731426}
+--- !u!114 &6473104114235639864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8554115220973709344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757a08d9c49d92241abef30a99c55d6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEntityChange:
+    m_PersistentCalls:
+      m_Calls: []
+  entityIdString: Zxl2el2iSE6UsyfD4i8IyA
+  metaIdString: 
+  initWithFirst: 0
 --- !u!1001 &556485354426371229
 PrefabInstance:
   m_ObjectHideFlags: 0

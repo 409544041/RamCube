@@ -42,8 +42,7 @@ namespace Qbism.Serpent
 
 		private void SpawnSegment()
 		{
-			bool isMother = segmentToSpawn.GetComponent<SegmentIdentifier>().segmentID ==
-				SegmentIDs.segment_head;
+			bool isMother = segmentToSpawn.GetComponent<M_Segments>().f_name == "segment_head";
 
 			float spawnY = segSpawnY; float spawnDegs = spawnDegrees;
 
