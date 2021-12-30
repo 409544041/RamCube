@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Qbism.SpriteAnimations;
+using Qbism.Serpent;
 
 namespace Qbism.Dialogue
 {
@@ -15,6 +16,7 @@ namespace Qbism.Dialogue
 		[SerializeField] Image nextButton;
 		[SerializeField] Vector3[] floatingHeadPos;
 		[SerializeField] float headScale;
+		[SerializeField] bool inLevel, inSerpentScreen, inMap;
 
 		//States
 		DialogueScripOb dialogueSO;
@@ -22,11 +24,13 @@ namespace Qbism.Dialogue
 		public bool inDialogue { get; set; } = false;
 		GameObject[] heads;
 		ExpressionHandler[] expressionHandlers;
+		SegmentAnimator partnerAnimator;
 
 		public void StartDialogue(DialogueScripOb incDialogueSO, GameObject leftObj, Vector3 leftRot,
-			GameObject rightObj, Vector3 rightRot)
+			GameObject rightObj, Vector3 rightRot, SegmentAnimator segAnimator)
 		{
 			dialogueSO = incDialogueSO;
+			partnerAnimator = segAnimator;
 			inDialogue = true;
 
 			SetupBackgroundCanvas();
@@ -101,6 +105,9 @@ namespace Qbism.Dialogue
 
 			dialogueCanvas.GetComponent<CanvasGroup>().alpha = 0;
 			backgroundCanvas.GetComponent<CanvasGroup>().alpha = 0;
+
+			if (inLevel) partnerAnimator.InitiateHappyWiggle();
+
 			// find a way to set played = true in dialogues database
 		}
 

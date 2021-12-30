@@ -1,3 +1,4 @@
+using Qbism.Serpent;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Qbism.Dialogue
 		[SerializeField] M_Segments m_segments;
 		[SerializeField] M_Dialogues m_dialogues;
 
-		public void StartRescueDialogue()
+		public void StartRescueDialogue(SegmentAnimator animator)
 		{
 			var dialogueManager = FindObjectOfType<DialogueManager>();
 
@@ -24,7 +25,7 @@ namespace Qbism.Dialogue
 			var rightObj = (GameObject) m_segments.f_DialogueObject;
 			var rightRot = m_segments.f_DialogueRotation;
 
-			dialogueManager.StartDialogue(dialogueToPlay, leftObj, leftRot, rightObj, rightRot);
+			dialogueManager.StartDialogue(dialogueToPlay, leftObj, leftRot, rightObj, rightRot, animator);
 		}
 	}
 }

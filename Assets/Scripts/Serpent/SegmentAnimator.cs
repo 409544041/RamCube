@@ -12,12 +12,12 @@ namespace Qbism.Serpent
 	public class SegmentAnimator : MonoBehaviour
 	{
 		//Config paramters
-		[Header ("Juice")]
+		[Header("Juice")]
 		[SerializeField] MMFeedbacks spawnJuice;
 		[SerializeField] MMFeedbacks flybyJuice;
-		[Header ("Animation")]
+		[Header("Animation")]
 		[SerializeField] Animator animator = null;
-		[SerializeField] float lookAroundAnimDelay = 0f, 
+		[SerializeField] float lookAroundAnimDelay = 0f,
 			lookUpAnimDelay = 0f, happyWiggleAnimDelay = 0f;
 
 		//Cache
@@ -26,18 +26,18 @@ namespace Qbism.Serpent
 		//States
 		bool justSpawned = false;
 
-		private void Awake() 
+		private void Awake()
 		{
 			playerAnim = FindObjectOfType<PlayerAnimator>();
 		}
 
-		private void OnEnable() 
+		private void OnEnable()
 		{
 			if (playerAnim != null)
 			{
 				playerAnim.onTriggerLandingReaction += TriggerSquish;
 				playerAnim.onChildSegmentToPlayer += ChildToPlayer;
-			} 	
+			}
 		}
 
 		public void Spawn()
@@ -64,12 +64,6 @@ namespace Qbism.Serpent
 			flybyJuice.PlayFeedbacks();
 		}
 
-		private IEnumerator TriggerLookAround() //Called from animation event
-		{
-			yield return new WaitForSeconds(lookAroundAnimDelay);
-			animator.SetTrigger("LookAround");
-		}
-
 		private void TriggerSquish()
 		{
 			if (justSpawned) animator.SetTrigger("Squish");
@@ -82,7 +76,12 @@ namespace Qbism.Serpent
 			animator.SetTrigger("LookUp");
 		}
 
-		private IEnumerator TriggerHappyWiggle() //Called from animation event
+		public void InitiateHappyWiggle()
+		{
+			StartCoroutine(TriggerHappyWiggle());
+		}
+
+		private IEnumerator TriggerHappyWiggle() 
 		{
 			yield return new WaitForSeconds(happyWiggleAnimDelay);
 			animator.SetTrigger("HappyWiggle");
@@ -105,7 +104,7 @@ namespace Qbism.Serpent
 
 		private void StartRescueDialogue()
 		{
-			GetComponentInParent<DialogueStarter>().StartRescueDialogue();
+			GetComponentInParent<DialogueStarter>().StartRescueDialogue(this);
 		}
 		
 		private void OnDisable()
