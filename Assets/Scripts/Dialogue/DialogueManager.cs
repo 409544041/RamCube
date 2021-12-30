@@ -8,15 +8,17 @@ namespace Qbism.Dialogue
 	{
 		//Config parameters
 		[SerializeField] Canvas dialogueCanvas;
-		[SerializeField] Vector3[] floatingHeadPos;
+		[SerializeField] Transform[] floatingHeadPos;
+		[SerializeField] float headScale;
 
 		//States
 		DialogueScripOb dialogueSO;
 		int dialogueIndex = 0;
 
-		public void StartDialogue(DialogueScripOb incDialogueSO)
+		public void StartDialogue(ScriptableObject incDialogueSO, Object floatingHead, Vector3 headRot)
 		{
-			//dialogueSO = incDialogueSO
+			dialogueSO = (DialogueScripOb)incDialogueSO;
+			print("Starting a convo lol");
 			// remove input control over gameplay if it isn't already removed
 			// show canvas
 			// place floating heads at correct location

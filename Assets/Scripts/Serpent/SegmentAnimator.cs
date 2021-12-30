@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using Qbism.Cubes;
+using Qbism.Dialogue;
 using Qbism.PlayerCube;
 using Qbism.SpriteAnimations;
 using UnityEngine;
@@ -100,6 +101,11 @@ namespace Qbism.Serpent
 		private void TriggerPlayerWiggle() // Called from animation event
 		{
 			playerAnim.TriggerWiggle();
+		}
+
+		private void StartRescueDialogue()
+		{
+			GetComponentInParent<DialogueStarter>().StartRescueDialogue();
 		}
 		
 		private void OnDisable()
