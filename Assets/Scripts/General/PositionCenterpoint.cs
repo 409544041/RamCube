@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Qbism.Cubes;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace Qbism.General
 {
 	public class PositionCenterpoint : MonoBehaviour
 	{
+		//Config paramters
+		[SerializeField] CinemachineVirtualCamera gameplayCam;
 		//Cache
 		CubeHandler handler;
 
@@ -111,7 +114,8 @@ namespace Qbism.General
 			var centerX = totalX / PortPositions.Length;
 			var centerY = totalY / PortPositions.Length;
 
-			centerPoint = Camera.main.ViewportToWorldPoint(new Vector3(centerX, centerY, 15));
+			var dist = gameplayCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance; 
+			centerPoint = Camera.main.ViewportToWorldPoint(new Vector3(centerX, centerY, dist));
 			centerPoint = new Vector3(centerPoint.x, 0, centerPoint.z);
 		}
 	}
