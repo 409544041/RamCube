@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Qbism.SpriteAnimations;
 
 namespace Qbism.Dialogue
 {
@@ -19,7 +20,8 @@ namespace Qbism.Dialogue
 		DialogueScripOb dialogueSO;
 		int dialogueIndex = 0;
 		public bool inDialogue { get; set; } = false;
-		GameObject leftHead, rightHead;
+		GameObject[] heads;
+		ExpressionHandler[] expressionHandlers;
 
 		public void StartDialogue(DialogueScripOb incDialogueSO, GameObject leftObj, Vector3 leftRot,
 			GameObject rightObj, Vector3 rightRot)
@@ -31,13 +33,42 @@ namespace Qbism.Dialogue
 			dialogueCanvas.GetComponent<CanvasGroup>().alpha = 1;
 
 			// remove input control over gameplay if it isn't already removed
+			heads = new GameObject[2];
+			heads[0] = SpawnDialogueFloatingHeads(leftObj, leftRot, floatingHeadPos[0], headScale);
+			heads[1] = SpawnDialogueFloatingHeads(rightObj, rightRot, floatingHeadPos[1], headScale);
 
-			leftHead =
-				SpawnDialogueFloatingHeads(leftObj, leftRot, floatingHeadPos[0], headScale);
-			rightHead =
-				SpawnDialogueFloatingHeads(rightObj, rightRot, floatingHeadPos[1], headScale);
+			expressionHandlers = new ExpressionHandler[2];
+			expressionHandlers[0] = heads[0].GetComponentInChildren<ExpressionHandler>();
+			expressionHandlers[1] = heads[1].GetComponentInChildren<ExpressionHandler>();
+
+			expressionHandlers[1].SetFace(dialogueSO.partnerFirstExpression, -1);
 
 			PrintDialogue();
+			SetDialogueExpression();
+		}
+
+		private void PrintDialogue()
+		{
+			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
+			charNameText.text = dialogueSO.characters[charIndex].ToString();
+			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
+		}
+
+		private void SetDialogueExpression()
+		{
+			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
+			expressionHandlers[charIndex].SetFace(dialogueSO.dialogues[dialogueIndex].expression, -1);
+		}
+
+		public void NextDialogueText()
+		{
+			dialogueIndex++;
+			if (dialogueIndex >= dialogueSO.dialogues.Length) ExitDialogue();
+			else
+			{
+				PrintDialogue();
+				SetDialogueExpression();
+			}
 		}
 
 		private GameObject SpawnDialogueFloatingHeads(GameObject obj, Vector3 rot, Vector3 pos, float scale)
@@ -59,27 +90,17 @@ namespace Qbism.Dialogue
 			backgroundCanvas.GetComponent<CanvasGroup>().alpha = 1;
 		}
 
-		public void NextDialogueText()
-		{
-			dialogueIndex++;
-			if (dialogueIndex >= dialogueSO.dialogues.Length) ExitDialogue();
-			else PrintDialogue();
-		}
-
-		private void PrintDialogue()
-		{
-			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
-			charNameText.text = dialogueSO.characters[charIndex].ToString();
-			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
-		}
-
 		private void ExitDialogue()
 		{
 			inDialogue = false;
+
+			for (int i = 0; i < heads.Length; i++)
+			{
+				GameObject.Destroy(heads[i]);
+			}
+
 			dialogueCanvas.GetComponent<CanvasGroup>().alpha = 0;
 			backgroundCanvas.GetComponent<CanvasGroup>().alpha = 0;
-			// turn off dialogue canvas
-			// switch player controls back using inDialogue = false
 			// find a way to set played = true in dialogues database
 		}
 

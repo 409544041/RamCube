@@ -6,6 +6,7 @@ public class DialogueScripOb : ScriptableObject
 {
 	//Config paramters
 	public SegmentIDs[] characters;
+	public Expressions partnerFirstExpression;
 	public DialogueData[] dialogues;
 
 	[System.Serializable]

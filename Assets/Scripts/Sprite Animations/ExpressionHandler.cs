@@ -1,3 +1,4 @@
+using Qbism.Cubes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Qbism.SpriteAnimations
 		//Config parameters
 		[SerializeField] ExpressionsScripOb expressionsSO;
 		[SerializeField] SituationsExprsScripOb situationsExprsSO;
-		[SerializeField] bool isPlayer;
+		[SerializeField] bool isPlayer, isBillySegment;
 		[SerializeField] bool hasBrows = true, hasMouth = true;
 		[SerializeField] Vector2 minMaxExpressionTime, minMaxBlinkTime;
 		[SerializeField] float blinkDur = .2f;
@@ -29,8 +30,6 @@ namespace Qbism.SpriteAnimations
 
 		//Actions, events, delegates etc
 		public Func<bool> onFetchStunned;
-		// Func works same as delegates but shorter. The last parameter 
-		// is always the return type. Any in front of that are just paramaters
 
 		private void Awake()
 		{
@@ -136,14 +135,15 @@ namespace Qbism.SpriteAnimations
 
 		private void HandleExpressionTimer()
 		{
+			if (isBillySegment) return;
+
 			expressionTimer += Time.deltaTime;
 
-			if (expressionTimer >= timeToExpress)
-			{
-				if (!onFetchStunned())
-					SetSituationFace(ExpressionSituations.play, GetRandomTime());
-				else SetSituationFace(ExpressionSituations.laserHit, GetRandomTime());
-			}
+			if (expressionTimer < timeToExpress) return;
+
+			if (!onFetchStunned())
+				SetSituationFace(ExpressionSituations.play, GetRandomTime());
+			else SetSituationFace(ExpressionSituations.laserHit, GetRandomTime());
 		}
 
 		private void SetNeutralFace()
