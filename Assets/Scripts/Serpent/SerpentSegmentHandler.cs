@@ -133,7 +133,6 @@ namespace Qbism.Serpent
 
 		public void EnableSegments(Transform[] segmentArray)
 		{
-			print("Enabling Segments");
 			bool inMap = GetComponent<SerpentMapHandler>();
 			bool inSerpScreen = FindObjectOfType<SerpentScreenScroller>();
 

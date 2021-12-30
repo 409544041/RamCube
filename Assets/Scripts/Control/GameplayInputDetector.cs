@@ -7,6 +7,7 @@ using Qbism.Rewind;
 using Qbism.SceneTransition;
 using Qbism.General;
 using Qbism.Saving;
+using Qbism.Dialogue;
 
 namespace Qbism.Control
 {
@@ -20,6 +21,7 @@ namespace Qbism.Control
 		GameControls controls;
 		FeatureSwitchBoard switchBoard;
 		ProgressHandler progHandler;
+		DialogueManager dialogueManager;
 
 		//States
 		Vector2 stickValue;
@@ -33,11 +35,12 @@ namespace Qbism.Control
 			rewinder = GetComponent<RewindHandler>();
 			progHandler = FindObjectOfType<ProgressHandler>();
 			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
+			dialogueManager = GetComponent<DialogueManager>();
 			controls = new GameControls();
 
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
 			controls.Gameplay.Rewind.performed += ctx => Rewind();
-			controls.Gameplay.Restart.performed += ctx => RestartLevel();
+			controls.Gameplay.Restart.performed += ctx => HandleRestartInput();
 			controls.Gameplay.DebugCompleteLevel.performed += ctx => FinishLevel();
 			controls.Gameplay.DebugNextLevel.performed += ctx  => NextLevel();
 			controls.Gameplay.DebugPrevLevel.performed += ctx => PrevLevel();
@@ -123,9 +126,10 @@ namespace Qbism.Control
 			rewinder.StartRewinding();
 		}
 
-		private void RestartLevel()
+		private void HandleRestartInput()
 		{
-			loader.RestartLevel();
+			if (dialogueManager.inDialogue) dialogueManager.NextDialogueText();
+			else loader.RestartLevel();
 		}
 
 		private void OnDisable() 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 namespace Qbism.Dialogue
 {
@@ -10,36 +11,44 @@ namespace Qbism.Dialogue
 		//Config parameters
 		[SerializeField] Canvas dialogueCanvas, backgroundCanvas;
 		[SerializeField] TextMeshProUGUI charNameText, dialogueText;
+		[SerializeField] Image nextButton;
 		[SerializeField] Vector3[] floatingHeadPos;
 		[SerializeField] float headScale;
 
 		//States
 		DialogueScripOb dialogueSO;
 		int dialogueIndex = 0;
-		bool inDialogue = false;
+		public bool inDialogue { get; set; } = false;
+		GameObject leftHead, rightHead;
 
-		public void StartDialogue(ScriptableObject incDialogueSO, Object floatingHead, Vector3 headRot)
+		public void StartDialogue(DialogueScripOb incDialogueSO, GameObject leftObj, Vector3 leftRot,
+			GameObject rightObj, Vector3 rightRot)
 		{
-			dialogueSO = (DialogueScripOb)incDialogueSO;
-			print("Starting a convo lol");
+			dialogueSO = incDialogueSO;
+			inDialogue = true;
 
-			// show canvas
 			SetupBackgroundCanvas();
 			dialogueCanvas.GetComponent<CanvasGroup>().alpha = 1;
 
-
 			// remove input control over gameplay if it isn't already removed
 
-			// place floating heads at correct location
+			leftHead =
+				SpawnDialogueFloatingHeads(leftObj, leftRot, floatingHeadPos[0], headScale);
+			rightHead =
+				SpawnDialogueFloatingHeads(rightObj, rightRot, floatingHeadPos[1], headScale);
 
+			PrintDialogue();
+		}
 
-			// inDialogue = true (a check for input control)
-			inDialogue = true;
+		private GameObject SpawnDialogueFloatingHeads(GameObject obj, Vector3 rot, Vector3 pos, float scale)
+		{
+			var spawnPos = Camera.main.ViewportToWorldPoint(pos);
 
-			// printDialogue first dialogue text
-			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
-			charNameText.text = dialogueSO.characters[charIndex].ToString();
-			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
+			var head = Instantiate(obj, spawnPos, Quaternion.Euler(rot.x, rot.y, rot.z));
+
+			head.transform.localScale = transform.localScale * scale;
+
+			return head;
 		}
 
 		private void SetupBackgroundCanvas()
@@ -52,19 +61,23 @@ namespace Qbism.Dialogue
 
 		public void NextDialogueText()
 		{
-			// dialogueindex++
-			// if dialogue index >= dialogueSO.dialogues length, ExitDialogue
-			// else printDialogue next dialogueSO.dialogues
-
+			dialogueIndex++;
+			if (dialogueIndex >= dialogueSO.dialogues.Length) ExitDialogue();
+			else PrintDialogue();
 		}
 
 		private void PrintDialogue()
 		{
-			// canvas text = dialogueSO text
+			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
+			charNameText.text = dialogueSO.characters[charIndex].ToString();
+			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
 		}
 
 		private void ExitDialogue()
 		{
+			inDialogue = false;
+			dialogueCanvas.GetComponent<CanvasGroup>().alpha = 0;
+			backgroundCanvas.GetComponent<CanvasGroup>().alpha = 0;
 			// turn off dialogue canvas
 			// switch player controls back using inDialogue = false
 			// find a way to set played = true in dialogues database
