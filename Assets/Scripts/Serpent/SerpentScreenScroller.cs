@@ -14,6 +14,7 @@ namespace Qbism.Serpent
         public float focusEnlargement = 2f;
 		public float scrollDur = .2f;
 		public float scaleJuiceBounce = .3f;
+		public AnimationCurve moveCurve, scaleCurve;
 
         //States
         SegmentScroll segInFocusAtStart = null;

@@ -67,9 +67,9 @@ namespace Qbism.Serpent
 				elapsedTime += Time.deltaTime;
 				var percentageComplete = elapsedTime / serpScroller.scrollDur;
 
-				transform.position = Vector3.Lerp(startPos, target, percentageComplete);
-				transform.rotation = Quaternion.Lerp(startRot, rotTarget, percentageComplete);
-				transform.localScale = Vector3.Lerp(startScale, targetScale, percentageComplete);
+				transform.position = Vector3.Lerp(startPos, target, serpScroller.moveCurve.Evaluate(percentageComplete));
+				transform.rotation = Quaternion.Lerp(startRot, rotTarget, serpScroller.moveCurve.Evaluate(percentageComplete));
+				transform.localScale = Vector3.Lerp(startScale, targetScale, serpScroller.scaleCurve.Evaluate(percentageComplete));
 
 				yield return null;
 			}
