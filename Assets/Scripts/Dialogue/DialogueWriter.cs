@@ -8,12 +8,13 @@ namespace Qbism.Dialogue
 	public class DialogueWriter : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] float letterInterval = .05f;
 		[SerializeField] TextMeshProUGUI dialogueText;
 		[SerializeField] DialogueManager dialogueManager;
 
 		//States
 		string fullText;
+		public bool isTyping { get; private set; } = false;
+		public bool showFullText { get; set; } = false;
 
 		public void StartWritingText(string incText)
 		{
@@ -23,14 +24,25 @@ namespace Qbism.Dialogue
 		private IEnumerator WriteText(string fullText)
 		{
 			string currentText;
+			isTyping = true;
 
 			for (int i = 0; i <= fullText.Length; i++)
 			{
-				currentText = fullText.Substring(0, i);
-				dialogueText.text = currentText;
-				yield return new WaitForSeconds(letterInterval);
+				if (showFullText)
+				{
+					dialogueText.text = fullText;
+					break;
+				}
+				else
+				{
+					currentText = fullText.Substring(0, i);
+					dialogueText.text = currentText;
+					yield return null;
+				}
 			}
 
+			showFullText = false;
+			isTyping = false;
 			dialogueManager.PulseNextButton();
 		}
 	}

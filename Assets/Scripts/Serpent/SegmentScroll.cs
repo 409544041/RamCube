@@ -8,7 +8,7 @@ namespace Qbism.Serpent
     public class SegmentScroll : MonoBehaviour
     {
         //Config parameters
-        [SerializeField] MMFeedbacks scrollJuice;
+        public MMFeedbacks scrollJuice;
 
         //Cache
         SerpentScreenScroller serpScroller;
@@ -67,9 +67,12 @@ namespace Qbism.Serpent
 				elapsedTime += Time.deltaTime;
 				var percentageComplete = elapsedTime / serpScroller.scrollDur;
 
-				transform.position = Vector3.Lerp(startPos, target, serpScroller.moveCurve.Evaluate(percentageComplete));
-				transform.rotation = Quaternion.Lerp(startRot, rotTarget, serpScroller.moveCurve.Evaluate(percentageComplete));
-				transform.localScale = Vector3.Lerp(startScale, targetScale, serpScroller.scaleCurve.Evaluate(percentageComplete));
+				transform.position = Vector3.Lerp(startPos, target, 
+					serpScroller.moveCurve.Evaluate(percentageComplete));
+				transform.rotation = Quaternion.Lerp(startRot, rotTarget, 
+					serpScroller.moveCurve.Evaluate(percentageComplete));
+				transform.localScale = Vector3.Lerp(startScale, targetScale, 
+					serpScroller.scaleCurve.Evaluate(percentageComplete));
 
 				yield return null;
 			}
@@ -78,7 +81,7 @@ namespace Qbism.Serpent
 			transform.rotation = rotTarget;
 			transform.localScale = targetScale;
 
-			if (loc == serpScroller.focusIndex && !setAtStart) TriggerScaleJuice(targetScale.x);
+			if (loc == serpScroller.focusIndex && !setAtStart) TriggerScaleJuice();
 		}
 
 		private Vector3 GetScale(int loc)
@@ -105,7 +108,7 @@ namespace Qbism.Serpent
 			return rot;
 		}
 
-        private void TriggerScaleJuice(float targetScale)
+        private void TriggerScaleJuice()
 		{
             scrollJuice.Initialization();
             scrollJuice.PlayFeedbacks();

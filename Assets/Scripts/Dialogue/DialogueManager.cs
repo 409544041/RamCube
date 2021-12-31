@@ -16,7 +16,8 @@ namespace Qbism.Dialogue
 		[SerializeField] TextMeshProUGUI charNameText;
 		[SerializeField] MMFeedbacks nextButtonJuice;
 		[SerializeField] Vector3[] floatingHeadPos;
-		[SerializeField] float focusScale, nonFocusScale;
+		[SerializeField] float focusScale, nonFocusScale, scaleDur = .2f;
+		[SerializeField] AnimationCurve scaleCurve;
 		[SerializeField] bool inLevel, inSerpentScreen, inMap;
 		[SerializeField] DialogueWriter writer;
 
@@ -26,10 +27,15 @@ namespace Qbism.Dialogue
 		public bool inDialogue { get; set; } = false;
 		GameObject[] heads;
 		ExpressionHandler[] expressionHandlers;
+		MMFeedbacks[] scaleJuice;
+		MMFeedbackScale[] mmscaler;
 		SegmentAnimator partnerAnimator;
+		float originalCurveOne, curveDelta;
+		bool originalValuesSet = false;
+		float elapsedTime = 0;
 
-		public void StartDialogue(DialogueScripOb incDialogueSO, GameObject leftObj, Vector3 leftRot,
-			GameObject rightObj, Vector3 rightRot, SegmentAnimator segAnimator)
+		public void StartDialogue(DialogueScripOb incDialogueSO, GameObject[] objs, Vector3[] rots,
+			SegmentAnimator segAnimator)
 		{
 			dialogueSO = incDialogueSO;
 			partnerAnimator = segAnimator;
@@ -42,13 +48,18 @@ namespace Qbism.Dialogue
 			//TO DO: remove input control over gameplay if it isn't already removed
 
 			heads = new GameObject[2];
-
-			heads[0] = SpawnDialogueFloatingHeads(leftObj, leftRot, floatingHeadPos[0], nonFocusScale);
-			heads[1] = SpawnDialogueFloatingHeads(rightObj, rightRot, floatingHeadPos[1], nonFocusScale);
-
 			expressionHandlers = new ExpressionHandler[2];
-			expressionHandlers[0] = heads[0].GetComponentInChildren<ExpressionHandler>();
-			expressionHandlers[1] = heads[1].GetComponentInChildren<ExpressionHandler>();
+			scaleJuice = new MMFeedbacks[2];
+			mmscaler = new MMFeedbackScale[2];
+
+			for (int i = 0; i < 2; i++)
+			{
+				heads[i] = SpawnDialogueFloatingHeads(objs[i], rots[i], floatingHeadPos[i], nonFocusScale);
+				expressionHandlers[i] = heads[i].GetComponentInChildren<ExpressionHandler>();
+				scaleJuice[i] = heads[i].GetComponent<SegmentScroll>().scrollJuice;
+				scaleJuice[i].Initialization();
+				mmscaler[i] = scaleJuice[i].GetComponent<MMFeedbackScale>();
+			}
 
 			expressionHandlers[1].SetFace(dialogueSO.partnerFirstExpression, -1);
 
@@ -75,11 +86,35 @@ namespace Qbism.Dialogue
 				var smallScale = new Vector3(nonFocusScale, nonFocusScale, nonFocusScale);
 
 				if (i == charIndex && heads[i].transform.localScale != bigScale)
-					heads[i].transform.localScale = bigScale;
+				{
+					StartCoroutine(ScaleHead(i, heads[i], bigScale, true));
+				}
+					
 
 				else if (i != charIndex && heads[i].transform.localScale != smallScale)
-					heads[i].transform.localScale = smallScale;
+				{
+					StartCoroutine(ScaleHead(i, heads[i], smallScale, false));
+				}
 			}
+		}
+
+		private IEnumerator ScaleHead(int i, GameObject head, Vector3 targetScale, bool scaleUp)
+		{
+			var startScale = head.transform.localScale;
+			elapsedTime = 0;
+
+			while (!Mathf.Approximately(head.transform.localScale.x, targetScale.x))
+			{
+				elapsedTime += Time.deltaTime;
+				var percentageComplete = elapsedTime / scaleDur;
+
+				head.transform.localScale = Vector3.Lerp(startScale, targetScale,
+					scaleCurve.Evaluate(percentageComplete));
+
+				yield return null;
+			}
+
+			TriggerScaleJuice(i, scaleUp);
 		}
 
 		private void SetDialogueExpression()
@@ -90,10 +125,13 @@ namespace Qbism.Dialogue
 
 		public void NextDialogueText()
 		{
-			dialogueIndex++;
-
-			if (dialogueIndex >= dialogueSO.dialogues.Length) ExitDialogue();
-			else Dialogue();
+			if (writer.isTyping) writer.showFullText = true;
+			else
+			{
+				dialogueIndex++;
+				if (dialogueIndex >= dialogueSO.dialogues.Length) ExitDialogue();
+				else Dialogue();
+			}
 		}
 
 		private GameObject SpawnDialogueFloatingHeads(GameObject obj, Vector3 rot, Vector3 pos, float scale)
@@ -105,6 +143,21 @@ namespace Qbism.Dialogue
 			head.transform.localScale = transform.localScale * scale;
 
 			return head;
+		}
+
+		private void TriggerScaleJuice(int i, bool scaleUp)
+		{
+			if (originalValuesSet == false)
+			{
+				originalCurveOne = mmscaler[i].RemapCurveOne;
+				curveDelta = originalCurveOne - mmscaler[i].RemapCurveZero;
+				originalValuesSet = true;
+			}
+
+			if (scaleUp) mmscaler[i].RemapCurveOne = originalCurveOne;
+			else mmscaler[i].RemapCurveOne = mmscaler[i].RemapCurveZero - curveDelta;
+
+			scaleJuice[i].PlayFeedbacks();
 		}
 
 		private void SetupBackgroundCanvas()

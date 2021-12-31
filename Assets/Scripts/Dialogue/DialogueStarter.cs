@@ -17,15 +17,18 @@ namespace Qbism.Dialogue
 
 			var dialogueToPlay = (DialogueScripOb) m_dialogues.f_RescueDialogue;
 
+			GameObject[] objs = new GameObject[2];
+			Vector3[] rots = new Vector3[2];
+
 			var leftEntity = E_Segments.FindEntity(entity =>
 				entity.f_name == dialogueToPlay.characters[0].ToString());
-			var leftObj = (GameObject) leftEntity.f_DialogueObject;
-			var leftRot = leftEntity.f_DialogueRotation;
+			objs[0] = (GameObject) leftEntity.f_DialogueObject;
+			rots[0] = leftEntity.f_DialogueRotation;
 
-			var rightObj = (GameObject) m_segments.f_DialogueObject;
-			var rightRot = m_segments.f_DialogueRotation;
+			objs[1] = (GameObject) m_segments.f_DialogueObject;
+			rots[1] = m_segments.f_DialogueRotation;
 
-			dialogueManager.StartDialogue(dialogueToPlay, leftObj, leftRot, rightObj, rightRot, animator);
+			dialogueManager.StartDialogue(dialogueToPlay, objs, rots, animator);
 		}
 	}
 }
