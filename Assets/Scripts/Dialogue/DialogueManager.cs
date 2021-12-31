@@ -16,7 +16,7 @@ namespace Qbism.Dialogue
 		[SerializeField] TextMeshProUGUI charNameText;
 		[SerializeField] MMFeedbacks nextButtonJuice;
 		[SerializeField] Vector3[] floatingHeadPos;
-		[SerializeField] float headScale;
+		[SerializeField] float focusScale, nonFocusScale;
 		[SerializeField] bool inLevel, inSerpentScreen, inMap;
 		[SerializeField] DialogueWriter writer;
 
@@ -39,10 +39,12 @@ namespace Qbism.Dialogue
 			SetupBackgroundCanvas();
 			dialogueCanvas.GetComponent<CanvasGroup>().alpha = 1;
 
-			// remove input control over gameplay if it isn't already removed
+			//TO DO: remove input control over gameplay if it isn't already removed
+
 			heads = new GameObject[2];
-			heads[0] = SpawnDialogueFloatingHeads(leftObj, leftRot, floatingHeadPos[0], headScale);
-			heads[1] = SpawnDialogueFloatingHeads(rightObj, rightRot, floatingHeadPos[1], headScale);
+
+			heads[0] = SpawnDialogueFloatingHeads(leftObj, leftRot, floatingHeadPos[0], nonFocusScale);
+			heads[1] = SpawnDialogueFloatingHeads(rightObj, rightRot, floatingHeadPos[1], nonFocusScale);
 
 			expressionHandlers = new ExpressionHandler[2];
 			expressionHandlers[0] = heads[0].GetComponentInChildren<ExpressionHandler>();
@@ -50,16 +52,34 @@ namespace Qbism.Dialogue
 
 			expressionHandlers[1].SetFace(dialogueSO.partnerFirstExpression, -1);
 
-			PrintDialogue();
-			SetDialogueExpression();
+			Dialogue();
 		}
 
-		private void PrintDialogue()
+		private void Dialogue()
 		{
 			nextButtonJuice.StopFeedbacks();
 			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
+
 			charNameText.text = dialogueSO.characters[charIndex].ToString();
 			writer.StartWritingText(dialogueSO.dialogues[dialogueIndex].dialogueText);
+
+			SetFocusScale(charIndex);
+			SetDialogueExpression();
+		}
+
+		private void SetFocusScale(int charIndex)
+		{
+			for (int i = 0; i < heads.Length; i++)
+			{
+				var bigScale = new Vector3(focusScale, focusScale, focusScale);
+				var smallScale = new Vector3(nonFocusScale, nonFocusScale, nonFocusScale);
+
+				if (i == charIndex && heads[i].transform.localScale != bigScale)
+					heads[i].transform.localScale = bigScale;
+
+				else if (i != charIndex && heads[i].transform.localScale != smallScale)
+					heads[i].transform.localScale = smallScale;
+			}
 		}
 
 		private void SetDialogueExpression()
@@ -71,12 +91,9 @@ namespace Qbism.Dialogue
 		public void NextDialogueText()
 		{
 			dialogueIndex++;
+
 			if (dialogueIndex >= dialogueSO.dialogues.Length) ExitDialogue();
-			else
-			{
-				PrintDialogue();
-				SetDialogueExpression();
-			}
+			else Dialogue();
 		}
 
 		private GameObject SpawnDialogueFloatingHeads(GameObject obj, Vector3 rot, Vector3 pos, float scale)
