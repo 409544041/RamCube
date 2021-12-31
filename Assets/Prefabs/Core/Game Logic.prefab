@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 5794705685702825650}
   - component: {fileID: 7034641184602976570}
   - component: {fileID: 1645401456089571225}
+  - component: {fileID: 3169373734023832201}
   m_Layer: 0
   m_Name: Game Logic
   m_TagString: Untagged
@@ -217,7 +218,6 @@ MonoBehaviour:
   dialogueCanvas: {fileID: 0}
   backgroundCanvas: {fileID: 0}
   charNameText: {fileID: 0}
-  dialogueText: {fileID: 0}
   nextButton: {fileID: 0}
   floatingHeadPos:
   - {x: 0.25, y: 0.6, z: 5}
@@ -226,3 +226,18 @@ MonoBehaviour:
   inLevel: 1
   inSerpentScreen: 0
   inMap: 0
+  writer: {fileID: 3169373734023832201}
+--- !u!114 &3169373734023832201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573582724643509009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df5293f4a84736c4ba91f7bf721d3cb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  letterInterval: 0.02
+  dialogueText: {fileID: 0}

@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using Qbism.SpriteAnimations;
 using Qbism.Serpent;
+using MoreMountains.Feedbacks;
 
 namespace Qbism.Dialogue
 {
@@ -12,11 +13,12 @@ namespace Qbism.Dialogue
 	{
 		//Config parameters
 		[SerializeField] Canvas dialogueCanvas, backgroundCanvas;
-		[SerializeField] TextMeshProUGUI charNameText, dialogueText;
-		[SerializeField] Image nextButton;
+		[SerializeField] TextMeshProUGUI charNameText;
+		[SerializeField] MMFeedbacks nextButtonJuice;
 		[SerializeField] Vector3[] floatingHeadPos;
 		[SerializeField] float headScale;
 		[SerializeField] bool inLevel, inSerpentScreen, inMap;
+		[SerializeField] DialogueWriter writer;
 
 		//States
 		DialogueScripOb dialogueSO;
@@ -32,6 +34,7 @@ namespace Qbism.Dialogue
 			dialogueSO = incDialogueSO;
 			partnerAnimator = segAnimator;
 			inDialogue = true;
+			nextButtonJuice.Initialization();
 
 			SetupBackgroundCanvas();
 			dialogueCanvas.GetComponent<CanvasGroup>().alpha = 1;
@@ -53,9 +56,10 @@ namespace Qbism.Dialogue
 
 		private void PrintDialogue()
 		{
+			nextButtonJuice.StopFeedbacks();
 			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
 			charNameText.text = dialogueSO.characters[charIndex].ToString();
-			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
+			writer.StartWritingText(dialogueSO.dialogues[dialogueIndex].dialogueText);
 		}
 
 		private void SetDialogueExpression()
@@ -94,9 +98,15 @@ namespace Qbism.Dialogue
 			backgroundCanvas.GetComponent<CanvasGroup>().alpha = 1;
 		}
 
+		public void PulseNextButton()
+		{
+			nextButtonJuice.PlayFeedbacks();
+		}
+
 		private void ExitDialogue()
 		{
 			inDialogue = false;
+			nextButtonJuice.StopFeedbacks();
 
 			for (int i = 0; i < heads.Length; i++)
 			{
