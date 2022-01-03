@@ -22,6 +22,7 @@ namespace Qbism.Control
 		FeatureSwitchBoard switchBoard;
 		ProgressHandler progHandler;
 		DialogueManager dialogueManager;
+		FinishCube finish;
 
 		//States
 		Vector2 stickValue;
@@ -36,6 +37,7 @@ namespace Qbism.Control
 			progHandler = FindObjectOfType<ProgressHandler>();
 			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
 			dialogueManager = GetComponent<DialogueManager>();
+			finish = FindObjectOfType<FinishCube>();
 			controls = new GameControls();
 
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
@@ -82,7 +84,7 @@ namespace Qbism.Control
 
 		private void HandleMove(Transform turnSide, Vector2Int posAheadDir, Vector3 turnAxis)
 		{
-			if (mover.isOutOfBounds) return;
+			if (mover.isOutOfBounds || !mover.input) return;
 
 			inputting = true;
 			var posAhead = mover.cubePoser.FetchGridPos() + posAheadDir;
@@ -114,22 +116,18 @@ namespace Qbism.Control
 
 		private void FinishLevel()
 		{	
-			if (switchBoard.allowDebugFinish)
-			{
-				FinishCube finish = FindObjectOfType<FinishCube>();
-				if (finish) finish.Finish();
-			}
+			if (switchBoard.allowDebugFinish && mover.input) finish.Finish();
 		}
 			
 		private void Rewind()
 		{
-			rewinder.StartRewinding();
+			if (!finish.hasFinished) rewinder.StartRewinding();
 		}
 
 		private void HandleRestartInput()
 		{
 			if (dialogueManager.inDialogue) dialogueManager.NextDialogueText();
-			else loader.RestartLevel();
+			else if (!finish.hasFinished) loader.RestartLevel();
 		}
 
 		private void OnDisable() 

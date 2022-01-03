@@ -25,7 +25,7 @@ namespace Qbism.Cubes
 		//States
 		Vector2Int myPosition;
 		public bool wrongOnFinish { get; set; } = false;
-		bool hasFinished = false;
+		public bool hasFinished = false;
 		
 		//Actions, events, delegates etc
 		public event Action onSetSegment;
@@ -100,6 +100,7 @@ namespace Qbism.Cubes
 
 			hasFinished = true;
 			mover.GetComponentInChildren<ExpressionHandler>().hasFinished = true;
+			mover.input = false;
 
 			juicer.DeactivateGlow();
 			juicer.PlaySuccesSound();

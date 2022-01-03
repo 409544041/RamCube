@@ -109,7 +109,6 @@ namespace Qbism.PlayerCube
 
 		public void HandleKeyInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			if (!input) return;
 			initiatedByPlayer = true;
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
