@@ -2,8 +2,6 @@ Shader "Hidden/FlatKit/FogFilter"
 {
     Properties
     {
-        [HideInInspector][MainTexture]_BaseMap ("Base (RGB)", 2D) = "white" { }
-
         [Toggle(USE_DISTANCE_FOG)]_UseDistanceFog ("Use Distance", Float) = 0
         [Toggle(USE_DISTANCE_FOG_ON_SKY)]_UseDistanceFogOnSky ("Use Distance Fog On Sky", Float) = 0
 
@@ -41,11 +39,6 @@ Shader "Hidden/FlatKit/FogFilter"
             HLSLPROGRAM
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareOpaqueTexture.hlsl"
-
-            TEXTURE2D_X(_BaseMap);
-            SAMPLER(sampler_BaseMap);
-            #define SAMPLE_BASEMAP(uv)   SAMPLE_TEXTURE2D_X(_BaseMap, sampler_BaseMap, UnityStereoTransformScreenSpaceTex(uv));
 
             sampler2D _DistanceLUT;
             float _Near;
@@ -65,6 +58,11 @@ Shader "Hidden/FlatKit/FogFilter"
 
             #define ALMOST_ONE 0.999
 
+            // Using `_CameraColorTexture` instead of the opaque texture `SampleSceneColor` to handle transparency.
+            TEXTURE2D(_CameraColorTexture);
+            SAMPLER(sampler_CameraColorTexture);
+            float4 _CameraColorTexture_TexelSize;
+
             // Z buffer depth to linear 0-1 depth
             // Handles orthographic projection correctly
             float Linear01Depth(float z)
@@ -82,7 +80,8 @@ Shader "Hidden/FlatKit/FogFilter"
 
             float4 Fog(float2 uv, float3 screen_pos)
             {
-                const float4 original = float4(SampleSceneColor(uv), 1.0);
+                float4 original = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture,
+                                                     UnityStereoTransformScreenSpaceTex(uv));
 
                 const float depthPacked = SampleSceneDepth(uv);
                 const float depthEye = LinearEyeDepth(depthPacked);
@@ -129,6 +128,9 @@ Shader "Hidden/FlatKit/FogFilter"
             Varyings vert(Attributes input)
             {
                 Varyings output = (Varyings)0;
+                
+                UNITY_SETUP_INSTANCE_ID(input);
+                UNITY_TRANSFER_INSTANCE_ID(input, output);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
                 const VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
@@ -141,7 +143,9 @@ Shader "Hidden/FlatKit/FogFilter"
 
             half4 frag(Varyings input): SV_Target
             {
+                UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+
                 float4 c = Fog(input.uv, input.screen_pos);
                 return c;
             }

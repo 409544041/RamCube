@@ -1,5 +1,5 @@
-#ifndef FLATKIT_SYLIZED_INPUT_INCLUDED
-#define FLATKIT_SYLIZED_INPUT_INCLUDED
+#ifndef FLAT_KIT_STYLIZED_INPUT_INCLUDED
+#define FLAT_KIT_STYLIZED_INPUT_INCLUDED
 
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
@@ -76,6 +76,12 @@ half _UnityShadowSharpness;
 half _OverrideLightmapDir;
 half3 _LightmapDirection;
 
+half4 _OutlineColor;
+half _OutlineWidth;
+half _OutlineScale;
+half _OutlineDepthOffset;
+half _CameraDistanceImpact;
+
 // Unused, required in Meta pass.
 #ifndef FLATKIT_TERRAIN
 half4 _SpecColor;
@@ -94,7 +100,7 @@ inline void InitializeSimpleLitSurfaceData(float2 uv, out SurfaceData outSurface
     outSurfaceData.alpha = albedoAlpha.a * _BaseColor.a;
     AlphaDiscard(outSurfaceData.alpha, _Cutoff);
 
-    outSurfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
+    outSurfaceData.albedo = albedoAlpha.rgb;
     #ifdef _ALPHAPREMULTIPLY_ON
     outSurfaceData.albedo *= outSurfaceData.alpha;
     #endif
@@ -110,19 +116,7 @@ inline void InitializeSimpleLitSurfaceData(float2 uv, out SurfaceData outSurface
 half4 SampleSpecularSmoothness(half2 uv, half alpha, half4 specColor, TEXTURE2D_PARAM(specMap, sampler_specMap))
 {
     half4 specularSmoothness = half4(0.0h, 0.0h, 0.0h, 1.0h);
-    #ifdef _SPECGLOSSMAP
-    specularSmoothness = SAMPLE_TEXTURE2D(specMap, sampler_specMap, uv) * specColor;
-    #elif defined(_SPECULAR_COLOR)
-    specularSmoothness = specColor;
-    #endif
-
-    #ifdef _GLOSSINESS_FROM_BASE_ALPHA
-    specularSmoothness.a = exp2(10 * alpha + 1);
-    #else
-    specularSmoothness.a = exp2(10 * specularSmoothness.a + 1);
-    #endif
-
     return specularSmoothness;
 }
 
-#endif  // FLATKIT_SYLIZED_INPUT_INCLUDED
+#endif  // FLAT_KIT_STYLIZED_INPUT_INCLUDED

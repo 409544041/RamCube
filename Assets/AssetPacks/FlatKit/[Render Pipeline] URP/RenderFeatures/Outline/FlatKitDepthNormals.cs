@@ -2,15 +2,19 @@
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+// TODO: Remove for URP 13.
+// https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.1/manual/upgrade-guide-2022-1.html
+#pragma warning disable CS0618
+
 public class FlatKitDepthNormals : ScriptableRendererFeature {
-    public bool overrideRenderEvent = false;
+    public bool overrideRenderEvent;
     public RenderPassEvent renderEvent = RenderPassEvent.AfterRenderingTransparents;
 
     class DepthNormalsPass : ScriptableRenderPass {
         private RenderTargetHandle _depthAttachmentHandle;
         private RenderTextureDescriptor _descriptor;
         private FilteringSettings _filteringSettings;
-        private readonly Material _depthNormalsMaterial = null;
+        private readonly Material _depthNormalsMaterial;
         private readonly string _profilerTag = "[Flat Kit] Depth Normals Pass";
         private readonly ShaderTagId _shaderTagId = new ShaderTagId("DepthOnly");
         private readonly int _depthBufferBits = 32;
@@ -20,8 +24,8 @@ public class FlatKitDepthNormals : ScriptableRendererFeature {
             _depthNormalsMaterial = material;
         }
 
-        public void Setup(RenderTextureDescriptor baseDescriptor, RenderTargetHandle depthAttachmentHandle) {
-            this._depthAttachmentHandle = depthAttachmentHandle;
+        public void Setup(RenderTextureDescriptor baseDescriptor, RenderTargetHandle depthRTHandle) {
+            this._depthAttachmentHandle = depthRTHandle;
             baseDescriptor.colorFormat = RenderTextureFormat.ARGB32;
             baseDescriptor.depthBufferBits = _depthBufferBits;
             _descriptor = baseDescriptor;

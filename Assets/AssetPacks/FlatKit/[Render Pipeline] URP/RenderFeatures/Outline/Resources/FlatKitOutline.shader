@@ -81,23 +81,26 @@ Shader "Hidden/FlatKit/OutlineFilter"
             // Decode normals stored in _CameraDepthNormalsTexture
             float3 SampleNormal(float2 uv)
             {
-                float4 raw = SAMPLE_TEXTURE2D_X(_CameraDepthNormalsTexture, sampler_CameraDepthNormalsTexture, UnityStereoTransformScreenSpaceTex(uv));
+                const float4 raw = SAMPLE_TEXTURE2D_X(_CameraDepthNormalsTexture, sampler_CameraDepthNormalsTexture,
+                                                UnityStereoTransformScreenSpaceTex(uv));
                 return DecodeViewNormalStereo(raw);
             }
 
             float SampleDepth(float2 uv)
             {
-                float d = SampleSceneDepth(uv);
+                const float d = SampleSceneDepth(uv);
                 return Linear01Depth(d);
             }
 
             float4 Outline(float2 uv)
             {
-                float4 original = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture, UnityStereoTransformScreenSpaceTex(uv));
+                float4 original = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture,
+                                                     UnityStereoTransformScreenSpaceTex(uv));
 
                 const float offset_positive = + ceil(_Thickness * 0.5f);
                 const float offset_negative = - floor(_Thickness * 0.5f);
-                const float2 texel_size = 1.0 / float2(_CameraColorTexture_TexelSize.z, _CameraColorTexture_TexelSize.w);
+                const float2 texel_size = 1.0 /
+                    float2(_CameraColorTexture_TexelSize.z, _CameraColorTexture_TexelSize.w);
 
                 float left = texel_size.x * offset_negative;
                 float right = texel_size.x * offset_positive;
@@ -127,7 +130,7 @@ Shader "Hidden/FlatKit/OutlineFilter"
                 const float3 n1 = SampleNormal(uv1);
                 const float3 n2 = SampleNormal(uv2);
                 const float3 n3 = SampleNormal(uv3);
-                
+
                 const float3 nd1 = n1 - n0;
                 const float3 nd2 = n3 - n2;
                 float n = sqrt(dot(nd1, nd1) + dot(nd2, nd2));
@@ -137,10 +140,14 @@ Shader "Hidden/FlatKit/OutlineFilter"
                 #endif  // OUTLINE_USE_NORMALS
 
                 #ifdef OUTLINE_USE_COLOR
-                const float3 c0 = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture, UnityStereoTransformScreenSpaceTex(uv0)).rgb;
-                const float3 c1 = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture, UnityStereoTransformScreenSpaceTex(uv1)).rgb;
-                const float3 c2 = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture, UnityStereoTransformScreenSpaceTex(uv2)).rgb;
-                const float3 c3 = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture, UnityStereoTransformScreenSpaceTex(uv3)).rgb;
+                const float3 c0 = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture,
+                                                     UnityStereoTransformScreenSpaceTex(uv0)).rgb;
+                const float3 c1 = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture,
+                                                     UnityStereoTransformScreenSpaceTex(uv1)).rgb;
+                const float3 c2 = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture,
+                                                     UnityStereoTransformScreenSpaceTex(uv2)).rgb;
+                const float3 c3 = SAMPLE_TEXTURE2D_X(_CameraColorTexture, sampler_CameraColorTexture,
+                                                     UnityStereoTransformScreenSpaceTex(uv3)).rgb;
 
                 const float3 cd1 = c1 - c0;
                 const float3 cd2 = c3 - c2;
@@ -150,14 +157,12 @@ Shader "Hidden/FlatKit/OutlineFilter"
                 float c = 0;
                 #endif  // OUTLINE_USE_COLOR
 
-                float g = max(d, max(n, c));
+                const float g = max(d, max(n, c));
 
-                // _EdgeColor.rgb = float3(1, 0, 0);
                 #ifdef OUTLINE_ONLY
                 original.rgb = lerp(1.0 - _EdgeColor.rgb, _EdgeColor.rgb, g * _EdgeColor.a);
                 #endif  // OUTLINE_ONLY
 
-                
                 float4 output;
                 output.rgb = lerp(original.rgb, _EdgeColor.rgb, g * _EdgeColor.a);
                 output.a = original.a;

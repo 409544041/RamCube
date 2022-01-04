@@ -35,6 +35,7 @@ public static class Tooltips {
 	{"Mode", "Use this menu to let the current material receive shadows. 'Multiply' parameter multiplies black shadow over existing colors of shading; 'Color' parameter applies freely colored shadow over existing colors of shading"},
 	{"Power", "How opaque the received shadows are"},
 	{"Sharpness", "How smooth or sharp the received shadows are. Values to the left mean 'sharper', values to the right are 'smoother'"},
+	{"Shadow Occlusion", "Mask received Unity shadows in areas where normals face away from the light. Useful to remove shadows that 'go through' objects."},
 	{"Blending Mode", "Select which blending mode to use for an albedo texture — 'Add' or 'Multiply'"},
 	{"Texture Impact", "How opaque or transparent the texture is"},
 	{"Surface Type", "'Opaque'; 'Transparent'"},

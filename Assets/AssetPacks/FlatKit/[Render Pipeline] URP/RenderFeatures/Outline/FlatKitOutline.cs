@@ -2,9 +2,14 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+// TODO: Remove for URP 13.
+// https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.1/manual/upgrade-guide-2022-1.html
+#pragma warning disable CS0618
+
 namespace FlatKit {
 public class FlatKitOutline : ScriptableRendererFeature {
     class OutlinePass : ScriptableRenderPass {
+        private readonly ProfilingSampler _profilingSampler = new ProfilingSampler("Outline");
         private ScriptableRenderer _renderer;
         private RenderTargetHandle _destination;
         private readonly Material _outlineMaterial = null;
@@ -30,22 +35,20 @@ public class FlatKitOutline : ScriptableRendererFeature {
         }
 #endif
 
-        public override void Execute(ScriptableRenderContext context,
-            ref RenderingData renderingData) {
-            CommandBuffer cmd = CommandBufferPool.Get("FlatKit Outline Pass");
+        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
+            CommandBuffer cmd = CommandBufferPool.Get();
 
-            RenderTextureDescriptor opaqueDescriptor =
-                renderingData.cameraData.cameraTargetDescriptor;
-            opaqueDescriptor.depthBufferBits = 0;
+            using (new ProfilingScope(cmd, _profilingSampler)) {
+                RenderTextureDescriptor opaqueDescriptor = renderingData.cameraData.cameraTargetDescriptor;
+                opaqueDescriptor.depthBufferBits = 0;
 
-            if (_destination == RenderTargetHandle.CameraTarget) {
-                cmd.GetTemporaryRT(_temporaryColorTexture.id, opaqueDescriptor, FilterMode.Point);
-                cmd.Blit(_renderer.cameraColorTarget, _temporaryColorTexture.Identifier(),
-                    _outlineMaterial, 0);
-                cmd.Blit(_temporaryColorTexture.Identifier(), _renderer.cameraColorTarget);
-            } else {
-                cmd.Blit(_renderer.cameraColorTarget, _destination.Identifier(), _outlineMaterial,
-                    0);
+                if (_destination == RenderTargetHandle.CameraTarget) {
+                    cmd.GetTemporaryRT(_temporaryColorTexture.id, opaqueDescriptor, FilterMode.Point);
+                    cmd.Blit(_renderer.cameraColorTarget, _temporaryColorTexture.Identifier(), _outlineMaterial, 0);
+                    cmd.Blit(_temporaryColorTexture.Identifier(), _renderer.cameraColorTarget);
+                } else {
+                    cmd.Blit(_renderer.cameraColorTarget, _destination.Identifier(), _outlineMaterial, 0);
+                }
             }
 
             context.ExecuteCommandBuffer(cmd);

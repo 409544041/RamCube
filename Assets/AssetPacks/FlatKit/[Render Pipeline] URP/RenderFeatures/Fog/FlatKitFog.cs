@@ -2,6 +2,10 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+// TODO: Remove for URP 13.
+// https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.1/manual/upgrade-guide-2022-1.html
+#pragma warning disable CS0618
+
 namespace FlatKit {
 public class FlatKitFog : ScriptableRendererFeature {
     class EffectPass : ScriptableRenderPass {
@@ -10,7 +14,6 @@ public class FlatKitFog : ScriptableRendererFeature {
         private RenderTargetHandle _destination;
         private readonly Material _effectMaterial = null;
         private RenderTargetHandle _temporaryColorTexture;
-        private RenderTextureDescriptor _descriptor;
 
         public EffectPass(Material effectMaterial) {
             _effectMaterial = effectMaterial;
@@ -26,22 +29,22 @@ public class FlatKitFog : ScriptableRendererFeature {
 
 #if UNITY_2020_3_OR_NEWER
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData) {
-            _descriptor = renderingData.cameraData.cameraTargetDescriptor;
 #else
         public override void Configure(CommandBuffer cmd,
             RenderTextureDescriptor cameraTextureDescriptor) {
-            _descriptor = cameraTextureDescriptor;
 #endif
-            _descriptor.depthBufferBits = 0;
-            cmd.GetTemporaryRT(_temporaryColorTexture.id, _descriptor, FilterMode.Point);
+            ConfigureClear(ClearFlag.None, Color.white);
         }
 
-        public override void Execute(ScriptableRenderContext context,
-            ref RenderingData renderingData) {
+        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
             CommandBuffer cmd = CommandBufferPool.Get();
             using (new ProfilingScope(cmd, _profilingSampler)) {
+                RenderTextureDescriptor opaqueDescriptor = renderingData.cameraData.cameraTargetDescriptor;
+                opaqueDescriptor.depthBufferBits = 0;
+
                 if (_destination == RenderTargetHandle.CameraTarget) {
-                    cmd.Blit(null, _temporaryColorTexture.Identifier(), _effectMaterial);
+                    cmd.GetTemporaryRT(_temporaryColorTexture.id, opaqueDescriptor, FilterMode.Point);
+                    cmd.Blit(_renderer.cameraColorTarget, _temporaryColorTexture.Identifier(), _effectMaterial);
                     cmd.Blit(_temporaryColorTexture.Identifier(), _renderer.cameraColorTarget);
                 } else {
                     cmd.Blit(null, _destination.Identifier(), _effectMaterial);
@@ -98,8 +101,7 @@ public class FlatKitFog : ScriptableRendererFeature {
         };
     }
 
-    public override void AddRenderPasses(ScriptableRenderer renderer,
-        ref RenderingData renderingData) {
+    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
 #if UNITY_EDITOR
         if (renderingData.cameraData.isPreviewCamera) {
             return;

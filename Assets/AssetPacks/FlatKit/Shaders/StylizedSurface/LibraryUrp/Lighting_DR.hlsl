@@ -65,8 +65,9 @@ half3 LightingPhysicallyBased_DSTRM(Light light, half3 normalWS, half3 viewDirec
     c = lerp(c, _ColorGradient, gradientFactor);
 #endif  // DR_GRADIENT_ON
 
-#if defined(DR_RIM_ON)
     const half NdotL = dot(normalWS, light.direction);
+
+#if defined(DR_RIM_ON)
     const float rim = 1.0 - dot(viewDirectionWS, normalWS);
     const float rimSpread = 1.0 - _FlatRimSize - NdotL * _FlatRimLightAlign;
     const float rimEdgeSmooth = _FlatRimEdgeSmoothness;
@@ -83,6 +84,12 @@ half3 LightingPhysicallyBased_DSTRM(Light light, half3 normalWS, half3 viewDirec
                                                 0.5 + _FlatSpecularEdgeSmoothness * 0.1, specular);
     c = lerp(c, _FlatSpecularColor, specularTransition);
 #endif  // DR_SPECULAR_ON
+
+#if defined(_UNITYSHADOW_OCCLUSION)
+    const float occludedAttenuation = smoothstep(0.25, 0.0, -min(NdotL, 0));
+    light.shadowAttenuation *= occludedAttenuation;
+    light.distanceAttenuation *= occludedAttenuation;
+#endif
 
 #if defined(_UNITYSHADOWMODE_MULTIPLY)
     c *= lerp(1, light.shadowAttenuation, _UnityShadowPower);
@@ -101,7 +108,7 @@ void StylizeLight(inout Light light)
     const half shadowAttenuation = saturate(light.shadowAttenuation * _UnityShadowSharpness);
     light.shadowAttenuation = shadowAttenuation;
 
-    const half distanceAttenuation = smoothstep(0, _LightFalloffSize, light.distanceAttenuation);
+    const half distanceAttenuation = smoothstep(0, _LightFalloffSize + 0.001, light.distanceAttenuation);
     light.distanceAttenuation = distanceAttenuation;
 
     const half3 lightColor = lerp(half3(1, 1, 1), light.color, _LightContribution);
@@ -136,13 +143,13 @@ half4 UniversalFragment_DSTRM(InputData inputData, half3 albedo, half3 emission,
         inputData.bakedGI *= aoFactor.indirectAmbientOcclusion;
     #endif
 
-    MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI, half4(0, 0, 0, 0));
+    MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI, shadowMask);
 
     // Apply Flat Kit stylizing to `inputData.bakedGI` (which is half3).
 #if LIGHTMAP_ON
     const half sharpness01 = (_UnityShadowSharpness - 1.0) / (10.0 - 1.0);  // UI range is set to 1.0 - 10.0.
     const half blur = max(1.0 - sharpness01, 0.001);
-    const half transitionPoint = 1.0 - _LightFalloffSize;
+    const half transitionPoint = 1.0 - (_LightFalloffSize + 0.001);
     inputData.bakedGI = smoothstep(transitionPoint, transitionPoint + blur, length(inputData.bakedGI));
 
     #if defined(_UNITYSHADOWMODE_MULTIPLY)

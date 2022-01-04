@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+// ReSharper disable RedundantDefaultMemberInitializer
 
 namespace FlatKit {
 [CreateAssetMenu(fileName = "OutlineSettings", menuName = "FlatKit/Outline Settings")]
