@@ -41,7 +41,7 @@ namespace Qbism.Dialogue
 
 		public void SetInitialFocusValues(GameObject head, int i)
 		{
-			var segmentEntity = head.GetComponent<M_Segments>();
+			var segEntity = head.GetComponent<M_Segments>();
 			var renders = head.GetComponentsInChildren<SkinnedMeshRenderer>();
 
 			for (int j = 0; j < renders.Length; j++)
@@ -62,10 +62,13 @@ namespace Qbism.Dialogue
 					if (i == 0)
 					{
 						mRenders[i][j].materials[k].SetFloat("_OverrideLightmapDir", 1);
-						mRenders[i][j].materials[k].SetFloat("_LightmapDirectionPitch", 
-							segmentEntity.f_DialogueLightPitchYaw.x);
-						mRenders[i][j].materials[k].SetFloat("_LightmapDirectionYaw", 
-							segmentEntity.f_DialogueLightPitchYaw.y);
+						mRenders[i][j].materials[k].SetFloat("_LightmapDirectionPitch",
+							segEntity.f_DialogueLightPitchYaw.x);
+						mRenders[i][j].materials[k].SetFloat("_LightmapDirectionYaw",
+							segEntity.f_DialogueLightPitchYaw.y);
+						mRenders[i][j].materials[k].SetFloat("_UnityShadowPower", 0);
+
+						mRenders[i][j].materials[k].EnableKeyword("DR_ENABLE_LIGHTMAP_DIR");
 					}
 				}
 			}
