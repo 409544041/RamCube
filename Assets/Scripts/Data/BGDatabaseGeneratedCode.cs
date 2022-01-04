@@ -2058,6 +2058,17 @@ public partial class E_Segments : BGEntity
 			_f_DialogueRotation[Index] = value;
 		}
 	}
+	public UnityEngine.Vector2 f_DialogueLightPitchYaw
+	{
+		get
+		{
+			return _f_DialogueLightPitchYaw[Index];
+		}
+		set
+		{
+			_f_DialogueLightPitchYaw[Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -2092,6 +2103,15 @@ public partial class E_Segments : BGEntity
 		{
 			if(_ufle12jhs77_f_DialogueRotation==null || _ufle12jhs77_f_DialogueRotation.IsDeleted) _ufle12jhs77_f_DialogueRotation=(BansheeGz.BGDatabase.BGFieldVector3) MetaDefault.GetField(new BGId(5760607302971462463UL,3672824699726006442UL));
 			return _ufle12jhs77_f_DialogueRotation;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldVector2 _ufle12jhs77_f_DialogueLightPitchYaw;
+	public static BansheeGz.BGDatabase.BGFieldVector2 _f_DialogueLightPitchYaw
+	{
+		get
+		{
+			if(_ufle12jhs77_f_DialogueLightPitchYaw==null || _ufle12jhs77_f_DialogueLightPitchYaw.IsDeleted) _ufle12jhs77_f_DialogueLightPitchYaw=(BansheeGz.BGDatabase.BGFieldVector2) MetaDefault.GetField(new BGId(5395289116548682697UL,15975294921309799602UL));
+			return _ufle12jhs77_f_DialogueLightPitchYaw;
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();

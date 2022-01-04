@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 7034641184602976570}
   - component: {fileID: 1645401456089571225}
   - component: {fileID: 3169373734023832201}
+  - component: {fileID: 4198279697341793878}
   m_Layer: 0
   m_Name: Game Logic
   m_TagString: Untagged
@@ -225,6 +226,7 @@ MonoBehaviour:
   focusScale: 3
   nonFocusScale: 2
   scaleDur: 0.2
+  nonFocusBrightnessDelta: 0.2
   scaleCurve:
     serializedVersion: 2
     m_Curve:
@@ -253,6 +255,7 @@ MonoBehaviour:
   inSerpentScreen: 0
   inMap: 0
   writer: {fileID: 3169373734023832201}
+  focuser: {fileID: 4198279697341793878}
 --- !u!114 &3169373734023832201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,6 +268,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5293f4a84736c4ba91f7bf721d3cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  letterInterval: 0.02
   dialogueText: {fileID: 0}
   dialogueManager: {fileID: 1645401456089571225}
+--- !u!114 &4198279697341793878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573582724643509009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febf03a23236c544f9f2ce7bb7f7abe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusScale: 3
+  nonFocusScale: 2
+  scaleDur: 0.2
+  nonFocusBrightnessDelta: 0.2
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  manager: {fileID: 1645401456089571225}
