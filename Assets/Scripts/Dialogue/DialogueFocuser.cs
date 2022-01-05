@@ -90,20 +90,24 @@ namespace Qbism.Dialogue
 
 		public void SetFocus(int charIndex, GameObject[] heads)
 		{
+			var bigScale = new Vector3(focusScale, focusScale, focusScale);
+			var smallScale = new Vector3(nonFocusScale, nonFocusScale, nonFocusScale);
+
 			for (int i = 0; i < heads.Length; i++)
 			{
-				var bigScale = new Vector3(focusScale, focusScale, focusScale);
-				var smallScale = new Vector3(nonFocusScale, nonFocusScale, nonFocusScale);
-
-				if (i == charIndex && heads[i].transform.localScale != bigScale)
+				if (i == charIndex)
 				{
-					StartCoroutine(ScaleHead(i, heads[i], bigScale, true));
+					if (heads[i].transform.localScale != bigScale)
+						StartCoroutine(ScaleHead(i, heads[i], bigScale, true));
+
 					ChangeFocusMatValues(i, matFocusColor[i], Color.white, 0);
 				}
 
-				else if (i != charIndex && heads[i].transform.localScale != smallScale)
+				else if (i != charIndex)
 				{
-					StartCoroutine(ScaleHead(i, heads[i], smallScale, false));
+					if (heads[i].transform.localScale != smallScale)
+						StartCoroutine(ScaleHead(i, heads[i], smallScale, false));
+
 					ChangeFocusMatValues(i, matUnfocusColor[i], spriteUnfocusColor, .5f);
 				}
 			}
