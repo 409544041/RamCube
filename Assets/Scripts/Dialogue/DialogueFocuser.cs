@@ -12,13 +12,15 @@ namespace Qbism.Dialogue
 		public float focusScale, nonFocusScale, focusTransitionDur = .2f;
 		[SerializeField] float brightnessDelta = .2f, saturationDelta = .1f;
 		[SerializeField] AnimationCurve scaleCurve;
+		[SerializeField] Color spriteUnfocusColor;
 
 		//States
 		MMFeedbacks[] scaleJuice = new MMFeedbacks[2];
 		MMFeedbackScale[] mmscaler = new MMFeedbackScale[2];
-		List<Color>[] focusColors = new List<Color>[2];
-		List<Color>[] unFocusColor = new List<Color>[2];
+		List<Color>[] matFocusColor = new List<Color>[2];
+		List<Color>[] matUnfocusColor = new List<Color>[2];
 		List<SkinnedMeshRenderer>[] mRenders = new List<SkinnedMeshRenderer>[2];
+		List<SpriteRenderer>[] sRenders = new List<SpriteRenderer>[2];
 		float originalCurveOne, curveDelta;
 		bool originalValuesSet = false;
 
@@ -26,9 +28,10 @@ namespace Qbism.Dialogue
 		{
 			for (int i = 0; i < 2; i++)
 			{
-				focusColors[i] = new List<Color>();
-				unFocusColor[i] = new List<Color>();
+				matFocusColor[i] = new List<Color>();
+				matUnfocusColor[i] = new List<Color>();
 				mRenders[i] = new List<SkinnedMeshRenderer>();
+				sRenders[i] = new List<SpriteRenderer>();
 			}
 		}
 
@@ -42,11 +45,17 @@ namespace Qbism.Dialogue
 		public void SetInitialFocusValues(GameObject head, int i)
 		{
 			var segEntity = head.GetComponent<M_Segments>();
-			var renders = head.GetComponentsInChildren<SkinnedMeshRenderer>();
+			var meshRenders = head.GetComponentsInChildren<SkinnedMeshRenderer>();
+			var spriteRenders = head.GetComponentsInChildren<SpriteRenderer>();
 
-			for (int j = 0; j < renders.Length; j++)
+			for (int j = 0; j < spriteRenders.Length; j++)
 			{
-				mRenders[i].Add(renders[j]);
+				sRenders[i].Add(spriteRenders[j]);
+			}
+
+			for (int j = 0; j < meshRenders.Length; j++)
+			{
+				mRenders[i].Add(meshRenders[j]);
 			}
 
 			for (int j = 0; j < mRenders[i].Count; j++)
@@ -56,8 +65,8 @@ namespace Qbism.Dialogue
 					var newFocusColor = mRenders[i][j].materials[k].GetColor("_BaseColor");
 					var newUnFocusColor = SetUnFocusColor(mRenders[i][j].materials[k]);
 
-					focusColors[i].Add(newFocusColor);
-					unFocusColor[i].Add(newUnFocusColor);
+					matFocusColor[i].Add(newFocusColor);
+					matUnfocusColor[i].Add(newUnFocusColor);
 
 					if (i == 0) OverrideLightDir(mRenders[i][j].materials[k], segEntity);
 				}
@@ -89,18 +98,19 @@ namespace Qbism.Dialogue
 				if (i == charIndex && heads[i].transform.localScale != bigScale)
 				{
 					StartCoroutine(ScaleHead(i, heads[i], bigScale, true));
-					ChangeFocusMatValues(i, focusColors[i], 0);
+					ChangeFocusMatValues(i, matFocusColor[i], Color.white, 0);
 				}
 
 				else if (i != charIndex && heads[i].transform.localScale != smallScale)
 				{
 					StartCoroutine(ScaleHead(i, heads[i], smallScale, false));
-					ChangeFocusMatValues(i, unFocusColor[i], .5f);
+					ChangeFocusMatValues(i, matUnfocusColor[i], spriteUnfocusColor, .5f);
 				}
 			}
 		}
 
-		private void ChangeFocusMatValues(int i, List<Color> colors, float lightColorCont)
+		private void ChangeFocusMatValues(int i, List<Color> matTargetColor, Color spriteTargetColor, 
+			float lightColorCont)
 		{
 			int matCounter = 0;
 
@@ -111,9 +121,14 @@ namespace Qbism.Dialogue
 				for (int k = 0; k < mRender.materials.Length; k++)
 				{
 					StartCoroutine(ChangeFocusColor(mRender.materials[k], 
-						colors[matCounter], lightColorCont));
+						matTargetColor[matCounter], lightColorCont));
 					matCounter++;
 				}
+			}
+
+			for (int j = 0; j < sRenders[i].Count; j++)
+			{
+				StartCoroutine(ChangeSpriteFocusColor(sRenders[i][j], spriteTargetColor));
 			}
 		}
 
@@ -133,6 +148,20 @@ namespace Qbism.Dialogue
 
 				var cont = Mathf.Lerp(startLightColorCont, lightColorCont, percentageCompleted);
 				mat.SetFloat("_LightContribution", cont);
+
+				yield return null;
+			}
+		}
+
+		private IEnumerator ChangeSpriteFocusColor(SpriteRenderer sprite, Color targetColor)
+		{
+			var startcolor = sprite.color;
+
+			for (float t = 0; t < focusTransitionDur; t += Time.deltaTime)
+			{
+				var percentageCompleted = t / focusTransitionDur;
+				var color = Color.Lerp(startcolor, targetColor, percentageCompleted);
+				sprite.color = color;
 
 				yield return null;
 			}
