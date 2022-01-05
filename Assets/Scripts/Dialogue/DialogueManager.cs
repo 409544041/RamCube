@@ -24,6 +24,7 @@ namespace Qbism.Dialogue
 		int dialogueIndex = 0;
 		public bool inDialogue { get; set; } = false;
 		GameObject[] heads = new GameObject[2];
+		string[] names = new string[2];
 		ExpressionHandler[] expressionHandlers = new ExpressionHandler[2];
 		SegmentAnimator partnerAnimator;
 
@@ -42,6 +43,7 @@ namespace Qbism.Dialogue
 			{
 				heads[i] = SpawnDialogueFloatingHeads(objs[i], rots[i], floatingHeadPos[i], focuser.nonFocusScale);
 				expressionHandlers[i] = heads[i].GetComponentInChildren<ExpressionHandler>();
+				names[i] = heads[i].GetComponent<M_Segments>().f_SegmentName;
 				focuser.SetJuiceValues(heads[i], i);
 				focuser.SetInitialFocusValues(heads[i], i);
 			}
@@ -56,7 +58,7 @@ namespace Qbism.Dialogue
 			nextButtonJuice.StopFeedbacks();
 			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
 
-			charNameText.text = dialogueSO.characters[charIndex].ToString();
+			charNameText.text = names[charIndex];
 			writer.StartWritingText(dialogueSO.dialogues[dialogueIndex].dialogueText);
 
 			focuser.SetFocus(charIndex, heads);
