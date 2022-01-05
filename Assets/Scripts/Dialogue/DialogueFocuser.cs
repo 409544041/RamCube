@@ -59,19 +59,24 @@ namespace Qbism.Dialogue
 					focusColors[i].Add(newFocusColor);
 					unFocusColor[i].Add(newUnFocusColor);
 
-					if (i == 0)
-					{
-						mRenders[i][j].materials[k].SetFloat("_OverrideLightmapDir", 1);
-						mRenders[i][j].materials[k].SetFloat("_LightmapDirectionPitch",
-							segEntity.f_DialogueLightPitchYaw.x);
-						mRenders[i][j].materials[k].SetFloat("_LightmapDirectionYaw",
-							segEntity.f_DialogueLightPitchYaw.y);
-						mRenders[i][j].materials[k].SetFloat("_UnityShadowPower", 0);
-
-						mRenders[i][j].materials[k].EnableKeyword("DR_ENABLE_LIGHTMAP_DIR");
-					}
+					if (i == 0) OverrideLightDir(mRenders[i][j].materials[k], segEntity);
 				}
 			}
+		}
+
+		private void OverrideLightDir(Material mat, M_Segments segEntity)
+		{
+			var pitch = segEntity.f_DialogueLightPitchYaw.x;
+			var yaw = segEntity.f_DialogueLightPitchYaw.y;
+			var rot = Quaternion.Euler(yaw, pitch, 0);
+			var pitchRad = Mathf.Rad2Deg * rot.x;
+			var yawRad = Mathf.Rad2Deg * rot.y;
+			var dir = new Vector4(Mathf.Sin(pitchRad) * Mathf.Sin(yawRad),
+				Mathf.Cos(pitchRad), Mathf.Sin(pitchRad) * Mathf.Cos(yawRad), 0.0f);
+
+			mat.SetFloat("_OverrideLightmapDir", 1);
+			mat.SetVector("_LightmapDirection", dir);
+			mat.SetFloat("_UnityShadowPower", 0);
 		}
 
 		public void SetFocus(int charIndex, GameObject[] heads)
