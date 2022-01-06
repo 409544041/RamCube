@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using Qbism.Cubes;
 using Qbism.SpriteAnimations;
 using UnityEngine;
 
@@ -13,22 +14,20 @@ namespace Qbism.PlayerCube
 		[SerializeField] float fartForce;
 		[SerializeField] LayerMask fartRayCastLayers;
 		[SerializeField] Transform fartVFXParent;
-		[SerializeField] GameObject playerVis;
 		[SerializeField] float flyByScaleMod, flyBySpeedMod;	
 		[SerializeField] float beamImpactAddedY = .55f;
-		[SerializeField] float camDisForCamSwitch = 7f;
+		[SerializeField] float shockedFaceTime = .5f, launchDur = 1;
 
 		//Cache
-		GameControls controls;
 		ExpressionHandler exprHandler;
 		PlayerFartJuicer juicer;
+		FinishEndSeqHandler endSeqHandler;
 
 		//States
 		bool fartCollided = false;
 		bool fartCounting = false;
 		int fartCount = 0;
 		ParticleSystem currentFartImpact = null;
-		bool endCam = false;
 		Vector3 originalScale;
 		float[] beamOriginalMins;
 		float[] beamOriginalMaxs;
@@ -43,7 +42,6 @@ namespace Qbism.PlayerCube
 		public event Action onDoneFarting;
 		public event Action onStartFarting;
 		public event Action onSwitchToEndCam;
-		public event Action onMoveCam;
 		public event Action<bool> onSwitchVisuals;
 		public Func<Vector3> onCheckFinishPos;
 
@@ -51,6 +49,7 @@ namespace Qbism.PlayerCube
 		{
 			exprHandler = GetComponentInChildren<ExpressionHandler>();
 			juicer = GetComponent<PlayerFartJuicer>();
+			endSeqHandler = FindObjectOfType<FinishEndSeqHandler>();
 		}
 
 		private void Start()
@@ -93,12 +92,13 @@ namespace Qbism.PlayerCube
 			juicer.PreFartJuice();
 			exprHandler.SetFace(Expressions.pushing, -1);
 			float feedbackDuration = juicer.preFartMMWiggle.WigglePositionDuration;
+
+			endSeqHandler.FartChargeCamResize(feedbackDuration + shockedFaceTime);
 			yield return new WaitForSeconds(feedbackDuration);
 
 			exprHandler.SetFace(Expressions.shocked, -1);
-			onMoveCam();
 
-			yield return new WaitForSeconds(.5f);
+			yield return new WaitForSeconds(shockedFaceTime);
 
 			exprHandler.SetFace(Expressions.gleeful, -1);
 			juicer.BeamFartJuice();
@@ -174,22 +174,23 @@ namespace Qbism.PlayerCube
 		{
 			float step = fartForce * Time.deltaTime;
 			launching = true;
+			float elapsedTime = 0;
+			var startPos = transform.position;
 
+			endSeqHandler.FartLaunchCamResize(launchDur - .2f);
+			
 			while (Vector3.Distance(transform.position, target.position) > 0.1f && launching)
 			{
-				transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+				elapsedTime += Time.deltaTime;
+				var percentageComplete = elapsedTime / launchDur;
 
-				if(Vector3.Distance(transform.position, Camera.main.transform.position) < 
-					camDisForCamSwitch && !endCam)
-				{
-					onSwitchToEndCam();
-					onDoneFarting();
-					endCam = true;
-				} 
+				transform.position = Vector3.Lerp(startPos, target.position, percentageComplete);
 
 				yield return null;
 			}
 
+			onSwitchToEndCam();
+			onDoneFarting();
 			launching = false;
 			transform.position = target.position;
 			onSwitchVisuals(false);

@@ -19,7 +19,9 @@ namespace Qbism.Cubes
 		[SerializeField] CinemachineVirtualCamera closeUpCam, endCam;
 		[SerializeField] Transform fartTowardsTarget;
 		[SerializeField] float fartDelay, flyByDelay;
-		[SerializeField] float fadeTime = .2f;
+		[SerializeField] AnimationCurve camResizeCurve;
+		[SerializeField] float closeUpResize = .9f, launchResize = 8, finishImpactResize = 1,
+			finishImpactResizeDur = .2f, endCamDollyTarget = .3f, endCamDollyDur = 5;
 
 		//Cache
 		CubeHandler handler;
@@ -28,15 +30,13 @@ namespace Qbism.Cubes
 		FinishCubeJuicer juicer;
 		SceneHandler loader;
 		ProgressHandler progHandler;
-		SerpentProgress serpProg;
 		PlayerFartLauncher farter;
-		Fader fader;
 		FeatureSwitchBoard switchBoard;
+		CamResizer camResizer;
 
 		//Actions, events, delegates etc
 		public event Action<bool> onSetSerpentMove;
 		public event Action onShowSegments;
-		public event Action onAlignCam;
 		public event Action onSpawnSegment;
 		public event Action onSpawnShapie;
 		public event Action<float> onUIFade;
@@ -49,9 +49,9 @@ namespace Qbism.Cubes
 			juicer = GetComponent<FinishCubeJuicer>();
 			loader = FindObjectOfType<SceneHandler>();
 			progHandler = FindObjectOfType<ProgressHandler>();
-			serpProg = progHandler.GetComponent<SerpentProgress>();
 			farter = FindObjectOfType<PlayerFartLauncher>();
 			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
+			camResizer = handler.GetComponent<CamResizer>();
 		}
 
 		private void OnEnable() 
@@ -78,7 +78,7 @@ namespace Qbism.Cubes
 
 			if (switchBoard.showEndLevelSeq)
 			{
-				StartCoroutine(SwitchToCloseupCam());
+				closeUpCam.Priority = 11;
 				onUIFade(0);
 				yield return new WaitForSeconds(fartDelay);
 				farter.InitiateFartSequence(fartTowardsTarget);
@@ -120,17 +120,6 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private IEnumerator SwitchToCloseupCam()
-		{
-			fader = FindObjectOfType<Fader>();
-			onAlignCam();
-			yield return fader.FadeOut(fadeTime);
-			closeUpCam.Priority = 11;
-			Camera.main.orthographic = false;
-			closeUpCam.transform.parent = null;
-			fader.FadeIn(fadeTime);
-		}
-
 		private void InitiateEndCamSwitch()
 		{
 			StartCoroutine(SwitchToEndCam());
@@ -138,16 +127,14 @@ namespace Qbism.Cubes
 
 		private IEnumerator SwitchToEndCam()
 		{
-			yield return fader.FadeOut(fadeTime);
 			endCam.Priority = 12;
-			Camera.main.orthographic = true;
 			endCam.transform.parent = null;
 			DisableForegroundObjects();
-			fader.FadeIn(fadeTime);
+			
 			yield return new WaitForSeconds(flyByDelay);
 
-			// flyby disabled if rescuing segment
-			if (!FetchHasSegment())
+			// flyby disabled if rescuing shapies
+			if (FetchHasSegment())
 			{
 				Vector3 startPos, endPos;
 				CalculateStartEnd(out startPos, out endPos);
@@ -244,6 +231,33 @@ namespace Qbism.Cubes
 		private Vector3 GetPos()
 		{
 			return transform.position;
+		}
+
+		public void FartChargeCamResize(float dur)
+		{
+			camResizer.InitiateCamResize(closeUpCam, closeUpResize, dur, camResizeCurve);
+		}
+
+		public void FartLaunchCamResize(float dur)
+		{
+			camResizer.InitiateCamResize(closeUpCam, launchResize, dur, camResizeCurve);
+		}
+
+		private void FinishImpactCamResize() // Called from animation
+		{
+			camResizer.InitiateCamResize(endCam, finishImpactResize, finishImpactResizeDur, 
+				camResizeCurve);
+
+			StartCoroutine(PanEndCam(finishImpactResizeDur, endCam, endCamDollyTarget, endCamDollyDur,
+				camResizeCurve));
+		}
+
+		private IEnumerator PanEndCam(float delay, CinemachineVirtualCamera cam, float target, 
+			float travelDur, AnimationCurve curve)
+		{
+			yield return new WaitForSeconds(delay);
+
+			camResizer.InitiateCamDollyMove(cam, target, travelDur, curve);
 		}
 
 		private void OnDisable()

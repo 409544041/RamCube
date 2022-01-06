@@ -100,7 +100,7 @@ namespace Qbism.Dialogue
 					if (heads[i].transform.localScale != bigScale)
 						StartCoroutine(ScaleHead(i, heads[i], bigScale, true));
 
-					ChangeFocusMatValues(i, matFocusColor[i], Color.white, 0);
+					ChangeFocusMatValues(i, matFocusColor[i], Color.white);
 				}
 
 				else if (i != charIndex)
@@ -108,13 +108,12 @@ namespace Qbism.Dialogue
 					if (heads[i].transform.localScale != smallScale)
 						StartCoroutine(ScaleHead(i, heads[i], smallScale, false));
 
-					ChangeFocusMatValues(i, matUnfocusColor[i], spriteUnfocusColor, .5f);
+					ChangeFocusMatValues(i, matUnfocusColor[i], spriteUnfocusColor);
 				}
 			}
 		}
 
-		private void ChangeFocusMatValues(int i, List<Color> matTargetColor, Color spriteTargetColor, 
-			float lightColorCont)
+		private void ChangeFocusMatValues(int i, List<Color> matTargetColor, Color spriteTargetColor)
 		{
 			int matCounter = 0;
 
@@ -125,7 +124,7 @@ namespace Qbism.Dialogue
 				for (int k = 0; k < mRender.materials.Length; k++)
 				{
 					StartCoroutine(ChangeFocusColor(mRender.materials[k], 
-						matTargetColor[matCounter], lightColorCont));
+						matTargetColor[matCounter]));
 					matCounter++;
 				}
 			}
@@ -136,12 +135,10 @@ namespace Qbism.Dialogue
 			}
 		}
 
-		private IEnumerator ChangeFocusColor(Material mat, Color targetColor, float lightColorCont)
+		private IEnumerator ChangeFocusColor(Material mat, Color targetColor)
 		{
 			var startColor = mat.GetColor("_BaseColor");
 			if (startColor == targetColor) yield break;
-
-			var startLightColorCont = mat.GetFloat("_LightContribution");
 
 			for (float t = 0; t < focusTransitionDur; t += Time.deltaTime)
 			{
@@ -149,9 +146,6 @@ namespace Qbism.Dialogue
 
 				var color = Color.Lerp(startColor, targetColor, percentageCompleted);
 				mat.SetColor("_BaseColor", color);
-
-				var cont = Mathf.Lerp(startLightColorCont, lightColorCont, percentageCompleted);
-				mat.SetFloat("_LightContribution", cont);
 
 				yield return null;
 			}
