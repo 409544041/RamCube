@@ -6,6 +6,8 @@ namespace Qbism.SpriteAnimations
 {
 	public class SpriteBrowAnimator : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] bool hasLaugh, hasFrown;
 		//Cache
 		Animator animator;
 
@@ -47,11 +49,17 @@ namespace Qbism.SpriteAnimations
 
 			if (state == BrowStates.high) ToFirstTierAnim(BrowStates.high, BrowStates.nullz, TO_HIGH);
 
-			if (state == BrowStates.frown) ToFirstTierAnim(BrowStates.frown, BrowStates.angry, TO_FROWN);
+			if (state == BrowStates.frown && hasFrown) ToFirstTierAnim(BrowStates.frown, BrowStates.angry, TO_FROWN);
+			
+			else if (state == BrowStates.frown && !hasFrown)
+				Debug.LogError("Character does not have frown brow animation.");
 
 			if (state == BrowStates.angry) ToSecondTierAnim(BrowStates.angry, BrowStates.frown, TO_ANGRY);
 
-			if (state == BrowStates.highLaugh) ToSecondTierAnim(BrowStates.highLaugh, BrowStates.high, TO_HIGHLAUGH);
+			if (state == BrowStates.highLaugh && hasLaugh) ToSecondTierAnim(BrowStates.highLaugh, BrowStates.high, TO_HIGHLAUGH);
+
+			else if (state == BrowStates.highLaugh && !hasLaugh)
+				Debug.LogError("Character does not have laugh brow animation.");
 		}
 
 		private void SetCurrentBrow()
