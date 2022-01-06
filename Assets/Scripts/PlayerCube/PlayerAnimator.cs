@@ -8,7 +8,7 @@ namespace Qbism.PlayerCube
 	public class PlayerAnimator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] float altWiggleDelay = 1f, introDelay = 1f;
+		[SerializeField] float altWiggleDelay = 1f, introDelay = 1f, fallDelay = .5f;
 		[SerializeField] BoxCollider coll = null;
 		[SerializeField] float impactGroundY, impactSegY;
 
@@ -80,6 +80,8 @@ namespace Qbism.PlayerCube
 
 		private IEnumerator Fall(float addedY, string fallType, float fallDeg)
 		{
+			yield return new WaitForSeconds(fallDelay);
+
 			fallen = true;
 			GetComponentInParent<PlayerFartLauncher>().flyingBy = false;
 
@@ -90,8 +92,6 @@ namespace Qbism.PlayerCube
 				playerFinishLandPos.y + addedY, playerFinishLandPos.z);
 
 			player.transform.rotation = Quaternion.Euler(0f, fallDeg, 0f);
-
-			yield return null; //This is to prevent cube from showing for 1 frame at wrong loc
 
 			//visuals were switched off in playerfartlauncher
 			onSwitchVisuals(true);

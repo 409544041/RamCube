@@ -18,7 +18,7 @@ namespace Qbism.Cubes
 		[SerializeField] float shrinkInterval = .25f;
 		[SerializeField] CinemachineVirtualCamera closeUpCam, endCam;
 		[SerializeField] Transform fartTowardsTarget;
-		[SerializeField] float fartDelay, flyByDelay;
+		[SerializeField] float fartDelay;
 		[SerializeField] AnimationCurve camResizeCurve;
 		[SerializeField] float closeUpResize = .9f, launchResize = 8, finishImpactResize = 1,
 			finishImpactResizeDur = .2f, endCamDollyTarget = .3f, endCamDollyDur = 5;
@@ -64,7 +64,7 @@ namespace Qbism.Cubes
 
 			if (juicer != null) juicer.onSpawnFriends += SpawnFriends;
 			
-			if (farter != null) farter.onSwitchToEndCam += InitiateEndCamSwitch;
+			if (farter != null) farter.onSwitchToEndCam += SwitchToEndCam;
 		}
 
 		public void InitiateEndSeq()
@@ -120,26 +120,11 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private void InitiateEndCamSwitch()
-		{
-			StartCoroutine(SwitchToEndCam());
-		}
-
-		private IEnumerator SwitchToEndCam()
+		private void SwitchToEndCam()
 		{
 			endCam.Priority = 12;
 			endCam.transform.parent = null;
-			DisableForegroundObjects();
-			
-			yield return new WaitForSeconds(flyByDelay);
-
-			// flyby disabled if rescuing shapies
-			if (FetchHasSegment())
-			{
-				Vector3 startPos, endPos;
-				CalculateStartEnd(out startPos, out endPos);
-				farter.InitiateFlyBy(startPos, endPos);
-			}
+			DisableForegroundObjects();		
 		}
 
 		private void DisableForegroundObjects()
@@ -152,26 +137,6 @@ namespace Qbism.Cubes
 					objectsToDisable[i].DisableMeshes();
 				}
 			}
-		}
-
-		private void CalculateStartEnd(out Vector3 startPos, out Vector3 endPos)
-		{
-			float[] possibleX = new float[2];
-			possibleX[0] = -3f;
-			possibleX[1] = 4f;
-
-			var index = UnityEngine.Random.Range(0, possibleX.Length);
-			float startX = possibleX[index];
-
-			float targetX;
-			if (startX > 0) targetX = -4;
-			else targetX = 5;
-
-			float startY = UnityEngine.Random.Range(.15f, .85f);
-			float targetY = UnityEngine.Random.Range(.15f, .85f);
-
-			startPos = Camera.main.ViewportToWorldPoint(new Vector3(startX, startY, 5));
-			endPos = Camera.main.ViewportToWorldPoint(new Vector3(targetX, targetY, -3));
 		}
 
 		private void InitiateSerpentSequence()
@@ -223,7 +188,7 @@ namespace Qbism.Cubes
 			else loader.NextLevel();
 		}
 
-		private bool FetchHasSegment()
+		public bool FetchHasSegment()
 		{
 			return progHandler.currentHasSegment;
 		}
@@ -270,7 +235,7 @@ namespace Qbism.Cubes
 
 			if (juicer != null) juicer.onSpawnFriends -= SpawnFriends;
 
-			if (farter != null) farter.onSwitchToEndCam -= InitiateEndCamSwitch;
+			if (farter != null) farter.onSwitchToEndCam -= SwitchToEndCam;
 		}
 	}
 }

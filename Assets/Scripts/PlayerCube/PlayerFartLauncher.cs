@@ -14,9 +14,10 @@ namespace Qbism.PlayerCube
 		[SerializeField] float fartForce;
 		[SerializeField] LayerMask fartRayCastLayers;
 		[SerializeField] Transform fartVFXParent;
-		[SerializeField] float flyByScaleMod, flyBySpeedMod;	
+		[SerializeField] float flyByScaleMod;	
 		[SerializeField] float beamImpactAddedY = .55f;
-		[SerializeField] float shockedFaceTime = .5f, launchDur = 1;
+		[SerializeField] float shockedFaceTime = .5f, launchDur = 1, flyByDelay, flyByDur = 1,
+			flyByDistanceFromSCreen;
 
 		//Cache
 		ExpressionHandler exprHandler;
@@ -35,8 +36,9 @@ namespace Qbism.PlayerCube
 		float beamOriginalMax;
 		ParticleSystem[] beamParticles;
 		bool impactOnFinish = false;
-		bool launching = false;
 		public bool flyingBy { get; set; } = false;
+		float flyByStartX, flyByStartY, flyByTargetX, flyByTargetY;
+		Vector3 flyByStartPos, flyByEndPos;
 
 		//Actions, events, delegates etc
 		public event Action onDoneFarting;
@@ -61,6 +63,14 @@ namespace Qbism.PlayerCube
 		{
 			HandleFartCounting();
 			KeepImpactOnFinishPos();
+
+			if (flyingBy)
+			{
+				flyByStartPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByStartX, flyByStartY, 
+					flyByDistanceFromSCreen));
+				flyByEndPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByTargetX, flyByTargetY, 
+					flyByDistanceFromSCreen));
+			}
 		}
 
 		private void KeepImpactOnFinishPos()
@@ -173,13 +183,12 @@ namespace Qbism.PlayerCube
 		private IEnumerator LaunchPlayer(Transform target)
 		{
 			float step = fartForce * Time.deltaTime;
-			launching = true;
 			float elapsedTime = 0;
 			var startPos = transform.position;
 
 			endSeqHandler.FartLaunchCamResize(launchDur - .2f);
 			
-			while (Vector3.Distance(transform.position, target.position) > 0.1f && launching)
+			while (Vector3.Distance(transform.position, target.position) > 0.1f)
 			{
 				elapsedTime += Time.deltaTime;
 				var percentageComplete = elapsedTime / launchDur;
@@ -191,42 +200,68 @@ namespace Qbism.PlayerCube
 
 			onSwitchToEndCam();
 			onDoneFarting();
-			launching = false;
 			transform.position = target.position;
 			onSwitchVisuals(false);
 			juicer.StopBeamFartJuice();
+
+			StartCoroutine(FlyBy());
 		}
 
-		public void InitiateFlyBy(Vector3 startPos, Vector3 endPos)
+		private IEnumerator FlyBy()
 		{
-			launching = false;
-			StartCoroutine(FlyBy(startPos, endPos));
-		}
+			if (!endSeqHandler.FetchHasSegment()) yield break;
 
-		private IEnumerator FlyBy(Vector3 startPos, Vector3 endPos)
-		{
-			var step = fartForce * flyBySpeedMod * Time.deltaTime;
+			yield return new WaitForSeconds(flyByDelay);
+
+			CalculateStartEnd();
+
 			flyingBy = true;
+			float elapsedTime = 0;
 
-			transform.position = startPos;
-			transform.LookAt(transform.position - (endPos - transform.position));
+			transform.position = flyByStartPos;
+			transform.LookAt(transform.position - (flyByEndPos - transform.position));
 
 			onSwitchVisuals(true);
 			juicer.BeamFartJuice();
 
 			SetScale(flyByScaleMod);
 
-			while (Vector3.Distance(transform.position, endPos) > .5f && flyingBy)
+			while (Vector3.Distance(transform.position, flyByEndPos) > .5f && flyingBy)
 			{
-				transform.position = Vector3.MoveTowards(transform.position, endPos, step);
+				elapsedTime += Time.deltaTime;
+				var percentageComplete = elapsedTime / flyByDur;
+
+				transform.position = Vector3.Lerp(flyByStartPos, flyByEndPos, percentageComplete);
+
 				yield return null;
 			}
 
 			flyingBy = false;
-			transform.position = endPos;
 			onSwitchVisuals(false);
 			SetScale(1);
 			juicer.StopBeamFartJuice();
+		}
+
+		private void CalculateStartEnd()
+		{
+			float[] possibleX = new float[2];
+			possibleX[0] = -2f;
+			possibleX[1] = 2f;
+
+			var index = UnityEngine.Random.Range(0, possibleX.Length);
+			flyByStartX = possibleX[index];
+
+
+			if (flyByStartX > 0) flyByTargetX = -4;
+			else flyByTargetX = 5;
+
+			flyByStartY = UnityEngine.Random.Range(.15f, .85f);
+			flyByTargetY = UnityEngine.Random.Range(.15f, .85f);
+
+			flyByStartPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByStartX, flyByStartY, 
+				flyByDistanceFromSCreen));
+			flyByEndPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByTargetX, flyByTargetY, 
+				flyByDistanceFromSCreen));
 		}
 
 		private void SetScale(float multiplier)
