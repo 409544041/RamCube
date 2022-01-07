@@ -121,7 +121,9 @@ namespace Qbism.Dialogue
 
 			if (inLevel) partnerAnimator.InitiateHappyWiggle();
 
+
 			// find a way to set played = true in dialogues database
+			// probably handy for quest dialogues, seeing as how they're in arrays
 		}
 
 	}

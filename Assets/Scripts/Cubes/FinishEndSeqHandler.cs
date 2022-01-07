@@ -21,7 +21,8 @@ namespace Qbism.Cubes
 		[SerializeField] float fartDelay;
 		[SerializeField] AnimationCurve camResizeCurve;
 		[SerializeField] float closeUpResize = .9f, launchResize = 8, finishImpactResize = 1,
-			finishImpactResizeDur = .2f, endCamDollyTarget = .3f, endCamDollyDur = 5;
+			finishImpactResizeDur = .2f, endCamDollyTarget = .3f, endCamDollyDur = 5, 
+			afterDialogueResize = 1.5f;
 
 		//Cache
 		CubeHandler handler;
@@ -215,6 +216,12 @@ namespace Qbism.Cubes
 
 			StartCoroutine(PanEndCam(finishImpactResizeDur, endCam, endCamDollyTarget, endCamDollyDur,
 				camResizeCurve));
+		}
+
+		public void PanAndZoomCamAfterDialogue()
+		{
+			camResizer.InitiateCamDollyMove(endCam, 0, endCamDollyDur, camResizeCurve);
+			camResizer.InitiateCamResize(endCam, afterDialogueResize, endCamDollyDur, camResizeCurve);
 		}
 
 		private IEnumerator PanEndCam(float delay, CinemachineVirtualCamera cam, float target, 

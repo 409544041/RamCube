@@ -17,8 +17,7 @@ namespace Qbism.Serpent
 		[SerializeField] MMFeedbacks flybyJuice;
 		[Header("Animation")]
 		[SerializeField] Animator animator = null;
-		[SerializeField] float lookAroundAnimDelay = 0f,
-			lookUpAnimDelay = 0f, happyWiggleAnimDelay = 0f;
+		[SerializeField] float lookUpAnimDelay = 0f, happyWiggleAnimDelay = 0f;
 
 		//Cache
 		PlayerAnimator playerAnim = null;
@@ -105,6 +104,11 @@ namespace Qbism.Serpent
 		private void StartRescueDialogue()
 		{
 			GetComponentInParent<DialogueStarter>().StartRescueDialogue(this);
+		}
+
+		private void TriggerAfterDialogueCam()
+		{
+			FindObjectOfType<FinishEndSeqHandler>().PanAndZoomCamAfterDialogue();
 		}
 		
 		private void OnDisable()
