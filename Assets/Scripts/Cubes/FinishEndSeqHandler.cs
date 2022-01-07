@@ -25,7 +25,8 @@ namespace Qbism.Cubes
 		[Space(10)]
 		[SerializeField] float closeUpResize = .9f; 
 		[SerializeField] float launchResize = 8, finishImpactResize = 1,
-			afterDialogueResize = 1.5f, endCamMotherResize = 1.5f, shapieEndCamSize = 5;
+			afterDialogueResize = 1.5f, endCamMotherResize = 1.5f, shapieEndCamSize = 5,
+			shapieEndCamResize = 5.5f;
 		[Space(10)]
 		[SerializeField] float finishImpactResizeDur = .2f;
 		[SerializeField] float endCamDollyDur = 5, endCamMotherDollyDur = 10;
@@ -147,7 +148,15 @@ namespace Qbism.Cubes
 
 		private void SwitchToEndCam()
 		{
-			if (!FetchHasSegment()) endCam.m_Lens.OrthographicSize = shapieEndCamSize;
+			if (!FetchHasSegment())
+			{
+				endCam.m_Lens.OrthographicSize = shapieEndCamSize;
+				camResizer.InitiateCamDollyMove(endCam, endCamDollyTarget, 
+					endCamMotherDollyDur, camResizeCurve);
+				camResizer.InitiateCamResize(endCam, shapieEndCamResize, endCamMotherDollyDur,
+					camResizeCurve);
+			}
+
 			endCam.Priority = 12;
 			endCam.transform.parent = null;
 			DisableForegroundObjects();		
