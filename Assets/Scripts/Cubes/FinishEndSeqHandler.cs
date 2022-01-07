@@ -20,9 +20,11 @@ namespace Qbism.Cubes
 		[SerializeField] Transform fartTowardsTarget;
 		[SerializeField] float fartDelay;
 		[SerializeField] AnimationCurve camResizeCurve;
-		[SerializeField] float closeUpResize = .9f, launchResize = 8, finishImpactResize = 1,
-			finishImpactResizeDur = .2f, endCamDollyTarget = .3f, endCamDollyDur = 5, 
-			afterDialogueResize = 1.5f;
+		[SerializeField]
+		float closeUpResize = .9f, launchResize = 8, finishImpactResize = 1,
+			finishImpactResizeDur = .2f, endCamDollyTarget = .3f, endCamDollyDur = 5,
+			afterDialogueResize = 1.5f, endCamMotherDollyDur = 10, endCamMotherResize = 1.5f,
+			endCamMotherDollyTarget = 1;
 
 		//Cache
 		CubeHandler handler;
@@ -214,7 +216,19 @@ namespace Qbism.Cubes
 			camResizer.InitiateCamResize(endCam, finishImpactResize, finishImpactResizeDur, 
 				camResizeCurve);
 
-			StartCoroutine(PanEndCam(finishImpactResizeDur, endCam, endCamDollyTarget, endCamDollyDur,
+			var serpProg = progHandler.GetComponent<SerpentProgress>();
+
+			//if it's a segment rescue and 1 is still false, it has to be the head
+			if (serpProg.serpentDataList[1] == false) 
+			{
+				StartCoroutine(PanCamWithDelay(finishImpactResizeDur, endCam, endCamMotherDollyTarget, 
+					endCamMotherDollyDur, camResizeCurve));
+				StartCoroutine(ResizeCamWithDelay(finishImpactResizeDur, endCam, endCamMotherResize,
+					endCamMotherDollyDur, camResizeCurve));
+			}	
+
+			else
+			StartCoroutine(PanCamWithDelay(finishImpactResizeDur, endCam, endCamDollyTarget, endCamDollyDur,
 				camResizeCurve));
 		}
 
@@ -224,7 +238,15 @@ namespace Qbism.Cubes
 			camResizer.InitiateCamResize(endCam, afterDialogueResize, endCamDollyDur, camResizeCurve);
 		}
 
-		private IEnumerator PanEndCam(float delay, CinemachineVirtualCamera cam, float target, 
+		private IEnumerator ResizeCamWithDelay(float delay, CinemachineVirtualCamera cam, float sizeTarget,
+			float resizeDur, AnimationCurve curve)
+		{
+			yield return new WaitForSeconds(delay);
+
+			camResizer.InitiateCamResize(cam, sizeTarget, resizeDur, curve);
+		}
+
+		private IEnumerator PanCamWithDelay(float delay, CinemachineVirtualCamera cam, float target, 
 			float travelDur, AnimationCurve curve)
 		{
 			yield return new WaitForSeconds(delay);
