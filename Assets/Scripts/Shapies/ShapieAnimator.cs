@@ -82,22 +82,21 @@ namespace Qbism.Shapies
 			animator.SetInteger("Celebrate", celebAnim);
 		}
 
-		private IEnumerator TriggerPlayerFalling(float delay) //Called from animation event
-		{
-			yield return new WaitForSeconds(delay);
-			playerAnim.TriggerFall(false, "FallOnGround", Random.Range(-40, -50), false);
-		}
-
-		private void TriggerGibberishSlow()
+		private void TriggerGibberishSlow() // called from animation
 		{
 			soundHandler.currentIntervalMinMax = soundHandler.slowIntervalMinMax;
 			soundHandler.PlayGibberish(true);
 		}
 
-		private void TriggerGibberishCelebration()
+		private void TriggerGibberishCelebration() // called from animation
 		{
 			soundHandler.currentIntervalMinMax = soundHandler.fastIntervalMinMax;
 			soundHandler.PlayGibberish(true);
+		}
+
+		private void ActivateSerpent() // Called from animation
+		{
+			playerAnim.ActivateSerpent();
 		}
 
 		private void OnDisable()

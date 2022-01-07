@@ -75,6 +75,11 @@ namespace Qbism.PlayerCube
 			source.PlayOneShot(ouchClipAlt, .75f);
 		}
 
+		public void PlayOuchSound()
+		{
+			source.PlayOneShot(ouchClip, .75f);
+		}
+
 		private void OnDisable()
 		{
 			if (serpMover != null)

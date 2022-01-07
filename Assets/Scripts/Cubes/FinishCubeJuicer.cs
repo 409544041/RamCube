@@ -93,7 +93,7 @@ namespace Qbism.Cubes
 			chargeJuice.StopFeedbacks();
 		}
 
-		private void Impact() //Called from animation event
+		public void Impact() //Called from animation event
 		{
 			impactJuice.PlayFeedbacks();
 

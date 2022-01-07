@@ -18,6 +18,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] float beamImpactAddedY = .55f;
 		[SerializeField] float shockedFaceTime = .5f, launchDur = 1, flyByDelay, flyByDur = 1,
 			flyByDistanceFromSCreen;
+		[SerializeField] Animator anim;
 
 		//Cache
 		ExpressionHandler exprHandler;
@@ -90,12 +91,12 @@ namespace Qbism.PlayerCube
 			if (fartCount > 10) StopFartHit();
 		}
 
-		public void InitiateFartSequence(Transform target)
+		public void InitiateLaunchSequence(Transform target, bool segmentRescue)
 		{
-			StartCoroutine(FartSequence(target));
+			StartCoroutine(LaunchSequence(target, segmentRescue));
 		}
 
-		private IEnumerator FartSequence(Transform target)
+		private IEnumerator LaunchSequence(Transform target, bool segmentRescue)
 		{
 			transform.parent = null;
 
@@ -103,17 +104,39 @@ namespace Qbism.PlayerCube
 			exprHandler.SetFace(Expressions.pushing, -1);
 			float feedbackDuration = juicer.preFartMMWiggle.WigglePositionDuration;
 
-			endSeqHandler.FartChargeCamResize(feedbackDuration + shockedFaceTime);
+			float resizeTime;
+			if (segmentRescue) resizeTime = feedbackDuration + shockedFaceTime;
+			else resizeTime = feedbackDuration;
+
+			endSeqHandler.FartChargeCamResize(resizeTime);
 			yield return new WaitForSeconds(feedbackDuration);
 
 			exprHandler.SetFace(Expressions.shocked, -1);
 
-			yield return new WaitForSeconds(shockedFaceTime);
+			if (segmentRescue)
+			{
+				yield return new WaitForSeconds(shockedFaceTime);
 
-			exprHandler.SetFace(Expressions.gleeful, -1);
-			juicer.BeamFartJuice();
-			onStartFarting();
-			StartCoroutine(LaunchPlayer(target));
+				exprHandler.SetFace(Expressions.gleeful, -1);
+				juicer.BeamFartJuice();
+				onStartFarting();
+				StartCoroutine(LaunchPlayer(target));
+			}
+
+			else
+			{
+				onSwitchToEndCam();
+				yield return new WaitForSeconds(shockedFaceTime);
+				ShapieRescueFart();
+			}
+		}
+
+		private void ShapieRescueFart()
+		{
+			anim.SetTrigger("SmallLaunch");
+			endSeqHandler.finishJuicer.Impact();
+			//TO DO: start explosionfart fx
+
 		}
 
 		public void StartBeamImpact()

@@ -15,22 +15,34 @@ namespace Qbism.Cubes
 	public class FinishEndSeqHandler : MonoBehaviour
 	{
 		//Config parameters
+		[Header("Floor Cube Shrinking")]
 		[SerializeField] float shrinkInterval = .25f;
-		[SerializeField] CinemachineVirtualCamera closeUpCam, endCam;
-		[SerializeField] Transform fartTowardsTarget;
-		[SerializeField] float fartDelay;
+		[Header("Cameras")]
+		[SerializeField] CinemachineVirtualCamera closeUpCam;
+		[SerializeField] CinemachineVirtualCamera endCam;
+		[Header("Camera Values")]
 		[SerializeField] AnimationCurve camResizeCurve;
-		[SerializeField]
-		float closeUpResize = .9f, launchResize = 8, finishImpactResize = 1,
-			finishImpactResizeDur = .2f, endCamDollyTarget = .3f, endCamDollyDur = 5,
-			afterDialogueResize = 1.5f, endCamMotherDollyDur = 10, endCamMotherResize = 1.5f,
-			endCamMotherDollyTarget = 1;
+		[Space(10)]
+		[SerializeField] float closeUpResize = .9f; 
+		[SerializeField] float launchResize = 8, finishImpactResize = 1,
+			afterDialogueResize = 1.5f, endCamMotherResize = 1.5f, shapieEndCamSize = 5;
+		[Space(10)]
+		[SerializeField] float finishImpactResizeDur = .2f;
+		[SerializeField] float endCamDollyDur = 5, endCamMotherDollyDur = 10;
+		[Space(10)]
+		[SerializeField] float endCamDollyTarget = .3f;
+		[SerializeField] float endCamMotherDollyTarget = 1;
+		[Header("Fart Values")]
+		[SerializeField] Transform fartTowardsTarget;
+		[SerializeField] float fartLaunchDelay, fartExplosionDelay;
+		[Header("References")]
+		public FinishCubeJuicer finishJuicer;
+		
 
 		//Cache
 		CubeHandler handler;
 		MoveableCubeHandler movHandler;
 		PlayerAnimator playerAnim;
-		FinishCubeJuicer juicer;
 		SceneHandler loader;
 		ProgressHandler progHandler;
 		PlayerFartLauncher farter;
@@ -49,7 +61,7 @@ namespace Qbism.Cubes
 			handler = FindObjectOfType<CubeHandler>();
 			movHandler = handler.GetComponent<MoveableCubeHandler>();
 			playerAnim = FindObjectOfType<PlayerAnimator>();
-			juicer = GetComponent<FinishCubeJuicer>();
+			finishJuicer = GetComponent<FinishCubeJuicer>();
 			loader = FindObjectOfType<SceneHandler>();
 			progHandler = FindObjectOfType<ProgressHandler>();
 			farter = FindObjectOfType<PlayerFartLauncher>();
@@ -65,7 +77,7 @@ namespace Qbism.Cubes
 				playerAnim.onGetFinishPos += GetPos;
 			}
 
-			if (juicer != null) juicer.onSpawnFriends += SpawnFriends;
+			if (finishJuicer != null) finishJuicer.onSpawnFriends += SpawnFriends;
 			
 			if (farter != null) farter.onSwitchToEndCam += SwitchToEndCam;
 		}
@@ -83,8 +95,18 @@ namespace Qbism.Cubes
 			{
 				closeUpCam.Priority = 11;
 				onUIFade(0);
-				yield return new WaitForSeconds(fartDelay);
-				farter.InitiateFartSequence(fartTowardsTarget);
+
+				if (FetchHasSegment())
+				{
+					yield return new WaitForSeconds(fartLaunchDelay);
+					farter.InitiateLaunchSequence(fartTowardsTarget, true);
+				}
+				
+				else
+				{
+					yield return new WaitForSeconds(fartExplosionDelay);
+					farter.InitiateLaunchSequence(null, false); 
+				}
 			}
 			else StartCoroutine(SerpentSequence());
 		}
@@ -125,6 +147,7 @@ namespace Qbism.Cubes
 
 		private void SwitchToEndCam()
 		{
+			if (!FetchHasSegment()) endCam.m_Lens.OrthographicSize = shapieEndCamSize;
 			endCam.Priority = 12;
 			endCam.transform.parent = null;
 			DisableForegroundObjects();		
@@ -178,12 +201,12 @@ namespace Qbism.Cubes
 
 		private IEnumerator LevelTransition(bool mapConnected, bool restart)
 		{
-			yield return new WaitWhile(() => juicer.source.isPlaying);
+			yield return new WaitWhile(() => finishJuicer.source.isPlaying);
 			//TO DO: Make timing wait for animations that are to come
 
 			if (restart)
 			{
-				juicer.PlayFailSound();
+				finishJuicer.PlayFailSound();
 				loader.RestartLevel();
 			}
 			else if (mapConnected) FindObjectOfType<WorldMapLoading>().
@@ -262,7 +285,7 @@ namespace Qbism.Cubes
 				playerAnim.onGetFinishPos -= GetPos;
 			}
 
-			if (juicer != null) juicer.onSpawnFriends -= SpawnFriends;
+			if (finishJuicer != null) finishJuicer.onSpawnFriends -= SpawnFriends;
 
 			if (farter != null) farter.onSwitchToEndCam -= SwitchToEndCam;
 		}

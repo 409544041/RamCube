@@ -20,6 +20,7 @@ namespace Qbism.PlayerCube
 		//States
 		Vector3 playerFinishLandPos;
 		bool fallen = false;
+		bool serpentActivated = false;
 
 		//Actions, events, delegates etc
 		public event Action onTriggerLandingReaction;
@@ -127,12 +128,15 @@ namespace Qbism.PlayerCube
 			animator.SetTrigger("Cuddle");
         }
 
-		private void ActivateSerpent() //Called from animation
+		public void ActivateSerpent() //Called from animation
 		{
+			if (serpentActivated) return;
+
 			onChildSegmentToPlayer();
 			coll.size = new Vector3(coll.size.x, 3, coll.size.z);
 			
 			onTriggerSerpent(); 
+			serpentActivated = true;
 			//TO DO: activate straight to serpent instead of via finish?
 		}
 
@@ -179,6 +183,11 @@ namespace Qbism.PlayerCube
 		private void PlayToothyLaughSound() //Called from animation
 		{
 			outroJuicer.PlayToothyLaughSound();
+		}
+
+		private void PlayOutchSound() // called from animation
+		{
+			outroJuicer.PlayOuchSound();
 		}
 	}
 }
