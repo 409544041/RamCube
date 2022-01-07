@@ -152,6 +152,15 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""54702321-07c6-4271-8c7b-f65a279f63d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -539,6 +548,28 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""action"": ""Debug Key Z"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5cd738c-52a2-4f23-9155-1882fe5f0073"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""080c1ca2-221f-4dec-bfa3-47709394be87"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -584,6 +615,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         m_Gameplay_DebugPrevLevel = m_Gameplay.FindAction("Debug Prev Level", throwIfNotFound: true);
         m_Gameplay_QuitGame = m_Gameplay.FindAction("Quit Game", throwIfNotFound: true);
         m_Gameplay_DebugKeyZ = m_Gameplay.FindAction("Debug Key Z", throwIfNotFound: true);
+        m_Gameplay_Back = m_Gameplay.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -657,6 +689,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_DebugPrevLevel;
     private readonly InputAction m_Gameplay_QuitGame;
     private readonly InputAction m_Gameplay_DebugKeyZ;
+    private readonly InputAction m_Gameplay_Back;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -675,6 +708,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         public InputAction @DebugPrevLevel => m_Wrapper.m_Gameplay_DebugPrevLevel;
         public InputAction @QuitGame => m_Wrapper.m_Gameplay_QuitGame;
         public InputAction @DebugKeyZ => m_Wrapper.m_Gameplay_DebugKeyZ;
+        public InputAction @Back => m_Wrapper.m_Gameplay_Back;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -726,6 +760,9 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 @DebugKeyZ.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKeyZ;
                 @DebugKeyZ.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKeyZ;
                 @DebugKeyZ.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKeyZ;
+                @Back.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -772,6 +809,9 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 @DebugKeyZ.started += instance.OnDebugKeyZ;
                 @DebugKeyZ.performed += instance.OnDebugKeyZ;
                 @DebugKeyZ.canceled += instance.OnDebugKeyZ;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
             }
         }
     }
@@ -810,5 +850,6 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         void OnDebugPrevLevel(InputAction.CallbackContext context);
         void OnQuitGame(InputAction.CallbackContext context);
         void OnDebugKeyZ(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }

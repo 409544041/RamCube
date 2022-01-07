@@ -11,7 +11,8 @@
                     "id": "788a117f-82af-4d31-8d93-7ecd93c435eb",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Rewind",
@@ -19,7 +20,8 @@
                     "id": "7bda7651-605e-4c5e-822e-7a395d4498b7",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Restart",
@@ -27,7 +29,8 @@
                     "id": "0d751531-09b3-492f-938c-44c23c1d0e81",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Click",
@@ -35,7 +38,8 @@
                     "id": "afde2e99-0105-4de5-88d3-a6bb5e786936",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Debug Delete Save Data",
@@ -43,7 +47,8 @@
                     "id": "1d2a28ac-5fc8-41cb-819d-ead0bc855a53",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Debug Complete Level",
@@ -51,7 +56,8 @@
                     "id": "8a5b591b-0d86-433a-986d-c984ef31dfc3",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Debug Key 1",
@@ -59,7 +65,8 @@
                     "id": "607ce4e9-7ba6-44b4-9d0c-527befba9380",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Debug Key 2",
@@ -67,7 +74,8 @@
                     "id": "a606b6d3-6ac0-4a2b-96e4-44ec3c39c192",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=2)"
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Debug Key 3",
@@ -75,7 +83,8 @@
                     "id": "6911e142-9c31-4e23-a257-64430a40a93e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Debug Key 4",
@@ -83,7 +92,8 @@
                     "id": "e2d5e8eb-87d1-4092-9092-bac8ca02d7f3",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Debug Next Level",
@@ -91,7 +101,8 @@
                     "id": "58c59055-1079-482e-a655-0965e526f5f8",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Debug Prev Level",
@@ -99,7 +110,8 @@
                     "id": "414e89f8-27ab-455b-9967-dcc804407536",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Quit Game",
@@ -107,7 +119,8 @@
                     "id": "1eafc677-770c-4ff9-be0c-d8ef488e700a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Debug Key Z",
@@ -115,7 +128,17 @@
                     "id": "c9bb0c94-92b6-446e-b748-eadfaa322c55",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "54702321-07c6-4271-8c7b-f65a279f63d5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -501,6 +524,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Debug Key Z",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5cd738c-52a2-4f23-9155-1882fe5f0073",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "080c1ca2-221f-4dec-bfa3-47709394be87",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -13,15 +13,18 @@ namespace Qbism.Control
 {
 	public class GameplayInputDetector : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] CubeHandler cubeHandler;
+		[SerializeField] SceneHandler sceneHandler;
+		[SerializeField] RewindHandler rewinder;
+		[SerializeField] DialogueManager dialogueManager;
+		[SerializeField] WorldMapLoading mapLoader;
+
 		//Cache
-		CubeHandler handler;
-		PlayerCubeMover mover;
-		SceneHandler loader;
-		RewindHandler rewinder;
 		GameControls controls;
+		PlayerCubeMover mover;
 		FeatureSwitchBoard switchBoard;
 		ProgressHandler progHandler;
-		DialogueManager dialogueManager;
 		FinishCube finish;
 
 		//States
@@ -30,19 +33,16 @@ namespace Qbism.Control
 
 		private void Awake()
 		{
-			handler = GetComponent<CubeHandler>();
 			mover = FindObjectOfType<PlayerCubeMover>();
-			loader = GetComponent<SceneHandler>();
-			rewinder = GetComponent<RewindHandler>();
 			progHandler = FindObjectOfType<ProgressHandler>();
 			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
-			dialogueManager = GetComponent<DialogueManager>();
 			finish = FindObjectOfType<FinishCube>();
 			controls = new GameControls();
 
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
 			controls.Gameplay.Rewind.performed += ctx => Rewind();
 			controls.Gameplay.Restart.performed += ctx => HandleRestartInput();
+			controls.Gameplay.Back.performed += ctx => BackToMap();
 			controls.Gameplay.DebugCompleteLevel.performed += ctx => FinishLevel();
 			controls.Gameplay.DebugNextLevel.performed += ctx  => NextLevel();
 			controls.Gameplay.DebugPrevLevel.performed += ctx => PrevLevel();
@@ -91,8 +91,8 @@ namespace Qbism.Control
 
 			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(turnSide, turnAxis);
 
-			else if (handler.floorCubeDic.ContainsKey(posAhead) || 
-				handler.movFloorCubeDic.ContainsKey(posAhead))
+			else if (cubeHandler.floorCubeDic.ContainsKey(posAhead) || 
+				cubeHandler.movFloorCubeDic.ContainsKey(posAhead))
 			{
 				if (mover.CheckForWallAhead(posAhead))
 					mover.InitiateWiggle(turnSide, turnAxis);
@@ -105,13 +105,13 @@ namespace Qbism.Control
 		private void NextLevel()
 		{
 			if (switchBoard.allowDebugLevelNav)
-				loader.NextLevel();
+				sceneHandler.NextLevel();
 		}
 
 		private void PrevLevel()
 		{
 			if (switchBoard.allowDebugLevelNav)
-				loader.PreviousLevel();
+				sceneHandler.PreviousLevel();
 		}
 
 		private void FinishLevel()
@@ -127,7 +127,12 @@ namespace Qbism.Control
 		private void HandleRestartInput()
 		{
 			if (dialogueManager.inDialogue) dialogueManager.NextDialogueText();
-			else if (!finish.hasFinished) loader.RestartLevel();
+			else if (!finish.hasFinished) sceneHandler.RestartLevel();
+		}
+
+		private void BackToMap()
+		{
+			if (!finish.hasFinished) mapLoader.StartLoadingWorldMap(true);
 		}
 
 		private void OnDisable() 
