@@ -77,7 +77,7 @@ namespace Qbism.Dialogue
 			else
 			{
 				dialogueIndex++;
-				if (dialogueIndex >= dialogueSO.dialogues.Length) ExitDialogue();
+				if (dialogueIndex >= dialogueSO.dialogues.Length) StartCoroutine(ExitDialogue());
 				else Dialogue();
 			}
 		}
@@ -106,8 +106,12 @@ namespace Qbism.Dialogue
 			nextButtonJuice.PlayFeedbacks();
 		}
 
-		private void ExitDialogue()
+		private IEnumerator ExitDialogue()
 		{
+			if (inLevel) partnerAnimator.InitiateHappyWiggle();
+
+			yield return new WaitForSeconds(.5f); //So when dialogue UI disappears animation is already playing
+
 			inDialogue = false;
 			nextButtonJuice.StopFeedbacks();
 
@@ -118,9 +122,6 @@ namespace Qbism.Dialogue
 
 			dialogueCanvas.GetComponent<CanvasGroup>().alpha = 0;
 			backgroundCanvas.GetComponent<CanvasGroup>().alpha = 0;
-
-			if (inLevel) partnerAnimator.InitiateHappyWiggle();
-
 
 			// find a way to set played = true in dialogues database
 			// probably handy for quest dialogues, seeing as how they're in arrays
