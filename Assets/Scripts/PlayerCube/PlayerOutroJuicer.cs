@@ -11,6 +11,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] AudioClip screamingClip, ouchClip, ouchClipAlt, boingShortClip, 
 			boingLongClip, endLaughClip, smallSurpriseClip, toothyLaughClip;
 		[SerializeField] AudioSource source;
+		[SerializeField] ParticleSystem sputterFartsVFX;
 
 		//Cache
 		SerpentMovement serpMover;
@@ -78,6 +79,11 @@ namespace Qbism.PlayerCube
 		public void PlayOuchSound()
 		{
 			source.PlayOneShot(ouchClip, .5f);
+		}
+
+		public void TriggerSputterFarts()
+		{
+			sputterFartsVFX.Play();
 		}
 
 		private void OnDisable()

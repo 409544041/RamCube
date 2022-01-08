@@ -189,5 +189,10 @@ namespace Qbism.PlayerCube
 		{
 			outroJuicer.PlayOuchSound();
 		}
+
+		private void TriggerSputterFarts()
+		{
+			outroJuicer.TriggerSputterFarts();
+		}
 	}
 }
