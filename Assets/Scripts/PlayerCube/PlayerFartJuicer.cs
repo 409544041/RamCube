@@ -44,22 +44,26 @@ namespace Qbism.PlayerCube
 		public void BulletFartJuice()
 		{
 			bulletFartJuice.PlayFeedbacks();
+			animator.SetTrigger("FartToot");
 		}
 
 		public void BeamFartJuice()
 		{
 			beamFartJuice.Initialization();
 			beamFartJuice.PlayFeedbacks();
+			animator.SetBool("FartLoop", true);
 		}
 
 		public void StopBeamFartJuice()
 		{
 			beamFartJuice.StopFeedbacks();
+			animator.SetBool("FartLoop", false);
 		}
 
 		public void ShapieRescueFartJuice()
 		{
 			bulletFartImpact.Play();
+			animator.SetTrigger("FartToot");
 			var particle = bulletFartJuice.GetComponent<MMFeedbackParticles>();
 			particle.enabled = false;
 			bulletFartJuice.PlayFeedbacks();
