@@ -8,7 +8,8 @@ namespace Qbism.PlayerCube
 	public class PlayerAnimator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] float altWiggleDelay = 1f, introDelay = 1f, fallDelay = .5f;
+		[SerializeField] float altWiggleDelay = 1f, introDelay = 1f, fallDelay = .5f, 
+			faceDownWiggleDelay = .5f;
 		[SerializeField] BoxCollider coll = null;
 		[SerializeField] float impactGroundY, impactSegY;
 
@@ -194,6 +195,12 @@ namespace Qbism.PlayerCube
 		{
 			var fartJuicer = GetComponentInParent<PlayerFartJuicer>();
 			fartJuicer.TriggerSputterFarts();
+		}
+
+		private IEnumerator TriggerFaceDownWiggle()
+		{
+			yield return new WaitForSeconds(faceDownWiggleDelay);
+			animator.SetTrigger("Wiggle");
 		}
 	}
 }
