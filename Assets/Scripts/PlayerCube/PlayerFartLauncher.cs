@@ -135,8 +135,7 @@ namespace Qbism.PlayerCube
 		{
 			anim.SetTrigger("SmallLaunch");
 			endSeqHandler.finishJuicer.Impact();
-			//TO DO: start explosionfart fx
-
+			juicer.ShapieRescueFartJuice();
 		}
 
 		public void StartBeamImpact()
