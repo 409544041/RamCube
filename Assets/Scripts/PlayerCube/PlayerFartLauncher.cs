@@ -14,7 +14,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] float fartForce;
 		[SerializeField] LayerMask fartRayCastLayers;
 		[SerializeField] Transform fartVFXParent;
-		[SerializeField] float flyByScaleMod;	
+		[SerializeField] float flyByScaleMult, flyByAngleMult;	
 		[SerializeField] float beamImpactAddedY = .55f;
 		[SerializeField] float shockedFaceTime = .5f, launchDur = 1, flyByDelay, flyByDur = 1,
 			flyByDistanceFromSCreen;
@@ -33,8 +33,7 @@ namespace Qbism.PlayerCube
 		Vector3 originalScale;
 		float[] beamOriginalMins;
 		float[] beamOriginalMaxs;
-		float beamOriginalMin;
-		float beamOriginalMax;
+		float beamOriginalAngle;
 		ParticleSystem[] beamParticles;
 		bool impactOnFinish = false;
 		public bool flyingBy { get; set; } = false;
@@ -246,7 +245,7 @@ namespace Qbism.PlayerCube
 			onSwitchVisuals(true);
 			juicer.BeamFartJuice();
 
-			SetScale(flyByScaleMod);
+			SetScale(flyByScaleMult, flyByAngleMult);
 
 			while (Vector3.Distance(transform.position, flyByEndPos) > .5f && flyingBy)
 			{
@@ -260,7 +259,7 @@ namespace Qbism.PlayerCube
 
 			flyingBy = false;
 			onSwitchVisuals(false);
-			SetScale(1);
+			SetScale(1, 1);
 			juicer.StopBeamFartJuice();
 		}
 
@@ -286,24 +285,23 @@ namespace Qbism.PlayerCube
 				flyByDistanceFromSCreen));
 		}
 
-		private void SetScale(float multiplier)
+		private void SetScale(float scaleMult, float angleMult)
 		{
-			transform.localScale = originalScale * multiplier;
+			transform.localScale = originalScale * scaleMult;
 
 			for (int i = 0; i < beamParticles.Length; i++)
 			{
 				var main = beamParticles[i].main;
-				float min = beamOriginalMins[i] * multiplier;
-				float max = beamOriginalMaxs[i]	* multiplier;
+				float min = beamOriginalMins[i] * scaleMult;
+				float max = beamOriginalMaxs[i]	* scaleMult;
 
 				main.startSize = new ParticleSystem.MinMaxCurve(min, max);
+
+				if (i != 0) continue;
+
+				var shape = beamParticles[i].shape;
+				shape.angle = beamOriginalAngle * angleMult;
 			}
-
-			var main2 = juicer.fartBeam.main;
-			float min2 = beamOriginalMin * multiplier;
-			float max2 = beamOriginalMax * multiplier;
-
-			main2.startSize = new ParticleSystem.MinMaxCurve(min2, max2);
 		}
 
 		private void SaveOriginalScales()
@@ -319,11 +317,12 @@ namespace Qbism.PlayerCube
 				var main = beamParticles[i].main;
 				beamOriginalMins[i] = main.startSize.constantMin;
 				beamOriginalMaxs[i] = main.startSize.constantMax;
-			}
 
-			var main2 = juicer.fartBeam.main;
-			beamOriginalMin = main2.startSize.constantMin;
-			beamOriginalMax = main2.startSize.constantMax;
+				if (i != 0) continue;
+
+				var shape = beamParticles[i].shape;
+				beamOriginalAngle = shape.angle;
+			}
 		}
 
 		public void ResetFartCollided()
