@@ -135,6 +135,7 @@ namespace Qbism.Serpent
 		{
 			bool inMap = GetComponent<SerpentMapHandler>();
 			bool inSerpScreen = FindObjectOfType<SerpentScreenScroller>();
+			bool inLevel = FindObjectOfType<CubeHandler>();
 
 			for (int i = 0; i < segmentArray.Length; i++)
 			{
@@ -149,6 +150,12 @@ namespace Qbism.Serpent
 				//actually in the very last position
 				if ((inMap || inSerpScreen) && i == segmentArray.Length - 1 && 
 					billyArrayIndex != segmentArray.Length - 1) 
+					SwitchRenderers(mRenders, sRenders, follower, false);
+
+				//Checking if we're in a level where we're rescuing a segment and
+				//making sure that segment isn't visible on pickup
+				else if (inLevel && finishEndSeq.FetchHasSegment() &&
+					serpDataList[i] == true && serpDataList[i + 1] == false)
 					SwitchRenderers(mRenders, sRenders, follower, false);
 
 				else if (serpDataList[i] == true) 
