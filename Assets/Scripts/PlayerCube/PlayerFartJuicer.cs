@@ -13,10 +13,10 @@ namespace Qbism.PlayerCube
 			beamFartJuice, sputterJuice;
 		public ParticleSystem fartCharge, fartBeam,
 			fartBeamImpact, bulletFartImpact, sputterFarts;
-		[SerializeField] AudioSource dopplerSource;
 
 		//Cache
 		public MMFeedbackWiggle preFartMMWiggle { get; set; }
+		Animator animator;
 
 		//States
 		float[] sputterFartTimes;
@@ -27,6 +27,7 @@ namespace Qbism.PlayerCube
 		private void Awake()
 		{
 			preFartMMWiggle = preFartJuice.GetComponent<MMFeedbackWiggle>();
+			animator = GetComponentInChildren<Animator>();
 		}
 
 		private void Update()
@@ -85,6 +86,7 @@ namespace Qbism.PlayerCube
 			if (timer > sputterFartTimes[sputterIndex])
 			{
 				sputterJuice.PlayFeedbacks();
+				animator.SetTrigger("FartToot");
 				sputterIndex++;
 				if (sputterIndex >= sputterFartTimes.Length) sputterFarting = false;
 			}
