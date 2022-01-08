@@ -190,9 +190,10 @@ namespace Qbism.PlayerCube
 			outroJuicer.PlayOuchSound();
 		}
 
-		private void TriggerSputterFarts()
+		private void TriggerSputterFarts() // called from animation
 		{
-			outroJuicer.TriggerSputterFarts();
+			var fartJuicer = GetComponentInParent<PlayerFartJuicer>();
+			fartJuicer.TriggerSputterFarts();
 		}
 	}
 }

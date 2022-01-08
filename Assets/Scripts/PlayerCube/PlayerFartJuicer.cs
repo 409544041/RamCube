@@ -10,17 +10,28 @@ namespace Qbism.PlayerCube
 	{
 		//Config parameters
 		[SerializeField] MMFeedbacks preFartJuice, bulletFartJuice,
-			beamFartJuice;
+			beamFartJuice, sputterJuice;
 		public ParticleSystem fartCharge, fartBeam,
-			fartBeamImpact, bulletFartImpact;
+			fartBeamImpact, bulletFartImpact, sputterFarts;
 		[SerializeField] AudioSource dopplerSource;
 
 		//Cache
 		public MMFeedbackWiggle preFartMMWiggle { get; set; }
 
+		//States
+		float[] sputterFartTimes;
+		float timer = 0;
+		int sputterIndex = 0;
+		bool sputterFarting = false;
+
 		private void Awake()
 		{
 			preFartMMWiggle = preFartJuice.GetComponent<MMFeedbackWiggle>();
+		}
+
+		private void Update()
+		{
+			if (sputterFarting) SputterFartJuice();
 		}
 
 		public void PreFartJuice()
@@ -51,6 +62,32 @@ namespace Qbism.PlayerCube
 			var particle = bulletFartJuice.GetComponent<MMFeedbackParticles>();
 			particle.enabled = false;
 			bulletFartJuice.PlayFeedbacks();
+		}
+
+		public void TriggerSputterFarts()
+		{
+			sputterJuice.Initialization();
+			var emis = sputterFarts.emission;
+			sputterFartTimes = new float[emis.burstCount];
+
+			for (int i = 0; i < emis.burstCount; i++)
+			{
+				sputterFartTimes[i] = emis.GetBurst(i).time;
+			}
+
+			sputterFarting = true;
+			sputterFarts.Play();
+		}
+
+		private void SputterFartJuice()
+		{
+			timer += Time.deltaTime;
+			if (timer > sputterFartTimes[sputterIndex])
+			{
+				sputterJuice.PlayFeedbacks();
+				sputterIndex++;
+				if (sputterIndex >= sputterFartTimes.Length) sputterFarting = false;
+			}
 		}
 	}
 }
