@@ -9,6 +9,8 @@ namespace Qbism.Shapies
 	{
 		//Config parameters
 		[SerializeField] GameObject[] shapies = null;
+		[SerializeField] AnimatorOverrideController[] eyeOverriders, mouthOverriders;
+		[SerializeField] Material[] mats;
 		[SerializeField] int spawnAmount = 3;
 		[SerializeField] float shapieSpawnY = -.5f;
 		[SerializeField] float[] pushDegrees;
@@ -44,9 +46,19 @@ namespace Qbism.Shapies
 
 			for (int i = 0; i < spawnAmount; i++)
 			{
-				int shapeIndex = Random.Range(0, shapies.Length - 1);
-				GameObject toSpawn = shapies[shapeIndex];
-				int degreeIndex = Random.Range(0, pushDegreesList.Count - 1);
+				GameObject toSpawn = shapies[Random.Range(0, shapies.Length)];
+
+				var refs = toSpawn.GetComponent<ShapieRefHolder>();
+
+				refs.eyesAnimator.runtimeAnimatorController = 
+					eyeOverriders[Random.Range(0, eyeOverriders.Length)];
+
+				refs.mouthAnimator.runtimeAnimatorController =
+					mouthOverriders[Random.Range(0, mouthOverriders.Length)];
+
+				refs.bodyMesh.material = mats[Random.Range(0, mats.Length)];
+
+				int degreeIndex = Random.Range(0, pushDegreesList.Count);
 				Instantiate(toSpawn, spawnPos, Quaternion.Euler(0f, pushDegreesList[degreeIndex], 0f));
 				pushDegreesList.RemoveAt(degreeIndex);
 			}
