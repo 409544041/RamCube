@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 3270797642785535032}
   - component: {fileID: 2351516559317354342}
   - component: {fileID: 255829168554869370}
+  - component: {fileID: 2226764578843882287}
   m_Layer: 9
   m_Name: Player Cube
   m_TagString: Player
@@ -302,8 +303,12 @@ MonoBehaviour:
   launchDur: 1
   flyByDelay: 1
   flyByDur: 2
-  flyByDistanceFromSCreen: 6
+  flyByStartDisFromScreen: 100
+  flyByEndDisFromScreen: 0
+  flyBySizeAtStart: 0.5
+  flyBySizeAtEnd: 15
   anim: {fileID: 6085885137421922675}
+  shrinker: {fileID: 2226764578843882287}
 --- !u!114 &2499511305187383396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,6 +657,19 @@ MonoBehaviour:
   smallSurpriseClip: {fileID: 8300000, guid: bd7007854cd38a74fb32dbda7bce78a7, type: 3}
   toothyLaughClip: {fileID: 8300000, guid: 58b597a1fe5597b43bdb7c45fd5aa8d2, type: 3}
   source: {fileID: 1324210861968108626}
+--- !u!114 &2226764578843882287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807421524612065335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f7b0c9773360c42bf933af167120f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mover: {fileID: 0}
 --- !u!1 &1893053367747824497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2501,6 +2519,7 @@ MonoBehaviour:
   altWiggleDelay: 1
   introDelay: 0.5
   fallDelay: 0.5
+  faceDownWiggleDelay: 0.5
   coll: {fileID: 1807421524612065339}
   impactGroundY: -0.1
   impactSegY: 0.8

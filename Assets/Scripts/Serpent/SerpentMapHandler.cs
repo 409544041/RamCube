@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Dreamteck.Splines;
 using Qbism.WorldMap;
+using Qbism.General;
 
 namespace Qbism.Serpent
 {
@@ -61,8 +62,8 @@ namespace Qbism.Serpent
 		{
 			for (int i = 0; i < segHandler.segments.Length; i++)
 			{
-				var shrinker = segHandler.segments[i].GetComponent<SegmentShrinker>();
-				if (shrinker != null) shrinker.SetTargetData(target, sizeAtStart, sizeAtTarget);
+				var shrinker = segHandler.segments[i].GetComponent<ScreenDistanceShrinker>();
+				if (shrinker != null) shrinker.SetTargetData(target.position, sizeAtStart, sizeAtTarget, 0);
 			}
 		}
 

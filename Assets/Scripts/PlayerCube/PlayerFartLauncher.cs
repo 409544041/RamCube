@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using Qbism.Cubes;
+using Qbism.General;
 using Qbism.SpriteAnimations;
 using UnityEngine;
 
@@ -17,8 +18,10 @@ namespace Qbism.PlayerCube
 		[SerializeField] float flyByScaleMult, flyByAngleMult;	
 		[SerializeField] float beamImpactAddedY = .55f;
 		[SerializeField] float shockedFaceTime = .5f, launchDur = 1, flyByDelay, flyByDur = 1,
-			flyByDistanceFromSCreen;
+			flyByStartDisFromScreen = 50, flyByEndDisFromScreen = -15, flyBySizeAtStart = .5f,
+			flyBySizeAtEnd = 5;
 		[SerializeField] Animator anim;
+		[SerializeField] ScreenDistanceShrinker shrinker;
 
 		//Cache
 		ExpressionHandler exprHandler;
@@ -67,9 +70,9 @@ namespace Qbism.PlayerCube
 			if (flyingBy)
 			{
 				flyByStartPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByStartX, flyByStartY, 
-					flyByDistanceFromSCreen));
+					flyByStartDisFromScreen));
 				flyByEndPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByTargetX, flyByTargetY, 
-					flyByDistanceFromSCreen));
+					flyByEndDisFromScreen));
 			}
 		}
 
@@ -235,6 +238,8 @@ namespace Qbism.PlayerCube
 			yield return new WaitForSeconds(flyByDelay);
 
 			CalculateStartEnd();
+			shrinker.SetTargetData(flyByEndPos, flyBySizeAtStart, flyBySizeAtEnd, 
+				flyByStartDisFromScreen);
 
 			flyingBy = true;
 			float elapsedTime = 0;
@@ -257,6 +262,7 @@ namespace Qbism.PlayerCube
 				yield return null;
 			}
 
+			shrinker.resizing = false;
 			flyingBy = false;
 			onSwitchVisuals(false);
 			SetScale(1, 1);
@@ -266,23 +272,23 @@ namespace Qbism.PlayerCube
 		private void CalculateStartEnd()
 		{
 			float[] possibleX = new float[2];
-			possibleX[0] = -2f;
+			possibleX[0] = -1f;
 			possibleX[1] = 2f;
 
 			var index = UnityEngine.Random.Range(0, possibleX.Length);
 			flyByStartX = possibleX[index];
 
 
-			if (flyByStartX > 0) flyByTargetX = -4;
-			else flyByTargetX = 5;
+			if (flyByStartX > 0) flyByTargetX = -2;
+			else flyByTargetX = 3;
 
 			flyByStartY = UnityEngine.Random.Range(.15f, .85f);
 			flyByTargetY = UnityEngine.Random.Range(.15f, .85f);
 
 			flyByStartPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByStartX, flyByStartY, 
-				flyByDistanceFromSCreen));
+				flyByStartDisFromScreen));
 			flyByEndPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByTargetX, flyByTargetY, 
-				flyByDistanceFromSCreen));
+				flyByEndDisFromScreen));
 		}
 
 		private void SetScale(float scaleMult, float angleMult)
