@@ -164,6 +164,8 @@ namespace Qbism.Cubes
 
 					wallRef.wallJuicer.Burrow();
 					wallRef.col.enabled = false;
+
+					yield return new WaitForSeconds(wallRef.wallJuicer.burrowTime);
 				}
 
 				yield return new WaitForSeconds(shrinkInterval);

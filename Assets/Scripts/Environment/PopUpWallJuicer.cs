@@ -11,6 +11,7 @@ namespace Qbism.Environment
 		[SerializeField] MMFeedbacks popUpJuice, burrowJuice;
 		[SerializeField] AudioClip upClip, downClip;
 		[SerializeField] AudioSource source;
+		public float burrowTime = .3f; //Should find a way to get total dur of a feedback
 
 		//States
 		bool burroweActivated;
