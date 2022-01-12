@@ -151,15 +151,23 @@ namespace Qbism.Cubes
 		//Temporary wall shrink script for old walls
 		private IEnumerator ShrinkAllWalls()
 		{
-			var oldWallsToShrink = GameObject.FindGameObjectsWithTag("Wall");
+			var wallsToShrink = GameObject.FindGameObjectsWithTag("Wall");
 
-			for (int i = 0; i < oldWallsToShrink.Length; i++)
+			for (int i = 0; i < wallsToShrink.Length; i++)
 			{
-				var shrinker = oldWallsToShrink[i].GetComponent<CubeShrinker>();
-				if (shrinker == null) continue;	
-				shrinker.StartShrinking();
+				var shrinker = wallsToShrink[i].GetComponent<CubeShrinker>();
+				if (shrinker != null) shrinker.StartShrinking();
+				else
+				{
+					var wallRef = wallsToShrink[i].GetComponentInParent<WallRefHolder>();
+					if (wallRef == null) continue;
+
+					wallRef.wallJuicer.Burrow();
+					wallRef.col.enabled = false;
+				}
+
 				yield return new WaitForSeconds(shrinkInterval);
-			}
+			}			
 		}
 
 		private void SwitchToEndCam()
