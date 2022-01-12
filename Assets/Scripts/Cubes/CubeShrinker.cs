@@ -10,10 +10,7 @@ namespace Qbism.Cubes
 	public class CubeShrinker : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] float shrinkStep = 0f;
-		[SerializeField] float timeStep = 0f;
 		[SerializeField] MMFeedbacks shrinkFeedback;
-		[SerializeField] float shrinkFeedbackDuration = 0f;
 		[SerializeField] MeshRenderer mesh, shrinkMesh;
 		[SerializeField] LineRenderer laserLine = null;
 
@@ -25,6 +22,7 @@ namespace Qbism.Cubes
 		Vector3 resetPos;
 		Quaternion resetRot;
 		Vector3 resetScale;
+		float totalFeedbackDur;
 
 		private void Awake() 
 		{
@@ -34,6 +32,8 @@ namespace Qbism.Cubes
 		private void Start()
 		{
 			if (GetComponent<FloorCube>()) SetResetData();
+
+			GetTotalFeedbackDur();
 		}
 
 		public void SetResetData()
@@ -44,12 +44,35 @@ namespace Qbism.Cubes
 			shrinkMesh.enabled = false;
 		}
 
-		public void StartShrinking()
+		private void GetTotalFeedbackDur()
 		{
-			StartCoroutine(Shrink());
+			var feedbacks = shrinkFeedback.GetComponents<MMFeedback>();
+
+			for (int i = 0; i < feedbacks.Length; i++)
+			{
+				totalFeedbackDur += feedbacks[i].FeedbackDuration;
+			}
 		}
 
-		private IEnumerator Shrink()
+		public void StartShrinking()
+		{
+			if (gameObject.tag == "Wall")
+				StartCoroutine(ShrinkWalls());
+
+			else StartCoroutine(ShrinkFloorCubes()); 			
+		}
+
+		private IEnumerator ShrinkWalls ()
+		{
+			shrinkFeedback.Initialization();
+			shrinkFeedback.PlayFeedbacks();
+
+			yield return new WaitForSeconds(totalFeedbackDur);
+
+			mesh.enabled = false;
+		}
+
+		private IEnumerator ShrinkFloorCubes()
 		{
 			mesh.enabled = false;
 			shrinkMesh.enabled = true;
@@ -91,8 +114,7 @@ namespace Qbism.Cubes
 			shrinkFeedback.Initialization();
 			shrinkFeedback.PlayFeedbacks();
 
-			yield return new WaitForSeconds(shrinkFeedbackDuration);
-			//----- TO DO: If shrink feedback is edited, edit this value to correspond to that
+			yield return new WaitForSeconds(totalFeedbackDur);
 
 			shrinkMesh.enabled = false;
 		}

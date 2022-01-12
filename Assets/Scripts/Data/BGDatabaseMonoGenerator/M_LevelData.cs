@@ -156,6 +156,17 @@ public partial class M_LevelData : BGEntityGo
 			_f_WallsFromOrigin[Entity.Index] = val;
 		}
 	}
+	public System.Boolean f_Visuals
+	{
+		get
+		{
+			return _f_Visuals[Entity.Index];
+		}
+		set
+		{
+			_f_Visuals[Entity.Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -235,6 +246,15 @@ public partial class M_LevelData : BGEntityGo
 		{
 			if(__f_WallsFromOrigin==null || __f_WallsFromOrigin.IsDeleted) __f_WallsFromOrigin=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5300666196508900259UL,13485411823914233985UL));
 			return __f_WallsFromOrigin;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool __f_Visuals;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_Visuals
+	{
+		get
+		{
+			if(__f_Visuals==null || __f_Visuals.IsDeleted) __f_Visuals=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5556000267342264102UL,15804675842545476242UL));
+			return __f_Visuals;
 		}
 	}
 }

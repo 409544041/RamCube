@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using Dreamteck.Splines;
+using Qbism.Environment;
 using Qbism.General;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
@@ -90,7 +91,8 @@ namespace Qbism.Cubes
 
 		private IEnumerator EndSequence()
 		{
-			yield return DestroyAllFloorCubes();
+			yield return ShrinkAllFloorCubes();
+			yield return ShrinkAllWalls();
 
 			if (switchBoard.showEndLevelSeq)
 			{
@@ -112,7 +114,7 @@ namespace Qbism.Cubes
 			else StartCoroutine(SerpentSequence());
 		}
 
-		private IEnumerator DestroyAllFloorCubes()
+		private IEnumerator ShrinkAllFloorCubes()
 		{
 			List<CubeShrinker> cubesToShrinkList = new List<CubeShrinker>();
 
@@ -142,6 +144,20 @@ namespace Qbism.Cubes
 			for (int i = 0; i < cubesToShrinkList.Count; i++)
 			{
 				cubesToShrinkList[i].StartShrinking();
+				yield return new WaitForSeconds(shrinkInterval);
+			}
+		}
+
+		//Temporary wall shrink script for old walls
+		private IEnumerator ShrinkAllWalls()
+		{
+			var oldWallsToShrink = GameObject.FindGameObjectsWithTag("Wall");
+
+			for (int i = 0; i < oldWallsToShrink.Length; i++)
+			{
+				var shrinker = oldWallsToShrink[i].GetComponent<CubeShrinker>();
+				if (shrinker == null) continue;	
+				shrinker.StartShrinking();
 				yield return new WaitForSeconds(shrinkInterval);
 			}
 		}

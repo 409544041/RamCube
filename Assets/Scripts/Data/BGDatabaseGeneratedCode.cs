@@ -184,6 +184,17 @@ public partial class E_LevelData : BGEntity
 			_f_WallsFromOrigin[Index] = val;
 		}
 	}
+	public System.Boolean f_Visuals
+	{
+		get
+		{
+			return _f_Visuals[Index];
+		}
+		set
+		{
+			_f_Visuals[Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -263,6 +274,15 @@ public partial class E_LevelData : BGEntity
 		{
 			if(_ufle12jhs77_f_WallsFromOrigin==null || _ufle12jhs77_f_WallsFromOrigin.IsDeleted) _ufle12jhs77_f_WallsFromOrigin=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5300666196508900259UL,13485411823914233985UL));
 			return _ufle12jhs77_f_WallsFromOrigin;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_Visuals;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_Visuals
+	{
+		get
+		{
+			if(_ufle12jhs77_f_Visuals==null || _ufle12jhs77_f_Visuals.IsDeleted) _ufle12jhs77_f_Visuals=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5556000267342264102UL,15804675842545476242UL));
+			return _ufle12jhs77_f_Visuals;
 		}
 	}
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
