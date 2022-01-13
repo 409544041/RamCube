@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
@@ -13,6 +14,7 @@ namespace Qbism.PlayerCube
 			beamFartJuice, sputterJuice;
 		public ParticleSystem fartCharge, fartBeam,
 			fartBeamImpact, bulletFartImpact, sputterFarts;
+		[SerializeField] float maxSputterTime = 2;
 
 		//Cache
 		public MMFeedbackWiggle preFartMMWiggle { get; set; }
@@ -71,16 +73,10 @@ namespace Qbism.PlayerCube
 
 		public void TriggerSputterFarts()
 		{
-			sputterJuice.Initialization();
-			var emis = sputterFarts.emission;
-			sputterFartTimes = new float[emis.burstCount];
-
-			for (int i = 0; i < emis.burstCount; i++)
-			{
-				sputterFartTimes[i] = emis.GetBurst(i).time;
-			}
+			RandomizeSputterFarts(); 
 
 			sputterFarting = true;
+			sputterJuice.Initialization();
 			sputterFarts.Play();
 		}
 
@@ -93,6 +89,57 @@ namespace Qbism.PlayerCube
 				animator.SetTrigger("FartToot");
 				sputterIndex++;
 				if (sputterIndex >= sputterFartTimes.Length) sputterFarting = false;
+			}
+		}
+
+		private void RandomizeSputterFarts()
+		{
+			var allPartSystems = sputterFarts.GetComponentsInChildren<ParticleSystem>();
+			ParticleSystem.EmissionModule[] emisArray = new ParticleSystem.EmissionModule[allPartSystems.Length];
+		
+			for (int i = 0; i < allPartSystems.Length; i++)
+			{
+				emisArray[i] = allPartSystems[i].emission;
+			}
+
+			//Set possible fart times with .1f gaps
+			List<float> possibleTimes = new List<float>();
+			float counter = 0;
+
+			for (int i = 0; i < 21; i++)
+			{
+				possibleTimes.Add(counter);
+				counter += .1f;
+				if (counter > maxSputterTime) break;
+			}
+
+			int tootAmount = UnityEngine.Random.Range(3, 8);
+
+			for (int i = 0; i < emisArray.Length; i++)
+			{
+				emisArray[i].burstCount = tootAmount;
+			}
+
+			sputterFartTimes = new float[tootAmount];
+			ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[tootAmount];
+			
+			//Set toot times
+			for (int i = 0; i < tootAmount; i++)
+			{
+				var j = UnityEngine.Random.Range(0, possibleTimes.Count - 1);
+				var tootTime = possibleTimes[j];
+				sputterFartTimes[i] = tootTime;
+				possibleTimes.RemoveAt(j);
+
+				bursts[i].time = tootTime;
+				bursts[i].count = 1;
+			}
+
+			Array.Sort(sputterFartTimes, bursts);
+
+			for (int k = 0; k < emisArray.Length; k++)
+			{
+				emisArray[k].SetBursts(bursts);
 			}
 		}
 	}
