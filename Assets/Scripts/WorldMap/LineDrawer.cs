@@ -10,8 +10,9 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public LineTypes lineType = LineTypes.full;
-		[SerializeField] float drawStep = 7f, lineWidth = .15f, linePinBuffer = 1;
+		[SerializeField] float drawDur = .5f, lineWidth = .15f, linePinBuffer = 1;
 		[SerializeField] ParticleSystem particle = null;
+		[SerializeField] AnimationCurve drawCurve;
 
 
 		//Cache
@@ -79,14 +80,17 @@ namespace Qbism.WorldMap
 			if (lRender.startWidth == 0 && lRender.endWidth == 0)
 				SetLineWidth(lineWidth);
 
-			var drawSpeed = drawStep * Time.deltaTime;
-			pointAlongLine = originPos;
 			particle.transform.position = originPos;
 			particle.transform.LookAt(destPos, Vector3.up);
 
+			float elapstedTime = 0;
+
 			while(Vector3.Distance(pointAlongLine, destPos) > .1f)
 			{
-				pointAlongLine = Vector3.MoveTowards(pointAlongLine, destPos, drawSpeed);
+				elapstedTime += Time.deltaTime;
+				var percentComplete = elapstedTime / drawDur;
+
+				pointAlongLine = Vector3.Lerp(originPos, destPos, drawCurve.Evaluate(percentComplete));
 				lRender.SetPosition(pointToMove, pointAlongLine);
 
 				particle.transform.position = pointAlongLine;
