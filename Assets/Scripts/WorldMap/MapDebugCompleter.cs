@@ -9,10 +9,12 @@ namespace Qbism.WorldMap
 	{
 		//Cache
 		ProgressHandler progHandler;
+		SerpentProgress serpProg;
 
 		private void Awake() 
 		{
 			progHandler = FindObjectOfType<ProgressHandler>();
+			serpProg = progHandler.GetComponent<SerpentProgress>();
 		}
 
 		public void UnCompleteAll()
@@ -27,8 +29,6 @@ namespace Qbism.WorldMap
 				if (i == 0) continue;
 				E_BiomeGameplayData.GetEntity(i).f_Unlocked = false;
 			}
-
-			var serpProg = progHandler.GetComponent<SerpentProgress>();
 			
 			for (int i = 0; i < serpProg.serpentDataList.Count; i++)
 			{
@@ -47,11 +47,11 @@ namespace Qbism.WorldMap
 
 			for (int i = 0; i < E_LevelGameplayData.CountEntities; i++)
 			{
-				E_LevelGameplayData.GetEntity(i).f_DebugComplete = true;
+				var entity = E_LevelGameplayData.GetEntity(i);
+				entity.f_DebugComplete = true;
 
-				if (E_LevelData.GetEntity(i).f_SegmentPresent == true)
+				if (E_LevelData.GetEntity(i).f_SegmentPresent && !entity.f_Completed)
 				{
-					var serpProg = progHandler.GetComponent<SerpentProgress>();
 					serpProg.AddSegment();
 				}
 			}
