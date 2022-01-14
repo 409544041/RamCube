@@ -16,7 +16,7 @@ namespace Qbism.Cubes
 
 			if (isPlayer)
 			{
-				if (transform.position.y > .5f) yPos = .9f;
+				if (transform.position.y > .5f) yPos = .905f;
 				else yPos = 0;
 			}
 			else yPos = Mathf.RoundToInt(transform.position.y);
