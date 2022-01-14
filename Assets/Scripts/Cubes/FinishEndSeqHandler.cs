@@ -148,7 +148,7 @@ namespace Qbism.Cubes
 			}
 		}
 
-		//Temporary wall shrink script for old walls
+		//Includes temporary wall shrink script for old walls
 		private IEnumerator ShrinkAllWalls()
 		{
 			var wallsToShrink = GameObject.FindGameObjectsWithTag("Wall");

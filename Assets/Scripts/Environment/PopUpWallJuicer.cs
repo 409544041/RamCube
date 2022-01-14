@@ -12,9 +12,10 @@ namespace Qbism.Environment
 		[SerializeField] AudioClip upClip, downClip;
 		[SerializeField] AudioSource source;
 		public float burrowTime = .3f; //Should find a way to get total dur of a feedback
+		[SerializeField] WallRefHolder wallRef;
 
 		//States
-		bool burroweActivated;
+		bool burrowActivated;
 
 		public void TriggerPopUpJuice()
 		{
@@ -35,12 +36,15 @@ namespace Qbism.Environment
 		public void Burrow()
 		{
 			//To avoid walls with multiple wallTagTransforms to call this multiple times
-			if (burroweActivated) return;
+			if (burrowActivated) return;
 
 			burrowJuice.Initialization();
 			burrowJuice.PlayFeedbacks();
 
-			burroweActivated = true;
+			if (wallRef.expressHandler != null)
+				wallRef.expressHandler.SetFace(Expressions.toothyLaugh, -1);
+
+			burrowActivated = true;
 		}
 	}
 }
