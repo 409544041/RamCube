@@ -226,7 +226,7 @@ namespace Qbism.PlayerCube
 			onDoneFarting();
 			transform.position = target.position;
 			onSwitchVisuals(false);
-			juicer.StopBeamFartJuice();
+			juicer.StopBeamFartVisualJuice();
 
 			StartCoroutine(FlyBy());
 		}
@@ -266,7 +266,7 @@ namespace Qbism.PlayerCube
 			flyingBy = false;
 			onSwitchVisuals(false);
 			SetScale(1, 1);
-			juicer.StopBeamFartJuice();
+			juicer.StopBeamFartVisualJuice();
 		}
 
 		private void CalculateStartEnd()

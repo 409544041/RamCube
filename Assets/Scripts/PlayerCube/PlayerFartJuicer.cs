@@ -62,6 +62,21 @@ namespace Qbism.PlayerCube
 			animator.SetBool("FartLoop", false);
 		}
 
+		public void StopBeamFartVisualJuice()
+		{
+			var feedbacks = beamFartJuice.GetComponents<MMFeedback>();
+
+			for (int i = 0; i < feedbacks.Length; i++)
+			{
+				if (feedbacks[i].Label == "Screaming Voice Doppler" ||
+					feedbacks[i].Label == "Fart Sound Soppler") continue;
+
+				feedbacks[i].Stop(transform.position);
+			}
+
+			animator.SetBool("FartLoop", false);
+		}
+
 		public void ShapieRescueFartJuice()
 		{
 			bulletFartImpact.Play();
