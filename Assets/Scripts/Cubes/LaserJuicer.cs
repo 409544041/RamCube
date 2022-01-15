@@ -84,6 +84,15 @@ namespace Qbism.Cubes
 
 		}
 
+		public void CloseEyeForFinish()
+		{
+			eyeAnim.CloseEyes();
+			mouthAnim.SadMouth();
+			denyBeam.Stop();
+			laserBeam.Stop();
+			pinkEyeVFX.Stop();
+		}
+
 		public void TriggerDenyJuice(float dist)
 		{
 			isDenying = true;

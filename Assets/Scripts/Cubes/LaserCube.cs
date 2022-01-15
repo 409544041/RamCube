@@ -17,9 +17,9 @@ namespace Qbism.Cubes
 		
 		//Cache
 		PlayerCubeMover mover;
-		SceneHandler loader;
 		LaserJuicer juicer;
 		CubeHandler cubeHandler;
+		FinishCube finish;
 
 
 		//States
@@ -28,6 +28,7 @@ namespace Qbism.Cubes
 		bool isClosed = false;
 		public bool laserPause { get; set; }= false;
 		public float dist { get; set; }
+		bool eyeClosedForFinish = false;
 
 		//Actions, events, delegates etc
 		public event Action<InterfaceIDs> onRewindPulse;
@@ -35,9 +36,9 @@ namespace Qbism.Cubes
 		private void Awake()
 		{
 			mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();
-			loader = FindObjectOfType<SceneHandler>();
 			juicer = GetComponent<LaserJuicer>();
 			cubeHandler = FindObjectOfType<CubeHandler>();
+			finish = FindObjectOfType<FinishCube>(); 
 		}
 
 		private void OnEnable() 
@@ -52,7 +53,12 @@ namespace Qbism.Cubes
 
 		private void FixedUpdate()
 		{
-			FireSphereCast();
+			if (!finish.hasFinished) FireSphereCast();
+			else if (finish.hasFinished && !eyeClosedForFinish)
+			{
+				juicer.CloseEyeForFinish();
+				eyeClosedForFinish = true;
+			}
 		}
 
 		private void FireSphereCast()
