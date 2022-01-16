@@ -69,7 +69,7 @@ namespace Qbism.PlayerCube
 			for (int i = 0; i < feedbacks.Length; i++)
 			{
 				if (feedbacks[i].Label == "Screaming Voice Doppler" ||
-					feedbacks[i].Label == "Fart Sound Soppler") continue;
+					feedbacks[i].Label == "Fart Sound Doppler") continue;
 
 				feedbacks[i].Stop(transform.position);
 			}
