@@ -61,10 +61,12 @@ namespace Qbism.Environment
 			for (int i = 0; i < spawnAmount; i++)
 			{
 				var toSpawn = floraList[Random.Range(0, floraList.Count)];
-				foreach (var mesh in toSpawn.floraMeshes)
+
+				foreach (var flor in floraList)
 				{
-					mesh.enabled = true;
+					ToggleMeshesAndColliders(flor, true);
 				}
+
 				ApplyVariation(toSpawn);
 				toSpawn.canSpawn = false;
 				floraList.Remove(toSpawn);
@@ -74,10 +76,7 @@ namespace Qbism.Environment
 			{
 				if (flor.canSpawn)
 				{
-					foreach (var mesh in flor.floraMeshes)
-					{
-						mesh.enabled = false;
-					}
+					ToggleMeshesAndColliders(flor, false);
 				}
 			}
 		}
@@ -86,10 +85,7 @@ namespace Qbism.Environment
 		{
 			foreach (var flor in flora)
 			{
-				foreach (var mesh in flor.floraMeshes)
-				{
-					mesh.enabled = false;
-				}
+				ToggleMeshesAndColliders(flor, false);
 			}
 		}
 
@@ -128,13 +124,20 @@ namespace Qbism.Environment
 			foreach (var flor in flora)
 			{
 				if (flor.canSpawn) floraList.Add(flor);
-				else
-				{
-					foreach (var mesh in flor.floraMeshes)
-					{
-						mesh.enabled = false;
-					}
-				}
+				else ToggleMeshesAndColliders(flor, false);
+			}
+		}
+
+		private void ToggleMeshesAndColliders(FloraIdentifier flor, bool value)
+		{
+			foreach (var mesh in flor.floraMeshes)
+			{
+				mesh.enabled = value;
+			}
+
+			foreach (var coll in flor.colliders)
+			{
+				coll.enabled = value;
 			}
 		}
 	}

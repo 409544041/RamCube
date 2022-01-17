@@ -22,6 +22,8 @@ namespace Qbism.Cubes
 		[Header("Charging VFX")]
 		[SerializeField] MMFeedbacks chargeJuice;
 		[SerializeField] float glowIncrease = .03f, glowIncreaseInterval = .05f;
+		[Header("References")]
+		[SerializeField] ExplosionForce explosion;
 
 		//Cache
 		public AudioSource source { get; private set; }
@@ -99,6 +101,7 @@ namespace Qbism.Cubes
 
 			mesh.enabled = false;
 			glowMesh.enabled = false;
+			explosion.KnockBack();
 
 			onSpawnFriends();
 		}

@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 2242913050542693674}
   - component: {fileID: 7220884827492460467}
   - component: {fileID: 3061805345187366561}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Tree Tall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,6 +213,8 @@ MonoBehaviour:
   floraMeshes:
   - {fileID: 1021296650624723477}
   - {fileID: 8118864184487417874}
+  colliders:
+  - {fileID: 3061805345187366561}
   canSpawn: 1
 --- !u!114 &7220884827492460467
 MonoBehaviour:
@@ -229,10 +231,15 @@ MonoBehaviour:
   meshParts:
   - {fileID: 1181600085019073902}
   - {fileID: 478159176458261938}
+  lineRender: {fileID: 0}
+  particle: {fileID: 0}
   biomeVarietySO: {fileID: 11400000, guid: 478d4825d619a4943820822158211f9b, type: 2}
   recalculate: 0
+  checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 0
+  isLine: 0
+  isParticle: 0
 --- !u!136 &3061805345187366561
 CapsuleCollider:
   m_ObjectHideFlags: 0

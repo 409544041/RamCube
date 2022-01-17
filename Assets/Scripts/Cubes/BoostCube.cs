@@ -150,7 +150,8 @@ namespace Qbism.Cubes
 			Vector3 target = new Vector3(0, 0, 0);
 
 			if (Physics.Raycast(boostRayOrigin.position,
-				boostObjDir.transform.TransformDirection(Vector3.forward), out wallHit, 20, mask))
+				boostObjDir.transform.TransformDirection(Vector3.forward), out wallHit, 20, mask, 
+				QueryTriggerInteraction.Collide))
 			{
 				//For this to work, wall or other blocker objects needs to be placed on 
 				//'the grid', just like cubes

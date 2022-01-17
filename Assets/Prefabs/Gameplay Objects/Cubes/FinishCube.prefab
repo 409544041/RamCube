@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6782235578536882594}
   - component: {fileID: 2142504418099604151}
   - component: {fileID: 2252775249819234067}
+  - component: {fileID: 4181731352595174631}
   m_Layer: 8
   m_Name: FinishCube
   m_TagString: Untagged
@@ -195,6 +196,7 @@ MonoBehaviour:
   chargeJuice: {fileID: 6633733773761495106}
   glowIncrease: 0.01
   glowIncreaseInterval: 0.05
+  explosion: {fileID: 4181731352595174631}
 --- !u!114 &2142504418099604151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +259,23 @@ MonoBehaviour:
   - 270
   - 300
   - 330
+--- !u!114 &4181731352595174631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378258485882190835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7257b8b2a7befaf4c8c4bcd43477bd46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explForce: 750
+  explRadius: 3
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!1 &653260382015681671
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,7 +489,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1152773906179060397}
-  m_LocalRotation: {x: 0.48893118, y: -0.3247021, z: 0.20252189, w: 0.7839004}
+  m_LocalRotation: {x: 0.48893115, y: -0.32470217, z: 0.2025219, w: 0.7839004}
   m_LocalPosition: {x: 14.12, y: 42.27, z: -14.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

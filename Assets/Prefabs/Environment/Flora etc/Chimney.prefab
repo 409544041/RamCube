@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7607332498799743604}
   - component: {fileID: 8828575970641081869}
   - component: {fileID: 5479656558376683847}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Chimney
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,10 +111,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshParts:
   - {fileID: 8255750033305105313}
+  lineRender: {fileID: 0}
+  particle: {fileID: 0}
   biomeVarietySO: {fileID: 11400000, guid: 6de3b25145f20954b9d04333068f2337, type: 2}
   recalculate: 0
+  checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 0
+  isLine: 0
+  isParticle: 0
 --- !u!1001 &1501381828702949512
 PrefabInstance:
   m_ObjectHideFlags: 0
