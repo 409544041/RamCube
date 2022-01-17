@@ -7,7 +7,11 @@ namespace Qbism.Environment
 {
 	public class VegetationExplosionHandler : MonoBehaviour, IExplosionHandler
 	{
+		//Config parameters
 		[SerializeField] ParticleSystem[] vegExplosionVFX;
+		[SerializeField] MeshRenderer[] meshes;
+		[SerializeField] Collider[] colliders;
+
 		public void HandleExplosion(Vector3 explOriginPos)
 		{
 			foreach (var vfx in vegExplosionVFX)
@@ -15,6 +19,16 @@ namespace Qbism.Environment
 				var dir = transform.position - explOriginPos;
 				vfx.transform.forward = dir;
 				vfx.Play();
+
+				foreach (var mesh in meshes)
+				{
+					mesh.enabled = false;
+				}
+
+				foreach (var coll in colliders)
+				{
+					coll.enabled = false;
+				}
 			}
 		}
 	}
