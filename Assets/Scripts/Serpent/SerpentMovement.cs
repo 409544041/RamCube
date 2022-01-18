@@ -13,21 +13,16 @@ namespace Qbism.Serpent
 		[SerializeField] Transform head = null;
 		[SerializeField] SerpentSegmentHandler segHandler;
 		public float segmentSpacing = 1f;
-		[Header ("Juice")]
-		[SerializeField] AudioClip pickupClip;
-		[SerializeField] AudioSource source;
 		
 		//Cache
 		FinishEndSeqHandler finishEndSeq = null;
-		
+
 		//States
 		List<Vector3> breadcrumbs = null;
 		bool isMoving = false;
 		Transform[] segments = null;
 		bool firstCrumbs = false;
 
-		//Actions, events, delegates etc
-		public event Action onTriggerPlayerAudio;
 
 		private void Awake() 
 		{
@@ -106,16 +101,6 @@ namespace Qbism.Serpent
 		public void SetMoving(bool value)
 		{
 			isMoving = value;
-		}
-
-		private void OnTriggerEnter(Collider other)
-		{
-			if (other.tag == "Player")
-			{
-				other.transform.parent = transform;
-				onTriggerPlayerAudio();
-				source.PlayOneShot(pickupClip);
-			} 		
 		}
 
 		private void OnDisable()

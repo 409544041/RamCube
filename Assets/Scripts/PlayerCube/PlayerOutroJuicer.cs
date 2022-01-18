@@ -13,19 +13,19 @@ namespace Qbism.PlayerCube
 		[SerializeField] AudioSource source;
 
 		//Cache
-		SerpentMovement serpMover;
+		SerpentCollHandler serpCollHandler;
 
 		private void Awake() 
 		{
-			serpMover = FindObjectOfType<SerpentMovement>();
+			serpCollHandler = FindObjectOfType<SerpentCollHandler>();
 		}
 
 		private void OnEnable() 
 		{
-			if (serpMover != null)
+			if (serpCollHandler != null)
 			{
-				serpMover.onTriggerPlayerAudio += StopLaughing;
-				serpMover.onTriggerPlayerAudio += PlayOuchSoundFromPickup;
+				serpCollHandler.onTriggerPlayerAudio += StopLaughing;
+				serpCollHandler.onTriggerPlayerAudio += PlayOuchSoundFromPickup;
 			} 
 		}
 
@@ -82,10 +82,10 @@ namespace Qbism.PlayerCube
 
 		private void OnDisable()
 		{
-			if (serpMover != null)
+			if (serpCollHandler != null)
 			{
-				serpMover.onTriggerPlayerAudio -= StopLaughing;
-				serpMover.onTriggerPlayerAudio -= PlayOuchSoundFromPickup;
+				serpCollHandler.onTriggerPlayerAudio -= StopLaughing;
+				serpCollHandler.onTriggerPlayerAudio -= PlayOuchSoundFromPickup;
 			}
 		}
 	}

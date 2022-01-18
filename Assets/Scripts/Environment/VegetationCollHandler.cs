@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Qbism.Environment
 {
-	public class VegetationExplosionHandler : MonoBehaviour, IExplosionHandler
+	public class VegetationCollHandler : MonoBehaviour, IExplosionHandler, ISerpentCollHandler
 	{
 		//Config parameters
 		[SerializeField] ParticleSystem[] vegExplosionVFX;
@@ -30,6 +30,11 @@ namespace Qbism.Environment
 					coll.enabled = false;
 				}
 			}
+		}
+
+		public void HandleSerpentColl(Vector3 serpentPos)
+		{
+			HandleExplosion(serpentPos);
 		}
 	}
 }

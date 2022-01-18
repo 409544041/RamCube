@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Qbism.Cubes
 {
-	public class LaserExplosionHandler : MonoBehaviour, IExplosionHandler
+	public class LaserCollHandler : MonoBehaviour, IExplosionHandler
 	{
 		//Config parameters
 		[SerializeField] BoxCollider wallCollider;

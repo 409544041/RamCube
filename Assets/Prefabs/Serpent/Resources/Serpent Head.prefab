@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 1658066792547649975}
   - component: {fileID: -4142880108822833781}
   - component: {fileID: -2810247119288052615}
+  - component: {fileID: 2746800725662620016}
   m_Layer: 0
   m_Name: Serpent Head
   m_TagString: LevelCompFollower
@@ -242,8 +243,6 @@ MonoBehaviour:
   head: {fileID: 1997926585458928239}
   segHandler: {fileID: 8587559809536208760}
   segmentSpacing: 1
-  pickupClip: {fileID: 8300000, guid: 3669834d29d22a24cae7c6d059851f52, type: 3}
-  source: {fileID: 3894007299249800165}
 --- !u!114 &8587559809536208760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,6 +326,20 @@ MonoBehaviour:
   entityIdString: MmB9C9La60+KdrAnEt1GNQ
   metaIdString: 
   initWithFirst: 0
+--- !u!114 &2746800725662620016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221002200640581845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0f379815ea8224fa7ca848bf297026, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 3894007299249800165}
+  pickupClip: {fileID: 8300000, guid: 3669834d29d22a24cae7c6d059851f52, type: 3}
 --- !u!1 &1915402862257612470
 GameObject:
   m_ObjectHideFlags: 0
