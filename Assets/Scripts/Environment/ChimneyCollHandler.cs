@@ -10,15 +10,22 @@ namespace Qbism.Environment
 		[SerializeField] MeshRenderer mesh;
 		[SerializeField] MeshRenderer intactMesh;
 		[SerializeField] Rigidbody rb;
-		[SerializeField] ParticleSystem particles;
+		[SerializeField] Rigidbody[] otherRB;
+		[SerializeField] ParticleSystem bubbleVFX, impactVFX;
 		[SerializeField] float torqueForce = 10000;
 
 		public void HandleExplosion(Transform explOrigin)
 		{
 			SwapMeshes();
-			particles.Stop();
+			bubbleVFX.Stop();
+			impactVFX.Play();
 			rb.isKinematic = false; 
 			rb.AddTorque(explOrigin.right * torqueForce);
+			
+			foreach (var rb in otherRB)
+			{
+				rb.isKinematic = false;
+			}
 		}
 
 		public void HandleSerpentColl(Transform serpTrans)
