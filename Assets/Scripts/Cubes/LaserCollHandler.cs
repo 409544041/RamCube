@@ -11,7 +11,7 @@ namespace Qbism.Cubes
 		[SerializeField] BoxCollider coll;
 		[SerializeField] Rigidbody rb;
 
-		public void HandleExplosion(Vector3 explOriginPos)
+		public void HandleExplosion(Transform explTrans)
 		{
 			if (wallCollider.enabled == true) wallCollider.enabled = false;
 			coll.enabled = true;

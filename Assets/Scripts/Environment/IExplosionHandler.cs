@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IExplosionHandler
 {
-	void HandleExplosion(Vector3 pos);
+	void HandleExplosion(Transform explTrans);
 }

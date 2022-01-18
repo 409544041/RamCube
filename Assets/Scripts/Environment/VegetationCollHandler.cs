@@ -12,11 +12,11 @@ namespace Qbism.Environment
 		[SerializeField] MeshRenderer[] meshes;
 		[SerializeField] Collider[] colliders;
 
-		public void HandleExplosion(Vector3 explOriginPos)
+		public void HandleExplosion(Transform explTrans)
 		{
 			foreach (var vfx in vegExplosionVFX)
 			{
-				var dir = transform.position - explOriginPos;
+				var dir = transform.position - explTrans.position;
 				vfx.transform.forward = dir;
 				vfx.Play();
 
@@ -32,9 +32,9 @@ namespace Qbism.Environment
 			}
 		}
 
-		public void HandleSerpentColl(Vector3 serpentPos)
+		public void HandleSerpentColl(Transform serpTrans)
 		{
-			HandleExplosion(serpentPos);
+			HandleExplosion(serpTrans);
 		}
 	}
 }

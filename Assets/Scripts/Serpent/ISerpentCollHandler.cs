@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ISerpentCollHandler
 {
-	void HandleSerpentColl(Vector3 serpentPos);
+	void HandleSerpentColl(Transform serpTrans);
 }

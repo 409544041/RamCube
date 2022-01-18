@@ -21,7 +21,7 @@ namespace Qbism.Cubes
 
 				var rb = coll.GetComponent<Rigidbody>();
 				
-				explHandler.HandleExplosion(transform.position);
+				explHandler.HandleExplosion(transform);
 
 				if (rb != null)
 					rb.AddExplosionForce(explForce, transform.position, explRadius);

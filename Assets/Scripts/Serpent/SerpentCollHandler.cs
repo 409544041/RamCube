@@ -28,7 +28,7 @@ namespace Qbism.Serpent
 		{
 			var collHandler = collision.gameObject.GetComponent<ISerpentCollHandler>();
 
-			if (collHandler != null) collHandler.HandleSerpentColl(transform.position);
+			if (collHandler != null) collHandler.HandleSerpentColl(transform);
 		}
 
 	}
