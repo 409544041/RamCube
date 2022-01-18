@@ -11,7 +11,7 @@ namespace Qbism.Environment
 		[SerializeField] MeshRenderer intactMesh;
 		[SerializeField] Rigidbody rb;
 		[SerializeField] ParticleSystem particles;
-		[SerializeField] float torqueForce = 1000;
+		[SerializeField] float torqueForce = 10000;
 
 		public void HandleExplosion(Transform explOrigin)
 		{

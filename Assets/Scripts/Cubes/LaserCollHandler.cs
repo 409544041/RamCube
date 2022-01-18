@@ -8,14 +8,15 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		[SerializeField] BoxCollider wallCollider;
-		[SerializeField] BoxCollider coll;
 		[SerializeField] Rigidbody rb;
+		[SerializeField] float torqueForce = 10000;
 
 		public void HandleExplosion(Transform explTrans)
 		{
 			if (wallCollider.enabled == true) wallCollider.enabled = false;
-			coll.enabled = true;
-			rb.isKinematic = false;
+			if (rb.isKinematic == true) rb.isKinematic = false;
+
+			rb.AddTorque((transform.position - explTrans.position) * torqueForce);
 		}
 	}
 }

@@ -10,7 +10,7 @@ Material:
   m_Name: Laser_BaseTop
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
   m_ShaderKeywords: DR_CEL_EXTRA_ON DR_ENABLE_LIGHTMAP_DIR DR_OUTLINE_ON DR_SPECULAR_ON
-    _CELPRIMARYMODE_CURVE _FLAT_RIM_ENABLED _FLAT_SHADOWS_ENABLED _FLAT_SPECULAR_ENABLED
+    _CELPRIMARYMODE_STEPS _FLAT_RIM_ENABLED _FLAT_SHADOWS_ENABLED _FLAT_SPECULAR_ENABLED
     _TEXTUREBLENDINGMODE_MULTIPLY _UNITYSHADOWMODE_MULTIPLY
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -34,7 +34,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CelStepTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 057a781f61a748b49a17a4db7fcc5960, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -51,7 +51,7 @@ Material:
     - _CameraDistanceImpact: 0
     - _CelExtraEnabled: 1
     - _CelNumSteps: 3
-    - _CelPrimaryMode: 3
+    - _CelPrimaryMode: 2
     - _Cull: 2
     - _Cutoff: 0.5
     - _DstBlend: 0
@@ -99,7 +99,7 @@ Material:
     - _ColorDim: {r: 0, g: 0, b: 0, a: 1}
     - _ColorDimCurve: {r: 0, g: 0, b: 0, a: 1}
     - _ColorDimExtra: {r: 0.18204784, g: 0.10412953, b: 0.18867919, a: 1}
-    - _ColorDimSteps: {r: 0.85, g: 0.85, b: 0.85, a: 0.85}
+    - _ColorDimSteps: {r: 0, g: 0, b: 0, a: 0.85}
     - _ColorGradient: {r: 0.3529412, g: 0.13333334, b: 0.50980395, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _FlatRimColor: {r: 0.12734222, g: 0.07662871, b: 0.13207549, a: 1}
