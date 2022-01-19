@@ -9,14 +9,16 @@ namespace Qbism.General
 	{
 		//Config parameters
 		[Header("Gameplay")]
-		public bool showEndLevelSeq;
-		public bool allowDebugFinish;
+		public bool showEndLevelSeq;	
 		public bool serpentConnected;
+		public bool allowDebugFinish;
 		public bool allowDebugLevelNav;
 		[Header("World Map")]
 		public bool worldMapConnected;
-		public bool allowMapReload;
+		public bool allowDebugMapReload;
 		public bool allowDebugCompleteAll;
+		public bool allowDebugUnlockAll;
+		public bool allowDebugDeleteProgress;
 		[Header("Demo")]
 		public bool demoSplashConnected;
 		[Header("Serpent Screen")]

@@ -24,9 +24,9 @@ namespace Qbism.Control
 
 			// controls.Gameplay.DebugDeleteSaveData.performed += ctx => DeleteSaveData();
 			controls.Gameplay.DebugKey4.performed += ctx => LoadSerpentScreen();
-			controls.Gameplay.Restart.performed += ctx => UnCompleteAllAndReload();
-			controls.Gameplay.DebugCompleteLevel.performed += ctx => CompleteAllAndReload();
-			controls.Gameplay.DebugKeyZ.performed += ctx => UnlockAllAndReload();
+			controls.Gameplay.DebugKey2.performed += ctx => UnCompleteAllAndReload();
+			controls.Gameplay.DebugKey3.performed += ctx => CompleteAllAndReload();
+			controls.Gameplay.DebugKey1.performed += ctx => UnlockAllAndReload();
 			controls.Gameplay.Rewind.performed += ctx => ReloadMap();
 		}
 
@@ -51,7 +51,7 @@ namespace Qbism.Control
 
 		private void ReloadMap()
 		{
-			if (switchBoard.allowMapReload)
+			if (switchBoard.allowDebugMapReload)
 			{
 				progHandler.SaveProgData();
 				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
@@ -60,7 +60,7 @@ namespace Qbism.Control
 
 		private void UnCompleteAllAndReload()
 		{
-			if (switchBoard.allowDebugCompleteAll)
+			if (switchBoard.allowDebugDeleteProgress)
 			{
 				FindObjectOfType<MapDebugCompleter>().UnCompleteAll();
 				progHandler.SaveProgData();
@@ -80,7 +80,7 @@ namespace Qbism.Control
 
 		private void UnlockAllAndReload()
 		{
-			if (switchBoard.allowDebugCompleteAll)
+			if (switchBoard.allowDebugUnlockAll)
 			{
 				FindObjectOfType<MapDebugCompleter>().UnlockAll();
 				progHandler.SaveProgData();
