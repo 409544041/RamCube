@@ -1,43 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!95 &898209005880148355
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2066598731405934530}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 08e33e8f52ecb9f41b93bd4b26717661, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8fda59df0c8d2244c973891785ec22c7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6461461435927646242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2066598731405934530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 801dffc182fb3ed47aff228fb0505147, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minMaxClosed: {x: 6, y: 12}
-  minMaxAction: {x: 4, y: 7}
-  minMaxBlink: {x: 3, y: 6}
-  halfLidMeshes:
-  - {fileID: 3096023260054840437}
-  - {fileID: 1548298691499724025}
-  fullLidMesh: {fileID: 5171238233294219241}
 --- !u!1 &4035305498341863831
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8058819264305203871}
+  - component: {fileID: 8879538808750458071}
   m_Layer: 0
   m_Name: Big Eye
   m_TagString: Untagged
@@ -69,6 +32,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8879538808750458071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4035305498341863831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshParts:
+  - {fileID: 3875386760415732873}
+  - {fileID: 6535826402270938262}
+  - {fileID: 7040141567650864389}
+  lineRender: {fileID: 0}
+  particle: {fileID: 0}
+  biomeVarietySO: {fileID: 11400000, guid: 52a2ec7fbaf4e6c4887d2a95b6ff04e5, type: 2}
+  recalculate: 0
+  checkBiomeLocally: 0
+  isSkyBox: 0
+  isVolume: 0
+  isLine: 0
+  isParticle: 0
 --- !u!1001 &1184272193898676883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -400,9 +388,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1184272193898676883}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3875386760415732873 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2713210903358137882, guid: 08e33e8f52ecb9f41b93bd4b26717661,
+    type: 3}
+  m_PrefabInstance: {fileID: 1184272193898676883}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &3096023260054840437 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -5001201716509645082, guid: 08e33e8f52ecb9f41b93bd4b26717661,
+    type: 3}
+  m_PrefabInstance: {fileID: 1184272193898676883}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6535826402270938262 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3829033622291184123, guid: 08e33e8f52ecb9f41b93bd4b26717661,
     type: 3}
   m_PrefabInstance: {fileID: 1184272193898676883}
   m_PrefabAsset: {fileID: 0}
@@ -412,9 +412,53 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1184272193898676883}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7040141567650864389 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1018664272722485354, guid: 08e33e8f52ecb9f41b93bd4b26717661,
+    type: 3}
+  m_PrefabInstance: {fileID: 1184272193898676883}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &5171238233294219241 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6317578925029434746, guid: 08e33e8f52ecb9f41b93bd4b26717661,
     type: 3}
   m_PrefabInstance: {fileID: 1184272193898676883}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &898209005880148355
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066598731405934530}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 08e33e8f52ecb9f41b93bd4b26717661, type: 3}
+  m_Controller: {fileID: 9100000, guid: 8fda59df0c8d2244c973891785ec22c7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6461461435927646242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066598731405934530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 801dffc182fb3ed47aff228fb0505147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minMaxClosed: {x: 6, y: 12}
+  minMaxAction: {x: 4, y: 7}
+  minMaxBlink: {x: 3, y: 6}
+  halfLidMeshes:
+  - {fileID: 3096023260054840437}
+  - {fileID: 1548298691499724025}
+  fullLidMesh: {fileID: 5171238233294219241}

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4841322775289175597}
+  - component: {fileID: 3110853314568405617}
   m_Layer: 0
   m_Name: Big Ear
   m_TagString: Untagged
@@ -31,6 +32,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3110853314568405617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8123646214972447994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshParts:
+  - {fileID: 2056615090540262457}
+  lineRender: {fileID: 0}
+  particle: {fileID: 0}
+  biomeVarietySO: {fileID: 11400000, guid: a1d7da4b8e423e041beed25ff599d306, type: 2}
+  recalculate: 0
+  checkBiomeLocally: 0
+  isSkyBox: 0
+  isVolume: 0
+  isLine: 0
+  isParticle: 0
 --- !u!1001 &1174306278362646888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -110,6 +134,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb48b59d64d8c1a458dacb42bcb6128e, type: 3}
+--- !u!1 &2056615090540262457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: eb48b59d64d8c1a458dacb42bcb6128e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1174306278362646888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1711719890528530051 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eb48b59d64d8c1a458dacb42bcb6128e,

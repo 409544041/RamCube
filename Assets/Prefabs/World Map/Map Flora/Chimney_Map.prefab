@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4158039900040815170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1494012667427949660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c66bbec7780780849bb42d17e410b134, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tresholdY: -0.5
-  particle: {fileID: 1621271713533395126}
 --- !u!1 &4619649501689362278
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,6 +173,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3978231034387270593, guid: ebb45189d3a9b0d4cb637fa421ae2347,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f9596cad7b785d64d97a691f96969c3a, type: 2}
     - target: {fileID: 3978735066872557839, guid: ebb45189d3a9b0d4cb637fa421ae2347,
         type: 3}
       propertyPath: prewarm
@@ -237,3 +228,17 @@ ParticleSystem:
     type: 3}
   m_PrefabInstance: {fileID: 2398347663014113721}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4158039900040815170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494012667427949660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c66bbec7780780849bb42d17e410b134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tresholdY: -0.5
+  particle: {fileID: 1621271713533395126}
