@@ -76,14 +76,7 @@ namespace Qbism.Serpent
 
 			if (headDisplacement != 0)
 			{
-				Vector3 pos = Vector3.Lerp(breadcrumbs[1], breadcrumbs[0], headDisplacement / segmentSpacing);
-				segments[0].position = pos;
-
-				//Need to check for != Vector3.zero to avoid Vector3.zero errors
-				if (breadcrumbs[0] - breadcrumbs[1] != Vector3.zero && head.position - breadcrumbs[0] != Vector3.zero)
-					segments[0].rotation = Quaternion.Slerp(Quaternion.LookRotation(breadcrumbs[0] - breadcrumbs[1]),
-					Quaternion.LookRotation(head.position - breadcrumbs[0]), headDisplacement / segmentSpacing);
-
+				Vector3 pos;
 
 				for (int i = 1; i < segments.Length; i++)
 				{
