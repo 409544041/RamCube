@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Qbism.Saving
 {
-	// save location = C:\Users\Gebruiker\AppData\LocalLow\Frambosa\Billy Bumbum
+	// save location = C:\Users\js_ba\AppData\LocalLow\Frambosa\Billy Bumbum
 	public static class SavingSystem
 	{
 		public static void SaveProgData(List<LevelStatusData> levelDataList, List<bool> biomeDataList,
