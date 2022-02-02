@@ -122,7 +122,6 @@ namespace Qbism.Cubes
 
 		private void Shake()
 		{
-			denyJuiceWiggle.Initialization();
 			denyJuiceWiggle.PlayFeedbacks();
 		}
 
