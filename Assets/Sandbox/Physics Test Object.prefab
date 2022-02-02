@@ -29,13 +29,13 @@ Transform:
   m_Children:
   - {fileID: 4941112618688375163}
   - {fileID: 4941112617862596866}
-  - {fileID: 4941112617819716725}
-  - {fileID: 4941112618803058684}
   - {fileID: 4941112617136903252}
-  - {fileID: 4941112618536911701}
+  - {fileID: 4941112617819716725}
   - {fileID: 4941112618243836292}
-  - {fileID: 4941112619074440165}
   - {fileID: 4941112619132026164}
+  - {fileID: 4941112618803058684}
+  - {fileID: 4941112618536911701}
+  - {fileID: 4941112619074440165}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -53,7 +53,9 @@ GameObject:
   - component: {fileID: 4941112617136903241}
   - component: {fileID: 4941112617136903240}
   - component: {fileID: 4941112617136903243}
-  m_Layer: 0
+  - component: {fileID: 6359403114378583685}
+  - component: {fileID: 4188842072768413488}
+  m_Layer: 12
   m_Name: Physics Test Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,11 +70,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941112617136903242}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.101, y: 0.583, z: 8.593}
+  m_LocalPosition: {x: -4.244, y: 2.41, z: 8.593}
   m_LocalScale: {x: 0.60524, y: 0.60524, z: 0.60524}
   m_Children: []
   m_Father: {fileID: 2843146126390940218}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4941112617136903255
 MeshFilter:
@@ -164,8 +166,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7257b8b2a7befaf4c8c4bcd43477bd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceToAdd: 1000
+  explForce: 500
   explRadius: 10
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!138 &6359403114378583685
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112617136903242}
+  m_ConnectedBody: {fileID: 4941112617862596870}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: 75
+  m_BreakTorque: 50
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 0
+  m_MassScale: 2
+  m_ConnectedMassScale: 1
+--- !u!114 &4188842072768413488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112617136903242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbc96f0c635c1f44b168caa452e32dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4941112617819716715
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +212,9 @@ GameObject:
   - component: {fileID: 4941112617819716726}
   - component: {fileID: 4941112617819716713}
   - component: {fileID: 4941112617819716712}
-  m_Layer: 0
+  - component: {fileID: 3378159408460264446}
+  - component: {fileID: 7582388782407853827}
+  m_Layer: 12
   m_Name: Physics Test Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,11 +229,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941112617819716715}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.101, y: 0.571, z: 9.233001}
+  m_LocalPosition: {x: -4.3, y: 1.782, z: 8.598}
   m_LocalScale: {x: 0.60524, y: 0.60524, z: 0.60524}
   m_Children: []
   m_Father: {fileID: 2843146126390940218}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4941112617819716724
 MeshFilter:
@@ -291,8 +325,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7257b8b2a7befaf4c8c4bcd43477bd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceToAdd: 1000
+  explForce: 500
   explRadius: 10
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!138 &3378159408460264446
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112617819716715}
+  m_ConnectedBody: {fileID: 4941112617136903240}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: 75
+  m_BreakTorque: 50
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 0
+  m_MassScale: 2
+  m_ConnectedMassScale: 1
+--- !u!114 &7582388782407853827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112617819716715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbc96f0c635c1f44b168caa452e32dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4941112617862596985
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +371,8 @@ GameObject:
   - component: {fileID: 4941112617862596871}
   - component: {fileID: 4941112617862596870}
   - component: {fileID: 4941112617862596867}
-  m_Layer: 0
+  - component: {fileID: 5852957646006927432}
+  m_Layer: 12
   m_Name: Physics Test Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941112617862596985}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.101, y: -0.079, z: 9.233001}
+  m_LocalPosition: {x: -4.077, y: 3.05, z: 8.593}
   m_LocalScale: {x: 0.60524, y: 0.60524, z: 0.60524}
   m_Children: []
   m_Father: {fileID: 2843146126390940218}
@@ -418,8 +483,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7257b8b2a7befaf4c8c4bcd43477bd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceToAdd: 1000
+  explForce: 500
   explRadius: 10
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &5852957646006927432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112617862596985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbc96f0c635c1f44b168caa452e32dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4941112618243836410
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +514,9 @@ GameObject:
   - component: {fileID: 4941112618243836409}
   - component: {fileID: 4941112618243836408}
   - component: {fileID: 4941112618243836411}
-  m_Layer: 0
+  - component: {fileID: 9034441399069202890}
+  - component: {fileID: 1174039532186927229}
+  m_Layer: 12
   m_Name: Physics Test Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,11 +531,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941112618243836410}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.44, y: 0.571, z: 9.233001}
+  m_LocalPosition: {x: -4.22, y: 1.17, z: 8.583}
   m_LocalScale: {x: 0.60524, y: 0.60524, z: 0.60524}
   m_Children: []
   m_Father: {fileID: 2843146126390940218}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4941112618243836295
 MeshFilter:
@@ -545,8 +627,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7257b8b2a7befaf4c8c4bcd43477bd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceToAdd: 1000
+  explForce: 500
   explRadius: 10
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!138 &9034441399069202890
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112618243836410}
+  m_ConnectedBody: {fileID: 4941112617819716713}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: 75
+  m_BreakTorque: 50
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 0
+  m_MassScale: 2
+  m_ConnectedMassScale: 1
+--- !u!114 &1174039532186927229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112618243836410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbc96f0c635c1f44b168caa452e32dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4941112618536911691
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,7 +673,9 @@ GameObject:
   - component: {fileID: 4941112618536911702}
   - component: {fileID: 4941112618536911689}
   - component: {fileID: 4941112618536911688}
-  m_Layer: 0
+  - component: {fileID: 5306711360169256139}
+  - component: {fileID: 312021564794263566}
+  m_Layer: 12
   m_Name: Physics Test Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -576,11 +690,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941112618536911691}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.44, y: -0.079, z: 9.233001}
+  m_LocalPosition: {x: -3.025, y: -0.073, z: 8.598}
   m_LocalScale: {x: 0.60524, y: 0.60524, z: 0.60524}
   m_Children: []
   m_Father: {fileID: 2843146126390940218}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4941112618536911700
 MeshFilter:
@@ -672,8 +786,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7257b8b2a7befaf4c8c4bcd43477bd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceToAdd: 1000
+  explForce: 500
   explRadius: 10
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!138 &5306711360169256139
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112618536911691}
+  m_ConnectedBody: {fileID: 4941112618243836408}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: 75
+  m_BreakTorque: 50
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 0
+  m_MassScale: 2
+  m_ConnectedMassScale: 1
+--- !u!114 &312021564794263566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112618536911691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbc96f0c635c1f44b168caa452e32dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4941112618688375167
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +846,7 @@ Transform:
   m_GameObject: {fileID: 4941112618688375167}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.77, y: -0.47, z: 8.91}
-  m_LocalScale: {x: 0.15398, y: 0.15398, z: 0.15398}
+  m_LocalScale: {x: 0.31570518, y: 0.15398, z: 0.15398}
   m_Children: []
   m_Father: {fileID: 2843146126390940218}
   m_RootOrder: 0
@@ -784,7 +928,9 @@ GameObject:
   - component: {fileID: 4941112618803058673}
   - component: {fileID: 4941112618803058672}
   - component: {fileID: 4941112618803058675}
-  m_Layer: 0
+  - component: {fileID: 4782114385845016349}
+  - component: {fileID: 4346195760766251675}
+  m_Layer: 12
   m_Name: Physics Test Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -799,11 +945,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941112618803058674}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.101, y: -0.07, z: 8.593}
+  m_LocalPosition: {x: -4.273, y: -0.07, z: 8.593}
   m_LocalScale: {x: 0.60524, y: 0.60524, z: 0.60524}
   m_Children: []
   m_Father: {fileID: 2843146126390940218}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4941112618803058687
 MeshFilter:
@@ -895,8 +1041,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7257b8b2a7befaf4c8c4bcd43477bd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceToAdd: 1000
+  explForce: 500
   explRadius: 10
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!138 &4782114385845016349
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112618803058674}
+  m_ConnectedBody: {fileID: 4941112617819716713}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: 75
+  m_BreakTorque: 50
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 0
+  m_MassScale: 2
+  m_ConnectedMassScale: 1
+--- !u!114 &4346195760766251675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112618803058674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbc96f0c635c1f44b168caa452e32dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4941112619074440155
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,7 +1087,9 @@ GameObject:
   - component: {fileID: 4941112619074440166}
   - component: {fileID: 4941112619074440153}
   - component: {fileID: 4941112619074440152}
-  m_Layer: 0
+  - component: {fileID: 2274876593143406192}
+  - component: {fileID: 8784317916966833174}
+  m_Layer: 12
   m_Name: Physics Test Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -926,11 +1104,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941112619074440155}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.44, y: -0.07, z: 8.593}
+  m_LocalPosition: {x: -3.649, y: -0.07, z: 8.593}
   m_LocalScale: {x: 0.60524, y: 0.60524, z: 0.60524}
   m_Children: []
   m_Father: {fileID: 2843146126390940218}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4941112619074440164
 MeshFilter:
@@ -1022,8 +1200,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7257b8b2a7befaf4c8c4bcd43477bd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceToAdd: 1000
+  explForce: 500
   explRadius: 10
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!138 &2274876593143406192
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112619074440155}
+  m_ConnectedBody: {fileID: 4941112619132026152}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: 75
+  m_BreakTorque: 50
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 0
+  m_MassScale: 2
+  m_ConnectedMassScale: 1
+--- !u!114 &8784317916966833174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112619074440155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbc96f0c635c1f44b168caa452e32dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4941112619132026154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,7 +1246,9 @@ GameObject:
   - component: {fileID: 4941112619132026153}
   - component: {fileID: 4941112619132026152}
   - component: {fileID: 4941112619132026155}
-  m_Layer: 0
+  - component: {fileID: 1294388796968654909}
+  - component: {fileID: 5599304709197686013}
+  m_Layer: 12
   m_Name: Physics Test Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1053,11 +1263,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941112619132026154}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.44, y: 0.583, z: 8.593}
+  m_LocalPosition: {x: -4.11, y: 0.551, z: 8.593}
   m_LocalScale: {x: 0.60524, y: 0.60524, z: 0.60524}
   m_Children: []
   m_Father: {fileID: 2843146126390940218}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4941112619132026167
 MeshFilter:
@@ -1149,5 +1359,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7257b8b2a7befaf4c8c4bcd43477bd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceToAdd: 1000
+  explForce: 500
   explRadius: 10
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!138 &1294388796968654909
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112619132026154}
+  m_ConnectedBody: {fileID: 4941112618243836408}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: 75
+  m_BreakTorque: 50
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 0
+  m_MassScale: 2
+  m_ConnectedMassScale: 1
+--- !u!114 &5599304709197686013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941112619132026154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbc96f0c635c1f44b168caa452e32dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
