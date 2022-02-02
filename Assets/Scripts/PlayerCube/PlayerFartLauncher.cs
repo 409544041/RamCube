@@ -115,6 +115,9 @@ namespace Qbism.PlayerCube
 
 			exprHandler.SetFace(Expressions.shocked, -1);
 
+			var musicPlayer = FindObjectOfType<MusicPlayer>();
+			musicPlayer.InitiageLevelCompleteTrack();
+
 			if (segmentRescue)
 			{
 				yield return new WaitForSeconds(shockedFaceTime);
