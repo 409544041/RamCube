@@ -13,8 +13,7 @@ namespace Qbism.General
 
 		private void Start()
 		{	
-			GetComponent<Text>().text = "Level " + 
-				(SceneManager.GetActiveScene().buildIndex - firstLevelIndex + 1).ToString();
+			GetComponent<Text>().text = SceneManager.GetActiveScene().name;
 		}
 	}
 }
