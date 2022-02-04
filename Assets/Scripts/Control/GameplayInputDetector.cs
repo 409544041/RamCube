@@ -119,18 +119,18 @@ namespace Qbism.Control
 			if (switchBoard.allowDebugFinish && mover.input) finish.Finish();
 		}
 			
-		private void Rewind()
+		public void Rewind()
 		{
 			if (!finish.hasFinished) rewinder.StartRewinding();
 		}
 
-		private void HandleRestartInput()
+		public void HandleRestartInput()
 		{
 			if (dialogueManager.inDialogue) dialogueManager.NextDialogueText();
 			else if (!finish.hasFinished) sceneHandler.RestartLevel();
 		}
 
-		private void BackToMap()
+		public void BackToMap()
 		{
 			if (!finish.hasFinished) mapLoader.StartLoadingWorldMap(true);
 		}
