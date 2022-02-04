@@ -48,7 +48,7 @@ namespace Qbism.WorldMap
 			pinUIJuice.PlayEnterLevelJuice();
 				
 			var loader = FindObjectOfType<LevelLoading>();
-			loader.StartLoadingLevel(levelPin.m_levelData.f_Pin.f_Index);
+			loader.StartLoadingLevel(levelPin.m_levelData.f_Level);
 		}
 
 		public void SetUIState(bool compValue, bool diamondValue, bool unCompValue, 

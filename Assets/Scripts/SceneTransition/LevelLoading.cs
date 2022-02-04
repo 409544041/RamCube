@@ -15,12 +15,12 @@ namespace Qbism.SceneTransition
 		//Config parameters
 		[SerializeField] float transDelay = .5f;
 
-		public void StartLoadingLevel(int index)
+		public void StartLoadingLevel(string levelName)
 		{
-			StartCoroutine(LoadLevel(index));
+			StartCoroutine(LoadLevel(levelName));
 		}
 
-		private IEnumerator LoadLevel(int index)
+		private IEnumerator LoadLevel(string levelName)
 		{
 			var transition = FindObjectOfType<CircleTransition>();
 			var fader = FindObjectOfType<Fader>();
@@ -43,7 +43,7 @@ namespace Qbism.SceneTransition
 			yield return transition.TransOut();
 			musicFader.TurnMusicOff();
 
-			yield return SceneManager.LoadSceneAsync(index);
+			yield return SceneManager.LoadSceneAsync(levelName);
 
 			//need this yield return here for debugFixCircle to work correctly
 			yield return null;
