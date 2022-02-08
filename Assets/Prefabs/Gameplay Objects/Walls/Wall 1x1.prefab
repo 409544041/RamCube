@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 5652572701872649906}
   - component: {fileID: 7523491965972352830}
   - component: {fileID: 7294688142589990132}
+  - component: {fileID: 3214876984053858057}
   m_Layer: 8
   m_Name: Wall 1x1
   m_TagString: Untagged
@@ -83,6 +84,7 @@ MonoBehaviour:
   popUpWall: {fileID: 0}
   wallJuicer: {fileID: 7294688142589990132}
   expressHandler: {fileID: 0}
+  navMeshOb: {fileID: 3214876984053858057}
 --- !u!65 &5652572701872649906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -139,6 +141,22 @@ MonoBehaviour:
   source: {fileID: 0}
   burrowTime: 0.3
   wallRef: {fileID: 2837588984947745432}
+--- !u!208 &3214876984053858057
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3863657441718100578}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 1.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7220928402715705878
 GameObject:
   m_ObjectHideFlags: 0

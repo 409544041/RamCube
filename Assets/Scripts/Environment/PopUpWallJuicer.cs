@@ -45,6 +45,7 @@ namespace Qbism.Environment
 				wallRef.expressHandler.SetFace(Expressions.toothyLaugh, -1);
 
 			burrowActivated = true;
+			wallRef.navMeshOb.enabled = false;
 		}
 	}
 }

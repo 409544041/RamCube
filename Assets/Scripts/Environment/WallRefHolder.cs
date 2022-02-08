@@ -2,6 +2,7 @@ using Qbism.SpriteAnimations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Qbism.Environment
 {
@@ -11,5 +12,6 @@ namespace Qbism.Environment
 		public PopUpWall popUpWall;
 		public PopUpWallJuicer wallJuicer;
 		public ExpressionHandler expressHandler;
+		public NavMeshObstacle navMeshOb;
 	}
 }
