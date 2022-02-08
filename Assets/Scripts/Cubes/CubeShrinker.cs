@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
-using Qbism.MoveableCubes;
+using UnityEngine.AI;
 using UnityEngine;
 
 namespace Qbism.Cubes
@@ -13,6 +13,7 @@ namespace Qbism.Cubes
 		[SerializeField] MMFeedbacks shrinkFeedback;
 		[SerializeField] MeshRenderer mesh, shrinkMesh;
 		[SerializeField] LineRenderer laserLine = null;
+		public NavMeshObstacle navMeshOb;
 
 
 		//Cache
@@ -77,6 +78,8 @@ namespace Qbism.Cubes
 			mesh.enabled = false;
 			shrinkMesh.enabled = true;
 			laserLine.enabled = false;
+			navMeshOb.enabled = false;
+
 			var staticCube = GetComponent<StaticCube>();
 			if (staticCube) staticCube.SwitchFaces();
 

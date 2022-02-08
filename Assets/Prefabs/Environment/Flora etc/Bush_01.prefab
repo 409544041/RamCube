@@ -46,6 +46,8 @@ GameObject:
   - component: {fileID: 5128190595478480936}
   - component: {fileID: 2302127244584573833}
   - component: {fileID: 256852084364980744}
+  - component: {fileID: 4246025613279272815}
+  - component: {fileID: 286996007933205131}
   m_Layer: 12
   m_Name: Bush_01
   m_TagString: Untagged
@@ -134,6 +136,7 @@ MonoBehaviour:
   - {fileID: 5092723184614934924}
   colliders:
   - {fileID: 2302127244584573833}
+  navMeshOb: {fileID: 4246025613279272815}
   canSpawn: 1
 --- !u!114 &5128190595478480936
 MonoBehaviour:
@@ -189,6 +192,38 @@ MonoBehaviour:
   - {fileID: 5092723184614934924}
   colliders:
   - {fileID: 2302127244584573833}
+  navMeshOb: {fileID: 4246025613279272815}
+--- !u!208 &4246025613279272815
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6749770702551853145}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.35000002, y: 0.35000002, z: 0.35000002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.15}
+  m_TimeToStationary: 0.5
+--- !u!114 &286996007933205131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6749770702551853145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5580a7abf819824691ae649fe8e5cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 5092723184614934924}
+  coll: {fileID: 2302127244584573833}
+  navMeshOb: {fileID: 4246025613279272815}
 --- !u!1001 &507973761715887031
 PrefabInstance:
   m_ObjectHideFlags: 0

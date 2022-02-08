@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FloraIdentifier : MonoBehaviour
 {
@@ -8,5 +9,6 @@ public class FloraIdentifier : MonoBehaviour
 	public FloraID floraType;
 	public MeshRenderer[] floraMeshes;
 	public Collider[] colliders;
+	public NavMeshObstacle navMeshOb;
 	public bool canSpawn = true;
 }

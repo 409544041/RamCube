@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 7607332498799743604}
   - component: {fileID: 8828575970641081869}
   - component: {fileID: 5479656558376683847}
+  - component: {fileID: 1092643465754050309}
   m_Layer: 8
   m_Name: Chimney
   m_TagString: Untagged
@@ -184,6 +185,22 @@ MonoBehaviour:
   isVolume: 0
   isLine: 0
   isParticle: 0
+--- !u!208 &1092643465754050309
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8255750033305105313}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.175, y: 0.5, z: 0.175}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8608068639817780971
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +465,7 @@ MonoBehaviour:
   bubbleVFX: {fileID: 2585827765421138311}
   impactVFX: {fileID: 5280434320628510367}
   torqueForce: 100000
+  navMeshOb: {fileID: 1092643465754050309}
 --- !u!114 &8130372863942309136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,15 +672,15 @@ ParticleSystem:
     type: 3}
   m_PrefabInstance: {fileID: 4379331684363360509}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4939121288022881978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8668807312556371527, guid: 62c2c16d0c39247408b4d99c4d9ae18a,
-    type: 3}
-  m_PrefabInstance: {fileID: 4379331684363360509}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4939121288022638356 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8668807312556681193, guid: 62c2c16d0c39247408b4d99c4d9ae18a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4379331684363360509}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4939121288022881978 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8668807312556371527, guid: 62c2c16d0c39247408b4d99c4d9ae18a,
     type: 3}
   m_PrefabInstance: {fileID: 4379331684363360509}
   m_PrefabAsset: {fileID: 0}
@@ -840,6 +858,7 @@ MonoBehaviour:
   bubbleVFX: {fileID: 2585827765421138311}
   impactVFX: {fileID: 4939121288003251816}
   torqueForce: 100000
+  navMeshOb: {fileID: 0}
 --- !u!114 &7585512850631704423
 MonoBehaviour:
   m_ObjectHideFlags: 0

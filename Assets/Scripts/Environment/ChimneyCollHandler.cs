@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Qbism.Environment
 {
@@ -13,6 +14,7 @@ namespace Qbism.Environment
 		[SerializeField] Rigidbody[] otherRB;
 		[SerializeField] ParticleSystem bubbleVFX, impactVFX;
 		[SerializeField] float torqueForce = 10000;
+		[SerializeField] NavMeshObstacle navMeshOb;
 
 		public void HandleExplosion(Transform explOrigin)
 		{
@@ -26,6 +28,8 @@ namespace Qbism.Environment
 			{
 				rb.isKinematic = false;
 			}
+
+			if (navMeshOb != null) navMeshOb.enabled = false;
 		}
 
 		public void HandleSerpentColl(Transform serpTrans)

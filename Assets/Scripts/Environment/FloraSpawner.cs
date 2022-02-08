@@ -139,6 +139,8 @@ namespace Qbism.Environment
 			{
 				coll.enabled = value;
 			}
+
+			if (flor.navMeshOb != null) flor.navMeshOb.enabled = value;
 		}
 	}
 }

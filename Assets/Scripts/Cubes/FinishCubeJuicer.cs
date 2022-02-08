@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using Qbism.PlayerCube;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.AI;
 
 namespace Qbism.Cubes
 {
@@ -19,6 +19,7 @@ namespace Qbism.Cubes
 		[Header("Impact VFX")]
 		[SerializeField] MMFeedbacks impactJuice;
 		[SerializeField] MeshRenderer mesh, glowMesh;
+		[SerializeField] NavMeshObstacle navMeshOb;
 		[Header("Charging VFX")]
 		[SerializeField] MMFeedbacks chargeJuice;
 		[SerializeField] float glowIncrease = .03f, glowIncreaseInterval = .05f;
@@ -99,6 +100,7 @@ namespace Qbism.Cubes
 		{
 			impactJuice.PlayFeedbacks();
 
+			navMeshOb.enabled = false;
 			mesh.enabled = false;
 			glowMesh.enabled = false;
 			explosion.KnockBack();
