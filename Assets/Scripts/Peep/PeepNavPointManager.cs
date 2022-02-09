@@ -4,10 +4,11 @@ using UnityEngine;
 
 namespace Qbism.Peep
 {
-	public class PeepPatrolPointManager : MonoBehaviour
+	public class PeepNavPointManager : MonoBehaviour
 	{
 		//Cache
 		public GameObject[] patrolPoints { get; private set; }
+		public GameObject[] hidePoints { get; private set; }
 		public GameObject[] peeps { get; private set; }
 
 		private void Awake()
@@ -20,8 +21,18 @@ namespace Qbism.Peep
 		{
 			foreach (var peep in peeps)
 			{
-				peep.GetComponent<PeepWalkState>().pointManager = this;
+				peep.GetComponent<PeepStateManager>().pointManager = this;
 			}
+
+			StartCoroutine(GetHidePoints()); 
+		}
+
+		private IEnumerator GetHidePoints()
+		{
+			//doing this with delay to give florachecker time to turn off hidepoints
+			yield return new WaitForSeconds(.1f);
+
+			hidePoints = GameObject.FindGameObjectsWithTag(("HidePoint"));
 		}
 	}
 }

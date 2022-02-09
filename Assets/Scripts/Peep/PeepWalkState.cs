@@ -8,12 +8,11 @@ namespace Qbism.Peep
 	public class PeepWalkState : MonoBehaviour, IPeepBaseState
 	{
 		//Config parameters
+		[SerializeField] float walkSpeed = 2;
 		[SerializeField] float minPatrolPointDis = 1;
-		[SerializeField] NavMeshAgent agent;
 
 		//Cache
 		PeepStateManager stateManager;
-		public PeepPatrolPointManager pointManager { get; set; }
 
 		//States
 		Transform nexTarget;
@@ -24,7 +23,7 @@ namespace Qbism.Peep
 
 			List<Transform> targets = new List<Transform>();
 
-			foreach (var point in pointManager.patrolPoints)
+			foreach (var point in stateManager.pointManager.patrolPoints)
 			{
 				if (Vector3.Distance(transform.position, point.transform.position) > minPatrolPointDis)
 					targets.Add(point.transform);
@@ -32,19 +31,21 @@ namespace Qbism.Peep
 
 			var i = Random.Range(0, targets.Count);
 			nexTarget = targets[i];
-			agent.destination = nexTarget.position;
 
-			// rotate peep to new destination direction
+			stateManager.agent.speed = walkSpeed;
+			stateManager.agent.destination = nexTarget.position;
+
 			// activate walking anim
 		}
 
 		public void StateUpdate(PeepStateManager psm)
 		{
-			//transform.LookAt(nexTarget.position);
 		}
 
 		private void OnTriggerEnter(Collider other)
 		{
+			if ((Object)stateManager.currentState != this) return;
+
 			if (other.tag == "PatrolPoint")
 			{
 				stateManager.idleState.pointAction = other.GetComponent<IdlePointAction>().pointAction;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Qbism.Peep
 {
@@ -10,10 +11,16 @@ namespace Qbism.Peep
 		public PeepIdleState idleState;
 		public PeepWalkState walkState;
 		public PeepRunState runState;
+		public NavMeshAgent agent;
+		[SerializeField] bool hide;
+
+		//Cache
+		public PeepNavPointManager pointManager {  get; set; }
 
 		//States
-		IPeepBaseState currentState;
-		string currentStateString;
+		public IPeepBaseState currentState { get; private set; }
+		string currentStateString; //just for easy reading in debug inspector
+		bool hidingInitiated = false;
 
 		private void Start()
 		{
@@ -24,6 +31,11 @@ namespace Qbism.Peep
 
 		private void Update()
 		{
+			if (!hidingInitiated && hide)
+			{
+				hidingInitiated = true;
+				SwitchState(runState);
+			}
 			currentState.StateUpdate(this);
 		}
 

@@ -105,6 +105,8 @@ MonoBehaviour:
   idleState: {fileID: 9195526909083625757}
   walkState: {fileID: 7044997350012408870}
   runState: {fileID: 5522690689258419204}
+  agent: {fileID: 8898327357715456591}
+  hide: 0
 --- !u!114 &9195526909083625757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,8 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9748d2b03a361794cb4f0c44db80d060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 2
   minPatrolPointDis: 1
-  agent: {fileID: 0}
 --- !u!114 &5522690689258419204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f088a2e377b7bc4c920bf131f919398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  runSpeed: 4
 --- !u!1001 &3552567876324834391
 PrefabInstance:
   m_ObjectHideFlags: 0

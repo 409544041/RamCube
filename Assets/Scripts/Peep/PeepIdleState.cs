@@ -22,7 +22,6 @@ namespace Qbism.Peep
 			if (stateManager == null) stateManager = psm;
 
 			ResetIdleTime();
-			Debug.Log(pointAction);
 		}
 
 		public void StateUpdate(PeepStateManager psm)

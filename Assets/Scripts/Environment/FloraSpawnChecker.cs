@@ -9,8 +9,9 @@ namespace Qbism.Environment
 	{
 		//Config Parameters
 		[SerializeField] MeshRenderer meshRenderer;
-		[SerializeField] Collider coll;
-		[SerializeField] NavMeshObstacle navMeshOb;
+		public Collider coll;
+		public NavMeshObstacle navMeshOb;
+		[SerializeField] GameObject hidePoint;
 
 		private void Start()
 		{
@@ -18,6 +19,7 @@ namespace Qbism.Environment
 			{
 				if (coll != null) coll.enabled = false;
 				if (navMeshOb != null) navMeshOb.enabled = false;
+				if (hidePoint != null) hidePoint.SetActive(false);
 			}
 		}
 	}
