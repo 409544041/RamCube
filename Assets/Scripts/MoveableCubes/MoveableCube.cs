@@ -32,6 +32,8 @@ namespace Qbism.MoveableCubes
 		[SerializeField] MMFeedbacks shrinkFeedback;
 		[SerializeField] float shrinkFeedbackDuration;
 		public MeshRenderer mesh;
+		[Header("Effector")]
+		public MoveableEffector moveEffector;
 
 		//Cache
 		FloorComponentAdder compAdder = null;
@@ -75,6 +77,7 @@ namespace Qbism.MoveableCubes
 			{
 				hasBumped = false;
 				onStopMovingMoveable(currentPos, this, false);
+				if (moveEffector != null) moveEffector.ToggleEffectFace(true);
 				return;
 			}
 
@@ -98,6 +101,8 @@ namespace Qbism.MoveableCubes
 
 			if(onFloorKeyCheck(posAhead)) //Normal movement
 			{
+				if (moveEffector != null) moveEffector.ToggleEffectFace(false);
+
 				for (int i = 0; i < (90 / turnStep); i++)
 				{
 					transform.RotateAround(side.position, turnAxis, turnStep);
@@ -118,6 +123,8 @@ namespace Qbism.MoveableCubes
 			//Docking
 			else if(!onFloorKeyCheck(posAhead))
 			{
+				if (moveEffector != null) moveEffector.ToggleEffectFace(false);
+
 				for (int i = 0; i < (180 / turnStep); i++)
 				{
 					transform.RotateAround(side.position, turnAxis, turnStep);
@@ -126,6 +133,12 @@ namespace Qbism.MoveableCubes
 
 				transform.localScale = new Vector3(1, 1, 1);
 				transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
+
+				if (moveEffector != null)
+				{
+					moveEffector.UpdateFacePos();
+					moveEffector.ToggleEffectFace(true);
+				}
 
 				cubePoser.RoundPosition();
 				hasBumped = false;
@@ -155,6 +168,12 @@ namespace Qbism.MoveableCubes
 
 			transform.localScale = new Vector3(1, 1, 1);
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
+			
+			if (moveEffector != null)
+			{
+				moveEffector.UpdateFacePos();
+				moveEffector.ToggleEffectFace(true);
+			}
 
 			cubePoser.RoundPosition();
 			hasBumped = false;
@@ -164,8 +183,12 @@ namespace Qbism.MoveableCubes
 
 		private void AddComponents(Vector2Int cubePos)
 		{
-			compAdder.AddComponent(cubePos, this.gameObject, laserLine, cubePoser);
+			compAdder.AddComponent(cubePos, this.gameObject, laserLine, cubePoser, moveEffector);
 			UpdateCenterPosition();
+
+			if (moveEffector == null) return;
+			moveEffector.AlignCubeRotToFaceRot();
+			moveEffector.AddMoveEffectorComponents(this.gameObject);
 		}
 
 		public bool CheckForWallAhead(Vector2Int currentPos, Vector2Int posAhead)
@@ -189,6 +212,8 @@ namespace Qbism.MoveableCubes
 			center.position = transform.position;
 			laserLine.transform.position = new Vector3 (transform.position.x, 
 				laserLine.transform.position.y, transform.position.z);
+
+			if (moveEffector != null) moveEffector.UpdateFacePos();
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead,

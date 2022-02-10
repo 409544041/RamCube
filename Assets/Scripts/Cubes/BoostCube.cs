@@ -13,9 +13,9 @@ namespace Qbism.Cubes
 		//Config parameters
 		[Header ("Boosting")]
 		[SerializeField] float boostSpeed = 30f;
-		[SerializeField] Transform boostRayOrigin = null;
-		[SerializeField] GameObject boostObjDir = null;
-		[SerializeField] LayerMask boostMaskPlayer, boostMaskMoveable;
+		public Transform boostRayOrigin = null;
+		public GameObject boostObjDir = null;
+		public LayerMask boostMaskPlayer, boostMaskMoveable;
 
 		public void PrepareAction(GameObject cube)
 		{

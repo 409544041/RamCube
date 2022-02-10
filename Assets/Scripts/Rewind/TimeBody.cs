@@ -267,6 +267,18 @@ namespace Qbism.Rewind
 				handler.movFloorCubeDic.Remove(cubePos);
 				moveHandler.moveableCubeDic.Add(rewPos, moveable);
 				moveable.gameObject.SendMessage("StartPostRewindJuice");
+
+				if (moveable.moveEffector != null)
+				{
+					if (moveable.moveEffector.effectorType == CubeTypes.Boosting)
+						Destroy(GetComponent<BoostCube>());
+
+					else if (moveable.moveEffector.effectorType == CubeTypes.Turning)
+						Destroy(GetComponent<TurningCube>());
+
+					else if (moveable.moveEffector.effectorType == CubeTypes.Static)
+						Destroy(GetComponent<StaticCube>());
+				}
 			}
 
 			isDockedList.RemoveAt(0);
