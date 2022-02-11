@@ -31,6 +31,8 @@ namespace Qbism.MoveableCubes
 
 		public void AlignCubeRotToFaceRot()
 		{
+			if (effectorType == CubeTypes.Static) return;
+
 			moveCube.transform.rotation = effectFace.transform.rotation;
 		}
 
@@ -41,7 +43,10 @@ namespace Qbism.MoveableCubes
 
 			else if (effectorType == CubeTypes.Turning)
 				GetComponent<TurnComponentAdder>().AddTurnComopnent(cube);
-			//else if (effectorType == CubeTypes.Static)
+
+
+			else if (effectorType == CubeTypes.Static)
+				GetComponent<StaticComponentAdder>().AddStaticComponent(cube);
 		}
 
 		public void ParentFaceToMoveable()

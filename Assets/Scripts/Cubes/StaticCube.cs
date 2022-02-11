@@ -9,7 +9,7 @@ namespace Qbism.Cubes
 	public class StaticCube : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks faceShrinkJuice;
+		public MMFeedbacks faceShrinkJuice;
 		public GameObject face, shrinkingFace;
 
 		public void BecomeShrinkingCube(GameObject cube)
