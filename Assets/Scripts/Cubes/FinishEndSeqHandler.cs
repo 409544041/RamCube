@@ -122,6 +122,10 @@ namespace Qbism.Cubes
 			{
 				var cube = pair.Value;
 				var pos = pair.Key;
+
+				var effector = cube.GetComponent<MoveableEffector>();
+				if (effector != null) effector.ToggleEffectFace(false);
+
 				if (!handler.movFloorCubeDic.ContainsKey(pos) &&
 					!handler.shrunkMovFloorCubeDic.ContainsKey(pos))
 					cubesToShrinkList.Add(cube.GetComponent<CubeShrinker>());
@@ -138,6 +142,10 @@ namespace Qbism.Cubes
 			{
 				var cube = pair.Value;
 				if (cube.type == CubeTypes.Finish) continue;
+
+				var effector = cube.GetComponent<MoveableEffector>();
+				if (effector != null) effector.ToggleEffectFace(false);
+
 				cubesToShrinkList.Add(cube.GetComponent<CubeShrinker>());
 			}
 

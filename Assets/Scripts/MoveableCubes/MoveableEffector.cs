@@ -9,9 +9,9 @@ namespace Qbism.MoveableCubes
 	public class MoveableEffector : MonoBehaviour
 	{
 		//Config parameters
-		public MeshRenderer effectFace;
+		[SerializeField] MeshRenderer effectFace;
 		[SerializeField] MoveableCube moveCube;
-		public Transform moveableParent;
+		[SerializeField] Transform moveableParent;
 		public CubeTypes effectorType;
 
 		private void Start()
@@ -40,6 +40,16 @@ namespace Qbism.MoveableCubes
 				GetComponent<BoostComponentAdder>().AddBoostComponent(cube);
 			//else if (effectorType == CubeTypes.Turning)
 			//else if (effectorType == CubeTypes.Static)
+		}
+
+		public void ParentFaceToMoveable()
+		{
+			effectFace.transform.parent = moveCube.transform;
+		}
+
+		public void UnParentFace()
+		{
+			effectFace.transform.parent = moveableParent.transform;
 		}
 	}
 }

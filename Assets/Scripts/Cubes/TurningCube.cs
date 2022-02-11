@@ -94,15 +94,15 @@ namespace Qbism.Cubes
 		{
 			var moveable = cube.GetComponent<MoveableCube>();
 			var cubePos = moveable.cubePoser.FetchGridPos();
-			var effectCube = moveable.moveEffector;
+			var moveEffector = moveable.moveEffector;
 
 			var axis = transform.TransformDirection(turnAxis);
 
-			if (effectCube != null)
+			if (moveEffector != null)
 			{
-				effectCube.UpdateFacePos();
-				effectCube.ToggleEffectFace(true);
-				effectCube.effectFace.transform.parent = moveable.transform;
+				moveEffector.UpdateFacePos();
+				moveEffector.ToggleEffectFace(true);
+				moveEffector.ParentFaceToMoveable();
 			}
 
 			onTurnEvent.Invoke();
@@ -117,8 +117,7 @@ namespace Qbism.Cubes
 			moveable.UpdateCenterPosition();
 			CalculateSide(ref side, ref movingTurnAxis, ref posAhead, moveable, cubePos);
 
-			if (effectCube != null)
-				effectCube.effectFace.transform.parent = effectCube.moveableParent;
+			if (moveEffector != null) moveEffector.UnParentFace();
 
 			if (prevCube.FetchType() != CubeTypes.Boosting)
 				moveable.InitiateMove(side, movingTurnAxis, posAhead, originPos);
