@@ -38,7 +38,9 @@ namespace Qbism.MoveableCubes
 		{
 			if (effectorType == CubeTypes.Boosting)
 				GetComponent<BoostComponentAdder>().AddBoostComponent(cube);
-			//else if (effectorType == CubeTypes.Turning)
+
+			else if (effectorType == CubeTypes.Turning)
+				GetComponent<TurnComponentAdder>().AddTurnComopnent(cube);
 			//else if (effectorType == CubeTypes.Static)
 		}
 

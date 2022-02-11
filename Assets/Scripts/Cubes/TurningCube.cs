@@ -1,29 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using Qbism.PlayerCube;
 using Qbism.MoveableCubes;
-using System;
 using Qbism.SpriteAnimations;
+using MoreMountains.Feedbacks;
 
 namespace Qbism.Cubes
 {
 	public class TurningCube : MonoBehaviour, ICubeInfluencer
 	{
 		//Config parameters
-		[SerializeField] int turnStep = 9;
+		[SerializeField] int turnStep = 6;
 		[SerializeField] float timeStep = 0.01f;
 		public bool isLeftTurning = false;
-		[SerializeField] CubePositioner cubePoser = null;
+		public CubePositioner cubePoser = null;
+		public MMFeedbacks juicer;
 
 		//Cache
 		PlayerCubeMover mover;
 
 		//States
 		public Vector3 turnAxis { get; set; } = new Vector3(0, 0, 0);
-
-		public UnityEvent onTurnEvent = new UnityEvent();
 
 		private void Awake()
 		{
@@ -49,7 +47,7 @@ namespace Qbism.Cubes
 
 			var axis = transform.TransformDirection(turnAxis);
 
-			onTurnEvent.Invoke();
+			juicer.PlayFeedbacks();
 
 			mover.GetComponentInChildren<ExpressionHandler>().
 				SetSituationFace(ExpressionSituations.turning, 1f);
@@ -105,7 +103,7 @@ namespace Qbism.Cubes
 				moveEffector.ParentFaceToMoveable();
 			}
 
-			onTurnEvent.Invoke();
+			juicer.PlayFeedbacks();
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
