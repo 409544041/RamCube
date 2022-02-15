@@ -16,14 +16,9 @@ namespace Qbism.Serpent
 		FinishEndSeqHandler finishEndSeq = null;
 
 		//States
-		public List<bool> serpDataList { get; set; } = new List<bool>();
 		int billyArrayIndex;
 		Transform[] segmentsReordered = null;
 		Transform[] segmentsUpToBilly = null;
-
-		//Actions, events, delegates etc
-		public Func<List<bool>> onFetchSerpDataList;
-
 
 		private void Awake() 
 		{
@@ -37,7 +32,6 @@ namespace Qbism.Serpent
 
 		private void Start()
 		{
-			serpDataList = onFetchSerpDataList();
 			DisableSegmentsAtStart();
 		}
 
@@ -96,9 +90,9 @@ namespace Qbism.Serpent
 
 		private int GetBillyArrayIndex(int billyIndex)
 		{
-			for (int i = 0; i < serpDataList.Count; i++)
+			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
-				if (serpDataList[i] == false)
+				if (E_SegmentsGameplayData.GetEntity(i).f_Rescued == false)
 				{
 					billyIndex = i;
 					break;
@@ -155,10 +149,11 @@ namespace Qbism.Serpent
 				//Checking if we're in a level where we're rescuing a segment and
 				//making sure that segment isn't visible on pickup
 				else if (inLevel && finishEndSeq.FetchHasSegment() &&
-					serpDataList[i] == true && serpDataList[i + 1] == false)
+					E_SegmentsGameplayData.GetEntity(i).f_Rescued == true &&
+					E_SegmentsGameplayData.GetEntity(i + 1).f_Rescued == false)
 					SwitchRenderers(mRenders, sRenders, follower, false);
 
-				else if (serpDataList[i] == true) 
+				else if (E_SegmentsGameplayData.GetEntity(i).f_Rescued == true) 
 					SwitchRenderers(mRenders, sRenders, follower, true);
 
 				else if ((inMap || inSerpScreen) && i == billyArrayIndex) 

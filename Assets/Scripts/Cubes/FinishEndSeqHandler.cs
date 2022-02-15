@@ -285,7 +285,7 @@ namespace Qbism.Cubes
 			var serpProg = progHandler.GetComponent<SerpentProgress>();
 
 			//if it's a segment rescue and 1 is still false, it has to be the head
-			if (serpProg.serpentDataList[1] == false) 
+			if (E_SegmentsGameplayData.GetEntity(1).f_Rescued == false) 
 			{
 				StartCoroutine(PanCamWithDelay(finishImpactResizeDur, endCam, endCamMotherDollyTarget, 
 					endCamMotherDollyDur, camResizeCurve));

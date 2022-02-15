@@ -30,9 +30,9 @@ namespace Qbism.WorldMap
 				E_BiomeGameplayData.GetEntity(i).f_Unlocked = false;
 			}
 			
-			for (int i = 0; i < serpProg.serpentDataList.Count; i++)
+			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
-				serpProg.serpentDataList[i] = false;
+				E_SegmentsGameplayData.GetEntity(i).f_Rescued = false;
 			}
 
 			progHandler.currentPin = E_Pin.GetEntity(0);

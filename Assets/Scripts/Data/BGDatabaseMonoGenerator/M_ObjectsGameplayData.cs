@@ -44,6 +44,17 @@ public partial class M_ObjectsGameplayData : BGEntityGo
 			_f_name[Entity.Index] = value;
 		}
 	}
+	public E_Objects f_Object
+	{
+		get
+		{
+			return (E_Objects) _f_Object[Entity.Index];
+		}
+		set
+		{
+			_f_Object[Entity.Index] = value;
+		}
+	}
 	public System.Boolean f_ObjectFound
 	{
 		get
@@ -73,6 +84,15 @@ public partial class M_ObjectsGameplayData : BGEntityGo
 		{
 			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(4704137733006346466UL,6507642195071752856UL));
 			return __f_name;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_Object;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Object
+	{
+		get
+		{
+			if(__f_Object==null || __f_Object.IsDeleted) __f_Object=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5575310436151618600UL,1591952302039477673UL));
+			return __f_Object;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldBool __f_ObjectFound;

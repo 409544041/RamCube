@@ -22,10 +22,10 @@ namespace Qbism.Dialogue
 
 			var leftEntity = E_Segments.FindEntity(entity =>
 				entity.f_name == dialogueToPlay.characters[0].ToString());
-			objs[0] = (GameObject) leftEntity.f_DialogueObject;
+			objs[0] = (GameObject) leftEntity.f_Prefab;
 			rots[0] = leftEntity.f_DialogueRotation;
 
-			objs[1] = (GameObject) m_segments.f_DialogueObject;
+			objs[1] = (GameObject) m_segments.f_Prefab;
 			rots[1] = m_segments.f_DialogueRotation;
 
 			dialogueManager.StartDialogue(dialogueToPlay, objs, rots, animator);

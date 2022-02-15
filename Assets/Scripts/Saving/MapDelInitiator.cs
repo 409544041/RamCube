@@ -22,9 +22,6 @@ namespace Qbism.Saving
 				progHandler.FixMapPinLinks();
 			}
 			else Debug.Log("Progress Handler not found.");
-
-			if (serpProg != null) serpProg.FixMapDelegateLinks();
-			else Debug.Log("Serpent Progress not found.");
 		}
 	}
 }

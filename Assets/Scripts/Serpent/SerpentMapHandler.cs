@@ -10,7 +10,6 @@ namespace Qbism.Serpent
 	public class SerpentMapHandler : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] float shrinkSpeed;
 		public float mapFollowSpeed = 9f;
 		[SerializeField] SplineFollower follower;
 		[SerializeField] SerpentSegmentHandler segHandler;
@@ -23,7 +22,7 @@ namespace Qbism.Serpent
 
 		public void ActivateSerpent(LevelPinUI pinUI)
 		{
-			if (segHandler.serpDataList[0] == false) return;
+			if (E_SegmentsGameplayData.GetEntity(0).f_Rescued == false) return;
 			
 			SetSpline();
 			SetSplineToTarget(pinUI);

@@ -58,11 +58,18 @@ public partial class M_Segments : BGEntityGo
 			_f_SegmentName[Entity.Index] = value;
 		}
 	}
-	public UnityEngine.Object f_DialogueObject
+	public UnityEngine.Object f_Prefab
 	{
 		get
 		{
-			return _f_DialogueObject[Entity.Index];
+			return _f_Prefab[Entity.Index];
+		}
+	}
+	public UnityEngine.Object f_SpawnPrefab
+	{
+		get
+		{
+			return _f_SpawnPrefab[Entity.Index];
 		}
 	}
 	public UnityEngine.Vector3 f_DialogueRotation
@@ -105,13 +112,22 @@ public partial class M_Segments : BGEntityGo
 			return __f_SegmentName;
 		}
 	}
-	private static BansheeGz.BGDatabase.BGFieldUnityObject __f_DialogueObject;
-	public static BansheeGz.BGDatabase.BGFieldUnityObject _f_DialogueObject
+	private static BansheeGz.BGDatabase.BGFieldUnityObject __f_Prefab;
+	public static BansheeGz.BGDatabase.BGFieldUnityObject _f_Prefab
 	{
 		get
 		{
-			if(__f_DialogueObject==null || __f_DialogueObject.IsDeleted) __f_DialogueObject=(BansheeGz.BGDatabase.BGFieldUnityObject) MetaDefault.GetField(new BGId(5042412784670426887UL,3798303333898769295UL));
-			return __f_DialogueObject;
+			if(__f_Prefab==null || __f_Prefab.IsDeleted) __f_Prefab=(BansheeGz.BGDatabase.BGFieldUnityObject) MetaDefault.GetField(new BGId(5042412784670426887UL,3798303333898769295UL));
+			return __f_Prefab;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldUnityObject __f_SpawnPrefab;
+	public static BansheeGz.BGDatabase.BGFieldUnityObject _f_SpawnPrefab
+	{
+		get
+		{
+			if(__f_SpawnPrefab==null || __f_SpawnPrefab.IsDeleted) __f_SpawnPrefab=(BansheeGz.BGDatabase.BGFieldUnityObject) MetaDefault.GetField(new BGId(5584655967112634227UL,13267101346744214414UL));
+			return __f_SpawnPrefab;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldVector3 __f_DialogueRotation;

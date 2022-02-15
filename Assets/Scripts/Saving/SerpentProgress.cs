@@ -7,12 +7,7 @@ namespace Qbism.Saving
 {
 	public class SerpentProgress : MonoBehaviour
 	{
-		//Config parameters
-		public GameObject[] segments;
-
 		//Cache
-		SerpentSegmentHandler[] serpSegHandlers = null;
-		SerpentScreenSplineHandler serpSplineHandler = null;
 		SegmentSpawner segSpawner = null;
 
 		//States
@@ -28,7 +23,7 @@ namespace Qbism.Saving
 		{
 			serpentDataList = new List<bool>();
 
-			for (int i = 0; i < segments.Length; i++)
+			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
 				serpentDataList.Add(false);
 			}
@@ -37,18 +32,30 @@ namespace Qbism.Saving
 		public void LoadSerpentData()
 		{
 			ProgData data = SavingSystem.LoadProgData();
-			if (data.savedSerpentDataList != null)
-				serpentDataList = data.savedSerpentDataList;
+			if (data == null) return;
+
+			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
+			{
+				E_SegmentsGameplayData.GetEntity(i).f_Rescued = data.savedSerpentDataList[i];
+			}
+		}
+
+		public void SaveSerpentData()
+		{
+			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
+			{
+				serpentDataList[i] = E_SegmentsGameplayData.GetEntity(i).f_Rescued;
+			}
 		}
 
 		public void AddSegment()
 		{
-			for (int i = 0; i < serpentDataList.Count; i++)
+			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
-				if(serpentDataList[i] == true) continue;
+				if(E_SegmentsGameplayData.GetEntity(i).f_Rescued == true) continue;
 				else
 				{
-					serpentDataList[i] = true;
+					E_SegmentsGameplayData.GetEntity(i).f_Rescued = true;
 					return;
 				}
 			}
@@ -56,11 +63,19 @@ namespace Qbism.Saving
 
 		private GameObject FetchSegmentToSpawn()
 		{
-			for (int i = 0; i < serpentDataList.Count; i++)
+			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
-				if(serpentDataList[i] == false)
+				if(E_SegmentsGameplayData.GetEntity(i).f_Rescued == false)
 				{
-					var nextSegmentToUnlock = segments[i];
+					GameObject nextSegmentToUnlock;
+
+					if (E_SegmentsGameplayData.GetEntity(i).f_Segment.f_SpawnPrefab != null)
+						nextSegmentToUnlock =
+						(GameObject)E_SegmentsGameplayData.GetEntity(i).f_Segment.f_SpawnPrefab;
+
+					else nextSegmentToUnlock =
+							(GameObject)E_SegmentsGameplayData.GetEntity(i).f_Segment.f_Prefab;
+					
 					return nextSegmentToUnlock;
 				}
 			}
@@ -69,58 +84,14 @@ namespace Qbism.Saving
 			return null;
 		}
 
-		private List<bool> FetchSerpentDataList()
-		{
-			return serpentDataList;
-		}
-
-		public void FixSerpentDelegateLinks()
-		{
-			serpSplineHandler = FindObjectOfType<SerpentScreenSplineHandler>();
-			if (serpSplineHandler != null)
-				serpSplineHandler.onFetchSerpDataList += FetchSerpentDataList;
-
-			serpSegHandlers = FindObjectsOfType<SerpentSegmentHandler>();
-			for (int i = 0; i < serpSegHandlers.Length; i++)
-			{
-				var handler = serpSegHandlers[i];
-				if (handler != null) handler.onFetchSerpDataList += FetchSerpentDataList;
-			}		
-		}
-
 		public void FixGameplayDelegateLinks()
 		{
-			serpSegHandlers = FindObjectsOfType<SerpentSegmentHandler>();
-			for (int i = 0; i < serpSegHandlers.Length; i++)
-			{
-				var handler = serpSegHandlers[i];
-				if (handler != null) handler.onFetchSerpDataList += FetchSerpentDataList;
-			}
-
 			segSpawner = FindObjectOfType<SegmentSpawner>();
 			if (segSpawner != null) segSpawner.onFetchSegmentToSpawn += FetchSegmentToSpawn;
 		}
 
-		public void FixMapDelegateLinks()
-		{
-			serpSegHandlers = FindObjectsOfType<SerpentSegmentHandler>();
-			for (int i = 0; i < serpSegHandlers.Length; i++)
-			{
-				var handler = serpSegHandlers[i];
-				if (handler != null) handler.onFetchSerpDataList += FetchSerpentDataList;
-			}
-		}
-
 		private void OnDisable()
 		{
-			foreach (SerpentSegmentHandler handler in serpSegHandlers)
-			{
-				if (handler != null) handler.onFetchSerpDataList -= FetchSerpentDataList;
-			}
-
-			if (serpSplineHandler != null)
-				serpSplineHandler.onFetchSerpDataList -= FetchSerpentDataList;
-
 			if (segSpawner != null) segSpawner.onFetchSegmentToSpawn -= FetchSegmentToSpawn;
 		}
 	}

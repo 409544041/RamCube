@@ -241,6 +241,8 @@ namespace Qbism.Saving
 				biomeDataList[i] = E_BiomeGameplayData.GetEntity(i).f_Unlocked;
 			}
 
+			serpProg.SaveSerpentData();
+
 			SavingSystem.SaveProgData(levelDataList, biomeDataList, currentPin.f_name.ToString(),
 				serpProg.serpentDataList);
 		}
@@ -248,6 +250,12 @@ namespace Qbism.Saving
 		public void LoadProgHandlerData()
 		{
 			ProgData data = SavingSystem.LoadProgData();
+
+			if (data == null)
+			{
+				Debug.Log("No save file found.");
+				return;
+			}
 
 			levelDataList = data.savedLevelData;
 			biomeDataList = data.savedBiomeData;
@@ -311,9 +319,9 @@ namespace Qbism.Saving
 
 			currentPin = E_LevelData.GetEntity(0).f_Pin;
 
-			for (int i = 0; i < serpProg.serpentDataList.Count; i++)
+			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
-				serpProg.serpentDataList[i] = false;
+				E_SegmentsGameplayData.GetEntity(i).f_Rescued = false;
 			}
 
 			SaveProgData();
