@@ -13,11 +13,11 @@ namespace Qbism.WorldMap
 
 		//Cache
 		PositionBiomeCenterpoint centerPoint;
+		LevelPinUI[] pinUIs;
 
 		//States
 		public LevelPin selectedPin { get; set; } = null;
 		public E_Biome currentBiome { get; set; }
-		E_Biome prevBiome;
 		LevelPin prevPin;
 		
 		//Actions, events, delegates etc
@@ -28,6 +28,7 @@ namespace Qbism.WorldMap
 		private void Awake() 
 		{
 			centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
+			pinUIs = FindObjectsOfType<LevelPinUI>();
 		}
 
 		private void Start()
@@ -43,11 +44,19 @@ namespace Qbism.WorldMap
 
 		private void Update() 
 		{
-			prevBiome = currentBiome;
 			prevPin = selectedPin;
 
 			GameObject selected = EventSystem.current.currentSelectedGameObject;
-			onPinFetch(selected); //Sets new selectedPin
+
+			for (int i = 0; i < pinUIs.Length; i++)
+			{
+				LevelPin pin = pinUIs[i].FetchPin(selected); //Sets new selectedPin
+				if (pin == null) continue;
+				
+				selectedPin = pin;
+				break;
+			}
+
 			currentBiome = selectedPin.m_Pin.f_Biome;
 
 			if(selectedPin != prevPin)

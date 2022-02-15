@@ -21,24 +21,8 @@ namespace Qbism.WorldMap
 		public Color unCompTextOutline, compTextOutline;
 		public LevelPinUIJuicer pinUIJuice;
 
-		//Cache
-		EditorLevelPinUI editorPin = null;
-		PinSelectionTracker pinSelTrack = null;
-
 		//Actions, events, delegates etc
 		public event Action<E_Pin, bool, E_Biome> onSetCurrentData;
-
-		private void Awake() 
-		{
-			editorPin = GetComponent<EditorLevelPinUI>();
-			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
-		}
-
-		private void OnEnable() 
-		{
-			if (pinSelTrack != null)
-				pinSelTrack.onPinFetch += FetchPin;
-		}
 
 		public void LoadAssignedLevel() //Called from Unity Event 
 		{				
@@ -78,16 +62,10 @@ namespace Qbism.WorldMap
 			button.Select();
 		}
 
-		private void FetchPin(GameObject selected)
+		public LevelPin FetchPin(GameObject selected)
 		{
-			if(selected == button.gameObject)
-				pinSelTrack.selectedPin = levelPin;
-		}
-
-		private void OnDisable() 
-		{
-			if (pinSelTrack != null)
-				pinSelTrack.onPinFetch -= FetchPin;
+			if (selected == button.gameObject) return levelPin;
+			else return null;
 		}
 	}
 }
