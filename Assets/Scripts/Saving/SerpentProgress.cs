@@ -11,7 +11,7 @@ namespace Qbism.Saving
 		SegmentSpawner segSpawner = null;
 
 		//States
-		public List<bool> serpentDataList;
+		public List<bool> serpentDataList { get; private set; } = new List<bool>();
 
 		private void Awake() 
 		{
@@ -21,8 +21,6 @@ namespace Qbism.Saving
 
 		private void BuildSerpentList()
 		{
-			serpentDataList = new List<bool>();
-
 			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
 				serpentDataList.Add(false);
@@ -48,7 +46,15 @@ namespace Qbism.Saving
 			}
 		}
 
-		public void AddSegment()
+		public void WipeSerpentData()
+		{
+			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
+			{
+				E_SegmentsGameplayData.GetEntity(i).f_Rescued = false;
+			}
+		}
+
+		public void AddSegmentToDatabase()
 		{
 			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
@@ -59,40 +65,6 @@ namespace Qbism.Saving
 					return;
 				}
 			}
-		}
-
-		private GameObject FetchSegmentToSpawn()
-		{
-			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
-			{
-				if(E_SegmentsGameplayData.GetEntity(i).f_Rescued == false)
-				{
-					GameObject nextSegmentToUnlock;
-
-					if (E_SegmentsGameplayData.GetEntity(i).f_Segment.f_SpawnPrefab != null)
-						nextSegmentToUnlock =
-						(GameObject)E_SegmentsGameplayData.GetEntity(i).f_Segment.f_SpawnPrefab;
-
-					else nextSegmentToUnlock =
-							(GameObject)E_SegmentsGameplayData.GetEntity(i).f_Segment.f_Prefab;
-					
-					return nextSegmentToUnlock;
-				}
-			}
-
-			Debug.LogError("Couldn't find next segment to unlock.");
-			return null;
-		}
-
-		public void FixGameplayDelegateLinks()
-		{
-			segSpawner = FindObjectOfType<SegmentSpawner>();
-			if (segSpawner != null) segSpawner.onFetchSegmentToSpawn += FetchSegmentToSpawn;
-		}
-
-		private void OnDisable()
-		{
-			if (segSpawner != null) segSpawner.onFetchSegmentToSpawn -= FetchSegmentToSpawn;
 		}
 	}
 }

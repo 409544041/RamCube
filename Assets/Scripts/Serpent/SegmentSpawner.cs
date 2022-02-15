@@ -12,7 +12,6 @@ namespace Qbism.Serpent
 		[SerializeField] float segSpawnY, headSegSpawnY;
 		[SerializeField] float spawnDegrees = 135, headSpawnDegrees = 110;
 
-
 		//States
 		GameObject segmentToSpawn = null;
 
@@ -20,27 +19,30 @@ namespace Qbism.Serpent
 		FinishEndSeqHandler finishEndSeq;
 		FinishCube finish;
 
-		//Actions, events, delegates etc
-		public Func<GameObject> onFetchSegmentToSpawn;
-
 		private void Awake() 
 		{
 			finish = GetComponent<FinishCube>();
 			finishEndSeq = GetComponent<FinishEndSeqHandler>();
 		}
 
-		private void OnEnable() 
+		public void SetSegmentToSpawn()
 		{
-			if (finish != null) finish.onSetSegment += FetchSegmentToSpawn;
-			if (finishEndSeq != null) finishEndSeq.onSpawnSegment += SpawnSegment;
+			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
+			{
+				if (E_SegmentsGameplayData.GetEntity(i).f_Rescued == false)
+				{
+					if (E_SegmentsGameplayData.GetEntity(i).f_Segment.f_SpawnPrefab != null)
+						segmentToSpawn =
+						(GameObject)E_SegmentsGameplayData.GetEntity(i).f_Segment.f_SpawnPrefab;
+
+					else segmentToSpawn =
+							(GameObject)E_SegmentsGameplayData.GetEntity(i).f_Segment.f_Prefab;
+					return;
+				}
+			}
 		}
 
-		private void FetchSegmentToSpawn()
-		{
-			segmentToSpawn = onFetchSegmentToSpawn();
-		}
-
-		private void SpawnSegment()
+		public void SpawnSegment()
 		{
 			bool isMother = segmentToSpawn.GetComponent<M_Segments>().f_name == "segment_head";
 
@@ -61,12 +63,6 @@ namespace Qbism.Serpent
 			if (isMother) spawnedSegment.GetComponentInChildren<MotherDragonAnimator>().
 					Spawn(headSpawnDegrees);
 			else spawnedSegment.GetComponentInChildren<SegmentAnimator>().Spawn();
-		}
-
-		private void OnDisable()
-		{
-			if (finish != null) finish.onSetSegment -= FetchSegmentToSpawn;
-			if (finishEndSeq != null) finishEndSeq.onSpawnSegment -= SpawnSegment;
 		}
 	}
 }

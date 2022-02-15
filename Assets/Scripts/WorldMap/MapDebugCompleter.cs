@@ -52,7 +52,7 @@ namespace Qbism.WorldMap
 
 				if (E_LevelData.GetEntity(i).f_SegmentPresent && !entity.f_Completed)
 				{
-					serpProg.AddSegment();
+					serpProg.AddSegmentToDatabase();
 				}
 			}
 		}

@@ -33,7 +33,7 @@ namespace Qbism.Cubes
 		PlayerCubeMover player;
 
 		//Actions, events, delegates etc
-		public event Action onSpawnFriends;
+		public event Action onSpawn;
 		public Func<bool> onFinishCheck;
 
 		private void Awake() 
@@ -105,7 +105,7 @@ namespace Qbism.Cubes
 			glowMesh.enabled = false;
 			explosion.KnockBack();
 
-			onSpawnFriends();
+			onSpawn();
 		}
 
 		private void StartGlowing()

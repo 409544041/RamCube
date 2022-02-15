@@ -22,12 +22,12 @@ namespace Qbism.WorldMap
 		public LevelPinUIJuicer pinUIJuice;
 
 		//Actions, events, delegates etc
-		public event Action<E_Pin, bool, E_Biome> onSetCurrentData;
+		public event Action<E_Pin, bool, bool, E_Biome> onSetCurrentData;
 
 		public void LoadAssignedLevel() //Called from Unity Event 
 		{				
 			onSetCurrentData(levelPin.m_levelData.f_Pin, levelPin.m_levelData.f_SegmentPresent,
-				levelPin.m_Pin.f_Biome);
+				levelPin.m_levelData.f_ObjectPresent, levelPin.m_Pin.f_Biome);
 
 			pinUIJuice.PlayEnterLevelJuice();
 				

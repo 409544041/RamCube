@@ -23,6 +23,8 @@ namespace Qbism.General
 		public bool demoSplashConnected;
 		[Header("Serpent Screen")]
 		public bool serpentScreenConnected;
+		[Header("Object Collection")]
+		public bool objectsConnected;
 
 	}
 }

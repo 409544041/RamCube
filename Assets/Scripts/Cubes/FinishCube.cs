@@ -6,18 +6,25 @@ using Qbism.Saving;
 using System;
 using Qbism.SpriteAnimations;
 using Qbism.General;
+using Qbism.Serpent;
+using Qbism.Objects;
 
 namespace Qbism.Cubes
 {
 	public class FinishCube : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] FinishEndSeqHandler finishEndSeq;
+		[SerializeField] FinishCubeJuicer juicer;
+		[SerializeField] SegmentSpawner segSpawner;
+		[SerializeField] ObjectSpawner objSpawner;
+
 		//Cache
 		PlayerCubeMover mover;
 		CubeHandler handler;
-		FinishCubeJuicer juicer;
 		ProgressHandler progHandler;
 		SerpentProgress serpProg;
-		FinishEndSeqHandler finishEndSeq;
+		ObjectsProgress objProg;
 		FloorCubeChecker floorChecker;
 		FeatureSwitchBoard switchBoard;
 		PlayerCubeFeedForward playerFF;
@@ -28,7 +35,6 @@ namespace Qbism.Cubes
 		public bool hasFinished = false;
 		
 		//Actions, events, delegates etc
-		public event Action onSetSegment;
 		public event Action<InterfaceIDs> onRewindPulse;
 		public event Action<InterfaceIDs> onStopRewindPulse;
 
@@ -37,10 +43,12 @@ namespace Qbism.Cubes
 			mover = FindObjectOfType<PlayerCubeMover>();
 			playerFF = mover.GetComponent<PlayerCubeFeedForward>();
 			handler = FindObjectOfType<CubeHandler>();
-			juicer = GetComponent<FinishCubeJuicer>();
 			progHandler = FindObjectOfType<ProgressHandler>();
-			if (progHandler) serpProg = progHandler.GetComponent<SerpentProgress>();
-			finishEndSeq = GetComponent<FinishEndSeqHandler>();
+			if (progHandler)
+			{
+				serpProg = progHandler.GetComponent<SerpentProgress>();
+				objProg = progHandler.GetComponent<ObjectsProgress>();
+			}
 			floorChecker = handler.GetComponent<FloorCubeChecker>();
 			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
 		}
@@ -83,17 +91,17 @@ namespace Qbism.Cubes
 			if (switchBoard.allowDebugFinish) PositionPlayerForFinish();
 
 			if (switchBoard.worldMapConnected)
-			{
 				progHandler.SetLevelToComplete(progHandler.currentPin);
-			}
 
-			if (progHandler.currentHasSegment)
+			if (progHandler.currentHasSegment && switchBoard.serpentConnected)
 			{
-				if (switchBoard.serpentConnected)
-				{
-					onSetSegment(); //Needs to be done before AddSegment
-					serpProg.AddSegment();
-				}
+				segSpawner.SetSegmentToSpawn(); //Needs to be done before AddSegment
+				serpProg.AddSegmentToDatabase();
+			}
+			else if (progHandler.currentHasObject && switchBoard.objectsConnected)
+			{
+				objSpawner.SetObjectToSpawn();
+				objProg.AddObjectToDatabase();
 			}
 
 			progHandler.SaveProgData();

@@ -6,9 +6,11 @@ using Dreamteck.Splines;
 using Qbism.Environment;
 using Qbism.General;
 using Qbism.MoveableCubes;
+using Qbism.Objects;
 using Qbism.PlayerCube;
 using Qbism.Saving;
 using Qbism.SceneTransition;
+using Qbism.Serpent;
 using UnityEngine;
 
 namespace Qbism.Cubes
@@ -39,6 +41,8 @@ namespace Qbism.Cubes
 		[SerializeField] float fartLaunchDelay, fartExplosionDelay;
 		[Header("References")]
 		public FinishCubeJuicer finishJuicer;
+		[SerializeField] SegmentSpawner segSpawner;
+		[SerializeField] ObjectSpawner objSpawner;
 		
 
 		//Cache
@@ -54,7 +58,6 @@ namespace Qbism.Cubes
 		//Actions, events, delegates etc
 		public event Action<bool> onSetSerpentMove;
 		public event Action onShowSegments;
-		public event Action onSpawnSegment;
 		public event Action onSpawnShapie;
 		public event Action<float> onUIFade;
 
@@ -63,7 +66,6 @@ namespace Qbism.Cubes
 			handler = FindObjectOfType<CubeHandler>();
 			movHandler = handler.GetComponent<MoveableCubeHandler>();
 			playerAnim = FindObjectOfType<PlayerAnimator>();
-			finishJuicer = GetComponent<FinishCubeJuicer>();
 			loader = FindObjectOfType<SceneHandler>();
 			progHandler = FindObjectOfType<ProgressHandler>();
 			farter = FindObjectOfType<PlayerFartLauncher>();
@@ -79,7 +81,7 @@ namespace Qbism.Cubes
 				playerAnim.onGetFinishPos += GetPos;
 			}
 
-			if (finishJuicer != null) finishJuicer.onSpawnFriends += SpawnFriends;
+			if (finishJuicer != null) finishJuicer.onSpawn += Spawn;
 			
 			if (farter != null) farter.onSwitchToEndCam += SwitchToEndCam;
 		}
@@ -233,12 +235,12 @@ namespace Qbism.Cubes
 			onShowSegments();
 		}
 
-		private void SpawnFriends()
+		private void Spawn()
 		{
 			if (FetchHasSegment() && switchBoard.serpentConnected)
-			{
-				onSpawnSegment();
-			}
+				segSpawner.SpawnSegment();
+			else if (progHandler.currentHasObject && switchBoard.objectsConnected)
+				objSpawner.SpawnObject();
 			else onSpawnShapie();
 		}
 
@@ -328,7 +330,7 @@ namespace Qbism.Cubes
 				playerAnim.onGetFinishPos -= GetPos;
 			}
 
-			if (finishJuicer != null) finishJuicer.onSpawnFriends -= SpawnFriends;
+			if (finishJuicer != null) finishJuicer.onSpawn -= Spawn;
 
 			if (farter != null) farter.onSwitchToEndCam -= SwitchToEndCam;
 		}

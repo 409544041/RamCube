@@ -99,6 +99,17 @@ public partial class M_LevelData : BGEntityGo
 			_f_SegmentPresent[Entity.Index] = value;
 		}
 	}
+	public System.Boolean f_ObjectPresent
+	{
+		get
+		{
+			return _f_ObjectPresent[Entity.Index];
+		}
+		set
+		{
+			_f_ObjectPresent[Entity.Index] = value;
+		}
+	}
 	public List<E_Pin> f_UnlocksPins
 	{
 		get
@@ -219,6 +230,15 @@ public partial class M_LevelData : BGEntityGo
 		{
 			if(__f_SegmentPresent==null || __f_SegmentPresent.IsDeleted) __f_SegmentPresent=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5708768082108931619UL,17251627778783522965UL));
 			return __f_SegmentPresent;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool __f_ObjectPresent;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_ObjectPresent
+	{
+		get
+		{
+			if(__f_ObjectPresent==null || __f_ObjectPresent.IsDeleted) __f_ObjectPresent=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5035583959570880310UL,15876700667616842681UL));
+			return __f_ObjectPresent;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldRelationMultiple __f_UnlocksPins;

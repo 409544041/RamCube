@@ -11,6 +11,7 @@ namespace Qbism.Saving
 	{
 		//Cache
 		SerpentProgress serpProg = null;
+		ObjectsProgress objProg = null;
 		PinSelectionTracker pinSelTrack = null;
 		LevelPinUI[] pinUIs = null;
 		PinChecker pinChecker = null;
@@ -21,9 +22,10 @@ namespace Qbism.Saving
 		public E_Biome currentBiome { get; set ; }
 		string debugCurrentPin, debugCurrentBiome;
 		public bool currentHasSegment { get ; set ; }
+		public bool currentHasObject { get; set ; }
 
 		List<LevelStatusData> levelDataList = new List<LevelStatusData>();
-		public List<bool> biomeDataList = new List<bool>();
+		List<bool> biomeDataList = new List<bool>();
 		List<LevelPinPathHandler> pinPathers = new List<LevelPinPathHandler>();
 		List<LineDrawer> lineDrawers = new List<LineDrawer>();
 
@@ -31,6 +33,7 @@ namespace Qbism.Saving
 		private void Awake() 
 		{
 			serpProg = GetComponent<SerpentProgress>();
+			objProg = GetComponent<ObjectsProgress>();
 			currentPin = E_LevelData.GetEntity(0).f_Pin;
 			currentBiome = currentPin.f_Biome;
 			BuildDataLists();
@@ -158,7 +161,7 @@ namespace Qbism.Saving
 			return pinChecker.levelPins;
 		}
 
-		private void SetCurrentData(E_Pin pin, bool hasSegment, E_Biome biome)
+		private void SetCurrentData(E_Pin pin, bool hasSegment, bool hasObject, E_Biome biome)
 		{
 			currentPin = pin;
 			currentBiome = biome;
@@ -168,8 +171,16 @@ namespace Qbism.Saving
 				var entity = E_LevelGameplayData.GetEntity(i);
 				if (entity.f_Pin == pin)
 				{
-					if (entity.f_Completed) currentHasSegment = false;
-					else currentHasSegment = hasSegment;
+					if (entity.f_Completed)
+					{
+						currentHasSegment = false;
+						currentHasObject = false;
+					}
+					else
+					{
+						currentHasSegment = hasSegment;
+						currentHasObject = hasObject;
+					}
 				}
 			}
 		}
@@ -242,9 +253,10 @@ namespace Qbism.Saving
 			}
 
 			serpProg.SaveSerpentData();
+			objProg.SaveObjectsData();
 
 			SavingSystem.SaveProgData(levelDataList, biomeDataList, currentPin.f_name.ToString(),
-				serpProg.serpentDataList);
+				serpProg.serpentDataList, objProg.objectsDataList);
 		}
 
 		public void LoadProgHandlerData()
@@ -319,10 +331,8 @@ namespace Qbism.Saving
 
 			currentPin = E_LevelData.GetEntity(0).f_Pin;
 
-			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
-			{
-				E_SegmentsGameplayData.GetEntity(i).f_Rescued = false;
-			}
+			serpProg.WipeSerpentData();
+			objProg.WipeObjectsData();
 
 			SaveProgData();
 		}

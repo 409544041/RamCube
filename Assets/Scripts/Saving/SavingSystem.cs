@@ -10,13 +10,14 @@ namespace Qbism.Saving
 	public static class SavingSystem
 	{
 		public static void SaveProgData(List<LevelStatusData> levelDataList, List<bool> biomeDataList,
-			string currentPin, List<bool> serpentDataList)
+			string currentPin, List<bool> serpentDataList, List<ObjectStatusData> objectsDataList)
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
 			string path = Application.persistentDataPath + "/progression.sav";
 			FileStream stream = new FileStream(path, FileMode.Create);
 
-			ProgData data = new ProgData(levelDataList, biomeDataList, currentPin, serpentDataList);
+			ProgData data = new ProgData(levelDataList, biomeDataList, currentPin, 
+				serpentDataList, objectsDataList);
 
 			formatter.Serialize(stream, data);
 			stream.Close();
