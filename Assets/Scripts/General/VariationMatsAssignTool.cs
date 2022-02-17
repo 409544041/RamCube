@@ -23,7 +23,7 @@ public class VariationMatsAssignTool : MonoBehaviour
 
 			for (int i = 0; i < duo.mats.Length; i++)
 			{
-				var bc = duo.scripOb.biomeColors[i]; ;
+				var bc = duo.scripOb.biomeColors[i];
 				var mat = duo.mats[i];
 
 				if (so.overwriteBaseColor) bc.baseColor = mat.GetColor("_BaseColor");
