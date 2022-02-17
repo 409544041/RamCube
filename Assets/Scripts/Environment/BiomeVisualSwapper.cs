@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.General;
 using Qbism.Saving;
-using Qbism.WorldMap;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 
 namespace Qbism.Environment
 {
@@ -17,6 +16,9 @@ namespace Qbism.Environment
 		[SerializeField] bool recalculate = false, checkBiomeLocally = false;
 		[SerializeField] bool isSkyBox = false, isVolume = false, isLine = false, isParticle = false;
 		//mesh and mat order should be same in scrip ob as in here
+
+		//Cache
+		public VarietyMaterialHandler matHandler { get; set; }
 
 		//States
 		E_Biome currentBiome;
@@ -55,8 +57,8 @@ namespace Qbism.Environment
 			}
 			else
 			{
-				M_MapBiomeIdentifier m_MapBiome = GetComponentInParent<M_MapBiomeIdentifier>();
-				if (m_MapBiome) currentBiome = m_MapBiome.f_Biome;
+				var m_biomeID = GetComponentInParent<M_BiomeIdentifier>();
+				if (m_biomeID) currentBiome = m_biomeID.f_Biome;
 			}
 		}
 
@@ -68,7 +70,8 @@ namespace Qbism.Environment
 				{
 					MeshFilter mFilter = meshParts[i].GetComponent<MeshFilter>();
 
-					Material[] newMats = CreateNewMatsArray(biomeVariety, i);
+					Material[] oldMats = meshParts[i].GetComponent<Renderer>().materials;
+					Material[] newMats = CreateNewMatsArray(biomeVariety, i, oldMats);
 
 					meshParts[i].GetComponent<Renderer>().materials = newMats;
 
@@ -87,12 +90,15 @@ namespace Qbism.Environment
 			}
 			else
 			{
-				Material[] newMats = CreateNewMatsArray(biomeVariety, 0);
+				Material[] oldMats = lineRender.materials;
+				Material[] newMats = CreateNewMatsArray(biomeVariety, 0, oldMats);
 				lineRender.materials = newMats;
+				//Create new version of create new array for this
 			}
 		}
 
-		private static Material[] CreateNewMatsArray(BiomeVisualsScripOb.biomeVariety biomeVariety, int i)
+		private Material[] CreateNewMatsArray(BiomeVisualsScripOb.biomeVariety biomeVariety, int i,
+			Material[] oldMats)
 		{
 			//Create new mats array
 			var newMats = new Material[biomeVariety.parts[i].mats.Length];
@@ -100,7 +106,7 @@ namespace Qbism.Environment
 			//Fill new mats array with correct mats from SO
 			for (int j = 0; j < newMats.Length; j++)
 			{
-				newMats[j] = biomeVariety.parts[i].mats[j];
+				newMats[j] = matHandler.allMatsDic[oldMats[j]][currentBiome.f_BiomeEnum];
 			}
 
 			return newMats;

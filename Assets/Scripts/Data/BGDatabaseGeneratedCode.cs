@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BansheeGz.BGDatabase;
 using Alias_rifegrt_Pin = E_Pin;
 using Alias_rifegrt_BiomeGameplayData = E_BiomeGameplayData;
-using Alias_rifegrt_MapBiomeIdentifier = E_MapBiomeIdentifier;
+using Alias_rifegrt_BiomeIdentifier = E_BiomeIdentifier;
 using Alias_rifegrt_LevelData = E_LevelData;
 using Alias_rifegrt_LevelGameplayData = E_LevelGameplayData;
 using Alias_rifegrt_MapWalls = E_MapWalls;
@@ -314,7 +314,7 @@ public partial class E_LevelData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -325,6 +325,7 @@ public partial class E_LevelData : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_LevelData() : base(MetaDefault)
 	{
 	}
@@ -508,6 +509,17 @@ public partial class E_Biome : BGEntity
 			_f_MinMaxZ[Index] = value;
 		}
 	}
+	public Biomes f_BiomeEnum
+	{
+		get
+		{
+			return (Biomes) _f_BiomeEnum[Index];
+		}
+		set
+		{
+			_f_BiomeEnum[Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -535,6 +547,15 @@ public partial class E_Biome : BGEntity
 			return _ufle12jhs77_f_MinMaxZ;
 		}
 	}
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_BiomeEnum;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_BiomeEnum
+	{
+		get
+		{
+			if(_ufle12jhs77_f_BiomeEnum==null || _ufle12jhs77_f_BiomeEnum.IsDeleted) _ufle12jhs77_f_BiomeEnum=(BansheeGz.BGDatabase.BGFieldEnum) MetaDefault.GetField(new BGId(5459334516898714152UL,14924872184031788952UL));
+			return _ufle12jhs77_f_BiomeEnum;
+		}
+	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
 	public List<E_Pin> RelatedPinListUsingBiomeRelation
 	{
@@ -560,14 +581,14 @@ public partial class E_Biome : BGEntity
 			return _private_result_list;
 		}
 	}
-	public List<E_MapBiomeIdentifier> RelatedMapBiomeIdentifierListUsingBiomeRelation
+	public List<E_BiomeIdentifier> RelatedBiomeIdentifierListUsingBiomeRelation
 	{
 		get
 		{
-			var _private_related_list = Alias_rifegrt_MapBiomeIdentifier._f_Biome.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
+			var _private_related_list = Alias_rifegrt_BiomeIdentifier._f_Biome.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
 			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_MapBiomeIdentifier>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_MapBiomeIdentifier) _private_related_list[i]);
+			var _private_result_list = new List<E_BiomeIdentifier>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_BiomeIdentifier) _private_related_list[i]);
 			_tugjbyuhfv_reusableList.Clear();
 			return _private_result_list;
 		}
@@ -578,7 +599,7 @@ public partial class E_Biome : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -589,6 +610,7 @@ public partial class E_Biome : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_Biome() : base(MetaDefault)
 	{
 	}
@@ -832,7 +854,7 @@ public partial class E_Pin : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -843,6 +865,7 @@ public partial class E_Pin : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_Pin() : base(MetaDefault)
 	{
 	}
@@ -1185,7 +1208,7 @@ public partial class E_LevelGameplayData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -1196,6 +1219,7 @@ public partial class E_LevelGameplayData : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_LevelGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1383,7 +1407,7 @@ public partial class E_MapWalls : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -1394,6 +1418,7 @@ public partial class E_MapWalls : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_MapWalls() : base(MetaDefault)
 	{
 	}
@@ -1556,7 +1581,7 @@ public partial class E_BiomeGameplayData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -1567,6 +1592,7 @@ public partial class E_BiomeGameplayData : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_BiomeGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1621,7 +1647,7 @@ public partial class E_BiomeGameplayData : BGEntity
 //||                   Generated by BansheeGz Code Generator ||
 //=============================================================
 
-public partial class E_MapBiomeIdentifier : BGEntity
+public partial class E_BiomeIdentifier : BGEntity
 {
 
 	//=============================================================
@@ -1632,11 +1658,11 @@ public partial class E_MapBiomeIdentifier : BGEntity
 	{
 		public BGEntity NewEntity(BGMetaEntity meta)
 		{
-			return new E_MapBiomeIdentifier(meta);
+			return new E_BiomeIdentifier(meta);
 		}
 		public BGEntity NewEntity(BGMetaEntity meta, BGId id)
 		{
-			return new E_MapBiomeIdentifier(meta, id);
+			return new E_BiomeIdentifier(meta, id);
 		}
 	}
 	private static BansheeGz.BGDatabase.BGMetaRow _metaDefault;
@@ -1709,7 +1735,7 @@ public partial class E_MapBiomeIdentifier : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -1720,53 +1746,54 @@ public partial class E_MapBiomeIdentifier : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
-	private E_MapBiomeIdentifier() : base(MetaDefault)
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
+	private E_BiomeIdentifier() : base(MetaDefault)
 	{
 	}
-	private E_MapBiomeIdentifier(BGId id) : base(MetaDefault, id)
+	private E_BiomeIdentifier(BGId id) : base(MetaDefault, id)
 	{
 	}
-	private E_MapBiomeIdentifier(BGMetaEntity meta) : base(meta)
+	private E_BiomeIdentifier(BGMetaEntity meta) : base(meta)
 	{
 	}
-	private E_MapBiomeIdentifier(BGMetaEntity meta, BGId id) : base(meta, id)
+	private E_BiomeIdentifier(BGMetaEntity meta, BGId id) : base(meta, id)
 	{
 	}
-	public static E_MapBiomeIdentifier FindEntity(Predicate<E_MapBiomeIdentifier> filter)
+	public static E_BiomeIdentifier FindEntity(Predicate<E_BiomeIdentifier> filter)
 	{
-		return MetaDefault.FindEntity(entity => filter==null || filter((E_MapBiomeIdentifier) entity)) as E_MapBiomeIdentifier;
+		return MetaDefault.FindEntity(entity => filter==null || filter((E_BiomeIdentifier) entity)) as E_BiomeIdentifier;
 	}
-	public static List<E_MapBiomeIdentifier> FindEntities(Predicate<E_MapBiomeIdentifier> filter, List<E_MapBiomeIdentifier> result=null, Comparison<E_MapBiomeIdentifier> sort=null)
+	public static List<E_BiomeIdentifier> FindEntities(Predicate<E_BiomeIdentifier> filter, List<E_BiomeIdentifier> result=null, Comparison<E_BiomeIdentifier> sort=null)
 	{
-		result = result ?? new List<E_MapBiomeIdentifier>();
+		result = result ?? new List<E_BiomeIdentifier>();
 		_find_Entities_Result.Clear();
-		MetaDefault.FindEntities(filter == null ? (Predicate<BGEntity>) null: e => filter((E_MapBiomeIdentifier) e), _find_Entities_Result, sort == null ? (Comparison<BGEntity>) null : (e1, e2) => sort((E_MapBiomeIdentifier) e1, (E_MapBiomeIdentifier) e2));
+		MetaDefault.FindEntities(filter == null ? (Predicate<BGEntity>) null: e => filter((E_BiomeIdentifier) e), _find_Entities_Result, sort == null ? (Comparison<BGEntity>) null : (e1, e2) => sort((E_BiomeIdentifier) e1, (E_BiomeIdentifier) e2));
 		if (_find_Entities_Result.Count != 0)
 		{
-			for (var i = 0; i < _find_Entities_Result.Count; i++) result.Add((E_MapBiomeIdentifier) _find_Entities_Result[i]);
+			for (var i = 0; i < _find_Entities_Result.Count; i++) result.Add((E_BiomeIdentifier) _find_Entities_Result[i]);
 			_find_Entities_Result.Clear();
 		}
 		return result;
 	}
-	public static void ForEachEntity(Action<E_MapBiomeIdentifier> action, Predicate<E_MapBiomeIdentifier> filter=null, Comparison<E_MapBiomeIdentifier> sort=null)
+	public static void ForEachEntity(Action<E_BiomeIdentifier> action, Predicate<E_BiomeIdentifier> filter=null, Comparison<E_BiomeIdentifier> sort=null)
 	{
-		MetaDefault.ForEachEntity(entity => action((E_MapBiomeIdentifier) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_MapBiomeIdentifier) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_MapBiomeIdentifier)e1,(E_MapBiomeIdentifier)e2));
+		MetaDefault.ForEachEntity(entity => action((E_BiomeIdentifier) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_BiomeIdentifier) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_BiomeIdentifier)e1,(E_BiomeIdentifier)e2));
 	}
-	public static E_MapBiomeIdentifier GetEntity(BGId entityId)
+	public static E_BiomeIdentifier GetEntity(BGId entityId)
 	{
-		return (E_MapBiomeIdentifier) MetaDefault.GetEntity(entityId);
+		return (E_BiomeIdentifier) MetaDefault.GetEntity(entityId);
 	}
-	public static E_MapBiomeIdentifier GetEntity(int index)
+	public static E_BiomeIdentifier GetEntity(int index)
 	{
-		return (E_MapBiomeIdentifier) MetaDefault[index];
+		return (E_BiomeIdentifier) MetaDefault[index];
 	}
-	public static E_MapBiomeIdentifier GetEntity(string entityName)
+	public static E_BiomeIdentifier GetEntity(string entityName)
 	{
-		return (E_MapBiomeIdentifier) MetaDefault.GetEntity(entityName);
+		return (E_BiomeIdentifier) MetaDefault.GetEntity(entityName);
 	}
-	public static E_MapBiomeIdentifier NewEntity()
+	public static E_BiomeIdentifier NewEntity()
 	{
-		return (E_MapBiomeIdentifier) MetaDefault.NewEntity();
+		return (E_BiomeIdentifier) MetaDefault.NewEntity();
 	}
 }
 
@@ -1978,7 +2005,7 @@ public partial class E_Dialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -1989,6 +2016,7 @@ public partial class E_Dialogues : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_Dialogues() : base(MetaDefault)
 	{
 	}
@@ -2240,7 +2268,7 @@ public partial class E_Segments : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -2251,6 +2279,7 @@ public partial class E_Segments : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_Segments() : base(MetaDefault)
 	{
 	}
@@ -2429,7 +2458,7 @@ public partial class E_QuestDialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -2440,6 +2469,7 @@ public partial class E_QuestDialogues : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_QuestDialogues() : base(MetaDefault)
 	{
 	}
@@ -2622,7 +2652,7 @@ public partial class E_ReturnDialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -2633,6 +2663,7 @@ public partial class E_ReturnDialogues : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_ReturnDialogues() : base(MetaDefault)
 	{
 	}
@@ -2815,7 +2846,7 @@ public partial class E_AdditionalDialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -2826,6 +2857,7 @@ public partial class E_AdditionalDialogues : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_AdditionalDialogues() : base(MetaDefault)
 	{
 	}
@@ -3008,7 +3040,7 @@ public partial class E_QuestWaitingDialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -3019,6 +3051,7 @@ public partial class E_QuestWaitingDialogues : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_QuestWaitingDialogues() : base(MetaDefault)
 	{
 	}
@@ -3181,7 +3214,7 @@ public partial class E_HintsDialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -3192,6 +3225,7 @@ public partial class E_HintsDialogues : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_HintsDialogues() : base(MetaDefault)
 	{
 	}
@@ -3358,7 +3392,7 @@ public partial class E_SegmentsGameplayData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -3369,6 +3403,7 @@ public partial class E_SegmentsGameplayData : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_SegmentsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -3580,7 +3615,7 @@ public partial class E_Objects : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -3591,6 +3626,7 @@ public partial class E_Objects : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_Objects() : base(MetaDefault)
 	{
 	}
@@ -3773,7 +3809,7 @@ public partial class E_ObjectsGameplayData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_MapBiomeIdentifier.Factory _factory6_PFS = new E_MapBiomeIdentifier.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
 	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
 	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
@@ -3784,6 +3820,7 @@ public partial class E_ObjectsGameplayData : BGEntity
 	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
 	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
 	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
 	private E_ObjectsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -3831,6 +3868,172 @@ public partial class E_ObjectsGameplayData : BGEntity
 	public static E_ObjectsGameplayData NewEntity()
 	{
 		return (E_ObjectsGameplayData) MetaDefault.NewEntity();
+	}
+}
+
+//=============================================================
+//||                   Generated by BansheeGz Code Generator ||
+//=============================================================
+
+public partial class E_BiomeMaterials : BGEntity
+{
+
+	//=============================================================
+	//||                   Generated by BansheeGz Code Generator ||
+	//=============================================================
+
+	public class Factory : BGEntity.EntityFactory
+	{
+		public BGEntity NewEntity(BGMetaEntity meta)
+		{
+			return new E_BiomeMaterials(meta);
+		}
+		public BGEntity NewEntity(BGMetaEntity meta, BGId id)
+		{
+			return new E_BiomeMaterials(meta, id);
+		}
+	}
+	private static BansheeGz.BGDatabase.BGMetaRow _metaDefault;
+	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault
+	{
+		get
+		{
+			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(4649947552330352983UL,13530387805308431750UL));
+			return _metaDefault;
+		}
+	}
+	public static BansheeGz.BGDatabase.BGRepoEvents Events
+	{
+		get
+		{
+			return BGRepo.I.Events;
+		}
+	}
+	private static readonly List<BGEntity> _find_Entities_Result = new List<BGEntity>();
+	public static int CountEntities
+	{
+		get
+		{
+			return MetaDefault.CountEntities;
+		}
+	}
+	public System.String f_name
+	{
+		get
+		{
+			return _f_name[Index];
+		}
+		set
+		{
+			_f_name[Index] = value;
+		}
+	}
+	public UnityEngine.Material f_BaseMat
+	{
+		get
+		{
+			return _f_BaseMat[Index];
+		}
+	}
+	public UnityEngine.ScriptableObject f_BiomeMatData
+	{
+		get
+		{
+			return _f_BiomeMatData[Index];
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
+	{
+		get
+		{
+			if(_ufle12jhs77_f_name==null || _ufle12jhs77_f_name.IsDeleted) _ufle12jhs77_f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(4978891958627373064UL,9403543406811406215UL));
+			return _ufle12jhs77_f_name;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldUnityMaterial _ufle12jhs77_f_BaseMat;
+	public static BansheeGz.BGDatabase.BGFieldUnityMaterial _f_BaseMat
+	{
+		get
+		{
+			if(_ufle12jhs77_f_BaseMat==null || _ufle12jhs77_f_BaseMat.IsDeleted) _ufle12jhs77_f_BaseMat=(BansheeGz.BGDatabase.BGFieldUnityMaterial) MetaDefault.GetField(new BGId(5644313148071272613UL,4942721971229058439UL));
+			return _ufle12jhs77_f_BaseMat;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _ufle12jhs77_f_BiomeMatData;
+	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_BiomeMatData
+	{
+		get
+		{
+			if(_ufle12jhs77_f_BiomeMatData==null || _ufle12jhs77_f_BiomeMatData.IsDeleted) _ufle12jhs77_f_BiomeMatData=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5687714982544646833UL,9757857676103977126UL));
+			return _ufle12jhs77_f_BiomeMatData;
+		}
+	}
+	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
+	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
+	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
+	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
+	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
+	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
+	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
+	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_AdditionalDialogues.Factory _factory11_PFS = new E_AdditionalDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory12_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_HintsDialogues.Factory _factory13_PFS = new E_HintsDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory14_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory15_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory16_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory17_PFS = new E_BiomeMaterials.Factory();
+	private E_BiomeMaterials() : base(MetaDefault)
+	{
+	}
+	private E_BiomeMaterials(BGId id) : base(MetaDefault, id)
+	{
+	}
+	private E_BiomeMaterials(BGMetaEntity meta) : base(meta)
+	{
+	}
+	private E_BiomeMaterials(BGMetaEntity meta, BGId id) : base(meta, id)
+	{
+	}
+	public static E_BiomeMaterials FindEntity(Predicate<E_BiomeMaterials> filter)
+	{
+		return MetaDefault.FindEntity(entity => filter==null || filter((E_BiomeMaterials) entity)) as E_BiomeMaterials;
+	}
+	public static List<E_BiomeMaterials> FindEntities(Predicate<E_BiomeMaterials> filter, List<E_BiomeMaterials> result=null, Comparison<E_BiomeMaterials> sort=null)
+	{
+		result = result ?? new List<E_BiomeMaterials>();
+		_find_Entities_Result.Clear();
+		MetaDefault.FindEntities(filter == null ? (Predicate<BGEntity>) null: e => filter((E_BiomeMaterials) e), _find_Entities_Result, sort == null ? (Comparison<BGEntity>) null : (e1, e2) => sort((E_BiomeMaterials) e1, (E_BiomeMaterials) e2));
+		if (_find_Entities_Result.Count != 0)
+		{
+			for (var i = 0; i < _find_Entities_Result.Count; i++) result.Add((E_BiomeMaterials) _find_Entities_Result[i]);
+			_find_Entities_Result.Clear();
+		}
+		return result;
+	}
+	public static void ForEachEntity(Action<E_BiomeMaterials> action, Predicate<E_BiomeMaterials> filter=null, Comparison<E_BiomeMaterials> sort=null)
+	{
+		MetaDefault.ForEachEntity(entity => action((E_BiomeMaterials) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_BiomeMaterials) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_BiomeMaterials)e1,(E_BiomeMaterials)e2));
+	}
+	public static E_BiomeMaterials GetEntity(BGId entityId)
+	{
+		return (E_BiomeMaterials) MetaDefault.GetEntity(entityId);
+	}
+	public static E_BiomeMaterials GetEntity(int index)
+	{
+		return (E_BiomeMaterials) MetaDefault[index];
+	}
+	public static E_BiomeMaterials GetEntity(string entityName)
+	{
+		return (E_BiomeMaterials) MetaDefault.GetEntity(entityName);
+	}
+	public static E_BiomeMaterials NewEntity()
+	{
+		return (E_BiomeMaterials) MetaDefault.NewEntity();
 	}
 }
 #pragma warning restore 414
