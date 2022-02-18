@@ -12,10 +12,10 @@ namespace Qbism.Environment
 		[SerializeField] GameObject[] meshParts;
 		[SerializeField] LineRenderer lineRender;
 		[SerializeField] ParticleSystem particle;
-		[SerializeField] BiomeVisualsScripOb biomeVarietySO;
+		[SerializeField] MeshVarietyScripOb meshVarietySO;
+		[SerializeField] MatBiomeColorsScripOb vignetteSO;
 		[SerializeField] bool recalculate = false, checkBiomeLocally = false;
-		[SerializeField] bool isSkyBox = false, isVolume = false, isLine = false, isParticle = false;
-		//mesh and mat order should be same in scrip ob as in here
+		[SerializeField] bool isSkyBox = false, isVolume = false;
 
 		//Cache
 		public VarietyMaterialHandler matHandler { get; set; }
@@ -27,15 +27,11 @@ namespace Qbism.Environment
 		{
 			FetchBiome();
 
-			foreach (var biomeVariety in biomeVarietySO.biomeVarieties)
-			{
-				if (biomeVariety.biome.ToString() != currentBiome.f_name.ToString()) continue;
-
-				if (isSkyBox) RenderSettings.skybox = biomeVariety.parts[0].mats[0];
-				else if (isVolume) SetVolume(biomeVariety);
-				else if (isParticle) SetParticle(biomeVariety);
-				else SetVisuals(biomeVariety);
-			}
+			if (isSkyBox) SetSkyBox();
+			else if (isVolume) SetVolume();
+			else if (particle != null) SetParticle();
+			else if (lineRender != null) SetLineRendererVisuals();
+			else SwapVisuals();
 		}
 
 		private void FetchBiome()
@@ -62,57 +58,71 @@ namespace Qbism.Environment
 			}
 		}
 
-		private void SetVisuals(BiomeVisualsScripOb.biomeVariety biomeVariety)
+		private void SwapVisuals()
 		{
-			if (!lineRender)
+			for (int i = 0; i < meshParts.Length; i++)
 			{
-				for (int i = 0; i < meshParts.Length; i++)
-				{
-					MeshFilter mFilter = meshParts[i].GetComponent<MeshFilter>();
+				var mFilter = meshParts[i].GetComponent<MeshFilter>();
+				var oldMats = meshParts[i].GetComponent<Renderer>().sharedMaterials;
+				var matsLength = oldMats.Length;
+				var newMats = CreateNewMatsArray(matsLength, i, oldMats);
 
-					Material[] oldMats = meshParts[i].GetComponent<Renderer>().materials;
-					Material[] newMats = CreateNewMatsArray(biomeVariety, i, oldMats);
+				if (newMats != null) meshParts[i].GetComponent<Renderer>().materials = newMats;
 
-					meshParts[i].GetComponent<Renderer>().materials = newMats;
-
-					//Change mesh
-					if (biomeVariety.parts[i].mesh != null)
-					{
-						mFilter.mesh = biomeVariety.parts[i].mesh;
-					}
-
-					if (recalculate)
-					{
-						mFilter.mesh.RecalculateTangents();
-						mFilter.mesh.RecalculateNormals();
-					}
-				}
-			}
-			else
-			{
-				Material[] oldMats = lineRender.materials;
-				Material[] newMats = CreateNewMatsArray(biomeVariety, 0, oldMats);
-				lineRender.materials = newMats;
-				//Create new version of create new array for this
+				if (meshVarietySO != null) SwapMesh(i, mFilter);
 			}
 		}
 
-		private Material[] CreateNewMatsArray(BiomeVisualsScripOb.biomeVariety biomeVariety, int i,
-			Material[] oldMats)
+		private void SwapMesh(int i, MeshFilter mFilter)
+		{
+			MeshVarietyScripOb.biomeVariety biomeVariety = null;
+
+			foreach (var variety in meshVarietySO.biomeVarieties)
+			{
+				if (variety.biome != currentBiome.f_BiomeEnum) continue;
+				biomeVariety = variety;
+			}
+
+			if (biomeVariety.parts[i].mesh != null)
+			{
+				mFilter.mesh = biomeVariety.parts[i].mesh;
+			}
+
+			if (recalculate)
+			{
+				mFilter.mesh.RecalculateTangents();
+				mFilter.mesh.RecalculateNormals();
+			}
+		}
+
+		private Material[] CreateNewMatsArray(int matsLength, int i, Material[] oldMats)
 		{
 			//Create new mats array
-			var newMats = new Material[biomeVariety.parts[i].mats.Length];
+			var newMats = new Material[matsLength];
 
 			//Fill new mats array with correct mats from SO
 			for (int j = 0; j < newMats.Length; j++)
 			{
-				newMats[j] = matHandler.allMatsDic[oldMats[j]][currentBiome.f_BiomeEnum];
-			}
+				if (matHandler.allMatsDic.ContainsKey(oldMats[j]))
+				{
+					if (matHandler.allMatsDic[oldMats[j]].ContainsKey(currentBiome.f_BiomeEnum))
+						newMats[j] = matHandler.allMatsDic[oldMats[j]][currentBiome.f_BiomeEnum];
 
+					else return null;
+				}
+				else return null;
+			}
 			return newMats;
 		}
 
-		private void SetVolume(BiomeVisualsScripOb.biomeVariety biomeVariety)
+		private void SetLineRendererVisuals()
+		{
+			Material[] oldMats = lineRender.materials;
+			Material[] newMats = CreateNewMatsArray(oldMats.Length, 0, oldMats);
+			if (newMats != null) lineRender.materials = newMats;
+		}
+
+		private void SetVolume()
 		{
 			//Not sure how it works is but it works
 			UnityEngine.Rendering.VolumeProfile volProf = GetComponent<UnityEngine.Rendering.Volume>()?.profile;
@@ -120,14 +130,34 @@ namespace Qbism.Environment
 			UnityEngine.Rendering.Universal.Vignette vignette;
 			if (!volProf.TryGet(out vignette)) throw new System.NullReferenceException(nameof(vignette));
 
-			var vigColor = biomeVariety.parts[0].mats[0].color;
-			vignette.color.Override(vigColor);
+			foreach (var entry in vignetteSO.biomeColors)
+			{
+				if (entry.biome != currentBiome.f_BiomeEnum) continue;
+				vignette.color.Override(entry.baseColor);
+			}
 		}
 
-		private void SetParticle(BiomeVisualsScripOb.biomeVariety biomeVariety)
+		private void SetSkyBox()
+		{
+			var oldMat = RenderSettings.skybox;
+
+			if (matHandler.allMatsDic.ContainsKey(oldMat))
+			{
+				if (matHandler.allMatsDic[oldMat].ContainsKey(currentBiome.f_BiomeEnum))
+					RenderSettings.skybox = matHandler.allMatsDic[oldMat][currentBiome.f_BiomeEnum];
+			}			
+		}
+
+		private void SetParticle()
 		{
 			var renderMod = particle.GetComponent<ParticleSystemRenderer>();
-			renderMod.material = biomeVariety.parts[0].mats[0];
+			var oldMat = renderMod.sharedMaterial;
+
+			if (matHandler.allMatsDic.ContainsKey(oldMat))
+			{
+				if (matHandler.allMatsDic[oldMat].ContainsKey(currentBiome.f_BiomeEnum))
+					renderMod.material = matHandler.allMatsDic[oldMat][currentBiome.f_BiomeEnum];
+			}
 		}
 	}
 }

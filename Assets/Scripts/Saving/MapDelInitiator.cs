@@ -14,7 +14,7 @@ namespace Qbism.Saving
 
 			progHandler.FixMapUILinks();
 			progHandler.FixMapPinLinks();
-			matHandler.FixMapLinks();
+			matHandler.FixLinks();
 		}
 	}
 }
