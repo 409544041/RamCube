@@ -117,9 +117,13 @@ namespace Qbism.Environment
 
 		private void SetLineRendererVisuals()
 		{
-			Material[] oldMats = lineRender.materials;
-			Material[] newMats = CreateNewMatsArray(oldMats.Length, 0, oldMats);
-			if (newMats != null) lineRender.materials = newMats;
+			var oldMat = lineRender.sharedMaterial;
+
+			if (matHandler.allMatsDic.ContainsKey(oldMat))
+			{
+				if (matHandler.allMatsDic[oldMat].ContainsKey(currentBiome.f_BiomeEnum))
+					lineRender.material = matHandler.allMatsDic[oldMat][currentBiome.f_BiomeEnum];
+			}
 		}
 
 		private void SetVolume()
