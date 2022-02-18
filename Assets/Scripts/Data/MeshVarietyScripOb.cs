@@ -5,19 +5,12 @@ using UnityEngine;
 public class MeshVarietyScripOb : ScriptableObject
 {
 	//Config Parameters
-	public biomeVariety[] biomeVarieties;
+	public meshVariety[] meshVarieties;
 
 	[System.Serializable]
-	public class biomeVariety
+	public class meshVariety
 	{
 		public Biomes biome;
-		public objectPart[] parts;
-	}
-
-	[System.Serializable]
-	public class objectPart
-	{
-		public Mesh mesh;
-		public Material[] mats;
+		public Mesh[] meshes;
 	}
 }

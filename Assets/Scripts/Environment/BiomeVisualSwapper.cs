@@ -75,17 +75,17 @@ namespace Qbism.Environment
 
 		private void SwapMesh(int i, MeshFilter mFilter)
 		{
-			MeshVarietyScripOb.biomeVariety biomeVariety = null;
+			MeshVarietyScripOb.meshVariety meshVariety = null;
 
-			foreach (var variety in meshVarietySO.biomeVarieties)
+			foreach (var variety in meshVarietySO.meshVarieties)
 			{
 				if (variety.biome != currentBiome.f_BiomeEnum) continue;
-				biomeVariety = variety;
+				meshVariety = variety;
 			}
 
-			if (biomeVariety.parts[i].mesh != null)
+			if (meshVariety.meshes[i] != null)
 			{
-				mFilter.mesh = biomeVariety.parts[i].mesh;
+				mFilter.mesh = meshVariety.meshes[i];
 			}
 
 			if (recalculate)
