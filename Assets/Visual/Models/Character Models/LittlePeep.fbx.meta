@@ -18,6 +18,21 @@ ModelImporter:
   - first:
       74: 3365767990223612192
     second: rig.001|Walking (1)
+  - first:
+      74: -5414100027817053873
+    second: Peep Idle Alt
+  - first:
+      74: 8602005156090790149
+    second: Peep Idle
+  - first:
+      74: 5676574305895727249
+    second: Peep Walking
+  - first:
+      74: 1372691933412856569
+    second: Peep Startle
+  - first:
+      74: 5393144679441723231
+    second: Peep Running
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -47,8 +62,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: rig.001|Idle Alt
-      takeName: rig.001|Idle Alt
+      name: Peep Idle Alt
+      takeName: peep|idel
       internalID: 0
       firstFrame: 0
       lastFrame: 75
@@ -76,11 +91,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: rig.001|PoseLib
-      takeName: rig.001|PoseLib
+      name: Peep Idle
+      takeName: peep|Idle
       internalID: 0
       firstFrame: 0
-      lastFrame: 1
+      lastFrame: 125
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -105,8 +120,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: rig.001|Walking
-      takeName: rig.001|Walking
+      name: Peep Walking
+      takeName: peep|Walk
       internalID: 0
       firstFrame: 0
       lastFrame: 20
@@ -134,11 +149,40 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: rig.001|Idle
-      takeName: rig.001|Idle
+      name: Peep Startle
+      takeName: peep|Startled
       internalID: 0
       firstFrame: 0
-      lastFrame: 125
+      lastFrame: 15
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Peep Running
+      takeName: peep|Run
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 14
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

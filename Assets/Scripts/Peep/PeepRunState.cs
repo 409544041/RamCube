@@ -30,7 +30,10 @@ namespace Qbism.Peep
 
 		public void StateUpdate(PeepStateManager psm)
 		{
+		}
 
+		public void StateFixedUpdate(PeepStateManager psm)
+		{
 		}
 
 		private void OnTriggerEnter(Collider other)

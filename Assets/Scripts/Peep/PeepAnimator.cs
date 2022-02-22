@@ -55,10 +55,10 @@ namespace Qbism.Peep
 		{
 			var randomMax = 1 / idleChangeChance;
 			var roll = Random.Range(0, randomMax);
-			if (roll <= 1) ChangeIdleAnim();
+			if (roll <= 1) StartCoroutine(ChangeIdleAnim());
 		}
 
-		private void ChangeIdleAnim()
+		private IEnumerator ChangeIdleAnim()
 		{
 			float elapsedTime = 0;
 
@@ -68,6 +68,7 @@ namespace Qbism.Peep
 				var percentageComplete = elapsedTime / idleAnimTransDur;
 
 				idleType = Mathf.Lerp(idleType, 1, percentageComplete);
+				yield return null;
 			}
 
 			idleType = 1;

@@ -7,5 +7,6 @@ namespace Qbism.Peep
 	{
 		void StateEnter(PeepStateManager psm);
 		void StateUpdate(PeepStateManager psm);
+		void StateFixedUpdate(PeepStateManager psm);
 	}
 }
