@@ -7,7 +7,7 @@ namespace Qbism.Peep
 	public class PeepIdleState : MonoBehaviour, IPeepBaseState
 	{
 		//Config parameters
-		[SerializeField] Vector2 idleTimeMinMax = new Vector2(4, 8);
+		public Vector2 idleTimeMinMax = new Vector2(4, 8);
 
 		//Cache
 		PeepStateManager stateManager;
@@ -27,7 +27,7 @@ namespace Qbism.Peep
 		public void StateUpdate(PeepStateManager psm)
 		{
 			idleTimer += Time.deltaTime;
-			if (idleTimer > timeToIdle) stateManager.SwitchState(stateManager.walkState);
+			if (idleTimer > timeToIdle) stateManager.SwitchState(stateManager.refs.walkState);
 		}
 
 		private void ResetIdleTime()

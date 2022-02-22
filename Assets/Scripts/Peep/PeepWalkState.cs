@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Qbism.Peep
 {
@@ -32,14 +31,18 @@ namespace Qbism.Peep
 			var i = Random.Range(0, targets.Count);
 			nexTarget = targets[i];
 
-			stateManager.agent.speed = walkSpeed;
-			stateManager.agent.destination = nexTarget.position;
+			stateManager.refs.agent.speed = walkSpeed;
+			stateManager.refs.agent.destination = nexTarget.position;
 
 			// activate walking anim
 		}
 
 		public void StateUpdate(PeepStateManager psm)
 		{
+			if (stateManager.refs.agent.velocity.magnitude > .025f &&
+				stateManager.refs.agent.velocity.magnitude < .1f)
+				transform.rotation = 
+					Quaternion.LookRotation(stateManager.refs.agent.velocity.normalized);
 		}
 
 		private void OnTriggerEnter(Collider other)
@@ -48,8 +51,8 @@ namespace Qbism.Peep
 
 			if (other.tag == "PatrolPoint")
 			{
-				stateManager.idleState.pointAction = other.GetComponent<IdlePointAction>().pointAction;
-				stateManager.SwitchState(stateManager.idleState);
+				stateManager.refs.idleState.pointAction = other.GetComponent<IdlePointAction>().pointAction;
+				stateManager.SwitchState(stateManager.refs.idleState);
 			}
 		}
 	}

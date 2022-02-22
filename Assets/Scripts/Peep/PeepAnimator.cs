@@ -1,30 +1,83 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Qbism.Peep
 {
 	public class PeepAnimator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] Animator animator;
-		[SerializeField] Rigidbody rb;
+		[SerializeField] float idleChangeChance = .5f;
+		[SerializeField] float idleAnimTransDur = .25f;
+		[SerializeField] PeepRefHolder refs;
 
 		//States
-		Vector3 prevPos;
-		float currentSpeed;
+		float moveSpeed;
+		Vector2 idleTimeMinMax;
+		float idleType = 0;
+		float idleTimer = 0;
+		float timeToIdle;
+
+		private void Start()
+		{
+			SetIdleMinMax();
+			timeToIdle = Random.Range(idleTimeMinMax.x, idleTimeMinMax.y);
+		}
 
 		private void Update()
 		{
-			CalculateCurrentSpeed();
-			animator.SetFloat("MoveSpeed", currentSpeed);
+			moveSpeed = refs.agent.velocity.magnitude;
+			HandleIdleTimer();
+			refs.animator.SetFloat("MoveSpeed", moveSpeed);
+			refs.animator.SetFloat("IdleType", idleType);
 		}
 
-		private void CalculateCurrentSpeed()
+		private void HandleIdleTimer()
 		{
-			var currentMovement = transform.position - prevPos;
-			currentSpeed = currentMovement.magnitude / Time.deltaTime;
-			prevPos = transform.position;
+			if (moveSpeed < .1f && idleType == 0) idleTimer += Time.deltaTime;
+			if (idleTimer > timeToIdle)
+			{
+				RollForIdleAnimChange();
+				idleTimer = 0;
+				timeToIdle = Random.Range(idleTimeMinMax.x, idleTimeMinMax.y);
+			}
+		}
+
+		private void SetIdleMinMax()
+		{
+			var idleMin = refs.idleState.idleTimeMinMax.x / 2;
+			var idleMax = refs.idleState.idleTimeMinMax.y / 2;
+			idleTimeMinMax = new Vector2(idleMin, idleMax);
+		}
+
+		private void RollForIdleAnimChange()
+		{
+			var randomMax = 1 / idleChangeChance;
+			var roll = Random.Range(0, randomMax);
+			if (roll <= 1) ChangeIdleAnim();
+		}
+
+		private void ChangeIdleAnim()
+		{
+			float elapsedTime = 0;
+
+			while (!Mathf.Approximately(idleType, 1))
+			{
+				elapsedTime += Time.deltaTime;
+				var percentageComplete = elapsedTime / idleAnimTransDur;
+
+				idleType = Mathf.Lerp(idleType, 1, percentageComplete);
+			}
+
+			idleType = 1;
+		}
+
+		private void ResetIdleType() //Called by animator
+		{
+			idleType = 0;
+			idleTimer = 0;
+			timeToIdle = Random.Range(idleTimeMinMax.x, idleTimeMinMax.y);
 		}
 	}
 }

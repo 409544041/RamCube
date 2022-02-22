@@ -65,12 +65,12 @@ namespace Qbism.Peep
 				pointChecker.navMeshOb.carving = false;
 				yield return null; //this to ensure the carving is actually turned off before the next bit
 
-				if (stateManager.agent.CalculatePath(points[i].transform.position, path) 
+				if (stateManager.refs.agent.CalculatePath(points[i].transform.position, path) 
 					&& pathFound == false)
 				{
-					stateManager.agent.speed = runSpeed;
+					stateManager.refs.agent.speed = runSpeed;
 					currentTarget = points[i].transform;
-					stateManager.agent.destination = currentTarget.position;
+					stateManager.refs.agent.destination = currentTarget.position;
 					pointChecker.coll.enabled = true;
 					pathFound = true;
 					continue;

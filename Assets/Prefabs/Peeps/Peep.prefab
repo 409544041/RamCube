@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3905939384105803416}
   - component: {fileID: 1078660253669783178}
   - component: {fileID: 8898327357715456591}
+  - component: {fileID: 3139609209763554299}
   - component: {fileID: 2713160480240438226}
   - component: {fileID: 9195526909083625757}
   - component: {fileID: 7044997350012408870}
@@ -79,9 +80,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.35
   m_Speed: 2
-  m_Acceleration: 8
+  m_Acceleration: 100
   avoidancePriority: 50
-  m_AngularSpeed: 1000
+  m_AngularSpeed: 100000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -90,6 +91,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3139609209763554299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345699827149558106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52315eef8eed5b245ab300c905472456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateMngr: {fileID: 2713160480240438226}
+  idleState: {fileID: 9195526909083625757}
+  walkState: {fileID: 7044997350012408870}
+  runState: {fileID: 5522690689258419204}
+  agent: {fileID: 8898327357715456591}
+  animator: {fileID: 4938652295556564000}
+  peepAnim: {fileID: 855340356152411188}
 --- !u!114 &2713160480240438226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,10 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968f83b04ef6d8f42b5da7f6af5083b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleState: {fileID: 9195526909083625757}
-  walkState: {fileID: 7044997350012408870}
-  runState: {fileID: 5522690689258419204}
-  agent: {fileID: 8898327357715456591}
+  refs: {fileID: 3139609209763554299}
   hide: 0
 --- !u!114 &9195526909083625757
 MonoBehaviour:
@@ -132,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9748d2b03a361794cb4f0c44db80d060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 2
+  walkSpeed: 0.6
   minPatrolPointDis: 1
 --- !u!114 &5522690689258419204
 MonoBehaviour:
@@ -146,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f088a2e377b7bc4c920bf131f919398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 4
+  runSpeed: 2
 --- !u!1001 &3552567876324834391
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -284,5 +301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a8ccbdcd5ad2694b9f3126bad832210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 4938652295556564000}
-  rb: {fileID: 3905939384105803416}
+  idleChangeChance: 1
+  idleAnimTransDur: 0.5
+  refs: {fileID: 3139609209763554299}

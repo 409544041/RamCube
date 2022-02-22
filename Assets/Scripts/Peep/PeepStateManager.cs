@@ -1,17 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Qbism.Peep
 {
 	public class PeepStateManager : MonoBehaviour
 	{
 		//Config parameters
-		public PeepIdleState idleState;
-		public PeepWalkState walkState;
-		public PeepRunState runState;
-		public NavMeshAgent agent;
+		public PeepRefHolder refs;
 		[SerializeField] bool hide;
 
 		//Cache
@@ -24,7 +20,7 @@ namespace Qbism.Peep
 
 		private void Start()
 		{
-			currentState = idleState;
+			currentState = refs.idleState;
 			currentStateString = currentState.ToString();
 			currentState.StateEnter(this);
 		}
@@ -34,7 +30,7 @@ namespace Qbism.Peep
 			if (!hidingInitiated && hide)
 			{
 				hidingInitiated = true;
-				SwitchState(runState);
+				SwitchState(refs.runState);
 			}
 			currentState.StateUpdate(this);
 		}
