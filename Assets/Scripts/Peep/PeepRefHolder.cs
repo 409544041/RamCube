@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,5 +15,8 @@ namespace Qbism.Peep
 		public NavMeshAgent agent;
 		public Animator animator;
 		public PeepAnimator peepAnim;
+		public PeepMover peepMover;
+		public MMFeedbacks hideJuice;
+		public Renderer[] meshes;
 	}
 }

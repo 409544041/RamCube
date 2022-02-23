@@ -30,10 +30,6 @@ namespace Qbism.Peep
 			if (idleTimer > timeToIdle) stateManager.SwitchState(stateManager.refs.walkState);
 		}
 
-		public void StateFixedUpdate(PeepStateManager psm)
-		{
-		}
-
 		private void ResetIdleTime()
 		{
 			idleTimer = 0;

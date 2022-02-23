@@ -35,11 +35,6 @@ namespace Qbism.Peep
 			currentState.StateUpdate(this);
 		}
 
-		private void FixedUpdate()
-		{
-			currentState.StateFixedUpdate(this);
-		}
-
 		public void SwitchState(IPeepBaseState state)
 		{
 			currentState = state;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,21 @@ namespace Qbism.Peep
 			yield return new WaitForSeconds(.1f);
 
 			hidePoints = GameObject.FindGameObjectsWithTag(("HidePoint"));
+		}
+
+		public GameObject[] SortHidePointsByDistance(GameObject[] points)
+		{
+			var pointsToSort = points;
+			float[] pointNavDistances = new float[pointsToSort.Length];
+
+			for (int i = 0; i < hidePoints.Length; i++)
+			{
+				float distToPoint = Vector3.Distance(transform.position, pointsToSort[i].transform.position);
+				pointNavDistances[i] = distToPoint;
+			}
+
+			Array.Sort(pointNavDistances, pointsToSort);
+			return pointsToSort;
 		}
 	}
 }
