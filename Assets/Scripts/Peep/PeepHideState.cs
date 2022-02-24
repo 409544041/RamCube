@@ -75,7 +75,6 @@ namespace Qbism.Peep
 			mmPosToDest.DestinationPositionTransform = divePoint;
 			refs.hideJuice.Initialization();
 			refs.hideJuice.PlayFeedbacks();
-			// TO DO: MMFeedbacks trigger diving vfx 
 		}
 
 		private bool V3Equal(Vector3 a, Vector3 b)
