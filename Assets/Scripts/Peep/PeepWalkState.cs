@@ -52,9 +52,8 @@ namespace Qbism.Peep
 		public void DestinationReached()
 		{
 			isMoving = false;
-			refs.idleState.pointAction =
-					targetDest.GetComponent<IdlePointAction>().pointAction;
-			stateManager.SwitchState(stateManager.refs.idleState);
+			refs.idleState.pointAction = targetDest.GetComponent<IdlePointAction>().pointAction;
+			stateManager.SwitchState(refs.idleState);
 		}
 	}
 }

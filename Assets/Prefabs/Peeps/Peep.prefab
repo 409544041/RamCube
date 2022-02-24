@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 9195526909083625757}
   - component: {fileID: 7044997350012408870}
   - component: {fileID: 5522690689258419204}
+  - component: {fileID: 448822792686422901}
   - component: {fileID: 4789145776581608242}
   m_Layer: 0
   m_Name: Peep
@@ -140,6 +141,7 @@ MonoBehaviour:
   idleState: {fileID: 9195526909083625757}
   walkState: {fileID: 7044997350012408870}
   runState: {fileID: 5522690689258419204}
+  hideState: {fileID: 448822792686422901}
   agent: {fileID: 8898327357715456591}
   animator: {fileID: 4938652295556564000}
   peepAnim: {fileID: 855340356152411188}
@@ -163,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   refs: {fileID: 3139609209763554299}
-  hide: 0
+  runToHide: 0
 --- !u!114 &9195526909083625757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +206,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runSpeed: 1.5
+--- !u!114 &448822792686422901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345699827149558106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9274f51034c84443b6d4b2a6c9b4598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4789145776581608242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5104,7 +5118,7 @@ PrefabInstance:
         type: 3}
       propertyPath: AnimatePositionTarget
       value: 
-      objectReference: {fileID: 5345699827149558106}
+      objectReference: {fileID: 4434964231611416838}
     - target: {fileID: 1906558439574084831, guid: 78fd023d322c6f940afad11e2854fbc0,
         type: 3}
       propertyPath: m_RootOrder

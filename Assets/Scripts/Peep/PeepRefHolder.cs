@@ -12,6 +12,7 @@ namespace Qbism.Peep
 		public PeepIdleState idleState;
 		public PeepWalkState walkState;
 		public PeepRunState runState;
+		public PeepHideState hideState;
 		public NavMeshAgent agent;
 		public Animator animator;
 		public PeepAnimator peepAnim;

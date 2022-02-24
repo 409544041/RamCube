@@ -11,15 +11,17 @@ namespace Qbism.Peep
 
 		//Cache
 		PeepStateManager stateManager;
+		PeepRefHolder refs;
 
 		//States
-		float idleTimer { get; set; } = 0;
+		float idleTimer = 0;
 		float timeToIdle;
 		public IdlePointActions pointAction { get; set; }
 
 		public void StateEnter(PeepStateManager psm)
 		{
 			if (stateManager == null) stateManager = psm;
+			refs = stateManager.refs;
 
 			ResetIdleTime();
 		}

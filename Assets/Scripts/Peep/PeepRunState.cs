@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using System;
-using Qbism.Environment;
-using MoreMountains.Feedbacks;
 
 namespace Qbism.Peep
 {
@@ -18,7 +15,7 @@ namespace Qbism.Peep
 		PeepRefHolder refs;
 
 		//States
-		Transform targetDest;
+		public Transform targetDest { get; private set; }
 		bool isMoving;
 
 		public void StateEnter(PeepStateManager psm)
@@ -35,11 +32,6 @@ namespace Qbism.Peep
 		public void StateUpdate(PeepStateManager psm)
 		{
 			if (isMoving) refs.peepMover.MoveWithSmoothRotation(runSpeed);
-		}
-
-		private void OnTriggerEnter(Collider other)
-		{
-			//if trigger = house || bush > shrinking juice to make it look like they shrank into the house
 		}
 
 		private IEnumerator SetNavTarget(GameObject[] points)
@@ -77,55 +69,7 @@ namespace Qbism.Peep
 		public void DestinationReached()
 		{
 			isMoving = false;
-			var points = targetDest.GetComponentsInChildren<Transform>();
-			Transform divePoint = null;
-
-			foreach (var point in points)
-			{
-				if (point.tag == "DivePoint") divePoint = point;
-			}
-
-			StartCoroutine(TurnToDivePoint(divePoint));
-			// MMFeedbacks trigger diving vfx 
-			// Switch state to hidden state
-		}
-
-		private IEnumerator TurnToDivePoint(Transform divePoint)
-		{
-			Vector3 diveDir = (divePoint.transform.position - transform.position).normalized;
-
-			while (!V3Equal(transform.forward, diveDir))
-			{
-				var newDir = Vector3.RotateTowards(transform.forward, diveDir, 200 * Time.deltaTime, 0.0f);
-				var newRot = Quaternion.LookRotation(newDir);
-				transform.rotation = Quaternion.Slerp(transform.rotation, newRot, 2 * Time.deltaTime);
-
-				yield return null;
-			}
-
-			InitiateHidingJuice(divePoint);
-		}
-
-		private void InitiateHidingJuice(Transform divePoint)
-		{
-			var mmPos = refs.hideJuice.GetComponents<MMFeedbackPosition>();
-			MMFeedbackPosition mmPosToDest = null;
-
-			foreach (var mm in mmPos)
-			{
-				if (mm.Label == "PositionToDest") mmPosToDest = mm;
-			}
-			
-			refs.agent.enabled = false;
-
-			mmPosToDest.DestinationPositionTransform = divePoint;
-			refs.hideJuice.Initialization();
-			refs.hideJuice.PlayFeedbacks();
-		}
-
-		private bool V3Equal(Vector3 a, Vector3 b)
-		{
-			return Vector3.SqrMagnitude(a - b) < 0.1;
+			stateManager.SwitchState(refs.hideState);
 		}
 	}
 }

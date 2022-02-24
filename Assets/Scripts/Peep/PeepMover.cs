@@ -16,13 +16,11 @@ namespace Qbism.Peep
 		Vector3 nextNodeDest = new Vector3(float.PositiveInfinity, float.PositiveInfinity,
 			float.PositiveInfinity);
 		NavMeshPath path;
-		Transform targetDest;
 		IPeepMovement moverState;
 
 		public void PrepareMove(Transform dest, IPeepMovement moveState)
 		{
 			moverState = moveState;
-			targetDest = dest;
 			path = new NavMeshPath();
 			refs.agent.CalculatePath(dest.position, path);
 			pathI = 1; //not 0 because that is the player's current pos

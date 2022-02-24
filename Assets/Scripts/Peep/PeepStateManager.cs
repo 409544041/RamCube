@@ -8,7 +8,7 @@ namespace Qbism.Peep
 	{
 		//Config parameters
 		public PeepRefHolder refs;
-		[SerializeField] bool hide;
+		[SerializeField] bool runToHide;
 
 		//Cache
 		public PeepNavPointManager pointManager {  get; set; }
@@ -16,7 +16,7 @@ namespace Qbism.Peep
 		//States
 		public IPeepBaseState currentState { get; private set; }
 		string currentStateString; //just for easy reading in debug inspector
-		bool hidingInitiated = false;
+		bool runTriggered = false;
 
 		private void Start()
 		{
@@ -27,9 +27,9 @@ namespace Qbism.Peep
 
 		private void Update()
 		{
-			if (!hidingInitiated && hide)
+			if (!runTriggered && runToHide)
 			{
-				hidingInitiated = true;
+				runTriggered = true;
 				SwitchState(refs.runState);
 			}
 			currentState.StateUpdate(this);
