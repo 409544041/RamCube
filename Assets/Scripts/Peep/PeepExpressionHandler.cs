@@ -94,7 +94,7 @@ namespace Qbism.Peep
 
 		private void OnDisable()
 		{
-			refs.meshes[2].material.SetTexture("_BaseMap", neutralExpr.eyeTex);
+			refs.meshes[2].material.mainTexture = neutralExpr.eyeTex;
 		}
 	}
 }
