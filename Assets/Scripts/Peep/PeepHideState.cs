@@ -20,8 +20,11 @@ namespace Qbism.Peep
 
 		public void StateEnter(PeepStateManager psm)
 		{
-			if (stateManager == null) stateManager = psm;
-			refs = stateManager.refs;
+			if (stateManager == null)
+			{
+				stateManager = psm;
+				refs = stateManager.refs;
+			}
 
 			var points = refs.runState.targetDest.GetComponentsInChildren<Transform>();
 			foreach (var point in points)
@@ -78,6 +81,10 @@ namespace Qbism.Peep
 		private bool V3Equal(Vector3 a, Vector3 b)
 		{
 			return Vector3.SqrMagnitude(a - b) < 0.05;
+		}
+
+		public void StateExit()
+		{
 		}
 	}
 }

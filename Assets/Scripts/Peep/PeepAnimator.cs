@@ -74,6 +74,11 @@ namespace Qbism.Peep
 			idleType = 1;
 		}
 
+		public void TriggerStartle()
+		{
+			refs.animator.SetTrigger("Startle");
+		}
+
 		private void ResetIdleType() //Called by animator
 		{
 			idleType = 0;

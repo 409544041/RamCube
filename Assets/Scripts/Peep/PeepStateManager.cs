@@ -8,15 +8,19 @@ namespace Qbism.Peep
 	{
 		//Config parameters
 		public PeepRefHolder refs;
-		[SerializeField] bool runToHide;
+		public PeepTypes peepType;
+		[SerializeField] bool runToHide, startle;
 
 		//Cache
 		public PeepNavPointManager pointManager {  get; set; }
 
 		//States
 		public IPeepBaseState currentState { get; private set; }
+		public IPeepBaseState prevState { get; private set; }
 		string currentStateString; //just for easy reading in debug inspector
+		string prevStateString;
 		bool runTriggered = false;
+		bool startleTriggered = false;
 
 		private void Start()
 		{
@@ -32,13 +36,23 @@ namespace Qbism.Peep
 				runTriggered = true;
 				SwitchState(refs.runState);
 			}
+
+			if (!startleTriggered && startle)
+			{
+				startleTriggered = true;
+				SwitchState(refs.startleState);
+			}
+
 			currentState.StateUpdate(this);
 		}
 
 		public void SwitchState(IPeepBaseState state)
 		{
+			prevState = currentState;
 			currentState = state;
 			currentStateString = currentState.ToString();
+			prevStateString = prevState.ToString();
+			prevState.StateExit();
 			state.StateEnter(this);
 		}
 	}

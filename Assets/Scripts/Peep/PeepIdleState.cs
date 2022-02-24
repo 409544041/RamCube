@@ -17,25 +17,39 @@ namespace Qbism.Peep
 		float idleTimer = 0;
 		float timeToIdle;
 		public IdlePointActions pointAction { get; set; }
+		bool timerCounting = false;
+		public bool continueCounting { get; set; } = false;
 
 		public void StateEnter(PeepStateManager psm)
 		{
-			if (stateManager == null) stateManager = psm;
-			refs = stateManager.refs;
+			if (stateManager == null)
+			{
+				stateManager = psm;
+				refs = stateManager.refs;
+			}
 
-			ResetIdleTime();
+			if (!continueCounting) ResetIdleTime();
+			timerCounting = true;
 		}
 
 		public void StateUpdate(PeepStateManager psm)
 		{
-			idleTimer += Time.deltaTime;
-			if (idleTimer > timeToIdle) stateManager.SwitchState(stateManager.refs.walkState);
+			if (timerCounting)
+			{
+				idleTimer += Time.deltaTime;
+				if (idleTimer > timeToIdle) stateManager.SwitchState(stateManager.refs.walkState);
+			}
 		}
 
 		private void ResetIdleTime()
 		{
 			idleTimer = 0;
 			timeToIdle = Random.Range(idleTimeMinMax.x, idleTimeMinMax.y);
+		}
+
+		public void StateExit()
+		{
+			timerCounting = false;
 		}
 	}
 }

@@ -19,23 +19,18 @@ namespace Qbism.Peep
 		//States
 		Transform targetDest;
 		bool isMoving;
+		public bool continuePrevMovement { get; set; } = false;
 
 		public void StateEnter(PeepStateManager psm)
 		{
-			if (stateManager == null) stateManager = psm;
-			refs = stateManager.refs;
-			agent = refs.agent;			
-
-			List<Transform> targets = new List<Transform>();
-
-			foreach (var point in stateManager.pointManager.patrolPoints)
+			if (stateManager == null)
 			{
-				if (Vector3.Distance(transform.position, point.transform.position) > minPatrolPointDis)
-					targets.Add(point.transform);
+				stateManager = psm;
+				refs = stateManager.refs;
+				agent = refs.agent;
 			}
 
-			var i = Random.Range(0, targets.Count);
-			targetDest = targets[i];
+			if (!continuePrevMovement) SetDestination();
 
 			agent.speed = walkSpeed;
 			agent.destination = targetDest.position;
@@ -49,11 +44,35 @@ namespace Qbism.Peep
 			//somehow agent.move and agent.destination work good together. Probably shouldn't though.
 		}
 
+		private void SetDestination()
+		{
+			List<Transform> targets = new List<Transform>();
+
+			foreach (var point in stateManager.pointManager.patrolPoints)
+			{
+				var newPath = new NavMeshPath();
+
+				if (Vector3.Distance(transform.position, point.transform.position) > minPatrolPointDis &&
+					refs.agent.CalculatePath(point.transform.position, newPath))
+					targets.Add(point.transform);
+			}
+
+			var i = Random.Range(0, targets.Count);
+			targetDest = targets[i];
+		}
+
 		public void DestinationReached()
 		{
 			isMoving = false;
 			refs.idleState.pointAction = targetDest.GetComponent<IdlePointAction>().pointAction;
 			stateManager.SwitchState(refs.idleState);
+		}
+
+		public void StateExit()
+		{
+			isMoving = false;
+			agent.isStopped = true;
+			continuePrevMovement = false;
 		}
 	}
 }
