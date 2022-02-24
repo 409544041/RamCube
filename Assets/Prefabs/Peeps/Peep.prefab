@@ -147,6 +147,7 @@ MonoBehaviour:
   agent: {fileID: 8898327357715456591}
   animator: {fileID: 4938652295556564000}
   peepAnim: {fileID: 855340356152411188}
+  expressionHandler: {fileID: 4522059387965012588}
   peepMover: {fileID: 4789145776581608242}
   hideJuice: {fileID: 1321887094748867864}
   meshes:
@@ -5124,6 +5125,31 @@ MonoBehaviour:
   idleChangeChance: 1
   idleAnimTransDur: 0.25
   refs: {fileID: 3139609209763554299}
+--- !u!114 &4522059387965012588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4434964231611416838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f52cc7ca56e47f4c8a7660315c4288b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  refs: {fileID: 3139609209763554299}
+  minMaxBlinkInterval: {x: 3, y: 8}
+  peepEyeExpressions:
+  - expression: 0
+    eyeTex: {fileID: 2800000, guid: 1fd4b6fe2f429f843a2e6bcdb3e3b3dd, type: 3}
+  - expression: 12
+    eyeTex: {fileID: 2800000, guid: d9f8c58251f595e4cafa4f4b54cafb9e, type: 3}
+  - expression: 11
+    eyeTex: {fileID: 2800000, guid: 56d9b5aa06154ea42b17aa399e08b7d4, type: 3}
+  - expression: 1
+    eyeTex: {fileID: 2800000, guid: 3e24327b03d772a409465436ba13caac, type: 3}
+  - expression: 21
+    eyeTex: {fileID: 2800000, guid: eb5d7ee82434a584dbe4687746cd7ea2, type: 3}
 --- !u!1001 &4064591412939572582
 PrefabInstance:
   m_ObjectHideFlags: 0

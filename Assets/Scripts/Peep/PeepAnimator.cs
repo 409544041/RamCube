@@ -72,6 +72,7 @@ namespace Qbism.Peep
 			}
 
 			idleType = 1;
+			refs.expressionHandler.SetAnnoyedExpression();
 		}
 
 		public void TriggerStartle()
@@ -84,6 +85,7 @@ namespace Qbism.Peep
 			idleType = 0;
 			idleTimer = 0;
 			timeToIdle = Random.Range(idleTimeMinMax.x, idleTimeMinMax.y);
+			refs.expressionHandler.SetNeutralExpression();
 		}
 	}
 }

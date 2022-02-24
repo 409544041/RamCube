@@ -50,6 +50,7 @@ namespace Qbism.Peep
 		public void StateExit()
 		{
 			timerCounting = false;
+			continueCounting = false;
 		}
 	}
 }

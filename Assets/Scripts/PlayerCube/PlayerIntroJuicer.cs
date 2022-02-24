@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using Qbism.Peep;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
@@ -14,13 +15,11 @@ namespace Qbism.PlayerCube
 		[SerializeField] AudioSource audioSource;
 
 		//States
-		ParticleSystem speedParticles, landParticles;
+		ParticleSystem speedParticles;
 
 		private void Awake() 
 		{
 			speedParticles = introJuice.
-				GetComponent<MMFeedbackParticles>().BoundParticleSystem;
-			landParticles = introLandingJuice.
 				GetComponent<MMFeedbackParticles>().BoundParticleSystem;
 		}
 
@@ -36,6 +35,12 @@ namespace Qbism.PlayerCube
 			speedParticles.Stop();
 			introLandingJuice.Initialization();
 			introLandingJuice.PlayFeedbacks();
+
+			var peepStateManagers = FindObjectsOfType<PeepStateManager>();
+			foreach (var peep in peepStateManagers)
+			{
+				peep.SwitchState(peep.refs.startleState);
+			}
 		}
 
 		public void PlayButtPopFX()

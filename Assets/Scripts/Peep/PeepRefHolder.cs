@@ -17,6 +17,7 @@ namespace Qbism.Peep
 		public NavMeshAgent agent;
 		public Animator animator;
 		public PeepAnimator peepAnim;
+		public PeepExpressionHandler expressionHandler;
 		public PeepMover peepMover;
 		public MMFeedbacks hideJuice;
 		public Renderer[] meshes;
