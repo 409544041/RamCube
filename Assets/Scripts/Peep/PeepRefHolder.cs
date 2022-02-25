@@ -20,6 +20,7 @@ namespace Qbism.Peep
 		public PeepExpressionHandler expressionHandler;
 		public PeepMover peepMover;
 		public MMFeedbacks hideJuice, shockUIJuice, questionUIjuice;
+		public CanvasGroup[] expressionSignals;
 		public Renderer[] meshes;
 	}
 }

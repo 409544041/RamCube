@@ -10,6 +10,8 @@ namespace Qbism.Peep
 		[SerializeField] PeepRefHolder refs;
 		[SerializeField] Vector2 minMaxBlinkInterval;
 		[SerializeField] PeepExpression[] peepEyeExpressions;
+		[SerializeField] float shockSignalTime = .5f, questionSignalTime = 1, 
+			questionSignalDelay = .5f, shockSignalDelay = .25f;
 
 		[System.Serializable]
 		public class PeepExpression
@@ -90,6 +92,36 @@ namespace Qbism.Peep
 		{
 			SetExpression(annoyedExpr);
 			currentExpr = annoyedExpr;
+		}
+
+		public void SetShockExprSignal()
+		{
+			StartCoroutine(HandleShockExprSignal());
+		}
+
+		private IEnumerator HandleShockExprSignal()
+		{
+			yield return new WaitForSeconds(shockSignalDelay);
+			refs.shockUIJuice.Initialization();
+			refs.shockUIJuice.PlayFeedbacks();
+			refs.expressionSignals[0].alpha = 1;
+			yield return new WaitForSeconds(shockSignalTime);
+			refs.expressionSignals[0].alpha = 0;
+		}
+
+		public void SetQuestionExprSignal()
+		{
+			StartCoroutine(HandleQuestionExprSignal());
+		}
+
+		private IEnumerator HandleQuestionExprSignal()
+		{
+			yield return new WaitForSeconds(questionSignalDelay);
+			refs.questionUIjuice.Initialization();
+			refs.questionUIjuice.PlayFeedbacks();
+			refs.expressionSignals[1].alpha = 1;
+			yield return new WaitForSeconds(questionSignalTime);
+			refs.expressionSignals[1].alpha = 0;
 		}
 
 		private void OnDisable()

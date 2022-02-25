@@ -178,7 +178,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4628221932916230852}
-  m_LocalRotation: {x: 0.0000000018454095, y: 0.9993932, z: 0.000000052948707, w: -0.034831632}
+  m_LocalRotation: {x: 0.42660016, y: -0.33944446, z: 0.1767036, w: 0.8194911}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -476,6 +476,9 @@ MonoBehaviour:
   hideJuice: {fileID: 1321887094748867864}
   shockUIJuice: {fileID: 1652224820573790028}
   questionUIjuice: {fileID: 5316000564921526966}
+  expressionSignals:
+  - {fileID: 3512805594368289812}
+  - {fileID: 8964139035751663304}
   meshes:
   - {fileID: 7005687616648061377}
   - {fileID: 2876954407301865733}
@@ -562,6 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a01e8adee8fb12844aaa0db7ce593998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnDelayMinMax: {x: 0.5, y: 1}
 --- !u!114 &4789145776581608242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5590,6 +5594,10 @@ MonoBehaviour:
     eyeTex: {fileID: 2800000, guid: 3e24327b03d772a409465436ba13caac, type: 3}
   - expression: 21
     eyeTex: {fileID: 2800000, guid: eb5d7ee82434a584dbe4687746cd7ea2, type: 3}
+  shockSignalTime: 0.5
+  questionSignalTime: 1
+  questionSignalDelay: 0.25
+  shockSignalDelay: 0.25
 --- !u!1001 &4064591412939572582
 PrefabInstance:
   m_ObjectHideFlags: 0

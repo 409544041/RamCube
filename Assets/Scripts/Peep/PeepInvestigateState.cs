@@ -6,6 +6,9 @@ namespace Qbism.Peep
 {
 	public class PeepInvestigateState : MonoBehaviour, IPeepBaseState
 	{
+		//Config parameters
+		[SerializeField] Vector2 turnDelayMinMax;
+
 		//Cache
 		PeepStateManager stateManager;
 		PeepRefHolder refs;
@@ -18,6 +21,8 @@ namespace Qbism.Peep
 				stateManager = psm;
 				refs = stateManager.refs;
 			}
+
+			refs.expressionHandler.SetQuestionExprSignal();
 
 			var playerDir = (player.transform.position - transform.position).normalized;
 			var playerDirV2 = new Vector2(playerDir.x, playerDir.z);
@@ -39,6 +44,9 @@ namespace Qbism.Peep
 
 		private IEnumerator TurnTowardsPlayer(Vector2 playerDirV2, Vector3 playerDir)
 		{
+			var delay = Random.Range(turnDelayMinMax.x, turnDelayMinMax.y);
+			yield return new WaitForSeconds(delay);
+
 			while (FetchAngle(playerDirV2) > 10)
 			{
 				var newDir = Vector3.RotateTowards(transform.forward, playerDir, 200 * Time.deltaTime, 0.0f);
@@ -56,7 +64,7 @@ namespace Qbism.Peep
 			if (stateManager.peepType == PeepTypes.scared)
 			{
 				StartCoroutine(TriggerAnim("Startle"));
-				//trigger expression vfx
+				refs.expressionHandler.SetShockExprSignal();
 			}
 			else
 			{
