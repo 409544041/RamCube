@@ -7,9 +7,21 @@ namespace Qbism.General
 	[ExecuteInEditMode]
 	public class EditorFaceCamera : MonoBehaviour
 	{
-		void Start()
+		//Config parameters
+		[SerializeField] bool updateAlign;
+
+		//Cache
+		Camera cam;
+
+		private void Start()
 		{
-			transform.forward = FindObjectOfType<Camera>().transform.forward;
+			cam = Camera.main;
+			transform.forward = cam.transform.forward;
+		}
+
+		private void Update()
+		{
+			if (updateAlign && Application.isPlaying) transform.forward = cam.transform.forward;
 		}
 	}
 }
