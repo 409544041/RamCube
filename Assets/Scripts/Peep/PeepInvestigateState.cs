@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace Qbism.Peep
 {
-	public class PeepStartleState : MonoBehaviour, IPeepBaseState
+	public class PeepInvestigateState : MonoBehaviour, IPeepBaseState
 	{
 		//Cache
 		PeepStateManager stateManager;
 		PeepRefHolder refs;
+		public GameObject player { get; set; }
 
 		public void StateEnter(PeepStateManager psm)
 		{
@@ -17,16 +18,55 @@ namespace Qbism.Peep
 				stateManager = psm;
 				refs = stateManager.refs;
 			}
-			StartCoroutine(TriggerStartleAnim());
+
+			var playerDir = (player.transform.position - transform.position).normalized;
+			var playerDirV2 = new Vector2(playerDir.x, playerDir.z);
+
+			if (FetchAngle(playerDirV2) < 45) TriggerReaction();
+			else StartCoroutine(TurnTowardsPlayer(playerDirV2, playerDir));
 		}
 
 		public void StateUpdate(PeepStateManager psm)
 		{
 		}
 
-		private IEnumerator TriggerStartleAnim()
+		private float FetchAngle(Vector2 playerDirV2)
 		{
-			refs.peepAnim.TriggerStartle();
+			var dirV2 = new Vector2(transform.forward.x, transform.forward.z);
+			var angle = Vector2.Angle(playerDirV2, dirV2);
+			return angle;
+		}
+
+		private IEnumerator TurnTowardsPlayer(Vector2 playerDirV2, Vector3 playerDir)
+		{
+			while (FetchAngle(playerDirV2) > 10)
+			{
+				var newDir = Vector3.RotateTowards(transform.forward, playerDir, 200 * Time.deltaTime, 0.0f);
+				var newRot = Quaternion.LookRotation(newDir);
+				transform.rotation = Quaternion.Slerp(transform.rotation, newRot, 3 * Time.deltaTime);
+
+				yield return null;
+			}
+
+			TriggerReaction();
+		}
+
+		private void TriggerReaction()
+		{
+			if (stateManager.peepType == PeepTypes.scared)
+			{
+				StartCoroutine(TriggerAnim("Startle"));
+				//trigger expression vfx
+			}
+			else
+			{
+				StartCoroutine(TriggerAnim("Shrug"));
+			}
+		}
+
+		private IEnumerator TriggerAnim(string animTrigger)
+		{
+			refs.peepAnim.TriggerAnim(animTrigger);
 			var animDur = refs.animator.GetCurrentAnimatorClipInfo(0).Length;
 			float timer = 0;
 

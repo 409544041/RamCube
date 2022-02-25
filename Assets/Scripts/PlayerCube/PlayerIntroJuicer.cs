@@ -39,7 +39,8 @@ namespace Qbism.PlayerCube
 			var peepStateManagers = FindObjectsOfType<PeepStateManager>();
 			foreach (var peep in peepStateManagers)
 			{
-				peep.SwitchState(peep.refs.startleState);
+				peep.refs.investigateState.player = this.gameObject;
+				peep.SwitchState(peep.refs.investigateState);
 			}
 		}
 

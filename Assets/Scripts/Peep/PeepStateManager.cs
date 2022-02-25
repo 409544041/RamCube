@@ -40,7 +40,7 @@ namespace Qbism.Peep
 			if (!startleTriggered && startle)
 			{
 				startleTriggered = true;
-				SwitchState(refs.startleState);
+				SwitchState(refs.investigateState);
 			}
 
 			currentState.StateUpdate(this);

@@ -43,12 +43,13 @@ namespace Qbism.Peep
 		{
 			while (refs.agent.velocity.magnitude > .1f)
 			{
-				yield return null;
+				yield return null; //ensure turning doesn't start when still moving
 			}
 
-			Vector3 diveDir = (divePoint.transform.position - transform.position).normalized;
+			var diveDir = (divePoint.transform.position - transform.position).normalized;
+			var diveDirV2 = new Vector2(diveDir.x, diveDir.z);
 
-			while (!V3Equal(transform.forward, diveDir))
+			while (FetchAngle(diveDirV2) > 10)
 			{
 				var newDir = Vector3.RotateTowards(transform.forward, diveDir, 200 * Time.deltaTime, 0.0f);
 				var newRot = Quaternion.LookRotation(newDir);
@@ -58,6 +59,13 @@ namespace Qbism.Peep
 			}
 
 			InitiateHidingJuice(divePoint);
+		}
+
+		private float FetchAngle(Vector2 diveDirV2)
+		{
+			var dirV2 = new Vector2(transform.forward.x, transform.forward.z);
+			var angle = Vector2.Angle(diveDirV2, dirV2);
+			return angle;
 		}
 
 		private void InitiateHidingJuice(Transform divePoint)

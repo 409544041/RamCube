@@ -75,9 +75,9 @@ namespace Qbism.Peep
 			refs.expressionHandler.SetAnnoyedExpression();
 		}
 
-		public void TriggerStartle()
+		public void TriggerAnim(string animTrigger)
 		{
-			refs.animator.SetTrigger("Startle");
+			refs.animator.SetTrigger(animTrigger);
 		}
 
 		private void ResetIdleType() //Called by animator
