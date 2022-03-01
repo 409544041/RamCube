@@ -7,17 +7,17 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Peep_Roof
+  m_Name: Peep_DarkestGrey_Flat
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
-  m_ShaderKeywords: DR_ENABLE_LIGHTMAP_DIR DR_OUTLINE_ON DR_RIM_ON _CELPRIMARYMODE_SINGLE
-    _FLAT_RIM_ENABLED _FLAT_SHADOWS_ENABLED _FLAT_SPECULAR_ENABLED _TEXTUREBLENDINGMODE_MULTIPLY
-    _UNITYSHADOWMODE_MULTIPLY
+  m_ShaderKeywords: _CELPRIMARYMODE_SINGLE _FLAT_RIM_ENABLED _FLAT_SHADOWS_ENABLED
+    _FLAT_SPECULAR_ENABLED _TEXTUREBLENDINGMODE_MULTIPLY _UNITYSHADOWMODE_MULTIPLY
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - SRPDEFAULTUNLIT
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -72,12 +72,12 @@ Material:
     - _LightmapDirectionPitch: 48
     - _LightmapDirectionYaw: 187
     - _OutlineDepthOffset: 0
-    - _OutlineEnabled: 1
+    - _OutlineEnabled: 0
     - _OutlineScale: 1
     - _OutlineWidth: 0.5
-    - _OverrideLightmapDir: 1
+    - _OverrideLightmapDir: 0
     - _QueueOffset: 0
-    - _RimEnabled: 1
+    - _RimEnabled: 0
     - _SelfShadingSize: 0.66
     - _SelfShadingSizeExtra: 0.666
     - _ShadowEdgeSize: 0.05
