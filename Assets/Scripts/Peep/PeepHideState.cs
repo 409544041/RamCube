@@ -80,6 +80,8 @@ namespace Qbism.Peep
 
 			refs.agent.enabled = false;
 
+			refs.peepAnim.TriggerAnim("Dive");
+
 			mmPosToDest.DestinationPositionTransform = divePoint;
 			refs.hideJuice.Initialization();
 			refs.hideJuice.PlayFeedbacks();
