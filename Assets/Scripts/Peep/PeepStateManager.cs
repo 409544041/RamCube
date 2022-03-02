@@ -9,6 +9,7 @@ namespace Qbism.Peep
 		//Config parameters
 		public PeepRefHolder refs;
 		public PeepTypes peepType;
+		public PeepJobs peepJob;
 		[SerializeField] bool runToHide, startle;
 
 		//Cache
@@ -24,7 +25,8 @@ namespace Qbism.Peep
 
 		private void Start()
 		{
-			currentState = refs.idleState;
+			if (peepJob == PeepJobs.balloon) currentState = refs.balloonIdleState;
+			else currentState = refs.idleState;
 			currentStateString = currentState.ToString();
 			currentState.StateEnter(this);
 		}

@@ -87,5 +87,10 @@ namespace Qbism.Peep
 			timeToIdle = Random.Range(idleTimeMinMax.x, idleTimeMinMax.y);
 			refs.expressionHandler.SetNeutralExpression();
 		}
+
+		public void SetAnimLayerValue(int layerIndex, int value)
+		{
+			refs.animator.SetLayerWeight(layerIndex, value);
+		}
 	}
 }

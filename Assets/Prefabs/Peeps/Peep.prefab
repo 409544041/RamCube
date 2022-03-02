@@ -178,7 +178,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4628221932916230852}
-  m_LocalRotation: {x: 0.42660016, y: -0.33944446, z: 0.1767036, w: 0.8194911}
+  m_LocalRotation: {x: 0.13415568, y: 0.86524844, z: -0.35839766, w: 0.32388043}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -374,6 +374,7 @@ GameObject:
   - component: {fileID: 448822792686422901}
   - component: {fileID: 3569305495301124351}
   - component: {fileID: 4789145776581608242}
+  - component: {fileID: 4850056201209905772}
   m_Layer: 0
   m_Name: Peep
   m_TagString: Peep
@@ -468,6 +469,7 @@ MonoBehaviour:
   runState: {fileID: 5522690689258419204}
   hideState: {fileID: 448822792686422901}
   investigateState: {fileID: 3569305495301124351}
+  balloonIdleState: {fileID: 4850056201209905772}
   agent: {fileID: 8898327357715456591}
   animator: {fileID: 4938652295556564000}
   peepAnim: {fileID: 855340356152411188}
@@ -498,6 +500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   refs: {fileID: 3139609209763554299}
   peepType: 0
+  peepJob: 0
   runToHide: 0
   startle: 0
 --- !u!114 &9195526909083625757
@@ -580,6 +583,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   refs: {fileID: 3139609209763554299}
   turnSpeed: 200
+--- !u!114 &4850056201209905772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345699827149558106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a81537d0740f14a4885c2e53f87474b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9039343756781327878
 GameObject:
   m_ObjectHideFlags: 0

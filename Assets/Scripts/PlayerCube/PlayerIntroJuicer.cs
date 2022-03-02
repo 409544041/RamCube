@@ -39,6 +39,8 @@ namespace Qbism.PlayerCube
 			var peepStateManagers = FindObjectsOfType<PeepStateManager>();
 			foreach (var peep in peepStateManagers)
 			{
+				if (peep.peepJob == PeepJobs.balloon) continue;
+
 				peep.refs.investigateState.player = this.gameObject;
 				peep.SwitchState(peep.refs.investigateState);
 			}
