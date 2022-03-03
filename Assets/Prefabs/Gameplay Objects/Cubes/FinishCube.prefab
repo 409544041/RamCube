@@ -201,7 +201,7 @@ MonoBehaviour:
   impactJuice: {fileID: 2235420607549997378}
   mesh: {fileID: 1166179637075229749}
   glowMesh: {fileID: 8319172520012422600}
-  navMeshOb: {fileID: 1190708186379168110}
+  navMeshOb: {fileID: 0}
   chargeJuice: {fileID: 6633733773761495106}
   glowIncrease: 0.01
   glowIncreaseInterval: 0.05
@@ -1364,22 +1364,34 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 571552061402587313}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1190708186379168110
-NavMeshObstacle:
+--- !u!114 &8645699998748709281
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 806116036754939360}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bee0a6fa1f5d4f4db481219040523c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  graphMask:
+    value: -1
+  type: 0
+  mesh: {fileID: 0}
+  rectangleSize: {x: 1, y: 1}
+  circleRadius: 1
+  circleResolution: 6
+  height: 1
+  meshScale: 1
+  center: {x: 0, y: 0, z: 0}
+  updateDistance: 0.4
+  isDual: 0
+  cutsAddedGeom: 1
+  updateRotationDistance: 10
+  useRotationAndScale: 0
 --- !u!1001 &1282345173543501491
 PrefabInstance:
   m_ObjectHideFlags: 0

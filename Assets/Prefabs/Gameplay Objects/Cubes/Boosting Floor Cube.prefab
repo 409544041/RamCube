@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 2418970613467818318}
   - component: {fileID: 959772360695176713}
   - component: {fileID: 8211759445778236917}
-  - component: {fileID: 2787070588755963614}
+  - component: {fileID: 3056505220338106840}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -165,22 +165,34 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139950575144778031}
   m_Mesh: {fileID: -9193997944984069800, guid: b65695abd2ca7b346bea0aa85fd65dfc, type: 3}
---- !u!208 &2787070588755963614
-NavMeshObstacle:
+--- !u!114 &3056505220338106840
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139950575144778031}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bee0a6fa1f5d4f4db481219040523c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  graphMask:
+    value: -1
+  type: 0
+  mesh: {fileID: 0}
+  rectangleSize: {x: 1, y: 1}
+  circleRadius: 1
+  circleResolution: 6
+  height: 1
+  meshScale: 1
+  center: {x: 0, y: 0, z: 0}
+  updateDistance: 0.4
+  isDual: 0
+  cutsAddedGeom: 1
+  updateRotationDistance: 10
+  useRotationAndScale: 0
 --- !u!1 &3450111624372250846
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,7 +551,7 @@ MonoBehaviour:
   mesh: {fileID: 959772360695176713}
   shrinkMesh: {fileID: 4479732722967651897}
   laserLine: {fileID: 5256593554777633337}
-  navMeshOb: {fileID: 2787070588755963614}
+  nmCutter: {fileID: 0}
 --- !u!1 &7666261262085957085
 GameObject:
   m_ObjectHideFlags: 0

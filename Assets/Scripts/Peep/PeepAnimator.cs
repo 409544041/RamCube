@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace Qbism.Peep
 
 		private void Update()
 		{
-			moveSpeed = refs.agent.velocity.magnitude;
+			moveSpeed = refs.aiPath.velocity.magnitude;
 			HandleIdleTimer();
 			refs.animator.SetFloat("MoveSpeed", moveSpeed);
 			refs.animator.SetFloat("IdleType", idleType);

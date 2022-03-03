@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,6 @@ namespace Qbism.Peep
 
 		//States
 		public Transform targetDest { get; private set; }
-		bool isMoving;
 		public bool continuePrevMovement { get; set; } = false;
 
 		public void StateEnter(PeepStateManager psm)
@@ -29,26 +29,26 @@ namespace Qbism.Peep
 
 			var pointMngr = stateManager.pointManager;
 			var hidePoints = pointMngr.SortHidePointsByDistance(pointMngr.hidePoints);
-			if (!continuePrevMovement) SetNavTarget(hidePoints);
+			if (!continuePrevMovement) SetDestination(hidePoints);
 
-			refs.agent.speed = runSpeed;
-			refs.agent.destination = targetDest.position;
-			refs.peepMover.PrepareMove(targetDest, this);
-			isMoving = true;
+			refs.aiPath.maxSpeed = runSpeed;
+			refs.aiPath.destination = targetDest.position;
 		}
 
 		public void StateUpdate(PeepStateManager psm)
 		{
-			if (isMoving) refs.peepMover.MoveWithSmoothRotation(runSpeed);
+			if (Vector3.Distance(transform.position, targetDest.position) <=
+				refs.aiPath.endReachedDistance)
+				DestinationReached();
 		}
 
-		private void SetNavTarget(GameObject[] points)
+		private void SetDestination(GameObject[] points)
 		{
 			for (int i = 0; i < points.Length; i++)
 			{
-				var newPath = new NavMeshPath();
-
-				if (refs.agent.CalculatePath(points[i].transform.position, newPath))
+				Path path = refs.pathSeeker.StartPath(transform.position, points[i].transform.position);
+				path.BlockUntilCalculated();
+				if (!path.error)
 				{
 					targetDest = points[i].transform;
 					return;
@@ -58,14 +58,11 @@ namespace Qbism.Peep
 
 		public void DestinationReached()
 		{
-			isMoving = false;
 			stateManager.SwitchState(refs.hideState);
 		}
 
 		public void StateExit()
 		{
-			isMoving = false;
-			refs.agent.isStopped = true;
 			continuePrevMovement = false;
 		}
 	}

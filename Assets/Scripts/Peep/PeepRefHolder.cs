@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Pathfinding;
 
 namespace Qbism.Peep
 {
@@ -15,11 +16,11 @@ namespace Qbism.Peep
 		public PeepHideState hideState;
 		public PeepInvestigateState investigateState;
 		public PeepBalloonIdleState balloonIdleState;
-		public NavMeshAgent agent;
+		public AIPath aiPath;
+		public Seeker pathSeeker;
 		public Animator animator;
 		public PeepAnimator peepAnim;
 		public PeepExpressionHandler expressionHandler;
-		public PeepMover peepMover;
 		public MMFeedbacks hideJuice, shockUIJuice, questionUIjuice;
 		public CanvasGroup[] expressionSignals;
 		public Renderer[] meshes;

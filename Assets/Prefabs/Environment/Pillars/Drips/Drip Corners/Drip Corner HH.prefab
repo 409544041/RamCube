@@ -204,13 +204,12 @@ MonoBehaviour:
   - {fileID: 2304730375467206639}
   lineRender: {fileID: 0}
   particle: {fileID: 0}
-  biomeVarietySO: {fileID: 11400000, guid: 136667da40100e94ea3aff456c87bc83, type: 2}
+  meshVarietySO: {fileID: 0}
+  vignetteSO: {fileID: 0}
   recalculate: 0
   checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 0
-  isLine: 0
-  isParticle: 0
 --- !u!1001 &150842645748132669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -390,22 +389,22 @@ PrefabInstance:
     - target: {fileID: 6262202632711008995, guid: 14b38509ccda59f43a052d7af267b700,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5000008
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6262202632711008995, guid: 14b38509ccda59f43a052d7af267b700,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5000008
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6262202632711008995, guid: 14b38509ccda59f43a052d7af267b700,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.49999928
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6262202632711008995, guid: 14b38509ccda59f43a052d7af267b700,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.49999928
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6262202632711008995, guid: 14b38509ccda59f43a052d7af267b700,
         type: 3}
@@ -415,7 +414,7 @@ PrefabInstance:
     - target: {fileID: 6262202632711008995, guid: 14b38509ccda59f43a052d7af267b700,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6262202632711008995, guid: 14b38509ccda59f43a052d7af267b700,
         type: 3}
@@ -426,6 +425,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bush_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6749770702551853145, guid: 14b38509ccda59f43a052d7af267b700,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14b38509ccda59f43a052d7af267b700, type: 3}

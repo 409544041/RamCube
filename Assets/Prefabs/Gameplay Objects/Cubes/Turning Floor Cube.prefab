@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 3405181485817477463}
   - component: {fileID: 7002247770126390487}
   - component: {fileID: 3511147458961298854}
-  - component: {fileID: 6682387016831378673}
+  - component: {fileID: 3563328718286704659}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -180,22 +180,34 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &6682387016831378673
-NavMeshObstacle:
+--- !u!114 &3563328718286704659
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7377635810446576114}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bee0a6fa1f5d4f4db481219040523c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  graphMask:
+    value: -1
+  type: 0
+  mesh: {fileID: 0}
+  rectangleSize: {x: 1, y: 1}
+  circleRadius: 1
+  circleResolution: 6
+  height: 1
+  meshScale: 1
+  center: {x: 0, y: 0, z: 0}
+  updateDistance: 0.4
+  isDual: 0
+  cutsAddedGeom: 1
+  updateRotationDistance: 10
+  useRotationAndScale: 0
 --- !u!1 &7527032043082956563
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,21 +375,6 @@ MonoBehaviour:
   isLeftTurning: 0
   cubePoser: {fileID: 3188276181541915990}
   juicer: {fileID: 4048100174578232224}
-  onTurnEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &3188276181541915990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,7 +404,7 @@ MonoBehaviour:
   mesh: {fileID: 3511147458961298854}
   shrinkMesh: {fileID: 8444544265384911107}
   laserLine: {fileID: 4982530462283413556}
-  navMeshOb: {fileID: 6682387016831378673}
+  nmCutter: {fileID: 0}
 --- !u!114 &4765442448934840136
 MonoBehaviour:
   m_ObjectHideFlags: 0

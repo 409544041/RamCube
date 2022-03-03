@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1008030931662479023}
   - component: {fileID: 4202673602272039178}
   - component: {fileID: 2140918558698694080}
+  - component: {fileID: 6970551319818476666}
   m_Layer: 0
   m_Name: Peep_Barrel
   m_TagString: Untagged
@@ -82,3 +83,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6970551319818476666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483836132898456597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bee0a6fa1f5d4f4db481219040523c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  graphMask:
+    value: -1
+  type: 1
+  mesh: {fileID: 0}
+  rectangleSize: {x: 1, y: 1}
+  circleRadius: 0.2
+  circleResolution: 6
+  height: 0.5
+  meshScale: 1
+  center: {x: 0, y: 0.25, z: 0}
+  updateDistance: 0.4
+  isDual: 0
+  cutsAddedGeom: 1
+  updateRotationDistance: 10
+  useRotationAndScale: 0

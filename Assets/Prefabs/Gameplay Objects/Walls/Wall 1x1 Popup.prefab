@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 7015777900617658319}
   - component: {fileID: 1920451314068686181}
   - component: {fileID: 610684731719733337}
-  - component: {fileID: 4949566711952604074}
+  - component: {fileID: 781831189328227341}
   m_Layer: 8
   m_Name: Wall 1x1 Popup
   m_TagString: Untagged
@@ -244,7 +244,7 @@ MonoBehaviour:
   popUpWall: {fileID: 4812613619775896406}
   wallJuicer: {fileID: 1920451314068686181}
   expressHandler: {fileID: 610684731719733337}
-  navMeshOb: {fileID: 4949566711952604074}
+  nmCutter: {fileID: 781831189328227341}
 --- !u!65 &1329861834296670582
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -292,13 +292,12 @@ MonoBehaviour:
   - {fileID: 4435943387852821534}
   lineRender: {fileID: 0}
   particle: {fileID: 0}
-  biomeVarietySO: {fileID: 11400000, guid: d5576f547e4e23b4ba6f6f514beea01f, type: 2}
+  meshVarietySO: {fileID: 0}
+  vignetteSO: {fileID: 0}
   recalculate: 0
   checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 0
-  isLine: 0
-  isParticle: 0
 --- !u!114 &1920451314068686181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,22 +338,34 @@ MonoBehaviour:
   minMaxExpressionTime: {x: 0, y: 0}
   minMaxBlinkTime: {x: 0, y: 0}
   blinkDur: 0.2
---- !u!208 &4949566711952604074
-NavMeshObstacle:
+--- !u!114 &781831189328227341
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091577146169053300}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 1.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: -0.55, z: 0}
-  m_TimeToStationary: 0.5
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bee0a6fa1f5d4f4db481219040523c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  graphMask:
+    value: -1
+  type: 0
+  mesh: {fileID: 0}
+  rectangleSize: {x: 1, y: 1}
+  circleRadius: 1
+  circleResolution: 6
+  height: 3
+  meshScale: 1
+  center: {x: 0, y: -0.5, z: 0}
+  updateDistance: 0.4
+  isDual: 0
+  cutsAddedGeom: 1
+  updateRotationDistance: 10
+  useRotationAndScale: 0
 --- !u!1 &1633505259693551104
 GameObject:
   m_ObjectHideFlags: 0

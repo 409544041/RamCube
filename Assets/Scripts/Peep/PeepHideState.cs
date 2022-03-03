@@ -41,7 +41,7 @@ namespace Qbism.Peep
 
 		private IEnumerator TurnToDivePoint(Transform divePoint)
 		{
-			while (refs.agent.velocity.magnitude > .1f)
+			while (refs.aiPath.velocity.magnitude > .1f)
 			{
 				yield return null; //ensure turning doesn't start when still moving
 			}
@@ -78,7 +78,7 @@ namespace Qbism.Peep
 				if (mm.Label == "PositionToDest") mmPosToDest = mm;
 			}
 
-			refs.agent.enabled = false;
+			refs.aiPath.enabled = false;
 
 			refs.peepAnim.TriggerAnim("Dive");
 

@@ -235,7 +235,7 @@ namespace Qbism.Rewind
 		{
 			CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
 			shrinker.EnableMesh();
-			shrinker.navMeshOb.enabled = true;
+			shrinker.nmCutter.enabled = true;
 			handler.FromShrunkToFloorDic(cubePos, cube);
 		}
 
