@@ -17,7 +17,8 @@ namespace Qbism.Peep
 		PeepRefHolder refs;
 
 		//States
-		Transform targetDest;
+		Vector3 targetDest;
+		Transform targetTrans;
 		public bool continuePrevMovement { get; set; } = false;
 
 		public void StateEnter(PeepStateManager psm)
@@ -33,14 +34,14 @@ namespace Qbism.Peep
 			if (targetDest != null)
 			{
 				refs.aiRich.maxSpeed = walkSpeed;
-				refs.aiRich.destination = targetDest.position;
+				refs.aiRich.destination = targetDest;
 			}
 			else stateManager.SwitchState(refs.idleState);
 		}
 
 		public void StateUpdate(PeepStateManager psm)
 		{
-			if (Vector3.Distance(transform.position, targetDest.position) <= 
+			if (Vector3.Distance(transform.position, targetDest) <= 
 				refs.aiRich.endReachedDistance)
 				DestinationReached();
 		}
@@ -62,15 +63,21 @@ namespace Qbism.Peep
 			if (targets.Count > 0)
 			{
 				var i = Random.Range(0, targets.Count);
-				targetDest = targets[i];
+				targetTrans = targets[i];
+				targetDest = targetTrans.position;
 			}
-			else targetDest = null;
+			else
+			{
+				targetDest = new Vector3(float.PositiveInfinity, float.PositiveInfinity,
+				float.PositiveInfinity);
+				targetTrans = null;
+			}
 		}
 
 		public void DestinationReached()
 		{
 			refs.aiRich.maxSpeed = 0;
-			refs.idleState.pointAction = targetDest.GetComponent<IdlePointAction>().pointAction;
+			refs.idleState.pointAction = targetTrans.GetComponent<IdlePointAction>().pointAction;
 			stateManager.SwitchState(refs.idleState);
 		}
 

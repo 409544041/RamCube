@@ -25,6 +25,7 @@ namespace Qbism.Peep
 			{
 				stateManager = psm;
 				refs = stateManager.refs;
+				investigateObject = stateManager.player;
 			}
 
 			refs.expressionHandler.SetQuestionExprSignal();
@@ -66,7 +67,8 @@ namespace Qbism.Peep
 
 		private void TriggerReaction()
 		{
-			if (stateManager.peepType == PeepTypes.scared)
+			if (stateManager.peepBravery == PeepBravery.coward ||
+				stateManager.peepBravery == PeepBravery.brave)
 			{
 				StartCoroutine(TriggerAnim("Startle"));
 				refs.expressionHandler.SetShockExprSignal();
@@ -89,9 +91,10 @@ namespace Qbism.Peep
 				yield return null;
 			}
 
-			if (stateManager.peepType == PeepTypes.scared) GoToRunState();
+			if (stateManager.peepBravery == PeepBravery.coward ||
+				stateManager.peepBravery == PeepBravery.brave) GoToRunState();
 
-			else if (stateManager.peepType == PeepTypes.notScared) ContinuePrevState();
+			else if (stateManager.peepBravery == PeepBravery.indifferent) ContinuePrevState();
 		}
 
 		private void SetDirections()

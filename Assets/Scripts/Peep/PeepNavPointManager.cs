@@ -22,7 +22,7 @@ namespace Qbism.Peep
 		{
 			foreach (var peep in peeps)
 			{
-				peep.GetComponent<PeepStateManager>().pointManager = this;
+				peep.GetComponentInChildren<PeepStateManager>().pointManager = this;
 			}
 
 			StartCoroutine(GetHidePoints()); 

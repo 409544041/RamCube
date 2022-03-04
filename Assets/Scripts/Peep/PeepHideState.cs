@@ -7,9 +7,6 @@ namespace Qbism.Peep
 {
 	public class PeepHideState : MonoBehaviour, IPeepBaseState
 	{
-		//Config parameters
-		[SerializeField] float turnToDiveDur = .25f;
-
 		//Cache
 		PeepStateManager stateManager;
 		PeepRefHolder refs;
@@ -26,7 +23,7 @@ namespace Qbism.Peep
 				refs = stateManager.refs;
 			}
 
-			var points = refs.runState.targetDest.GetComponentsInChildren<Transform>();
+			var points = refs.runState.targetTrans.GetComponentsInChildren<Transform>();
 			foreach (var point in points)
 			{
 				if (point.tag == "DivePoint") divePoint = point;

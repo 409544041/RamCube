@@ -8,12 +8,13 @@ namespace Qbism.Peep
 	{
 		//Config parameters
 		public PeepRefHolder refs;
-		public PeepTypes peepType;
+		public PeepBravery peepBravery;
 		public PeepJobs peepJob;
 		[SerializeField] bool runToHide, startle;
 
 		//Cache
 		public PeepNavPointManager pointManager {  get; set; }
+		public GameObject player { get; set; }
 
 		//States
 		public IPeepBaseState currentState { get; private set; }
