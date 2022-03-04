@@ -17,7 +17,7 @@ namespace Qbism.Peep
 		public PeepInvestigateState investigateState;
 		public PeepCowerState cowerState;
 		public PeepBalloonIdleState balloonIdleState;
-		public AIPath aiPath;
+		public RichAI aiRich;
 		public Seeker pathSeeker;
 		public Animator animator;
 		public PeepAnimator peepAnim;

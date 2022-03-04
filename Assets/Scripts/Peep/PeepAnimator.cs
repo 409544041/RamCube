@@ -28,7 +28,7 @@ namespace Qbism.Peep
 
 		private void Update()
 		{
-			moveSpeed = refs.aiPath.velocity.magnitude;
+			moveSpeed = refs.aiRich.velocity.magnitude;
 			HandleIdleTimer();
 			refs.animator.SetFloat("MoveSpeed", moveSpeed);
 			refs.animator.SetFloat("IdleType", idleType);

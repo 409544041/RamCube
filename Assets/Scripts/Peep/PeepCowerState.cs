@@ -18,7 +18,7 @@ namespace Qbism.Peep
 				refs = stateManager.refs;
 			}
 			//TO DO: activate cowering animation
-			refs.aiPath.isStopped = true;
+			refs.aiRich.maxSpeed = 0;
 			print("Cowering");
 		}
 

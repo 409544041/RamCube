@@ -32,8 +32,10 @@ namespace Qbism.Peep
 
 			if (targetDest != null)
 			{
-				refs.aiPath.maxSpeed = walkSpeed;
-				refs.aiPath.destination = targetDest.position;
+				//refs.aiPath.maxSpeed = walkSpeed;
+				//refs.aiPath.destination = targetDest.position;
+				refs.aiRich.maxSpeed = walkSpeed;
+				refs.aiRich.destination = targetDest.position;
 			}
 			else stateManager.SwitchState(refs.idleState);
 		}
@@ -41,7 +43,7 @@ namespace Qbism.Peep
 		public void StateUpdate(PeepStateManager psm)
 		{
 			if (Vector3.Distance(transform.position, targetDest.position) <= 
-				refs.aiPath.endReachedDistance)
+				refs.aiRich.endReachedDistance)
 				DestinationReached();
 		}
 
@@ -69,6 +71,7 @@ namespace Qbism.Peep
 
 		public void DestinationReached()
 		{
+			refs.aiRich.maxSpeed = 0;
 			refs.idleState.pointAction = targetDest.GetComponent<IdlePointAction>().pointAction;
 			stateManager.SwitchState(refs.idleState);
 		}

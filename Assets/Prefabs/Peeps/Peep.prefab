@@ -365,8 +365,8 @@ GameObject:
   - component: {fileID: 5910563129948846922}
   - component: {fileID: 3905939384105803416}
   - component: {fileID: 1078660253669783178}
+  - component: {fileID: 1843118010332396348}
   - component: {fileID: 1339959502425107199}
-  - component: {fileID: 951367935778624567}
   - component: {fileID: 515349412203204331}
   - component: {fileID: 6855886272081877845}
   - component: {fileID: 3139609209763554299}
@@ -432,7 +432,7 @@ CapsuleCollider:
   m_Height: 0.6
   m_Direction: 1
   m_Center: {x: 0, y: 0.3, z: 0}
---- !u!114 &1339959502425107199
+--- !u!114 &1843118010332396348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -441,40 +441,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5345699827149558106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: 1
---- !u!114 &951367935778624567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5345699827149558106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Script: {fileID: 11500000, guid: ce11ea984e202491d9271f53021d8b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
   radius: 0.25
-  height: 1
+  height: 0.5
   canMove: 1
   maxSpeed: 1
   gravity: {x: NaN, y: NaN, z: NaN}
@@ -493,15 +465,43 @@ MonoBehaviour:
     maximumInterval: 2
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
-  maxAcceleration: -2.5
-  rotationSpeed: 1000
-  slowdownDistance: 1
-  pickNextWaypointDist: 1
+  acceleration: 50
+  rotationSpeed: 100
+  slowdownTime: 0.3
   endReachedDistance: 0.5
-  alwaysDrawGizmos: 0
-  slowWhenNotFacingTarget: 0
-  whenCloseToDestination: 0
-  constrainInsideGraph: 1
+  wallForce: 2
+  wallDist: 1
+  funnelSimplification: 0
+  slowWhenNotFacingTarget: 1
+  animCompatibility: {fileID: 0}
+--- !u!114 &1339959502425107199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345699827149558106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 1
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: 1
 --- !u!114 &515349412203204331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,8 +535,8 @@ MonoBehaviour:
   centerBackingField: 1
   locked: 0
   lockWhenNotMoving: 0
-  agentTimeHorizon: 3
-  obstacleTimeHorizon: 3
+  agentTimeHorizon: 2
+  obstacleTimeHorizon: 2
   maxNeighbours: 10
   layer: 1
   collidesWith: 3
@@ -564,7 +564,8 @@ MonoBehaviour:
   investigateState: {fileID: 3569305495301124351}
   cowerState: {fileID: 5456565755616517249}
   balloonIdleState: {fileID: 4850056201209905772}
-  aiPath: {fileID: 951367935778624567}
+  aiPath: {fileID: 0}
+  aiRich: {fileID: 1843118010332396348}
   pathSeeker: {fileID: 1339959502425107199}
   animator: {fileID: 4938652295556564000}
   peepAnim: {fileID: 855340356152411188}
