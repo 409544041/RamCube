@@ -14,6 +14,11 @@ namespace Qbism.Peep
 		PeepRefHolder refs;
 		public GameObject investigateObject { get; set; }
 
+		//States
+		Vector3 playerDir;
+		Vector2 playerDirV2;
+		Vector2 peepDirV2;
+
 		public void StateEnter(PeepStateManager psm)
 		{
 			if (stateManager == null)
@@ -24,32 +29,32 @@ namespace Qbism.Peep
 
 			refs.expressionHandler.SetQuestionExprSignal();
 
-			var playerDir = (investigateObject.transform.position - transform.position).normalized;
-			var playerDirV2 = new Vector2(playerDir.x, playerDir.z);
+			SetDirections();
 
-			if (FetchAngle(playerDirV2) < 45) TriggerReaction();
-			else StartCoroutine(TurnTowardsPlayer(playerDirV2, playerDir));
+			if (FetchAngle() < 45) TriggerReaction();
+			else StartCoroutine(TurnTowardsPlayer());
 		}
 
 		public void StateUpdate(PeepStateManager psm)
 		{
+			SetDirections();
 		}
 
-		private float FetchAngle(Vector2 playerDirV2)
+		private float FetchAngle()
 		{
-			var dirV2 = new Vector2(transform.forward.x, transform.forward.z);
-			var angle = Vector2.Angle(playerDirV2, dirV2);
+			var angle = Vector3.Angle(playerDirV2, peepDirV2);
 			return angle;
 		}
 
-		private IEnumerator TurnTowardsPlayer(Vector2 playerDirV2, Vector3 playerDir)
+		private IEnumerator TurnTowardsPlayer()
 		{
 			var delay = Random.Range(turnDelayMinMax.x, turnDelayMinMax.y);
 			yield return new WaitForSeconds(delay);
 
-			while (FetchAngle(playerDirV2) > 10)
+			while (FetchAngle() > 10)
 			{
-				var newDir = Vector3.RotateTowards(transform.forward, playerDir, 200 * Time.deltaTime, 0.0f);
+				var newDir = Vector3.RotateTowards(transform.forward, 
+					new Vector3(playerDir.x, transform.forward.y, playerDir.z), 200 * Time.deltaTime, 0.0f);
 				var newRot = Quaternion.LookRotation(newDir);
 				transform.rotation = Quaternion.Slerp(transform.rotation, newRot, 3 * Time.deltaTime);
 
@@ -87,6 +92,13 @@ namespace Qbism.Peep
 			if (stateManager.peepType == PeepTypes.scared) GoToRunState();
 
 			else if (stateManager.peepType == PeepTypes.notScared) ContinuePrevState();
+		}
+
+		private void SetDirections()
+		{
+			playerDir = (investigateObject.transform.position - transform.position).normalized;
+			playerDirV2 = new Vector2(playerDir.x, playerDir.z);
+			peepDirV2 = new Vector2(transform.forward.x, transform.forward.z);
 		}
 
 		private void GoToRunState()
