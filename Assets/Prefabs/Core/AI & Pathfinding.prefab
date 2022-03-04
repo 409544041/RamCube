@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4933135871000493976}
   - component: {fileID: 3621097226095753792}
   - component: {fileID: 1113387872605305916}
+  - component: {fileID: 3051772255398428604}
   m_Layer: 0
   m_Name: AI & Pathfinding
   m_TagString: Untagged
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAIIewEax9x3gEAAMUDAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGVU8Fy2jAQ/RXG56YTYxigxxImPRTo2DlkkulhkRZbE1misgQEhn+vVpbBmfaSk6y3+95q367PCavAALNocuDCNcm3wf3X8ZdBwrSy2pklHBfGaOPxlFCUshAnDGlDyjuAfIONxB8oysoGPOvBcynqTUBTyq7hWEi9I/4o3he8xJ+oSlvFGrVQOZZCq1iI8pALq82TkBjBdDj1sI3A8z/IyxVxDRKPOrPGoUcMStyDso8GdlXhzBYYLjUn2eRBr7TN8Y8TBhPKhcZ74wXnWkrB0fR1utgSmyoU2IJsPkSe0BgQ6r8hg/1Hsaifd/EHtCAktXEfjGre/Pd5kOxBOnrqNJ0NBxdqGcplG339Tde2ZAH17uoWTcRoC9a72qocaSYefY/nic4gt9WGIf+uneLNHJWX+wwjFoz5WUcYR0LWMppKH8i0tbNSKLy5QIGVH8VcK4WMntu3taPFmd1oCsFgYwt/sGqt5PvzS4+GijZxBfvac+fOWqHKG7d0gn90NsEpz3DEOR/NNmOWZndZOpmlGz6ZwJiPpxNMQhdCCStA/vL60na2+OVWvYdBHRRzZH6ug7BxtFbcwOFRnGrd2wChtrpgfivUutW4tu33AaQ3li/Cb1BgaIGoyfmSXP4CUEsDBBQAAAgIAAAIIezv/f5obwAAAHoAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrRSqkWKcapJSkqKiWWSabKhsa6xobmlYVKKuXmiaYqphXmqUixQfUllQapfYm4qRE9AYklGWmZeSmZeul5QanJicYk7yHCl2FoAUEsBAi0AFAAACAgAAAgh7ARrH3HeAQAAxQMAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAAgh7O/9/mhvAAAAegAAAAkAJAAAAAAAAAAAAAAAKwIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAADlAgAAAAA=
+    dataString: UEsDBBQAAAgIAAAIIexWQK883wEAAMQDAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGVU8Fy2jAQ/RWPz00nxrhAjyVMeijQwTlkkulhkRZbE1misgQEhn+vVhbgzPSSk6y3+95q365PKavBALNoVsCFa9Pvyf3X4kuSMq2sdmYOh5kx2ng8IxSlLMURQ9qA8vYg32At8SeKqrYBz3vwVIpmHdCMshs4lFJviT+M9xmv8BeqytaxRiPUCiuhVSxEeciF1eZJSIzgN0JtvD8TczDuIS9XxLVINGrMGoceMShxB8o+GtjWpTMbYDjXnFTTB73QdoV/nTCYUi603hovONVSCo6mr3OJzbGtQ4ENyPZD5AmNAaH+GzLYfxSL+qtL/AEtCElt3Aef2jf/fUrSHUhHTx1nk0FyppahmnfR1z907UqW0GyvZtFAjLZgvamdyoFG4tH3eB7pDHIbbRjyH9op3k5RebnPMGLBmJ9fCEUk5B2jrfWeTFs6K4XCmwsUWPhRTLVSyOi5fVsvtDizG00hGGxt6Q9WL5V8f37p0VDRIi5g13ju1FkrVHXjVk7wj86mOOY5Djnnw8m6YFl+l2ejSbbmoxEUvBiPMA1dCCWsAPnb60t7scXvtuo9DJqguELm55qEjaO14gb2j+LY6N4GCLXRJfNboZadxrVtvw8gvbF8Fv6CEkMLRE1P5/T8D1BLAwQUAAAICAAACCHs7/3+aG8AAAB6AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0UqpFinGqSUpKiollkmmyobGusaG5pWFSirl5ommKqYV5qlIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrpeUGpyYnGJO8hwpdhaAFBLAQItABQAAAgIAAAIIexWQK883wEAAMQDAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAIIezv/f5obwAAAHoAAAAJACQAAAAAAAAAAAAAACwCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAA5gIAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -72,7 +73,7 @@ MonoBehaviour:
   manualDebugFloorRoof: 0
   showSearchTree: 0
   unwalkableNodeDebugSize: 0.3
-  logPathResults: 1
+  logPathResults: 4
   maxNearestNodeDistance: 100
   scanOnStartup: 1
   fullGetNearestSearch: 0
@@ -119,3 +120,18 @@ MonoBehaviour:
   symmetryBreakingBias: 0.1
   movementPlane: 0
   drawObstacles: 0
+--- !u!114 &3051772255398428604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2609488634106449134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e10183f1ec74d27ba5e19d5a2242c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  uniqueID: 2314249674308905875
+  wallHeight: 1

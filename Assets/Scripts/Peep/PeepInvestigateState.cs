@@ -12,7 +12,7 @@ namespace Qbism.Peep
 		//Cache
 		PeepStateManager stateManager;
 		PeepRefHolder refs;
-		public GameObject player { get; set; }
+		public GameObject investigateObject { get; set; }
 
 		public void StateEnter(PeepStateManager psm)
 		{
@@ -24,7 +24,7 @@ namespace Qbism.Peep
 
 			refs.expressionHandler.SetQuestionExprSignal();
 
-			var playerDir = (player.transform.position - transform.position).normalized;
+			var playerDir = (investigateObject.transform.position - transform.position).normalized;
 			var playerDirV2 = new Vector2(playerDir.x, playerDir.z);
 
 			if (FetchAngle(playerDirV2) < 45) TriggerReaction();

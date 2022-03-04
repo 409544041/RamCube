@@ -41,7 +41,7 @@ namespace Qbism.PlayerCube
 			{
 				if (peep.peepJob == PeepJobs.balloon) continue;
 
-				peep.refs.investigateState.player = this.gameObject;
+				peep.refs.investigateState.investigateObject = this.gameObject;
 				peep.SwitchState(peep.refs.investigateState);
 			}
 		}

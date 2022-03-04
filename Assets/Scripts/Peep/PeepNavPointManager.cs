@@ -36,14 +36,14 @@ namespace Qbism.Peep
 			hidePoints = GameObject.FindGameObjectsWithTag(("HidePoint"));
 		}
 
-		public GameObject[] SortHidePointsByDistance(GameObject[] points)
+		public GameObject[] SortHidePointsByDistance(GameObject[] points, Vector3 peepPos)
 		{
 			var pointsToSort = points;
 			float[] pointNavDistances = new float[pointsToSort.Length];
 
 			for (int i = 0; i < hidePoints.Length; i++)
 			{
-				float distToPoint = Vector3.Distance(transform.position, pointsToSort[i].transform.position);
+				float distToPoint = Vector3.Distance(peepPos, pointsToSort[i].transform.position);
 				pointNavDistances[i] = distToPoint;
 			}
 

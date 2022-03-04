@@ -28,11 +28,15 @@ namespace Qbism.Peep
 			}
 
 			var pointMngr = stateManager.pointManager;
-			var hidePoints = pointMngr.SortHidePointsByDistance(pointMngr.hidePoints);
+			var hidePoints = pointMngr.SortHidePointsByDistance(pointMngr.hidePoints, transform.position);
 			if (!continuePrevMovement) SetDestination(hidePoints);
 
-			refs.aiPath.maxSpeed = runSpeed;
-			refs.aiPath.destination = targetDest.position;
+			if (targetDest != null)
+			{
+				refs.aiPath.maxSpeed = runSpeed;
+				refs.aiPath.destination = targetDest.position;
+			}
+			else stateManager.SwitchState(refs.cowerState);
 		}
 
 		public void StateUpdate(PeepStateManager psm)
@@ -53,6 +57,7 @@ namespace Qbism.Peep
 					targetDest = points[i].transform;
 					return;
 				}
+				else targetDest = null;
 			}
 		}
 

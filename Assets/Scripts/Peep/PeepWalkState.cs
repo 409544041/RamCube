@@ -29,8 +29,13 @@ namespace Qbism.Peep
 			}
 
 			if (!continuePrevMovement) SetDestination();
-			refs.aiPath.maxSpeed = walkSpeed;
-			refs.aiPath.destination = targetDest.position;
+
+			if (targetDest != null)
+			{
+				refs.aiPath.maxSpeed = walkSpeed;
+				refs.aiPath.destination = targetDest.position;
+			}
+			else stateManager.SwitchState(refs.idleState);
 		}
 
 		public void StateUpdate(PeepStateManager psm)
@@ -59,6 +64,7 @@ namespace Qbism.Peep
 				var i = Random.Range(0, targets.Count);
 				targetDest = targets[i];
 			}
+			else targetDest = null;
 		}
 
 		public void DestinationReached()
