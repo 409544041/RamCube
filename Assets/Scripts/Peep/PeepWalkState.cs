@@ -32,8 +32,6 @@ namespace Qbism.Peep
 
 			if (targetDest != null)
 			{
-				//refs.aiPath.maxSpeed = walkSpeed;
-				//refs.aiPath.destination = targetDest.position;
 				refs.aiRich.maxSpeed = walkSpeed;
 				refs.aiRich.destination = targetDest.position;
 			}
