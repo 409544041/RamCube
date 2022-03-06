@@ -54,10 +54,14 @@ namespace Qbism.Peep
 
 			while (FetchAngle() > 10)
 			{
-				var newDir = Vector3.RotateTowards(transform.forward, 
-					new Vector3(playerDir.x, transform.forward.y, playerDir.z), 200 * Time.deltaTime, 0.0f);
+				var newDir = Vector3.RotateTowards(refs.transform.forward, 
+					new Vector3(playerDir.x, refs.transform.forward.y, playerDir.z), 
+					200 * Time.deltaTime, 0.0f);
+
 				var newRot = Quaternion.LookRotation(newDir);
-				transform.rotation = Quaternion.Slerp(transform.rotation, newRot, 3 * Time.deltaTime);
+
+				refs.transform.rotation = Quaternion.Slerp(refs.transform.rotation, 
+					newRot, 3 * Time.deltaTime);
 
 				yield return null;
 			}
@@ -67,16 +71,12 @@ namespace Qbism.Peep
 
 		private void TriggerReaction()
 		{
-			if (stateManager.peepBravery == PeepBravery.coward ||
-				stateManager.peepBravery == PeepBravery.brave)
+			if (stateManager.coward || stateManager.brave)
 			{
 				StartCoroutine(TriggerAnim("Startle"));
 				refs.expressionHandler.SetShockExprSignal();
 			}
-			else
-			{
-				StartCoroutine(TriggerAnim("Shrug"));
-			}
+			else StartCoroutine(TriggerAnim("Shrug"));
 		}
 
 		private IEnumerator TriggerAnim(string animTrigger)
@@ -91,17 +91,16 @@ namespace Qbism.Peep
 				yield return null;
 			}
 
-			if (stateManager.peepBravery == PeepBravery.coward ||
-				stateManager.peepBravery == PeepBravery.brave) GoToRunState();
+			if (stateManager.coward || stateManager.brave) GoToRunState();
 
-			else if (stateManager.peepBravery == PeepBravery.indifferent) ContinuePrevState();
+			else ContinuePrevState();
 		}
 
 		private void SetDirections()
 		{
 			playerDir = (investigateObject.transform.position - transform.position).normalized;
 			playerDirV2 = new Vector2(playerDir.x, playerDir.z);
-			peepDirV2 = new Vector2(transform.forward.x, transform.forward.z);
+			peepDirV2 = new Vector2(refs.transform.forward.x, refs.transform.forward.z);
 		}
 
 		private void GoToRunState()

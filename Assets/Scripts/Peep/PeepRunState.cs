@@ -29,21 +29,17 @@ namespace Qbism.Peep
 			{
 				stateManager = psm;
 				refs = stateManager.refs;
+				stopDist = refs.aiRich.endReachedDistance;
+				if (stateManager.brave) stopDist = refs.aiRich.endReachedDistance + addStopDist;
 			}
 
-			stopDist = refs.aiRich.endReachedDistance;
-
-			if (stateManager.peepBravery == PeepBravery.coward)
+			if (stateManager.coward)
 			{
 				var pointMngr = stateManager.pointManager;
 				var hidePoints = pointMngr.SortHidePointsByDistance(pointMngr.hidePoints, transform.position);
 				if (!continuePrevMovement) SetHideDest(hidePoints);
 			}
-			else if (stateManager.peepBravery == PeepBravery.brave)
-			{
-				stopDist = refs.aiRich.endReachedDistance + addStopDist;
-				SetAttackPos();
-			}
+			else if (stateManager.brave) SetAttackPos();
 
 			if (targetDest.x < float.PositiveInfinity)
 			{
@@ -104,7 +100,9 @@ namespace Qbism.Peep
 		public void DestinationReached()
 		{
 			refs.aiRich.maxSpeed = 0;
-			stateManager.SwitchState(refs.hideState);
+			if (stateManager.coward) stateManager.SwitchState(refs.hideState);
+			else if (stateManager.brave) Debug.Log("Switching to attack state");
+			// TO DO: Create and hook up attack state
 		}
 
 		public void StateExit()

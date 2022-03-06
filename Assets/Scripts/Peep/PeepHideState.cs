@@ -48,9 +48,13 @@ namespace Qbism.Peep
 
 			while (FetchAngle(diveDirV2) > 10)
 			{
-				var newDir = Vector3.RotateTowards(transform.forward, diveDir, 200 * Time.deltaTime, 0.0f);
+				var newDir = Vector3.RotateTowards(refs.transform.forward, diveDir, 
+					200 * Time.deltaTime, 0.0f);
+
 				var newRot = Quaternion.LookRotation(newDir);
-				transform.rotation = Quaternion.Slerp(transform.rotation, newRot, 4 * Time.deltaTime);
+
+				refs.transform.rotation = Quaternion.Slerp(refs.transform.rotation, 
+					newRot, 4 * Time.deltaTime);
 
 				yield return null;
 			}
@@ -60,7 +64,7 @@ namespace Qbism.Peep
 
 		private float FetchAngle(Vector2 diveDirV2)
 		{
-			var dirV2 = new Vector2(transform.forward.x, transform.forward.z);
+			var dirV2 = new Vector2(refs.transform.forward.x, refs.transform.forward.z);
 			var angle = Vector2.Angle(diveDirV2, dirV2);
 			return angle;
 		}
@@ -82,11 +86,6 @@ namespace Qbism.Peep
 			mmPosToDest.DestinationPositionTransform = divePoint;
 			refs.hideJuice.Initialization();
 			refs.hideJuice.PlayFeedbacks();
-		}
-
-		private bool V3Equal(Vector3 a, Vector3 b)
-		{
-			return Vector3.SqrMagnitude(a - b) < 0.05;
 		}
 
 		public void StateExit()

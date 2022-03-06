@@ -23,9 +23,16 @@ namespace Qbism.Peep
 		string prevStateString;
 		bool runTriggered = false;
 		bool startleTriggered = false;
+		public bool coward { get; private set; } = false;
+		public bool indifferent { get; private set; } = false;
+		public bool brave { get; private set; } = false;
 
 		private void Start()
 		{
+			if (peepBravery == PeepBravery.coward) coward = true;
+			if (peepBravery == PeepBravery.indifferent) indifferent = true;
+			if (peepBravery == PeepBravery.brave) brave = true;
+
 			if (peepJob == PeepJobs.balloon) currentState = refs.balloonIdleState;
 			else currentState = refs.idleState;
 			currentStateString = currentState.ToString();
