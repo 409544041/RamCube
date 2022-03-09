@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 4198279697341793878}
   - component: {fileID: 5924007430084180936}
   - component: {fileID: -8520138409295970726}
+  - component: {fileID: 6805045356244847440}
   m_Layer: 0
   m_Name: Game Logic
   m_TagString: Untagged
@@ -155,13 +156,12 @@ MonoBehaviour:
   meshParts: []
   lineRender: {fileID: 0}
   particle: {fileID: 0}
-  biomeVarietySO: {fileID: 11400000, guid: fe86ac17865a7b34aab40be6101f47df, type: 2}
+  meshVarietySO: {fileID: 0}
+  vignetteSO: {fileID: 0}
   recalculate: 0
   checkBiomeLocally: 0
   isSkyBox: 1
   isVolume: 0
-  isLine: 0
-  isParticle: 0
 --- !u!114 &7298168270807896021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,3 +302,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f04d45d676466438e8d11c0035271b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6805045356244847440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573582724643509009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b1c68bcd0404747afcdb093255dc99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundCanvas: {fileID: 0}
+  overlayDelay: 4
+  objectScaleUp: 3
+  scaleTransDur: 0.25
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  cam: {fileID: 0}

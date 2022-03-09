@@ -99,6 +99,7 @@ namespace Qbism.PlayerCube
 
 			animator.SetTrigger("FartToot");
 			bulletFartImpact.transform.localPosition = new Vector3(0, objFartHeight, 0);
+			bulletFartImpact.transform.forward = Vector3.up;
 			bulletFartImpact.Play();
 			var mmParticle = bulletFartJuice.GetComponent<MMFeedbackParticles>();
 			mmParticle.enabled = false;

@@ -152,7 +152,7 @@ namespace Qbism.PlayerCube
 		private IEnumerator TimerToLeaveScene()
 		{
 			//TEMPORARY. REMOVE ONCE WE HAVE FULL SEQ
-			yield return new WaitForSeconds(5);
+			yield return new WaitForSeconds(8);
 			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(true);
 		}
 
