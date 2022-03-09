@@ -110,6 +110,7 @@ namespace Qbism.Cubes
 				else
 				{
 					yield return new WaitForSeconds(fartExplosionDelay);
+					if (progHandler.currentHasObject) farter.hasSegObj = true;
 					farter.InitiateLaunchSequence(null, false); 
 				}
 			}

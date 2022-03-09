@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using Qbism.Cubes;
 using Qbism.General;
+using Qbism.SceneTransition;
 using Qbism.SpriteAnimations;
 using UnityEngine;
 
@@ -42,6 +43,7 @@ namespace Qbism.PlayerCube
 		public bool flyingBy { get; set; } = false;
 		float flyByStartX, flyByStartY, flyByTargetX, flyByTargetY;
 		Vector3 flyByStartPos, flyByEndPos;
+		public bool hasSegObj { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action onDoneFarting;
@@ -132,15 +134,26 @@ namespace Qbism.PlayerCube
 			{
 				onSwitchToEndCam();
 				yield return new WaitForSeconds(shockedFaceTime);
-				ShapieRescueFart();
+				ShapieRescueOrObjectFart();
 			}
 		}
 
-		private void ShapieRescueFart()
+		private void ShapieRescueOrObjectFart()
 		{
+			anim.SetBool("ObjFart", hasSegObj);
 			anim.SetTrigger("SmallLaunch");
 			endSeqHandler.finishJuicer.Impact();
 			juicer.ShapieRescueFartJuice();
+
+			//TEMPORARY. REMOVE ONCE WE HAVE FULL SEQ
+			if (hasSegObj) StartCoroutine(TimerToLeaveScene());
+		}
+
+		private IEnumerator TimerToLeaveScene()
+		{
+			//TEMPORARY. REMOVE ONCE WE HAVE FULL SEQ
+			yield return new WaitForSeconds(5);
+			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(true);
 		}
 
 		public void StartBeamImpact()

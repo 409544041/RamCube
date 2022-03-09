@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
-using Qbism.SpriteAnimations;
+using Qbism.Saving;
 using UnityEngine;
 
 namespace Qbism.PlayerCube
@@ -14,11 +14,12 @@ namespace Qbism.PlayerCube
 			beamFartJuice, sputterJuice;
 		public ParticleSystem fartCharge, fartBeam,
 			fartBeamImpact, bulletFartImpact, sputterFarts;
-		[SerializeField] float maxSputterTime = 2;
+		[SerializeField] float maxSputterTime = 2, objFartDelay = 1f, objFartHeight = -.5f;
 
 		//Cache
 		public MMFeedbackWiggle preFartMMWiggle { get; set; }
 		Animator animator;
+		ProgressHandler progHandler;
 
 		//States
 		float[] sputterFartTimes;
@@ -30,6 +31,7 @@ namespace Qbism.PlayerCube
 		{
 			preFartMMWiggle = preFartJuice.GetComponent<MMFeedbackWiggle>();
 			animator = GetComponentInChildren<Animator>();
+			progHandler = FindObjectOfType<ProgressHandler>();
 		}
 
 		private void Update()
@@ -86,13 +88,33 @@ namespace Qbism.PlayerCube
 			bulletFartJuice.PlayFeedbacks();
 		}
 
+		public void InitiateObjectFart()
+		{
+			if (progHandler.currentHasObject) StartCoroutine(TriggerObjectFart());
+		}
+
+		private IEnumerator TriggerObjectFart()
+		{
+			yield return new WaitForSeconds(objFartDelay);
+
+			animator.SetTrigger("FartToot");
+			bulletFartImpact.transform.localPosition = new Vector3(0, objFartHeight, 0);
+			bulletFartImpact.Play();
+			var mmParticle = bulletFartJuice.GetComponent<MMFeedbackParticles>();
+			mmParticle.enabled = false;
+			bulletFartJuice.PlayFeedbacks();
+		}
+
 		public void TriggerSputterFarts()
 		{
-			RandomizeSputterFarts(); 
+			if (!progHandler.currentHasObject)
+			{
+				RandomizeSputterFarts();
 
-			sputterFarting = true;
-			sputterJuice.Initialization();
-			sputterFarts.Play();
+				sputterFarting = true;
+				sputterJuice.Initialization();
+				sputterFarts.Play();
+			}		
 		}
 
 		private void SputterFartJuice()

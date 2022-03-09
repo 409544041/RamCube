@@ -17,6 +17,7 @@ namespace Qbism.PlayerCube
 		Animator animator;
 		PlayerIntroJuicer introJuicer;
 		PlayerOutroJuicer outroJuicer;
+		PlayerFartJuicer fartJuicer;
 
 		//States
 		Vector3 playerFinishLandPos;
@@ -36,6 +37,7 @@ namespace Qbism.PlayerCube
 			animator = GetComponent<Animator>();
 			introJuicer = GetComponentInParent<PlayerIntroJuicer>();
 			outroJuicer = GetComponentInParent<PlayerOutroJuicer>();
+			fartJuicer = GetComponentInParent<PlayerFartJuicer>();
 		}
 
 		private void Start() 
@@ -193,8 +195,12 @@ namespace Qbism.PlayerCube
 
 		private void TriggerSputterFarts() // called from animation
 		{
-			var fartJuicer = GetComponentInParent<PlayerFartJuicer>();
 			fartJuicer.TriggerSputterFarts();
+		}
+
+		private void TriggerObjectFart()
+		{
+			fartJuicer.InitiateObjectFart();
 		}
 
 		private IEnumerator TriggerFaceDownWiggle()
