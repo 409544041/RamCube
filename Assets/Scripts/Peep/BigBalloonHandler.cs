@@ -9,6 +9,7 @@ namespace Qbism.Peep
 	{
 		//Config parameters
 		[SerializeField] Vector2 minMaxSpawnDelay;
+		[SerializeField] float maxAddHeight = 2;
 		[SerializeField] SplineComputer[] viableSplines;
 		[SerializeField] SplineFollower follower;
 
@@ -20,6 +21,7 @@ namespace Qbism.Peep
 		float timeToRespawn;
 		bool timerActivated = false;
 		SplineComputer currentSpline;
+		float addHeight;
 
 		private void Awake()
 		{
@@ -29,6 +31,8 @@ namespace Qbism.Peep
 		private void Start()
 		{
 			currentSpline = follower.spline;
+			addHeight = 0 + Random.Range(0, maxAddHeight);
+			follower.spline.transform.localPosition = new Vector3(0, addHeight, 0);
 		}
 
 		private void Update()
@@ -74,6 +78,8 @@ namespace Qbism.Peep
 			}
 
 			follower.spline = currentSpline;
+			addHeight = 0 + Random.Range(0, maxAddHeight);
+			follower.spline.transform.localPosition = new Vector3(0, addHeight, 0);
 			follower.Restart(1);
 			ToggleMeshes(true);
 		}
