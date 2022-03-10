@@ -19,7 +19,7 @@ namespace Qbism.PlayerCube
 		//Cache
 		public MMFeedbackWiggle preFartMMWiggle { get; set; }
 		Animator animator;
-		ProgressHandler progHandler;
+		public ProgressHandler progHandler { get; private set; }
 
 		//States
 		float[] sputterFartTimes;

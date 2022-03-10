@@ -188,6 +188,12 @@ namespace Qbism.PlayerCube
 			outroJuicer.PlayToothyLaughSound();
 		}
 
+		private void PlaySwallowOrOuchSound() //Called from animation
+		{
+			if (fartJuicer.progHandler.currentHasObject) outroJuicer.PlaySwallowClip();
+			else outroJuicer.PlayOuchSound();
+		}
+
 		private void PlayOutchSound() // called from animation
 		{
 			outroJuicer.PlayOuchSound();

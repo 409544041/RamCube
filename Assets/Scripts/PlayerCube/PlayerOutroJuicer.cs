@@ -9,7 +9,7 @@ namespace Qbism.PlayerCube
 	{
 		//Config parameters
 		[SerializeField] AudioClip screamingClip, ouchClip, ouchClipAlt, boingShortClip, 
-			boingLongClip, endLaughClip, smallSurpriseClip, toothyLaughClip;
+			boingLongClip, endLaughClip, smallSurpriseClip, toothyLaughClip, swallowClip;
 		[SerializeField] AudioSource source;
 
 		//Cache
@@ -35,10 +35,15 @@ namespace Qbism.PlayerCube
 			source.Play();
 		}
 
+		public void PlaySwallowClip()
+		{
+			print("Playing swallow");
+			source.PlayOneShot(swallowClip, 2);
+		}
+
 		public void PlayLandingSound()
 		{
 			source.Stop();
-			source.PlayOneShot(ouchClip, .75f);
 			source.PlayOneShot(boingLongClip);
 		}
 
