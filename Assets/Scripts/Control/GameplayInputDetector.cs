@@ -8,6 +8,7 @@ using Qbism.SceneTransition;
 using Qbism.General;
 using Qbism.Saving;
 using Qbism.Dialogue;
+using Qbism.Objects;
 
 namespace Qbism.Control
 {
@@ -19,6 +20,7 @@ namespace Qbism.Control
 		[SerializeField] RewindHandler rewinder;
 		[SerializeField] DialogueManager dialogueManager;
 		[SerializeField] WorldMapLoading mapLoader;
+		[SerializeField] ObjectCollectManager objManager;
 
 		//Cache
 		GameControls controls;
@@ -127,6 +129,7 @@ namespace Qbism.Control
 		public void HandleRestartInput()
 		{
 			if (dialogueManager.inDialogue) dialogueManager.NextDialogueText();
+			else if (objManager.overlayActive) mapLoader.StartLoadingWorldMap(true);
 			else if (!finish.hasFinished) sceneHandler.RestartLevel();
 		}
 

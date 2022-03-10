@@ -144,16 +144,6 @@ namespace Qbism.PlayerCube
 			anim.SetTrigger("SmallLaunch");
 			endSeqHandler.finishJuicer.Impact();
 			juicer.ShapieRescueFartJuice();
-
-			//TEMPORARY. REMOVE ONCE WE HAVE FULL SEQ
-			if (hasSegObj) StartCoroutine(TimerToLeaveScene());
-		}
-
-		private IEnumerator TimerToLeaveScene()
-		{
-			//TEMPORARY. REMOVE ONCE WE HAVE FULL SEQ
-			yield return new WaitForSeconds(15);
-			FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(true);
 		}
 
 		public void StartBeamImpact()

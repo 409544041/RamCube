@@ -90,6 +90,7 @@ MonoBehaviour:
   rewinder: {fileID: 7126253460651279447}
   dialogueManager: {fileID: 1645401456089571225}
   mapLoader: {fileID: 0}
+  objManager: {fileID: 6805045356244847440}
 --- !u!114 &2989723172869007455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,7 +315,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b1c68bcd0404747afcdb093255dc99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectCanvas: {fileID: 0}
   backgroundCanvas: {fileID: 0}
+  objNameText: {fileID: 0}
+  objSubText: {fileID: 0}
+  objOwnerText: {fileID: 0}
   overlayDelay: 4
   objectScaleUp: 3
   scaleTransDur: 0.25
@@ -343,3 +348,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   cam: {fileID: 0}
+  overlayActive: 0

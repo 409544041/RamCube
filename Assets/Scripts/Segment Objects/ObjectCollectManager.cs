@@ -19,9 +19,11 @@ namespace Qbism.Objects
 		public SegmentObjectJuicer objJuicer { get; set; }
 		Vector3 objNewViewPos;
 		Renderer objMesh;
+		public bool overlayActive = false;
 
 		public void InitiateShowingObjectOverlay()
 		{
+			overlayActive = true;
 			StartCoroutine(ShowObjectOverlay());
 		}
 
