@@ -10,6 +10,7 @@ namespace Qbism.Objects
 		//Config parameters
 		[SerializeField] MMFeedbacks swallowAndFartOutJuice, scaleUpJuice, starScaleJuice;
 		[SerializeField] float scaleUpOvershoot = .6f;
+		public ParticleSystem fartParticles;
 		public Canvas uiStar;
 
 		//States
@@ -38,10 +39,11 @@ namespace Qbism.Objects
 			scaleUpJuice.PlayFeedbacks();
 		}
 
-		public void TriggerStarScaleJuice()
+		public void TriggerVFX()
 		{
 			starScaleJuice.Initialization();
 			starScaleJuice.PlayFeedbacks();
+			fartParticles.Play();
 		}
 	}
 }

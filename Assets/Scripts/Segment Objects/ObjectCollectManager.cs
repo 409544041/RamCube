@@ -34,7 +34,7 @@ namespace Qbism.Objects
 
 			GetObjCloserToCam();
 			SetupBackgroundCanvas();
-			SetupStar();
+			SetupVFX();
 			StartCoroutine(ScaleObject());
 
 			objNameText.text = m_Object.f_ObjectTitle;
@@ -58,14 +58,20 @@ namespace Qbism.Objects
 			backgroundCanvas.transform.rotation = cam.transform.rotation;
 			backgroundCanvas.transform.localPosition = new Vector3(0, 0, 10);
 			backgroundCanvas.GetComponent<CanvasGroup>().alpha = 1;
+			backgroundCanvas.sortingOrder = 0;
 		}
 
-		private void SetupStar()
+		private void SetupVFX()
 		{
 			objJuicer.uiStar.transform.forward = cam.transform.forward;
+			objJuicer.fartParticles.transform.forward = cam.transform.forward;
+
 			var objMeshViewPos = cam.WorldToViewportPoint(objMesh.transform.position);
-			var starNewViewPos = new Vector3(objMeshViewPos.x, objMeshViewPos.y, 7);
+			var starNewViewPos = new Vector3(objMeshViewPos.x, objMeshViewPos.y, 8);
+			var particleNewVewPos = new Vector3(objMeshViewPos.x, objMeshViewPos.y, 7);
+
 			objJuicer.uiStar.transform.position = cam.ViewportToWorldPoint(starNewViewPos);
+			objJuicer.fartParticles.transform.position = cam.ViewportToWorldPoint(particleNewVewPos);
 		}
 		
 		private IEnumerator ScaleObject()
@@ -87,7 +93,7 @@ namespace Qbism.Objects
 			}
 
 			objJuicer.TriggerScaleUpJuice();
-			objJuicer.TriggerStarScaleJuice();
+			objJuicer.TriggerVFX();
 		}
 	}
 }
