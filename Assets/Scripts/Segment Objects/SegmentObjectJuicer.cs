@@ -8,8 +8,9 @@ namespace Qbism.Objects
 	public class SegmentObjectJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks swallowAndFartOutJuice, scaleUpJuice;
+		[SerializeField] MMFeedbacks swallowAndFartOutJuice, scaleUpJuice, starScaleJuice;
 		[SerializeField] float scaleUpOvershoot = .6f;
+		public Canvas uiStar;
 
 		//States
 		bool swallowFartJuiceActivated = false;
@@ -35,6 +36,12 @@ namespace Qbism.Objects
 			mmScaler.RemapCurveOne = startScale + scaleUpOvershoot;
 			scaleUpJuice.Initialization();
 			scaleUpJuice.PlayFeedbacks();
+		}
+
+		public void TriggerStarScaleJuice()
+		{
+			starScaleJuice.Initialization();
+			starScaleJuice.PlayFeedbacks();
 		}
 	}
 }
