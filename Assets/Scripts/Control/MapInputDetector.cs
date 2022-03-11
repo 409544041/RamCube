@@ -44,8 +44,8 @@ namespace Qbism.Control
 		{
 			if (switchBoard.serpentScreenConnected)
 			{
-				SceneHandler sceneHandler = GetComponent<SceneHandler>();
-				sceneHandler.LoadSerpentScreen();
+				SerpentScreenLoading serpentLoading = FindObjectOfType<SerpentScreenLoading>();
+				serpentLoading.StartLoadingSerpentScreen();
 			}
 		}
 

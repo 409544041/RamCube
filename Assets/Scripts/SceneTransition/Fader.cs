@@ -7,7 +7,7 @@ namespace Qbism.SceneTransition
 	public class Fader : MonoBehaviour
 	{
 		//Config parameters
-		public float sceneTransTime, endSeqTransTime = .5f;
+		public float sceneTransTime;
 
 		//Cache
 		CanvasGroup canvasGroup = null;
