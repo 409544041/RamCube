@@ -11,6 +11,7 @@ namespace Qbism.Control
 		//Cache
 		GameControls controls;
 		SerpentScreenScroller serpScroller;
+		WorldMapLoading mapLoader;
 
 		//States
 		Vector2 stickValue;
@@ -20,8 +21,10 @@ namespace Qbism.Control
 		{
 			controls = new GameControls();
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
-			controls.Gameplay.DebugKey4.performed += ctx => LoadWorldMap();
+			controls.Gameplay.Back.performed += ctx => LoadWorldMap();
+
 			serpScroller = GetComponent<SerpentScreenScroller>();
+			mapLoader = FindObjectOfType<WorldMapLoading>();
 		}
 
 		private void OnEnable()
@@ -55,8 +58,7 @@ namespace Qbism.Control
 
 		private void LoadWorldMap()
 		{
-			SceneHandler sceneHandler = GetComponent<SceneHandler>();
-			sceneHandler.LoadWorldMap();
+			mapLoader.StartLoadingWorldMap(false);
 		}
 
 		private void OnDisable()
