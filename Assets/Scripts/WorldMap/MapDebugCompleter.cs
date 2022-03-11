@@ -10,11 +10,13 @@ namespace Qbism.WorldMap
 		//Cache
 		ProgressHandler progHandler;
 		SerpentProgress serpProg;
+		ObjectsProgress objProg;
 
 		private void Awake() 
 		{
 			progHandler = FindObjectOfType<ProgressHandler>();
 			serpProg = progHandler.GetComponent<SerpentProgress>();
+			objProg = progHandler.GetComponent<ObjectsProgress>();
 		}
 
 		public void UnCompleteAll()
@@ -35,6 +37,12 @@ namespace Qbism.WorldMap
 				E_SegmentsGameplayData.GetEntity(i).f_Rescued = false;
 			}
 
+			for (int i = 0; i < E_ObjectsGameplayData.CountEntities; i++)
+			{
+				E_ObjectsGameplayData.GetEntity(i).f_ObjectFound = false;
+				E_ObjectsGameplayData.GetEntity(i).f_ObjectReturned = false;
+			}
+
 			progHandler.currentPin = E_Pin.GetEntity(0);
 		}
 
@@ -53,6 +61,11 @@ namespace Qbism.WorldMap
 				if (E_LevelData.GetEntity(i).f_SegmentPresent && !entity.f_Completed)
 				{
 					serpProg.AddSegmentToDatabase();
+				}
+
+				if (E_LevelData.GetEntity(i).f_ObjectPresent && !entity.f_Completed)
+				{
+					objProg.AddObjectToDatabase();
 				}
 			}
 		}
