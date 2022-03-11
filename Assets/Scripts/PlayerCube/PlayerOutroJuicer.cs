@@ -37,7 +37,6 @@ namespace Qbism.PlayerCube
 
 		public void PlaySwallowClip()
 		{
-			print("Playing swallow");
 			source.PlayOneShot(swallowClip, 2);
 		}
 

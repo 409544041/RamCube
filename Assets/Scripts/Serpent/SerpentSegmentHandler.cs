@@ -4,6 +4,7 @@ using Dreamteck.Splines;
 using UnityEngine;
 using Qbism.Cubes;
 using System;
+using Qbism.WorldMap;
 
 namespace Qbism.Serpent
 {
@@ -11,6 +12,7 @@ namespace Qbism.Serpent
 	{
 		//Config parameters
 		public Transform[] segments = null;
+		[SerializeField] MapCoreRefHolder mapCoreRefs;
 
 		//Cache
 		FinishEndSeqHandler finishEndSeq = null;
@@ -22,7 +24,7 @@ namespace Qbism.Serpent
 
 		private void Awake() 
 		{
-			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
+			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>(); //TO DO: Ref this in gameplay
 		}
 
 		private void OnEnable() 
@@ -127,9 +129,11 @@ namespace Qbism.Serpent
 
 		public void EnableSegments(Transform[] segmentArray)
 		{
-			bool inMap = GetComponent<SerpentMapHandler>();
-			bool inSerpScreen = FindObjectOfType<SerpentScreenScroller>();
-			bool inLevel = FindObjectOfType<CubeHandler>();
+			//TO DO: link these bools to refs in each scene
+			bool inMap = false, inSerpScreen = false, inLevel = false;
+			if (mapCoreRefs != null) inMap = true;
+			inSerpScreen = FindObjectOfType<SerpentScreenScroller>();
+			inLevel = FindObjectOfType<CubeHandler>();
 
 			for (int i = 0; i < segmentArray.Length; i++)
 			{

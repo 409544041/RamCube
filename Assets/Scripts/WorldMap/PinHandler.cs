@@ -7,14 +7,14 @@ namespace Qbism.WorldMap
 	public class PinHandler : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] PinChecker pinChecker = null;
+		[SerializeField] MapCoreRefHolder mapCoreRef;
 
-		//Cache
-		PositionBiomeCenterpoint centerPoint = null;
+		//States
+		MapLogicRefHolder logicRef;
 
 		private void Awake() 
 		{
-			centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
+			logicRef = mapCoreRef.mapLogicRef;
 		}
 
 		public void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed, bool justCompleted)
@@ -82,9 +82,9 @@ namespace Qbism.WorldMap
 
 				if (unlocked && !unlockAnimPlayed)
 				{
-					if (biomeUnlocked) centerPoint.StartPositionCenterPoint
+					if (biomeUnlocked) logicRef.centerPoint.StartPositionCenterPoint
 						(null, null, false, true, true, pointBetweenPins);
-					else centerPoint.StartPositionCenterPoint
+					else logicRef.centerPoint.StartPositionCenterPoint
 	 					(null, null, false, true, false, pointBetweenPins);
 
 					//for newly unlocked pins that need to be raised
@@ -112,16 +112,16 @@ namespace Qbism.WorldMap
 								List<E_LevelData> pinsToRaise = E_LevelData.FindEntities(entity =>
 									entity.f_Pin.f_Biome == pin.m_levelData.f_Pin.f_Biome);
 
-								for (int j = 0; j < pinChecker.levelPins.Length; j++)
+								for (int j = 0; j < logicRef.pinChecker.levelPins.Length; j++)
 								{
 									var gameplayEntity = E_LevelGameplayData.FindEntity(entity =>
-										entity.f_Pin == pinChecker.levelPins[j].m_levelData.f_Pin);
+										entity.f_Pin == logicRef.pinChecker.levelPins[j].m_levelData.f_Pin);
 
 									for (int k = 0; k < pinsToRaise.Count; k++)
 									{
-										if (pinChecker.levelPins[j].m_levelData.f_Pin == pinsToRaise[k].f_Pin &&
+										if (logicRef.pinChecker.levelPins[j].m_levelData.f_Pin == pinsToRaise[k].f_Pin &&
 											!gameplayEntity.f_Unlocked)
-											pinChecker.levelPins[j].pinRaiser.InitiateBiomeUnlockRaising();
+											logicRef.pinChecker.levelPins[j].pinRaiser.InitiateBiomeUnlockRaising();
 									}
 								}
 							}

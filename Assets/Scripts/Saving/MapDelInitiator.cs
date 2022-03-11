@@ -1,4 +1,5 @@
 ﻿using Qbism.General;
+using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,16 @@ namespace Qbism.Saving
 {
 	public class MapDelInitiator : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] MapCoreRefHolder mapCoreRef;
+
 		private void Awake() 
 		{
-			var progHandler = FindObjectOfType<ProgressHandler>();
-			var matHandler = progHandler.GetComponent<VarietyMaterialHandler>();
+			var persRef = mapCoreRef.persistantRef;
 
-			progHandler.FixMapUILinks();
-			progHandler.FixMapPinLinks();
-			matHandler.FixLinks();
+			persRef.progHandler.FixMapUILinks();
+			persRef.progHandler.FixMapPinLinks();
+			persRef.varMatHandler.FixLinks();
 		}
 	}
 }

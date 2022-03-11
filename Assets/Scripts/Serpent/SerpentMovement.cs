@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.Cubes;
 using System;
+using Qbism.WorldMap;
 
 namespace Qbism.Serpent
 {
@@ -11,8 +12,9 @@ namespace Qbism.Serpent
 	{
 		//Config parameters
 		[SerializeField] Transform head = null;
-		[SerializeField] SerpentSegmentHandler segHandler;
 		public float segmentSpacing = 1f;
+		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] SerpentSegmentHandler segHandler;
 		
 		//Cache
 		FinishEndSeqHandler finishEndSeq = null;
@@ -26,8 +28,7 @@ namespace Qbism.Serpent
 
 		private void Awake() 
 		{
-			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
-
+			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>(); //TO DO: Refs this in gameplay
 			breadcrumbs = new List<Vector3>();
 		}
 
@@ -38,9 +39,7 @@ namespace Qbism.Serpent
 
         private void Start()
         {
-			var serpMapHandler = GetComponent<SerpentMapHandler>();
-
-			if (serpMapHandler != null) segments = segHandler.PrepareSegmentsWithBilly();
+			if (mapCoreRef != null) segments = segHandler.PrepareSegmentsWithBilly();
 			else segments = segHandler.segments;
 		}
 

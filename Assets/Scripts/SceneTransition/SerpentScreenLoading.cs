@@ -1,4 +1,6 @@
 using Qbism.General;
+using Qbism.Saving;
+using Qbism.WorldMap;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +11,17 @@ namespace Qbism.SceneTransition
 {
 	public class SerpentScreenLoading : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] MapCoreRefHolder mapCoreRef;
+
+		//States
+		PersistentRefHolder persRef;
+
+		private void Awake()
+		{
+			persRef = mapCoreRef.persistantRef;
+		}
+
 		public void StartLoadingSerpentScreen()
 		{
 			StartCoroutine(LoadSerpentScreen());
@@ -16,19 +29,16 @@ namespace Qbism.SceneTransition
 
 		private IEnumerator LoadSerpentScreen()
 		{
-			var fader = FindObjectOfType<Fader>();
-			var musicFader = FindObjectOfType<MusicFadeOut>();
-
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
-			if (musicFader) musicFader.FadeMusicOut();
-			yield return fader.FadeOut(fader.sceneTransTime);
-			if (musicFader) musicFader.TurnMusicOff();
+			if (mapCoreRef.musicFadeOut) mapCoreRef.musicFadeOut.FadeMusicOut();
+			yield return persRef.fader.FadeOut(persRef.fader.sceneTransTime);
+			if (mapCoreRef.musicFadeOut) mapCoreRef.musicFadeOut.TurnMusicOff();
 
 			yield return SceneManager.LoadSceneAsync("SerpentScreen");
 
-			yield return fader.FadeIn(fader.sceneTransTime);
+			yield return persRef.fader.FadeIn(persRef.fader.sceneTransTime);
 
 			Destroy(gameObject);
 		}

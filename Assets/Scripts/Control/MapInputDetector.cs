@@ -11,15 +11,18 @@ namespace Qbism.Control
 {
 	public class MapInputDetector : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] MapCoreRefHolder mapCoreRef;
+
 		//Cache
 		GameControls controls;
-		ProgressHandler progHandler;
-		FeatureSwitchBoard switchBoard;
+
+		//States
+		MapLogicRefHolder logicRef;
+		PersistentRefHolder persRef;
 
 		void Awake()
 		{
-			progHandler = FindObjectOfType<ProgressHandler>();
-			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
 			controls = new GameControls();
 
 			// controls.Gameplay.DebugDeleteSaveData.performed += ctx => DeleteSaveData();
@@ -28,6 +31,9 @@ namespace Qbism.Control
 			controls.Gameplay.DebugKey3.performed += ctx => CompleteAllAndReload();
 			controls.Gameplay.DebugKey1.performed += ctx => UnlockAllAndReload();
 			controls.Gameplay.Rewind.performed += ctx => ReloadMap();
+
+			logicRef = mapCoreRef.mapLogicRef;
+			persRef = mapCoreRef.persistantRef;
 		}
 
 		private void OnEnable()
@@ -37,54 +43,53 @@ namespace Qbism.Control
 
 		private void DeleteSaveData()
 		{
-			progHandler.WipeProgData();
+			persRef.progHandler.WipeProgData();
 		}
 
 		private void LoadSerpentScreen()
 		{
-			if (switchBoard.serpentScreenConnected)
+			if (persRef.switchBoard.serpentScreenConnected)
 			{
-				SerpentScreenLoading serpentLoading = FindObjectOfType<SerpentScreenLoading>();
-				serpentLoading.StartLoadingSerpentScreen();
+				logicRef.serpentLoader.StartLoadingSerpentScreen();
 			}
 		}
 
 		private void ReloadMap()
 		{
-			if (switchBoard.allowDebugMapReload)
+			if (persRef.switchBoard.allowDebugMapReload)
 			{
-				progHandler.SaveProgData();
-				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+				persRef.progHandler.SaveProgData();
+				logicRef.mapLoader.StartLoadingWorldMap(false);
 			}
 		}
 
 		private void UnCompleteAllAndReload()
 		{
-			if (switchBoard.allowDebugDeleteProgress)
+			if (persRef.switchBoard.allowDebugDeleteProgress)
 			{
-				FindObjectOfType<MapDebugCompleter>().UnCompleteAll();
-				progHandler.SaveProgData();
-				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+				logicRef.debugCompleter.UnCompleteAll();
+				persRef.progHandler.SaveProgData();
+				logicRef.mapLoader.StartLoadingWorldMap(false);
 			}
 		}
 
 		private void CompleteAllAndReload()
 		{
-			if (switchBoard.allowDebugCompleteAll)
+			if (persRef.switchBoard.allowDebugCompleteAll)
 			{
-				FindObjectOfType<MapDebugCompleter>().CompleteAll();
-				progHandler.SaveProgData();
-				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+				logicRef.debugCompleter.CompleteAll();
+				persRef.progHandler.SaveProgData();
+				logicRef.mapLoader.StartLoadingWorldMap(false);
 			}
 		}
 
 		private void UnlockAllAndReload()
 		{
-			if (switchBoard.allowDebugUnlockAll)
+			if (persRef.switchBoard.allowDebugUnlockAll)
 			{
-				FindObjectOfType<MapDebugCompleter>().UnlockAll();
-				progHandler.SaveProgData();
-				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(false);
+				logicRef.debugCompleter.UnlockAll();
+				persRef.progHandler.SaveProgData();
+				logicRef.mapLoader.StartLoadingWorldMap(false);
 			}
 		}
 

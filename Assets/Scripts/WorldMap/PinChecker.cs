@@ -8,25 +8,27 @@ namespace Qbism.WorldMap
 	public class PinChecker : MonoBehaviour
 	{
 		//Config parameters
-		public LevelPin[] levelPins = null;
-		[SerializeField] PinHandler pinHandler = null;
-		[SerializeField] MapDebugCompleter debugComp;
+		public LevelPin[] levelPins;
+		[SerializeField] MapCoreRefHolder mapCoreRef;
 
-		//Cache
-		ProgressHandler progHandler = null;
+		//States
+		MapLogicRefHolder logicRef;
+		PersistentRefHolder persRef;
+
 
 		private void Awake() 
 		{
-			progHandler = FindObjectOfType<ProgressHandler>();
+			logicRef = mapCoreRef.mapLogicRef;
+			persRef = mapCoreRef.persistantRef;
 		}
 
 		private void Start() 
 		{
-			debugComp.CheckDebugStatuses();
+			logicRef.debugCompleter.CheckDebugStatuses();
 			CheckLevelPins();
 		}
 
-		public void CheckLevelPins()
+		private void CheckLevelPins()
 		{
 			for (int i = 0; i < levelPins.Length; i++)
 			{
@@ -77,13 +79,13 @@ namespace Qbism.WorldMap
 							unlockAnimPlayed);
 				}
 
-				pinHandler.SetPinUI(pin, unlockAnimPlayed, completed, pin.justCompleted);
-				pinHandler.InitiateRaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft,
+				logicRef.pinHandler.SetPinUI(pin, unlockAnimPlayed, completed, pin.justCompleted);
+				logicRef.pinHandler.InitiateRaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft,
 					dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn, originWalls,
 					biomeUnlocked);
 			}
 
-			progHandler.SaveProgData();
+			persRef.progHandler.SaveProgData();
 		}
 
 		private void AddOriginPins(LevelPin incomingPin, List<LevelPin> originPins)

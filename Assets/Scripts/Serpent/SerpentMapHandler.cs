@@ -11,14 +11,12 @@ namespace Qbism.Serpent
 	{
 		//Config parameters
 		public float mapFollowSpeed = 9f;
-		[SerializeField] SplineFollower follower;
-		[SerializeField] SerpentSegmentHandler segHandler;
 		[SerializeField] float sizeAtStart, sizeAtTarget;
-		[SerializeField] SplineComputer[] splines;
+		[SerializeField] MapCoreRefHolder mapCoreRef;
 
 		//States
 		Transform target;
-		SplineComputer spline;
+		SplineComputer currentSpline;
 
 		public void ActivateSerpent(LevelPinUI pinUI)
 		{
@@ -28,47 +26,47 @@ namespace Qbism.Serpent
 			SetSplineToTarget(pinUI);
 			SetShrinkingData();
 			PlaceSegments();
-			var segmentArray = segHandler.PrepareSegmentsWithBilly();
-			segHandler.EnableSegments(segmentArray); 
+			var segmentArray = mapCoreRef.serpSegHandler.PrepareSegmentsWithBilly();
+			mapCoreRef.serpSegHandler.EnableSegments(segmentArray); 
 			StartMovement();
 		}
 
 		private void SetSpline()
 		{
-			var i = Random.Range(0, splines.Length - 1);
-			follower.spline = splines[i];
+			var i = Random.Range(0, mapCoreRef.splines.Length - 1);
+			mapCoreRef.splineFollower.spline = mapCoreRef.splines[i];
 		}
 
 		private void PlaceSegments()
 		{
-			Vector3 pos = spline.GetPoint(spline.pointCount -1).position;
+			Vector3 pos = currentSpline.GetPoint(currentSpline.pointCount -1).position;
 
-			for (int i = 0; i < segHandler.segments.Length; i++)
+			for (int i = 0; i < mapCoreRef.serpSegHandler.segments.Length; i++)
 			{
-				segHandler.segments[i].position = pos;
+				mapCoreRef.serpSegHandler.segments[i].position = pos;
 			}
 		}
 
 		private void SetSplineToTarget(LevelPinUI pinUI)
 		{
-			spline = follower.spline;
+			currentSpline = mapCoreRef.splineFollower.spline;
 			target = pinUI.levelPin.pinPather.pathPoint.transform;
-			spline.SetPointPosition(0, target.position);
-			spline.Rebuild();
+			currentSpline.SetPointPosition(0, target.position);
+			currentSpline.Rebuild();
 		}
 
 		private void SetShrinkingData()
 		{
-			for (int i = 0; i < segHandler.segments.Length; i++)
+			for (int i = 0; i < mapCoreRef.serpSegHandler.segments.Length; i++)
 			{
-				var shrinker = segHandler.segments[i].GetComponent<ScreenDistanceShrinker>();
+				var shrinker = mapCoreRef.serpSegHandler.segments[i].GetComponent<ScreenDistanceShrinker>();
 				if (shrinker != null) shrinker.SetTargetData(target.position, sizeAtStart, sizeAtTarget, 0);
 			}
 		}
 
 		private void StartMovement()
 		{
-			follower.followSpeed = mapFollowSpeed;
+			mapCoreRef.splineFollower.followSpeed = mapFollowSpeed;
 			GetComponent<SerpentMovement>().SetMoving(true);
 			
 		}

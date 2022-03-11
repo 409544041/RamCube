@@ -7,16 +7,15 @@ namespace Qbism.WorldMap
 {
 	public class MapDebugCompleter : MonoBehaviour
 	{
-		//Cache
-		ProgressHandler progHandler;
-		SerpentProgress serpProg;
-		ObjectsProgress objProg;
+		//Config parameters
+		[SerializeField] MapCoreRefHolder mapCoreRef;
 
-		private void Awake() 
+		//States
+		PersistentRefHolder persRef;
+
+		private void Awake()
 		{
-			progHandler = FindObjectOfType<ProgressHandler>();
-			serpProg = progHandler.GetComponent<SerpentProgress>();
-			objProg = progHandler.GetComponent<ObjectsProgress>();
+			persRef = mapCoreRef.persistantRef;
 		}
 
 		public void UnCompleteAll()
@@ -43,7 +42,7 @@ namespace Qbism.WorldMap
 				E_ObjectsGameplayData.GetEntity(i).f_ObjectReturned = false;
 			}
 
-			progHandler.currentPin = E_Pin.GetEntity(0);
+			persRef.progHandler.currentPin = E_Pin.GetEntity(0);
 		}
 
 		public void CompleteAll()
@@ -60,12 +59,12 @@ namespace Qbism.WorldMap
 
 				if (E_LevelData.GetEntity(i).f_SegmentPresent && !entity.f_Completed)
 				{
-					serpProg.AddSegmentToDatabase();
+					persRef.serpProg.AddSegmentToDatabase();
 				}
 
 				if (E_LevelData.GetEntity(i).f_ObjectPresent && !entity.f_Completed)
 				{
-					objProg.AddObjectToDatabase();
+					persRef.objProg.AddObjectToDatabase();
 				}
 			}
 		}
@@ -170,7 +169,7 @@ namespace Qbism.WorldMap
 			if (gameplayEntity.f_DebugComplete)
 			{
 				if (!gameplayEntity.f_Unlocked) gameplayEntity.f_Unlocked = true;
-				progHandler.SetLevelToComplete(gameplayEntity.f_Pin);
+				persRef.progHandler.SetLevelToComplete(gameplayEntity.f_Pin);
 				gameplayEntity.f_DebugComplete = false;
 			}
 		}

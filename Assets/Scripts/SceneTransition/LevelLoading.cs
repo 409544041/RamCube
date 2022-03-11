@@ -5,8 +5,7 @@ using Qbism.General;
 using Qbism.WorldMap;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Dreamteck.Splines;
-using Qbism.Serpent;
+using Qbism.Saving;
 
 namespace Qbism.SceneTransition
 {
@@ -14,6 +13,17 @@ namespace Qbism.SceneTransition
 	{
 		//Config parameters
 		[SerializeField] float transDelay = .5f;
+		[SerializeField] MapCoreRefHolder mapCoreRef;
+
+		//States
+		PersistentRefHolder persRef;
+		MapLogicRefHolder logicRef;
+
+		private void Awake()
+		{
+			persRef = mapCoreRef.persistantRef;
+			logicRef = mapCoreRef.mapLogicRef;
+		}
 
 		public void StartLoadingLevel(string levelName)
 		{
@@ -22,26 +32,22 @@ namespace Qbism.SceneTransition
 
 		private IEnumerator LoadLevel(string levelName)
 		{
-			var transition = FindObjectOfType<CircleTransition>();
-			var fader = FindObjectOfType<Fader>();
-			var selectedPinUI = FindObjectOfType<PinSelectionTracker>().selectedPin.pinUI;
-			var musicFader = FindObjectOfType<MusicFadeOut>();
-			var serpMapHandler = FindObjectOfType<SerpentMapHandler>();
+			var selectedPinUI = logicRef.pinTracker.selectedPin.pinUI;
 
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
-			serpMapHandler.ActivateSerpent(selectedPinUI);
+			mapCoreRef.serpMapHandler.ActivateSerpent(selectedPinUI);
 
 			yield return new WaitForSeconds(transDelay);
 
-			transition.SetCirclePos(selectedPinUI.transform.position);
-			transition.SetCircleStartState(0);
-			transition.DebugFixCircleMask();
+			persRef.circTransition.SetCirclePos(selectedPinUI.transform.position);
+			persRef.circTransition.SetCircleStartState(0);
+			persRef.circTransition.DebugFixCircleMask();
 
-			musicFader.FadeMusicOut();
-			yield return transition.TransOut();
-			musicFader.TurnMusicOff();
+			mapCoreRef.musicFadeOut.FadeMusicOut();
+			yield return persRef.circTransition.TransOut();
+			mapCoreRef.musicFadeOut.TurnMusicOff();
 
 			yield return SceneManager.LoadSceneAsync(levelName);
 
@@ -49,11 +55,11 @@ namespace Qbism.SceneTransition
 			yield return null;
 			var finish = FindObjectOfType<FinishCube>();
 
-			transition.SetCirclePos(finish.transform.position);
-			transition.SetCircleStartState(1);
-			transition.DebugFixCircleMask();
-			fader.FadeImmediate(0);
-			yield return transition.TransIn();
+			persRef.circTransition.SetCirclePos(finish.transform.position);
+			persRef.circTransition.SetCircleStartState(1);
+			persRef.circTransition.DebugFixCircleMask();
+			persRef.fader.FadeImmediate(0);
+			yield return persRef.circTransition.TransIn();
 
 			Destroy(gameObject);
 		}
