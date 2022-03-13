@@ -13,7 +13,7 @@ namespace Qbism.Serpent
 		//Config parameters
 		[SerializeField] Transform head = null;
 		public float segmentSpacing = 1f;
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 		[SerializeField] SerpentSegmentHandler segHandler;
 		
 		//Cache
@@ -39,7 +39,7 @@ namespace Qbism.Serpent
 
         private void Start()
         {
-			if (mapCoreRef != null) segments = segHandler.PrepareSegmentsWithBilly();
+			if (mcRef != null) segments = segHandler.PrepareSegmentsWithBilly();
 			else segments = segHandler.segments;
 		}
 

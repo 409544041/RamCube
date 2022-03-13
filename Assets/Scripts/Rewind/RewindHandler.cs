@@ -10,12 +10,14 @@ namespace Qbism.Rewind
 {
 	public class RewindHandler : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] GameLogicRefHolder glRef;
+
 		//Cache
 		TimeBody[] timeBodies = null;
 		PlayerCubeMover mover = null;
 		CubeHandler handler = null;
 		MoveableCubeHandler moveHandler = null;
-		MoveableCube[] moveableCubes;
 		LaserCube[] lasers;
 		FinishCube finish;
 
@@ -24,13 +26,12 @@ namespace Qbism.Rewind
 
 		private void Awake() 
 		{
-			timeBodies = FindObjectsOfType<TimeBody>();
-			mover = FindObjectOfType<PlayerCubeMover>();
-			handler = GetComponent<CubeHandler>();
-			moveHandler = handler.GetComponent<MoveableCubeHandler>();
-			moveableCubes = FindObjectsOfType<MoveableCube>();
+			timeBodies = FindObjectsOfType<TimeBody>(); //TO DO: add cube refs
+			mover = FindObjectOfType<PlayerCubeMover>(); //TO DO: add player refs
+			handler = glRef.cubeHandler;
+			moveHandler = glRef.movCubeHandler;
 			lasers = FindObjectsOfType<LaserCube>();
-			finish = FindObjectOfType<FinishCube>();
+			finish = FindObjectOfType<FinishCube>(); //TO DO: finish refs
 		}
 
 		private void OnEnable() 

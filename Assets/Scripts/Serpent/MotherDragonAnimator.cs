@@ -64,9 +64,9 @@ namespace Qbism.Serpent
 
 		private void LevelTransition() //Called from animation event
         {
-			var switchBoard = FindObjectOfType<FeatureSwitchBoard>();
+			var switchBoard = FindObjectOfType<FeatureSwitchBoard>(); //TO DO: link to refs
 			if (switchBoard.worldMapConnected)
-				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(true);
+				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(true); //TO DO: link to refs
 			else FindObjectOfType<SceneHandler>().NextLevel();
 		}
 

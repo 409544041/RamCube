@@ -12,7 +12,7 @@ namespace Qbism.Control
 	public class MapInputDetector : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//Cache
 		GameControls controls;
@@ -32,8 +32,8 @@ namespace Qbism.Control
 			controls.Gameplay.DebugKey1.performed += ctx => UnlockAllAndReload();
 			controls.Gameplay.Rewind.performed += ctx => ReloadMap();
 
-			logicRef = mapCoreRef.mapLogicRef;
-			persRef = mapCoreRef.persistantRef;
+			logicRef = mcRef.mlRef;
+			persRef = mcRef.persRef;
 		}
 
 		private void OnEnable()

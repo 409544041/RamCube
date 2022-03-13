@@ -8,14 +8,14 @@ namespace Qbism.WorldMap
 	public class MapDebugCompleter : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//States
 		PersistentRefHolder persRef;
 
 		private void Awake()
 		{
-			persRef = mapCoreRef.persistantRef;
+			persRef = mcRef.persRef;
 		}
 
 		public void UnCompleteAll()

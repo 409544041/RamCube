@@ -12,14 +12,14 @@ namespace Qbism.SceneTransition
 	public class SerpentScreenLoading : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//States
 		PersistentRefHolder persRef;
 
 		private void Awake()
 		{
-			persRef = mapCoreRef.persistantRef;
+			persRef = mcRef.persRef;
 		}
 
 		public void StartLoadingSerpentScreen()
@@ -32,9 +32,9 @@ namespace Qbism.SceneTransition
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
-			if (mapCoreRef.musicFadeOut) mapCoreRef.musicFadeOut.FadeMusicOut();
+			if (mcRef.musicFader) mcRef.musicFader.FadeMusicOut();
 			yield return persRef.fader.FadeOut(persRef.fader.sceneTransTime);
-			if (mapCoreRef.musicFadeOut) mapCoreRef.musicFadeOut.TurnMusicOff();
+			if (mcRef.musicFader) mcRef.musicFader.TurnMusicOff();
 
 			yield return SceneManager.LoadSceneAsync("SerpentScreen");
 

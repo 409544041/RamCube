@@ -13,7 +13,7 @@ namespace Qbism.SceneTransition
 	{
 		//Config parameters
 		[SerializeField] float transDelay = .5f;
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//States
 		PersistentRefHolder persRef;
@@ -21,8 +21,8 @@ namespace Qbism.SceneTransition
 
 		private void Awake()
 		{
-			persRef = mapCoreRef.persistantRef;
-			logicRef = mapCoreRef.mapLogicRef;
+			persRef = mcRef.persRef;
+			logicRef = mcRef.mlRef;
 		}
 
 		public void StartLoadingLevel(string levelName)
@@ -37,7 +37,7 @@ namespace Qbism.SceneTransition
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
-			mapCoreRef.serpMapHandler.ActivateSerpent(selectedPinUI);
+			mcRef.serpMapHandler.ActivateSerpent(selectedPinUI);
 
 			yield return new WaitForSeconds(transDelay);
 
@@ -45,9 +45,9 @@ namespace Qbism.SceneTransition
 			persRef.circTransition.SetCircleStartState(0);
 			persRef.circTransition.DebugFixCircleMask();
 
-			mapCoreRef.musicFadeOut.FadeMusicOut();
+			mcRef.musicFader.FadeMusicOut();
 			yield return persRef.circTransition.TransOut();
-			mapCoreRef.musicFadeOut.TurnMusicOff();
+			mcRef.musicFader.TurnMusicOff();
 
 			yield return SceneManager.LoadSceneAsync(levelName);
 

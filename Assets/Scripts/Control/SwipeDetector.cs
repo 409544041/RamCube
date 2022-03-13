@@ -13,11 +13,11 @@ namespace Qbism.Control
 		//Config parameters
 		[SerializeField] bool DetectBeforeRelease = false;
 		[SerializeField] float minSwipeDistance = 20f;
+		[SerializeField] GameLogicRefHolder glRef;
 
 		//Cache
 		CubeHandler handler;
 		PlayerCubeMover mover;
-		RewindHandler rewinder;
 
 		//States
 		Vector2 fingerDownPos;
@@ -27,9 +27,8 @@ namespace Qbism.Control
 
 		private void Awake()
 		{
-			handler = FindObjectOfType<CubeHandler>();
-			mover = FindObjectOfType<PlayerCubeMover>();
-			rewinder = FindObjectOfType<RewindHandler>();
+			handler = glRef.cubeHandler;
+			mover = FindObjectOfType<PlayerCubeMover>(); //TO DO: link player ref
 		}
 
 		void Update()

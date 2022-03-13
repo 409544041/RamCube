@@ -8,18 +8,16 @@ namespace Qbism.Objects
 	public class ObjectCollectManager : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] Canvas objectCanvas, backgroundCanvas;
-		[SerializeField] TextMeshProUGUI objNameText, objSubText, objOwnerText;
 		[SerializeField] float overlayDelay = 4, objectScaleUp = 3, scaleTransDur = .5f;
 		[SerializeField] AnimationCurve scaleCurve;
-		[SerializeField] Camera cam;
+		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		//Cache
 		GameObject collectableObject;
 		public SegmentObjectJuicer objJuicer { get; set; }
 		Vector3 objNewViewPos;
 		Renderer objMesh;
-		public bool overlayActive = false;
+		public bool overlayActive { get; private set; } = false;
 
 		public void InitiateShowingObjectOverlay()
 		{
@@ -39,41 +37,41 @@ namespace Qbism.Objects
 			SetupVFX();
 			StartCoroutine(ScaleObject());
 
-			objNameText.text = m_Object.f_ObjectTitle;
-			objSubText.text = m_Object.f_ObjectSubText;
-			objOwnerText.text = "Belongs to " + m_Object.f_Owner.f_SegmentName;
+			gcRef.objectNameText.text = m_Object.f_ObjectTitle;
+			gcRef.objectSubText.text = m_Object.f_ObjectSubText;
+			gcRef.objectOwnerText.text = "Belongs to " + m_Object.f_Owner.f_SegmentName;
 
-			objectCanvas.GetComponent<CanvasGroup>().alpha = 1;
+			gcRef.objectCanvasGroup.alpha = 1;
 		}
 
 		private void GetObjCloserToCam()
 		{
-			var viewPos = cam.WorldToViewportPoint(collectableObject.transform.position);
+			var viewPos = gcRef.cam.WorldToViewportPoint(collectableObject.transform.position);
 			objNewViewPos = new Vector3(viewPos.x, viewPos.y, 5);
-			collectableObject.transform.position = cam.ViewportToWorldPoint(objNewViewPos);
-			collectableObject.transform.parent = cam.transform;
+			collectableObject.transform.position = gcRef.cam.ViewportToWorldPoint(objNewViewPos);
+			collectableObject.transform.parent = gcRef.cam.transform;
 		}
 
 		private void SetupBackgroundCanvas()
 		{
-			backgroundCanvas.transform.parent = cam.transform;
-			backgroundCanvas.transform.rotation = cam.transform.rotation;
-			backgroundCanvas.transform.localPosition = new Vector3(0, 0, 10);
-			backgroundCanvas.GetComponent<CanvasGroup>().alpha = 1;
-			backgroundCanvas.sortingOrder = 0;
+			gcRef.bgCanvas.transform.parent = gcRef.cam.transform;
+			gcRef.bgCanvas.transform.rotation = gcRef.cam.transform.rotation;
+			gcRef.bgCanvas.transform.localPosition = new Vector3(0, 0, 10);
+			gcRef.bgCanvasGroup.alpha = 1;
+			gcRef.bgCanvas.sortingOrder = 0;
 		}
 
 		private void SetupVFX()
 		{
-			objJuicer.uiStar.transform.forward = cam.transform.forward;
-			objJuicer.fartParticles.transform.forward = cam.transform.forward;
+			objJuicer.uiStar.transform.forward = gcRef.cam.transform.forward;
+			objJuicer.fartParticles.transform.forward = gcRef.cam.transform.forward;
 
-			var objMeshViewPos = cam.WorldToViewportPoint(objMesh.transform.position);
+			var objMeshViewPos = gcRef.cam.WorldToViewportPoint(objMesh.transform.position);
 			var starNewViewPos = new Vector3(objMeshViewPos.x, objMeshViewPos.y, 8);
 			var particleNewVewPos = new Vector3(objMeshViewPos.x, objMeshViewPos.y, 7);
 
-			objJuicer.uiStar.transform.position = cam.ViewportToWorldPoint(starNewViewPos);
-			objJuicer.fartParticles.transform.position = cam.ViewportToWorldPoint(particleNewVewPos);
+			objJuicer.uiStar.transform.position = gcRef.cam.ViewportToWorldPoint(starNewViewPos);
+			objJuicer.fartParticles.transform.position = gcRef.cam.ViewportToWorldPoint(particleNewVewPos);
 		}
 		
 		private IEnumerator ScaleObject()

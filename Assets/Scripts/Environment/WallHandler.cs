@@ -7,6 +7,8 @@ namespace Qbism.Environment
 {
 	public class WallHandler : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] GameLogicRefHolder glRef;
 		//Cache
 		MoveableCube[] moveableCubes = null;
 		MoveableCubeHandler moveHandler;
@@ -18,7 +20,7 @@ namespace Qbism.Environment
 		private void Awake() 
 		{
 			moveableCubes = FindObjectsOfType<MoveableCube>();
-			moveHandler = GetComponent<MoveableCubeHandler>();
+			moveHandler = glRef.movCubeHandler;
 			LoadWallCubeDictionary();
 		}
 

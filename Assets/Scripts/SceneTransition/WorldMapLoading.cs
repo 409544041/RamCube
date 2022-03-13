@@ -11,18 +11,29 @@ namespace Qbism.SceneTransition
 	public class WorldMapLoading : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
+		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		//States
 		PersistentRefHolder persRef;
-		MapLogicRefHolder logicRef;
+		MapLogicRefHolder mlRef;
+		MusicFadeOut musicFader;
+		Fader fader;
 
 		private void Awake()
 		{
-			if (mapCoreRef != null)
+			if (mcRef != null)
 			{
-				persRef = mapCoreRef.persistantRef;
-				logicRef = mapCoreRef.mapLogicRef;
+				persRef = mcRef.persRef;
+				mlRef = mcRef.mlRef;
+				musicFader = mcRef.musicFader;
+				fader = persRef.fader;
+			}
+			else if (gcRef != null)
+			{
+				persRef = gcRef.persRef;
+				musicFader = gcRef.musicFader;
+				fader = persRef.fader;
 			}
 		}
 
@@ -33,40 +44,32 @@ namespace Qbism.SceneTransition
 
 		private IEnumerator LoadWorldMap(bool fromLevel)
 		{
-			Fader fader;
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
-			//TO DO: link to musicfadeout in gameplay refs when in gameplay
-			if (mapCoreRef != null) mapCoreRef.musicFadeOut.FadeMusicOut();
-			else FindObjectOfType<MusicFadeOut>().FadeMusicOut();
+			//TO DO: Remove this when we have serpscreen core refs
+			if (musicFader != null) musicFader.FadeMusicOut();
 
 			//TO DO: same here
-			if (mapCoreRef != null)
-				yield return persRef.fader.FadeOut(persRef.fader.sceneTransTime);
-			else
-			{
-				fader = FindObjectOfType<Fader>();
-				yield return fader.FadeOut(fader.sceneTransTime);
-			}
+			if (fader == null) fader = FindObjectOfType<Fader>();
+			yield return fader.FadeOut(fader.sceneTransTime);
 
-			if (mapCoreRef != null) mapCoreRef.musicFadeOut.TurnMusicOff();
-			else FindObjectOfType<MusicFadeOut>().TurnMusicOff();
-
+			if (musicFader != null) musicFader.TurnMusicOff();
+			
 			yield return SceneManager.LoadSceneAsync("WorldMap");
 
-			if (mapCoreRef == null)
+			if (mcRef == null)
 			{
-				mapCoreRef = FindObjectOfType<MapCoreRefHolder>();
-				persRef = mapCoreRef.persistantRef;
-				logicRef = mapCoreRef.mapLogicRef;
+				mcRef = FindObjectOfType<MapCoreRefHolder>();
+				persRef = mcRef.persRef;
+				mlRef = mcRef.mlRef;
 			}
 
-			logicRef.centerPoint.PositionCenterPointOnMapLoad();
+			mlRef.centerPoint.PositionCenterPointOnMapLoad();
 
 			//need this yield return here to avoid race condition with selectedPinUI
 			yield return null;
-			var selectedPinUI = logicRef.pinTracker.selectedPin.pinUI;
+			var selectedPinUI = mlRef.pinTracker.selectedPin.pinUI;
 
 			if (fromLevel)
 			{

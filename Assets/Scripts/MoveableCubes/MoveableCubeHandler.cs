@@ -9,7 +9,6 @@ namespace Qbism.MoveableCubes
 	{
 		//Cache
 		MoveableCube[] moveableCubes = null;
-		FloorComponentAdder[] compAdders = null;
 
 		//States
 		public int movingMoveables { get; set; } = 0;
@@ -23,8 +22,7 @@ namespace Qbism.MoveableCubes
 
 		private void Awake() 
 		{
-			moveableCubes = FindObjectsOfType<MoveableCube>();
-			compAdders = FindObjectsOfType<FloorComponentAdder>();
+			moveableCubes = FindObjectsOfType<MoveableCube>(); //TO DO: add movcube reffers
 			
 			LoadMoveableCubeDictionary(); 
 		}

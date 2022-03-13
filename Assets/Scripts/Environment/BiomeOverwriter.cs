@@ -11,18 +11,30 @@ namespace Qbism.Environment
 		public Biomes biomeOverwrite;
 		public bool respawnFloraVariety = false;
 		public bool respawnWallPillarVariety = false;
+		[SerializeField] GameplayCoreRefHolder gcRef;
 
-		private void Awake() 
+		private void Awake()
 		{
-			if (respawnWallPillarVariety)
-			{
-				var spawners = FindObjectsOfType<WallPillarSpawner>();
+			AssignThisToSwappers();
+			if (respawnWallPillarVariety) AssignThisToPillars();
+		}
 
-				for (int i = 0; i < spawners.Length; i++)
-				{
-					spawners[i].bOverwriter = this;
-				}
-			}	
+		private void AssignThisToSwappers()
+		{
+			foreach (var swapper in gcRef.visualSwappers)
+			{
+				swapper.bOverWriter = this;
+			}
+		}
+
+		private void AssignThisToPillars()
+		{
+			var spawners = FindObjectsOfType<WallPillarSpawner>();
+
+			for (int i = 0; i < spawners.Length; i++)
+			{
+				spawners[i].bOverwriter = this;
+			}
 		}
 	}
 }

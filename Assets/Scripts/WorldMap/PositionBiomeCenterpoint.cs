@@ -9,7 +9,7 @@ namespace Qbism.WorldMap
 {
 	public class PositionBiomeCenterpoint : MonoBehaviour
 	{
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//Actions, events, delegates etc
 		public Func<LevelPin> onSavedPinFetch;
@@ -34,9 +34,9 @@ namespace Qbism.WorldMap
 
 			if (onMapLoad)
 			{
-				mapCoreRef.mapCam.enabled = false;
-				mapCoreRef.camBrain.enabled = false;
-				camToPointDiff = mapCoreRef.mapCam.transform.position - transform.position;
+				mcRef.mapCam.enabled = false;
+				mcRef.camBrain.enabled = false;
+				camToPointDiff = mcRef.mapCam.transform.position - transform.position;
 			}
 
 			float xPos = 0;
@@ -57,10 +57,10 @@ namespace Qbism.WorldMap
 
 			if (onMapLoad)
 			{
-				mapCoreRef.mapCam.transform.position = transform.position +
+				mcRef.mapCam.transform.position = transform.position +
 					camToPointDiff;
-				mapCoreRef.mapCam.enabled = true;
-				mapCoreRef.camBrain.enabled = true;
+				mcRef.mapCam.enabled = true;
+				mcRef.camBrain.enabled = true;
 			}
 		}
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BansheeGz.BGDatabase;
+using Qbism.Environment;
 using Qbism.WorldMap;
 using UnityEngine;
 

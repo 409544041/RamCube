@@ -1,4 +1,5 @@
 using Qbism.Serpent;
+using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace Qbism.General
 	public class ScreenDistanceShrinker : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] SerpentMovement mover;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//States
 		float targetDisToScreen, startDisToScreen;
@@ -31,7 +32,7 @@ namespace Qbism.General
 				var newSize = Mathf.Lerp(sizeAtStart, sizeAtTarget, disNormalized);
 
 				transform.localScale = new Vector3(newSize, newSize, newSize);
-				if (mover != null) mover.segmentSpacing = newSize;
+				if (mcRef != null) mcRef.serpMover.segmentSpacing = newSize;
 			}
 		}
 

@@ -1,5 +1,6 @@
 using Cinemachine;
 using Dreamteck.Splines;
+using Qbism.Environment;
 using Qbism.General;
 using Qbism.Saving;
 using Qbism.Serpent;
@@ -23,19 +24,27 @@ namespace Qbism.WorldMap
 		public SplineFollower splineFollower;
 		public SplineComputer[] splines;
 		[Header("Logic")]
-		public MapLogicRefHolder mapLogicRef;
+		public MapLogicRefHolder mlRef;
 		[Header("Canvasses")]
 		public Canvas worldMapCanvas;
 		[Header("Music")]
 		public AudioSource musicSource;
-		public MusicFadeOut musicFadeOut;
+		public MusicFadeOut musicFader;
 
 		//Cache
-		public PersistentRefHolder persistantRef { get; private set; }
+		public PersistentRefHolder persRef { get; private set; }
+		public BiomeVisualSwapper[] visualSwappers { get; private set; }
 
 		private void Awake()
 		{
-			persistantRef = FindObjectOfType<PersistentRefHolder>();
+			persRef = FindObjectOfType<PersistentRefHolder>();
+
+			visualSwappers = FindObjectsOfType<BiomeVisualSwapper>();
+			foreach (var swapper in visualSwappers)
+			{
+				swapper.progHandler = persRef.progHandler;
+				swapper.matHandler = persRef.varMatHandler;
+			}
 		}
 	}
 }

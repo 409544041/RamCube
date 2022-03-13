@@ -11,13 +11,9 @@ namespace Qbism.Dialogue
 	public class DialogueManager : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] Canvas dialogueCanvas, backgroundCanvas;
-		[SerializeField] TextMeshProUGUI charNameText;
-		[SerializeField] MMFeedbacks nextButtonJuice;
 		[SerializeField] Vector3[] floatingHeadPos;
 		[SerializeField] bool inLevel, inSerpentScreen, inMap;
-		[SerializeField] DialogueWriter writer;
-		[SerializeField] DialogueFocuser focuser;
+		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		//States
 		DialogueScripOb dialogueSO;
@@ -34,18 +30,19 @@ namespace Qbism.Dialogue
 			dialogueSO = incDialogueSO;
 			partnerAnimator = segAnimator;
 			inDialogue = true;
-			nextButtonJuice.Initialization();
+			gcRef.dialogueNextButtonJuice.Initialization();
 
 			SetupBackgroundCanvas();
-			dialogueCanvas.GetComponent<CanvasGroup>().alpha = 1;
+			gcRef.dialogueCanvasGroup.alpha = 1;
 
 			for (int i = 0; i < 2; i++)
 			{
-				heads[i] = SpawnDialogueFloatingHeads(objs[i], rots[i], floatingHeadPos[i], focuser.nonFocusScale);
+				heads[i] = SpawnDialogueFloatingHeads(objs[i], rots[i], 
+					floatingHeadPos[i], gcRef.glRef.dialogueFocuser.nonFocusScale);
 				expressionHandlers[i] = heads[i].GetComponentInChildren<ExpressionHandler>();
 				names[i] = heads[i].GetComponent<M_Segments>().f_SegmentName;
-				focuser.SetJuiceValues(heads[i], i);
-				focuser.SetInitialFocusValues(heads[i], i);
+				gcRef.glRef.dialogueFocuser.SetJuiceValues(heads[i], i);
+				gcRef.glRef.dialogueFocuser.SetInitialFocusValues(heads[i], i);
 			}
 
 			expressionHandlers[1].SetFace(dialogueSO.partnerFirstExpression, -1);
@@ -55,13 +52,13 @@ namespace Qbism.Dialogue
 
 		private void Dialogue()
 		{
-			nextButtonJuice.StopFeedbacks();
+			gcRef.dialogueNextButtonJuice.StopFeedbacks();
 			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
 
-			charNameText.text = names[charIndex];
-			writer.StartWritingText(dialogueSO.dialogues[dialogueIndex].dialogueText);
+			gcRef.characterNameText.text = names[charIndex];
+			gcRef.glRef.dialogueWriter.StartWritingText(dialogueSO.dialogues[dialogueIndex].dialogueText);
 
-			focuser.SetFocus(charIndex, heads);
+			gcRef.glRef.dialogueFocuser.SetFocus(charIndex, heads);
 			SetDialogueExpression();
 		}
 
@@ -73,7 +70,8 @@ namespace Qbism.Dialogue
 
 		public void NextDialogueText()
 		{
-			if (writer.isTyping) writer.showFullText = true;
+			if (gcRef.glRef.dialogueWriter.isTyping) 
+				gcRef.glRef.dialogueWriter.showFullText = true;
 			else
 			{
 				dialogueIndex++;
@@ -95,15 +93,15 @@ namespace Qbism.Dialogue
 
 		private void SetupBackgroundCanvas()
 		{
-			backgroundCanvas.transform.parent = Camera.main.transform;
-			backgroundCanvas.transform.rotation = Camera.main.transform.rotation;
-			backgroundCanvas.transform.localPosition = new Vector3(0, 0, 10);
-			backgroundCanvas.GetComponent<CanvasGroup>().alpha = 1;
+			gcRef.bgCanvas.transform.parent = Camera.main.transform;
+			gcRef.bgCanvas.transform.rotation = Camera.main.transform.rotation;
+			gcRef.bgCanvas.transform.localPosition = new Vector3(0, 0, 10);
+			gcRef.bgCanvasGroup.alpha = 1;
 		}
 
 		public void PulseNextButton()
 		{
-			nextButtonJuice.PlayFeedbacks();
+			gcRef.dialogueNextButtonJuice.PlayFeedbacks();
 		}
 
 		private IEnumerator ExitDialogue()
@@ -113,15 +111,15 @@ namespace Qbism.Dialogue
 			yield return new WaitForSeconds(.5f); //So when dialogue UI disappears animation is already playing
 
 			inDialogue = false;
-			nextButtonJuice.StopFeedbacks();
+			gcRef.dialogueNextButtonJuice.StopFeedbacks();
 
 			for (int i = 0; i < heads.Length; i++)
 			{
 				GameObject.Destroy(heads[i]);
 			}
 
-			dialogueCanvas.GetComponent<CanvasGroup>().alpha = 0;
-			backgroundCanvas.GetComponent<CanvasGroup>().alpha = 0;
+			gcRef.dialogueCanvasGroup.alpha = 0;
+			gcRef.bgCanvasGroup.alpha = 0;
 
 			// find a way to set played = true in dialogues database
 			// probably handy for quest dialogues, seeing as how they're in arrays

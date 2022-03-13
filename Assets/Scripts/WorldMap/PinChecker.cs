@@ -9,7 +9,7 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public LevelPin[] levelPins;
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//States
 		MapLogicRefHolder logicRef;
@@ -18,8 +18,8 @@ namespace Qbism.WorldMap
 
 		private void Awake() 
 		{
-			logicRef = mapCoreRef.mapLogicRef;
-			persRef = mapCoreRef.persistantRef;
+			logicRef = mcRef.mlRef;
+			persRef = mcRef.persRef;
 		}
 
 		private void Start() 

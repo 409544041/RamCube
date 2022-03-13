@@ -9,15 +9,14 @@ namespace Qbism.Saving
 	public class MapDelInitiator : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		private void Awake() 
 		{
-			var persRef = mapCoreRef.persistantRef;
+			var persRef = mcRef.persRef;
 
 			persRef.progHandler.FixMapUILinks();
 			persRef.progHandler.FixMapPinLinks();
-			persRef.varMatHandler.FixLinks();
 		}
 	}
 }

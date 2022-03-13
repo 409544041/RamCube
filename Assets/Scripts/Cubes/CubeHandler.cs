@@ -36,6 +36,7 @@ namespace Qbism.Cubes
 
 		private void Awake()
 		{
+			//TO DO: mov / player refs
 			mover = FindObjectOfType<PlayerCubeMover>();
 			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
 			moveableCubes = FindObjectsOfType<MoveableCube>();

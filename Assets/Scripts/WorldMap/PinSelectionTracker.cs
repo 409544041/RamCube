@@ -9,10 +9,10 @@ namespace Qbism.WorldMap
 	public class PinSelectionTracker : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//Cache
-		MapLogicRefHolder logicRef;
+		MapLogicRefHolder mlRef;
 		LevelPinUI[] pinUIs;
 
 		//States
@@ -26,7 +26,7 @@ namespace Qbism.WorldMap
 
 		private void Awake() 
 		{
-			logicRef = mapCoreRef.mapLogicRef;
+			mlRef = mcRef.mlRef;
 			pinUIs = FindObjectsOfType<LevelPinUI>();
 		}
 
@@ -60,7 +60,7 @@ namespace Qbism.WorldMap
 
 			if(selectedPin != prevPin)
 			{
-				logicRef.centerPoint.StartPositionCenterPoint(currentBiome, selectedPin, false, 
+				mlRef.centerPoint.StartPositionCenterPoint(currentBiome, selectedPin, false, 
 					false, true, new Vector2(0, 0));
 				SetPinSelectionLoc();
 				selectedPin.pinUI.pinUIJuice.SelectionEnlargen(1, selectedPin.pinUI.pinUIJuice.selectedSize);
@@ -70,8 +70,8 @@ namespace Qbism.WorldMap
 
 		private void SetPinSelectionLoc()
 		{
-			logicRef.pinSelShape.transform.position = new Vector3 (selectedPin.transform.position.x, 
-				logicRef.pinSelShape.transform.position.y, selectedPin.transform.position.z);
+			mlRef.pinSelShape.transform.position = new Vector3 (selectedPin.transform.position.x, 
+				mlRef.pinSelShape.transform.position.y, selectedPin.transform.position.z);
 		}
 	}
 }

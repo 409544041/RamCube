@@ -7,14 +7,14 @@ namespace Qbism.WorldMap
 	public class PinHandler : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MapCoreRefHolder mapCoreRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//States
 		MapLogicRefHolder logicRef;
 
 		private void Awake() 
 		{
-			logicRef = mapCoreRef.mapLogicRef;
+			logicRef = mcRef.mlRef;
 		}
 
 		public void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed, bool justCompleted)

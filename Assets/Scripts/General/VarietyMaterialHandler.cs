@@ -57,14 +57,5 @@ namespace Qbism.General
 
 			if (matData.overwriteTint) newMat.SetColor("_Tint", colorData.tintColor);
 		}
-
-		public void FixLinks()
-		{
-			var swappers = FindObjectsOfType<BiomeVisualSwapper>();
-			foreach (var swapper in swappers)
-			{
-				swapper.matHandler = this;
-			}
-		}
 	}
 }

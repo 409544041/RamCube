@@ -63,14 +63,14 @@ namespace Qbism.Cubes
 
 		private void Awake()
 		{
-			handler = FindObjectOfType<CubeHandler>();
+			handler = FindObjectOfType<CubeHandler>(); //TO DO: link to refs once finish has own ref
 			movHandler = handler.GetComponent<MoveableCubeHandler>();
 			playerAnim = FindObjectOfType<PlayerAnimator>();
 			loader = FindObjectOfType<SceneHandler>();
 			progHandler = FindObjectOfType<ProgressHandler>();
 			farter = FindObjectOfType<PlayerFartLauncher>();
 			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
-			camResizer = handler.GetComponent<CamResizer>();
+			camResizer = handler.GetComponentInParent<CamResizer>();
 		}
 
 		private void OnEnable() 
@@ -224,8 +224,7 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
 			} 
 
-			if (switchBoard.worldMapConnected) StartCoroutine(LevelTransition(true, false));
-			else StartCoroutine(LevelTransition(false, false));
+			StartCoroutine(LevelTransition(switchBoard.worldMapConnected, false));
 		}
 
 		private void ActivateSerpent()
@@ -256,7 +255,7 @@ namespace Qbism.Cubes
 				loader.RestartLevel();
 			}
 			else if (mapConnected) FindObjectOfType<WorldMapLoading>().
-				StartLoadingWorldMap(true);
+				StartLoadingWorldMap(true); //TO DO: link to refs
 			else loader.NextLevel();
 		}
 

@@ -7,6 +7,9 @@ namespace Qbism.Cubes
 {
 	public class FloorCubeCheckerMoveable : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] GameLogicRefHolder glRef;
+
 		//Cache
 		CubeHandler handler = null;
 		MoveableCubeHandler moveHandler = null;
@@ -14,9 +17,9 @@ namespace Qbism.Cubes
 
 		private void Awake() 
 		{
-			handler = GetComponent<CubeHandler>();
-			moveHandler = GetComponent<MoveableCubeHandler>();
-			moveableCubes = FindObjectsOfType<MoveableCube>();
+			handler = glRef.cubeHandler;
+			moveHandler = glRef.movCubeHandler;
+			moveableCubes = FindObjectsOfType<MoveableCube>(); //TO DO: movref
 		}
 
 		private void OnEnable() 

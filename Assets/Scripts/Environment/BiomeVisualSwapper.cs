@@ -19,6 +19,8 @@ namespace Qbism.Environment
 
 		//Cache
 		public VarietyMaterialHandler matHandler { get; set; }
+		public BiomeOverwriter bOverWriter { get; set; }
+		public ProgressHandler progHandler { get; set; }
 
 		//States
 		E_Biome currentBiome;
@@ -38,14 +40,10 @@ namespace Qbism.Environment
 		{
 			if (!checkBiomeLocally)
 			{
-				ProgressHandler progHandler = FindObjectOfType<ProgressHandler>();
-
-				if (progHandler)
-					currentBiome = progHandler.currentBiome;
+				if (progHandler != null) currentBiome = progHandler.currentBiome;
 
 				else
 				{
-					var bOverWriter = FindObjectOfType<BiomeOverwriter>();
 					if (bOverWriter) currentBiome = E_Biome.FindEntity(entity =>
 						entity.f_name == bOverWriter.biomeOverwrite.ToString());
 					else Debug.LogError("Progression Handler or Biome Overwriter not Linked. Setting first biome visuals");

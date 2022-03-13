@@ -12,7 +12,7 @@ namespace Qbism.Serpent
 	{
 		//Config parameters
 		public Transform[] segments = null;
-		[SerializeField] MapCoreRefHolder mapCoreRefs;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//Cache
 		FinishEndSeqHandler finishEndSeq = null;
@@ -131,7 +131,7 @@ namespace Qbism.Serpent
 		{
 			//TO DO: link these bools to refs in each scene
 			bool inMap = false, inSerpScreen = false, inLevel = false;
-			if (mapCoreRefs != null) inMap = true;
+			if (mcRef != null) inMap = true;
 			inSerpScreen = FindObjectOfType<SerpentScreenScroller>();
 			inLevel = FindObjectOfType<CubeHandler>();
 

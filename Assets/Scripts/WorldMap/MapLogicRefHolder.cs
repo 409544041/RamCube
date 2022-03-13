@@ -9,7 +9,7 @@ namespace Qbism.WorldMap
 	public class MapLogicRefHolder : MonoBehaviour
 	{
 		//Config parameters
-		public MapCoreRefHolder coreRef;
+		public MapCoreRefHolder mcRef;
 		public MapInputDetector input;
 		public MapDebugCompleter debugCompleter;
 		[Header("Pin Handling")]
