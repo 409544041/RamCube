@@ -99,7 +99,7 @@ namespace Qbism.Cubes
 			if (switchBoard.showEndLevelSeq)
 			{
 				closeUpCam.Priority = 11;
-				onUIFade(0);
+				onUIFade(0); //TO DO: via finish ref and canvas group, delete ImageFader
 
 				if (FetchHasSegment())
 				{

@@ -9,6 +9,7 @@ using TMPro;
 using Qbism.Saving;
 using Qbism.MoveableCubes;
 using Qbism.Environment;
+using Qbism.Peep;
 
 public class GameplayCoreRefHolder : MonoBehaviour
 {
@@ -42,17 +43,27 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	//Cache
 	public PersistentRefHolder persRef { get; private set; }
 	public BiomeVisualSwapper[] visualSwappers { get; private set; }
+
+	public PeepRefHolder[] peeps;
+
 	//TO DO: Add finish ref and cube refs
 
 	private void Awake()
 	{
 		persRef = FindObjectOfType<PersistentRefHolder>();
+		persRef.cam = cam;
 
 		visualSwappers = FindObjectsOfType<BiomeVisualSwapper>();
 		foreach (var swapper in visualSwappers)
 		{
 			swapper.progHandler = persRef.progHandler;
 			swapper.matHandler = persRef.varMatHandler;
+		}
+
+		peeps = FindObjectsOfType<PeepRefHolder>();
+		foreach (var peep in peeps)
+		{
+			peep.cam = cam;
 		}
 	}
 }

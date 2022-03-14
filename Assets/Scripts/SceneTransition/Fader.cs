@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Qbism.Saving;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,19 +9,14 @@ namespace Qbism.SceneTransition
 	{
 		//Config parameters
 		public float sceneTransTime;
+		[SerializeField] PersistentRefHolder persRef;
 
 		//Cache
-		CanvasGroup canvasGroup = null;
 		Coroutine activeCoroutine = null;
-
-		void Awake()
-		{
-			canvasGroup = GetComponentInChildren<CanvasGroup>();
-		}
 
 		public void FadeImmediate(float target)
 		{
-			canvasGroup.alpha = target;
+			persRef.fadeCanvasGroup.alpha = target;
 		}
 
 		public Coroutine FadeOut(float time)
@@ -42,13 +38,13 @@ namespace Qbism.SceneTransition
 
 		private IEnumerator FadeRoutine(float target, float time)
 		{
-			if (Mathf.Approximately(canvasGroup.alpha, target))
-				canvasGroup.alpha = Mathf.RoundToInt(1 * (1 - target));
+			if (Mathf.Approximately(persRef.fadeCanvasGroup.alpha, target))
+				persRef.fadeCanvasGroup.alpha = Mathf.RoundToInt(1 * (1 - target));
 
-			while (!Mathf.Approximately(canvasGroup.alpha, target))
+			while (!Mathf.Approximately(persRef.fadeCanvasGroup.alpha, target))
 			{
 				//mathf.movetowards to get float to desired value using desired speed
-				canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, target, 
+				persRef.fadeCanvasGroup.alpha = Mathf.MoveTowards(persRef.fadeCanvasGroup.alpha, target, 
 					Time.deltaTime / time);
 				yield return null;
 			}

@@ -21,7 +21,11 @@ namespace Qbism.Saving
 		[Header("Scene Transition")]
 		public Fader fader;
 		public Canvas fadeCanvas;
+		public CanvasGroup fadeCanvasGroup;
 		public CircleTransition circTransition;
 		public Canvas circCanvas;
+
+		//States
+		public Camera cam { get; set; }
 	}
 }

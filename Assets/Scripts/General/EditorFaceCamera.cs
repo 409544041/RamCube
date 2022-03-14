@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Qbism.Peep;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,13 +10,15 @@ namespace Qbism.General
 	{
 		//Config parameters
 		[SerializeField] bool updateAlign;
+		[SerializeField] PeepRefHolder peepRefs;
 
 		//Cache
 		Camera cam;
 
-		private void Start()
+		private void Awake()
 		{
-			cam = Camera.main;
+			if (peepRefs != null) cam = peepRefs.cam;
+			else cam = Camera.main; //TO DO: switch to cam ref once we have pin refs
 			transform.forward = cam.transform.forward;
 		}
 

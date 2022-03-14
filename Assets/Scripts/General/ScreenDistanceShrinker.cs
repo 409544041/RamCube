@@ -15,14 +15,21 @@ namespace Qbism.General
 		float targetDisToScreen, startDisToScreen;
 		public bool resizing { get; set; } = false;
 		float sizeAtStart = 1f, sizeAtTarget = .25f;
+		Camera cam;
+
+		private void Awake()
+		{
+			if (mcRef != null) cam = mcRef.cam;
+			else cam = Camera.main; //TO DO: Switch to player ref cam once we have player ref
+		}
 
 		private void Update()
 		{
 			if (resizing)
 			{
-				var screenTrans = Camera.main.WorldToViewportPoint(transform.position);
+				var screenTrans = cam.WorldToViewportPoint(transform.position);
 				screenTrans = new Vector3(screenTrans.x, screenTrans.y, 0);
-				var worldScreenTrans = Camera.main.ViewportToWorldPoint(screenTrans);
+				var worldScreenTrans = cam.ViewportToWorldPoint(screenTrans);
 
 				var disToScreen = Vector3.Distance(worldScreenTrans, transform.position);
 
@@ -40,9 +47,9 @@ namespace Qbism.General
 		{
 			sizeAtStart = startSize; sizeAtTarget = targetSize; startDisToScreen = disAtStart;
 
-			var targetScreenTrans = Camera.main.WorldToViewportPoint(targetPos);
+			var targetScreenTrans = cam.WorldToViewportPoint(targetPos);
 			var newTargetScreenTrans = new Vector3(targetScreenTrans.x, targetScreenTrans.y, 0);
-			var targetWorldScreenTrans = Camera.main.ViewportToWorldPoint(newTargetScreenTrans);
+			var targetWorldScreenTrans = cam.ViewportToWorldPoint(newTargetScreenTrans);
 
 			targetDisToScreen = Vector3.Distance(targetWorldScreenTrans, targetPos);
 

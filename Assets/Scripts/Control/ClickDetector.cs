@@ -28,7 +28,7 @@ namespace Qbism.Control
 		private void HandleMouseClick()
 		{
 			RaycastHit hit;
-
+			//TO DO: remove camera.main and add cam ref (if we ever use this script again)
 			if(Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()),
 				out hit, Mathf.Infinity, layerMask))
 			{

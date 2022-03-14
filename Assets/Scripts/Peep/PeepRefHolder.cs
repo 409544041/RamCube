@@ -9,6 +9,7 @@ namespace Qbism.Peep
 {
 	public class PeepRefHolder : MonoBehaviour
 	{
+		[Header("States")]
 		public PeepStateManager stateMngr;
 		public PeepIdleState idleState;
 		public PeepWalkState walkState;
@@ -17,13 +18,21 @@ namespace Qbism.Peep
 		public PeepInvestigateState investigateState;
 		public PeepCowerState cowerState;
 		public PeepBalloonIdleState balloonIdleState;
+		[Header("Pathfinding")]
 		public RichAI aiRich;
 		public Seeker pathSeeker;
+		[Header("Animation")]
 		public Animator animator;
 		public PeepAnimator peepAnim;
+		[Header("Expressions")]
 		public PeepExpressionHandler expressionHandler;
-		public MMFeedbacks hideJuice, shockUIJuice, questionUIjuice;
 		public CanvasGroup[] expressionSignals;
+		[Header("Juice")]
+		public MMFeedbacks hideJuice, shockUIJuice, questionUIjuice;
+		[Header("Meshes")]
 		public Renderer[] meshes;
+
+		//Cache
+		public Camera cam { get; set; }
 	}
 }

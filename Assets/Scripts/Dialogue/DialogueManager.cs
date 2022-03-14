@@ -82,7 +82,7 @@ namespace Qbism.Dialogue
 
 		private GameObject SpawnDialogueFloatingHeads(GameObject obj, Vector3 rot, Vector3 pos, float scale)
 		{
-			var spawnPos = Camera.main.ViewportToWorldPoint(pos);
+			var spawnPos = gcRef.cam.ViewportToWorldPoint(pos);
 
 			var head = Instantiate(obj, spawnPos, Quaternion.Euler(rot.x, rot.y, rot.z));
 
@@ -93,8 +93,8 @@ namespace Qbism.Dialogue
 
 		private void SetupBackgroundCanvas()
 		{
-			gcRef.bgCanvas.transform.parent = Camera.main.transform;
-			gcRef.bgCanvas.transform.rotation = Camera.main.transform.rotation;
+			gcRef.bgCanvas.transform.parent = gcRef.cam.transform;
+			gcRef.bgCanvas.transform.rotation = gcRef.cam.transform.rotation;
 			gcRef.bgCanvas.transform.localPosition = new Vector3(0, 0, 10);
 			gcRef.bgCanvasGroup.alpha = 1;
 		}

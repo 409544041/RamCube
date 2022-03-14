@@ -158,6 +158,7 @@ MonoBehaviour:
   varMatHandler: {fileID: 3746189926911478469}
   fader: {fileID: 7825849878406715151}
   fadeCanvas: {fileID: 3639041241050812987}
+  fadeCanvasGroup: {fileID: 1918777678143941965}
   circTransition: {fileID: 562029899342363840}
   circCanvas: {fileID: 8205841500424300071}
 --- !u!1001 &3131975201887657184
@@ -222,6 +223,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5182521508084304879, guid: 1d7aea6fc0d5b034d83e79576bda5ff9,
+        type: 3}
+      propertyPath: persRef
+      value: 
+      objectReference: {fileID: 6898763950629518534}
     - target: {fileID: 8689536959968284406, guid: 1d7aea6fc0d5b034d83e79576bda5ff9,
         type: 3}
       propertyPath: m_Name
@@ -250,6 +256,12 @@ MonoBehaviour:
 --- !u!223 &3639041241050812987 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 1871098724106374875, guid: 1d7aea6fc0d5b034d83e79576bda5ff9,
+    type: 3}
+  m_PrefabInstance: {fileID: 3131975201887657184}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1918777678143941965 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 3591582202698101165, guid: 1d7aea6fc0d5b034d83e79576bda5ff9,
     type: 3}
   m_PrefabInstance: {fileID: 3131975201887657184}
   m_PrefabAsset: {fileID: 0}
@@ -320,6 +332,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4700006999438685778, guid: a6ef41396cbad41498c766cabd8daaca,
+        type: 3}
+      propertyPath: persRef
+      value: 
+      objectReference: {fileID: 6898763950629518534}
     - target: {fileID: 5130992090245371270, guid: a6ef41396cbad41498c766cabd8daaca,
         type: 3}
       propertyPath: m_AnchorMax.x

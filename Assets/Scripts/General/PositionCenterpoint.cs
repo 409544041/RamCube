@@ -9,7 +9,8 @@ namespace Qbism.General
 	public class PositionCenterpoint : MonoBehaviour
 	{
 		//Config paramters
-		[SerializeField] CinemachineVirtualCamera gameplayCam;
+		[SerializeField] GameplayCoreRefHolder gcRef;
+
 		//Cache
 		CubeHandler handler;
 
@@ -20,7 +21,7 @@ namespace Qbism.General
 
 		private void Awake() 
 		{
-			handler = FindObjectOfType<CubeHandler>();
+			handler = gcRef.glRef.cubeHandler;
 		}
 
 		private void Start() 
@@ -48,7 +49,7 @@ namespace Qbism.General
 			{
 				if (cube.Value == null) return;
 				
-				Vector2 viewPortPos = Camera.main.WorldToViewportPoint(cube.Value.transform.position);
+				Vector2 viewPortPos = gcRef.cam.WorldToViewportPoint(cube.Value.transform.position);
 
 				if (!firstValueAssigned)
 				{
@@ -92,13 +93,13 @@ namespace Qbism.General
 
 		private void CalculateAvgPoint(Vector3 highCube, Vector3 lowCube, Vector3 leftCube, Vector3 rightCube)
 		{
-			Vector2 highCubePort = Camera.main.WorldToViewportPoint(highCube); 
-			Vector2 lowCubePort = Camera.main.WorldToViewportPoint(lowCube);
-			Vector2 leftCubePort = Camera.main.WorldToViewportPoint(leftCube);
-			Vector2 rightCubePort = Camera.main.WorldToViewportPoint(rightCube);			
+			Vector2 highCubePort = gcRef.cam.WorldToViewportPoint(highCube); 
+			Vector2 lowCubePort = gcRef.cam.WorldToViewportPoint(lowCube);
+			Vector2 leftCubePort = gcRef.cam.WorldToViewportPoint(leftCube);
+			Vector2 rightCubePort = gcRef.cam.WorldToViewportPoint(rightCube);			
 
 			GameObject player = GameObject.FindGameObjectWithTag("Player");
-			Vector2 PlayerPortPos = Camera.main.WorldToViewportPoint(player.transform.position);
+			Vector2 PlayerPortPos = gcRef.cam.WorldToViewportPoint(player.transform.position);
 
 			Vector2[] PortPositions = {highCubePort, lowCubePort, leftCubePort, rightCubePort, PlayerPortPos};
 
@@ -114,8 +115,8 @@ namespace Qbism.General
 			var centerX = totalX / PortPositions.Length;
 			var centerY = totalY / PortPositions.Length;
 
-			var dist = gameplayCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance; 
-			centerPoint = Camera.main.ViewportToWorldPoint(new Vector3(centerX, centerY, dist));
+			var dist = gcRef.gameCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance; 
+			centerPoint = gcRef.cam.ViewportToWorldPoint(new Vector3(centerX, centerY, dist));
 			centerPoint = new Vector3(centerPoint.x, 0, centerPoint.z);
 		}
 	}

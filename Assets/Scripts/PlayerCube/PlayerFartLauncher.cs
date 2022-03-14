@@ -70,7 +70,7 @@ namespace Qbism.PlayerCube
 			KeepImpactOnFinishPos();
 
 			if (flyingBy)
-			{
+			{ //TO DO: switch camera.main with cam ref once we have player ref
 				flyByStartPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByStartX, flyByStartY, 
 					flyByStartDisFromScreen));
 				flyByEndPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByTargetX, flyByTargetY, 

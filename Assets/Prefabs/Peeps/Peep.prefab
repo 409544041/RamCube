@@ -178,7 +178,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4628221932916230852}
-  m_LocalRotation: {x: 0.42660016, y: -0.33944446, z: 0.1767036, w: 0.8194911}
+  m_LocalRotation: {x: 0.37361234, y: -0.19996406, z: 0.08282784, w: 0.9019799}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateAlign: 1
+  peepRefs: {fileID: 3139609209763554299}
 --- !u!1 &4684657920660533936
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,12 +691,12 @@ MonoBehaviour:
   animator: {fileID: 4938652295556564000}
   peepAnim: {fileID: 855340356152411188}
   expressionHandler: {fileID: 4522059387965012588}
-  hideJuice: {fileID: 1321887094748867864}
-  shockUIJuice: {fileID: 1652224820573790028}
-  questionUIjuice: {fileID: 5316000564921526966}
   expressionSignals:
   - {fileID: 3512805594368289812}
   - {fileID: 8964139035751663304}
+  hideJuice: {fileID: 1321887094748867864}
+  shockUIJuice: {fileID: 1652224820573790028}
+  questionUIjuice: {fileID: 5316000564921526966}
   meshes:
   - {fileID: 7005687616648061377}
   - {fileID: 2876954407301865733}
@@ -5687,8 +5688,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a8ccbdcd5ad2694b9f3126bad832210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleChangeChance: 1
-  idleAnimTransDur: 0.5
   refs: {fileID: 3139609209763554299}
 --- !u!114 &4522059387965012588
 MonoBehaviour:
