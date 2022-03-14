@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace Qbism.General
 {
-	[ExecuteInEditMode]
-	public class EditorFaceCamera : MonoBehaviour
+	public class FaceCamera : MonoBehaviour
 	{
 		//Config parameters
 		[SerializeField] bool updateAlign;
