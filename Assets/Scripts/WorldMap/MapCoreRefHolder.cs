@@ -48,6 +48,11 @@ namespace Qbism.WorldMap
 				swapper.progHandler = persRef.progHandler;
 				swapper.matHandler = persRef.varMatHandler;
 			}
+
+			foreach (var pin in mlRef.levelPins)
+			{
+				pin.mcRef = this;
+			}
 		}
 	}
 }

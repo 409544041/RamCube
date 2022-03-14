@@ -32,6 +32,7 @@ namespace Qbism.WorldMap
 		//Cache
 		public M_LevelData m_levelData { get; private set; }
 		public M_Pin m_pin { get; private set; }
+		public MapCoreRefHolder mcRef { get; set; }
 
 		private void Awake()
 		{
