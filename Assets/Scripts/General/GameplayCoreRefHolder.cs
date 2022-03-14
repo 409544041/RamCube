@@ -42,7 +42,6 @@ public class GameplayCoreRefHolder : MonoBehaviour
 
 	//Cache
 	public PersistentRefHolder persRef { get; private set; }
-	public BiomeVisualSwapper[] visualSwappers { get; private set; }
 
 	public PeepRefHolder[] peeps;
 
@@ -52,13 +51,6 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	{
 		persRef = FindObjectOfType<PersistentRefHolder>();
 		persRef.cam = cam;
-
-		visualSwappers = FindObjectsOfType<BiomeVisualSwapper>();
-		foreach (var swapper in visualSwappers)
-		{
-			swapper.progHandler = persRef.progHandler;
-			swapper.matHandler = persRef.varMatHandler;
-		}
 
 		peeps = FindObjectsOfType<PeepRefHolder>();
 		foreach (var peep in peeps)

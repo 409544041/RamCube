@@ -11,15 +11,10 @@ namespace Qbism.Environment
 		[SerializeField] GameObject[] pillarSegments; //Make sure they're in order from left ot right
 
 		//Cache
-		BiomeOverwriter bOverwriter;
+		public BiomeOverwriter bOverwriter { get; set; }
 
 		//States
 		DripHeightID prevHeight;
-
-		private void Awake()
-		{
-			bOverwriter = FindObjectOfType<BiomeOverwriter>();
-		}
 
 		private void Start()
 		{

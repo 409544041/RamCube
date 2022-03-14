@@ -1,4 +1,5 @@
 using Qbism.Control;
+using Qbism.Environment;
 using Qbism.SceneTransition;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,5 +23,7 @@ namespace Qbism.WorldMap
 		public WorldMapLoading mapLoader;
 		public LevelLoading levelLoader;
 		public SerpentScreenLoading serpentLoader;
+		[Header("Biome")]
+		public BiomeOverwriter bOverwriter;
 	}
 }

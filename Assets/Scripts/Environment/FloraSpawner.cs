@@ -15,17 +15,12 @@ namespace Qbism.Environment
 		[SerializeField] bool generateOnStart = false;
 
 		//Cache
-		BiomeOverwriter bOverwriter;
+		public BiomeOverwriter bOverwriter { get; set; }
 
 		//States
 		int spawnAmount = 0;
 
 		List<FloraIdentifier> floraList = new List<FloraIdentifier>();
-
-		private void Awake()
-		{
-			bOverwriter = FindObjectOfType<BiomeOverwriter>();
-		}
 
 		private void Start() 
 		{	
