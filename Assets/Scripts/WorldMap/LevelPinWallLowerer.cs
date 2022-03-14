@@ -11,8 +11,7 @@ namespace Qbism.WorldMap
 		[SerializeField] GameObject wall;
 		[SerializeField] float normalYPos, loweredYPos = -12;
 		[SerializeField] float loweringSpeed = 1, loweringInterval = .1f, loweringDelay = 1f;
-
-		[SerializeField] LevelPin pin = null;
+		[SerializeField] LevelPinRefHolder refs;
 
 		public Coroutine InitiateWallLowering()
 		{
@@ -24,7 +23,7 @@ namespace Qbism.WorldMap
 			yield return new WaitForSeconds(loweringDelay);
 
 			E_LevelGameplayData.FindEntity(entity =>
-				entity.f_Pin == GetComponent<LevelPin>().m_levelData.f_Pin).f_WallDown = true;
+				entity.f_Pin == refs.m_levelData.f_Pin).f_WallDown = true;
 
 			var wallPillars = wall.GetComponentsInChildren<WallPillarSpawner>();
 

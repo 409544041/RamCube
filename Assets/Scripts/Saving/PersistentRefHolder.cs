@@ -1,5 +1,6 @@
 using Qbism.General;
 using Qbism.SceneTransition;
+using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,5 +28,9 @@ namespace Qbism.Saving
 
 		//States
 		public Camera cam { get; set; }
+		public MapCoreRefHolder mcRef { get; set; }
+		public MapLogicRefHolder mlRef { get; set; }
+		public GameplayCoreRefHolder gcRef { get; set; }
+		public GameLogicRefHolder glRef { get; set; }
 	}
 }

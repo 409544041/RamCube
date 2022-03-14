@@ -7,9 +7,6 @@ namespace Qbism.Saving
 {
 	public class SerpentProgress : MonoBehaviour
 	{
-		//Cache
-		SegmentSpawner segSpawner = null;
-
 		//States
 		public List<bool> serpentDataList { get; private set; } = new List<bool>();
 

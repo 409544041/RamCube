@@ -39,6 +39,8 @@ namespace Qbism.WorldMap
 		{
 			persRef = FindObjectOfType<PersistentRefHolder>();
 			persRef.cam = cam;
+			persRef.mcRef = this;
+			persRef.mlRef = mlRef;
 
 			visualSwappers = FindObjectsOfType<BiomeVisualSwapper>();
 			foreach (var swapper in visualSwappers)

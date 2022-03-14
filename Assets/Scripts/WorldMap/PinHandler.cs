@@ -10,23 +10,23 @@ namespace Qbism.WorldMap
 		[SerializeField] MapCoreRefHolder mcRef;
 
 		//States
-		MapLogicRefHolder logicRef;
+		MapLogicRefHolder mlRef;
 
 		private void Awake() 
 		{
-			logicRef = mcRef.mlRef;
+			mlRef = mcRef.mlRef;
 		}
 
-		public void SetPinUI(LevelPin pin, bool unlockAnimPlayed, bool completed, bool justCompleted)
+		public void SetPinUI(LevelPinRefHolder pin, bool unlockAnimPlayed, bool completed, bool justCompleted)
 		{
 			if (!unlockAnimPlayed) pin.pinUI.SetUIState(false, false, false, false, false);
 			else if (unlockAnimPlayed && !completed) pin.pinUI.SetUIState(false, false, true, true, true);
 			else if (completed && !justCompleted) pin.pinUI.SetUIState(true, true, false, true, true);
-			else if (completed && justCompleted) pin.pinUI.pinUIJuice.StartPlayingCompJuice();
+			else if (completed && justCompleted) pin.pinUIJuicer.StartPlayingCompJuice();
 		}
 
-		public void InitiateRaiseAndDrawPaths(E_LevelGameplayData entity, LevelPin pin,
-			List<LevelPin> originPins, int locksAmount, int locksLeft, bool dottedAnimPlayed,
+		public void InitiateRaiseAndDrawPaths(E_LevelGameplayData entity, LevelPinRefHolder pin,
+			List<LevelPinRefHolder> originPins, int locksAmount, int locksLeft, bool dottedAnimPlayed,
 			bool unlockAnimPlayed, bool unlocked, bool completed, bool pathDrawn,
 			List<E_MapWalls> originWalls, bool biomeUnlocked)
 		{
@@ -35,8 +35,8 @@ namespace Qbism.WorldMap
 			originWalls, biomeUnlocked));
 		}
 
-		private IEnumerator RaiseAndDrawPaths(E_LevelGameplayData entity, LevelPin pin,
-			List<LevelPin> originPins, int locksAmount, int locksLeft, bool dottedAnimPlayed,
+		private IEnumerator RaiseAndDrawPaths(E_LevelGameplayData entity, LevelPinRefHolder pin,
+			List<LevelPinRefHolder> originPins, int locksAmount, int locksLeft, bool dottedAnimPlayed,
 			bool unlockAnimPlayed, bool unlocked, bool completed, bool pathDrawn,
 			List<E_MapWalls> originWalls, bool biomeUnlocked)
 		{
@@ -69,12 +69,12 @@ namespace Qbism.WorldMap
 				if (lessLocks)
 				{
 					//for pins with still one or more locks left
-					if (!originGameplayEntity.f_DottedAnimPlayed && originPin.justCompleted)
+					if (!originGameplayEntity.f_DottedAnimPlayed && originPin.pinPather.justCompleted)
 					{
 						if (linkedWall)
-							originPin.pinPather.DrawToGate(LineTypes.dotted, pin.pinPather.pathPoint);
+							originPin.pinPather.DrawToGate(LineTypes.dotted, pin.pathPoint);
 
-						else originPin.pinPather.DrawNewPath(LineTypes.dotted, pin.pinPather.pathPoint);
+						else originPin.pinPather.DrawNewPath(LineTypes.dotted, pin.pathPoint);
 
 						originGameplayEntity.f_DottedAnimPlayed = true;
 					}
@@ -82,9 +82,9 @@ namespace Qbism.WorldMap
 
 				if (unlocked && !unlockAnimPlayed)
 				{
-					if (biomeUnlocked) logicRef.centerPoint.StartPositionCenterPoint
+					if (biomeUnlocked) mlRef.centerPoint.StartPositionCenterPoint
 						(null, null, false, true, true, pointBetweenPins);
-					else logicRef.centerPoint.StartPositionCenterPoint
+					else mlRef.centerPoint.StartPositionCenterPoint
 	 					(null, null, false, true, false, pointBetweenPins);
 
 					//for newly unlocked pins that need to be raised
@@ -93,7 +93,7 @@ namespace Qbism.WorldMap
 						//if wall, lower it first. Afterwards raise pin
 						if (linkedWall)
 						{
-							yield return originPin.wallLowerer.InitiateWallLowering();
+							yield return originPin.pinWallLowerer.InitiateWallLowering();
 							loweredWalls++;
 						}
 
@@ -112,16 +112,16 @@ namespace Qbism.WorldMap
 								List<E_LevelData> pinsToRaise = E_LevelData.FindEntities(entity =>
 									entity.f_Pin.f_Biome == pin.m_levelData.f_Pin.f_Biome);
 
-								for (int j = 0; j < logicRef.pinChecker.levelPins.Length; j++)
+								for (int j = 0; j < mlRef.levelPins.Length; j++)
 								{
 									var gameplayEntity = E_LevelGameplayData.FindEntity(entity =>
-										entity.f_Pin == logicRef.pinChecker.levelPins[j].m_levelData.f_Pin);
+										entity.f_Pin == mlRef.levelPins[j].m_levelData.f_Pin);
 
 									for (int k = 0; k < pinsToRaise.Count; k++)
 									{
-										if (logicRef.pinChecker.levelPins[j].m_levelData.f_Pin == pinsToRaise[k].f_Pin &&
+										if (mlRef.levelPins[j].m_levelData.f_Pin == pinsToRaise[k].f_Pin &&
 											!gameplayEntity.f_Unlocked)
-											logicRef.pinChecker.levelPins[j].pinRaiser.InitiateBiomeUnlockRaising();
+											mlRef.levelPins[j].pinRaiser.InitiateBiomeUnlockRaising();
 									}
 								}
 							}
@@ -132,14 +132,14 @@ namespace Qbism.WorldMap
 				}
 				// for pins that have already been unlocked by another level and a second path is 
 				// now coming towards it
-				else if (unlocked && unlockAnimPlayed && originPin.justCompleted)
-					originPin.pinPather.DrawNewPath(LineTypes.full, pin.pinPather.pathPoint);
+				else if (unlocked && unlockAnimPlayed && originPin.pinPather.justCompleted)
+					originPin.pinPather.DrawNewPath(LineTypes.full, pin.pathPoint);
 			}
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;
 		}
 
-		private Vector2 CalculateCamMidPoint(LevelPin pin, List<LevelPin> originPins)
+		private Vector2 CalculateCamMidPoint(LevelPinRefHolder pin, List<LevelPinRefHolder> originPins)
 		{
 			var totalX = pin.transform.position.x;
 			var totalZ = pin.transform.position.z;

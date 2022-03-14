@@ -13,19 +13,15 @@ namespace Qbism.WorldMap
 		[SerializeField] float drawDur = .5f, lineWidth = .15f, linePinBuffer = 1;
 		[SerializeField] ParticleSystem particle = null;
 		[SerializeField] AnimationCurve drawCurve;
-
-
-		//Cache
-		LineRenderer lRender;
+		[SerializeField] LineRenderer lRender;
 
 		//States
 		public bool drawing { get; set; } = false;
-		float counter = 0;
 		Vector3 originPos, destPos;
-		LevelPin destLevelPin;
+		LevelPinRefHolder destLevelPin;
 		Vector3 pointAlongLine;
 		public int pointToMove { get; set; } = 0;
-		LevelPin originPin = null;
+		LevelPinRefHolder originPin = null;
 
 		//Actions, events, delegates etc
 		public event Action onSaveData;
@@ -33,14 +29,13 @@ namespace Qbism.WorldMap
 
 		private void Awake()
 		{
-			lRender = GetComponent<LineRenderer>();
 			SetLineWidth(0);
 		}
 
 		public void SetPositions(Transform incOrigin, Transform incDest)
 		{
-			destLevelPin = incDest.GetComponentInParent<LevelPin>();
-			originPin = incOrigin.GetComponentInParent<LevelPin>();
+			destLevelPin = incDest.GetComponentInParent<LevelPinRefHolder>();
+			originPin = incOrigin.GetComponentInParent<LevelPinRefHolder>();
 			originPos = SetOriginPoint(incOrigin.position, incDest.position, linePinBuffer);
 			destPos = SetDestPoint(originPos, incDest.position, linePinBuffer);
 			lRender.positionCount = 2;
@@ -53,13 +48,13 @@ namespace Qbism.WorldMap
 			}
 		}
 
-		public Vector3 SetOriginPoint(Vector3 origin, Vector3 dest, float x)
+		private Vector3 SetOriginPoint(Vector3 origin, Vector3 dest, float x)
 		{
 			var point = x * Vector3.Normalize(dest - origin) + origin;
 			return point;
 		}
 
-		public Vector3 SetDestPoint(Vector3 origin, Vector3 dest, float x)
+		private Vector3 SetDestPoint(Vector3 origin, Vector3 dest, float x)
 		{
 			var lineDir = (dest - origin).normalized;
 			var dist = Vector3.Distance(origin, dest) - x;
@@ -112,7 +107,7 @@ namespace Qbism.WorldMap
 				//if locks = 0 but there were more locks means full lines are drawn.
 				//Remove any dotted lines after full lines are drawn
 				if (destLevelPin.m_levelData.f_LocksAmount > 0) 
-					originPin.pinPather.dottedLineRenderer.GetComponent<LineRenderer>().enabled = false;
+					originPin.dottedLineRenderer.enabled = false;
 			} 
 			onSaveData();
 		}

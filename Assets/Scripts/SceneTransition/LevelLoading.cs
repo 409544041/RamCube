@@ -32,16 +32,16 @@ namespace Qbism.SceneTransition
 
 		private IEnumerator LoadLevel(string levelName)
 		{
-			var selectedPinUI = logicRef.pinTracker.selectedPin.pinUI;
+			var selectedPin = logicRef.pinTracker.selectedPin;
 
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
-			mcRef.serpMapHandler.ActivateSerpent(selectedPinUI);
+			mcRef.serpMapHandler.ActivateSerpent(selectedPin);
 
 			yield return new WaitForSeconds(transDelay);
 
-			persRef.circTransition.SetCirclePos(selectedPinUI.transform.position);
+			persRef.circTransition.SetCirclePos(selectedPin.pinUI.transform.position);
 			persRef.circTransition.SetCircleStartState(0);
 			persRef.circTransition.DebugFixCircleMask();
 

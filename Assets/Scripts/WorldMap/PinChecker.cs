@@ -8,32 +8,30 @@ namespace Qbism.WorldMap
 	public class PinChecker : MonoBehaviour
 	{
 		//Config parameters
-		public LevelPin[] levelPins;
 		[SerializeField] MapCoreRefHolder mcRef;
 
 		//States
-		MapLogicRefHolder logicRef;
+		MapLogicRefHolder mlRef;
 		PersistentRefHolder persRef;
-
 
 		private void Awake() 
 		{
-			logicRef = mcRef.mlRef;
+			mlRef = mcRef.mlRef;
 			persRef = mcRef.persRef;
 		}
 
 		private void Start() 
 		{
-			logicRef.debugCompleter.CheckDebugStatuses();
+			mlRef.debugCompleter.CheckDebugStatuses();
 			CheckLevelPins();
 		}
 
 		private void CheckLevelPins()
 		{
-			for (int i = 0; i < levelPins.Length; i++)
+			for (int i = 0; i < mlRef.levelPins.Length; i++)
 			{
-				var pin = levelPins[i];
-				List<LevelPin> originPins = new List<LevelPin>();
+				var pin = mlRef.levelPins[i];
+				List<LevelPinRefHolder> originPins = new List<LevelPinRefHolder>();
 				AddOriginPins(pin, originPins);
 
 				var levelEntity = E_LevelData.FindEntity(entity =>
@@ -51,8 +49,8 @@ namespace Qbism.WorldMap
 					out dottedAnimPlayed, out unlockAnimPlayed, out unlocked, out completed, out pathDrawn,
 					out originWalls, out wallDown);
 
-				pin.justCompleted = false;
-				if (completed && !pathDrawn) pin.justCompleted = true;
+				pin.pinPather.justCompleted = false;
+				if (completed && !pathDrawn) pin.pinPather.justCompleted = true;
 
 				bool uUnlocked = false, uUnlockAnimPlayed = false; int uLocksLeft = 2; 
 				List<E_MapWalls> uOriginWalls = null; 
@@ -69,7 +67,7 @@ namespace Qbism.WorldMap
 					if (!checkedRaiseAndWallStatus)
 					{
 						pin.pinRaiser.CheckRaiseStatus(unlocked, unlockAnimPlayed, biomeUnlocked);
-						if (pin.wallLowerer.hasWall) pin.wallLowerer.CheckWallStatus(wallDown);
+						if (pin.pinWallLowerer.hasWall) pin.pinWallLowerer.CheckWallStatus(wallDown);
 						checkedRaiseAndWallStatus = true;
 					}
 
@@ -79,8 +77,8 @@ namespace Qbism.WorldMap
 							unlockAnimPlayed);
 				}
 
-				logicRef.pinHandler.SetPinUI(pin, unlockAnimPlayed, completed, pin.justCompleted);
-				logicRef.pinHandler.InitiateRaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft,
+				mlRef.pinHandler.SetPinUI(pin, unlockAnimPlayed, completed, pin.pinPather.justCompleted);
+				mlRef.pinHandler.InitiateRaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft,
 					dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn, originWalls,
 					biomeUnlocked);
 			}
@@ -88,18 +86,18 @@ namespace Qbism.WorldMap
 			persRef.progHandler.SaveProgData();
 		}
 
-		private void AddOriginPins(LevelPin incomingPin, List<LevelPin> originPins)
+		private void AddOriginPins(LevelPinRefHolder incomingPin, List<LevelPinRefHolder> originPins)
 		{
-			for (int i = 0; i < levelPins.Length; i++)
+			for (int i = 0; i < mlRef.levelPins.Length; i++)
 			{
-				var unlockPins = levelPins[i].m_levelData.f_UnlocksPins;
+				var unlockPins = mlRef.levelPins[i].m_levelData.f_UnlocksPins;
 
 				if (unlockPins != null)
 				{
 					for (int j = 0; j < unlockPins.Count; j++)
 					{
 						if (unlockPins[j] == incomingPin.m_levelData.f_Pin)
-							originPins.Add(levelPins[i]);
+							originPins.Add(mlRef.levelPins[i]);
 					}
 				}
 			}

@@ -11,6 +11,8 @@ namespace Qbism.Environment
 		public Biomes biomeOverwrite;
 		public bool respawnFloraVariety = false;
 		public bool respawnWallPillarVariety = false;
+		[SerializeField] GameplayCoreRefHolder gcRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		private void Awake()
 		{
@@ -21,7 +23,10 @@ namespace Qbism.Environment
 
 		private void AssignThisToSwappers()
 		{
-			var visualSwappers = FindObjectsOfType<BiomeVisualSwapper>();
+			BiomeVisualSwapper[] visualSwappers;
+			if (gcRef != null) visualSwappers = gcRef.visualSwappers;
+			else visualSwappers = mcRef.visualSwappers;
+
 			foreach (var swapper in visualSwappers)
 			{
 				swapper.bOverWriter = this;

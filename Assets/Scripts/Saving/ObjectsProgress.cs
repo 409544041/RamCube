@@ -10,7 +10,6 @@ namespace Qbism.Saving
 		//States
 		public List<ObjectStatusData> objectsDataList { get; private set; }
 			= new List<ObjectStatusData>();
-		E_Objects objectCollected;
 
 		private void Awake()
 		{

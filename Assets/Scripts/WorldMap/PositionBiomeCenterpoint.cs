@@ -12,10 +12,10 @@ namespace Qbism.WorldMap
 		[SerializeField] MapCoreRefHolder mcRef;
 
 		//Actions, events, delegates etc
-		public Func<LevelPin> onSavedPinFetch;
+		public Func<LevelPinRefHolder> onSavedPinFetch;
 		public Func<E_Biome> onSavedBiomeFetch;
 
-		public void StartPositionCenterPoint(E_Biome biome, LevelPin selPin, bool onMapLoad,
+		public void StartPositionCenterPoint(E_Biome biome, LevelPinRefHolder selPin, bool onMapLoad,
 			bool specificPos, bool checkMinMax, Vector2 pos)
 		{
 			PositionCenterPoint(selPin, onMapLoad, specificPos, checkMinMax, pos);
@@ -27,7 +27,7 @@ namespace Qbism.WorldMap
 			PositionCenterPoint(selPin, true, false, true, new Vector2(0, 0));
 		}
 
-		private void PositionCenterPoint(LevelPin selPin, bool onMapLoad, 
+		private void PositionCenterPoint(LevelPinRefHolder selPin, bool onMapLoad, 
 			bool specificPos, bool checkMinMax, Vector2 pos)
 		{
 			Vector3 camToPointDiff = new Vector3(0, 0, 0);
@@ -64,9 +64,9 @@ namespace Qbism.WorldMap
 			}
 		}
 
-		private void FindPos(LevelPin selPin, out float xPos, out float zPos)
+		private void FindPos(LevelPinRefHolder selPin, out float xPos, out float zPos)
 		{
-			Vector3 selPos = selPin.pinPather.pathPoint.transform.position;
+			Vector3 selPos = selPin.pathPoint.transform.position;
 
 			var selPosX = selPos.x;
 			var selPosZ = selPos.z;

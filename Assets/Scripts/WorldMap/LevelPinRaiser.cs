@@ -8,12 +8,11 @@ namespace Qbism.WorldMap
 	public class LevelPinRaiser : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] LevelPin pin;
 		[SerializeField] float biomeLockedYPos = -14, lockedYPos = -11;
 		public float unlockedYPos = -9;
 		[SerializeField] float raiseStep = .25f, raiseSpeed = .05f, raiseDelay = 1f;
 		[SerializeField] GameObject pinVisuals = null;
-		[SerializeField] LevelPinRaiseJuicer raiseJuicer;
+		[SerializeField] LevelPinRefHolder refs;
 
 		//States
 		bool raising = false;
@@ -40,7 +39,7 @@ namespace Qbism.WorldMap
 			StartCoroutine(BiomeUnlockRaising());
 		}
 
-		public IEnumerator BiomeUnlockRaising()
+		private IEnumerator BiomeUnlockRaising()
 		{
 			yield return new WaitForSeconds(raiseDelay);
 
@@ -59,7 +58,7 @@ namespace Qbism.WorldMap
 				(transform.position.x, lockedYPos, transform.position.z);
 		}
 
-		public void InitiateRaising(List<LevelPin> originPins)
+		public void InitiateRaising(List<LevelPinRefHolder> originPins)
 		{
 			pinVisuals.transform.position = new Vector3
 				(transform.position.x, lockedYPos, transform.position.z);
@@ -67,11 +66,11 @@ namespace Qbism.WorldMap
 			StartCoroutine(RaiseCliff(originPins));
 		}
 
-		private IEnumerator RaiseCliff(List<LevelPin> originPins)
+		private IEnumerator RaiseCliff(List<LevelPinRefHolder> originPins)
 		{
 			yield return new WaitForSeconds(raiseDelay);
 			
-			raiseJuicer.PlayRaiseJuice();
+			refs.pinRaiseJuicer.PlayRaiseJuice();
 			raising = true;
 
 			while (raising)
@@ -86,18 +85,19 @@ namespace Qbism.WorldMap
 			pinVisuals.transform.position = new Vector3
 					(transform.position.x, unlockedYPos, transform.position.z);
 
-			raiseJuicer.StopRaiseJuice();
-			pin.pinUI.pinUIJuice.StartPlayingUnCompJuice();
+			refs.pinRaiseJuicer.StopRaiseJuice();
+			refs.pinUIJuicer.StartPlayingUnCompJuice();
 
-			yield return new WaitForSeconds(pin.pinUI.pinUIJuice.unCompJuiceDelay);
+			yield return new WaitForSeconds(refs.pinUIJuicer.unCompJuiceDelay);
 
 			for (int i = 0; i < originPins.Count; i++)
 			{
 				bool originDottedAnimPlayed = E_LevelGameplayData.FindEntity(entity =>
 					entity.f_Pin == originPins[i].m_levelData.f_Pin).f_DottedAnimPlayed;
 
-				if (originPins[i].justCompleted || !originPins[i].justCompleted && originDottedAnimPlayed)
-					originPins[i].pinPather.DrawNewPath(LineTypes.full, pin.pinPather.pathPoint);
+				if (originPins[i].pinPather.justCompleted || 
+					!originPins[i].pinPather.justCompleted && originDottedAnimPlayed)
+					originPins[i].pinPather.DrawNewPath(LineTypes.full, refs.pathPoint);
 			}
 		}
 	}

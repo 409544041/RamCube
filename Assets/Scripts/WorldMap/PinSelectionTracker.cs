@@ -16,18 +16,25 @@ namespace Qbism.WorldMap
 		LevelPinUI[] pinUIs;
 
 		//States
-		public LevelPin selectedPin { get; set; } = null;
+		public LevelPinRefHolder selectedPin { get; set; } = null;
 		public E_Biome currentBiome { get; set; }
-		LevelPin prevPin;
+		LevelPinRefHolder prevPin;
 		
 		//Actions, events, delegates etc
-		public Func<LevelPin> onSavedPinFetch;
+		public Func<LevelPinRefHolder> onSavedPinFetch;
 		public Func<E_Biome> onSavedBiomeFetch;
 
 		private void Awake() 
 		{
 			mlRef = mcRef.mlRef;
-			pinUIs = FindObjectsOfType<LevelPinUI>();
+
+			var pins = mcRef.mlRef.levelPins;
+			pinUIs = new LevelPinUI[pins.Length];
+
+			for (int i = 0; i < pinUIs.Length; i++)
+			{
+				pinUIs[i] = pins[i].pinUI;
+			}
 		}
 
 		private void Start()
@@ -38,7 +45,7 @@ namespace Qbism.WorldMap
 
 			selectedPin.pinUI.SelectPinUI();
 			SetPinSelectionLoc();
-			selectedPin.pinUI.pinUIJuice.SelectionEnlargen(1, selectedPin.pinUI.pinUIJuice.selectedSize);
+			selectedPin.pinUIJuicer.SelectionEnlargen(1, selectedPin.pinUIJuicer.selectedSize);
 		}
 
 		private void Update() 
@@ -49,22 +56,22 @@ namespace Qbism.WorldMap
 
 			for (int i = 0; i < pinUIs.Length; i++)
 			{
-				LevelPin pin = pinUIs[i].FetchPin(selected); //Sets new selectedPin
+				LevelPinRefHolder pin = pinUIs[i].FetchPin(selected); //Sets new selectedPin
 				if (pin == null) continue;
 				
 				selectedPin = pin;
 				break;
 			}
 
-			currentBiome = selectedPin.m_Pin.f_Biome;
+			currentBiome = selectedPin.m_pin.f_Biome;
 
 			if(selectedPin != prevPin)
 			{
 				mlRef.centerPoint.StartPositionCenterPoint(currentBiome, selectedPin, false, 
 					false, true, new Vector2(0, 0));
 				SetPinSelectionLoc();
-				selectedPin.pinUI.pinUIJuice.SelectionEnlargen(1, selectedPin.pinUI.pinUIJuice.selectedSize);
-				prevPin.pinUI.pinUIJuice.SelectionEnlargen(selectedPin.pinUI.pinUIJuice.selectedSize, 1);
+				selectedPin.pinUIJuicer.SelectionEnlargen(1, selectedPin.pinUIJuicer.selectedSize);
+				prevPin.pinUIJuicer.SelectionEnlargen(selectedPin.pinUIJuicer.selectedSize, 1);
 			} 
 		}
 

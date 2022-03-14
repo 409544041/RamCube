@@ -18,12 +18,12 @@ namespace Qbism.Serpent
 		Transform target;
 		SplineComputer currentSpline;
 
-		public void ActivateSerpent(LevelPinUI pinUI)
+		public void ActivateSerpent(LevelPinRefHolder pin)
 		{
 			if (E_SegmentsGameplayData.GetEntity(0).f_Rescued == false) return;
 			
 			SetSpline();
-			SetSplineToTarget(pinUI);
+			SetSplineToTarget(pin);
 			SetShrinkingData();
 			PlaceSegments();
 			var segmentArray = mcRef.serpSegHandler.PrepareSegmentsWithBilly();
@@ -47,10 +47,10 @@ namespace Qbism.Serpent
 			}
 		}
 
-		private void SetSplineToTarget(LevelPinUI pinUI)
+		private void SetSplineToTarget(LevelPinRefHolder pin)
 		{
 			currentSpline = mcRef.splineFollower.spline;
-			target = pinUI.levelPin.pinPather.pathPoint.transform;
+			target = pin.pathPoint.transform;
 			currentSpline.SetPointPosition(0, target.position);
 			currentSpline.Rebuild();
 		}

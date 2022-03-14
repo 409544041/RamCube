@@ -11,14 +11,7 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		[SerializeField] TextMeshProUGUI uiText;
-
-		//Cache 
-		LevelPinUI pinUI;
-
-		private void Awake() 
-		{
-			pinUI = GetComponent<LevelPinUI>();
-		}
+		[SerializeField] LevelPinRefHolder refs;
 
 		private void Start()
 		{
@@ -28,13 +21,13 @@ namespace Qbism.WorldMap
 
 		private void NameGameObject()
 		{
-			string pinID = pinUI.levelPin.m_levelData.f_Pin.f_name.ToString();
+			string pinID = refs.m_pin.ToString();
 			transform.gameObject.name = "pin UI " + pinID;
 		}
 
 		private void SetUIText()
 		{
-			var uiText = pinUI.levelPin.m_levelData.f_Pin.f_PinTextUI.ToString();
+			var uiText = refs.m_levelData.f_Pin.f_PinTextUI.ToString();
 			this.uiText.text = uiText;
 
 			var butRecTrans = this.uiText.rectTransform;

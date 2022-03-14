@@ -19,6 +19,7 @@ namespace Qbism.WorldMap
 		public PinSelectionTracker pinTracker;
 		public Transform pinSelShape;
 		public PositionBiomeCenterpoint centerPoint;
+		public LevelPinRefHolder[] levelPins;
 		[Header("Scene Handling")]
 		public WorldMapLoading mapLoader;
 		public LevelLoading levelLoader;

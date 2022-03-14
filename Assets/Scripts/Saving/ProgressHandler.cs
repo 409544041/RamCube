@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BansheeGz.BGDatabase;
-using Qbism.Environment;
 using Qbism.WorldMap;
 using UnityEngine;
 
@@ -10,13 +9,15 @@ namespace Qbism.Saving
 {
 	public class ProgressHandler : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] PersistentRefHolder persRef;
+
 		//Cache
-		SerpentProgress serpProg = null;
-		ObjectsProgress objProg = null;
-		PinSelectionTracker pinSelTrack = null;
-		LevelPinUI[] pinUIs = null;
-		PinChecker pinChecker = null;
-		PositionBiomeCenterpoint centerPoint = null;
+		SerpentProgress serpProg;
+		ObjectsProgress objProg;
+		PinSelectionTracker pinSelTrack;
+		LevelPinUI[] pinUIs;
+		PositionBiomeCenterpoint centerPoint;
 		
 		//States
 		public E_Pin currentPin { get; set; }
@@ -33,8 +34,8 @@ namespace Qbism.Saving
 
 		private void Awake() 
 		{
-			serpProg = GetComponent<SerpentProgress>();
-			objProg = GetComponent<ObjectsProgress>();
+			serpProg = persRef.serpProg;
+			objProg = persRef.objProg;
 			currentPin = E_LevelData.GetEntity(0).f_Pin;
 			currentBiome = currentPin.f_Biome;
 			BuildDataLists();
@@ -67,21 +68,28 @@ namespace Qbism.Saving
 
 		public void FixMapUILinks()
 		{
-			pinSelTrack = FindObjectOfType<PinSelectionTracker>();
+			pinSelTrack = persRef.mlRef.pinTracker;
 			if (pinSelTrack != null)
 			{
 				pinSelTrack.onSavedPinFetch += FetchCurrentPin;
 				pinSelTrack.onSavedBiomeFetch += FetchCurrentBiome;
-			} 
+			}
 
-			pinUIs = FindObjectsOfType<LevelPinUI>();
+			var pins = persRef.mlRef.levelPins;
+			pinUIs = new LevelPinUI[pins.Length];
+
+			for (int i = 0; i < pinUIs.Length; i++)
+			{
+				pinUIs[i] = pins[i].pinUI;
+			}
+
 			foreach (LevelPinUI pinUI in pinUIs)
 			{
 				if (pinUI != null)
 					pinUI.onSetCurrentData += SetCurrentData;
 			}
 
-			centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
+			centerPoint = persRef.mlRef.centerPoint;
 			if (centerPoint != null)
 			{
 				centerPoint.onSavedPinFetch += FetchCurrentPin;
@@ -91,16 +99,23 @@ namespace Qbism.Saving
 
 		public void FixMapPinLinks()
 		{
-			pinChecker = FindObjectOfType<PinChecker>();
-
 			pinPathers.Clear();
 			lineDrawers.Clear();
 
-			for (int i = 0; i < pinChecker.levelPins.Length; i++)
+			for (int i = 0; i < persRef.mlRef.levelPins.Length; i++)
 			{
-				pinPathers.Add(pinChecker.levelPins[i].pinPather);
+				var pin = persRef.mlRef.levelPins[i];
+				pinPathers.Add(pin.pinPather);
 
-				LineDrawer[] drawers = pinChecker.levelPins[i].GetComponentsInChildren<LineDrawer>();
+				var drawers = new LineDrawer[3];
+
+				for (int j = 0; j < pin.fullLineDrawers.Length; j++)
+				{
+					drawers[j] = pin.fullLineDrawers[j];
+				}
+
+				drawers[2] = pin.dottedLineDrawer;
+
 				for (int j = 0; j < drawers.Length; j++)
 				{
 					lineDrawers.Add(drawers[j]);
@@ -157,11 +172,6 @@ namespace Qbism.Saving
 
 		}
 
-		public LevelPin[] FetchLevelPins()
-		{
-			return pinChecker.levelPins;
-		}
-
 		private void SetCurrentData(E_Pin pin, bool hasSegment, bool hasObject, E_Biome biome)
 		{
 			currentPin = pin;
@@ -186,26 +196,26 @@ namespace Qbism.Saving
 			}
 		}
 
-		private LevelPin FetchPin(E_Pin pin)
+		private LevelPinRefHolder FetchPin(E_Pin pin)
 		{
-			LevelPin foundPin = null;
+			LevelPinRefHolder foundPin = null;
 
-			for (int i = 0; i < pinChecker.levelPins.Length; i++)
+			for (int i = 0; i < persRef.mlRef.levelPins.Length; i++)
 			{
-				if (pinChecker.levelPins[i].m_levelData.f_Pin == pin)
-				return pinChecker.levelPins[i];
+				if (persRef.mlRef.levelPins[i].m_levelData.f_Pin == pin)
+				return persRef.mlRef.levelPins[i];
 			}
 			Debug.LogError("Couldn't find " + pin.f_name);
 			return foundPin;
 		}
 
-		private LevelPin FetchCurrentPin()
+		private LevelPinRefHolder FetchCurrentPin()
 		{
-			for (int i = 0; i < pinChecker.levelPins.Length; i++)
+			for (int i = 0; i < persRef.mlRef.levelPins.Length; i++)
 			{
-				if (pinChecker.levelPins[i].m_Pin.Entity != currentPin) continue;
+				if (persRef.mlRef.levelPins[i].m_pin.Entity != currentPin) continue;
 
-				return pinChecker.levelPins[i];
+				return persRef.mlRef.levelPins[i];
 			}
 
 			Debug.LogError("Couldn't fetch current pin");
@@ -214,11 +224,11 @@ namespace Qbism.Saving
 
 		private E_Biome FetchCurrentBiome()
 		{
-			for (int i = 0; i < pinChecker.levelPins.Length; i++)
+			for (int i = 0; i < persRef.mlRef.levelPins.Length; i++)
 			{
-				if (pinChecker.levelPins[i].m_Pin.Entity != currentPin) continue;
+				if (persRef.mlRef.levelPins[i].m_pin.Entity != currentPin) continue;
 
-				return pinChecker.levelPins[i].m_Pin.f_Biome;
+				return persRef.mlRef.levelPins[i].m_pin.f_Biome;
 			}
 
 			Debug.LogError("Couldn't fetch current biome");

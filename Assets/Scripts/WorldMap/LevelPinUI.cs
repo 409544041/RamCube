@@ -12,27 +12,26 @@ namespace Qbism.WorldMap
 	public class LevelPinUI : MonoBehaviour
 	{
 		//Config parameters
-		public LevelPin levelPin = null;
 		[SerializeField] Button button = null;
 		public Image compIcon, compDiamond, unCompIcon;
 		public TextMeshProUGUI uiText;
 		public Color unCompText,  compText;
 		[ColorUsage(true, true)]
 		public Color unCompTextOutline, compTextOutline;
-		public LevelPinUIJuicer pinUIJuice;
+		[SerializeField] LevelPinRefHolder refs;
 
 		//Actions, events, delegates etc
 		public event Action<E_Pin, bool, bool, E_Biome> onSetCurrentData;
 
 		public void LoadAssignedLevel() //Called from Unity Event 
 		{				
-			onSetCurrentData(levelPin.m_levelData.f_Pin, levelPin.m_levelData.f_SegmentPresent,
-				levelPin.m_levelData.f_ObjectPresent, levelPin.m_Pin.f_Biome);
+			onSetCurrentData(refs.m_levelData.f_Pin, refs.m_levelData.f_SegmentPresent,
+				refs.m_levelData.f_ObjectPresent, refs.m_pin.f_Biome);
 
-			pinUIJuice.PlayEnterLevelJuice();
+			refs.pinUIJuicer.PlayEnterLevelJuice();
 				
 			var loader = FindObjectOfType<LevelLoading>();
-			loader.StartLoadingLevel(levelPin.m_levelData.f_Level);
+			loader.StartLoadingLevel(refs.m_levelData.f_Level);
 		}
 
 		public void SetUIState(bool compValue, bool diamondValue, bool unCompValue, 
@@ -62,9 +61,9 @@ namespace Qbism.WorldMap
 			button.Select();
 		}
 
-		public LevelPin FetchPin(GameObject selected)
+		public LevelPinRefHolder FetchPin(GameObject selected)
 		{
-			if (selected == button.gameObject) return levelPin;
+			if (selected == button.gameObject) return refs;
 			else return null;
 		}
 	}
