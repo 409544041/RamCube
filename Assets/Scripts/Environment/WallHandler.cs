@@ -38,9 +38,7 @@ namespace Qbism.Environment
 
 		private void LoadWallCubeDictionary()
 		{
-			GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
-
-			foreach (var wall in walls)
+			foreach (var wall in glRef.gcRef.walls)
 			{
 				Vector2Int wallPos = new Vector2Int(Mathf.RoundToInt(wall.transform.position.x),
 					Mathf.RoundToInt(wall.transform.position.z));

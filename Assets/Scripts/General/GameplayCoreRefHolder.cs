@@ -10,6 +10,7 @@ using Qbism.Saving;
 using Qbism.MoveableCubes;
 using Qbism.Environment;
 using Qbism.Peep;
+using Qbism.Cubes;
 
 public class GameplayCoreRefHolder : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public PositionCenterpoint centerPoint;
 	[Header("Logic")]
 	public GameLogicRefHolder glRef;
+	public OutOfBounds[] outOfBounds;
 	[Header("Music")]
 	public MusicPlayer musicPlayer;
 	public AudioSource source;
@@ -33,6 +35,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public CanvasGroup bgCanvasGroup;
 	public Canvas gameplayCanvas;
 	public CanvasGroup gameplayCanvasGroup;
+	public ImageFader gameplayCanvasFader;
 	public InterfacePulser rewindPulser;
 	public Canvas objectCanvas;
 	public CanvasGroup objectCanvasGroup;
@@ -44,8 +47,10 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public PersistentRefHolder persRef { get; private set; }
 	public PeepRefHolder[] peeps { get; private set; }
 	public BiomeVisualSwapper[] visualSwappers { get; private set; }
-
 	public MoveableCube[] movCubes { get; private set; }
+	public GameObject[] walls { get; private set; }
+
+	public FinishRefHolder finishRef { get; private set; }
 
 
 	//TO DO: Add finish ref and cube refs
@@ -63,6 +68,11 @@ public class GameplayCoreRefHolder : MonoBehaviour
 			peep.cam = cam;
 		}
 
+		finishRef = FindObjectOfType<FinishRefHolder>();
+		finishRef.gcRef = this;
+		finishRef.persRef = persRef;
+		finishRef.cam = cam;
+
 		visualSwappers = FindObjectsOfType<BiomeVisualSwapper>();
 		foreach (var swapper in visualSwappers)
 		{
@@ -71,5 +81,6 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		}
 
 		movCubes = FindObjectsOfType<MoveableCube>(); //TO DO: add movcube reffers
+		walls = GameObject.FindGameObjectsWithTag("Wall");
 	}
 }

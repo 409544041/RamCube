@@ -15,7 +15,6 @@ namespace Qbism.General
 		[SerializeField] MMFeedbacks pulser = null;
 
 		//Cache
-		FinishCube finishCube = null;
 		LaserCube[] lasers = null;
 		TimeBody[] bodies = null;
 		PlayerCubeMover playerMover;
@@ -23,7 +22,6 @@ namespace Qbism.General
 		private void Awake()
 		{
 			//TO DO: Reverse + ref these
-			finishCube = FindObjectOfType<FinishCube>(); //TO DO player/finish/cube refs
 			lasers = FindObjectsOfType<LaserCube>();
 			bodies = FindObjectsOfType<TimeBody>();
 			playerMover = FindObjectOfType<PlayerCubeMover>();
@@ -31,12 +29,6 @@ namespace Qbism.General
 
 		private void OnEnable()
 		{
-			if (finishCube != null)
-			{
-				finishCube.onRewindPulse += InitiatePulse;
-				finishCube.onStopRewindPulse += StopPulse;
-			}
-
 			foreach (LaserCube laser in lasers)
 			{
 				if (laser != null) laser.onRewindPulse += InitiatePulse;
@@ -68,12 +60,6 @@ namespace Qbism.General
 
 		private void OnDisable()
 		{
-			if (finishCube != null)
-			{
-				finishCube.onRewindPulse -= InitiatePulse;
-				finishCube.onStopRewindPulse -= StopPulse;
-			}
-
 			foreach (LaserCube laser in lasers)
 			{
 				if (laser != null) laser.onRewindPulse -= InitiatePulse;

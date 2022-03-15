@@ -7,6 +7,9 @@ namespace Qbism.Saving
 {
 	public class ObjectsProgress : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] PersistentRefHolder persRef;
+
 		//States
 		public List<ObjectStatusData> objectsDataList { get; private set; }
 			= new List<ObjectStatusData>();
@@ -52,7 +55,7 @@ namespace Qbism.Saving
 
 		public void AddObjectToDatabase()
 		{
-			ObjectSpawner objSpawner = FindObjectOfType<ObjectSpawner>();
+			var objSpawner = persRef.gcRef.finishRef.objSpawner;
 
 			var objEntity = E_ObjectsGameplayData.FindEntity(entity =>
 				entity.f_Object == objSpawner.objectToSpawn);

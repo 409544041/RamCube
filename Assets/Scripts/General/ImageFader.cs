@@ -10,40 +10,23 @@ namespace Qbism.General
 	{
 		//Config parameters
 		[SerializeField] float fadeTime;
+		[SerializeField] GameplayCoreRefHolder gcRef;
 
-		//Cache
-		CanvasGroup canvasGroup;
-		FinishEndSeqHandler finishEndSeq;
-
-		private void Awake() 
-		{
-			canvasGroup = GetComponent<CanvasGroup>();	
-			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>();
-		}
-
-		private void OnEnable() 
-		{
-			if (finishEndSeq != null) finishEndSeq.onUIFade += StartFade;
-		}
-
-		private void StartFade(float target)
+		public void StartFade(float target)
 		{
 			StartCoroutine(Fade(target));
 		}
 
 		private IEnumerator Fade(float targetAlpha)
 		{
-			while (!Mathf.Approximately(canvasGroup.alpha, targetAlpha))
+			while (!Mathf.Approximately(gcRef.gameplayCanvasGroup.alpha, targetAlpha))
 			{
 				//mathf.movetowards to get float to desired value using desired speed
-				canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha, Time.deltaTime / fadeTime);
+				gcRef.gameplayCanvasGroup.alpha = 
+					Mathf.MoveTowards(gcRef.gameplayCanvasGroup.alpha, 
+					targetAlpha, Time.deltaTime / fadeTime);
 				yield return null;
 			}
-		}
-
-		private void OnDisable()
-		{
-			if (finishEndSeq != null) finishEndSeq.onUIFade -= StartFade;
 		}
 	}
 }

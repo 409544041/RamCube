@@ -101,12 +101,12 @@ namespace Qbism.Serpent
 			playerAnim.TriggerWiggle();
 		}
 
-		private void StartRescueDialogue()
+		private void StartRescueDialogue() // Called from animation event
 		{
 			GetComponentInParent<DialogueStarter>().StartRescueDialogue(this);
 		}
 
-		private void TriggerAfterDialogueCam()
+		private void TriggerAfterDialogueCam() // Called from animation event
 		{
 			FindObjectOfType<FinishEndSeqHandler>().PanAndZoomCamAfterDialogue();
 		}

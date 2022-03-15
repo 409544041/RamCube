@@ -35,6 +35,7 @@ namespace Qbism.Cubes
 
 		private void Awake()
 		{
+			//TO DO: Link to refs once we have laser ref
 			mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();
 			juicer = GetComponent<LaserJuicer>();
 			cubeHandler = FindObjectOfType<CubeHandler>();

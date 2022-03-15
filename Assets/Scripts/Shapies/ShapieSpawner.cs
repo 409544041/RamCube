@@ -15,16 +15,8 @@ namespace Qbism.Shapies
 		[SerializeField] float shapieSpawnY = -.5f;
 		[SerializeField] float[] pushDegrees;
 
-		//Cache
-		FinishEndSeqHandler finishEndSeq;
-
 		//States
 		List<float> pushDegreesList = new List<float>();
-
-		private void Awake()
-		{
-			finishEndSeq = GetComponent<FinishEndSeqHandler>();
-		}
 
 		private void Start() 
 		{
@@ -34,12 +26,7 @@ namespace Qbism.Shapies
 			}
 		}
 
-		private void OnEnable()
-		{
-			if (finishEndSeq != null) finishEndSeq.onSpawnShapie += SpawnShapie;
-		}
-
-		private void SpawnShapie()
+		public void SpawnShapie()
 		{
 			var spawnPos = new Vector3(transform.position.x,
 				shapieSpawnY, transform.position.z);
@@ -48,25 +35,20 @@ namespace Qbism.Shapies
 			{
 				GameObject toSpawn = shapies[Random.Range(0, shapies.Length)];
 
-				var refs = toSpawn.GetComponent<ShapieRefHolder>();
+				var shapeRef = toSpawn.GetComponent<ShapieRefHolder>();
 
-				refs.eyesAnimator.runtimeAnimatorController = 
+				shapeRef.eyesAnimator.runtimeAnimatorController = 
 					eyeOverriders[Random.Range(0, eyeOverriders.Length)];
 
-				refs.mouthAnimator.runtimeAnimatorController =
+				shapeRef.mouthAnimator.runtimeAnimatorController =
 					mouthOverriders[Random.Range(0, mouthOverriders.Length)];
 
-				refs.bodyMesh.material = mats[Random.Range(0, mats.Length)];
+				shapeRef.bodyMesh.material = mats[Random.Range(0, mats.Length)];
 
 				int degreeIndex = Random.Range(0, pushDegreesList.Count);
 				Instantiate(toSpawn, spawnPos, Quaternion.Euler(0f, pushDegreesList[degreeIndex], 0f));
 				pushDegreesList.RemoveAt(degreeIndex);
 			}
-		}
-
-		private void OnDisable()
-		{
-			if (finishEndSeq != null) finishEndSeq.onSpawnShapie -= SpawnShapie;
 		}
 	}
 }

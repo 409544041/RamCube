@@ -19,28 +19,18 @@ namespace Qbism.Cubes
 		[SerializeField] GameObject glowEmitParticles;
 		[Header("Impact VFX")]
 		[SerializeField] MMFeedbacks impactJuice;
-		[SerializeField] MeshRenderer mesh, glowMesh;
-		[SerializeField] NavmeshCut nmCutter;
 		[Header("Charging VFX")]
 		[SerializeField] MMFeedbacks chargeJuice;
 		[SerializeField] float glowIncrease = .03f, glowIncreaseInterval = .05f;
 		[Header("References")]
-		[SerializeField] ExplosionForce explosion;
+		[SerializeField] FinishRefHolder refs;
 
 		//Cache
-		public AudioSource source { get; private set; }
-		Animator animator;
 		PlayerFartLauncher farter;
 		PlayerCubeMover player;
 
-		//Actions, events, delegates etc
-		public event Action onSpawn;
-		public Func<bool> onFinishCheck;
-
 		private void Awake() 
 		{
-			source = GetComponentInChildren<AudioSource>();
-			animator = GetComponent<Animator>();
 			player = FindObjectOfType<PlayerCubeMover>();
 			farter = player.GetComponent<PlayerFartLauncher>();
 		}
@@ -57,7 +47,7 @@ namespace Qbism.Cubes
 
 		private void Update()
 		{
-			if(!onFinishCheck()) CheckForGlowDeactivation();
+			if(!refs.finishCube.FetchFinishStatus()) CheckForGlowDeactivation();
 		}
 
 		private void CheckForGlowDeactivation()
@@ -74,17 +64,17 @@ namespace Qbism.Cubes
 
 		public void PlaySuccesSound()
 		{
-			source.PlayOneShot(succesClip);
+			refs.source.PlayOneShot(succesClip);
 		}
 
 		public void PlayFailSound()
 		{
-			source.PlayOneShot(failClip);
+			refs.source.PlayOneShot(failClip);
 		}
 
 		private void StartBreakingAnimation() 
 		{
-			animator.SetTrigger("Open");
+			refs.animator.SetTrigger("Open");
 		}
 
 		private void StartChargeFX() //Called from animation event
@@ -101,12 +91,12 @@ namespace Qbism.Cubes
 		{
 			impactJuice.PlayFeedbacks();
 
-			nmCutter.enabled = false;
-			mesh.enabled = false;
-			glowMesh.enabled = false;
-			explosion.KnockBack();
+			refs.nmCutter.enabled = false;
+			refs.mesh.enabled = false;
+			refs.glowMesh.enabled = false;
+			refs.explForce.KnockBack();
 
-			onSpawn();
+			refs.endSeq.Spawn();
 		}
 
 		private void StartGlowing()
@@ -116,11 +106,11 @@ namespace Qbism.Cubes
 
 		private IEnumerator EnableGlowMesh() 
 		{
-			glowMesh.enabled = true;
+			refs.glowMesh.enabled = true;
 
-			while (glowMesh.materials[3].GetFloat("Glow_Alpha") < 1)
+			while (refs.glowMesh.materials[3].GetFloat("Glow_Alpha") < 1)
 			{
-				foreach (Material mat in glowMesh.materials)
+				foreach (Material mat in refs.glowMesh.materials)
 				{
 					float current = mat.GetFloat("Glow_Alpha");
 					mat.SetFloat("Glow_Alpha", current + glowIncrease);
@@ -128,12 +118,12 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(glowIncreaseInterval);
 			}
 
-			mesh.enabled = false;
+			refs.mesh.enabled = false;
 		}
 
 		private Vector3 FetchFinishPos()
 		{
-			return glowMesh.transform.position;
+			return refs.glowMesh.transform.position;
 		}
 
 		private void OnDisable()

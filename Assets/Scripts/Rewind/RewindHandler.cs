@@ -21,9 +21,6 @@ namespace Qbism.Rewind
 		LaserCube[] lasers;
 		FinishCube finish;
 
-		//Actions, events, delegates etc
-		public event Action<InterfaceIDs> onStopRewindPulse;
-
 		private void Awake() 
 		{
 			timeBodies = FindObjectsOfType<TimeBody>(); //TO DO: add cube refs
@@ -31,7 +28,7 @@ namespace Qbism.Rewind
 			handler = glRef.cubeHandler;
 			moveHandler = glRef.movCubeHandler;
 			lasers = FindObjectsOfType<LaserCube>();
-			finish = FindObjectOfType<FinishCube>(); //TO DO: finish refs
+			finish = glRef.gcRef.finishRef.finishCube;
 		}
 
 		private void OnEnable() 

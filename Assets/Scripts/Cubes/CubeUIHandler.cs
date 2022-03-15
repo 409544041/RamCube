@@ -24,7 +24,7 @@ namespace Qbism.Cubes
 		bool hiddenForFinish = false;
 
 		private void Awake() 
-		{
+		{ //TO DO: link to refs once we have cube ref
 			lRender = GetComponent<LineRenderer>();
 			mover = FindObjectOfType<PlayerCubeMover>();
 			floorCube = GetComponentInParent<FloorCube>();

@@ -15,9 +15,6 @@ namespace Qbism.Serpent
 		public float segmentSpacing = 1f;
 		[SerializeField] MapCoreRefHolder mcRef;
 		[SerializeField] SerpentSegmentHandler segHandler;
-		
-		//Cache
-		FinishEndSeqHandler finishEndSeq = null;
 
 		//States
 		List<Vector3> breadcrumbs = null;
@@ -28,13 +25,7 @@ namespace Qbism.Serpent
 
 		private void Awake() 
 		{
-			finishEndSeq = FindObjectOfType<FinishEndSeqHandler>(); //TO DO: Refs this in gameplay
 			breadcrumbs = new List<Vector3>();
-		}
-
-		private void OnEnable() 
-		{
-			if (finishEndSeq != null) finishEndSeq.onSetSerpentMove += SetMoving;
 		}
 
         private void Start()
@@ -93,11 +84,6 @@ namespace Qbism.Serpent
 		public void SetMoving(bool value)
 		{
 			isMoving = value;
-		}
-
-		private void OnDisable()
-		{
-			if (finishEndSeq != null) finishEndSeq.onSetSerpentMove -= SetMoving;
 		}
 	}
 }

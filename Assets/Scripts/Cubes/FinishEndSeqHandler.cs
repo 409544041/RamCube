@@ -20,9 +20,6 @@ namespace Qbism.Cubes
 		//Config parameters
 		[Header("Floor Cube Shrinking")]
 		[SerializeField] float shrinkInterval = .25f;
-		[Header("Cameras")]
-		[SerializeField] CinemachineVirtualCamera closeUpCam;
-		[SerializeField] CinemachineVirtualCamera endCam;
 		[Header("Camera Values")]
 		[SerializeField] AnimationCurve camResizeCurve;
 		[Space(10)]
@@ -37,12 +34,9 @@ namespace Qbism.Cubes
 		[SerializeField] float endCamDollyTarget = .3f;
 		[SerializeField] float endCamMotherDollyTarget = 1;
 		[Header("Fart Values")]
-		[SerializeField] Transform fartTowardsTarget;
 		[SerializeField] float fartLaunchDelay, fartExplosionDelay;
 		[Header("References")]
-		public FinishCubeJuicer finishJuicer;
-		[SerializeField] SegmentSpawner segSpawner;
-		[SerializeField] ObjectSpawner objSpawner;
+		[SerializeField] FinishRefHolder refs;
 		
 
 		//Cache
@@ -54,23 +48,19 @@ namespace Qbism.Cubes
 		PlayerFartLauncher farter;
 		FeatureSwitchBoard switchBoard;
 		CamResizer camResizer;
-
-		//Actions, events, delegates etc
-		public event Action<bool> onSetSerpentMove;
-		public event Action onShowSegments;
-		public event Action onSpawnShapie;
-		public event Action<float> onUIFade;
+		public FinishCubeJuicer finishJuicer { get; private set; } //TO DO: fartlaunch should get it from own ref
 
 		private void Awake()
 		{
-			handler = FindObjectOfType<CubeHandler>(); //TO DO: link to refs once finish has own ref
-			movHandler = handler.GetComponent<MoveableCubeHandler>();
-			playerAnim = FindObjectOfType<PlayerAnimator>();
-			loader = FindObjectOfType<SceneHandler>();
-			progHandler = FindObjectOfType<ProgressHandler>();
+			handler = refs.gcRef.glRef.cubeHandler;
+			movHandler = refs.gcRef.glRef.movCubeHandler;
+			playerAnim = FindObjectOfType<PlayerAnimator>(); //TO DO: link to player refs;
+			loader = refs.gcRef.glRef.sceneHandler;
+			progHandler = refs.persRef.progHandler;
 			farter = FindObjectOfType<PlayerFartLauncher>();
-			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
-			camResizer = handler.GetComponentInParent<CamResizer>();
+			switchBoard = refs.persRef.switchBoard;
+			camResizer = refs.gcRef.glRef.camResizer;
+			finishJuicer = refs.finishJuicer;
 		}
 
 		private void OnEnable() 
@@ -80,8 +70,6 @@ namespace Qbism.Cubes
 				playerAnim.onTriggerSerpent += InitiateSerpentSequence;
 				playerAnim.onGetFinishPos += GetPos;
 			}
-
-			if (finishJuicer != null) finishJuicer.onSpawn += Spawn;
 			
 			if (farter != null) farter.onSwitchToEndCam += SwitchToEndCam;
 		}
@@ -98,13 +86,13 @@ namespace Qbism.Cubes
 
 			if (switchBoard.showEndLevelSeq)
 			{
-				closeUpCam.Priority = 11;
-				onUIFade(0); //TO DO: via finish ref and canvas group, delete ImageFader
+				refs.closeUpCam.Priority = 11;
+				refs.gcRef.gameplayCanvasFader.StartFade(0);
 
 				if (FetchHasSegment())
 				{
 					yield return new WaitForSeconds(fartLaunchDelay);
-					farter.InitiateLaunchSequence(fartTowardsTarget, true);
+					farter.InitiateLaunchSequence(refs.fartTarget, true);
 				}
 				
 				else
@@ -159,13 +147,13 @@ namespace Qbism.Cubes
 			}
 		}
 
-		//Includes temporary wall shrink script for old walls
 		private IEnumerator ShrinkAllWalls()
 		{
-			var wallsToShrink = GameObject.FindGameObjectsWithTag("Wall");
+			var wallsToShrink = refs.gcRef.walls;
 
 			for (int i = 0; i < wallsToShrink.Length; i++)
 			{
+				//getting shrinker for temp walls. Remove once we don't have those anymore
 				var shrinker = wallsToShrink[i].GetComponent<CubeShrinker>();
 				if (shrinker != null) shrinker.StartShrinking();
 				else
@@ -187,15 +175,15 @@ namespace Qbism.Cubes
 		{
 			if (!FetchHasSegment())
 			{
-				endCam.m_Lens.OrthographicSize = shapieEndCamSize;
-				camResizer.InitiateCamDollyMove(endCam, endCamDollyTarget, 
+				refs.endCam.m_Lens.OrthographicSize = shapieEndCamSize;
+				camResizer.InitiateCamDollyMove(refs.endCam, endCamDollyTarget, 
 					endCamMotherDollyDur, camResizeCurve);
-				camResizer.InitiateCamResize(endCam, shapieEndCamResize, endCamMotherDollyDur,
+				camResizer.InitiateCamResize(refs.endCam, shapieEndCamResize, endCamMotherDollyDur,
 					camResizeCurve);
 			}
 
-			endCam.Priority = 12;
-			endCam.transform.parent = null;
+			refs.endCam.Priority = 12;
+			refs.endCam.transform.parent = null;
 			DisableForegroundObjects();		
 		}
 
@@ -229,24 +217,23 @@ namespace Qbism.Cubes
 
 		private void ActivateSerpent()
 		{
-			var serpent = GameObject.FindGameObjectWithTag("LevelCompFollower");
-			serpent.GetComponent<SplineFollower>().followSpeed = 15;
-			onSetSerpentMove(true);
-			onShowSegments();
+			refs.follower.followSpeed = 15;
+			refs.serpMovement.SetMoving(true);
+			refs.serpSegHandler.EnableSegmentsWithoutBilly();
 		}
 
-		private void Spawn()
+		public void Spawn()
 		{
 			if (FetchHasSegment() && switchBoard.serpentConnected)
-				segSpawner.SpawnSegment();
+				refs.segSpawner.SpawnSegment();
 			else if (progHandler.currentHasObject && switchBoard.objectsConnected)
-				objSpawner.SpawnObject();
-			else onSpawnShapie();
+				refs.objSpawner.SpawnObject();
+			else refs.shapieSpawner.SpawnShapie();
 		}
 
 		private IEnumerator LevelTransition(bool mapConnected, bool restart)
 		{
-			yield return new WaitWhile(() => finishJuicer.source.isPlaying);
+			yield return new WaitWhile(() => refs.source.isPlaying);
 			//TO DO: Make timing wait for animations that are to come
 
 			if (restart)
@@ -254,8 +241,7 @@ namespace Qbism.Cubes
 				finishJuicer.PlayFailSound();
 				loader.RestartLevel();
 			}
-			else if (mapConnected) FindObjectOfType<WorldMapLoading>().
-				StartLoadingWorldMap(true); //TO DO: link to refs
+			else if (mapConnected) refs.gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
 			else loader.NextLevel();
 		}
 
@@ -271,39 +257,37 @@ namespace Qbism.Cubes
 
 		public void FartChargeCamResize(float dur)
 		{
-			camResizer.InitiateCamResize(closeUpCam, closeUpResize, dur, camResizeCurve);
+			camResizer.InitiateCamResize(refs.closeUpCam, closeUpResize, dur, camResizeCurve);
 		}
 
 		public void FartLaunchCamResize(float dur)
 		{
-			camResizer.InitiateCamResize(closeUpCam, launchResize, dur, camResizeCurve);
+			camResizer.InitiateCamResize(refs.closeUpCam, launchResize, dur, camResizeCurve);
 		}
 
 		private void FinishImpactCamResize() // Called from animation
 		{
-			camResizer.InitiateCamResize(endCam, finishImpactResize, finishImpactResizeDur, 
+			camResizer.InitiateCamResize(refs.endCam, finishImpactResize, finishImpactResizeDur, 
 				camResizeCurve);
-
-			var serpProg = progHandler.GetComponent<SerpentProgress>();
 
 			//if it's a segment rescue and 1 is still false, it has to be the head
 			if (E_SegmentsGameplayData.GetEntity(1).f_Rescued == false) 
 			{
-				StartCoroutine(PanCamWithDelay(finishImpactResizeDur, endCam, endCamMotherDollyTarget, 
+				StartCoroutine(PanCamWithDelay(finishImpactResizeDur, refs.endCam, endCamMotherDollyTarget, 
 					endCamMotherDollyDur, camResizeCurve));
-				StartCoroutine(ResizeCamWithDelay(finishImpactResizeDur, endCam, endCamMotherResize,
+				StartCoroutine(ResizeCamWithDelay(finishImpactResizeDur, refs.endCam, endCamMotherResize,
 					endCamMotherDollyDur, camResizeCurve));
 			}	
 
 			else
-			StartCoroutine(PanCamWithDelay(finishImpactResizeDur, endCam, endCamDollyTarget, endCamDollyDur,
+			StartCoroutine(PanCamWithDelay(finishImpactResizeDur, refs.endCam, endCamDollyTarget, endCamDollyDur,
 				camResizeCurve));
 		}
 
 		public void PanAndZoomCamAfterDialogue()
 		{
-			camResizer.InitiateCamDollyMove(endCam, 0, endCamDollyDur, camResizeCurve);
-			camResizer.InitiateCamResize(endCam, afterDialogueResize, endCamDollyDur, camResizeCurve);
+			camResizer.InitiateCamDollyMove(refs.endCam, 0, endCamDollyDur, camResizeCurve);
+			camResizer.InitiateCamResize(refs.endCam, afterDialogueResize, endCamDollyDur, camResizeCurve);
 		}
 
 		private IEnumerator ResizeCamWithDelay(float delay, CinemachineVirtualCamera cam, float sizeTarget,
@@ -329,8 +313,6 @@ namespace Qbism.Cubes
 				playerAnim.onTriggerSerpent -= InitiateSerpentSequence;
 				playerAnim.onGetFinishPos -= GetPos;
 			}
-
-			if (finishJuicer != null) finishJuicer.onSpawn -= Spawn;
 
 			if (farter != null) farter.onSwitchToEndCam -= SwitchToEndCam;
 		}

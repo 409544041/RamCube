@@ -32,7 +32,7 @@ namespace Qbism.Control
 		{
 			mover = FindObjectOfType<PlayerCubeMover>(); //TO DO: player refs
 			switchBoard = gcRef.persRef.switchBoard;
-			finish = FindObjectOfType<FinishCube>(); //TO DO: finish refs
+			finish = gcRef.finishRef.finishCube;
 			controls = new GameControls();
 
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();

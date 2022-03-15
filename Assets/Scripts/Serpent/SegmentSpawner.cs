@@ -15,16 +15,6 @@ namespace Qbism.Serpent
 		//States
 		GameObject segmentToSpawn = null;
 
-		//Cache
-		FinishEndSeqHandler finishEndSeq;
-		FinishCube finish;
-
-		private void Awake() 
-		{
-			finish = GetComponent<FinishCube>();
-			finishEndSeq = GetComponent<FinishEndSeqHandler>();
-		}
-
 		public void SetSegmentToSpawn()
 		{
 			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)

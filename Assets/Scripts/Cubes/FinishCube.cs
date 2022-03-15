@@ -14,10 +14,7 @@ namespace Qbism.Cubes
 	public class FinishCube : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] FinishEndSeqHandler finishEndSeq;
-		[SerializeField] FinishCubeJuicer juicer;
-		[SerializeField] SegmentSpawner segSpawner;
-		[SerializeField] ObjectSpawner objSpawner;
+		[SerializeField] FinishRefHolder refs;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -33,30 +30,22 @@ namespace Qbism.Cubes
 		Vector2Int myPosition;
 		public bool wrongOnFinish { get; set; } = false;
 		public bool hasFinished = false;
-		
-		//Actions, events, delegates etc
-		public event Action<InterfaceIDs> onRewindPulse;
-		public event Action<InterfaceIDs> onStopRewindPulse;
 
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>();
 			playerFF = mover.GetComponent<PlayerCubeFeedForward>();
-			handler = FindObjectOfType<CubeHandler>();
-			progHandler = FindObjectOfType<ProgressHandler>();
-			if (progHandler)
-			{
-				serpProg = progHandler.GetComponent<SerpentProgress>();
-				objProg = progHandler.GetComponent<ObjectsProgress>();
-			}
-			floorChecker = handler.GetComponent<FloorCubeChecker>();
-			switchBoard = progHandler.GetComponent<FeatureSwitchBoard>();
+			handler = refs.gcRef.glRef.cubeHandler;
+			progHandler = refs.persRef.progHandler;
+			serpProg = refs.persRef.serpProg;
+			objProg = refs.persRef.objProg;
+			floorChecker = refs.gcRef.glRef.floorChecker;
+			switchBoard = refs.persRef.switchBoard;
 		}
 
 		private void OnEnable()
 		{
 			if (floorChecker != null) floorChecker.onCheckForFinish += CheckForFinish;
-			if (juicer != null) juicer.onFinishCheck += FetchFinishStatus;
 			if (playerFF != null) playerFF.onFinishCheck += FetchFinishStatus;
 		}
 
@@ -76,12 +65,12 @@ namespace Qbism.Cubes
 				else
 				{
 					wrongOnFinish = true;
-					PulseRewindUI();
+					refs.gcRef.rewindPulser.InitiatePulse(InterfaceIDs.Rewind);
 				} 
 			}
 			else if (wrongOnFinish)
 			{
-				onStopRewindPulse(InterfaceIDs.Rewind);
+				refs.gcRef.rewindPulser.StopPulse(InterfaceIDs.Rewind);
 				wrongOnFinish = false;
 			} 
 		}
@@ -95,27 +84,27 @@ namespace Qbism.Cubes
 
 			if (progHandler.currentHasSegment && switchBoard.serpentConnected)
 			{
-				segSpawner.SetSegmentToSpawn(); //Needs to be done before AddSegment
+				refs.segSpawner.SetSegmentToSpawn(); //Needs to be done before AddSegment
 				serpProg.AddSegmentToDatabase();
 			}
 			else if (progHandler.currentHasObject && switchBoard.objectsConnected)
 			{
-				objSpawner.SetObjectToSpawn();
+				refs.objSpawner.SetObjectToSpawn();
 				objProg.AddObjectToDatabase();
 			}
 
 			progHandler.SaveProgData();
 
 			hasFinished = true;
-			mover.GetComponentInChildren<ExpressionHandler>().hasFinished = true;
+			mover.GetComponentInChildren<ExpressionHandler>().hasFinished = true; //TO DO: link to player ref
 			mover.input = false;
 
-			juicer.DeactivateGlow();
-			juicer.PlaySuccesSound();
+			refs.finishJuicer.DeactivateGlow();
+			refs.finishJuicer.PlaySuccesSound();
 
 			DisableOutOfBounds();
 
-			finishEndSeq.InitiateEndSeq();
+			refs.endSeq.InitiateEndSeq();
 		}
 
 		private void PositionPlayerForFinish()
@@ -125,16 +114,6 @@ namespace Qbism.Cubes
 			mover.transform.forward = Vector3.down;
 		}
 
-		private void PulseRewindUI()
-		{
-			onRewindPulse(InterfaceIDs.Rewind);
-		}
-
-		public void StopPulseRewindUI()
-		{
-			onStopRewindPulse(InterfaceIDs.Rewind);
-		}
-
 		public bool FetchFinishStatus()
 		{
 			return hasFinished;
@@ -142,7 +121,7 @@ namespace Qbism.Cubes
 
 		private void DisableOutOfBounds()
 		{
-			var oob = FindObjectsOfType<OutOfBounds>();
+			var oob = refs.gcRef.outOfBounds;
 
 			for (int i = 0; i < oob.Length; i++)
 			{
@@ -153,7 +132,6 @@ namespace Qbism.Cubes
 		private void OnDisable()
 		{
 			if (floorChecker != null) floorChecker.onCheckForFinish -= CheckForFinish;
-			if (juicer != null) juicer.onFinishCheck -= FetchFinishStatus;
 			if (playerFF != null) playerFF.onFinishCheck -= FetchFinishStatus;
 		}
 	}
