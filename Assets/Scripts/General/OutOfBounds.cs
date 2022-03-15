@@ -10,19 +10,19 @@ namespace Qbism.General
 {
 	public class OutOfBounds : MonoBehaviour
 	{
-		//Actions, events, delegates etc
-		public event Action<InterfaceIDs> onRewindPulse;
+		//Config parameters
+		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		private void OnTriggerEnter(Collider other) 
 		{
 			if (other.tag == "Player")
 			{
-				var player = other.GetComponent<PlayerCubeMover>();
+				var player = other.GetComponent<PlayerCubeMover>(); //TO DO: replace when player refs
 				player.isOutOfBounds = true;
 				player.isBoosting = false;
-				if (FindObjectOfType<MoveableCubeHandler>().movingMoveables == 0)
+				if (gcRef.glRef.movCubeHandler.movingMoveables == 0)
 					player.input = true; //This here else wont let you rewind
-				onRewindPulse(InterfaceIDs.Rewind);				
+				gcRef.rewindPulser.InitiatePulse(InterfaceIDs.Rewind);				
 			}
 
 			if (other.tag == "FFCube")

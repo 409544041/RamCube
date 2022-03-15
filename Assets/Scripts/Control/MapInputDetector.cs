@@ -18,7 +18,7 @@ namespace Qbism.Control
 		GameControls controls;
 
 		//States
-		MapLogicRefHolder logicRef;
+		MapLogicRefHolder mlRef;
 		PersistentRefHolder persRef;
 
 		void Awake()
@@ -32,7 +32,7 @@ namespace Qbism.Control
 			controls.Gameplay.DebugKey1.performed += ctx => UnlockAllAndReload();
 			controls.Gameplay.Rewind.performed += ctx => ReloadMap();
 
-			logicRef = mcRef.mlRef;
+			mlRef = mcRef.mlRef;
 			persRef = mcRef.persRef;
 		}
 
@@ -50,7 +50,7 @@ namespace Qbism.Control
 		{
 			if (persRef.switchBoard.serpentScreenConnected)
 			{
-				logicRef.serpentLoader.StartLoadingSerpentScreen();
+				mlRef.serpentLoader.StartLoadingSerpentScreen();
 			}
 		}
 
@@ -59,7 +59,7 @@ namespace Qbism.Control
 			if (persRef.switchBoard.allowDebugMapReload)
 			{
 				persRef.progHandler.SaveProgData();
-				logicRef.mapLoader.StartLoadingWorldMap(false);
+				mlRef.mapLoader.StartLoadingWorldMap(false);
 			}
 		}
 
@@ -67,9 +67,9 @@ namespace Qbism.Control
 		{
 			if (persRef.switchBoard.allowDebugDeleteProgress)
 			{
-				logicRef.debugCompleter.UnCompleteAll();
+				mlRef.debugCompleter.UnCompleteAll();
 				persRef.progHandler.SaveProgData();
-				logicRef.mapLoader.StartLoadingWorldMap(false);
+				mlRef.mapLoader.StartLoadingWorldMap(false);
 			}
 		}
 
@@ -77,9 +77,9 @@ namespace Qbism.Control
 		{
 			if (persRef.switchBoard.allowDebugCompleteAll)
 			{
-				logicRef.debugCompleter.CompleteAll();
+				mlRef.debugCompleter.CompleteAll();
 				persRef.progHandler.SaveProgData();
-				logicRef.mapLoader.StartLoadingWorldMap(false);
+				mlRef.mapLoader.StartLoadingWorldMap(false);
 			}
 		}
 
@@ -87,9 +87,9 @@ namespace Qbism.Control
 		{
 			if (persRef.switchBoard.allowDebugUnlockAll)
 			{
-				logicRef.debugCompleter.UnlockAll();
+				mlRef.debugCompleter.UnlockAll();
 				persRef.progHandler.SaveProgData();
-				logicRef.mapLoader.StartLoadingWorldMap(false);
+				mlRef.mapLoader.StartLoadingWorldMap(false);
 			}
 		}
 

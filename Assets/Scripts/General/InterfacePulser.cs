@@ -16,19 +16,16 @@ namespace Qbism.General
 
 		//Cache
 		FinishCube finishCube = null;
-		RewindHandler rewinder = null;
 		LaserCube[] lasers = null;
 		TimeBody[] bodies = null;
-		OutOfBounds[] outOfBounds = null;
 		PlayerCubeMover playerMover;
 
 		private void Awake()
 		{
-			finishCube = FindObjectOfType<FinishCube>();
-			rewinder = FindObjectOfType<RewindHandler>();
+			//TO DO: Reverse + ref these
+			finishCube = FindObjectOfType<FinishCube>(); //TO DO player/finish/cube refs
 			lasers = FindObjectsOfType<LaserCube>();
 			bodies = FindObjectsOfType<TimeBody>();
-			outOfBounds = FindObjectsOfType<OutOfBounds>();
 			playerMover = FindObjectOfType<PlayerCubeMover>();
 		}
 
@@ -40,8 +37,6 @@ namespace Qbism.General
 				finishCube.onStopRewindPulse += StopPulse;
 			}
 
-			if (rewinder != null) rewinder.onStopRewindPulse += StopPulse;
-
 			foreach (LaserCube laser in lasers)
 			{
 				if (laser != null) laser.onRewindPulse += InitiatePulse;
@@ -52,15 +47,10 @@ namespace Qbism.General
 				if (body != null) body.onStopRewindPulse += StopPulse;
 			}
 
-			foreach (OutOfBounds oob in outOfBounds)
-			{
-				if (oob != null) oob.onRewindPulse += InitiatePulse;
-			}
-
 			if (playerMover != null) playerMover.onRewindPulse += InitiatePulse;
 		}
 
-		private void InitiatePulse(InterfaceIDs id)
+		public void InitiatePulse(InterfaceIDs id) //TO DO: Remove need for interfaceIDs
 		{
 			if (pulser.IsPlaying) return; 
 			
@@ -71,7 +61,7 @@ namespace Qbism.General
 			}
 		}
 
-		private void StopPulse(InterfaceIDs id)
+		public void StopPulse(InterfaceIDs id)
 		{
 			pulser.StopFeedbacks();
 		}
@@ -84,8 +74,6 @@ namespace Qbism.General
 				finishCube.onStopRewindPulse -= StopPulse;
 			}
 
-			if (rewinder != null) rewinder.onStopRewindPulse -= StopPulse;
-
 			foreach (LaserCube laser in lasers)
 			{
 				if (laser != null) laser.onRewindPulse -= InitiatePulse;
@@ -94,11 +82,6 @@ namespace Qbism.General
 			foreach (TimeBody body in bodies)
 			{
 				if (body != null) body.onStopRewindPulse -= StopPulse;
-			}
-
-			foreach (OutOfBounds oob in outOfBounds)
-			{
-				if (oob != null) oob.onRewindPulse -= InitiatePulse;
 			}
 
 			if (playerMover != null) playerMover.onRewindPulse -= InitiatePulse;

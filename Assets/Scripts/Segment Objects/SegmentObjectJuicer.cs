@@ -10,6 +10,8 @@ namespace Qbism.Objects
 		//Config parameters
 		[SerializeField] MMFeedbacks swallowAndFartOutJuice, scaleUpJuice, starScaleJuice;
 		[SerializeField] float scaleUpOvershoot = .6f;
+		[SerializeField] Renderer mesh;
+		[SerializeField] M_Objects m_Object;
 		public ParticleSystem fartParticles;
 		public Canvas uiStar;
 
@@ -25,7 +27,10 @@ namespace Qbism.Objects
 			swallowFartJuiceActivated = true;
 
 			var objCollManager = FindObjectOfType<ObjectCollectManager>();
+			objCollManager.collectableObject = this.gameObject;
 			objCollManager.objJuicer = this;
+			objCollManager.objMesh = mesh;
+			objCollManager.m_Object = m_Object;
 			objCollManager.InitiateShowingObjectOverlay();
 		}
 

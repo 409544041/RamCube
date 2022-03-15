@@ -67,7 +67,7 @@ namespace Qbism.Serpent
 		private void StartMovement()
 		{
 			mcRef.splineFollower.followSpeed = mapFollowSpeed;
-			GetComponent<SerpentMovement>().SetMoving(true);
+			mcRef.serpMover.SetMoving(true);
 			
 		}
 	}

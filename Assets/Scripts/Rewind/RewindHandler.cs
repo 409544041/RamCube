@@ -55,8 +55,7 @@ namespace Qbism.Rewind
 			RewindTimeBodies();
 
 			//To stop rewind UI element from pulsing if rewinding off finish
-			if (finish.wrongOnFinish)
-				onStopRewindPulse(InterfaceIDs.Rewind);
+			if (finish.wrongOnFinish) glRef.gcRef.rewindPulser.StopPulse(InterfaceIDs.Rewind);
 
 			StartCoroutine(DelayedLaserRewindStuff());
 

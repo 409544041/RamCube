@@ -29,8 +29,8 @@ namespace Qbism.WorldMap
 				refs.m_levelData.f_ObjectPresent, refs.m_pin.f_Biome);
 
 			refs.pinUIJuicer.PlayEnterLevelJuice();
-				
-			var loader = FindObjectOfType<LevelLoading>();
+
+			var loader = refs.mcRef.mlRef.levelLoader;
 			loader.StartLoadingLevel(refs.m_levelData.f_Level);
 		}
 

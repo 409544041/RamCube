@@ -7,6 +7,9 @@ namespace Qbism.MoveableCubes
 {
 	public class MoveableCubeHandler : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] GameplayCoreRefHolder gcRef;
+
 		//Cache
 		MoveableCube[] moveableCubes = null;
 
@@ -22,7 +25,7 @@ namespace Qbism.MoveableCubes
 
 		private void Awake() 
 		{
-			moveableCubes = FindObjectsOfType<MoveableCube>(); //TO DO: add movcube reffers
+			moveableCubes = gcRef.movCubes; //TO DO: add movcube reffers
 			
 			LoadMoveableCubeDictionary(); 
 		}
@@ -40,7 +43,7 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		public void LoadMoveableCubeDictionary()
+		private void LoadMoveableCubeDictionary()
 		{
 			MoveableCube[] cubes = FindObjectsOfType<MoveableCube>();
 			foreach (MoveableCube cube in cubes)

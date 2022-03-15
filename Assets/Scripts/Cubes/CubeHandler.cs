@@ -10,6 +10,9 @@ namespace Qbism.Cubes
 {
 	public class CubeHandler : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] GameplayCoreRefHolder gcRef;
+
 		//Cache
 		PlayerCubeFeedForward cubeFF = null;
 		PlayerCubeMover mover = null;
@@ -39,7 +42,7 @@ namespace Qbism.Cubes
 			//TO DO: mov / player refs
 			mover = FindObjectOfType<PlayerCubeMover>();
 			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
-			moveableCubes = FindObjectsOfType<MoveableCube>();
+			moveableCubes = gcRef.movCubes;
 			compAdders = FindObjectsOfType<FloorComponentAdder>();
 			LoadFloorCubeDictionary();
 		}
@@ -69,7 +72,7 @@ namespace Qbism.Cubes
 			}
 		}
 
-		public void LoadFloorCubeDictionary()
+		private void LoadFloorCubeDictionary()
 		{
 			FloorCube[] cubes = FindObjectsOfType<FloorCube>();
 			foreach (FloorCube cube in cubes)

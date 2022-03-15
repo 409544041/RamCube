@@ -11,15 +11,15 @@ namespace Qbism.Cubes
 		[SerializeField] GameLogicRefHolder glRef;
 
 		//Cache
-		CubeHandler handler = null;
-		MoveableCubeHandler moveHandler = null;
-		MoveableCube[] moveableCubes = null;
+		CubeHandler handler;
+		MoveableCubeHandler moveHandler;
+		MoveableCube[] moveableCubes;
 
 		private void Awake() 
 		{
 			handler = glRef.cubeHandler;
 			moveHandler = glRef.movCubeHandler;
-			moveableCubes = FindObjectsOfType<MoveableCube>(); //TO DO: movref
+			moveableCubes = glRef.gcRef.movCubes; //TO DO: movref
 		}
 
 		private void OnEnable() 

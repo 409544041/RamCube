@@ -13,11 +13,12 @@ namespace Qbism.Objects
 		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		//Cache
-		GameObject collectableObject;
+		public GameObject collectableObject { get; set; }
 		public SegmentObjectJuicer objJuicer { get; set; }
 		Vector3 objNewViewPos;
-		Renderer objMesh;
+		public Renderer objMesh { get; set; }
 		public bool overlayActive { get; private set; } = false;
+		public M_Objects m_Object { get; set; }
 
 		public void InitiateShowingObjectOverlay()
 		{
@@ -28,9 +29,6 @@ namespace Qbism.Objects
 		private IEnumerator ShowObjectOverlay()
 		{
 			yield return new WaitForSeconds(overlayDelay);
-			collectableObject = GameObject.FindGameObjectWithTag("SegmentObject");
-			objMesh = collectableObject.GetComponentInChildren<Renderer>();
-			var m_Object = collectableObject.GetComponent<M_Objects>();
 
 			GetObjCloserToCam();
 			SetupBackgroundCanvas();

@@ -31,7 +31,6 @@ namespace Qbism.Control
 		private void Awake()
 		{
 			mover = FindObjectOfType<PlayerCubeMover>(); //TO DO: player refs
-
 			switchBoard = gcRef.persRef.switchBoard;
 			finish = FindObjectOfType<FinishCube>(); //TO DO: finish refs
 			controls = new GameControls();

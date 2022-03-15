@@ -45,6 +45,8 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public PeepRefHolder[] peeps { get; private set; }
 	public BiomeVisualSwapper[] visualSwappers { get; private set; }
 
+	public MoveableCube[] movCubes { get; private set; }
+
 
 	//TO DO: Add finish ref and cube refs
 
@@ -67,5 +69,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 			swapper.progHandler = persRef.progHandler;
 			swapper.matHandler = persRef.varMatHandler;
 		}
+
+		movCubes = FindObjectsOfType<MoveableCube>(); //TO DO: add movcube reffers
 	}
 }
