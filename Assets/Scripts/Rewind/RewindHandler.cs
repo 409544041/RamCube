@@ -75,10 +75,13 @@ namespace Qbism.Rewind
 			//Order in which moveables get rewinded is important to avoid dic errors
 			foreach (TimeBody body in timeBodies)
 			{
+				var refs = body.refs;
 				var moveable = body.refs.movCube;
 
-				if (moveable != null && moveable.orderOfMovement != -1)
+				if (refs != null && moveable != null)
 				{
+					if (moveable.orderOfMovement == -1) break;
+
 					rewindFirstDic.Add(moveable.orderOfMovement, body);
 					body.priorityRewind = true;
 				}

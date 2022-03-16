@@ -51,7 +51,6 @@ namespace Qbism.Peep
 
 		public void HandleBalloonRespawn() //Called from spline event
 		{
-			print("Calling");
 			ToggleMeshes(false);
 
 			respawnTimer = 0;
