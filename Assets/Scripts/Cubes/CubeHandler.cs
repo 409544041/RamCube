@@ -43,7 +43,7 @@ namespace Qbism.Cubes
 			mover = FindObjectOfType<PlayerCubeMover>();
 			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
 			moveableCubes = gcRef.movCubes;
-			compAdders = FindObjectsOfType<FloorComponentAdder>();
+			compAdders = gcRef.floorCompAdders;
 			LoadFloorCubeDictionary();
 		}
 
@@ -74,14 +74,22 @@ namespace Qbism.Cubes
 
 		private void LoadFloorCubeDictionary()
 		{
-			FloorCube[] cubes = FindObjectsOfType<FloorCube>();
-			foreach (FloorCube cube in cubes)
+			var cubes = gcRef.cubeRefs;
+			foreach (CubeRefHolder cube in cubes)
 			{
-				Vector2Int pos = cube.cubePoser.FetchGridPos();
-				if (floorCubeDic.ContainsKey(pos))
-					Debug.Log("Overlapping cube " + cube + " & " + floorCubeDic[pos]);
-				else floorCubeDic.Add(pos, cube);
+				if (cube.floorCube == null) continue;
+				AddToFloorCubeDic(cube.cubePos.FetchGridPos(), cube.floorCube);
 			}
+
+			var finish = gcRef.finishRef;
+			AddToFloorCubeDic(finish.cubePos.FetchGridPos(), finish.floorCube);
+		}
+
+		private void AddToFloorCubeDic(Vector2Int pos, FloorCube cube)
+		{
+			if (floorCubeDic.ContainsKey(pos))
+				Debug.Log("Overlapping cube " + cube + " & " + floorCubeDic[pos]);
+			else floorCubeDic.Add(pos, cube);
 		}
 
 		private void DicCheckForShrinking(Vector2Int cubeToShrink)

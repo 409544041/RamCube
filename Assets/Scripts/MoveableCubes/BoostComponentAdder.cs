@@ -8,18 +8,17 @@ namespace Qbism.MoveableCubes
 	public class BoostComponentAdder : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] Transform boostRayOrigin;
-		[SerializeField] GameObject objDir;
 		[SerializeField] LayerMask boostMaskPlayer;
 		[SerializeField] LayerMask boostMaskMoveable;
+		[SerializeField] CubeRefHolder refs;
 
 		public void AddBoostComponent(GameObject cube)
 		{
 			BoostCube newBoost = cube.AddComponent<BoostCube>();
-			newBoost.boostRayOrigin = boostRayOrigin;
-			newBoost.boostObjDir = objDir;
 			newBoost.boostMaskPlayer = boostMaskPlayer;
 			newBoost.boostMaskMoveable = boostMaskMoveable;
+			refs.boostCube = newBoost;
+			newBoost.refs = refs;
 		}
 	}
 }

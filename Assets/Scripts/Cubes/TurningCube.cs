@@ -14,8 +14,7 @@ namespace Qbism.Cubes
 		[SerializeField] int turnStep = 6;
 		[SerializeField] float timeStep = 0.01f;
 		public bool isLeftTurning = false;
-		public CubePositioner cubePoser = null;
-		public MMFeedbacks juicer;
+		public CubeRefHolder refs;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -47,7 +46,7 @@ namespace Qbism.Cubes
 
 			var axis = transform.TransformDirection(turnAxis);
 
-			juicer.PlayFeedbacks();
+			refs.turnJuice.PlayFeedbacks();
 
 			mover.GetComponentInChildren<ExpressionHandler>().
 				SetSituationFace(ExpressionSituations.turning, 1f);
@@ -76,7 +75,7 @@ namespace Qbism.Cubes
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
-				if (ff.cubePoser.FetchGridPos() == cubePoser.FetchGridPos())
+				if (ff.cubePoser.FetchGridPos() == refs.cubePos.FetchGridPos())
 				{
 					ffCube.transform.Rotate(axis, turnStep, Space.World);
 					yield return null;
@@ -90,9 +89,10 @@ namespace Qbism.Cubes
 		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 movingTurnAxis,
 		Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
-			var moveable = cube.GetComponent<MoveableCube>();
-			var cubePos = moveable.cubePoser.FetchGridPos();
-			var moveEffector = moveable.moveEffector;
+			var movRef = cube.GetComponent<CubeRefHolder>();
+			var movCube = movRef.movCube;
+			var cubePos = movRef.cubePos.FetchGridPos();
+			var moveEffector = movRef.movEffector;
 
 			var axis = transform.TransformDirection(turnAxis);
 
@@ -103,7 +103,7 @@ namespace Qbism.Cubes
 				moveEffector.ParentFaceToMoveable();
 			}
 
-			juicer.PlayFeedbacks();
+			refs.turnJuice.PlayFeedbacks();
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
@@ -111,18 +111,18 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(timeStep);
 			}
 
-			moveable.cubePoser.RoundPosition();
-			moveable.UpdateCenterPosition();
-			CalculateSide(ref side, ref movingTurnAxis, ref posAhead, moveable, cubePos);
+			movRef.cubePos.RoundPosition();
+			movCube.UpdateCenterPosition();
+			CalculateSide(ref side, ref movingTurnAxis, ref posAhead, movCube, cubePos);
 
 			if (moveEffector != null) moveEffector.UnParentFace();
 
 			if (prevCube.FetchType() != CubeTypes.Boosting)
-				moveable.InitiateMove(side, movingTurnAxis, posAhead, originPos);
+				movCube.InitiateMove(side, movingTurnAxis, posAhead, originPos);
 			else 
 			{
-				var moveHandler = FindObjectOfType<MoveableCubeHandler>();
-				moveHandler.StopMovingMoveables(cubePos, moveable, false);
+				var moveHandler = refs.gcRef.glRef.movCubeHandler;
+				moveHandler.StopMovingMoveables(cubePos, movCube, false);
 			}
 
 		}

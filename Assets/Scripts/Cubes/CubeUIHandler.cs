@@ -8,16 +8,13 @@ namespace Qbism.Cubes
 	public class CubeUIHandler : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] GameObject uiElement = null;
-		[SerializeField] Transform[] pointsToCheck = null;
 		[SerializeField] LayerMask lineLayers;
 		[SerializeField] float triggerDis = 0.3f;
+		[SerializeField] CubeRefHolder refs;
 
 		//Cache
-		LineRenderer lRender = null;
-		PlayerCubeMover mover = null;
-		FloorCube floorCube = null;
-		FinishCube finishCube = null;
+		PlayerCubeMover mover;
+		FinishCube finishCube;
 
 		//States
 		float disToPlayer = 0;
@@ -25,17 +22,15 @@ namespace Qbism.Cubes
 
 		private void Awake() 
 		{ //TO DO: link to refs once we have cube ref
-			lRender = GetComponent<LineRenderer>();
 			mover = FindObjectOfType<PlayerCubeMover>();
-			floorCube = GetComponentInParent<FloorCube>();
-			finishCube = FindObjectOfType<FinishCube>();
+			finishCube = refs.gcRef.finishRef.finishCube;
 		}
 
 		private void Start()
 		{
 			CheckForMirror();
 
-			lRender.SetPosition(1, uiElement.transform.localPosition);
+			refs.uiLineRender.SetPosition(1, refs.uiElement.transform.localPosition);
 		}
 
 		private void Update()
@@ -48,22 +43,22 @@ namespace Qbism.Cubes
 		private void ShowUICheck()
 		{
 			disToPlayer = Vector3.Distance
-				(floorCube.transform.position, mover.transform.position);
+				(refs.floorCube.transform.position, mover.transform.position);
 
 			//The last part is to avoid bug when static cube becomes floor cube
 			if (mover.isMoving || mover.isBoosting || mover.isTurning ||
-				disToPlayer < triggerDis || floorCube.type == CubeTypes.Shrinking) 
+				disToPlayer < triggerDis || refs.floorCube.type == CubeTypes.Shrinking) 
 			{
 				ShowOrHideUI(false);
 				return;
 			} 
 
-			foreach (Transform point in pointsToCheck)
+			foreach (Transform point in refs.uiLineTargets)
 			{
 				//Gets viewport position of cubes, makes depth 0 and uses that as origin point for line
-				Vector3 viewPortPos = Camera.main.WorldToViewportPoint(point.position);
+				Vector3 viewPortPos = refs.gcRef.cam.WorldToViewportPoint(point.position);
 				viewPortPos = new Vector3(viewPortPos.x, viewPortPos.y, 0);
-				Vector3 lineOrigin = Camera.main.ViewportToWorldPoint(viewPortPos);
+				Vector3 lineOrigin = refs.gcRef.cam.ViewportToWorldPoint(viewPortPos);
 
 				if (Physics.Linecast(lineOrigin, point.position, lineLayers))
 				{
@@ -85,18 +80,16 @@ namespace Qbism.Cubes
 
 		private void ShowOrHideUI(bool value)
 		{
-			uiElement.SetActive(value);
-			lRender.enabled = value;
+			refs.uiElement.SetActive(value);
+			refs.uiLineRender.enabled = value;
 		}
 
 		private void CheckForMirror()
 		{
-			TurningCube turner = GetComponentInParent<TurningCube>();
-
-			if (turner)
+			if (refs.turnCube != null)
 			{
-				if (turner.isLeftTurning)
-					uiElement.transform.localScale = new Vector3(-1, 1, 1);
+				if (refs.turnCube.isLeftTurning)
+					refs.uiElement.transform.localScale = new Vector3(-1, 1, 1);
 			}
 		}
 	}

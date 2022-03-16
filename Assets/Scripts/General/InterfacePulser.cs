@@ -16,14 +16,12 @@ namespace Qbism.General
 
 		//Cache
 		LaserCube[] lasers = null;
-		TimeBody[] bodies = null;
 		PlayerCubeMover playerMover;
 
 		private void Awake()
 		{
 			//TO DO: Reverse + ref these
 			lasers = FindObjectsOfType<LaserCube>();
-			bodies = FindObjectsOfType<TimeBody>();
 			playerMover = FindObjectOfType<PlayerCubeMover>();
 		}
 
@@ -32,11 +30,6 @@ namespace Qbism.General
 			foreach (LaserCube laser in lasers)
 			{
 				if (laser != null) laser.onRewindPulse += InitiatePulse;
-			}
-			
-			foreach (TimeBody body in bodies)
-			{
-				if (body != null) body.onStopRewindPulse += StopPulse;
 			}
 
 			if (playerMover != null) playerMover.onRewindPulse += InitiatePulse;
@@ -63,11 +56,6 @@ namespace Qbism.General
 			foreach (LaserCube laser in lasers)
 			{
 				if (laser != null) laser.onRewindPulse -= InitiatePulse;
-			}
-
-			foreach (TimeBody body in bodies)
-			{
-				if (body != null) body.onStopRewindPulse -= StopPulse;
 			}
 
 			if (playerMover != null) playerMover.onRewindPulse -= InitiatePulse;

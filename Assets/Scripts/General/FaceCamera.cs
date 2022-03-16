@@ -25,7 +25,7 @@ namespace Qbism.General
 
 		private void Update()
 		{
-			if (updateAlign && Application.isPlaying) transform.forward = cam.transform.forward;
+			if (updateAlign) transform.forward = cam.transform.forward;
 		}
 	}
 }

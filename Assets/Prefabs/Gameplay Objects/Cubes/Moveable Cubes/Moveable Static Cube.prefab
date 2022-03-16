@@ -188,6 +188,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Moveable Static Cube
       objectReference: {fileID: 0}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: staticFace
+      value: 
+      objectReference: {fileID: 3156359375482258434}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: movEffector
+      value: 
+      objectReference: {fileID: 4797665941153908331}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: movFaceMesh
+      value: 
+      objectReference: {fileID: 3516563988051109335}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: staticCompAdder
+      value: 
+      objectReference: {fileID: 8301608922061004626}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: staticShrinkingFace
+      value: 
+      objectReference: {fileID: 6046699931331619450}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: staticFaceShrinkJuice
+      value: 
+      objectReference: {fileID: 444745292096115301}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b5fa2872d1584e40a118c8292466417, type: 3}
 --- !u!4 &5460488822105693202 stripped
@@ -202,16 +232,16 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1067811724389751342}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2469907666119822057 stripped
+--- !u!114 &8740589882511472860 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3213176448746098887, guid: 5b5fa2872d1584e40a118c8292466417,
+  m_CorrespondingSourceObject: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
     type: 3}
   m_PrefabInstance: {fileID: 1067811724389751342}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7042215136841145196}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4a3e89b5083c0e44b30582c3fd4b301, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c9c8a42e83c59d44ae1e9c3ee6d64aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1331690296953543512 stripped
@@ -238,10 +268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 172494ed9e90d0b4293963d879880db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectFace: {fileID: 3516563988051109335}
-  moveCube: {fileID: 2469907666119822057}
   moveableParent: {fileID: 5460488822105693202}
   effectorType: 1
+  refs: {fileID: 8740589882511472860}
 --- !u!114 &8301608922061004626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,9 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d526730eaf69c45ad634a0ebe2f8ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faceShrinkJuice: {fileID: 444745292096115301}
-  face: {fileID: 3156359375482258434}
-  shrinkingFace: {fileID: 6046699931331619450}
+  refs: {fileID: 8740589882511472860}
 --- !u!1001 &2813850302624905555
 PrefabInstance:
   m_ObjectHideFlags: 0

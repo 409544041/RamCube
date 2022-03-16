@@ -183,6 +183,26 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: 06920bf8778a8b34d8c3a562ebe34761, type: 2}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: turnJuice
+      value: 
+      objectReference: {fileID: 8412506289810543248}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: movEffector
+      value: 
+      objectReference: {fileID: 8613261867923626473}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: movFaceMesh
+      value: 
+      objectReference: {fileID: 6959708357296522257}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: turnCompAdder
+      value: 
+      objectReference: {fileID: 3147130699911921253}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b5fa2872d1584e40a118c8292466417, type: 3}
 --- !u!4 &3151582856860763153 stripped
@@ -197,28 +217,16 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7974334889854222893}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4773245652684133098 stripped
+--- !u!114 &1817191996910231775 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3213176448746098887, guid: 5b5fa2872d1584e40a118c8292466417,
+  m_CorrespondingSourceObject: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
     type: 3}
   m_PrefabInstance: {fileID: 7974334889854222893}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126627545926321007}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4a3e89b5083c0e44b30582c3fd4b301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1631602639490801475 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8650881215713484142, guid: 5b5fa2872d1584e40a118c8292466417,
-    type: 3}
-  m_PrefabInstance: {fileID: 7974334889854222893}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 126627545926321007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5516e84b9c2e1d4eae51d0e4a85f60c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c9c8a42e83c59d44ae1e9c3ee6d64aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &3770222403489638349 stripped
@@ -240,8 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLeftTurning: 0
-  cubePoser: {fileID: 1631602639490801475}
-  turnJuicer: {fileID: 8412506289810543248}
+  refs: {fileID: 1817191996910231775}
 --- !u!114 &8613261867923626473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,10 +261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 172494ed9e90d0b4293963d879880db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectFace: {fileID: 6959708357296522257}
-  moveCube: {fileID: 4773245652684133098}
   moveableParent: {fileID: 3151582856860763153}
   effectorType: 4
+  refs: {fileID: 1817191996910231775}
 --- !u!1001 &8598581433471637653
 PrefabInstance:
   m_ObjectHideFlags: 0

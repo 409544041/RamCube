@@ -13,9 +13,8 @@ namespace Qbism.Cubes
 		//Config parameters
 		[Header ("Boosting")]
 		[SerializeField] float boostSpeed = 30f;
-		public Transform boostRayOrigin = null;
-		public GameObject boostObjDir = null;
 		public LayerMask boostMaskPlayer, boostMaskMoveable;
+		public CubeRefHolder refs;
 
 		public void PrepareAction(GameObject cube)
 		{
@@ -43,7 +42,7 @@ namespace Qbism.Cubes
 			mover.justBoosted = true;
 
 			mover.GetComponent<PlayerCubeBoostJuicer>().
-				PlayBoostJuice(boostObjDir.transform.forward);
+				PlayBoostJuice(refs.boostDirTrans.transform.forward);
 
 			while (mover.isBoosting && !mover.isOutOfBounds)
 			{
@@ -112,36 +111,34 @@ namespace Qbism.Cubes
 		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, 
 			Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
-			var moveable = cube.GetComponent<MoveableCube>();
-			Vector2Int launchPos = moveable.cubePoser.FetchGridPos();
+			var movRef = cube.GetComponent<CubeRefHolder>();
+			var movCube = movRef.movCube;
+			Vector2Int launchPos = movRef.cubePos.FetchGridPos();
 
-			moveable.isBoosting = true;
+			movCube.isBoosting = true;
 
 			GameObject wallObject = null;
 			Vector3 boostTarget = GetBoostTarget(boostMaskMoveable, out wallObject);
 
-			while (moveable.isBoosting)
+			while (movCube.isBoosting)
 			{
-
 				cube.transform.position = Vector3.MoveTowards(cube.transform.position,
 					boostTarget, boostSpeed * Time.deltaTime);
 
 				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.001f)
-					moveable.isBoosting = false;
+					movCube.isBoosting = false;
 
 				yield return null;
 			}
 
-			moveable.cubePoser.RoundPosition();
-			moveable.UpdateCenterPosition();
+			movRef.cubePos.RoundPosition();
+			movCube.UpdateCenterPosition();
 
-			Vector2Int cubePos = moveable.cubePoser.FetchGridPos();
+			Vector2Int cubePos = movRef.cubePos.FetchGridPos();
 
-			MoveableCubeHandler moveHandler = FindObjectOfType<MoveableCubeHandler>();
+			CalculateSide(null, movCube, cubePos, ref side, ref turnAxis, ref posAhead);
 
-			CalculateSide(null, moveable, cubePos, ref side, ref turnAxis, ref posAhead);
-
-			moveable.CheckFloorInNewPos(side, turnAxis, posAhead, moveable, cubePos, originPos, launchPos);
+			movCube.CheckFloorInNewPos(side, turnAxis, posAhead, originPos, launchPos);
 		}
 
 		private Vector3 GetBoostTarget(LayerMask mask, out GameObject wallObject)
@@ -149,22 +146,23 @@ namespace Qbism.Cubes
 			RaycastHit wallHit;
 			Vector3 target = new Vector3(0, 0, 0);
 
-			if (Physics.Raycast(boostRayOrigin.position,
-				boostObjDir.transform.TransformDirection(Vector3.forward), out wallHit, 20, mask, 
+			if (Physics.Raycast(refs.boostRayOrigin.position,
+				refs.boostDirTrans.transform.TransformDirection(Vector3.forward), out wallHit, 20, mask, 
 				QueryTriggerInteraction.Collide))
 			{
 				//For this to work, wall or other blocker objects needs to be placed on 
 				//'the grid', just like cubes
-				float distance = Vector3.Distance(boostRayOrigin.position, wallHit.point) - .5f;
-				target = boostRayOrigin.position + 
-					(boostObjDir.transform.TransformDirection(Vector3.forward) * distance);
+				float distance = Vector3.Distance(refs.boostRayOrigin.position, wallHit.point) - .5f;
+				target = refs.boostRayOrigin.position + 
+					(refs.boostDirTrans.transform.TransformDirection(Vector3.forward) * distance);
 				wallObject = wallHit.transform.gameObject;
 			}
 
 			//this else is for when it flies out of bounds
 			else
 			{
-				target = boostRayOrigin.position + (boostObjDir.transform.TransformDirection(Vector3.forward) * 30);
+				target = refs.boostRayOrigin.position + 
+					(refs.boostDirTrans.transform.TransformDirection(Vector3.forward) * 30);
 				wallObject = null;
 			}
 			return target;

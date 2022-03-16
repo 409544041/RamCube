@@ -10,12 +10,6 @@ namespace Qbism.MoveableCubes
 	public class MoveableCube : MonoBehaviour
 	{
 		//Config parameters
-		public CubePositioner cubePoser;
-		[Header("Becoming Floor")]
-		[SerializeField] float shrinkStep = 0f;
-		[SerializeField] float shrinkTimeStep = 0f;
-		[SerializeField] MeshRenderer shrinkingmesh;
-		public LineRenderer laserLine = null;
 		[Header("Flip Center")]
 		[SerializeField] Transform center = null;
 		public Transform up = null;
@@ -29,17 +23,9 @@ namespace Qbism.MoveableCubes
 		[Header("Feedback")]
 		[SerializeField] AudioClip landClip = null;
 		[SerializeField] Vector3 moveScale = new Vector3( .9f, .9f, .9f);
-		[SerializeField] MMFeedbacks shrinkFeedback;
-		[SerializeField] float shrinkFeedbackDuration;
-		public MeshRenderer mesh;
-		[Header("Effector")]
-		public MoveableEffector moveEffector;
-
-		//Cache
-		FloorComponentAdder compAdder = null;
+		[SerializeField] CubeRefHolder refs;
 
 		//States
-		private float yPos = 1f;
 		public bool isBoosting { get; set; } = false;
 		public bool hasBumped { get; set; } = false;
 		public bool isOutOfBounds { get; set; } = false;
@@ -56,28 +42,22 @@ namespace Qbism.MoveableCubes
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
 		public event Action<int, MoveableCube> onUpdateOrderInTimebody;
 
-		private void Awake() 
-		{
-			compAdder = GetComponent<FloorComponentAdder>();
-		}
-
 		private void Start()
 		{
 			UpdateCenterPosition();
-			yPos = transform.position.y;
 			transform.localScale = moveScale;
 			resetRot = transform.rotation;
 		}
 
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
 		{
-			Vector2Int currentPos = cubePoser.FetchGridPos();
+			Vector2Int currentPos = refs.cubePos.FetchGridPos();
 
 			if (CheckForWallAhead(currentPos, posAhead) || hasBumped)
 			{
 				hasBumped = false;
 				onStopMovingMoveable(currentPos, this, false);
-				if (moveEffector != null) moveEffector.ToggleEffectFace(true);
+				if (refs.movEffector != null) refs.movEffector.ToggleEffectFace(true);
 				return;
 			}
 
@@ -90,7 +70,7 @@ namespace Qbism.MoveableCubes
 			if(onMoveableKeyCheck(posAhead))
 			{
 				hasBumped = true;
-				onStartMovingMoveable(posAhead, turnAxis, cubePoser.FetchGridPos());
+				onStartMovingMoveable(posAhead, turnAxis, refs.cubePos.FetchGridPos());
 			} 	
 
 			if(posAhead == onPlayerPosCheck())	//Checking if it bumps into player
@@ -101,7 +81,7 @@ namespace Qbism.MoveableCubes
 
 			if(onFloorKeyCheck(posAhead)) //Normal movement
 			{
-				if (moveEffector != null) moveEffector.ToggleEffectFace(false);
+				if (refs.movEffector != null) refs.movEffector.ToggleEffectFace(false);
 
 				for (int i = 0; i < (90 / turnStep); i++)
 				{
@@ -109,7 +89,7 @@ namespace Qbism.MoveableCubes
 					yield return new WaitForSeconds(timeStep);
 				}
 
-				cubePoser.RoundPosition();
+				refs.cubePos.RoundPosition();
 				UpdateCenterPosition();
 
 				if (side == up) posAhead += Vector2Int.up;
@@ -117,13 +97,13 @@ namespace Qbism.MoveableCubes
 				else if (side == left) posAhead += Vector2Int.left;
 				else if (side == right) posAhead += Vector2Int.right;
 
-				CheckFloorInNewPos(side, turnAxis, posAhead, this, cubePoser.FetchGridPos(), originPos, prevPos);
+				CheckFloorInNewPos(side, turnAxis, posAhead, originPos, prevPos);
 			}
 
 			//Docking
 			else if(!onFloorKeyCheck(posAhead))
 			{
-				if (moveEffector != null) moveEffector.ToggleEffectFace(false);
+				if (refs.movEffector != null) refs.movEffector.ToggleEffectFace(false);
 
 				for (int i = 0; i < (180 / turnStep); i++)
 				{
@@ -134,15 +114,15 @@ namespace Qbism.MoveableCubes
 				transform.localScale = new Vector3(1, 1, 1);
 				transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
-				if (moveEffector != null)
+				if (refs.movEffector != null)
 				{
-					moveEffector.UpdateFacePos();
-					moveEffector.ToggleEffectFace(true);
+					refs.movEffector.UpdateFacePos();
+					refs.movEffector.ToggleEffectFace(true);
 				}
 
-				cubePoser.RoundPosition();
+				refs.cubePos.RoundPosition();
 				hasBumped = false;
-				var cubePos = cubePoser.FetchGridPos();
+				var cubePos = refs.cubePos.FetchGridPos();
 				onStopMovingMoveable(cubePos, this, true);				
 				AddComponents(cubePos);
 			}
@@ -169,13 +149,13 @@ namespace Qbism.MoveableCubes
 			transform.localScale = new Vector3(1, 1, 1);
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 			
-			if (moveEffector != null)
+			if (refs.movEffector != null)
 			{
-				moveEffector.UpdateFacePos();
-				moveEffector.ToggleEffectFace(true);
+				refs.movEffector.UpdateFacePos();
+				refs.movEffector.ToggleEffectFace(true);
 			}
 
-			cubePoser.RoundPosition();
+			refs.cubePos.RoundPosition();
 			hasBumped = false;
 			onStopMovingMoveable(cubePos, this, true);
 			AddComponents(cubePos);
@@ -183,12 +163,12 @@ namespace Qbism.MoveableCubes
 
 		private void AddComponents(Vector2Int cubePos)
 		{
-			compAdder.AddComponent(cubePos, this.gameObject, laserLine, cubePoser, moveEffector);
+			refs.floorCompAdder.AddComponent(cubePos, this.gameObject, refs.movEffector);
 			UpdateCenterPosition();
 
-			if (moveEffector == null) return;
-			moveEffector.AlignCubeRotToFaceRot();
-			moveEffector.AddMoveEffectorComponents(this.gameObject);
+			if (refs.movEffector == null) return;
+			refs.movEffector.AlignCubeRotToFaceRot();
+			refs.movEffector.AddMoveEffectorComponents(this.gameObject);
 		}
 
 		public bool CheckForWallAhead(Vector2Int currentPos, Vector2Int posAhead)
@@ -210,16 +190,16 @@ namespace Qbism.MoveableCubes
 		public void UpdateCenterPosition()
 		{
 			center.position = transform.position;
-			laserLine.transform.position = new Vector3 (transform.position.x, 
-				laserLine.transform.position.y, transform.position.z);
+			refs.lineRender.transform.position = new Vector3 (transform.position.x, 
+				refs.lineRender.transform.position.y, transform.position.z);
 
-			if (moveEffector != null) moveEffector.UpdateFacePos();
+			if (refs.movEffector != null) refs.movEffector.UpdateFacePos();
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead,
-			MoveableCube cube, Vector2Int cubePos, Vector2Int originPos, Vector2Int prevPos)
+			Vector2Int originPos, Vector2Int prevPos)
 		{
-			onFloorCheck(side, turnAxis, posAhead, this, cubePoser.FetchGridPos(), originPos, prevPos);
+			onFloorCheck(side, turnAxis, posAhead, this, refs.cubePos.FetchGridPos(), originPos, prevPos);
 		}
 
 		public void PlayLandClip()

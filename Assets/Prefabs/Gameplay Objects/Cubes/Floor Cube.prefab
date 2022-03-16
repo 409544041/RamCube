@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 2143523393208751171}
   - component: {fileID: 5547375766370299260}
   - component: {fileID: 4070112975366463874}
+  - component: {fileID: 894538665717139718}
   m_Layer: 8
   m_Name: Floor Cube
   m_TagString: Environment
@@ -195,8 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  laserLine: {fileID: 5993831159234769446}
-  cubePoser: {fileID: 2143523393208751171}
+  refs: {fileID: 894538665717139718}
 --- !u!114 &2143523393208751171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,10 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shrinkFeedback: {fileID: 1821482559761664736}
-  mesh: {fileID: 6626651121808308692}
-  shrinkMesh: {fileID: 6419949711809555740}
-  laserLine: {fileID: 5993831159234769446}
-  nmCutter: {fileID: 2878766988375664694}
+  refs: {fileID: 894538665717139718}
 --- !u!114 &4070112975366463874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +236,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d516fbc1af19f847a2d3e72f75e3469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  refs: {fileID: 894538665717139718}
+--- !u!114 &894538665717139718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7618746930442311347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c9c8a42e83c59d44ae1e9c3ee6d64aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorCube: {fileID: 4689585929086503859}
+  cubePos: {fileID: 2143523393208751171}
+  cubeShrink: {fileID: 5547375766370299260}
+  timeBody: {fileID: 4070112975366463874}
+  mesh: {fileID: 6626651121808308692}
+  shrinkMesh: {fileID: 6419949711809555740}
+  lineRender: {fileID: 5993831159234769446}
+  nmCutter: {fileID: 2878766988375664694}
+  boostCube: {fileID: 0}
+  boostRayOrigin: {fileID: 0}
+  boostDirTrans: {fileID: 0}
+  turnCube: {fileID: 0}
+  arrowFlip: {fileID: 0}
+  staticCube: {fileID: 0}
+  staticFaceMesh: {fileID: 0}
+  movCube: {fileID: 0}
+  center: {fileID: 0}
+  movEffector: {fileID: 0}
+  movFaceMesh: {fileID: 0}
+  floorCompAdder: {fileID: 0}
+  boostCompAdder: {fileID: 0}
+  turnCompAdder: {fileID: 0}
+  staticCompAdder: {fileID: 0}
+  cubeUI: {fileID: 0}
+  uiLineRender: {fileID: 0}
+  uiLineTargets: []
+  uiElement: {fileID: 0}
+  rwndJuice: {fileID: 0}
+  turnJuice: {fileID: 0}
 --- !u!1 &7643626700717573735
 GameObject:
   m_ObjectHideFlags: 0

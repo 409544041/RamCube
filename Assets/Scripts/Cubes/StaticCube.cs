@@ -9,20 +9,19 @@ namespace Qbism.Cubes
 	public class StaticCube : MonoBehaviour
 	{
 		//Config parameters
-		public MMFeedbacks faceShrinkJuice;
-		public GameObject face, shrinkingFace;
+		public CubeRefHolder refs;
 
 		public void BecomeShrinkingCube(GameObject cube)
 		{
-			faceShrinkJuice.Initialization();
-			faceShrinkJuice.PlayFeedbacks();
-			GetComponent<FloorCube>().type = CubeTypes.Shrinking;
+			refs.staticFaceShrinkJuice.Initialization();
+			refs.staticFaceShrinkJuice.PlayFeedbacks();
+			refs.floorCube.type = CubeTypes.Shrinking;
 		}
 
 		public void SwitchFaces()
 		{
-			face.SetActive(false);
-			shrinkingFace.SetActive(true);
+			refs.staticFace.SetActive(false);
+			refs.staticShrinkingFace.SetActive(true);
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace Qbism.Environment
 
 		private void Awake() 
 		{
-			moveableCubes = glRef.gcRef.movCubes; //TO DO: add movcube reffers
+			moveableCubes = glRef.gcRef.movCubes;
 			moveHandler = glRef.movCubeHandler;
 			LoadWallCubeDictionary();
 		}

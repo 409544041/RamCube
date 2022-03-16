@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Qbism.Cubes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace Qbism.MoveableCubes
 
 		private void Awake() 
 		{
-			moveableCubes = gcRef.movCubes; //TO DO: add movcube reffers
+			moveableCubes = gcRef.movCubes;
 			
 			LoadMoveableCubeDictionary(); 
 		}
@@ -45,13 +46,12 @@ namespace Qbism.MoveableCubes
 
 		private void LoadMoveableCubeDictionary()
 		{
-			MoveableCube[] cubes = FindObjectsOfType<MoveableCube>();
-			foreach (MoveableCube cube in cubes)
+			var cubeRefs = gcRef.cubeRefs;
+			foreach (CubeRefHolder cube in cubeRefs)
 			{
-				var cubePos = cube.cubePoser.FetchGridPos();
-				if (moveableCubeDic.ContainsKey(cubePos))
-					Debug.Log("Overlapping moveable cube " + cubePos);
-				else moveableCubeDic.Add(cubePos, cube);
+				if (cube.movCube == null) continue;
+
+				AddToMoveableDic(cube.cubePos.FetchGridPos(), cube.movCube);
 			}
 		}
 

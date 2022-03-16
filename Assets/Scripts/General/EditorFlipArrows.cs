@@ -7,30 +7,23 @@ namespace Qbism.General
 {
 	[ExecuteInEditMode]
 	public class EditorFlipArrows : MonoBehaviour
-	{ 
-		//Cache
-		TurningCube cube;
-
-		private void Awake() 
-		{
-			cube = GetComponent<TurningCube>();
-		}
+	{
+		//Config parameters
+		public CubeRefHolder refs;
 
 		private void Start() 
 		{
-			MeshRenderer renderer = GetComponentInChildren<MeshRenderer>();
-
-			if (cube.isLeftTurning)
+			if (refs.turnCube.isLeftTurning)
 			{
-				renderer.transform.localScale = new Vector3 (Mathf.Abs(renderer.transform.localScale.x) * -1,
-					renderer.transform.localScale.y, renderer.transform.localScale.z);
-				cube.turnAxis = Vector3.down;
+				refs.mesh.transform.localScale = new Vector3 (Mathf.Abs(refs.mesh.transform.localScale.x) * -1,
+					refs.mesh.transform.localScale.y, refs.mesh.transform.localScale.z);
+				refs.turnCube.turnAxis = Vector3.down;
 			}
 			else
 			{
-				renderer.transform.localScale = new Vector3(Mathf.Abs(renderer.transform.localScale.x),
-					renderer.transform.localScale.y, renderer.transform.localScale.z);
-				cube.turnAxis = Vector3.up;
+				refs.mesh.transform.localScale = new Vector3(Mathf.Abs(refs.mesh.transform.localScale.x),
+					refs.mesh.transform.localScale.y, refs.mesh.transform.localScale.z);
+				refs.turnCube.turnAxis = Vector3.up;
 			} 
 		}
 	}

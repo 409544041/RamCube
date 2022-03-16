@@ -132,6 +132,31 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: 06920bf8778a8b34d8c3a562ebe34761, type: 2}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: movEffector
+      value: 
+      objectReference: {fileID: 2295881107765679733}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: movFaceMesh
+      value: 
+      objectReference: {fileID: 8365066598432016863}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: boostDirTrans
+      value: 
+      objectReference: {fileID: 7232080737172288176}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: boostCompAdder
+      value: 
+      objectReference: {fileID: 710068138272669800}
+    - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
+        type: 3}
+      propertyPath: boostRayOrigin
+      value: 
+      objectReference: {fileID: 1500624542895020830}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b5fa2872d1584e40a118c8292466417, type: 3}
 --- !u!4 &621497533122257927 stripped
@@ -146,16 +171,16 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5599711610830512699}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6998966547255882492 stripped
+--- !u!114 &4191546278630998217 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3213176448746098887, guid: 5b5fa2872d1584e40a118c8292466417,
+  m_CorrespondingSourceObject: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
     type: 3}
   m_PrefabInstance: {fileID: 5599711610830512699}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2512292031411970937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4a3e89b5083c0e44b30582c3fd4b301, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c9c8a42e83c59d44ae1e9c3ee6d64aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &710068138272669800
@@ -170,14 +195,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e8bce4f1571c834db059a8c46545dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boostRayOrigin: {fileID: 1500624542895020830}
-  objDir: {fileID: 8004677404765792266}
   boostMaskPlayer:
     serializedVersion: 2
     m_Bits: 256
   boostMaskMoveable:
     serializedVersion: 2
     m_Bits: 768
+  refs: {fileID: 4191546278630998217}
 --- !u!114 &2295881107765679733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,10 +214,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 172494ed9e90d0b4293963d879880db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectFace: {fileID: 8365066598432016863}
-  moveCube: {fileID: 6998966547255882492}
   moveableParent: {fileID: 621497533122257927}
   effectorType: 2
+  refs: {fileID: 4191546278630998217}
 --- !u!1001 &7194283120192132443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -283,12 +306,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8919bfa915fb37e448d1938bb25bd2c9, type: 3}
---- !u!1 &8004677404765792266 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8919bfa915fb37e448d1938bb25bd2c9,
-    type: 3}
-  m_PrefabInstance: {fileID: 7194283120192132443}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7232080737172288176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8919bfa915fb37e448d1938bb25bd2c9,

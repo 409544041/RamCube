@@ -9,10 +9,9 @@ namespace Qbism.MoveableCubes
 	public class MoveableEffector : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MeshRenderer effectFace;
-		[SerializeField] MoveableCube moveCube;
 		[SerializeField] Transform moveableParent;
 		public CubeTypes effectorType;
+		[SerializeField] CubeRefHolder refs;
 
 		private void Start()
 		{
@@ -21,42 +20,42 @@ namespace Qbism.MoveableCubes
 
 		public void ToggleEffectFace(bool value)
 		{
-			effectFace.enabled = value;
+			refs.movFaceMesh.enabled = value;
 		}
 
 		public void UpdateFacePos()
 		{
-			effectFace.transform.position = moveCube.transform.position;
+			refs.movFaceMesh.transform.position = refs.movCube.transform.position;
 		}
 
 		public void AlignCubeRotToFaceRot()
 		{
 			if (effectorType == CubeTypes.Static) return;
 
-			moveCube.transform.rotation = effectFace.transform.rotation;
+			refs.movCube.transform.rotation = refs.movFaceMesh.transform.rotation;
 		}
 
 		public void AddMoveEffectorComponents(GameObject cube)
 		{
 			if (effectorType == CubeTypes.Boosting)
-				GetComponent<BoostComponentAdder>().AddBoostComponent(cube);
+				refs.boostCompAdder.AddBoostComponent(cube);
 
 			else if (effectorType == CubeTypes.Turning)
-				GetComponent<TurnComponentAdder>().AddTurnComopnent(cube);
+				refs.turnCompAdder.AddTurnComopnent(cube);
 
 
 			else if (effectorType == CubeTypes.Static)
-				GetComponent<StaticComponentAdder>().AddStaticComponent(cube);
+				refs.staticCompAdder.AddStaticComponent(cube);
 		}
 
 		public void ParentFaceToMoveable()
 		{
-			effectFace.transform.parent = moveCube.transform;
+			refs.movFaceMesh.transform.parent = refs.movCube.transform;
 		}
 
 		public void UnParentFace()
 		{
-			effectFace.transform.parent = moveableParent.transform;
+			refs.movFaceMesh.transform.parent = moveableParent.transform;
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace Qbism.Cubes
 		{
 			handler = glRef.cubeHandler;
 			moveHandler = glRef.movCubeHandler;
-			moveableCubes = glRef.gcRef.movCubes; //TO DO: movref
+			moveableCubes = glRef.gcRef.movCubes;
 		}
 
 		private void OnEnable() 

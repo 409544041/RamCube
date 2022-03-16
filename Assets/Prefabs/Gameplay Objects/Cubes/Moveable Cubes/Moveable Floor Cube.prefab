@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 5301483408941736163}
   - component: {fileID: 2489216231011968775}
   - component: {fileID: 145876043645398180}
+  - component: {fileID: 8619169692785287922}
   m_Layer: 8
   m_Name: Moveable Cube
   m_TagString: Moveable
@@ -281,11 +282,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a3e89b5083c0e44b30582c3fd4b301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePoser: {fileID: 8650881215713484142}
-  shrinkStep: 0.5
-  shrinkTimeStep: 0.01
-  shrinkingmesh: {fileID: 8421745259192764266}
-  laserLine: {fileID: 359314076325028110}
   center: {fileID: 4745137476811388159}
   up: {fileID: 4745137476572096899}
   down: {fileID: 4745137476971675417}
@@ -296,10 +292,7 @@ MonoBehaviour:
   lowerStep: 2.5
   landClip: {fileID: 8300000, guid: 216733143506beb4aa2455d68078a4af, type: 3}
   moveScale: {x: 0.9, y: 0.9, z: 0.9}
-  shrinkFeedback: {fileID: 9158600549025654425}
-  shrinkFeedbackDuration: 0.4
-  mesh: {fileID: 7123817644234092039}
-  moveEffector: {fileID: 0}
+  refs: {fileID: 8619169692785287922}
 --- !u!114 &8650881215713484142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,10 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shrinkFeedback: {fileID: 9158600549025654425}
-  mesh: {fileID: 7123817644234092039}
-  shrinkMesh: {fileID: 8421745259192764266}
-  laserLine: {fileID: 359314076325028110}
-  nmCutter: {fileID: 3374900512470706626}
+  refs: {fileID: 8619169692785287922}
 --- !u!114 &4515865334334731891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d516fbc1af19f847a2d3e72f75e3469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  refs: {fileID: 8619169692785287922}
 --- !u!65 &8028607793029448003
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -396,7 +387,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86405d2716b4c7b4ca9bd1e7e09826bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shrinker: {fileID: 5508458773026103034}
+  refs: {fileID: 8619169692785287922}
+--- !u!114 &8619169692785287922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028607793029448002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c9c8a42e83c59d44ae1e9c3ee6d64aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorCube: {fileID: 0}
+  cubePos: {fileID: 8650881215713484142}
+  cubeShrink: {fileID: 5508458773026103034}
+  timeBody: {fileID: 4515865334334731891}
+  mesh: {fileID: 7123817644234092039}
+  shrinkMesh: {fileID: 8421745259192764266}
+  lineRender: {fileID: 359314076325028110}
+  nmCutter: {fileID: 3374900512470706626}
+  boostCube: {fileID: 0}
+  boostRayOrigin: {fileID: 0}
+  boostDirTrans: {fileID: 0}
+  turnCube: {fileID: 0}
+  arrowFlip: {fileID: 0}
+  staticCube: {fileID: 0}
+  staticFace: {fileID: 0}
+  staticShrinkingFace: {fileID: 0}
+  movCube: {fileID: 3213176448746098887}
+  center: {fileID: 4745137476811388159}
+  movEffector: {fileID: 0}
+  movFaceMesh: {fileID: 0}
+  floorCompAdder: {fileID: 145876043645398180}
+  boostCompAdder: {fileID: 0}
+  turnCompAdder: {fileID: 0}
+  staticCompAdder: {fileID: 0}
+  cubeUI: {fileID: 0}
+  uiLineRender: {fileID: 0}
+  uiLineTargets: []
+  uiElement: {fileID: 0}
+  rwndJuice: {fileID: 2489216231011968775}
+  turnJuice: {fileID: 0}
+  staticFaceShrinkJuice: {fileID: 0}
 --- !u!1 &8414849812941373003
 GameObject:
   m_ObjectHideFlags: 0

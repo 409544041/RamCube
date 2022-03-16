@@ -11,12 +11,14 @@ namespace Qbism.Rewind
 {
 	public class TimeBody : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] CubeRefHolder refs;
+
 		//Cache
 		PlayerCubeMover mover;
 		MoveableCubeHandler moveHandler;
 		CubeHandler handler;
 		FloorCubeChecker floorChecker;
-		MoveableCube myMoveable;
 		ExpressionHandler expresHandler;
 
 		//States
@@ -29,47 +31,47 @@ namespace Qbism.Rewind
 		private List<bool> isOutOfBoundsList = new List<bool>();
 		public List<int> movementOrderList { get; set; } = new List<int>();
 
-		//Actions, events, delegates etc
-		public event Action<InterfaceIDs> onStopRewindPulse;
-
 		private void Awake() 
 		{
-			if (this.tag == "Player")
+			if (this.tag == "Player") //TO DO: player refs
 			{
 				mover = FindObjectOfType<PlayerCubeMover>();
 				expresHandler = GetComponentInChildren<ExpressionHandler>();
+				//TO DO: Remove once we have player refs
+				handler = FindObjectOfType<CubeHandler>();
+				moveHandler = handler.GetComponent<MoveableCubeHandler>();
+				floorChecker = handler.GetComponent<FloorCubeChecker>();
 			}
-
-			handler = FindObjectOfType<CubeHandler>();
-			moveHandler = handler.GetComponent<MoveableCubeHandler>();
-			floorChecker = handler.GetComponent<FloorCubeChecker>();
-			if (this.tag == "Moveable") myMoveable = GetComponent<MoveableCube>();
+			else
+			{
+				handler = refs.gcRef.glRef.cubeHandler;
+				moveHandler = refs.gcRef.glRef.movCubeHandler;
+				floorChecker = refs.gcRef.glRef.floorChecker;
+			}
 		}
 
 		private void OnEnable() 
 		{
-			if (myMoveable != null) myMoveable.onUpdateOrderInTimebody += AddToMoveOrderList;
+			if (refs != null && refs.movCube != null) 
+				refs.movCube.onUpdateOrderInTimebody += AddToMoveOrderList;
 		}
 
 		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale)
 		{
-			var cube = GetComponent<FloorCube>();
-			var moveable = GetComponent<MoveableCube>();
-
 			rewindList.Insert(0, new PointInTime(pos, rot, scale));
 
-			if (cube)
+			if (refs != null && refs.floorCube != null)
 			{
-				var cubePos = cube.cubePoser.FetchGridPos();
-				AddToStaticList(cube);
-				AddToShrunkList(cube, moveable, cubePos);
+				var cubePos = refs.cubePos.FetchGridPos();
+				AddToStaticList(refs.floorCube);
+				AddToShrunkList(refs.floorCube, refs.movCube, cubePos);
 			}
 
-			if (moveable)
+			if (refs != null && refs.movCube != null)
 			{
-				AddToDockedList(moveable);
-				AddToOutOfBoundsList(moveable);
-				AddToMoveOrderList(-1, moveable);
+				AddToDockedList(refs.movCube);
+				AddToOutOfBoundsList(refs.movCube);
+				AddToMoveOrderList(-1, refs.movCube);
 			}
 		}
 
@@ -111,7 +113,7 @@ namespace Qbism.Rewind
 
 		private void AddToDockedList(MoveableCube moveable)
 		{
-			var cubePos = moveable.cubePoser.FetchGridPos();
+			var cubePos = refs.cubePos.FetchGridPos();
 			if (moveHandler.moveableCubeDic.ContainsKey(cubePos))
 				isDockedList.Insert(0, false);
 			else isDockedList.Insert(0, true);
@@ -139,12 +141,10 @@ namespace Qbism.Rewind
 		{
 			var preRewPos = new Vector2Int(Mathf.RoundToInt(transform.position.x),
 				Mathf.RoundToInt(transform.position.z));
-
-			var moveable = GetComponent<MoveableCube>();
 			
-			if (moveable)
+			if (refs != null && refs.movCube != null)
 			{
-				ResetDocked(moveable, rewindList[0].position);
+				ResetDocked(refs.movCube, rewindList[0].position);
 			} 
 			
 			transform.position = rewindList[0].position;
@@ -163,7 +163,7 @@ namespace Qbism.Rewind
 				{
 					mover.isOutOfBounds = false;
 					mover.isLowered = false;
-					onStopRewindPulse(InterfaceIDs.Rewind);
+					// refs.gcRef.rewindPulser.StopPulse(InterfaceIDs.Rewind); //TO DO: Link to player ref
 				}
 				
 				if (mover.isStunned)
@@ -171,7 +171,7 @@ namespace Qbism.Rewind
 					//yield here bc otherwise laser detects cube collider again and player stays stunned
 					yield return null;
 					mover.isStunned = false;
-					onStopRewindPulse(InterfaceIDs.Rewind);
+					// refs.gcRef.rewindPulser.StopPulse(InterfaceIDs.Rewind); //TO DO: Link to player ref
 					mover.GetComponent<PlayerStunJuicer>().StopStunVFX();
 				}
 
@@ -182,24 +182,23 @@ namespace Qbism.Rewind
 
 			if (this.tag == "Environment" || this.tag == "Moveable")
 			{
-				var cube = GetComponent<FloorCube>();
-				if (cube)
+				if (refs.floorCube != null)
 				{
-					ResetStatic(cube);
-					ResetShrunkStatus(cube);
+					ResetStatic(refs.floorCube);
+					ResetShrunkStatus(refs.floorCube);
 				}
 
-				if (moveable)
+				if (refs.movCube != null)
 				{
-					moveable.cubePoser.RoundPosition();
-					moveable.UpdateCenterPosition();
-					ResetOutOfBounds(moveable);
+					refs.cubePos.RoundPosition();
+					refs.movCube.UpdateCenterPosition();
+					ResetOutOfBounds(refs.movCube);
 					movementOrderList.RemoveAt(0);
 					
-					if (!cube)
+					if (refs.floorCube == null)
 					{
 						moveHandler.RemoveFromMoveableDic(preRewPos);
-						moveHandler.AddToMoveableDic(moveable.cubePoser.FetchGridPos(), moveable);
+						moveHandler.AddToMoveableDic(refs.cubePos.FetchGridPos(), refs.movCube);
 					}
 				}
 			}
@@ -208,9 +207,9 @@ namespace Qbism.Rewind
 		private void ResetShrunkStatus(FloorCube cube)
 		{
 			if (hasShrunkList.Count <= 0) return;
-			var cubePos = cube.cubePoser.FetchGridPos();
+			var cubePos = refs.cubePos.FetchGridPos();
 
-			if (cube.GetComponent<MoveableCube>())
+			if (refs.movCube != null)
 			{
 				if (hasShrunkList[0] == false
 					&& handler.shrunkMovFloorCubeDic.ContainsKey(cubePos))
@@ -227,15 +226,14 @@ namespace Qbism.Rewind
 					ResetShrinking(cube, cubePos);
 				}
 			}
-			
+
 			hasShrunkList.RemoveAt(0);
 		}
 
 		private void ResetShrinking(FloorCube cube, Vector2Int cubePos)
 		{
-			CubeShrinker shrinker = cube.GetComponent<CubeShrinker>();
-			shrinker.EnableMesh();
-			shrinker.nmCutter.enabled = true;
+			refs.cubeShrink.EnableMesh();
+			refs.nmCutter.enabled = true;
 			handler.FromShrunkToFloorDic(cubePos, cube);
 		}
 
@@ -247,7 +245,7 @@ namespace Qbism.Rewind
 				cube.type == CubeTypes.Shrinking)
 			{
 				cube.type = CubeTypes.Static;
-				cube.GetComponent<StaticCube>().face.SetActive(true);
+				refs.staticFace.SetActive(true);
 			}
 
 			isStaticList.RemoveAt(0);
@@ -255,29 +253,29 @@ namespace Qbism.Rewind
 
 		private void ResetDocked(MoveableCube moveable, Vector3 rewindPos) 
 		{
-			var cubePos = moveable.cubePoser.FetchGridPos();
+			var cubePos = refs.cubePos.FetchGridPos();
 			var rewPos = new Vector2Int(Mathf.RoundToInt(rewindPos.x), Mathf.RoundToInt(rewindPos.z));
 
 			if(isDockedList.Count > 0 && isDockedList[0] == false 
 				&& handler.movFloorCubeDic.ContainsKey(cubePos))
 			{
 				this.tag = "Moveable";
-				Destroy(GetComponent<FloorCube>());
-				moveable.laserLine.enabled = false;
+				Destroy(refs.floorCube);
+				refs.lineRender.enabled = false;
 				handler.movFloorCubeDic.Remove(cubePos);
 				moveHandler.moveableCubeDic.Add(rewPos, moveable);
 				moveable.gameObject.SendMessage("StartPostRewindJuice");
 
-				if (moveable.moveEffector != null)
+				if (refs.movEffector != null)
 				{
-					if (moveable.moveEffector.effectorType == CubeTypes.Boosting)
-						Destroy(GetComponent<BoostCube>());
+					if (refs.movEffector.effectorType == CubeTypes.Boosting)
+						Destroy(refs.boostCube);
 
-					else if (moveable.moveEffector.effectorType == CubeTypes.Turning)
-						Destroy(GetComponent<TurningCube>());
+					else if (refs.movEffector.effectorType == CubeTypes.Turning)
+						Destroy(refs.turnCube);
 
-					else if (moveable.moveEffector.effectorType == CubeTypes.Static)
-						Destroy(GetComponent<StaticCube>());
+					else if (refs.movEffector.effectorType == CubeTypes.Static)
+						Destroy(refs.staticCube);
 				}
 			}
 
@@ -290,7 +288,7 @@ namespace Qbism.Rewind
 				moveable.isOutOfBounds == true)
 			{
 				moveable.isOutOfBounds = false;
-				moveable.mesh.enabled = true;
+				refs.mesh.enabled = true;
 			}
 
 			isOutOfBoundsList.RemoveAt(0);
@@ -298,7 +296,8 @@ namespace Qbism.Rewind
 
 		private void OnDisable()
 		{
-			if (myMoveable != null) myMoveable.onUpdateOrderInTimebody -= AddToMoveOrderList;
+			if (refs != null && refs.movCube != null) 
+				refs.movCube.onUpdateOrderInTimebody -= AddToMoveOrderList;
 		}
 	}
 }

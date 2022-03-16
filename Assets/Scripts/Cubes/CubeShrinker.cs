@@ -11,13 +11,11 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		[SerializeField] MMFeedbacks shrinkFeedback;
-		[SerializeField] MeshRenderer mesh, shrinkMesh;
-		[SerializeField] LineRenderer laserLine = null;
-		public NavmeshCut nmCutter;
-
+		[SerializeField] CubeRefHolder refs;
+		[SerializeField] Renderer wallMesh;
 
 		//Cache
-		CubeHandler handler = null;
+		public CubeHandler handler { get; set; } //TO DO: do this via refs
 
 		//States
 		Vector3 resetPos;
@@ -25,24 +23,19 @@ namespace Qbism.Cubes
 		Vector3 resetScale;
 		float totalFeedbackDur;
 
-		private void Awake() 
-		{
-			handler = FindObjectOfType<CubeHandler>();
-		}
-
 		private void Start()
 		{
-			if (GetComponent<FloorCube>()) SetResetData();
+			if (refs != null) SetResetData();
 
 			GetTotalFeedbackDur();
 		}
 
 		public void SetResetData()
 		{
-			resetPos = shrinkMesh.transform.position;
-			resetRot = shrinkMesh.transform.rotation;
-			resetScale = shrinkMesh.transform.localScale;
-			shrinkMesh.enabled = false;
+			resetPos = refs.shrinkMesh.transform.position;
+			resetRot = refs.shrinkMesh.transform.rotation;
+			resetScale = refs.shrinkMesh.transform.localScale;
+			refs.shrinkMesh.enabled = false;
 		}
 
 		private void GetTotalFeedbackDur()
@@ -70,30 +63,28 @@ namespace Qbism.Cubes
 
 			yield return new WaitForSeconds(totalFeedbackDur);
 
-			mesh.enabled = false;
+			wallMesh.enabled = false;
 		}
 
 		private IEnumerator ShrinkFloorCubes()
 		{
-			mesh.enabled = false;
-			shrinkMesh.enabled = true;
-			laserLine.enabled = false;
-			nmCutter.enabled = false;
+			refs.mesh.enabled = false;
+			refs.shrinkMesh.enabled = true;
+			refs.lineRender.enabled = false;
+			refs.nmCutter.enabled = false;
 
-			var staticCube = GetComponent<StaticCube>();
-			if (staticCube) staticCube.SwitchFaces();
+			if (refs.staticCube != null) refs.staticCube.SwitchFaces();
 
 			// checking for floor bc it might be moveable that gets shrunk at end of level
-			var floorCube = GetComponent<FloorCube>();
-			if (floorCube)
+			if (refs.floorCube != null)
 			{
-				var cubePos = floorCube.cubePoser.FetchGridPos();
-				handler.FromFloorToShrunkDic(cubePos, floorCube);
+				var cubePos = refs.cubePos.FetchGridPos();
+				handler.FromFloorToShrunkDic(cubePos, refs.floorCube);
 
 				//Makes sure all values are reset in case this is the second shrink
-				shrinkMesh.transform.position = resetPos;
-				shrinkMesh.transform.rotation = resetRot;
-				shrinkMesh.transform.localScale = resetScale;
+				refs.shrinkMesh.transform.position = resetPos;
+				refs.shrinkMesh.transform.rotation = resetRot;
+				refs.shrinkMesh.transform.localScale = resetScale;
 			}
 
 			MMFeedbackPosition[] posFeedbacks =
@@ -119,12 +110,12 @@ namespace Qbism.Cubes
 
 			yield return new WaitForSeconds(totalFeedbackDur);
 
-			shrinkMesh.enabled = false;
+			refs.shrinkMesh.enabled = false;
 		}
 
 		public void EnableMesh()
 		{
-			mesh.enabled = true;
+			refs.mesh.enabled = true;
 		}
 	}
 }

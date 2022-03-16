@@ -11,17 +11,18 @@ namespace Qbism.MoveableCubes
 	{
 		//Config parameters
 		[SerializeField] bool isLeftTurning = false;
-		[SerializeField] CubePositioner cubePoser;
-		[SerializeField] MMFeedbacks turnJuicer;
+		[SerializeField] CubeRefHolder refs;
 
 		public void AddTurnComopnent(GameObject cube)
 		{
 			var newTurn = cube.AddComponent<TurningCube>();
 			newTurn.isLeftTurning = isLeftTurning;
-			newTurn.cubePoser = cubePoser;
-			newTurn.juicer = turnJuicer;
+			refs.turnCube = newTurn;
+			newTurn.refs = refs;
 
-			cube.AddComponent<EditorFlipArrows>();
+			var newFlipper = cube.AddComponent<EditorFlipArrows>();
+			refs.arrowFlip = newFlipper;
+			newFlipper.refs = refs;
 		}
 	}
 }

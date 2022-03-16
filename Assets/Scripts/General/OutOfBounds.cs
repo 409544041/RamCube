@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Qbism.Cubes;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
 using Qbism.Rewind;
@@ -33,10 +34,10 @@ namespace Qbism.General
 			
 			if (other.tag == "Moveable")
 			{
-				var moveable = other.GetComponent<MoveableCube>();
-				moveable.isBoosting = false;
-				moveable.isOutOfBounds = true;
-				moveable.mesh.enabled = false;
+				var movRef = other.GetComponent<CubeRefHolder>();
+				movRef.movCube.isBoosting = false;
+				movRef.movCube.isOutOfBounds = true;
+				movRef.mesh.enabled = false;
 			}
 
 		}
