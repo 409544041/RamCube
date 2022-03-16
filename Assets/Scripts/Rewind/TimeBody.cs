@@ -12,7 +12,7 @@ namespace Qbism.Rewind
 	public class TimeBody : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] CubeRefHolder refs;
+		public CubeRefHolder refs;
 
 		//Cache
 		PlayerCubeMover mover;

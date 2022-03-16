@@ -23,7 +23,7 @@ namespace Qbism.Rewind
 
 		private void Awake() 
 		{
-			timeBodies = FindObjectsOfType<TimeBody>(); //TO DO: add cube refs
+			timeBodies = glRef.gcRef.timeBodies;
 			mover = FindObjectOfType<PlayerCubeMover>(); //TO DO: add player refs
 			handler = glRef.cubeHandler;
 			moveHandler = glRef.movCubeHandler;
@@ -75,9 +75,9 @@ namespace Qbism.Rewind
 			//Order in which moveables get rewinded is important to avoid dic errors
 			foreach (TimeBody body in timeBodies)
 			{
-				var moveable = body.GetComponent<MoveableCube>();
+				var moveable = body.refs.movCube;
 
-				if (moveable && moveable.orderOfMovement != -1)
+				if (moveable != null && moveable.orderOfMovement != -1)
 				{
 					rewindFirstDic.Add(moveable.orderOfMovement, body);
 					body.priorityRewind = true;

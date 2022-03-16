@@ -11,6 +11,7 @@ using Qbism.MoveableCubes;
 using Qbism.Environment;
 using Qbism.Peep;
 using Qbism.Cubes;
+using Qbism.Rewind;
 
 public class GameplayCoreRefHolder : MonoBehaviour
 {
@@ -54,8 +55,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public FloorCube[] floorCubes { get; private set; }
 	public CubeShrinker[] cubeShrinkers { get; private set; }
 	public FloorComponentAdder[] floorCompAdders { get; private set; }
-
-	//TO DO: assign floorcubes/cubeshrinkers from across cuberefs and finishref
+	public TimeBody[] timeBodies { get; private set; } //TO DO: Do this via refs once we have playerrefs
 
 	private void Awake()
 	{
@@ -74,6 +74,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		GetSetVisualSwappers();
 
 		walls = GameObject.FindGameObjectsWithTag("Wall");
+		timeBodies = FindObjectsOfType<TimeBody>();
 
 		GetSetShrinker();
 

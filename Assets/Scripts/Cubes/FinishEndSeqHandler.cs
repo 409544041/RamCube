@@ -109,6 +109,9 @@ namespace Qbism.Cubes
 		{
 			List<CubeShrinker> cubesToShrinkList = new List<CubeShrinker>();
 
+			//TO DO: Change below to use less GetComponent if we use dics with cubeRefHolder
+			//instead of moveable/floorcube
+
 			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in movHandler.moveableCubeDic)
 			{
 				var cube = pair.Value;
