@@ -7,6 +7,7 @@ namespace Qbism.Shapies
 {
 	public class ShapieRefHolder : MonoBehaviour
 	{
+		//Config parameters
 		public ShapieSoundHandler soundHandler;
 		public Animator bodyAnimator, eyesAnimator, mouthAnimator;
 		public ExpressionHandler expresHandler;

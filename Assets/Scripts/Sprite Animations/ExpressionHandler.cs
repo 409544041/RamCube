@@ -1,4 +1,5 @@
 using Qbism.Cubes;
+using Qbism.PlayerCube;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,12 +16,10 @@ namespace Qbism.SpriteAnimations
 		[SerializeField] bool hasBrows = true, hasMouth = true;
 		[SerializeField] Vector2 minMaxExpressionTime, minMaxBlinkTime;
 		[SerializeField] float blinkDur = .2f;
-
-		//Cache
-		SpriteBrowAnimator browAnim = null;
-		SpriteEyesAnimator eyesAnim = null;
-		SpriteMouthAnimator mouthAnim = null;
-		FaceJuicer faceJuice = null;
+		[SerializeField] SpriteBrowAnimator browAnim;
+		[SerializeField] SpriteEyesAnimator eyesAnim;
+		[SerializeField] SpriteMouthAnimator mouthAnim;
+		[SerializeField] FaceJuicer faceJuice;
 
 		//States
 		float expressionTimer = 0f, blinkTimer = 0f;
@@ -30,14 +29,6 @@ namespace Qbism.SpriteAnimations
 
 		//Actions, events, delegates etc
 		public Func<bool> onFetchStunned;
-
-		private void Awake()
-		{
-			browAnim = GetComponentInChildren<SpriteBrowAnimator>();
-			eyesAnim = GetComponentInChildren<SpriteEyesAnimator>();
-			mouthAnim = GetComponentInChildren<SpriteMouthAnimator>();
-			faceJuice = GetComponent<FaceJuicer>();
-		}
 
 		private void Update()
 		{

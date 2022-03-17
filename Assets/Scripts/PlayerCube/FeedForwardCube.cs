@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.Cubes;
+using Qbism.General;
 using Qbism.MoveableCubes;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Qbism.PlayerCube
 		//Config paremeters
 		public CubePositioner cubePoser;
 		[SerializeField] FFJuicer ffJuicer;
+		[SerializeField] VisualsSwitch visualSwitch;
 
 		//States
 		public bool isBoosting { get; set; } = false;
@@ -19,7 +21,6 @@ namespace Qbism.PlayerCube
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int, GameObject> onFeedForwardFloorCheck;
-		public event Action<bool> onSwitchVisuals;
 
 		public void CheckFloorInNewPos()
 		{
@@ -31,9 +32,9 @@ namespace Qbism.PlayerCube
 			if (value == true)
 			{
 				ffJuicer.TriggerJuice();
-				onSwitchVisuals(true);
+				visualSwitch.SwitchMeshes(true);
 			}
-			else onSwitchVisuals(false);
+			else visualSwitch.SwitchMeshes(false);
 		}
 
 		private void OnDisable()

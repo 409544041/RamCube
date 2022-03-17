@@ -14,10 +14,10 @@ namespace Qbism.Cubes
 		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		//Cache
-		PlayerCubeFeedForward cubeFF = null;
-		PlayerCubeMover mover = null;
-		MoveableCube[] moveableCubes = null;
-		FloorComponentAdder[] compAdders = null;
+		PlayerCubeFeedForward cubeFF;
+		PlayerCubeMover mover;
+		MoveableCube[] moveableCubes;
+		FloorComponentAdder[] compAdders;
 
 		//States	
 		public Vector2Int shrunkToFloorThisRewind { get; set; } = new Vector2Int(99, 99);
@@ -35,13 +35,12 @@ namespace Qbism.Cubes
 			new Dictionary<Vector2Int, List<FloorCube>>();
 
 		//Actions, events, delegates etc
-		public event Action<FloorCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
+		public event Action<CubeRefHolder, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
 		private void Awake()
 		{
-			//TO DO: mov / player refs
-			mover = FindObjectOfType<PlayerCubeMover>();
-			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
+			mover = gcRef.pRef.playerMover;
+			cubeFF = gcRef.pRef.playerFF;
 			moveableCubes = gcRef.movCubes;
 			compAdders = gcRef.floorCompAdders;
 			LoadFloorCubeDictionary();
@@ -172,33 +171,33 @@ namespace Qbism.Cubes
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in floorCubeDic)
 			{
 				var cube = pair.Value;
-				TriggerRecord(cube);
+				if (cube.refs != null) TriggerRecord(cube.refs);
 			}
 
 			foreach (KeyValuePair<Vector2Int, List<FloorCube>> pair in shrunkFloorCubeDic)
 			{
 				foreach (var cube in pair.Value)
 				{
-					TriggerRecord(cube);
+					if (cube.refs != null) TriggerRecord(cube.refs);
 				}
 			}
 
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in movFloorCubeDic)
 			{
 				var cube = pair.Value;
-				TriggerRecord(cube);
+				if (cube.refs != null) TriggerRecord(cube.refs);
 			}
 
 			foreach (KeyValuePair<Vector2Int, List<FloorCube>> pair in shrunkMovFloorCubeDic)
 			{
 				foreach (var cube in pair.Value)
 				{
-					TriggerRecord(cube);
+					if (cube.refs != null) TriggerRecord(cube.refs);
 				}
 			}
 		}
 
-		private void TriggerRecord(FloorCube cube)
+		private void TriggerRecord(CubeRefHolder cube)
 		{
 			onInitialCubeRecording(cube, cube.transform.position,
 				cube.transform.rotation, cube.transform.localScale);

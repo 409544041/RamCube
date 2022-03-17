@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class LaserRefHolder : MonoBehaviour
 {
-	[SerializeField] BoxCollider wallCollider;
-	[SerializeField] LaserCube laser;
-	[SerializeField] LaserJuicer juicer;
-	[SerializeField] Rigidbody[] partsRB;
-	[SerializeField] BoxCollider[] partsColl;
-	[SerializeField] Animator[] partsAnimators;
-	[SerializeField] LaserEyeAnimator eyeAnimator;
-	[SerializeField] LaserMouthAnimator mouthAnimator;
+	//Config parameters
+	public BoxCollider wallCollider;
+	public LaserCube laser;
+	public LaserJuicer juicer;
+	public Rigidbody[] partsRB;
+	public BoxCollider[] partsColl;
+	public Animator[] partsAnimators;
+	public LaserEyeAnimator eyeAnimator;
+	public LaserMouthAnimator mouthAnimator;
+
+	//Cache
+	public GameplayCoreRefHolder gcRef { get; set; }
 }

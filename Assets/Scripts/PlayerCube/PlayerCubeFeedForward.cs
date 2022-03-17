@@ -9,6 +9,7 @@ namespace Qbism.PlayerCube
 	{
 		//Config parameters
 		[SerializeField] FeedForwardCube[] feedForwardCubes = null;
+		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
 		PlayerCubeMover mover;
@@ -24,8 +25,8 @@ namespace Qbism.PlayerCube
 
 		private void Awake()
 		{
-			mover = GetComponent<PlayerCubeMover>();
-			playerAnimator = GetComponentInChildren<PlayerAnimator>();
+			mover = refs.playerMover;
+			playerAnimator = refs.playerAnim;
 		}
 
 		private void OnEnable() 
@@ -73,7 +74,7 @@ namespace Qbism.PlayerCube
 				var ffCube = feedForwardCubes[ffIndex];
 				ffCube.transform.rotation = transform.rotation;
 
-				var onePosAhead = mover.cubePoser.FetchGridPos() + neighbourDirs[ffIndex];
+				var onePosAhead = refs.cubePos.FetchGridPos() + neighbourDirs[ffIndex];
 
 				if (onKeyCheck(onePosAhead))
 				{
@@ -82,7 +83,7 @@ namespace Qbism.PlayerCube
 						(onePosAhead.x, transform.position.y, onePosAhead.y);
 					ffCube.transform.Rotate(turnAxis[ffIndex], 90, Space.World);
 
-					ffCube.GetComponent<FeedForwardCube>().CheckFloorInNewPos();
+					ffCube.CheckFloorInNewPos();
 				}
 				else ffCube.SwitchFF(false);
 			}

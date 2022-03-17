@@ -21,7 +21,7 @@ namespace Qbism.MoveableCubes
 		public Dictionary<Vector2Int, MoveableCube> moveableCubeDic = 
 			new Dictionary<Vector2Int, MoveableCube>();
 
-		public event Action<MoveableCube, Vector3, Quaternion, Vector3> onInitialCubeRecording;
+		public event Action<CubeRefHolder, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 		public event Action<bool> onSetPlayerInput;
 
 		private void Awake() 
@@ -110,7 +110,7 @@ namespace Qbism.MoveableCubes
 			foreach(KeyValuePair<Vector2Int, MoveableCube> pair in moveableCubeDic)
 			{
 				var cube = pair.Value;
-				onInitialCubeRecording(cube, cube.transform.position,
+				onInitialCubeRecording(cube.refs, cube.transform.position,
 					cube.transform.rotation, cube.transform.localScale);
 			}
 		}

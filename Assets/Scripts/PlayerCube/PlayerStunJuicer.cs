@@ -12,7 +12,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] MMFeedbacks stunWiggleJuice;
 		[SerializeField] ParticleSystem stunVFX;
 		[SerializeField] GameObject stunMesh;
-		[SerializeField] PlayerCubeMover mover;
+		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
 		MMFeedbackWiggle stunMMWiggle;
@@ -29,7 +29,7 @@ namespace Qbism.PlayerCube
 
 		private void Update()
 		{
-			if (mover.isStunned) HandleShakeTimer();
+			if (refs.playerMover.isStunned) HandleShakeTimer();
 		}
 
 		public void PlayStunVFX()
@@ -37,9 +37,8 @@ namespace Qbism.PlayerCube
 			stunVFX.Play();
 			stunMesh.SetActive(true);
 
-			var expressHandler = GetComponentInChildren<ExpressionHandler>();
-			expressHandler.SetSituationFace(ExpressionSituations.laserHit, 
-				expressHandler.GetRandomTime());
+			refs.exprHandler.SetSituationFace(ExpressionSituations.laserHit, 
+				refs.exprHandler.GetRandomTime());
 		}
 
 		public void StopStunVFX()

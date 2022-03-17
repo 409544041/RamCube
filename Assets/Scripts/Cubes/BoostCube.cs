@@ -30,7 +30,7 @@ namespace Qbism.Cubes
 
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
-			var mover = cube.GetComponent<PlayerCubeMover>();
+			var mover = refs.gcRef.pRef.playerMover;
 
 			PopUpWall popWall = null;
 			GameObject wallObject = null;
@@ -41,8 +41,7 @@ namespace Qbism.Cubes
 			mover.isBoosting = true;
 			mover.justBoosted = true;
 
-			mover.GetComponent<PlayerCubeBoostJuicer>().
-				PlayBoostJuice(refs.boostDirTrans.transform.forward);
+			refs.gcRef.pRef.boostJuicer.PlayBoostJuice(refs.boostDirTrans.transform.forward);
 
 			while (mover.isBoosting && !mover.isOutOfBounds)
 			{
@@ -63,10 +62,10 @@ namespace Qbism.Cubes
 
 			if (!mover.isOutOfBounds)
 			{
-				mover.cubePoser.RoundPosition();
+				refs.gcRef.pRef.cubePos.RoundPosition();
 				mover.UpdateCenterPosition();
 
-				var cubePos = mover.cubePoser.FetchGridPos();
+				var cubePos = refs.gcRef.pRef.cubePos.FetchGridPos();
 
 				Transform side = null;
 				Vector3 turnAxis = new Vector3(0, 0, 0);

@@ -320,6 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shrinkFeedback: {fileID: 9158600549025654425}
   refs: {fileID: 8619169692785287922}
+  wallMesh: {fileID: 0}
 --- !u!114 &4515865334334731891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,7 +333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d516fbc1af19f847a2d3e72f75e3469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refs: {fileID: 8619169692785287922}
+  cubeRef: {fileID: 8619169692785287922}
+  pRef: {fileID: 0}
 --- !u!65 &8028607793029448003
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -417,7 +419,6 @@ MonoBehaviour:
   staticFace: {fileID: 0}
   staticShrinkingFace: {fileID: 0}
   movCube: {fileID: 3213176448746098887}
-  center: {fileID: 4745137476811388159}
   movEffector: {fileID: 0}
   movFaceMesh: {fileID: 0}
   floorCompAdder: {fileID: 145876043645398180}
@@ -428,7 +429,7 @@ MonoBehaviour:
   uiLineRender: {fileID: 0}
   uiLineTargets: []
   uiElement: {fileID: 0}
-  rwndJuice: {fileID: 2489216231011968775}
+  rewindJuicer: {fileID: 0}
   turnJuice: {fileID: 0}
   staticFaceShrinkJuice: {fileID: 0}
 --- !u!1 &8414849812941373003

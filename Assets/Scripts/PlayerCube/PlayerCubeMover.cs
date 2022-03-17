@@ -26,8 +26,8 @@ namespace Qbism.PlayerCube
 		[SerializeField] int wiggleTurnStep = 18;
 		[SerializeField] int wiggleRotation = 8;
 		[Header ("Position")]
-		[SerializeField] float loweredYDelta = .95f;		
-		public CubePositioner cubePoser = null;
+		[SerializeField] float loweredYDelta = .95f;
+		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
 		MoveableCubeHandler moveHandler;
@@ -58,17 +58,16 @@ namespace Qbism.PlayerCube
 		public event Action<Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action onInitialFloorCubeRecord;
 		public event Action<bool> onSetLaserTriggers;
-		public event Action<InterfaceIDs> onRewindPulse;
 
 		private void Awake()
 		{
-			moveHandler = FindObjectOfType<MoveableCubeHandler>();
-			wallHandler = moveHandler.GetComponent<WallHandler>();
-			moveableCubes = FindObjectsOfType<MoveableCube>();
-			playerFlipJuicer = GetComponent<PlayerCubeFlipJuicer>();
-			playerAnimator = GetComponentInChildren<PlayerAnimator>();
-			boostJuicer = GetComponent<PlayerCubeBoostJuicer>();
-			expresHandler = GetComponentInChildren<ExpressionHandler>();
+			moveHandler = refs.gcRef.glRef.movCubeHandler;
+			wallHandler = refs.gcRef.glRef.wallHandler;
+			moveableCubes = refs.gcRef.movCubes;
+			playerFlipJuicer = refs.flipJuicer;
+			playerAnimator = refs.playerAnim;
+			boostJuicer = refs.boostJuicer;
+			expresHandler = refs.exprHandler;
 		}
 
 		private void OnEnable() 
@@ -95,7 +94,7 @@ namespace Qbism.PlayerCube
 
 		private void Start()
 		{
-			cubePoser.RoundPosition();
+			refs.cubePos.RoundPosition();
 			UpdateCenterPosition();
 			startScale = transform.localScale;
 		}
@@ -123,7 +122,7 @@ namespace Qbism.PlayerCube
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			var cubeToShrink = cubePoser.FetchGridPos();
+			var cubeToShrink = refs.cubePos.FetchGridPos();
 			moveHandler.ResetMovedMoveables();
 
 			isMoving = true;
@@ -153,7 +152,7 @@ namespace Qbism.PlayerCube
 				yield return new WaitForSeconds(timeStep);
 			}
 
-			cubePoser.RoundPosition();
+			refs.cubePos.RoundPosition();
 			UpdateCenterPosition();
 			isMoving = false;
 			onCubeShrink(cubeToShrink);
@@ -217,13 +216,13 @@ namespace Qbism.PlayerCube
 
 			isLowered = true;
 			if (moveHandler.movingMoveables == 0) input = true;
-			cubePoser.RoundPosition();
-			onRewindPulse(InterfaceIDs.Rewind);
+			refs.cubePos.RoundPosition();
+			refs.gcRef.rewindPulser.InitiatePulse();
 		}
 
 		public bool CheckForWallAhead(Vector2Int posAhead)
 		{
-			var currentPos = cubePoser.FetchGridPos();
+			var currentPos = refs.cubePos.FetchGridPos();
 
 			if (moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
@@ -236,12 +235,12 @@ namespace Qbism.PlayerCube
 		private void ActivateMoveableAhead(Vector2Int posAhead, Vector3 turnAxis)
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
-				moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePoser.FetchGridPos());
+				moveHandler.StartMovingMoveable(posAhead, turnAxis, refs.cubePos.FetchGridPos());
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			onFloorCheck(cubePoser.FetchGridPos(), this.gameObject, side, turnAxis, posAhead);
+			onFloorCheck(refs.cubePos.FetchGridPos(), this.gameObject, side, turnAxis, posAhead);
 		}
 
 		public void UpdateCenterPosition()
@@ -266,7 +265,7 @@ namespace Qbism.PlayerCube
 
 		private Vector2Int FetchPos()
 		{
-			return cubePoser.FetchGridPos();
+			return refs.cubePos.FetchGridPos();
 		}
 
 		private void SetSide(MoveableCube cube, ref Transform side, ref Vector2Int posAhead)

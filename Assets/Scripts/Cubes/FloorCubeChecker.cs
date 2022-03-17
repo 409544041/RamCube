@@ -14,32 +14,31 @@ namespace Qbism.Cubes
 		[SerializeField] GameLogicRefHolder glRef;
 
 		//Cache
-		PlayerCubeBoostJuicer playerBoostJuicer = null;
-		PlayerCubeMover mover = null;
-		CubeHandler handler = null;
-		WallHandler wallHandler = null;
-		MoveableCubeHandler moveHandler = null;
-		PlayerCubeFeedForward cubeFF = null;
-		PlayerCubeFlipJuicer playerFlipJuicer = null;
-		FeedForwardCube[] ffCubes = null;
+		PlayerCubeBoostJuicer playerBoostJuicer;
+		PlayerCubeMover mover;
+		CubeHandler handler;
+		MoveableCubeHandler moveHandler;
+		PlayerCubeFeedForward cubeFF;
+		PlayerCubeFlipJuicer playerFlipJuicer;
+		FeedForwardCube[] ffCubes;
+		PlayerRefHolder player;
 
 		//States
 		public FloorCube currentCube { get; set; } = null;
 
 		//Actions, events, delegates etc
-		public event Action onCheckForFinish;
+		public event Action onCheckForFinish; //TO DO: Check where this ref goes
 
 		private void Awake() 
 		{
-			//TO DO: Add player refs
-			mover = FindObjectOfType<PlayerCubeMover>();
+			player = glRef.gcRef.pRef;
+			mover = player.playerMover;
 			handler = glRef.cubeHandler;
-			wallHandler = glRef.wallHandler;
 			moveHandler = glRef.movCubeHandler;
-			cubeFF = FindObjectOfType<PlayerCubeFeedForward>();
-			playerFlipJuicer = mover.GetComponent<PlayerCubeFlipJuicer>();
-			playerBoostJuicer = mover.GetComponent<PlayerCubeBoostJuicer>();
-			ffCubes = FindObjectsOfType<FeedForwardCube>();
+			cubeFF = player.playerFF;
+			playerFlipJuicer = player.flipJuicer;
+			playerBoostJuicer = player.boostJuicer;
+			ffCubes = player.ffCubes;
 		}
 
 		private void OnEnable() 
@@ -57,7 +56,7 @@ namespace Qbism.Cubes
 
 		private void Start()
 		{
-			currentCube = handler.FetchCube(mover.cubePoser.FetchGridPos(), true);
+			currentCube = handler.FetchCube(player.cubePos.FetchGridPos(), true);
 		}
 
 		private void CheckFloorType(Vector2Int cubePos, GameObject cube,
@@ -68,7 +67,7 @@ namespace Qbism.Cubes
 			previousCube = currentCube;
 
 			if (previousCube.FetchType() == CubeTypes.Static)
-				previousCube.refs.staticCube.BecomeShrinkingCube(cube);
+				previousCube.refs.staticCube.BecomeShrinkingCube();
 
 			HandleMovingMoveableFromBoost(cubePos, turnAxis, posAhead, previousCube);
 
@@ -96,7 +95,7 @@ namespace Qbism.Cubes
 							playerBoostJuicer.PlayPostBoostJuice();
 					}
 
-					mover.GetComponent<PlayerFartLauncher>().ResetFartCollided();
+					player.fartLauncher.ResetFartCollided();
 					mover.justBoosted = false;
 				}
 			}
@@ -119,7 +118,7 @@ namespace Qbism.Cubes
 			{
 				var posAheadOfAhead = posAhead + (posAhead - cubePos);
 
-				if (!wallHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead))
+				if (!glRef.wallHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead))
 					moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos);
 			}
 		}
@@ -134,7 +133,7 @@ namespace Qbism.Cubes
 			}
 
 			currentCube.refs.turnCube.PrepareAction(cube);
-			mover.GetComponent<PlayerCubeTurnJuicer>().PlayTurningVoice();
+			player.turnJuicer.PlayTurningVoice();
 		}
 
 		private void HandleLandingOnFinalPos(FloorCube previousCube)

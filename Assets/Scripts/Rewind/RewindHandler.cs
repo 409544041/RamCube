@@ -14,20 +14,20 @@ namespace Qbism.Rewind
 		[SerializeField] GameLogicRefHolder glRef;
 
 		//Cache
-		TimeBody[] timeBodies = null;
-		PlayerCubeMover mover = null;
-		CubeHandler handler = null;
-		MoveableCubeHandler moveHandler = null;
-		LaserCube[] lasers;
+		TimeBody[] timeBodies;
+		PlayerCubeMover mover;
+		CubeHandler handler;
+		MoveableCubeHandler moveHandler;
+		LaserRefHolder[] laserRefs;
 		FinishCube finish;
 
 		private void Awake() 
 		{
 			timeBodies = glRef.gcRef.timeBodies;
-			mover = FindObjectOfType<PlayerCubeMover>(); //TO DO: add player refs
+			mover = glRef.gcRef.pRef.playerMover;
 			handler = glRef.cubeHandler;
 			moveHandler = glRef.movCubeHandler;
-			lasers = FindObjectsOfType<LaserCube>();
+			laserRefs = glRef.gcRef.laserRefs;
 			finish = glRef.gcRef.finishRef.finishCube;
 		}
 
@@ -52,7 +52,7 @@ namespace Qbism.Rewind
 			RewindTimeBodies();
 
 			//To stop rewind UI element from pulsing if rewinding off finish
-			if (finish.wrongOnFinish) glRef.gcRef.rewindPulser.StopPulse(InterfaceIDs.Rewind);
+			if (finish.wrongOnFinish) glRef.gcRef.rewindPulser.StopPulse();
 
 			StartCoroutine(DelayedLaserRewindStuff());
 
@@ -75,8 +75,10 @@ namespace Qbism.Rewind
 			//Order in which moveables get rewinded is important to avoid dic errors
 			foreach (TimeBody body in timeBodies)
 			{
-				var refs = body.refs;
-				var moveable = body.refs.movCube;
+				var refs = body.cubeRef;
+
+				MoveableCube moveable = null;
+				if (refs != null) moveable = body.cubeRef.movCube;
 
 				if (refs != null && moveable != null)
 				{
@@ -115,12 +117,12 @@ namespace Qbism.Rewind
 
 		private void LaserRewindStuff()
 		{
-			if (lasers.Length > 0)
+			if (laserRefs.Length > 0)
 			{
-				foreach (var laser in lasers)
+				foreach (var laserRef in laserRefs)
 				{
 					//To make sure there's no delay on turning on laser again upon rewind
-					laser.laserPause = false;
+					laserRef.laser.laserPause = false;
 				}
 			}
 		}
@@ -130,23 +132,23 @@ namespace Qbism.Rewind
 			yield return new WaitForSeconds(.05f); 
 			//to avoid laser reading player eventhough player already rewinded
 
-			if (lasers.Length > 0)
+			if (laserRefs.Length > 0)
 			{
-				foreach (var laser in lasers)
+				foreach (var laserRef in laserRefs)
 				{
-					laser.shouldTrigger = true;
+					laserRef.laser.shouldTrigger = true;
 				}
 			}
 		}
 
 		private void AddInitialPlayerRecording(Vector3 pos, Quaternion rot, Vector3 scale)
 		{
-			mover.GetComponent<TimeBody>().InitialRecord(pos, rot, scale);
+			glRef.gcRef.pRef.timeBody.InitialRecord(pos, rot, scale);
 		}
 
-		private void AddInitialCubeRecording(FloorCube cube, Vector3 pos, Quaternion rot, Vector3 scale)
+		private void AddInitialCubeRecording(CubeRefHolder cubeRef, Vector3 pos, Quaternion rot, Vector3 scale)
 		{
-			var body = cube.GetComponent<TimeBody>();
+			var body = cubeRef.timeBody;
 
 			if (body != null)
 			{
@@ -154,9 +156,9 @@ namespace Qbism.Rewind
 			}
 		}
 
-		private void AddInitialMoveableRecording(MoveableCube cube, Vector3 pos, Quaternion rot, Vector3 scale)
+		private void AddInitialMoveableRecording(CubeRefHolder cubeRef, Vector3 pos, Quaternion rot, Vector3 scale)
 		{
-			var body = cube.GetComponent<TimeBody>();
+			var body = cubeRef.timeBody;
 
 			if (body != null)
 			{

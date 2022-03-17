@@ -8,7 +8,7 @@ namespace Qbism.Environment
 {
 	public class WallRefHolder : MonoBehaviour
 	{
-		public Collider col;
+		public BoxCollider col;
 		public PopUpWall popUpWall;
 		public PopUpWallJuicer wallJuicer;
 		public ExpressionHandler expressHandler;

@@ -54,10 +54,10 @@ namespace Qbism.Cubes
 		{
 			handler = refs.gcRef.glRef.cubeHandler;
 			movHandler = refs.gcRef.glRef.movCubeHandler;
-			playerAnim = FindObjectOfType<PlayerAnimator>(); //TO DO: link to player refs;
+			playerAnim = refs.gcRef.pRef.playerAnim;
 			loader = refs.gcRef.glRef.sceneHandler;
 			progHandler = refs.persRef.progHandler;
-			farter = FindObjectOfType<PlayerFartLauncher>();
+			farter = refs.gcRef.pRef.fartLauncher;
 			switchBoard = refs.persRef.switchBoard;
 			camResizer = refs.gcRef.glRef.camResizer;
 			finishJuicer = refs.finishJuicer;

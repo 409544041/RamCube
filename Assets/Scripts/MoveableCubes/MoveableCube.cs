@@ -23,7 +23,7 @@ namespace Qbism.MoveableCubes
 		[Header("Feedback")]
 		[SerializeField] AudioClip landClip = null;
 		[SerializeField] Vector3 moveScale = new Vector3( .9f, .9f, .9f);
-		[SerializeField] CubeRefHolder refs;
+		public CubeRefHolder refs;
 
 		//States
 		public bool isBoosting { get; set; } = false;

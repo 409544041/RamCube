@@ -27,12 +27,12 @@ namespace Qbism.Cubes
 
 		//Cache
 		PlayerFartLauncher farter;
-		PlayerCubeMover player;
+		PlayerCubeMover playerMover;
 
 		private void Awake() 
 		{
-			player = FindObjectOfType<PlayerCubeMover>();
-			farter = player.GetComponent<PlayerFartLauncher>();
+			playerMover = refs.gcRef.pRef.playerMover;
+			farter = refs.gcRef.pRef.fartLauncher;
 		}
 
 		private void OnEnable()
@@ -52,7 +52,7 @@ namespace Qbism.Cubes
 
 		private void CheckForGlowDeactivation()
 		{
-			if (Vector3.Distance(transform.position, player.transform.position) < 1.25f)
+			if (Vector3.Distance(transform.position, playerMover.transform.position) < 1.25f)
 				glowEmitParticles.SetActive(false);
 			else if (glowEmitParticles.activeSelf == false) glowEmitParticles.SetActive(true);
 		}

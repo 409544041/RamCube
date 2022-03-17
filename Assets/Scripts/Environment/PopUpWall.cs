@@ -12,6 +12,7 @@ namespace Qbism.Environment
 		[SerializeField] float popUpHeight = .5f;
 		[SerializeField] float upwardDuration = .5f, downwardDuration = 1f;
 		[SerializeField] float downwardDelay = .5f;
+		[SerializeField] WallRefHolder refs;
 
 		//Cache
 		PopUpWallJuicer juicer;
@@ -25,9 +26,9 @@ namespace Qbism.Environment
 
 		private void Awake() 
 		{
-			col = GetComponent<BoxCollider>();
-			juicer = GetComponent<PopUpWallJuicer>();
-			exprHandler = GetComponent<ExpressionHandler>();
+			col = refs.col;
+			juicer = refs.wallJuicer;
+			exprHandler = refs.expressHandler;
 		}
 
 		private void Start() 

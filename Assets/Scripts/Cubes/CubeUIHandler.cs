@@ -21,8 +21,8 @@ namespace Qbism.Cubes
 		bool hiddenForFinish = false;
 
 		private void Awake() 
-		{ //TO DO: link to refs once we have cube ref
-			mover = FindObjectOfType<PlayerCubeMover>();
+		{
+			mover = refs.gcRef.pRef.playerMover;
 			finishCube = refs.gcRef.finishRef.finishCube;
 		}
 

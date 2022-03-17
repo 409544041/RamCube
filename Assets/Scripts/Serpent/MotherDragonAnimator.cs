@@ -22,7 +22,7 @@ namespace Qbism.Serpent
 		float headSpawnDegrees;
 
 		private void Awake()
-		{
+		{ //TO DO: Set up serpent refs
 			playerAnim = FindObjectOfType<PlayerAnimator>();
 		}
 

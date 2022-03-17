@@ -11,54 +11,19 @@ namespace Qbism.General
 	public class InterfacePulser : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] InterfaceIDs interfaceID;
 		[SerializeField] MMFeedbacks pulser = null;
 
-		//Cache
-		LaserCube[] lasers = null;
-		PlayerCubeMover playerMover;
-
-		private void Awake()
-		{
-			//TO DO: Reverse + ref these
-			lasers = FindObjectsOfType<LaserCube>();
-			playerMover = FindObjectOfType<PlayerCubeMover>();
-		}
-
-		private void OnEnable()
-		{
-			foreach (LaserCube laser in lasers)
-			{
-				if (laser != null) laser.onRewindPulse += InitiatePulse;
-			}
-
-			if (playerMover != null) playerMover.onRewindPulse += InitiatePulse;
-		}
-
-		public void InitiatePulse(InterfaceIDs id) //TO DO: Remove need for interfaceIDs
+		public void InitiatePulse()
 		{
 			if (pulser.IsPlaying) return; 
 			
-			if (id == interfaceID)
-			{
-				pulser.Initialization();
-				pulser.PlayFeedbacks();
-			}
+			pulser.Initialization();
+			pulser.PlayFeedbacks();
 		}
 
-		public void StopPulse(InterfaceIDs id)
+		public void StopPulse()
 		{
 			pulser.StopFeedbacks();
-		}
-
-		private void OnDisable()
-		{
-			foreach (LaserCube laser in lasers)
-			{
-				if (laser != null) laser.onRewindPulse -= InitiatePulse;
-			}
-
-			if (playerMover != null) playerMover.onRewindPulse -= InitiatePulse;
 		}
 	}
 

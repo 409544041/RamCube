@@ -10,7 +10,6 @@ namespace Qbism.General
 		//Config parameters
 		[SerializeField] MMFeedbacks postRewindJuice = null;
 
-		//Activated by SendMessage from timebody. If method name changes, must change it there too.
 		public void StartPostRewindJuice()
 		{
 			postRewindJuice.Initialization();

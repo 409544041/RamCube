@@ -44,7 +44,7 @@ namespace Qbism.Cubes
 		public Transform[] uiLineTargets;
 		public GameObject uiElement;
 		[Header("Juice")]
-		public RewindJuicer rwndJuice;
+		public RewindJuicer rewindJuicer;
 		public MMFeedbacks turnJuice;
 		public MMFeedbacks staticFaceShrinkJuice;
 

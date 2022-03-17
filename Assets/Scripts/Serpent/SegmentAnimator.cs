@@ -26,7 +26,7 @@ namespace Qbism.Serpent
 		bool justSpawned = false;
 
 		private void Awake()
-		{
+		{ //TO DO: Setup serpent refs
 			playerAnim = FindObjectOfType<PlayerAnimator>();
 		}
 

@@ -12,6 +12,8 @@ using Qbism.Environment;
 using Qbism.Peep;
 using Qbism.Cubes;
 using Qbism.Rewind;
+using Qbism.PlayerCube;
+using Qbism.Shapies;
 
 public class GameplayCoreRefHolder : MonoBehaviour
 {
@@ -55,32 +57,49 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public FloorCube[] floorCubes { get; private set; }
 	public CubeShrinker[] cubeShrinkers { get; private set; }
 	public FloorComponentAdder[] floorCompAdders { get; private set; }
-	public TimeBody[] timeBodies { get; private set; } //TO DO: Do this via refs once we have playerrefs
+	public TimeBody[] timeBodies { get; private set; }
+	public PlayerRefHolder pRef { get; private set; }
+	public LaserRefHolder[] laserRefs { get; private set; }
 
 	private void Awake()
 	{
 		List<FloorCube> floorCubeList = new List<FloorCube>();
 		List<MoveableCube> movCubeList = new List<MoveableCube>();
 		List<FloorComponentAdder> floorCompList = new List<FloorComponentAdder>();
-		
+		List<TimeBody> timeBodyList = new List<TimeBody>();
+
 		GetSetPersistentRef();
-
 		GetSetPeepRef();
-
 		GetSetFinishRef(floorCubeList);
-
-		GetSetCubeRefs(floorCubeList, movCubeList, floorCompList);
-
+		GetSetCubeRefs(floorCubeList, movCubeList, floorCompList, timeBodyList);
 		GetSetVisualSwappers();
+		GetSetShrinker();
+		GetSetPlayer(timeBodyList);
+		GetSetLasers();
 
 		walls = GameObject.FindGameObjectsWithTag("Wall");
-		timeBodies = FindObjectsOfType<TimeBody>();
-
-		GetSetShrinker();
 
 		movCubes = movCubeList.ToArray();
 		floorCubes = floorCubeList.ToArray();
 		floorCompAdders = floorCompList.ToArray();
+		timeBodies = timeBodyList.ToArray();
+	}
+
+	private void GetSetLasers()
+	{
+		laserRefs = FindObjectsOfType<LaserRefHolder>();
+		foreach (var laser in laserRefs)
+		{
+			laser.gcRef = this;
+		}
+	}
+
+	private void GetSetPlayer(List<TimeBody> timeBodyList)
+	{
+		pRef = FindObjectOfType<PlayerRefHolder>();
+		pRef.gcRef = this;
+		pRef.cam = cam;
+		timeBodyList.Add(pRef.timeBody);
 	}
 
 	private void GetSetPersistentRef()
@@ -110,7 +129,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	}
 
 	private void GetSetCubeRefs(List<FloorCube> floorCubeList, List<MoveableCube> movCubeList,
-		List<FloorComponentAdder> floorCompList)
+		List<FloorComponentAdder> floorCompList, List<TimeBody> timeBodyList)
 	{
 		cubeRefs = FindObjectsOfType<CubeRefHolder>();
 		foreach (var cube in cubeRefs)
@@ -119,6 +138,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 			if (cube.floorCube != null) floorCubeList.Add(cube.floorCube);
 			if (cube.movCube != null) movCubeList.Add(cube.movCube);
 			if (cube.floorCompAdder != null) floorCompList.Add(cube.floorCompAdder);
+			if (cube.timeBody != null) timeBodyList.Add(cube.timeBody);
 		}
 	}
 

@@ -15,6 +15,7 @@ namespace Qbism.PlayerCube
 		public ParticleSystem fartCharge, fartBeam,
 			fartBeamImpact, bulletFartImpact, sputterFarts;
 		[SerializeField] float maxSputterTime = 2, objFartDelay = 1f, objFartHeight = -.5f;
+		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
 		public MMFeedbackWiggle preFartMMWiggle { get; set; }
@@ -30,8 +31,8 @@ namespace Qbism.PlayerCube
 		private void Awake()
 		{
 			preFartMMWiggle = preFartJuice.GetComponent<MMFeedbackWiggle>();
-			animator = GetComponentInChildren<Animator>();
-			progHandler = FindObjectOfType<ProgressHandler>();
+			animator = refs.animator;
+			progHandler = refs.gcRef.persRef.progHandler;
 		}
 
 		private void Update()

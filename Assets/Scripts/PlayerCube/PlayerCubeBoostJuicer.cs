@@ -13,21 +13,22 @@ namespace Qbism.PlayerCube
 		[SerializeField] MMFeedbacks postBoostJuice = null;
 		[SerializeField] float maxBoostTrailTime = 1f;
 		[Header ("Audio")]
-		[SerializeField] AudioSource source;
 		[SerializeField] AudioClip loweringClip;
 		[SerializeField] float loweringVolume;
+		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
 		MMFeedbackScale[] postBoostMMScalers;
 		MMFeedbackPosition postBoostMMPos;
 		MMFeedbackScale[] boostMMScalers;
+		MMFeedbackParticlesInstantiation postBoostMMParticles;
 		ExpressionHandler expresHandler;
 
 		//States
 		Vector3 boostImpactDir = new Vector3(0, 0, 0);
 		float boostTrailTimer = 0f;
 		bool boostTrailCounting = false;
-		ParticleSystem particles;
+		ParticleSystem boostParticles, postBoostParticles;
 		public float feedbackDur { get; set; } = 0;
 
 		private void Awake() 
@@ -35,8 +36,10 @@ namespace Qbism.PlayerCube
 			postBoostMMScalers = postBoostJuice.GetComponents<MMFeedbackScale>();
 			postBoostMMPos = postBoostJuice.GetComponent<MMFeedbackPosition>();
 			boostMMScalers = boostJuice.GetComponents<MMFeedbackScale>();
-			expresHandler = GetComponentInChildren<ExpressionHandler>();
-			particles = boostJuice.GetComponent<MMFeedbackParticles>().BoundParticleSystem;
+			expresHandler = refs.exprHandler;
+			boostParticles = boostJuice.GetComponent<MMFeedbackParticles>().BoundParticleSystem;
+			postBoostMMParticles = postBoostJuice.GetComponent<MMFeedbackParticlesInstantiation>();
+			postBoostParticles = postBoostMMParticles.ParticlesPrefab;
 		}
 
 		private void Start() 
@@ -62,7 +65,7 @@ namespace Qbism.PlayerCube
 
 		public void PlayBoostJuice(Vector3 direction)
 		{
-			particles.transform.forward = direction;
+			boostParticles.transform.forward = direction;
 			boostImpactDir = direction;
 
 			for (int i = 0; i < boostMMScalers.Length; i++)
@@ -82,11 +85,8 @@ namespace Qbism.PlayerCube
 		{
 			ResetMMPosValues();
 
-			ParticleSystem particles = postBoostJuice.GetComponent<MMFeedbackParticlesInstantiation>().
-				ParticlesPrefab;
-
-			particles.transform.forward = transform.TransformDirection(boostImpactDir);
-			postBoostJuice.GetComponent<MMFeedbackParticlesInstantiation>().Offset = boostImpactDir * .5f;
+			postBoostParticles.transform.forward = transform.TransformDirection(boostImpactDir);
+			postBoostMMParticles.Offset = boostImpactDir * .5f;
 
 			for (int i = 0; i < postBoostMMScalers.Length; i++)
 			{
@@ -108,7 +108,7 @@ namespace Qbism.PlayerCube
 
 		public void PlayLoweringSFX()
 		{
-			source.PlayOneShot(loweringClip, loweringVolume);
+			refs.source.PlayOneShot(loweringClip, loweringVolume);
 		}
 
 		private void CalculatePostBoostScaleMoveDir()
@@ -219,7 +219,7 @@ namespace Qbism.PlayerCube
 			return V3Equal(transform.up, Vector3.forward) || V3Equal(transform.up, Vector3.back);
 		}
 
-		public bool V3Equal(Vector3 a, Vector3 b)
+		private bool V3Equal(Vector3 a, Vector3 b)
 		{
 			return Vector3.SqrMagnitude(a - b) < 0.001;
 		}

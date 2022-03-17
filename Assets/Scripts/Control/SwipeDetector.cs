@@ -18,6 +18,7 @@ namespace Qbism.Control
 		//Cache
 		CubeHandler handler;
 		PlayerCubeMover mover;
+		PlayerRefHolder player;
 
 		//States
 		Vector2 fingerDownPos;
@@ -28,7 +29,8 @@ namespace Qbism.Control
 		private void Awake()
 		{
 			handler = glRef.cubeHandler;
-			mover = FindObjectOfType<PlayerCubeMover>(); //TO DO: link player ref
+			player = glRef.gcRef.pRef;
+			mover = player.playerMover;
 		}
 
 		void Update()
@@ -64,7 +66,7 @@ namespace Qbism.Control
 			{
 				if (IsUpSwipe())
 				{
-					var posAhead = mover.cubePoser.FetchGridPos() + Vector2Int.up;
+					var posAhead = player.cubePos.FetchGridPos() + Vector2Int.up;
 
 					if (handler.floorCubeDic.ContainsKey(posAhead) || handler.movFloorCubeDic.ContainsKey(posAhead))
 						mover.HandleSwipeInput(mover.up, Vector3.right, posAhead);
@@ -72,7 +74,7 @@ namespace Qbism.Control
 
 				if (IsDownSwipe())
 				{
-					var posAhead = mover.cubePoser.FetchGridPos() + Vector2Int.down;
+					var posAhead = player.cubePos.FetchGridPos() + Vector2Int.down;
 
 					if (handler.floorCubeDic.ContainsKey(posAhead) || handler.movFloorCubeDic.ContainsKey(posAhead))
 						mover.HandleSwipeInput(mover.down, Vector3.left, posAhead);
@@ -80,7 +82,7 @@ namespace Qbism.Control
 
 				if (IsLeftSwipe())
 				{
-					var posAhead = mover.cubePoser.FetchGridPos() + Vector2Int.left;
+					var posAhead = player.cubePos.FetchGridPos() + Vector2Int.left;
 
 					if (handler.floorCubeDic.ContainsKey(posAhead) || handler.movFloorCubeDic.ContainsKey(posAhead))
 						mover.HandleSwipeInput(mover.left, Vector3.forward, posAhead);
@@ -88,7 +90,7 @@ namespace Qbism.Control
 
 				if (IsRightSwipe())
 				{
-					var posAhead = mover.cubePoser.FetchGridPos() + Vector2Int.right;
+					var posAhead = player.cubePos.FetchGridPos() + Vector2Int.right;
 
 					if (handler.floorCubeDic.ContainsKey(posAhead) || handler.movFloorCubeDic.ContainsKey(posAhead))
 						mover.HandleSwipeInput(mover.right, Vector3.back, posAhead);

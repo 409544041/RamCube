@@ -8,8 +8,7 @@ namespace Qbism.SpriteAnimations
 	{
 		//Config parameters
 		[SerializeField] bool hasLaugh, hasFrown;
-		//Cache
-		Animator animator;
+		[SerializeField] Animator animator;
 
 		//States
 		BrowStates currentBrow = BrowStates.low;
@@ -20,11 +19,6 @@ namespace Qbism.SpriteAnimations
 		const string TO_HIGHLAUGH = "ToHighLaugh";
 
 		List<string> animStringList = new List<string>();
-
-		private void Awake() 
-		{
-			animator = GetComponent<Animator>();
-		}
 
 		private void Start()
 		{

@@ -9,7 +9,6 @@ namespace Qbism.SpriteAnimations
 	{
 		//Config parameters
 		[SerializeField] MMFeedbacks faceJuice;
-		[SerializeField] Transform faceSprites, faceInitialPos;
 
 		public void WiggleFace()
 		{

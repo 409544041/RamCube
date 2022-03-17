@@ -18,13 +18,15 @@ namespace Qbism.Cubes
 
 		//Cache
 		PlayerCubeMover mover;
+		PlayerRefHolder player;
 
 		//States
 		public Vector3 turnAxis { get; set; } = new Vector3(0, 0, 0);
 
 		private void Awake()
 		{
-			mover = FindObjectOfType<PlayerCubeMover>();
+			player = refs.gcRef.pRef;
+			mover = player.playerMover;
 		}
 
 		public void PrepareAction(GameObject cube)
@@ -48,7 +50,7 @@ namespace Qbism.Cubes
 
 			refs.turnJuice.PlayFeedbacks();
 
-			mover.GetComponentInChildren<ExpressionHandler>().
+			player.exprHandler.
 				SetSituationFace(ExpressionSituations.turning, 1f);
 
 			for (int i = 0; i < (90 / turnStep); i++)
@@ -57,7 +59,7 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(timeStep);
 			}
 
-			mover.cubePoser.RoundPosition();
+			player.cubePos.RoundPosition();
 			mover.UpdateCenterPosition();
 
 			Transform side = null;

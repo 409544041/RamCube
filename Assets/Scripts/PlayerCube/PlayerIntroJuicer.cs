@@ -12,7 +12,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] MMFeedbacks introJuice, introLandingJuice;
 		[SerializeField] ParticleSystem buttPopVFX, popVFX;
 		[SerializeField] AudioClip introPop;
-		[SerializeField] AudioSource audioSource;
+		[SerializeField] PlayerRefHolder refs;
 
 		//States
 		ParticleSystem speedParticles;
@@ -36,7 +36,14 @@ namespace Qbism.PlayerCube
 			introLandingJuice.Initialization();
 			introLandingJuice.PlayFeedbacks();
 
-			var peepStateManagers = FindObjectsOfType<PeepStateManager>();
+			List<PeepStateManager> peepStateManagers = new List<PeepStateManager>();
+
+			var peepRefs = refs.gcRef.peeps;
+			foreach (var peep in peepRefs)
+			{
+				peepStateManagers.Add(peep.stateMngr);
+			}
+
 			foreach (var peep in peepStateManagers)
 			{
 				if (peep.peepJob == PeepJobs.balloon) continue;
@@ -48,15 +55,15 @@ namespace Qbism.PlayerCube
 
 		public void PlayButtPopFX()
 		{
-			audioSource.pitch = .9f;
-			audioSource.PlayOneShot(introPop);
+			refs.source.pitch = .9f;
+			refs.source.PlayOneShot(introPop);
 			buttPopVFX.Play();
 		}
 
 		public void PlayPopVFX()
 		{
-			audioSource.pitch = 1;
-			audioSource.PlayOneShot(introPop);
+			refs.source.pitch = 1;
+			refs.source.PlayOneShot(introPop);
 			popVFX.Play();
 		}
 	}

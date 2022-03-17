@@ -12,6 +12,7 @@ namespace Qbism.PlayerCube
 			faceDownWiggleDelay = .5f;
 		[SerializeField] BoxCollider coll = null;
 		[SerializeField] float impactGroundY, impactSegY;
+		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
 		Animator animator;
@@ -27,22 +28,23 @@ namespace Qbism.PlayerCube
 		//Actions, events, delegates etc
 		public event Action onTriggerLandingReaction;
 		public event Action onShowFF, onTriggerSerpent, onChildSegmentToPlayer;
-		public event Action<bool> onInputSet, onIntroSet, onSwitchVisuals;
+		public event Action<bool> onInputSet, onIntroSet;
 
 		public delegate Vector3 FinishPosDel();
 		public FinishPosDel onGetFinishPos;
 
 		private void Awake() 
 		{
-			animator = GetComponent<Animator>();
-			introJuicer = GetComponentInParent<PlayerIntroJuicer>();
-			outroJuicer = GetComponentInParent<PlayerOutroJuicer>();
-			fartJuicer = GetComponentInParent<PlayerFartJuicer>();
+			animator = refs.animator;
+			introJuicer = refs.introJuicer;
+			outroJuicer = refs.outroJuicer;
+			fartJuicer = refs.fartJuicer;
 		}
 
 		private void Start() 
 		{
-			onSwitchVisuals(false);
+			refs.visualSwitch.SwitchMeshes(false);
+			refs.visualSwitch.SwitchSprites(false);
 			playerFinishLandPos = onGetFinishPos();
 			StartCoroutine(DisableInputForDrop());
 		}
@@ -60,7 +62,8 @@ namespace Qbism.PlayerCube
 			animator.speed = 0; //pauze intro animation
 			yield return new WaitForSeconds(introDelay);
 			animator.speed = 1;
-			onSwitchVisuals(true);
+			refs.visualSwitch.SwitchMeshes(true);
+			refs.visualSwitch.SwitchSprites(true);
 
 			var currentClipinfo = animator.GetCurrentAnimatorClipInfo(0);
 			float clipLength = currentClipinfo[0].clip.length;
@@ -87,18 +90,16 @@ namespace Qbism.PlayerCube
 			yield return new WaitForSeconds(fallDelay);
 
 			fallen = true;
-			GetComponentInParent<PlayerFartLauncher>().flyingBy = false;
-
-			var mover = GetComponentInParent<PlayerCubeMover>();
-			GameObject player = mover.gameObject;
+			refs.fartLauncher.flyingBy = false;
 			
-			player.transform.position = new Vector3(playerFinishLandPos.x,
+			refs.transform.position = new Vector3(playerFinishLandPos.x,
 				playerFinishLandPos.y + addedY, playerFinishLandPos.z);
 
-			player.transform.rotation = Quaternion.Euler(0f, fallDeg, 0f);
+			refs.transform.rotation = Quaternion.Euler(0f, fallDeg, 0f);
 
 			//visuals were switched off in playerfartlauncher
-			onSwitchVisuals(true);
+			refs.visualSwitch.SwitchMeshes(true);
+			refs.visualSwitch.SwitchSprites(true);
 
 			animator.SetTrigger(fallType);
 

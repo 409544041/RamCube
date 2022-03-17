@@ -11,7 +11,7 @@ namespace Qbism.Cubes
 		//Config parameters
 		public CubeRefHolder refs;
 
-		public void BecomeShrinkingCube(GameObject cube)
+		public void BecomeShrinkingCube()
 		{
 			refs.staticFaceShrinkJuice.Initialization();
 			refs.staticFaceShrinkJuice.PlayFeedbacks();

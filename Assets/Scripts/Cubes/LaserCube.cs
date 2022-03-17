@@ -14,6 +14,7 @@ namespace Qbism.Cubes
 		[SerializeField] Transform laserOrigin = null;
 		[SerializeField] LayerMask chosenLayers;
 		[SerializeField] float idleLaserDelay = .5f;
+		[SerializeField] LaserRefHolder refs;
 		
 		//Cache
 		PlayerCubeMover mover;
@@ -31,15 +32,15 @@ namespace Qbism.Cubes
 		bool eyeClosedForFinish = false;
 
 		//Actions, events, delegates etc
-		public event Action<InterfaceIDs> onRewindPulse;
+		public event Action<InterfaceIDs> onRewindPulse; //TO DO: direct link to it
 
 		private void Awake()
 		{
 			//TO DO: Link to refs once we have laser ref
-			mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCubeMover>();
-			juicer = GetComponent<LaserJuicer>();
-			cubeHandler = FindObjectOfType<CubeHandler>();
-			finish = FindObjectOfType<FinishCube>(); 
+			mover = refs.gcRef.pRef.playerMover;
+			juicer = refs.juicer;
+			cubeHandler = refs.gcRef.glRef.cubeHandler;
+			finish = refs.gcRef.finishRef.finishCube; 
 		}
 
 		private void OnEnable() 
@@ -76,7 +77,7 @@ namespace Qbism.Cubes
 					if(shouldTrigger)
 					{
 						shouldTrigger = false;
-						var fartLauncher = mover.GetComponent<PlayerFartLauncher>();
+						var fartLauncher = refs.gcRef.pRef.fartLauncher;
 						bool hasHit = false;
 						RaycastHit hit = fartLauncher.FireRayCast(out hasHit);
 						if (hasHit) fartLauncher.FireBulletFart();
@@ -91,8 +92,8 @@ namespace Qbism.Cubes
 					{
 						shouldTrigger = false;
 						juicer.TriggerDenyJuice(currentLength);
-						onRewindPulse(InterfaceIDs.Rewind);
-						mover.GetComponent<PlayerStunJuicer>().PlayStunVFX();
+						refs.gcRef.rewindPulser.InitiatePulse();
+						refs.gcRef.pRef.stunJuicer.PlayStunVFX();
 						mover.isStunned = true;						
 					}
 				}

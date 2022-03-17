@@ -1,3 +1,4 @@
+using Qbism.PlayerCube;
 using Qbism.Serpent;
 using Qbism.WorldMap;
 using System.Collections;
@@ -10,6 +11,7 @@ namespace Qbism.General
 	{
 		//Config parameters
 		[SerializeField] MapCoreRefHolder mcRef;
+		[SerializeField] PlayerRefHolder pRef;
 
 		//States
 		float targetDisToScreen, startDisToScreen;
@@ -20,7 +22,7 @@ namespace Qbism.General
 		private void Awake()
 		{
 			if (mcRef != null) cam = mcRef.cam;
-			else cam = Camera.main; //TO DO: Switch to player ref cam once we have player ref
+			else cam = pRef.cam;
 		}
 
 		private void Update()

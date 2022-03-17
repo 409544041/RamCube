@@ -9,9 +9,7 @@ namespace Qbism.SpriteAnimations
 	{
 		//Config parameters
 		[SerializeField] bool hasCircle, hasTeeth, hasWail, hasCry, hasBoop, hasYawn, hasLaugh;
-
-		//Cache
-		Animator animator;
+		[SerializeField] Animator animator;
 
 		//States
 		MouthStates currentMouth = MouthStates.normal;
@@ -28,11 +26,6 @@ namespace Qbism.SpriteAnimations
 		const string TO_LAUGH = "ToLaughing";
 
 		List<string> animStringList = new List<string>();
-
-		private void Awake()
-		{
-			animator = GetComponent<Animator>();
-		}
 
 		private void Start() 
 		{

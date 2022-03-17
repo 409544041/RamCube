@@ -10,14 +10,14 @@ namespace Qbism.PlayerCube
 		//Config parameters
 		[SerializeField] AudioClip screamingClip, ouchClip, ouchClipAlt, boingShortClip, 
 			boingLongClip, endLaughClip, smallSurpriseClip, toothyLaughClip, swallowClip;
-		[SerializeField] AudioSource source;
+		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
 		SerpentCollHandler serpCollHandler;
 
 		private void Awake() 
 		{
-			serpCollHandler = FindObjectOfType<SerpentCollHandler>();
+			serpCollHandler = refs.gcRef.finishRef.serpCollHandler;
 		}
 
 		private void OnEnable() 
@@ -31,57 +31,57 @@ namespace Qbism.PlayerCube
 
 		public void PlayFallingSound()
 		{
-			source.clip = screamingClip;
-			source.Play();
+			refs.source.clip = screamingClip;
+			refs.source.Play();
 		}
 
 		public void PlaySwallowClip()
 		{
-			source.PlayOneShot(swallowClip, 2);
+			refs.source.PlayOneShot(swallowClip, 2);
 		}
 
 		public void PlayLandingSound()
 		{
-			source.Stop();
-			source.PlayOneShot(boingLongClip);
+			refs.source.Stop();
+			refs.source.PlayOneShot(boingLongClip);
 		}
 
 		public void PlaySmallLandingSound()
 		{
-			source.PlayOneShot(boingShortClip);
+			refs.source.PlayOneShot(boingShortClip);
 		}
 
 		public void PlaySurpriseSound()
 		{
-			source.PlayOneShot(smallSurpriseClip);
+			refs.source.PlayOneShot(smallSurpriseClip);
 		}
 
 		public void PlayEndLaughSound()
 		{
-			source.clip = endLaughClip;
-			source.volume = .3f;
-			source.Play();
+			refs.source.clip = endLaughClip;
+			refs.source.volume = .3f;
+			refs.source.Play();
 		}
 
 		public void PlayToothyLaughSound()
 		{
-			source.PlayOneShot(toothyLaughClip);
+			refs.source.PlayOneShot(toothyLaughClip);
 		}
 
 		private void StopLaughing()
 		{
-			if (source.clip == endLaughClip && source.isPlaying)
-			source.Stop();
+			if (refs.source.clip == endLaughClip && refs.source.isPlaying)
+			refs.source.Stop();
 		}
 
 		private void PlayOuchSoundFromPickup()
 		{
-			source.PlayOneShot(ouchClipAlt, .75f);
+			refs.source.PlayOneShot(ouchClipAlt, .75f);
 		}
 
 		public void PlayOuchSound()
 		{
-			source.PlayOneShot(ouchClip, .5f);
+			refs.source.PlayOneShot(ouchClip, .5f);
 		}
 
 		private void OnDisable()

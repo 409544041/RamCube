@@ -18,12 +18,12 @@ namespace Qbism.General
 		{
 			if (other.tag == "Player")
 			{
-				var player = other.GetComponent<PlayerCubeMover>(); //TO DO: replace when player refs
-				player.isOutOfBounds = true;
-				player.isBoosting = false;
+				var playerMover = gcRef.pRef.playerMover;
+				playerMover.isOutOfBounds = true;
+				playerMover.isBoosting = false;
 				if (gcRef.glRef.movCubeHandler.movingMoveables == 0)
-					player.input = true; //This here else wont let you rewind
-				gcRef.rewindPulser.InitiatePulse(InterfaceIDs.Rewind);				
+					playerMover.input = true; //This here else wont let you rewind
+				gcRef.rewindPulser.InitiatePulse();				
 			}
 
 			if (other.tag == "FFCube")

@@ -20,6 +20,7 @@ namespace Qbism.Control
 
 		//Cache
 		GameControls controls;
+		PlayerRefHolder player;
 		PlayerCubeMover mover;
 		FeatureSwitchBoard switchBoard;
 		FinishCube finish;
@@ -30,7 +31,8 @@ namespace Qbism.Control
 
 		private void Awake()
 		{
-			mover = FindObjectOfType<PlayerCubeMover>(); //TO DO: player refs
+			player = gcRef.pRef;
+			mover = player.playerMover;
 			switchBoard = gcRef.persRef.switchBoard;
 			finish = gcRef.finishRef.finishCube;
 			controls = new GameControls();
@@ -83,7 +85,7 @@ namespace Qbism.Control
 			if (mover.isOutOfBounds || !mover.input) return;
 
 			inputting = true;
-			var posAhead = mover.cubePoser.FetchGridPos() + posAheadDir;
+			var posAhead = player.cubePos.FetchGridPos() + posAheadDir;
 
 			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(turnSide, turnAxis);
 

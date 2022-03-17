@@ -25,6 +25,7 @@ namespace Qbism.Cubes
 		FloorCubeChecker floorChecker;
 		FeatureSwitchBoard switchBoard;
 		PlayerCubeFeedForward playerFF;
+		PlayerRefHolder player;
 
 		//States
 		Vector2Int myPosition;
@@ -33,8 +34,9 @@ namespace Qbism.Cubes
 
 		private void Awake()
 		{
-			mover = FindObjectOfType<PlayerCubeMover>();
-			playerFF = mover.GetComponent<PlayerCubeFeedForward>();
+			player = refs.gcRef.pRef;
+			mover = player.playerMover;
+			playerFF = player.playerFF;
 			handler = refs.gcRef.glRef.cubeHandler;
 			progHandler = refs.persRef.progHandler;
 			serpProg = refs.persRef.serpProg;
@@ -57,7 +59,7 @@ namespace Qbism.Cubes
 
 		private void CheckForFinish()
 		{
-			if (handler.FetchCube(myPosition, true) == handler.FetchCube(mover.cubePoser.FetchGridPos(), true))
+			if (handler.FetchCube(myPosition, true) == handler.FetchCube(player.cubePos.FetchGridPos(), true))
 			{
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.up), -1))
 					Finish();	
@@ -65,12 +67,12 @@ namespace Qbism.Cubes
 				else
 				{
 					wrongOnFinish = true;
-					refs.gcRef.rewindPulser.InitiatePulse(InterfaceIDs.Rewind);
+					refs.gcRef.rewindPulser.InitiatePulse();
 				} 
 			}
 			else if (wrongOnFinish)
 			{
-				refs.gcRef.rewindPulser.StopPulse(InterfaceIDs.Rewind);
+				refs.gcRef.rewindPulser.StopPulse();
 				wrongOnFinish = false;
 			} 
 		}
@@ -96,7 +98,7 @@ namespace Qbism.Cubes
 			progHandler.SaveProgData();
 
 			hasFinished = true;
-			mover.GetComponentInChildren<ExpressionHandler>().hasFinished = true; //TO DO: link to player ref
+			player.exprHandler.hasFinished = true;
 			mover.input = false;
 
 			refs.finishJuicer.DeactivateGlow();

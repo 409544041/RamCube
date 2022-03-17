@@ -12,12 +12,12 @@ namespace Qbism.PlayerCube
 		[SerializeField] MMFeedbacks flipJuice = null;
 		public float preFlipJuiceDuration = 0f;
 		[SerializeField] MMFeedbacks postFlipJuice = null;
+		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
 		MMFeedbackScale[] postFlipMMScalers;
 		MMFeedbackScale[] flipMMScalers;
 		MMFeedbackPosition postFlipMMPos;
-		ExpressionHandler expresHandler;
 		ParticleSystem postFlipParticles;
 
 		//States
@@ -28,7 +28,6 @@ namespace Qbism.PlayerCube
 			postFlipMMScalers = postFlipJuice.GetComponents<MMFeedbackScale>();
 			flipMMScalers = flipJuice.GetComponents<MMFeedbackScale>();
 			postFlipMMPos = postFlipJuice.GetComponent<MMFeedbackPosition>();
-			expresHandler = GetComponentInChildren<ExpressionHandler>();
 			postFlipParticles = postFlipJuice.GetComponent<MMFeedbackParticles>().BoundParticleSystem;
 		}
 
@@ -61,7 +60,7 @@ namespace Qbism.PlayerCube
 
 			postFlipJuice.PlayFeedbacks();
 
-			expresHandler.SetSituationFace(ExpressionSituations.flip, .5f);
+			refs.exprHandler.SetSituationFace(ExpressionSituations.flip, .5f);
 		}
 
 		private void CalculateFlipScaleAxis(int i, MMFeedbackScale[] scalers)

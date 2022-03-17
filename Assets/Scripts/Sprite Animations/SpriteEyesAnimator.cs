@@ -9,9 +9,7 @@ namespace Qbism.SpriteAnimations
 		//Config parameters
 		[SerializeField] bool hasTwitch, hasSquint, hasAnnoyed, hasLooking, 
 			hasSparkling, hasCrossShut, hasWink, hasBoop, hasYawn, hasArchLaugh;
-
-		//Cache
-		Animator animator;
+		[SerializeField] Animator animator;
 
 		//States
 		EyesStates currentEyes = EyesStates.normal;
@@ -31,11 +29,6 @@ namespace Qbism.SpriteAnimations
 		const string TO_ARCHLAUGH = "ToArchedLaughing";
 
 		List<string> animStringList = new List<string>();
-
-		private void Awake()
-		{
-			animator = GetComponent<Animator>();
-		}
 
 		private void Start() 
 		{

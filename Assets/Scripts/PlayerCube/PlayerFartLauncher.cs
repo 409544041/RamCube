@@ -21,8 +21,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] float shockedFaceTime = .5f, launchDur = 1, flyByDelay, flyByDur = 1,
 			flyByStartDisFromScreen = 50, flyByEndDisFromScreen = -15, flyBySizeAtStart = .5f,
 			flyBySizeAtEnd = 5;
-		[SerializeField] Animator anim;
-		[SerializeField] ScreenDistanceShrinker shrinker;
+		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
 		ExpressionHandler exprHandler;
@@ -49,14 +48,13 @@ namespace Qbism.PlayerCube
 		public event Action onDoneFarting;
 		public event Action onStartFarting;
 		public event Action onSwitchToEndCam;
-		public event Action<bool> onSwitchVisuals;
 		public Func<Vector3> onCheckFinishPos;
 
 		private void Awake()
 		{
-			exprHandler = GetComponentInChildren<ExpressionHandler>();
-			juicer = GetComponent<PlayerFartJuicer>();
-			endSeqHandler = FindObjectOfType<FinishEndSeqHandler>();
+			exprHandler = refs.exprHandler;
+			juicer = refs.fartJuicer;
+			endSeqHandler = refs.gcRef.finishRef.endSeq;
 		}
 
 		private void Start()
@@ -70,10 +68,10 @@ namespace Qbism.PlayerCube
 			KeepImpactOnFinishPos();
 
 			if (flyingBy)
-			{ //TO DO: switch camera.main with cam ref once we have player ref
-				flyByStartPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByStartX, flyByStartY, 
+			{
+				flyByStartPos = refs.cam.ViewportToWorldPoint(new Vector3(flyByStartX, flyByStartY, 
 					flyByStartDisFromScreen));
-				flyByEndPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByTargetX, flyByTargetY, 
+				flyByEndPos = refs.cam.ViewportToWorldPoint(new Vector3(flyByTargetX, flyByTargetY, 
 					flyByEndDisFromScreen));
 			}
 		}
@@ -117,8 +115,7 @@ namespace Qbism.PlayerCube
 
 			exprHandler.SetFace(Expressions.shocked, -1);
 
-			var musicPlayer = FindObjectOfType<MusicPlayer>();
-			musicPlayer.InitiageLevelCompleteTrack();
+			refs.gcRef.musicPlayer.InitiageLevelCompleteTrack();
 
 			if (segmentRescue)
 			{
@@ -140,8 +137,8 @@ namespace Qbism.PlayerCube
 
 		private void ShapieRescueOrObjectFart()
 		{
-			anim.SetBool("ObjFart", hasSegObj);
-			anim.SetTrigger("SmallLaunch");
+			refs.animator.SetBool("ObjFart", hasSegObj);
+			refs.animator.SetTrigger("SmallLaunch");
 			endSeqHandler.finishJuicer.Impact();
 			juicer.ShapieRescueFartJuice();
 		}
@@ -231,7 +228,8 @@ namespace Qbism.PlayerCube
 			onSwitchToEndCam();
 			onDoneFarting();
 			transform.position = target.position;
-			onSwitchVisuals(false);
+			refs.visualSwitch.SwitchMeshes(false);
+			refs.visualSwitch.SwitchSprites(false);
 			juicer.StopBeamFartVisualJuice();
 
 			StartCoroutine(FlyBy());
@@ -244,7 +242,7 @@ namespace Qbism.PlayerCube
 			yield return new WaitForSeconds(flyByDelay);
 
 			CalculateStartEnd();
-			shrinker.SetTargetData(flyByEndPos, flyBySizeAtStart, flyBySizeAtEnd, 
+			refs.disShrinker.SetTargetData(flyByEndPos, flyBySizeAtStart, flyBySizeAtEnd, 
 				flyByStartDisFromScreen);
 
 			flyingBy = true;
@@ -253,7 +251,8 @@ namespace Qbism.PlayerCube
 			transform.position = flyByStartPos;
 			transform.LookAt(transform.position - (flyByEndPos - transform.position));
 
-			onSwitchVisuals(true);
+			refs.visualSwitch.SwitchMeshes(true);
+			refs.visualSwitch.SwitchSprites(true);
 			juicer.BeamFartJuice();
 
 			SetScale(flyByScaleMult, flyByAngleMult);
@@ -268,9 +267,10 @@ namespace Qbism.PlayerCube
 				yield return null;
 			}
 
-			shrinker.resizing = false;
+			refs.disShrinker.resizing = false;
 			flyingBy = false;
-			onSwitchVisuals(false);
+			refs.visualSwitch.SwitchMeshes(false);
+			refs.visualSwitch.SwitchSprites(false);
 			SetScale(1, 1);
 			juicer.StopBeamFartVisualJuice();
 		}
@@ -291,9 +291,9 @@ namespace Qbism.PlayerCube
 			flyByStartY = UnityEngine.Random.Range(.15f, .85f);
 			flyByTargetY = UnityEngine.Random.Range(.15f, .85f);
 
-			flyByStartPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByStartX, flyByStartY, 
+			flyByStartPos = refs.cam.ViewportToWorldPoint(new Vector3(flyByStartX, flyByStartY, 
 				flyByStartDisFromScreen));
-			flyByEndPos = Camera.main.ViewportToWorldPoint(new Vector3(flyByTargetX, flyByTargetY, 
+			flyByEndPos = refs.cam.ViewportToWorldPoint(new Vector3(flyByTargetX, flyByTargetY, 
 				flyByEndDisFromScreen));
 		}
 

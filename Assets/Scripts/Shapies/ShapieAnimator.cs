@@ -12,6 +12,7 @@ namespace Qbism.Shapies
 		[SerializeField] Transform pushBackTarget;
 		[SerializeField] MMFeedbacks pushBackJuice;
 		[SerializeField] Vector2 minMaxGetUpDelay, minMaxCelebrateDelay, minMaxPush;
+		[SerializeField] ShapieRefHolder refs;
 
 		//Cache
 		Animator animator;
@@ -21,10 +22,10 @@ namespace Qbism.Shapies
 
 		private void Awake() 
 		{
-			animator = GetComponent<Animator>();
+			animator = refs.bodyAnimator;
 			playerAnim = FindObjectOfType<PlayerAnimator>();
 			pushMMPos = pushBackJuice.GetComponent<MMFeedbackPosition>();
-			soundHandler = GetComponentInParent<ShapieSoundHandler>();
+			soundHandler = refs.soundHandler;
 		}
 
 		private void OnEnable() 

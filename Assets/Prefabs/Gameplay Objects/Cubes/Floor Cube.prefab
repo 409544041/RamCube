@@ -224,6 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shrinkFeedback: {fileID: 1821482559761664736}
   refs: {fileID: 894538665717139718}
+  wallMesh: {fileID: 0}
 --- !u!114 &4070112975366463874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,7 +237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d516fbc1af19f847a2d3e72f75e3469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refs: {fileID: 894538665717139718}
+  cubeRef: {fileID: 894538665717139718}
+  pRef: {fileID: 0}
 --- !u!114 &894538665717139718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,9 +265,9 @@ MonoBehaviour:
   turnCube: {fileID: 0}
   arrowFlip: {fileID: 0}
   staticCube: {fileID: 0}
-  staticFaceMesh: {fileID: 0}
+  staticFace: {fileID: 0}
+  staticShrinkingFace: {fileID: 0}
   movCube: {fileID: 0}
-  center: {fileID: 0}
   movEffector: {fileID: 0}
   movFaceMesh: {fileID: 0}
   floorCompAdder: {fileID: 0}
@@ -276,8 +278,9 @@ MonoBehaviour:
   uiLineRender: {fileID: 0}
   uiLineTargets: []
   uiElement: {fileID: 0}
-  rwndJuice: {fileID: 0}
+  rewindJuicer: {fileID: 0}
   turnJuice: {fileID: 0}
+  staticFaceShrinkJuice: {fileID: 0}
 --- !u!1 &7643626700717573735
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,6 +42,7 @@ namespace Qbism.Cubes
 		public SerpentMovement serpMovement;
 		public SerpentSegmentHandler serpSegHandler;
 		public SplineComputer spline;
+		public SerpentCollHandler serpCollHandler;
 
 		//Cache
 		public GameplayCoreRefHolder gcRef { get; set; }
