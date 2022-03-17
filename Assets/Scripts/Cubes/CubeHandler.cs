@@ -104,7 +104,7 @@ namespace Qbism.Cubes
 		{
 			if (dic[cubeToShrink].FetchType() == CubeTypes.Shrinking)
 			{
-				dic[cubeToShrink].GetComponent<CubeShrinker>().StartShrinking();
+				dic[cubeToShrink].refs.cubeShrink.StartShrinking();
 			}
 		}
 

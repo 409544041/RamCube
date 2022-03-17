@@ -68,7 +68,7 @@ namespace Qbism.Cubes
 			previousCube = currentCube;
 
 			if (previousCube.FetchType() == CubeTypes.Static)
-				previousCube.GetComponent<StaticCube>().BecomeShrinkingCube(cube);
+				previousCube.refs.staticCube.BecomeShrinkingCube(cube);
 
 			HandleMovingMoveableFromBoost(cubePos, turnAxis, posAhead, previousCube);
 
@@ -79,7 +79,7 @@ namespace Qbism.Cubes
 				bool differentCubes = currentCube != previousCube;
 
 				if (currentCube.FetchType() == CubeTypes.Boosting && differentCubes)
-					currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+					currentCube.refs.boostCube.PrepareAction(cube);
 
 				else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
 					StartCoroutine(HandleTurning(cube, previousCube));
@@ -133,7 +133,7 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(feedbackDur);
 			}
 
-			currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+			currentCube.refs.turnCube.PrepareAction(cube);
 			mover.GetComponent<PlayerCubeTurnJuicer>().PlayTurningVoice();
 		}
 
@@ -152,9 +152,11 @@ namespace Qbism.Cubes
 		{
 			FloorCube currentCube = handler.FetchCube(cubePos, true);
 
-			if (currentCube.FetchType() == CubeTypes.Boosting ||
-				currentCube.FetchType() == CubeTypes.Turning)
-				currentCube.GetComponent<ICubeInfluencer>().PrepareAction(cube);
+			if (currentCube.FetchType() == CubeTypes.Boosting)
+				currentCube.refs.boostCube.PrepareAction(cube);
+
+			else if (currentCube.FetchType() == CubeTypes.Turning)
+				currentCube.refs.turnCube.PrepareAction(cube);
 		}
 
 		private void OnDisable()
