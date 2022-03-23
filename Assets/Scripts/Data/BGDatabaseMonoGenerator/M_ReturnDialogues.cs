@@ -62,6 +62,17 @@ public partial class M_ReturnDialogues : BGEntityGo
 			return _f_ReturnDialogue[Entity.Index];
 		}
 	}
+	public E_Objects f_ForObject
+	{
+		get
+		{
+			return (E_Objects) _f_ForObject[Entity.Index];
+		}
+		set
+		{
+			_f_ForObject[Entity.Index] = value;
+		}
+	}
 	public System.Boolean f_Played
 	{
 		get
@@ -98,6 +109,15 @@ public partial class M_ReturnDialogues : BGEntityGo
 		{
 			if(__f_ReturnDialogue==null || __f_ReturnDialogue.IsDeleted) __f_ReturnDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5561073307789242631UL,2750474124636255876UL));
 			return __f_ReturnDialogue;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_ForObject;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForObject
+	{
+		get
+		{
+			if(__f_ForObject==null || __f_ForObject.IsDeleted) __f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5205356440346579593UL,8967285530539706020UL));
+			return __f_ForObject;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldBool __f_Played;

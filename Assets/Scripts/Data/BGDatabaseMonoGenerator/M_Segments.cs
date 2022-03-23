@@ -65,6 +65,36 @@ public partial class M_Segments : BGEntityGo
 			return _f_Prefab[Entity.Index];
 		}
 	}
+	public List<E_Objects> f_Objects
+	{
+		get
+		{
+			var val = _f_Objects[Entity.Index];
+			if(val==null || val.Count==0) return null;
+			var ___Objects = new List<E_Objects>();
+			for (var i = 0; i < val.Count; i++) ___Objects.Add((E_Objects) val[i]);
+			return ___Objects;
+		}
+		set
+		{
+			var val = _f_Objects[Entity.Index];
+			if(val==null) val = new List<BGEntity>();
+			val.Clear();
+			if(value!=null) for (var i = 0; i < value.Count; i++) val.Add(value[i]);
+			_f_Objects[Entity.Index] = val;
+		}
+	}
+	public E_Dialogues f_Dialogues
+	{
+		get
+		{
+			return (E_Dialogues) _f_Dialogues[Entity.Index];
+		}
+		set
+		{
+			_f_Dialogues[Entity.Index] = value;
+		}
+	}
 	public UnityEngine.Object f_SpawnPrefab
 	{
 		get
@@ -94,6 +124,17 @@ public partial class M_Segments : BGEntityGo
 			_f_DialogueLightPitchYaw[Entity.Index] = value;
 		}
 	}
+	public E_SegmentsGameplayData f_GameplayData
+	{
+		get
+		{
+			return (E_SegmentsGameplayData) _f_GameplayData[Entity.Index];
+		}
+		set
+		{
+			_f_GameplayData[Entity.Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -121,6 +162,24 @@ public partial class M_Segments : BGEntityGo
 			return __f_Prefab;
 		}
 	}
+	private static BansheeGz.BGDatabase.BGFieldRelationMultiple __f_Objects;
+	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_Objects
+	{
+		get
+		{
+			if(__f_Objects==null || __f_Objects.IsDeleted) __f_Objects=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5414509257987170800UL,16375924262376720830UL));
+			return __f_Objects;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_Dialogues;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues
+	{
+		get
+		{
+			if(__f_Dialogues==null || __f_Dialogues.IsDeleted) __f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5043863872193162925UL,15580842669602972338UL));
+			return __f_Dialogues;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldUnityObject __f_SpawnPrefab;
 	public static BansheeGz.BGDatabase.BGFieldUnityObject _f_SpawnPrefab
 	{
@@ -146,6 +205,15 @@ public partial class M_Segments : BGEntityGo
 		{
 			if(__f_DialogueLightPitchYaw==null || __f_DialogueLightPitchYaw.IsDeleted) __f_DialogueLightPitchYaw=(BansheeGz.BGDatabase.BGFieldVector2) MetaDefault.GetField(new BGId(5395289116548682697UL,15975294921309799602UL));
 			return __f_DialogueLightPitchYaw;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_GameplayData;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData
+	{
+		get
+		{
+			if(__f_GameplayData==null || __f_GameplayData.IsDeleted) __f_GameplayData=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4909705211094579299UL,13210900775542928543UL));
+			return __f_GameplayData;
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();

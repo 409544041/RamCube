@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using Qbism.Serpent;
+using TMPro;
 
 namespace Qbism.Dialogue
 {
@@ -9,15 +10,25 @@ namespace Qbism.Dialogue
 	{
 		//Config parameters
 		[SerializeField] GameplayCoreRefHolder gcRef;
+		[SerializeField] SerpCoreRefHolder scRef;
+		[SerializeField] DialogueManager dialogueManager;
 
 		//States
 		public bool isTyping { get; private set; } = false;
 		public bool showFullText { get; set; } = false;
+		TextMeshProUGUI dialogueText;
+
+		private void Awake()
+		{
+			if (gcRef != null) dialogueText = gcRef.dialogueText;
+			//if (scRef != null) dialogueText = scRef.dialogueText;
+		}
 
 		public void StartWritingText(string incText)
 		{
 			StartCoroutine(WriteText(incText));
 		}
+		//TO DO: Make serpent screen version of below.
 
 		private IEnumerator WriteText(string fullText)
 		{
@@ -28,20 +39,20 @@ namespace Qbism.Dialogue
 			{
 				if (showFullText)
 				{
-					gcRef.dialogueText.text = fullText;
+					dialogueText.text = fullText;
 					break;
 				}
 				else
 				{
 					currentText = fullText.Substring(0, i);
-					gcRef.dialogueText.text = currentText;
+					dialogueText.text = currentText;
 					yield return null;
 				}
 			}
 
 			showFullText = false;
 			isTyping = false;
-			gcRef.glRef.dialogueManager.PulseNextButton();
+			dialogueManager.PulseNextButton();
 		}
 	}
 }

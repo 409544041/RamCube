@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5845055227900744515}
   - component: {fileID: 4171758188550439727}
   - component: {fileID: 4214781060161001047}
+  - component: {fileID: 8538307242587459332}
   m_Layer: 0
   m_Name: SegObj
   m_TagString: SegmentObject
@@ -104,6 +105,24 @@ MonoBehaviour:
   entityIdString: YQ3GUkXsKkW94ZuFaAq4BQ
   metaIdString: 
   initWithFirst: 0
+--- !u!114 &8538307242587459332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355312477744744947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbb5094ff21412499847a5a29a4605f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objects: {fileID: 4214781060161001047}
+  mesh: {fileID: 1913411997889166807}
+  juicer: {fileID: 4171758188550439727}
+  spawnJuice: {fileID: 6869478243646843155}
+  canvas: {fileID: 9111568591519665292}
+  canvasGroup: {fileID: 2988115212891781614}
 --- !u!1 &1394718326908042464
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,6 +644,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95bcfccb6db416e4989a624d132f4c9e, type: 3}
+--- !u!114 &6869478243646843155 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6836516065918832974, guid: 95bcfccb6db416e4989a624d132f4c9e,
+    type: 3}
+  m_PrefabInstance: {fileID: 123115834314848349}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4734687516482417561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4612134649318525892, guid: 95bcfccb6db416e4989a624d132f4c9e,

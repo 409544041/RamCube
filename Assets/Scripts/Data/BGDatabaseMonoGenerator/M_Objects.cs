@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using BansheeGz.BGDatabase;
+using Alias_rifegrt_Segments = E_Segments;
+using Alias_rifegrt_QuestDialogues = E_QuestDialogues;
+using Alias_rifegrt_ReturnDialogues = E_ReturnDialogues;
+using Alias_rifegrt_QuestWaitingDialogues = E_QuestWaitingDialogues;
 using Alias_rifegrt_ObjectsGameplayData = E_ObjectsGameplayData;
 
 //=============================================================
@@ -85,6 +89,17 @@ public partial class M_Objects : BGEntityGo
 			_f_Owner[Entity.Index] = value;
 		}
 	}
+	public E_ObjectsGameplayData f_GameplayData
+	{
+		get
+		{
+			return (E_ObjectsGameplayData) _f_GameplayData[Entity.Index];
+		}
+		set
+		{
+			_f_GameplayData[Entity.Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -130,7 +145,64 @@ public partial class M_Objects : BGEntityGo
 			return __f_Owner;
 		}
 	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_GameplayData;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData
+	{
+		get
+		{
+			if(__f_GameplayData==null || __f_GameplayData.IsDeleted) __f_GameplayData=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5680102043031229158UL,4949064207623274920UL));
+			return __f_GameplayData;
+		}
+	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
+	public List<E_Segments> RelatedSegmentsListUsingObjectsRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_Segments._f_Objects.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_Segments>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Segments) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
+		}
+	}
+	public List<E_QuestDialogues> RelatedQuestDialoguesListUsingForObjectRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_QuestDialogues._f_ForObject.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_QuestDialogues>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_QuestDialogues) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
+		}
+	}
+	public List<E_ReturnDialogues> RelatedReturnDialoguesListUsingForObjectRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_ReturnDialogues._f_ForObject.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_ReturnDialogues>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_ReturnDialogues) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
+		}
+	}
+	public List<E_QuestWaitingDialogues> RelatedQuestWaitingDialoguesListUsingForObjectRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_QuestWaitingDialogues._f_ForObject.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_QuestWaitingDialogues>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_QuestWaitingDialogues) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
+		}
+	}
 	public List<E_ObjectsGameplayData> RelatedObjectsGameplayDataListUsingObjectRelation
 	{
 		get

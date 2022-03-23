@@ -14,6 +14,7 @@ namespace Qbism.Serpent
 		public Transform[] segments = null;
 		[SerializeField] MapCoreRefHolder mcRef;
 		[SerializeField] FinishRefHolder finishRef;
+		[SerializeField] SerpCoreRefHolder scRef;
 
 		//States
 		int billyArrayIndex;
@@ -118,9 +119,8 @@ namespace Qbism.Serpent
 
 		public void EnableSegments(Transform[] segmentArray)
 		{
-			//TO DO: link these bools to refs in each scene
 			inMap = (mcRef != null);
-			inSerpScreen = FindObjectOfType<SerpentScreenScroller>(); //TO DO: use serp ref
+			inSerpScreen = (scRef != null);
 			inLevel = (finishRef != null);
 
 			for (int i = 0; i < segmentArray.Length; i++)

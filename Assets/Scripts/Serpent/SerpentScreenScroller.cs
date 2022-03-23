@@ -15,14 +15,12 @@ namespace Qbism.Serpent
 		public float scrollDur = .2f;
 		public float scaleJuiceBounce = .3f;
 		public AnimationCurve moveCurve, scaleCurve;
+		public SerpCoreRefHolder scRef;
 
         //States
         SegmentScroll segInFocusAtStart = null;
         int segToFocusOn = 0;
         SegmentScroll[] segments = null;
-
-        //Actions, events, delegates etc
-        public event Action<int, bool> onScrollSegments;
 
         private IEnumerator Start()
         {
@@ -58,7 +56,7 @@ namespace Qbism.Serpent
         {
             segToFocusOn = segments.Length - 1;
             segInFocusAtStart = segments[segToFocusOn];
-            segInFocusAtStart.SetSegmentsAtStart(focusIndex);
+            segInFocusAtStart.SetSegmentsAtStart(focusIndex, this);
         }
 
         private void SetRestOfSegments()
@@ -66,7 +64,7 @@ namespace Qbism.Serpent
             int locIndex = focusIndex + 1;
             for (int i = segToFocusOn - 1; i >= 0; i--)
             {
-                segments[i].SetSegmentsAtStart(locIndex);
+                segments[i].SetSegmentsAtStart(locIndex, this);
                 locIndex++;
                 if (locIndex > scrollLocs.Length - 1) locIndex = scrollLocs.Length - 1;
 
@@ -76,7 +74,7 @@ namespace Qbism.Serpent
             locIndex = focusIndex - 1;
             for (int i = segToFocusOn + 1; i < segments.Length; i++)
             {
-                segments[i].SetSegmentsAtStart(locIndex);
+                segments[i].SetSegmentsAtStart(locIndex, this);
                 locIndex--;
                 if (locIndex < 0) locIndex = 0;
             }
@@ -85,13 +83,21 @@ namespace Qbism.Serpent
         public void ScrollLeft()
         {
             if (segments[0].locIndex == focusIndex) return;
-            onScrollSegments(-1, false);
+
+			foreach(var segment in segments)
+			{
+				segment.InitiateSegmentScroll(-1, false);
+			}
         }
 
         public void ScrollRight()
         {
             if (segments[segments.Length - 1].locIndex == focusIndex) return;
-            onScrollSegments(1, false);
-        }
+
+			foreach (var segment in segments)
+			{
+				segment.InitiateSegmentScroll(1, false);
+			}
+		}
     }
 }

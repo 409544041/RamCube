@@ -65,6 +65,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gcRef: {fileID: 0}
+  scRef: {fileID: 0}
+  dialogueManager: {fileID: 4300353220786692159}
 --- !u!114 &3046887159190210964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a346dc2a8df25fd4e88f7bf34208a738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gpLogicRef: {fileID: 7286304185802157844}
+  glRef: {fileID: 7286304185802157844}
 --- !u!114 &2653795977077097177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060fdfa73a28af04da6a6f8a3adbfe20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gpLogicRef: {fileID: 7286304185802157844}
+  glRef: {fileID: 7286304185802157844}
 --- !u!114 &2957358092620856976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca97898e6317a64aac7e6f5c86145a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gcRef: {fileID: 0}
 --- !u!114 &4427148236981019360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df15bf4d6c3b94040a050f06c83c4220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gpLogicRef: {fileID: 7286304185802157844}
+  glRef: {fileID: 7286304185802157844}
 --- !u!114 &7897787388083789460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f348b0c046c8cf4eb3ea2d83c72aa11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gcRef: {fileID: 0}
 --- !u!1 &4331261675221862858
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce719f0bfdd4e34db90541a334201d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gpLogicRef: {fileID: 7286304185802157844}
+  glRef: {fileID: 7286304185802157844}
 --- !u!1 &5405034135132404182
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,6 +392,8 @@ MonoBehaviour:
   biomeOverwrite: 0
   respawnFloraVariety: 0
   respawnWallPillarVariety: 0
+  gcRef: {fileID: 0}
+  mcRef: {fileID: 0}
 --- !u!1 &8573582724643509009
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +406,6 @@ GameObject:
   - component: {fileID: 1532914687393087819}
   - component: {fileID: 780844664703696454}
   - component: {fileID: 5924007430084180936}
-  - component: {fileID: -8520138409295970726}
   - component: {fileID: 7286304185802157844}
   m_Layer: 0
   m_Name: Game Logic
@@ -444,7 +449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DetectBeforeRelease: 0
   minSwipeDistance: 35
-  gpLogicRef: {fileID: 7286304185802157844}
+  glRef: {fileID: 7286304185802157844}
 --- !u!114 &780844664703696454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gcRef: {fileID: 0}
-  gpLogicRef: {fileID: 7286304185802157844}
+  glRef: {fileID: 7286304185802157844}
 --- !u!114 &5924007430084180936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,19 +476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e7e63e51d8dab45ab237086f37df06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-8520138409295970726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8573582724643509009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f04d45d676466438e8d11c0035271b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gcRef: {fileID: 0}
 --- !u!114 &7286304185802157844
 MonoBehaviour:
   m_ObjectHideFlags: 0

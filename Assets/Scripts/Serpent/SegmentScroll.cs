@@ -12,29 +12,28 @@ namespace Qbism.Serpent
 
         //Cache
         SerpentScreenScroller serpScroller;
+		SerpCoreRefHolder scRef;
+		SerpLogicRefHolder slRef;
 
         //States
         public int locIndex { get; set; } = -1;
 		bool newInput = false;
 		float elapsedTime;
 
-        private void Awake()
-        {
-            serpScroller = FindObjectOfType<SerpentScreenScroller>();
-        }
-
-        private void OnEnable()
-        {
-            if (serpScroller != null) serpScroller.onScrollSegments += InitiateSegmentScroll;
-        }
-
-		public void SetSegmentsAtStart(int loc)
+		public void SetSegmentsAtStart(int loc, SerpentScreenScroller scroller)
 		{
+			if (serpScroller == null)
+			{
+				serpScroller = scroller;
+				scRef = serpScroller.scRef;
+				slRef = scRef.slRef;
+			}
+
 			locIndex = loc;
 			InitiateSegmentScroll(0, true);
 		}
 
-		private void InitiateSegmentScroll(int value, bool setAtStart)
+		public void InitiateSegmentScroll(int value, bool setAtStart)
 		{
 			//checks if segments is actually active or not
 			if (locIndex < 0) return;
@@ -81,7 +80,15 @@ namespace Qbism.Serpent
 			transform.rotation = rotTarget;
 			transform.localScale = targetScale;
 
-			if (loc == serpScroller.focusIndex && !setAtStart) TriggerScaleJuice();
+			if (loc == serpScroller.focusIndex)
+			{
+				if (!setAtStart) TriggerScaleJuice();
+
+				var m_seg = GetComponent<M_Segments>();
+				var e_objs = m_seg.f_Objects;
+
+				slRef.objUIHandler.ShowObjectUI(e_objs);
+			}
 		}
 
 		private Vector3 GetScale(int loc)
@@ -113,11 +120,5 @@ namespace Qbism.Serpent
             scrollJuice.Initialization();
             scrollJuice.PlayFeedbacks();
 		}
-
-        private void OnDisable()
-        {
-            if (serpScroller != null) serpScroller.onScrollSegments -= InitiateSegmentScroll;
-        }
-
     }
 }

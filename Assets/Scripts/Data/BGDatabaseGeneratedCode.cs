@@ -7,9 +7,13 @@ using Alias_rifegrt_BiomeIdentifier = E_BiomeIdentifier;
 using Alias_rifegrt_LevelData = E_LevelData;
 using Alias_rifegrt_LevelGameplayData = E_LevelGameplayData;
 using Alias_rifegrt_MapWalls = E_MapWalls;
+using Alias_rifegrt_Segments = E_Segments;
 using Alias_rifegrt_Dialogues = E_Dialogues;
 using Alias_rifegrt_SegmentsGameplayData = E_SegmentsGameplayData;
 using Alias_rifegrt_Objects = E_Objects;
+using Alias_rifegrt_QuestDialogues = E_QuestDialogues;
+using Alias_rifegrt_ReturnDialogues = E_ReturnDialogues;
+using Alias_rifegrt_QuestWaitingDialogues = E_QuestWaitingDialogues;
 using Alias_rifegrt_ObjectsGameplayData = E_ObjectsGameplayData;
 
 //=============================================================
@@ -1999,6 +2003,19 @@ public partial class E_Dialogues : BGEntity
 			return _ufle12jhs77_f_HintsDialogues;
 		}
 	}
+	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
+	public List<E_Segments> RelatedSegmentsListUsingDialoguesRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_Segments._f_Dialogues.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_Segments>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Segments) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
+		}
+	}
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
 	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
@@ -2142,6 +2159,36 @@ public partial class E_Segments : BGEntity
 			return _f_Prefab[Index];
 		}
 	}
+	public List<E_Objects> f_Objects
+	{
+		get
+		{
+			var val = _f_Objects[Index];
+			if(val==null || val.Count==0) return null;
+			var _ufli12jhs_Objects = new List<E_Objects>();
+			for (var i = 0; i < val.Count; i++) _ufli12jhs_Objects.Add((E_Objects) val[i]);
+			return _ufli12jhs_Objects;
+		}
+		set
+		{
+			var val = _f_Objects[Index];
+			if(val==null) val = new List<BGEntity>();
+			val.Clear();
+			if(value!=null) for (var i = 0; i < value.Count; i++) val.Add(value[i]);
+			_f_Objects[Index] = val;
+		}
+	}
+	public E_Dialogues f_Dialogues
+	{
+		get
+		{
+			return (E_Dialogues) _f_Dialogues[Index];
+		}
+		set
+		{
+			_f_Dialogues[Index] = value;
+		}
+	}
 	public UnityEngine.Object f_SpawnPrefab
 	{
 		get
@@ -2171,6 +2218,17 @@ public partial class E_Segments : BGEntity
 			_f_DialogueLightPitchYaw[Index] = value;
 		}
 	}
+	public E_SegmentsGameplayData f_GameplayData
+	{
+		get
+		{
+			return (E_SegmentsGameplayData) _f_GameplayData[Index];
+		}
+		set
+		{
+			_f_GameplayData[Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -2198,6 +2256,24 @@ public partial class E_Segments : BGEntity
 			return _ufle12jhs77_f_Prefab;
 		}
 	}
+	private static BansheeGz.BGDatabase.BGFieldRelationMultiple _ufle12jhs77_f_Objects;
+	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_Objects
+	{
+		get
+		{
+			if(_ufle12jhs77_f_Objects==null || _ufle12jhs77_f_Objects.IsDeleted) _ufle12jhs77_f_Objects=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5414509257987170800UL,16375924262376720830UL));
+			return _ufle12jhs77_f_Objects;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues
+	{
+		get
+		{
+			if(_ufle12jhs77_f_Dialogues==null || _ufle12jhs77_f_Dialogues.IsDeleted) _ufle12jhs77_f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5043863872193162925UL,15580842669602972338UL));
+			return _ufle12jhs77_f_Dialogues;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldUnityObject _ufle12jhs77_f_SpawnPrefab;
 	public static BansheeGz.BGDatabase.BGFieldUnityObject _f_SpawnPrefab
 	{
@@ -2223,6 +2299,15 @@ public partial class E_Segments : BGEntity
 		{
 			if(_ufle12jhs77_f_DialogueLightPitchYaw==null || _ufle12jhs77_f_DialogueLightPitchYaw.IsDeleted) _ufle12jhs77_f_DialogueLightPitchYaw=(BansheeGz.BGDatabase.BGFieldVector2) MetaDefault.GetField(new BGId(5395289116548682697UL,15975294921309799602UL));
 			return _ufle12jhs77_f_DialogueLightPitchYaw;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_GameplayData;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData
+	{
+		get
+		{
+			if(_ufle12jhs77_f_GameplayData==null || _ufle12jhs77_f_GameplayData.IsDeleted) _ufle12jhs77_f_GameplayData=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4909705211094579299UL,13210900775542928543UL));
+			return _ufle12jhs77_f_GameplayData;
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
@@ -2328,6 +2413,24 @@ public partial class E_Segments : BGEntity
 	{
 		return (E_Segments) MetaDefault.NewEntity();
 	}
+	public void f_Objects_Add(E_Objects related)
+	{
+		if(related == null) throw new Exception("Can not add a related entity, cause value is null");
+		var val = _f_Objects[Index];
+		if(val == null) val = new List<BGEntity>{related};
+		else val.Add(related);
+		_f_Objects[Index] = val;
+	}
+	public void f_Objects_Remove(E_Objects related)
+	{
+		if(related == null) throw new Exception("Can not remove a related entity, cause value is null");
+		var val = _f_Objects[Index];
+		if(val != null)
+		{
+			val.RemoveAll(e => Equals(e, related));
+			_f_Objects[Index] = val.Count == 0 ? null : val;
+		}
+	}
 }
 
 //=============================================================
@@ -2405,6 +2508,17 @@ public partial class E_QuestDialogues : BGEntity
 			return _f_QuestDialogue[Index];
 		}
 	}
+	public E_Objects f_ForObject
+	{
+		get
+		{
+			return (E_Objects) _f_ForObject[Index];
+		}
+		set
+		{
+			_f_ForObject[Index] = value;
+		}
+	}
 	public System.Boolean f_Played
 	{
 		get
@@ -2441,6 +2555,15 @@ public partial class E_QuestDialogues : BGEntity
 		{
 			if(_ufle12jhs77_f_QuestDialogue==null || _ufle12jhs77_f_QuestDialogue.IsDeleted) _ufle12jhs77_f_QuestDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5688831178092183995UL,10495045604489321390UL));
 			return _ufle12jhs77_f_QuestDialogue;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_ForObject;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForObject
+	{
+		get
+		{
+			if(_ufle12jhs77_f_ForObject==null || _ufle12jhs77_f_ForObject.IsDeleted) _ufle12jhs77_f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5004266668345210568UL,9845439169215335097UL));
+			return _ufle12jhs77_f_ForObject;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_Played;
@@ -2599,6 +2722,17 @@ public partial class E_ReturnDialogues : BGEntity
 			return _f_ReturnDialogue[Index];
 		}
 	}
+	public E_Objects f_ForObject
+	{
+		get
+		{
+			return (E_Objects) _f_ForObject[Index];
+		}
+		set
+		{
+			_f_ForObject[Index] = value;
+		}
+	}
 	public System.Boolean f_Played
 	{
 		get
@@ -2635,6 +2769,15 @@ public partial class E_ReturnDialogues : BGEntity
 		{
 			if(_ufle12jhs77_f_ReturnDialogue==null || _ufle12jhs77_f_ReturnDialogue.IsDeleted) _ufle12jhs77_f_ReturnDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5561073307789242631UL,2750474124636255876UL));
 			return _ufle12jhs77_f_ReturnDialogue;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_ForObject;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForObject
+	{
+		get
+		{
+			if(_ufle12jhs77_f_ForObject==null || _ufle12jhs77_f_ForObject.IsDeleted) _ufle12jhs77_f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5205356440346579593UL,8967285530539706020UL));
+			return _ufle12jhs77_f_ForObject;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_Played;
@@ -2987,6 +3130,17 @@ public partial class E_QuestWaitingDialogues : BGEntity
 			return _f_WaitingDialogue[Index];
 		}
 	}
+	public E_Objects f_ForObject
+	{
+		get
+		{
+			return (E_Objects) _f_ForObject[Index];
+		}
+		set
+		{
+			_f_ForObject[Index] = value;
+		}
+	}
 	public System.Boolean f_Played
 	{
 		get
@@ -3023,6 +3177,15 @@ public partial class E_QuestWaitingDialogues : BGEntity
 		{
 			if(_ufle12jhs77_f_WaitingDialogue==null || _ufle12jhs77_f_WaitingDialogue.IsDeleted) _ufle12jhs77_f_WaitingDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5075957454151973099UL,8866328356865390467UL));
 			return _ufle12jhs77_f_WaitingDialogue;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_ForObject;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForObject
+	{
+		get
+		{
+			if(_ufle12jhs77_f_ForObject==null || _ufle12jhs77_f_ForObject.IsDeleted) _ufle12jhs77_f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4892145133406715386UL,8464972153410059912UL));
+			return _ufle12jhs77_f_ForObject;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_Played;
@@ -3359,6 +3522,17 @@ public partial class E_SegmentsGameplayData : BGEntity
 			_f_Rescued[Index] = value;
 		}
 	}
+	public System.Collections.Generic.List<System.Boolean> f_ObjDialoguePlayed
+	{
+		get
+		{
+			return _f_ObjDialoguePlayed[Index];
+		}
+		set
+		{
+			_f_ObjDialoguePlayed[Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -3384,6 +3558,28 @@ public partial class E_SegmentsGameplayData : BGEntity
 		{
 			if(_ufle12jhs77_f_Rescued==null || _ufle12jhs77_f_Rescued.IsDeleted) _ufle12jhs77_f_Rescued=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4897271965161504167UL,2768130027215449236UL));
 			return _ufle12jhs77_f_Rescued;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldListBool _ufle12jhs77_f_ObjDialoguePlayed;
+	public static BansheeGz.BGDatabase.BGFieldListBool _f_ObjDialoguePlayed
+	{
+		get
+		{
+			if(_ufle12jhs77_f_ObjDialoguePlayed==null || _ufle12jhs77_f_ObjDialoguePlayed.IsDeleted) _ufle12jhs77_f_ObjDialoguePlayed=(BansheeGz.BGDatabase.BGFieldListBool) MetaDefault.GetField(new BGId(5005048154492295582UL,18343704791617690790UL));
+			return _ufle12jhs77_f_ObjDialoguePlayed;
+		}
+	}
+	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
+	public List<E_Segments> RelatedSegmentsListUsingGameplayDataRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_Segments._f_GameplayData.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_Segments>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Segments) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
 		}
 	}
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
@@ -3551,6 +3747,17 @@ public partial class E_Objects : BGEntity
 			_f_Owner[Index] = value;
 		}
 	}
+	public E_ObjectsGameplayData f_GameplayData
+	{
+		get
+		{
+			return (E_ObjectsGameplayData) _f_GameplayData[Index];
+		}
+		set
+		{
+			_f_GameplayData[Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -3596,7 +3803,64 @@ public partial class E_Objects : BGEntity
 			return _ufle12jhs77_f_Owner;
 		}
 	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_GameplayData;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData
+	{
+		get
+		{
+			if(_ufle12jhs77_f_GameplayData==null || _ufle12jhs77_f_GameplayData.IsDeleted) _ufle12jhs77_f_GameplayData=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5680102043031229158UL,4949064207623274920UL));
+			return _ufle12jhs77_f_GameplayData;
+		}
+	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
+	public List<E_Segments> RelatedSegmentsListUsingObjectsRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_Segments._f_Objects.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_Segments>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Segments) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
+		}
+	}
+	public List<E_QuestDialogues> RelatedQuestDialoguesListUsingForObjectRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_QuestDialogues._f_ForObject.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_QuestDialogues>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_QuestDialogues) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
+		}
+	}
+	public List<E_ReturnDialogues> RelatedReturnDialoguesListUsingForObjectRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_ReturnDialogues._f_ForObject.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_ReturnDialogues>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_ReturnDialogues) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
+		}
+	}
+	public List<E_QuestWaitingDialogues> RelatedQuestWaitingDialoguesListUsingForObjectRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_QuestWaitingDialogues._f_ForObject.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_QuestWaitingDialogues>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_QuestWaitingDialogues) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
+		}
+	}
 	public List<E_ObjectsGameplayData> RelatedObjectsGameplayDataListUsingObjectRelation
 	{
 		get
@@ -3801,6 +4065,19 @@ public partial class E_ObjectsGameplayData : BGEntity
 		{
 			if(_ufle12jhs77_f_ObjectReturned==null || _ufle12jhs77_f_ObjectReturned.IsDeleted) _ufle12jhs77_f_ObjectReturned=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4762361548636797324UL,11593070393711443599UL));
 			return _ufle12jhs77_f_ObjectReturned;
+		}
+	}
+	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
+	public List<E_Objects> RelatedObjectsListUsingGameplayDataRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_Objects._f_GameplayData.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_Objects>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Objects) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
 		}
 	}
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();

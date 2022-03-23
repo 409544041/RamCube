@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1649878793360924044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5697806750221284357}
+  m_Layer: 0
+  m_Name: Notification Icon Trans
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5697806750221284357
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649878793360924044}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8159655035380119096}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5117874761046671306
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +391,6 @@ GameObject:
   - component: {fileID: 1225204154015398306}
   - component: {fileID: 3659917832463773925}
   - component: {fileID: 6473104114235639864}
-  - component: {fileID: 2482948315133092644}
   m_Layer: 0
   m_Name: Segment 01
   m_TagString: Segment
@@ -424,7 +453,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_segments: {fileID: 6473104114235639864}
-  m_dialogues: {fileID: 2482948315133092644}
 --- !u!114 &6473104114235639864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,24 +469,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   entityIdString: Zxl2el2iSE6UsyfD4i8IyA
-  metaIdString: 
-  initWithFirst: 0
---- !u!114 &2482948315133092644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8554115220973709344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f9d8749d8052e249b127c4a9f220f05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnEntityChange:
-    m_PersistentCalls:
-      m_Calls: []
-  entityIdString: VJer7fF3QE2OFD8m+dhx3A
   metaIdString: 
   initWithFirst: 0
 --- !u!1001 &556485354426371229

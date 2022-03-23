@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using Qbism.SpriteAnimations;
 using Qbism.Serpent;
-using MoreMountains.Feedbacks;
 
 namespace Qbism.Dialogue
 {
