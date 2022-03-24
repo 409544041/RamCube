@@ -4031,6 +4031,17 @@ public partial class E_ObjectsGameplayData : BGEntity
 			_f_ObjectReturned[Index] = value;
 		}
 	}
+	public System.Boolean f_ObjectQuestGiven
+	{
+		get
+		{
+			return _f_ObjectQuestGiven[Index];
+		}
+		set
+		{
+			_f_ObjectQuestGiven[Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -4065,6 +4076,15 @@ public partial class E_ObjectsGameplayData : BGEntity
 		{
 			if(_ufle12jhs77_f_ObjectReturned==null || _ufle12jhs77_f_ObjectReturned.IsDeleted) _ufle12jhs77_f_ObjectReturned=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4762361548636797324UL,11593070393711443599UL));
 			return _ufle12jhs77_f_ObjectReturned;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_ObjectQuestGiven;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_ObjectQuestGiven
+	{
+		get
+		{
+			if(_ufle12jhs77_f_ObjectQuestGiven==null || _ufle12jhs77_f_ObjectQuestGiven.IsDeleted) _ufle12jhs77_f_ObjectQuestGiven=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4691334056568724199UL,3732333455379869369UL));
+			return _ufle12jhs77_f_ObjectQuestGiven;
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
