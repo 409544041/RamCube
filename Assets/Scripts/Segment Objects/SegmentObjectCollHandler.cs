@@ -24,7 +24,7 @@ namespace Qbism.Objects
 			var objCollManager = FindObjectOfType<ObjectCollectManager>();
 			objCollManager.collectableObject = this.gameObject;
 			objCollManager.objJuicer = refs.juicer;
-			objCollManager.objMesh = refs.mesh;
+			objCollManager.objMeshTrans = refs.meshTrans;
 			objCollManager.m_Object = refs.m_objects;
 			objCollManager.InitiateShowingObjectOverlay();
 		}

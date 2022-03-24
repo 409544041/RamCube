@@ -17,9 +17,19 @@ namespace Qbism.Objects
 				{
 					obj.spawnJuice.Initialization();
 					obj.spawnJuice.PlayFeedbacks();
-					obj.mesh.enabled = true;
+
+					foreach (var mesh in obj.meshes)
+					{
+						mesh.enabled = true;
+					}
 				}
-				else if (obj.gameObject.activeSelf == true) obj.mesh.enabled = false;
+				else if (obj.gameObject.activeSelf == true)
+				{
+					foreach (var mesh in obj.meshes)
+					{
+						mesh.enabled = false;
+					}
+				}
 			}
 		}
 
@@ -27,7 +37,13 @@ namespace Qbism.Objects
 		{
 			foreach (var obj in objectsToRender)
 			{
-				if (obj.gameObject.activeSelf == true) obj.mesh.enabled = false;
+				if (obj.gameObject.activeSelf == true)
+				{
+					foreach (var mesh in obj.meshes)
+					{
+						mesh.enabled = false;
+					}
+				}
 			}
 		}
 	}

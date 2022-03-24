@@ -9,7 +9,8 @@ namespace Qbism.Objects
 	{
 		//Config parameters
 		public M_Objects m_objects;
-		public Renderer mesh;
+		public Renderer[] meshes;
+		public Transform meshTrans;
 		[Header("Juice")]
 		public SegmentObjectJuicer juicer;
 		public MMFeedbacks spawnJuice;

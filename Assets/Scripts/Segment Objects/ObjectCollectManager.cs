@@ -16,7 +16,7 @@ namespace Qbism.Objects
 		public GameObject collectableObject { get; set; }
 		public SegmentObjectJuicer objJuicer { get; set; }
 		Vector3 objNewViewPos;
-		public Renderer objMesh { get; set; }
+		public Transform objMeshTrans { get; set; }
 		public bool overlayActive { get; private set; } = false;
 		public M_Objects m_Object { get; set; }
 
@@ -64,7 +64,7 @@ namespace Qbism.Objects
 			objJuicer.uiStar.transform.forward = gcRef.cam.transform.forward;
 			objJuicer.fartParticles.transform.forward = gcRef.cam.transform.forward;
 
-			var objMeshViewPos = gcRef.cam.WorldToViewportPoint(objMesh.transform.position);
+			var objMeshViewPos = gcRef.cam.WorldToViewportPoint(objMeshTrans.position);
 			var starNewViewPos = new Vector3(objMeshViewPos.x, objMeshViewPos.y, 8);
 			var particleNewVewPos = new Vector3(objMeshViewPos.x, objMeshViewPos.y, 7);
 
@@ -74,17 +74,17 @@ namespace Qbism.Objects
 		
 		private IEnumerator ScaleObject()
 		{
-			var startscale = objMesh.transform.localScale;
+			var startscale = objMeshTrans.localScale;
 			var newScale = startscale.x * objectScaleUp;
 			var targetScale = new Vector3(newScale, newScale, newScale);
 			float elapsedTime = 0;
 
-			while (!Mathf.Approximately(objMesh.transform.localScale.x, newScale))
+			while (!Mathf.Approximately(objMeshTrans.localScale.x, newScale))
 			{
 				elapsedTime += Time.deltaTime;
 				var percentageComplete = elapsedTime / scaleTransDur;
 
-				objMesh.transform.localScale = Vector3.Lerp(startscale, targetScale,
+				objMeshTrans.localScale = Vector3.Lerp(startscale, targetScale,
 					scaleCurve.Evaluate(percentageComplete));
 
 				yield return null;
