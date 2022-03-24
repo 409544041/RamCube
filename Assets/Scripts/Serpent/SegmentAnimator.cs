@@ -16,42 +16,33 @@ namespace Qbism.Serpent
 		[SerializeField] MMFeedbacks spawnJuice;
 		[SerializeField] MMFeedbacks flybyJuice;
 		[Header("Animation")]
-		[SerializeField] Animator animator = null;
 		[SerializeField] float lookUpAnimDelay = 0f, happyWiggleAnimDelay = 0f;
+		[SerializeField] SegmentRefHolder refs;
 
 		//Cache
-		PlayerAnimator playerAnim = null;
+		PlayerAnimator playerAnim;
+		GameplayCoreRefHolder gcRef;
 
 		//States
-		bool justSpawned = false;
-
-		private void Awake()
-		{ //TO DO: Setup serpent refs
-			playerAnim = FindObjectOfType<PlayerAnimator>();
-		}
-
-		private void OnEnable()
-		{
-			if (playerAnim != null)
-			{
-				playerAnim.onTriggerLandingReaction += TriggerSquish;
-				playerAnim.onChildSegmentToPlayer += ChildToPlayer;
-			}
-		}
+		public bool justSpawned { get; private set; } = false;
 
 		public void Spawn()
 		{
+			gcRef = FindObjectOfType<GameplayCoreRefHolder>();
+			playerAnim = gcRef.pRef.playerAnim;
+			refs.gcRef = gcRef;
+
 			justSpawned = true;
 			spawnJuice.Initialization();
 			spawnJuice.PlayFeedbacks();
-			animator.SetTrigger("SpawnWiggle");
+			refs.bodyAnimator.SetTrigger("SpawnWiggle");
 		}
 
-		private void ChildToPlayer()
+		public void ChildToPlayer()
 		{
 			if (justSpawned)
 			{
-				var player = playerAnim.GetComponentInParent<PlayerCubeMover>().transform;
+				var player = refs.gcRef.pRef.playerMover.transform;
 				var myParent = transform.parent;
 				myParent.transform.parent = player;
 			}
@@ -63,16 +54,16 @@ namespace Qbism.Serpent
 			flybyJuice.PlayFeedbacks();
 		}
 
-		private void TriggerSquish()
+		public void TriggerSquish()
 		{
-			if (justSpawned) animator.SetTrigger("Squish");
+			if (justSpawned) refs.bodyAnimator.SetTrigger("Squish");
 		}
 
 		private IEnumerator TriggerLookUp() //Called from animation event
 		{
 			//Take the player landing + squish reaction duration into account for look up delay
 			yield return new WaitForSeconds(lookUpAnimDelay);
-			animator.SetTrigger("LookUp");
+			refs.bodyAnimator.SetTrigger("LookUp");
 		}
 
 		public void InitiateHappyWiggle()
@@ -83,7 +74,7 @@ namespace Qbism.Serpent
 		private IEnumerator TriggerHappyWiggle() 
 		{
 			yield return new WaitForSeconds(happyWiggleAnimDelay);
-			animator.SetTrigger("HappyWiggle");
+			refs.bodyAnimator.SetTrigger("HappyWiggle");
 		}
 
 		private void TriggerPlayerLanding() //Called from animation event
@@ -103,21 +94,12 @@ namespace Qbism.Serpent
 
 		private void StartRescueDialogue() // Called from animation event
 		{
-			GetComponentInParent<DialogueStarter>().StartRescueDialogue(this);
+			refs.dialogueStarter.StartRescueDialogue(this);
 		}
 
 		private void TriggerAfterDialogueCam() // Called from animation event
 		{
-			FindObjectOfType<FinishEndSeqHandler>().PanAndZoomCamAfterDialogue();
-		}
-		
-		private void OnDisable()
-		{
-			if (playerAnim != null)
-			{
-				playerAnim.onTriggerLandingReaction -= TriggerSquish;
-				playerAnim.onChildSegmentToPlayer -= ChildToPlayer;
-			}
+			refs.gcRef.finishRef.endSeq.PanAndZoomCamAfterDialogue();
 		}
 	}
 }

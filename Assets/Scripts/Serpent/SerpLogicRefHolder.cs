@@ -1,4 +1,5 @@
 using Qbism.Control;
+using Qbism.Dialogue;
 using Qbism.Objects;
 using Qbism.SceneTransition;
 using System.Collections;
@@ -19,6 +20,10 @@ namespace Qbism.Serpent
 		public ObjectStatusChecker objStatusChecker;
 		public ObjectUIHandler objUIHandler;
 		public ObjectRenderSelector[] objRenderSelectors;
+		[Header("Dialogue")]
+		public DialogueManager dialogueManager;
+		public DialogueFocuser dialogueFocuser;
+		public DialogueWriter dialogueWriter;
 
 	}
 }

@@ -30,7 +30,7 @@ namespace Qbism.Serpent
 
         private void PlaceSegmentsAtStart()
         {
-            Transform[] segmentsTrans = GetRescuedSegments();
+            SegmentRefHolder[] segmentsTrans = GetRescuedSegments();
 
             SetSegmentInFocus();
 
@@ -39,14 +39,14 @@ namespace Qbism.Serpent
             segHandler.EnableSegments(segmentsTrans);
         }
 
-        private Transform[] GetRescuedSegments()
+        private SegmentRefHolder[] GetRescuedSegments()
         {
             var segmentsTrans = segHandler.PrepareSegmentsUpToBilly();
 
             segments = new SegmentScroll[segmentsTrans.Length];
             for (int i = 0; i < segmentsTrans.Length; i++)
             {
-                segments[i] = segmentsTrans[i].GetComponent<SegmentScroll>();
+                segments[i] = segmentsTrans[i].segScroll;
             }
 
             return segmentsTrans;

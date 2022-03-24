@@ -19,7 +19,7 @@ namespace Qbism.Dialogue
 		MMFeedbackScale[] mmscaler = new MMFeedbackScale[2];
 		List<Color>[] matFocusColor = new List<Color>[2];
 		List<Color>[] matUnfocusColor = new List<Color>[2];
-		List<SkinnedMeshRenderer>[] mRenders = new List<SkinnedMeshRenderer>[2];
+		List<Renderer>[] mRenders = new List<Renderer>[2];
 		List<SpriteRenderer>[] sRenders = new List<SpriteRenderer>[2];
 		float originalCurveOne, curveDelta;
 		bool originalValuesSet = false;
@@ -30,23 +30,23 @@ namespace Qbism.Dialogue
 			{
 				matFocusColor[i] = new List<Color>();
 				matUnfocusColor[i] = new List<Color>();
-				mRenders[i] = new List<SkinnedMeshRenderer>();
+				mRenders[i] = new List<Renderer>();
 				sRenders[i] = new List<SpriteRenderer>();
 			}
 		}
 
-		public void SetJuiceValues(GameObject head, int i)
+		public void SetJuiceValues(SegmentRefHolder segRef, int i)
 		{
-			scaleJuice[i] = head.GetComponent<SegmentScroll>().scrollJuice;
+			scaleJuice[i] = segRef.segScroll.scrollJuice;
 			scaleJuice[i].Initialization();
 			mmscaler[i] = scaleJuice[i].GetComponent<MMFeedbackScale>();
 		}
 
-		public void SetInitialFocusValues(GameObject head, int i)
+		public void SetInitialFocusValues(SegmentRefHolder segRef, int i)
 		{
-			var segEntity = head.GetComponent<M_Segments>();
-			var meshRenders = head.GetComponentsInChildren<SkinnedMeshRenderer>();
-			var spriteRenders = head.GetComponentsInChildren<SpriteRenderer>();
+			var segEntity = segRef.mSegments;
+			var meshRenders = segRef.meshes;
+			var spriteRenders = segRef.GetComponentsInChildren<SpriteRenderer>();
 
 			for (int j = 0; j < spriteRenders.Length; j++)
 			{

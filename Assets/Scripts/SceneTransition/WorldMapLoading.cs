@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.General;
 using Qbism.Saving;
+using Qbism.Serpent;
 using Qbism.WorldMap;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,7 @@ namespace Qbism.SceneTransition
 		//Config parameters
 		[SerializeField] MapCoreRefHolder mcRef;
 		[SerializeField] GameplayCoreRefHolder gcRef;
+		[SerializeField] SerpCoreRefHolder scRef;
 
 		//States
 		PersistentRefHolder persRef;
@@ -35,6 +37,12 @@ namespace Qbism.SceneTransition
 				musicFader = gcRef.musicFader;
 				fader = persRef.fader;
 			}
+			else if (scRef != null)
+			{
+				persRef = scRef.persRef;
+				musicFader = scRef.musicFader;
+				fader = persRef.fader;
+			}
 		}
 
 		public void StartLoadingWorldMap(bool fromLevel)
@@ -47,14 +55,11 @@ namespace Qbism.SceneTransition
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
-			//TO DO: Remove this when we have serpscreen core refs
-			if (musicFader != null) musicFader.FadeMusicOut();
+			musicFader.FadeMusicOut();
 
-			//TO DO: same here
-			if (fader == null) fader = FindObjectOfType<Fader>();
 			yield return fader.FadeOut(fader.sceneTransTime);
 
-			if (musicFader != null) musicFader.TurnMusicOff();
+			musicFader.TurnMusicOff();
 			
 			yield return SceneManager.LoadSceneAsync("WorldMap");
 

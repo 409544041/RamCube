@@ -5,6 +5,8 @@ using UnityEngine;
 using TMPro;
 using MoreMountains.Feedbacks;
 using UnityEngine.UI;
+using Qbism.Saving;
+using Qbism.General;
 
 namespace Qbism.Serpent
 {
@@ -13,6 +15,7 @@ namespace Qbism.Serpent
 		//Config parameters
 		public Camera cam;
 		public CinemachineVirtualCamera serpCam;
+		public MusicFadeOut musicFader;
 		[Header("Logic")]
 		public SerpLogicRefHolder slRef;
 		[Header("Canvas")]
@@ -28,5 +31,22 @@ namespace Qbism.Serpent
 		public CanvasGroup bgCanvasGroup;
 		[Header("Serpent")]
 		public SerpentSegmentHandler segHandler;
+
+		//Cache
+		public SegmentRefHolder[] segRefs { get; private set; }
+		public PersistentRefHolder persRef { get; private set; }
+
+		private void Awake()
+		{
+			persRef = FindObjectOfType<PersistentRefHolder>();
+			persRef.scRef = this;
+			persRef.cam = cam;
+
+			segRefs = FindObjectsOfType<SegmentRefHolder>();
+			foreach (var segRef in segRefs)
+			{
+				segRef.scRef = this;
+			}
+		}
 	}
 }

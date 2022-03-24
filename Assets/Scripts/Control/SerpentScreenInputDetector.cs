@@ -8,10 +8,11 @@ namespace Qbism.Control
 {
 	public class SerpentScreenInputDetector : MonoBehaviour
 	{
+		//Config parameters
+		[SerializeField] SerpCoreRefHolder scRef;
+
 		//Cache
 		GameControls controls;
-		SerpentScreenScroller serpScroller;
-		WorldMapLoading mapLoader;
 
 		//States
 		Vector2 stickValue;
@@ -22,9 +23,6 @@ namespace Qbism.Control
 			controls = new GameControls();
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
 			controls.Gameplay.Back.performed += ctx => LoadWorldMap();
-
-			serpScroller = GetComponent<SerpentScreenScroller>();
-			mapLoader = FindObjectOfType<WorldMapLoading>();
 		}
 
 		private void OnEnable()
@@ -46,19 +44,19 @@ namespace Qbism.Control
         {
 			if (stickValue.x > .5)
 			{
-				serpScroller.ScrollLeft();
+				scRef.slRef.scroller.ScrollLeft();
 				inputting = true;
 			}
 			else if (stickValue.x < -.5)
 			{
-				serpScroller.ScrollRight();
+				scRef.slRef.scroller.ScrollRight();
 				inputting = true;
 			}
 		}
 
 		private void LoadWorldMap()
 		{
-			mapLoader.StartLoadingWorldMap(false);
+			scRef.slRef.mapLoader.StartLoadingWorldMap(false);
 		}
 
 		private void OnDisable()

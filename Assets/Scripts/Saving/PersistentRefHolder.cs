@@ -1,5 +1,6 @@
 using Qbism.General;
 using Qbism.SceneTransition;
+using Qbism.Serpent;
 using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,5 +33,6 @@ namespace Qbism.Saving
 		public MapLogicRefHolder mlRef { get; set; }
 		public GameplayCoreRefHolder gcRef { get; set; }
 		public GameLogicRefHolder glRef { get; set; }
+		public SerpCoreRefHolder scRef { get; set; }
 	}
 }

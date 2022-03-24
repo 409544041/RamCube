@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Qbism.Serpent;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Qbism.PlayerCube
 		PlayerIntroJuicer introJuicer;
 		PlayerOutroJuicer outroJuicer;
 		PlayerFartJuicer fartJuicer;
+		SegmentRefHolder rescuedSegRef;
 
 		//States
 		Vector3 playerFinishLandPos;
@@ -49,9 +51,20 @@ namespace Qbism.PlayerCube
 			StartCoroutine(DisableInputForDrop());
 		}
 
+		private void FindRescuedSegRef()
+		{
+			SegmentRefHolder[] segRefs = FindObjectsOfType<SegmentRefHolder>();
+			foreach (var segRef in segRefs)
+			{
+				if (segRef.segAnim != null && segRef.segAnim.justSpawned)
+					rescuedSegRef = segRef;
+			}
+		}
+
 		private void TriggerLandingReaction() //Called from animation event
 		{
-			onTriggerLandingReaction();
+			if (rescuedSegRef == null) FindRescuedSegRef();
+			if (rescuedSegRef != null) rescuedSegRef.segAnim.TriggerSquish();
 		}
 
 		private IEnumerator DisableInputForDrop()
@@ -136,7 +149,9 @@ namespace Qbism.PlayerCube
 		{
 			if (serpentActivated) return;
 
-			onChildSegmentToPlayer();
+			if (rescuedSegRef == null) FindRescuedSegRef();
+			if (rescuedSegRef != null) rescuedSegRef.segAnim.ChildToPlayer();
+
 			coll.size = new Vector3(coll.size.x, 3, coll.size.z);
 			
 			onTriggerSerpent(); 

@@ -41,9 +41,9 @@ namespace Qbism.Serpent
 		{
 			Vector3 pos = currentSpline.GetPoint(currentSpline.pointCount -1).position;
 
-			for (int i = 0; i < mcRef.serpSegHandler.segments.Length; i++)
+			for (int i = 0; i < mcRef.serpSegHandler.segRefs.Length; i++)
 			{
-				mcRef.serpSegHandler.segments[i].position = pos;
+				mcRef.serpSegHandler.segRefs[i].transform.position = pos;
 			}
 		}
 
@@ -57,9 +57,9 @@ namespace Qbism.Serpent
 
 		private void SetShrinkingData()
 		{
-			for (int i = 0; i < mcRef.serpSegHandler.segments.Length; i++)
+			for (int i = 0; i < mcRef.serpSegHandler.segRefs.Length; i++)
 			{
-				var shrinker = mcRef.serpSegHandler.segments[i].GetComponent<ScreenDistanceShrinker>();
+				var shrinker = mcRef.serpSegHandler.segRefs[i].distShrinker;
 				if (shrinker != null) shrinker.SetTargetData(target.position, sizeAtStart, sizeAtTarget, 0);
 			}
 		}

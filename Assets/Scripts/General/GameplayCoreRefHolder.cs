@@ -14,6 +14,7 @@ using Qbism.Cubes;
 using Qbism.Rewind;
 using Qbism.PlayerCube;
 using Qbism.Shapies;
+using Qbism.Serpent;
 
 public class GameplayCoreRefHolder : MonoBehaviour
 {
@@ -60,6 +61,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public TimeBody[] timeBodies { get; private set; }
 	public PlayerRefHolder pRef { get; private set; }
 	public LaserRefHolder[] laserRefs { get; private set; }
+	public SegmentRefHolder[] segRefs { get; private set; }
 
 	private void Awake()
 	{
@@ -76,6 +78,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		GetSetShrinker();
 		GetSetPlayer(timeBodyList);
 		GetSetLasers();
+		GetSetSegments();
 
 		walls = GameObject.FindGameObjectsWithTag("Wall");
 
@@ -83,6 +86,15 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		floorCubes = floorCubeList.ToArray();
 		floorCompAdders = floorCompList.ToArray();
 		timeBodies = timeBodyList.ToArray();
+	}
+
+	private void GetSetSegments()
+	{
+		segRefs = finishRef.serpSegHandler.segRefs;
+		foreach (var segRef in segRefs)
+		{
+			segRef.gcRef = this;
+		}
 	}
 
 	private void GetSetLasers()

@@ -9,6 +9,7 @@ namespace Qbism.Serpent
     {
         //Config parameters
         public MMFeedbacks scrollJuice;
+		[SerializeField] SegmentRefHolder refs;
 
         //Cache
         SerpentScreenScroller serpScroller;
@@ -84,8 +85,7 @@ namespace Qbism.Serpent
 			{
 				if (!setAtStart) TriggerScaleJuice();
 
-				var m_seg = GetComponent<M_Segments>();
-				var e_objs = m_seg.f_Objects;
+				var e_objs = refs.mSegments.f_Objects;
 
 				slRef.objUIHandler.ShowObjectUI(e_objs);
 			}

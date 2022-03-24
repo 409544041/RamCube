@@ -11,15 +11,15 @@ namespace Qbism.Serpent
 	public class SerpentSegmentHandler : MonoBehaviour
 	{
 		//Config parameters
-		public Transform[] segments = null;
+		public SegmentRefHolder[] segRefs;
 		[SerializeField] MapCoreRefHolder mcRef;
 		[SerializeField] FinishRefHolder finishRef;
 		[SerializeField] SerpCoreRefHolder scRef;
 
 		//States
 		int billyArrayIndex;
-		Transform[] segmentsReordered = null;
-		Transform[] segmentsUpToBilly = null;
+		SegmentRefHolder[] segmentsReordered = null;
+		SegmentRefHolder[] segmentsUpToBilly = null;
 		bool inMap = false, inSerpScreen = false, inLevel = false;
 
 		private void Start()
@@ -29,36 +29,39 @@ namespace Qbism.Serpent
 
         private void DisableSegmentsAtStart()
         {
-            for (int i = 0; i < segments.Length; i++)
+            for (int i = 0; i < segRefs.Length; i++)
             {
-                var mRenders = segments[i].GetComponentsInChildren<Renderer>();
-                var sRender = segments[i].GetComponentInChildren<SpriteRenderer>();
+                var mRenders = segRefs[i].meshes;
+                var sRenders = segRefs[i].GetComponentsInChildren<SpriteRenderer>();
 
                 for (int j = 0; j < mRenders.Length; j++)
                 {
                     mRenders[j].enabled = false;
                 }
 
-                if (sRender) sRender.enabled = false;
+				for (int j = 0; j < sRenders.Length; j++)
+				{
+					sRenders[j].enabled = false;
+				}
             }
         }
 
         public void EnableSegmentsWithoutBilly()
 		{
-			var segmentsWithoutBilly = new Transform[segments.Length - 1];
+			var segmentsWithoutBilly = new SegmentRefHolder[segRefs.Length - 1];
 
             for (int i = 0; i < segmentsWithoutBilly.Length; i++)
             {
-				segmentsWithoutBilly[i] = segments[i];
+				segmentsWithoutBilly[i] = segRefs[i];
             }
 
 			EnableSegments(segmentsWithoutBilly);
 		}
 
-		public Transform[] PrepareSegmentsWithBilly()
+		public SegmentRefHolder[] PrepareSegmentsWithBilly()
         {
-            segmentsReordered = new Transform[segments.Length];
-            var billyIndex = segments.Length - 1;
+            segmentsReordered = new SegmentRefHolder[segRefs.Length];
+            var billyIndex = segRefs.Length - 1;
 
 			billyIndex = GetBillyArrayIndex(billyIndex);
 			billyArrayIndex = billyIndex;
@@ -68,13 +71,13 @@ namespace Qbism.Serpent
 			return segmentsReordered;
 		}
 
-		public Transform[] PrepareSegmentsUpToBilly()
+		public SegmentRefHolder[] PrepareSegmentsUpToBilly()
         {
-			var billyIndex = segments.Length - 1;
+			var billyIndex = segRefs.Length - 1;
 			billyIndex = GetBillyArrayIndex(billyIndex);
 			billyArrayIndex = billyIndex;
 
-			segmentsUpToBilly = new Transform[billyIndex + 1];
+			segmentsUpToBilly = new SegmentRefHolder[billyIndex + 1];
 			FillArrayUpToBilly(segmentsUpToBilly, billyIndex);
 
 			return segmentsUpToBilly;
@@ -93,31 +96,31 @@ namespace Qbism.Serpent
 			return billyIndex;
 		}
 
-		private void PlaceBillyInNewArray(Transform[] segmentsReordered, int billyIndex)
+		private void PlaceBillyInNewArray(SegmentRefHolder[] segmentsReordered, int billyIndex)
         {
-            for (int i = 0; i < segments.Length; i++)
+            for (int i = 0; i < segRefs.Length; i++)
             {
-                if (i < billyIndex) segmentsReordered[i] = segments[i];
+                if (i < billyIndex) segmentsReordered[i] = segRefs[i];
 
                 else if (i == billyIndex)
-                    segmentsReordered[i] = segments[segments.Length - 1];
+                    segmentsReordered[i] = segRefs[segRefs.Length - 1];
 
-                else if (i > billyIndex && i < segments.Length)
-                    segmentsReordered[i] = segments[i - 1];
+                else if (i > billyIndex && i < segRefs.Length)
+                    segmentsReordered[i] = segRefs[i - 1];
             }
         }
 
-		private void FillArrayUpToBilly(Transform[] array, int billyIndex)
+		private void FillArrayUpToBilly(SegmentRefHolder[] array, int billyIndex)
 		{
-			for (int i = 0; i < segments.Length; i++)
+			for (int i = 0; i < segRefs.Length; i++)
 			{
-				if (i < billyIndex) array[i] = segments[i];
+				if (i < billyIndex) array[i] = segRefs[i];
 
-				else if (i == billyIndex) array[i] = segments[segments.Length - 1];
+				else if (i == billyIndex) array[i] = segRefs[segRefs.Length - 1];
 			}
 		}
 
-		public void EnableSegments(Transform[] segmentArray)
+		public void EnableSegments(SegmentRefHolder[] segmentArray)
 		{
 			inMap = (mcRef != null);
 			inSerpScreen = (scRef != null);
@@ -125,7 +128,7 @@ namespace Qbism.Serpent
 
 			for (int i = 0; i < segmentArray.Length; i++)
 			{
-				var mRenders = segmentArray[i].GetComponentsInChildren<Renderer>();
+				var mRenders = segmentArray[i].meshes;
 				SpriteRenderer[] sRenders = segmentArray[i].GetComponentsInChildren<SpriteRenderer>();
 
 				if ((mRenders.Length == 0 || sRenders.Length == 0) && i != 0) Debug.Log

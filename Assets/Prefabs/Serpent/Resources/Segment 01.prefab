@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 1225204154015398306}
   - component: {fileID: 3659917832463773925}
   - component: {fileID: 6473104114235639864}
+  - component: {fileID: 992632224042162888}
   m_Layer: 0
   m_Name: Segment 01
   m_TagString: Segment
@@ -440,6 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollJuice: {fileID: 4972252815281731426}
+  refs: {fileID: 992632224042162888}
 --- !u!114 &3659917832463773925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 663732ace60e90c4697eccadb497d966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_segments: {fileID: 6473104114235639864}
+  refs: {fileID: 992632224042162888}
 --- !u!114 &6473104114235639864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +473,30 @@ MonoBehaviour:
   entityIdString: Zxl2el2iSE6UsyfD4i8IyA
   metaIdString: 
   initWithFirst: 0
+--- !u!114 &992632224042162888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8554115220973709344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c1ae7794ae61a4dbdf1464052ffd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mSegments: {fileID: 6473104114235639864}
+  meshes:
+  - {fileID: 6894196130062769236}
+  segHandler: {fileID: 0}
+  bodyAnimator: {fileID: 6708227828586836224}
+  exprHandler: {fileID: 1077521818582539555}
+  segAnim: {fileID: 3223442707762543998}
+  dragonAnim: {fileID: 0}
+  segScroll: {fileID: 1225204154015398306}
+  dialogueStarter: {fileID: 3659917832463773925}
+  distShrinker: {fileID: 0}
+  serpMapHandler: {fileID: 0}
 --- !u!1001 &556485354426371229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1154,6 +1180,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 1512b1a097df6a64fadcd0f8bebff2b9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff6aa16672b00e845ae1b4fa574c595a, type: 3}
+--- !u!137 &6894196130062769236 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2962041044565347719, guid: ff6aa16672b00e845ae1b4fa574c595a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8554115220257264083}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6320735536552705309 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -6845030513194095410, guid: ff6aa16672b00e845ae1b4fa574c595a,
@@ -1230,6 +1262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnJuice: {fileID: 1570939729246052504}
   flybyJuice: {fileID: 3221079219657747159}
-  animator: {fileID: 6708227828586836224}
   lookUpAnimDelay: 1
   happyWiggleAnimDelay: 0.5
+  refs: {fileID: 992632224042162888}
