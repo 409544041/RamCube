@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3318342424200073904}
   - component: {fileID: 5845055227900744515}
   - component: {fileID: 4171758188550439727}
+  - component: {fileID: 6695681259369873185}
   - component: {fileID: 4214781060161001047}
   - component: {fileID: 8538307242587459332}
   m_Layer: 0
@@ -79,14 +80,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048ada2baff79144889eacb0da0145e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swallowAndFartOutJuice: {fileID: 1915046287115354468}
   scaleUpJuice: {fileID: 5537842861653905536}
   starScaleJuice: {fileID: 1812855230871676523}
   scaleUpOvershoot: 0.6
-  mesh: {fileID: 1913411997889166807}
-  m_Object: {fileID: 4214781060161001047}
   fartParticles: {fileID: 7049562857748471153}
   uiStar: {fileID: 9111568591519665292}
+--- !u!114 &6695681259369873185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355312477744744947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f612c4320f5dbb459acf73a0449f94e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swallowAndFartOutJuice: {fileID: 1915046287115354468}
+  refs: {fileID: 8538307242587459332}
 --- !u!114 &4214781060161001047
 MonoBehaviour:
   m_ObjectHideFlags: 0
