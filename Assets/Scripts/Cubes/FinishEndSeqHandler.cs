@@ -48,7 +48,7 @@ namespace Qbism.Cubes
 		PlayerFartLauncher farter;
 		FeatureSwitchBoard switchBoard;
 		CamResizer camResizer;
-		public FinishCubeJuicer finishJuicer { get; private set; } //TO DO: fartlaunch should get it from own ref
+		public FinishCubeJuicer finishJuicer { get; private set; }
 
 		private void Awake()
 		{
@@ -109,27 +109,24 @@ namespace Qbism.Cubes
 		{
 			List<CubeShrinker> cubesToShrinkList = new List<CubeShrinker>();
 
-			//TO DO: Change below to use less GetComponent if we use dics with cubeRefHolder
-			//instead of moveable/floorcube
-
 			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in movHandler.moveableCubeDic)
 			{
 				var cube = pair.Value;
 				var pos = pair.Key;
 
-				var effector = cube.GetComponent<MoveableEffector>();
+				var effector = cube.refs.movEffector;
 				if (effector != null) effector.ToggleEffectFace(false);
 
 				if (!handler.movFloorCubeDic.ContainsKey(pos) &&
 					!handler.shrunkMovFloorCubeDic.ContainsKey(pos))
-					cubesToShrinkList.Add(cube.GetComponent<CubeShrinker>());
+					cubesToShrinkList.Add(cube.refs.cubeShrink);
 			}
 
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.floorCubeDic)
 			{
 				var cube = pair.Value;
 				if (cube.type == CubeTypes.Finish) continue;
-				cubesToShrinkList.Add(cube.GetComponent<CubeShrinker>());
+				cubesToShrinkList.Add(cube.refs.cubeShrink);
 			}
 
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.movFloorCubeDic)
@@ -137,10 +134,10 @@ namespace Qbism.Cubes
 				var cube = pair.Value;
 				if (cube.type == CubeTypes.Finish) continue;
 
-				var effector = cube.GetComponent<MoveableEffector>();
+				var effector = cube.refs.movEffector;
 				if (effector != null) effector.ToggleEffectFace(false);
 
-				cubesToShrinkList.Add(cube.GetComponent<CubeShrinker>());
+				cubesToShrinkList.Add(cube.refs.cubeShrink);
 			}
 
 			for (int i = 0; i < cubesToShrinkList.Count; i++)

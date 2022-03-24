@@ -14,16 +14,19 @@ namespace Qbism.Serpent
 		//Config parameters
 		[SerializeField] Animator animator;
 		[SerializeField] MMFeedbacks flybyJuice, spawnJuice;
+		[SerializeField] SegmentRefHolder refs;
 
 		//Cache
-		PlayerAnimator playerAnim = null;
+		GameplayCoreRefHolder gcRef;
+		PlayerAnimator playerAnim;
 
 		//States
 		float headSpawnDegrees;
 
 		private void Awake()
-		{ //TO DO: Set up serpent refs
-			playerAnim = FindObjectOfType<PlayerAnimator>();
+		{
+			gcRef = FindObjectOfType<GameplayCoreRefHolder>();
+			if (gcRef != null) playerAnim = gcRef.pRef.playerAnim;
 		}
 
 		public void ActivateFlyByJuice()
@@ -64,15 +67,15 @@ namespace Qbism.Serpent
 
 		private void LevelTransition() //Called from animation event
         {
-			var switchBoard = FindObjectOfType<FeatureSwitchBoard>(); //TO DO: link to refs
+			var switchBoard = gcRef.persRef.switchBoard;
 			if (switchBoard.worldMapConnected)
-				FindObjectOfType<WorldMapLoading>().StartLoadingWorldMap(true); //TO DO: link to refs
-			else FindObjectOfType<SceneHandler>().NextLevel();
+				gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
+			else gcRef.glRef.sceneHandler.NextLevel();
 		}
 
 		private void SetPlayerLaughingFace() //Called from animation event
         {
-			playerAnim.GetComponent<ExpressionHandler>().SetLaughingFace();
+			gcRef.pRef.exprHandler.SetLaughingFace();
         }
 	}
 }

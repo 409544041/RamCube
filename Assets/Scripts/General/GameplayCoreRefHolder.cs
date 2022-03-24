@@ -56,7 +56,6 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public FinishRefHolder finishRef { get; private set; } 
 	public CubeRefHolder[] cubeRefs { get; private set; }
 	public FloorCube[] floorCubes { get; private set; }
-	public CubeShrinker[] cubeShrinkers { get; private set; }
 	public FloorComponentAdder[] floorCompAdders { get; private set; }
 	public TimeBody[] timeBodies { get; private set; }
 	public PlayerRefHolder pRef { get; private set; }
@@ -75,7 +74,6 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		GetSetFinishRef(floorCubeList);
 		GetSetCubeRefs(floorCubeList, movCubeList, floorCompList, timeBodyList);
 		GetSetVisualSwappers();
-		GetSetShrinker();
 		GetSetPlayer(timeBodyList);
 		GetSetLasers();
 		GetSetSegments();
@@ -161,16 +159,6 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		{
 			swapper.progHandler = persRef.progHandler;
 			swapper.matHandler = persRef.varMatHandler;
-		}
-	}
-
-	private void GetSetShrinker()
-	{
-		//cant do shrinker via refs bc old walls also have shrinkers and no ref
-		cubeShrinkers = FindObjectsOfType<CubeShrinker>();
-		foreach (var shrinker in cubeShrinkers)
-		{
-			shrinker.handler = glRef.cubeHandler;
 		}
 	}
 }

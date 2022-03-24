@@ -27,7 +27,7 @@ namespace Qbism.Cubes
 		public FloorCube currentCube { get; set; } = null;
 
 		//Actions, events, delegates etc
-		public event Action onCheckForFinish; //TO DO: Check where this ref goes
+		public event Action onCheckForFinish; 
 
 		private void Awake() 
 		{

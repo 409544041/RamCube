@@ -15,13 +15,18 @@ namespace Qbism.Cubes
 		[SerializeField] Renderer wallMesh;
 
 		//Cache
-		public CubeHandler handler { get; set; } //TO DO: do this via refs
+		CubeHandler handler; 
 
 		//States
 		Vector3 resetPos;
 		Quaternion resetRot;
 		Vector3 resetScale;
 		float totalFeedbackDur;
+
+		private void Awake()
+		{
+			if (refs!= null) handler = refs.gcRef.glRef.cubeHandler;
+		}
 
 		private void Start()
 		{

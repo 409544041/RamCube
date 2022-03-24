@@ -204,8 +204,7 @@ namespace Qbism.MoveableCubes
 
 		public void PlayLandClip()
 		{
-			AudioSource.PlayClipAtPoint(landClip, Camera.main.transform.position, .05f);
-			//TO DO: siwtch camera.main with cam ref once we have movCube ref
+			AudioSource.PlayClipAtPoint(landClip, refs.gcRef.cam.transform.position, .05f);
 		}
 	}
 }

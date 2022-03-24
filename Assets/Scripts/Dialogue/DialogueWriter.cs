@@ -21,14 +21,13 @@ namespace Qbism.Dialogue
 		private void Awake()
 		{
 			if (gcRef != null) dialogueText = gcRef.dialogueText;
-			//if (scRef != null) dialogueText = scRef.dialogueText;
+			if (scRef != null) dialogueText = scRef.dialogueText;
 		}
 
 		public void StartWritingText(string incText)
 		{
 			StartCoroutine(WriteText(incText));
 		}
-		//TO DO: Make serpent screen version of below.
 
 		private IEnumerator WriteText(string fullText)
 		{

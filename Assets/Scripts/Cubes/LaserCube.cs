@@ -31,12 +31,8 @@ namespace Qbism.Cubes
 		public float dist { get; set; }
 		bool eyeClosedForFinish = false;
 
-		//Actions, events, delegates etc
-		public event Action<InterfaceIDs> onRewindPulse; //TO DO: direct link to it
-
 		private void Awake()
 		{
-			//TO DO: Link to refs once we have laser ref
 			mover = refs.gcRef.pRef.playerMover;
 			juicer = refs.juicer;
 			cubeHandler = refs.gcRef.glRef.cubeHandler;
