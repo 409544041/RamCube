@@ -23,6 +23,7 @@ namespace Qbism.Control
 			controls = new GameControls();
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
 			controls.Gameplay.Back.performed += ctx => LoadWorldMap();
+			controls.Gameplay.Restart.performed += ctx => StartSerpScreenDialogue();
 		}
 
 		private void OnEnable()
@@ -57,6 +58,11 @@ namespace Qbism.Control
 		private void LoadWorldMap()
 		{
 			scRef.slRef.mapLoader.StartLoadingWorldMap(false);
+		}
+
+		private void StartSerpScreenDialogue()
+		{
+			scRef.slRef.objStatusChecker.StartDialogue();
 		}
 
 		private void OnDisable()

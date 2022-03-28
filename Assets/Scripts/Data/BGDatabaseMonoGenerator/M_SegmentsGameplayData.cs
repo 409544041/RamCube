@@ -67,15 +67,15 @@ public partial class M_SegmentsGameplayData : BGEntityGo
 			_f_Rescued[Entity.Index] = value;
 		}
 	}
-	public System.Collections.Generic.List<System.Boolean> f_ObjDialoguePlayed
+	public List<E_FluffDialogueGameplayData> f_FluffDialogueGameplayData
 	{
 		get
 		{
-			return _f_ObjDialoguePlayed[Entity.Index];
-		}
-		set
-		{
-			_f_ObjDialoguePlayed[Entity.Index] = value;
+			var val = _f_FluffDialogueGameplayData[Entity.Index];
+			if(val==null || val.Count==0) return null;
+			var ___FluffDialogueGameplayData = new List<E_FluffDialogueGameplayData>();
+			for (var i = 0; i < val.Count; i++) ___FluffDialogueGameplayData.Add((E_FluffDialogueGameplayData) val[i]);
+			return ___FluffDialogueGameplayData;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
@@ -105,13 +105,13 @@ public partial class M_SegmentsGameplayData : BGEntityGo
 			return __f_Rescued;
 		}
 	}
-	private static BansheeGz.BGDatabase.BGFieldListBool __f_ObjDialoguePlayed;
-	public static BansheeGz.BGDatabase.BGFieldListBool _f_ObjDialoguePlayed
+	private static BansheeGz.BGDatabase.BGFieldNested __f_FluffDialogueGameplayData;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogueGameplayData
 	{
 		get
 		{
-			if(__f_ObjDialoguePlayed==null || __f_ObjDialoguePlayed.IsDeleted) __f_ObjDialoguePlayed=(BansheeGz.BGDatabase.BGFieldListBool) MetaDefault.GetField(new BGId(5005048154492295582UL,18343704791617690790UL));
-			return __f_ObjDialoguePlayed;
+			if(__f_FluffDialogueGameplayData==null || __f_FluffDialogueGameplayData.IsDeleted) __f_FluffDialogueGameplayData=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5289789315245825160UL,11581812223873279893UL));
+			return __f_FluffDialogueGameplayData;
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();

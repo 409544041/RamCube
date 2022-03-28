@@ -96,26 +96,26 @@ public partial class M_Dialogues : BGEntityGo
 			return ___ReturnDialogues;
 		}
 	}
-	public List<E_AdditionalDialogues> f_AdditionalDialogues
+	public List<E_AltReturnDialogues> f_AltReturnDialogues
 	{
 		get
 		{
-			var val = _f_AdditionalDialogues[Entity.Index];
+			var val = _f_AltReturnDialogues[Entity.Index];
 			if(val==null || val.Count==0) return null;
-			var ___AdditionalDialogues = new List<E_AdditionalDialogues>();
-			for (var i = 0; i < val.Count; i++) ___AdditionalDialogues.Add((E_AdditionalDialogues) val[i]);
-			return ___AdditionalDialogues;
+			var ___AltReturnDialogues = new List<E_AltReturnDialogues>();
+			for (var i = 0; i < val.Count; i++) ___AltReturnDialogues.Add((E_AltReturnDialogues) val[i]);
+			return ___AltReturnDialogues;
 		}
 	}
-	public List<E_HintsDialogues> f_HintsDialogues
+	public List<E_FluffDialogues> f_FluffDialogues
 	{
 		get
 		{
-			var val = _f_HintsDialogues[Entity.Index];
+			var val = _f_FluffDialogues[Entity.Index];
 			if(val==null || val.Count==0) return null;
-			var ___HintsDialogues = new List<E_HintsDialogues>();
-			for (var i = 0; i < val.Count; i++) ___HintsDialogues.Add((E_HintsDialogues) val[i]);
-			return ___HintsDialogues;
+			var ___FluffDialogues = new List<E_FluffDialogues>();
+			for (var i = 0; i < val.Count; i++) ___FluffDialogues.Add((E_FluffDialogues) val[i]);
+			return ___FluffDialogues;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
@@ -172,22 +172,22 @@ public partial class M_Dialogues : BGEntityGo
 			return __f_ReturnDialogues;
 		}
 	}
-	private static BansheeGz.BGDatabase.BGFieldNested __f_AdditionalDialogues;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_AdditionalDialogues
+	private static BansheeGz.BGDatabase.BGFieldNested __f_AltReturnDialogues;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_AltReturnDialogues
 	{
 		get
 		{
-			if(__f_AdditionalDialogues==null || __f_AdditionalDialogues.IsDeleted) __f_AdditionalDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5650391854847053935UL,9041473667705462207UL));
-			return __f_AdditionalDialogues;
+			if(__f_AltReturnDialogues==null || __f_AltReturnDialogues.IsDeleted) __f_AltReturnDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5070407350080768397UL,9859837574045701809UL));
+			return __f_AltReturnDialogues;
 		}
 	}
-	private static BansheeGz.BGDatabase.BGFieldNested __f_HintsDialogues;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_HintsDialogues
+	private static BansheeGz.BGDatabase.BGFieldNested __f_FluffDialogues;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogues
 	{
 		get
 		{
-			if(__f_HintsDialogues==null || __f_HintsDialogues.IsDeleted) __f_HintsDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(4758135799136454102UL,13727966505551805077UL));
-			return __f_HintsDialogues;
+			if(__f_FluffDialogues==null || __f_FluffDialogues.IsDeleted) __f_FluffDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5478707207032614291UL,13273353822579157894UL));
+			return __f_FluffDialogues;
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();

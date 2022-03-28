@@ -19,7 +19,7 @@ namespace Qbism.Dialogue
 			StartDialogue(dialogueToPlay, segAnim);
 		}
 
-		private void StartDialogue(DialogueScripOb dialogueToPlay, SegmentAnimator segAnim)
+		public void StartDialogue(DialogueScripOb dialogueToPlay, SegmentAnimator segAnim)
 		{
 			GameObject[] objs = new GameObject[2];
 			Vector3[] rots = new Vector3[2];

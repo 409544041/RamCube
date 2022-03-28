@@ -21,7 +21,7 @@ namespace Qbism.Objects
 			swallowAndFartOutJuice.PlayFeedbacks();
 			swallowFartJuiceActivated = true;
 
-			var objCollManager = FindObjectOfType<ObjectCollectManager>();
+			var objCollManager = FindObjectOfType<ObjectCollectorAtEndSeq>();
 			objCollManager.collectableObject = this.gameObject;
 			objCollManager.objJuicer = refs.juicer;
 			objCollManager.objMeshTrans = refs.meshTrans;

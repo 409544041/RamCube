@@ -83,12 +83,17 @@ namespace Qbism.Serpent
 
 			if (loc == serpScroller.focusIndex)
 			{
-				if (!setAtStart) TriggerScaleJuice();
-
-				var e_objs = refs.mSegments.f_Objects;
-
-				slRef.objUIHandler.ShowObjectUI(e_objs);
+				HandleSegmentInFocus(setAtStart);
 			}
+		}
+
+		private void HandleSegmentInFocus(bool setAtStart)
+		{
+			if (!setAtStart) TriggerScaleJuice();
+
+			var e_objs = refs.mSegments.f_Objects;
+			slRef.objUIHandler.ShowObjectUI(e_objs);
+			slRef.objStatusChecker.DecideOnDialogueToPlay(refs);
 		}
 
 		private Vector3 GetScale(int loc)

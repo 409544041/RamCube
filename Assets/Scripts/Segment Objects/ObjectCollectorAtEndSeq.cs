@@ -5,7 +5,7 @@ using TMPro;
 
 namespace Qbism.Objects
 {
-	public class ObjectCollectManager : MonoBehaviour
+	public class ObjectCollectorAtEndSeq : MonoBehaviour
 	{
 		//Config parameters
 		[SerializeField] float overlayDelay = 4, objectScaleUp = 3, scaleTransDur = .5f;
