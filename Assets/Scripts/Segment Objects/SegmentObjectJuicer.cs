@@ -8,7 +8,7 @@ namespace Qbism.Objects
 	public class SegmentObjectJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks scaleUpJuice, starScaleJuice;
+		[SerializeField] MMFeedbacks scaleUpJuice, starScaleJuice, onlyRotationJuice;
 		[SerializeField] float scaleUpOvershoot = .6f;
 		public ParticleSystem fartParticles;
 		public Canvas uiStar;
@@ -28,6 +28,12 @@ namespace Qbism.Objects
 			starScaleJuice.Initialization();
 			starScaleJuice.PlayFeedbacks();
 			fartParticles.Play();
+		}
+
+		public void TriggerOnlyRotation()
+		{
+			onlyRotationJuice.Initialization();
+			onlyRotationJuice.PlayFeedbacks();
 		}
 	}
 }

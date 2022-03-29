@@ -56,7 +56,7 @@ namespace Qbism.Dialogue
 
 			SetupBackgroundCanvas();
 			dialogueCanvasGroup.alpha = 1;
-			if (scRef != null) scRef.serpScreenCanvasGroup.alpha = 0;
+			if (scRef != null) scRef.slRef.serpScreenUIHandler.SetSerpScreenAlpha(0);
 
 			for (int i = 0; i < 2; i++)
 			{
@@ -150,7 +150,13 @@ namespace Qbism.Dialogue
 
 			dialogueCanvasGroup.alpha = 0;
 			bgCanvasGroup.alpha = 0;
-			if (scRef != null) scRef.serpScreenCanvasGroup.alpha = 1;
+
+			if (scRef != null)
+			{
+				scRef.slRef.serpScreenUIHandler.SetSerpScreenAlpha(1);
+				var checker = scRef.slRef.objSegChecker;
+				checker.DecideOnDialogueToPlay(checker.segInFocus);
+			}
 		}
 
 	}

@@ -59,6 +59,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3362eed4f7fb0c24d9b8b5719336a333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  elementFaded: {r: 0.5411765, g: 0.53333336, b: 0.53333336, a: 1}
+  iconFaded: {r: 0.43529412, g: 0.21176471, b: 0.13725491, a: 1}
+  speechElement: {fileID: 0}
+  speechIcon: {fileID: 0}
   slRef: {fileID: 5373936611251524687}
 --- !u!1 &5255093603326727689
 GameObject:
@@ -108,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b86675755e3c6840a94e0a65233b2eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scRef: {fileID: 0}
 --- !u!114 &1388425622416427950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,8 +196,8 @@ MonoBehaviour:
   input: {fileID: 6848565460736391748}
   scroller: {fileID: 1388425622416427950}
   mapLoader: {fileID: 4099101718631722132}
-  objStatusChecker: {fileID: 8994222098268157907}
-  objUIHandler: {fileID: 5139268147055895858}
+  objSegChecker: {fileID: 8994222098268157907}
+  serpScreenUIHandler: {fileID: 5139268147055895858}
   objRenderSelectors:
   - {fileID: 3043156810365249968}
   - {fileID: 4724595699464320733}
@@ -247,10 +252,8 @@ MonoBehaviour:
   floatingHeadPos:
   - {x: 0.25, y: 0.6, z: 5}
   - {x: 0.75, y: 0.6, z: 5}
-  inLevel: 0
-  inSerpentScreen: 1
-  inMap: 0
   gcRef: {fileID: 0}
+  scRef: {fileID: 0}
 --- !u!114 &5125207069782607746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,6 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mcRef: {fileID: 0}
   gcRef: {fileID: 0}
+  scRef: {fileID: 0}
 --- !u!1001 &57720999251790745
 PrefabInstance:
   m_ObjectHideFlags: 0

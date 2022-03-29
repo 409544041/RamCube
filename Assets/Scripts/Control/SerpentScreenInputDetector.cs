@@ -64,7 +64,7 @@ namespace Qbism.Control
 		{
 			if (scRef.slRef.dialogueManager.inDialogue) 
 				scRef.slRef.dialogueManager.NextDialogueText();
-			else scRef.slRef.objStatusChecker.StartDialogue();
+			else scRef.slRef.objSegChecker.StartDialogue();
 		}
 
 		private void OnDisable()

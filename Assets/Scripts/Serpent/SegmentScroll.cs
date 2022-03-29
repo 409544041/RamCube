@@ -92,8 +92,8 @@ namespace Qbism.Serpent
 			if (!setAtStart) TriggerScaleJuice();
 
 			var e_objs = refs.mSegments.f_Objects;
-			slRef.objUIHandler.ShowObjectUI(e_objs);
-			slRef.objStatusChecker.DecideOnDialogueToPlay(refs);
+			slRef.serpScreenUIHandler.ShowObjectUI(e_objs);
+			slRef.objSegChecker.DecideOnDialogueToPlay(refs);
 		}
 
 		private Vector3 GetScale(int loc)

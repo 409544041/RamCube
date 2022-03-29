@@ -17,6 +17,7 @@ namespace Qbism.Objects
 				{
 					obj.spawnJuice.Initialization();
 					obj.spawnJuice.PlayFeedbacks();
+					obj.juicer.TriggerOnlyRotation();
 
 					foreach (var mesh in obj.meshes)
 					{

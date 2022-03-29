@@ -2,29 +2,34 @@ using Qbism.Serpent;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BansheeGz.BGDatabase;
 
 namespace Qbism.Objects
 {
-	public class ObjectStatusChecker : MonoBehaviour
+	public class ObjectAndSegmentChecker : MonoBehaviour
 	{
 		//Config parameters
 		[SerializeField] SerpLogicRefHolder slRef;
 
 		//States
 		DialogueScripOb dialogueToPlay;
-		SegmentRefHolder segInFocus;
+		public SegmentRefHolder segInFocus { get; private set; }
+		bool checkQuestGiven, checkObjectReturned;
+		E_Objects objToCheck;
 
 		public void DecideOnDialogueToPlay(SegmentRefHolder segRef)
 		{
 			segInFocus = segRef;
 			var eSegment = segRef.mSegments;
 			dialogueToPlay = null;
+			checkQuestGiven = false; checkObjectReturned = false;
 
 			if (eSegment.f_Dialogues == null)
 			{
-				//TO DO: Remove dialogue button with juice
+				slRef.serpScreenUIHandler.FadeOutSpeechElement();
 				return;
 			}
+			else slRef.serpScreenUIHandler.ResetSpeechElementColor();
 
 			if (eSegment.f_Objects != null)
 			{
@@ -48,7 +53,16 @@ namespace Qbism.Objects
 
 		public void StartDialogue()
 		{
-			if (dialogueToPlay != null) segInFocus.dialogueStarter.StartDialogue(dialogueToPlay, null);
+			if (dialogueToPlay != null)
+			{
+				segInFocus.dialogueStarter.StartDialogue(dialogueToPlay, null);
+
+				var objGameplayEntity = E_ObjectsGameplayData.FindEntity(entity =>
+					entity.f_Object == objToCheck);
+
+				if (checkQuestGiven) objGameplayEntity.f_ObjectQuestGiven = true;
+				if (checkObjectReturned) objGameplayEntity.f_ObjectReturned = true;
+			}
 		}
 
 		private DialogueScripOb FetchCorrectDialogue(bool hasQuestMarker, bool questGiven,
@@ -62,12 +76,16 @@ namespace Qbism.Objects
 				{
 					var dialogueEntity = E_AltReturnDialogues.FindEntity(entity =>
 						entity.f_ForObject == eObj);
+					objToCheck = eObj;
+					checkObjectReturned = true;
 					return (DialogueScripOb)dialogueEntity.f_AltReturnDialogue;
 				}
 				else
 				{
 					var dialogueEntity = E_QuestDialogues.FindEntity(entity =>
 						entity.f_ForObject == eObj);
+					objToCheck = eObj;
+					checkQuestGiven = true;
 					return (DialogueScripOb)dialogueEntity.f_QuestDialogue;
 				}
 			}
@@ -80,12 +98,16 @@ namespace Qbism.Objects
 					{
 						var dialogueEntity = E_ReturnDialogues.FindEntity(entity =>
 							entity.f_ForObject == eObj);
+						objToCheck = eObj;
+						checkObjectReturned = true;
 						return (DialogueScripOb)dialogueEntity.f_ReturnDialogue;
 					}
 					else
 					{
 						var dialogueEntity = E_AltReturnDialogues.FindEntity(entity =>
 							entity.f_ForObject == eObj);
+						objToCheck = eObj;
+						checkObjectReturned = true;
 						return (DialogueScripOb)dialogueEntity.f_AltReturnDialogue;
 					}
 				}

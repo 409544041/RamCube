@@ -17,8 +17,8 @@ namespace Qbism.Serpent
 		[Header("Level Loading")]
 		public WorldMapLoading mapLoader;
 		[Header("Object Handling")]
-		public ObjectStatusChecker objStatusChecker;
-		public ObjectUIHandler objUIHandler;
+		public ObjectAndSegmentChecker objSegChecker;
+		public SerpScreenUIHandler serpScreenUIHandler;
 		public ObjectRenderSelector[] objRenderSelectors;
 		[Header("Dialogue")]
 		public DialogueManager dialogueManager;
