@@ -18,7 +18,7 @@ namespace Qbism.Dialogue
 
 		//States
 		DialogueScripOb dialogueSO;
-		int dialogueIndex = 0;
+		int dialogueIndex;
 		public bool inDialogue { get; set; } = false;
 		GameObject[] heads = new GameObject[2];
 		string[] names = new string[2];
@@ -53,6 +53,7 @@ namespace Qbism.Dialogue
 			partnerAnimator = segAnimator;
 			inDialogue = true;
 			nextButtonJuice.Initialization();
+			dialogueIndex = 0;
 
 			SetupBackgroundCanvas();
 			dialogueCanvasGroup.alpha = 1;

@@ -24,17 +24,6 @@ namespace Qbism.Dialogue
 		float originalCurveOne, curveDelta;
 		bool originalValuesSet = false;
 
-		private void Awake()
-		{
-			for (int i = 0; i < 2; i++)
-			{
-				matFocusColor[i] = new List<Color>();
-				matUnfocusColor[i] = new List<Color>();
-				mRenders[i] = new List<Renderer>();
-				sRenders[i] = new List<SpriteRenderer>();
-			}
-		}
-
 		public void SetJuiceValues(SegmentRefHolder segRef, int i)
 		{
 			scaleJuice[i] = segRef.segScroll.scrollJuice;
@@ -44,6 +33,14 @@ namespace Qbism.Dialogue
 
 		public void SetInitialFocusValues(SegmentRefHolder segRef, int i)
 		{
+			for (int j = 0; j < 2; j++)
+			{
+				matFocusColor[j] = new List<Color>();
+				matUnfocusColor[j] = new List<Color>();
+				mRenders[j] = new List<Renderer>();
+				sRenders[j] = new List<SpriteRenderer>();
+			}
+
 			var segEntity = segRef.mSegments;
 			var meshRenders = segRef.meshes;
 			var spriteRenders = segRef.GetComponentsInChildren<SpriteRenderer>();

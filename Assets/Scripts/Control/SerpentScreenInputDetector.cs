@@ -62,7 +62,9 @@ namespace Qbism.Control
 
 		private void StartSerpScreenDialogue()
 		{
-			scRef.slRef.objStatusChecker.StartDialogue();
+			if (scRef.slRef.dialogueManager.inDialogue) 
+				scRef.slRef.dialogueManager.NextDialogueText();
+			else scRef.slRef.objStatusChecker.StartDialogue();
 		}
 
 		private void OnDisable()
