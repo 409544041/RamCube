@@ -12,7 +12,6 @@ namespace Qbism.Dialogue
 	{
 		//Config parameters
 		[SerializeField] Vector3[] floatingHeadPos;
-		[SerializeField] bool inLevel, inSerpentScreen, inMap;
 		[SerializeField] GameplayCoreRefHolder gcRef;
 		[SerializeField] SerpCoreRefHolder scRef;
 
@@ -57,6 +56,7 @@ namespace Qbism.Dialogue
 
 			SetupBackgroundCanvas();
 			dialogueCanvasGroup.alpha = 1;
+			if (scRef != null) scRef.serpScreenCanvasGroup.alpha = 0;
 
 			for (int i = 0; i < 2; i++)
 			{
@@ -113,8 +113,9 @@ namespace Qbism.Dialogue
 		{
 			var spawnPos = cam.ViewportToWorldPoint(pos);
 
-			var head = Instantiate(obj, spawnPos, Quaternion.Euler(rot.x, rot.y, rot.z));
-
+			var head = Instantiate(obj, spawnPos, Quaternion.identity);
+			head.transform.parent = cam.transform;
+			head.transform.localRotation = Quaternion.Euler(rot.x, rot.y, rot.z);
 			head.transform.localScale = transform.localScale * scale;
 
 			return head;
@@ -135,7 +136,7 @@ namespace Qbism.Dialogue
 
 		private IEnumerator ExitDialogue()
 		{
-			if (inLevel) partnerAnimator.InitiateHappyWiggle();
+			if (gcRef != null) partnerAnimator.InitiateHappyWiggle();
 
 			yield return new WaitForSeconds(.5f); //So when dialogue UI disappears animation is already playing
 
@@ -149,9 +150,7 @@ namespace Qbism.Dialogue
 
 			dialogueCanvasGroup.alpha = 0;
 			bgCanvasGroup.alpha = 0;
-
-			// find a way to set played = true in dialogues database
-			// probably handy for quest dialogues, seeing as how they're in arrays
+			if (scRef != null) scRef.serpScreenCanvasGroup.alpha = 1;
 		}
 
 	}
