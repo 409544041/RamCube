@@ -33,6 +33,7 @@ namespace Qbism.Serpent
 		public CanvasGroup canvasGroup;
 		public Transform markerTrans;
 		public RectTransform notificationMarker;
+		public RectTransform notificationArrow;
 
 		//Cache
 		public SerpCoreRefHolder scRef { get; set; }

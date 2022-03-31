@@ -22,6 +22,7 @@ namespace Qbism.Serpent
 		private void Update()
 		{
 			UpdateMarkerPos();
+			UpdateArrowDir();
 		}
 
 		private void UpdateMarkerPos()
@@ -40,8 +41,8 @@ namespace Qbism.Serpent
 				if (refs.uiObject.transform.parent != refs.transform)
 					refs.uiObject.transform.parent = refs.transform;
 
-				if (refs.uiObject.transform.position != refs.markerTrans.transform.position)
-					refs.uiObject.transform.position = refs.markerTrans.transform.position;
+				if (refs.uiObject.transform.position != refs.markerTrans.position)
+					refs.uiObject.transform.position = refs.markerTrans.position;
 			}
 			else if (markerLeftViewPortPos.x < 0)
 			{
@@ -62,6 +63,11 @@ namespace Qbism.Serpent
 			}
 		}
 
+		private void UpdateArrowDir()
+		{
+			var dir = (refs.transform.position - refs.uiObject.transform.position).normalized;
+			refs.notificationArrow.up = -dir;
+		}
 		public void SetScreenEdgePosWithPadding()
 		{
 			padding = refs.canvas.GetComponent<RectTransform>().rect.width / 2;
