@@ -92,6 +92,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		foreach (var segRef in segRefs)
 		{
 			segRef.gcRef = this;
+			segRef.cam = cam;
 		}
 	}
 

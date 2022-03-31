@@ -81,6 +81,9 @@ namespace Qbism.Serpent
 			transform.rotation = rotTarget;
 			transform.localScale = targetScale;
 
+			if (setAtStart && refs.uiHandler != null)
+				refs.uiHandler.SetScreenEdgePosWithPadding();
+
 			if (loc == serpScroller.focusIndex)
 			{
 				HandleSegmentInFocus(setAtStart);

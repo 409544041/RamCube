@@ -34,6 +34,7 @@ namespace Qbism.WorldMap
 		//Cache
 		public PersistentRefHolder persRef { get; private set; }
 		public BiomeVisualSwapper[] visualSwappers { get; private set; }
+		public SegmentRefHolder[] segRefs { get; private set; }
 
 		private void Awake()
 		{
@@ -52,6 +53,13 @@ namespace Qbism.WorldMap
 			foreach (var pin in mlRef.levelPins)
 			{
 				pin.mcRef = this;
+			}
+
+			segRefs = FindObjectsOfType<SegmentRefHolder>();
+			foreach (var segRef in segRefs)
+			{
+				segRef.mcRef = this;
+				segRef.cam = cam;
 			}
 		}
 	}

@@ -46,6 +46,7 @@ namespace Qbism.Serpent
 			foreach (var segRef in segRefs)
 			{
 				segRef.scRef = this;
+				segRef.cam = cam;
 			}
 		}
 	}

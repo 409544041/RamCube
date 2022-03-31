@@ -1,4 +1,5 @@
 ﻿using Qbism.Peep;
+using Qbism.Serpent;
 using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Qbism.General
 		[SerializeField] bool updateAlign;
 		[SerializeField] PeepRefHolder peepRef;
 		[SerializeField] LevelPinRefHolder pinRef;
+		[SerializeField] SegmentRefHolder segRef;
 
 		//Cache
 		Camera cam;
@@ -20,6 +22,7 @@ namespace Qbism.General
 		{
 			if (peepRef != null) cam = peepRef.cam;
 			else if (pinRef != null) cam = pinRef.mcRef.cam;
+			else if (segRef != null) cam = segRef.cam;
 			transform.forward = cam.transform.forward;
 		}
 

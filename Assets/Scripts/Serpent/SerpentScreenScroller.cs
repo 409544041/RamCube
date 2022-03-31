@@ -18,9 +18,9 @@ namespace Qbism.Serpent
 		public SerpCoreRefHolder scRef;
 
         //States
-        SegmentScroll segInFocusAtStart = null;
+        SegmentRefHolder segInFocusAtStart = null;
         int segToFocusOn = 0;
-        SegmentScroll[] segments = null;
+		SegmentRefHolder[] segments = null;
 
         private IEnumerator Start()
         {
@@ -30,33 +30,17 @@ namespace Qbism.Serpent
 
         private void PlaceSegmentsAtStart()
         {
-            SegmentRefHolder[] segmentsTrans = GetRescuedSegments();
-
+			segments = segHandler.PrepareSegmentsUpToBilly();
             SetSegmentInFocus();
-
-            SetRestOfSegments();
-
-            segHandler.EnableSegments(segmentsTrans);
-        }
-
-        private SegmentRefHolder[] GetRescuedSegments()
-        {
-            var segmentsTrans = segHandler.PrepareSegmentsUpToBilly();
-
-            segments = new SegmentScroll[segmentsTrans.Length];
-            for (int i = 0; i < segmentsTrans.Length; i++)
-            {
-                segments[i] = segmentsTrans[i].segScroll;
-            }
-
-            return segmentsTrans;
+			SetRestOfSegments();
+			segHandler.EnableSegments(segments);
         }
 
         private void SetSegmentInFocus()
         {
             segToFocusOn = segments.Length - 1;
             segInFocusAtStart = segments[segToFocusOn];
-            segInFocusAtStart.SetSegmentsAtStart(focusIndex, this);
+            segInFocusAtStart.segScroll.SetSegmentsAtStart(focusIndex, this);
         }
 
         private void SetRestOfSegments()
@@ -64,7 +48,7 @@ namespace Qbism.Serpent
             int locIndex = focusIndex + 1;
             for (int i = segToFocusOn - 1; i >= 0; i--)
             {
-                segments[i].SetSegmentsAtStart(locIndex, this);
+                segments[i].segScroll.SetSegmentsAtStart(locIndex, this);
                 locIndex++;
                 if (locIndex > scrollLocs.Length - 1) locIndex = scrollLocs.Length - 1;
 
@@ -74,7 +58,7 @@ namespace Qbism.Serpent
             locIndex = focusIndex - 1;
             for (int i = segToFocusOn + 1; i < segments.Length; i++)
             {
-                segments[i].SetSegmentsAtStart(locIndex, this);
+                segments[i].segScroll.SetSegmentsAtStart(locIndex, this);
                 locIndex--;
                 if (locIndex < 0) locIndex = 0;
             }
@@ -82,21 +66,21 @@ namespace Qbism.Serpent
 
         public void ScrollLeft()
         {
-            if (segments[0].locIndex == focusIndex) return;
+            if (segments[0].segScroll.locIndex == focusIndex) return;
 
 			foreach(var segment in segments)
 			{
-				segment.InitiateSegmentScroll(-1, false);
+				segment.segScroll.InitiateSegmentScroll(-1, false);
 			}
         }
 
         public void ScrollRight()
         {
-            if (segments[segments.Length - 1].locIndex == focusIndex) return;
+            if (segments[segments.Length - 1].segScroll.locIndex == focusIndex) return;
 
 			foreach (var segment in segments)
 			{
-				segment.InitiateSegmentScroll(1, false);
+				segment.segScroll.InitiateSegmentScroll(1, false);
 			}
 		}
     }
