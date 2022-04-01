@@ -3108,6 +3108,17 @@ public partial class E_SegmentsGameplayData : BGEntity
 			_f_Rescued[Index] = value;
 		}
 	}
+	public System.Boolean f_AddedToSerpScreen
+	{
+		get
+		{
+			return _f_AddedToSerpScreen[Index];
+		}
+		set
+		{
+			_f_AddedToSerpScreen[Index] = value;
+		}
+	}
 	public List<E_FluffDialogueGameplayData> f_FluffDialogueGameplayData
 	{
 		get
@@ -3144,6 +3155,15 @@ public partial class E_SegmentsGameplayData : BGEntity
 		{
 			if(_ufle12jhs77_f_Rescued==null || _ufle12jhs77_f_Rescued.IsDeleted) _ufle12jhs77_f_Rescued=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4897271965161504167UL,2768130027215449236UL));
 			return _ufle12jhs77_f_Rescued;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_AddedToSerpScreen;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_AddedToSerpScreen
+	{
+		get
+		{
+			if(_ufle12jhs77_f_AddedToSerpScreen==null || _ufle12jhs77_f_AddedToSerpScreen.IsDeleted) _ufle12jhs77_f_AddedToSerpScreen=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5472508438153550995UL,3271020857625076629UL));
+			return _ufle12jhs77_f_AddedToSerpScreen;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogueGameplayData;

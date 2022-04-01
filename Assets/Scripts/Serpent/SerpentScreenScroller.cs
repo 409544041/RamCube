@@ -17,10 +17,11 @@ namespace Qbism.Serpent
 		public AnimationCurve moveCurve, scaleCurve;
 		public SerpCoreRefHolder scRef;
 
-        //States
-        SegmentRefHolder segInFocusAtStart = null;
+		//States
+		SegmentRefHolder segInFocusAtStart;
         int segToFocusOn = 0;
-		SegmentRefHolder[] segments = null;
+		SegmentRefHolder[] segments;
+		List<SegmentRefHolder> newSegments = new List<SegmentRefHolder>();
 
         private IEnumerator Start()
         {
@@ -29,14 +30,59 @@ namespace Qbism.Serpent
         }
 
         private void PlaceSegmentsAtStart()
-        {
+		{
 			segments = segHandler.PrepareSegmentsUpToBilly();
-            SetSegmentInFocus();
+			SetSegmentInFocus();
 			SetRestOfSegments();
 			segHandler.EnableSegments(segments);
-        }
+			CheckForNewSegmentsToAdd();
+		}
 
-        private void SetSegmentInFocus()
+		private void CheckForNewSegmentsToAdd()
+		{
+			for (int i = 0; i < segHandler.segRefs.Length; i++)
+			{
+				var seg = segHandler.segRefs[i];
+
+				if (seg.mSegments.f_GameplayData == null) continue;
+
+				if (seg.mSegments.f_GameplayData.f_Rescued == true &&
+					seg.mSegments.f_GameplayData.f_AddedToSerpScreen == false)
+					newSegments.Add(seg);
+			}
+
+			if (newSegments.Count > 0) StartCoroutine(PopInNewSegments());
+		}
+
+		private IEnumerator PopInNewSegments()
+		{
+			scRef.slRef.input.allowInput = false;
+
+			yield return new WaitForSeconds(.5f);
+
+			foreach (var seg in newSegments)
+			{
+				seg.mSegments.f_GameplayData.f_AddedToSerpScreen = true;
+			}
+
+			segments = segHandler.PrepareSegmentsUpToBilly();
+
+			for (int i = newSegments.Count - 1; i >= 0; i--)
+			{
+				MakeRoomForNewSegment();
+				yield return new WaitForSeconds(scrollDur);
+				newSegments[i].segScroll.SetSegmentsAtStart(focusIndex, this);
+				yield return null; //Here to make sure all elements of segment have been moved to new loc
+				newSegments[i].segScroll.PopInJuice();
+				SpriteRenderer[] sRenders = newSegments[i].GetComponentsInChildren<SpriteRenderer>();
+				segHandler.SwitchRenderers(newSegments[i].meshes, sRenders, true);
+				yield return new WaitForSeconds(.5f);
+			}
+
+			scRef.slRef.input.allowInput = true;
+		}
+
+		private void SetSegmentInFocus()
         {
             segToFocusOn = segments.Length - 1;
             segInFocusAtStart = segments[segToFocusOn];
@@ -63,6 +109,15 @@ namespace Qbism.Serpent
                 if (locIndex < 0) locIndex = 0;
             }
         }
+
+		private void MakeRoomForNewSegment()
+		{
+			foreach (var segment in segments)
+			{
+				if (segment.segScroll.locIndex > focusIndex) continue;
+				segment.segScroll.InitiateSegmentScroll(-1, false);
+			}
+		}
 
         public void ScrollLeft()
         {

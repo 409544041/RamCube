@@ -7,8 +7,8 @@ namespace Qbism.Serpent
 {
     public class SegmentScroll : MonoBehaviour
     {
-        //Config parameters
-        public MMFeedbacks scrollJuice;
+		//Config parameters
+		public MMFeedbacks scrollJuice, popInJuice;
 		[SerializeField] SegmentRefHolder refs;
 
         //Cache
@@ -97,6 +97,12 @@ namespace Qbism.Serpent
 			var e_objs = refs.mSegments.f_Objects;
 			slRef.serpScreenUIHandler.ShowObjectUI(e_objs);
 			slRef.objSegChecker.DecideOnDialogueToPlay(refs);
+		}
+
+		public void PopInJuice()
+		{
+			popInJuice.Initialization();
+			popInJuice.PlayFeedbacks();
 		}
 
 		private Vector3 GetScale(int loc)

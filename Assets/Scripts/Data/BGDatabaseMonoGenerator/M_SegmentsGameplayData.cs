@@ -67,6 +67,17 @@ public partial class M_SegmentsGameplayData : BGEntityGo
 			_f_Rescued[Entity.Index] = value;
 		}
 	}
+	public System.Boolean f_AddedToSerpScreen
+	{
+		get
+		{
+			return _f_AddedToSerpScreen[Entity.Index];
+		}
+		set
+		{
+			_f_AddedToSerpScreen[Entity.Index] = value;
+		}
+	}
 	public List<E_FluffDialogueGameplayData> f_FluffDialogueGameplayData
 	{
 		get
@@ -103,6 +114,15 @@ public partial class M_SegmentsGameplayData : BGEntityGo
 		{
 			if(__f_Rescued==null || __f_Rescued.IsDeleted) __f_Rescued=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4897271965161504167UL,2768130027215449236UL));
 			return __f_Rescued;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool __f_AddedToSerpScreen;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_AddedToSerpScreen
+	{
+		get
+		{
+			if(__f_AddedToSerpScreen==null || __f_AddedToSerpScreen.IsDeleted) __f_AddedToSerpScreen=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5472508438153550995UL,3271020857625076629UL));
+			return __f_AddedToSerpScreen;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldNested __f_FluffDialogueGameplayData;

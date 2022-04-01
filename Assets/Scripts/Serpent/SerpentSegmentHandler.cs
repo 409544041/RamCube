@@ -87,7 +87,9 @@ namespace Qbism.Serpent
 		{
 			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
-				if (E_SegmentsGameplayData.GetEntity(i).f_Rescued == false)
+				var entity = E_SegmentsGameplayData.GetEntity(i);
+				if ((entity.f_Rescued == true && entity.f_AddedToSerpScreen == false) || 
+					entity.f_Rescued == false)
 				{
 					billyIndex = i;
 					break;
@@ -157,7 +159,7 @@ namespace Qbism.Serpent
 			}
 		}
 
-        private void SwitchRenderers(Renderer[] mRenders, SpriteRenderer[] sRenders, bool value)
+        public void SwitchRenderers(Renderer[] mRenders, SpriteRenderer[] sRenders, bool value)
 		{
 			for (int i = 0; i < mRenders.Length; i++)
 			{

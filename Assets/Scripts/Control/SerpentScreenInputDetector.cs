@@ -17,6 +17,7 @@ namespace Qbism.Control
 		//States
 		Vector2 stickValue;
 		bool inputting = false;
+		public bool allowInput { get; set; } = true;
 
 		private void Awake() 
 		{
@@ -33,6 +34,8 @@ namespace Qbism.Control
 
 		void Update()
 		{
+			if (!allowInput) return;
+
 			//inputting is to avoid multiple movement inputs at once
 			if (stickValue.x > -.1 && stickValue.x < .1 &&
 				stickValue.y > -.1 && stickValue.y < .1)
