@@ -63,7 +63,7 @@ namespace Qbism.Serpent
             segmentsReordered = new SegmentRefHolder[segRefs.Length];
             var billyIndex = segRefs.Length - 1;
 
-			billyIndex = GetBillyArrayIndex(billyIndex);
+			billyIndex = GetBillyArrayIndex(billyIndex, false);
 			billyArrayIndex = billyIndex;
 
             PlaceBillyInNewArray(segmentsReordered, billyIndex);
@@ -74,7 +74,7 @@ namespace Qbism.Serpent
 		public SegmentRefHolder[] PrepareSegmentsUpToBilly()
         {
 			var billyIndex = segRefs.Length - 1;
-			billyIndex = GetBillyArrayIndex(billyIndex);
+			billyIndex = GetBillyArrayIndex(billyIndex, true);
 			billyArrayIndex = billyIndex;
 
 			segmentsUpToBilly = new SegmentRefHolder[billyIndex + 1];
@@ -83,16 +83,28 @@ namespace Qbism.Serpent
 			return segmentsUpToBilly;
 		}
 
-		private int GetBillyArrayIndex(int billyIndex)
+		private int GetBillyArrayIndex(int billyIndex, bool forSerpScreen)
 		{
 			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
 				var entity = E_SegmentsGameplayData.GetEntity(i);
-				if ((entity.f_Rescued == true && entity.f_AddedToSerpScreen == false) || 
-					entity.f_Rescued == false)
+
+				if (!forSerpScreen)
 				{
-					billyIndex = i;
-					break;
+					if (entity.f_Rescued == false)
+					{
+						billyIndex = i;
+						break;
+					}
+				}
+				else
+				{
+					if ((entity.f_Rescued == true && entity.f_AddedToSerpScreen == false) ||
+					entity.f_Rescued == false)
+					{
+						billyIndex = i;
+						break;
+					}
 				}
 			}
 			return billyIndex;
@@ -133,8 +145,8 @@ namespace Qbism.Serpent
 				var mRenders = segmentArray[i].meshes;
 				SpriteRenderer[] sRenders = segmentArray[i].GetComponentsInChildren<SpriteRenderer>();
 
-				if ((mRenders.Length == 0 || sRenders.Length == 0) && i != 0) Debug.Log
-						(segmentArray[i] + " is missing either a meshrenderer or spriterenderer!");
+				if ((mRenders.Length == 0 || sRenders.Length == 0) && i != 0) 
+					Debug.Log (segmentArray[i] + " is missing either a meshrenderer or spriterenderer!");
 
 				//Are we in map, don't enable last segment (which is Billy) unless Billy is
 				//actually in the very last position

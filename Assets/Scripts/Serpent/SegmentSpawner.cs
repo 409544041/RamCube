@@ -53,7 +53,7 @@ namespace Qbism.Serpent
 
 			var segRef = spawnedSegment.GetComponent<SegmentRefHolder>();
 			segRef.cam = refs.cam;
-			segRef.uiHandler.SetCam();
+			if (segRef.uiHandler != null) segRef.uiHandler.SetCam();
 
 			if (isMother) segRef.dragonAnim.Spawn(headSpawnDegrees);
 			else segRef.segAnim.Spawn();
