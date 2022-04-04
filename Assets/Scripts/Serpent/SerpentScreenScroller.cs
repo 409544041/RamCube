@@ -96,8 +96,6 @@ namespace Qbism.Serpent
             {
                 segments[i].segScroll.SetSegmentsAtStart(locIndex, this);
                 locIndex++;
-                if (locIndex > scrollLocs.Length - 1) locIndex = scrollLocs.Length - 1;
-
             }
 
             //Place segments higher in segment array to the left of focus loc
@@ -106,7 +104,6 @@ namespace Qbism.Serpent
             {
                 segments[i].segScroll.SetSegmentsAtStart(locIndex, this);
                 locIndex--;
-                if (locIndex < 0) locIndex = 0;
             }
         }
 

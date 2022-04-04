@@ -157,11 +157,11 @@ namespace Qbism.Serpent
 				//Checking if we're in a level where we're rescuing a segment and
 				//making sure that segment isn't visible on pickup
 				else if (inLevel && finishRef.endSeq.FetchHasSegment() &&
-					E_SegmentsGameplayData.GetEntity(i).f_Rescued == true &&
+					E_SegmentsGameplayData.GetEntity(i).f_Rescued == true && 
 					E_SegmentsGameplayData.GetEntity(i + 1).f_Rescued == false)
 					SwitchRenderers(mRenders, sRenders, false);
 
-				else if (E_SegmentsGameplayData.GetEntity(i).f_Rescued == true) 
+				else if (i != billyArrayIndex && E_SegmentsGameplayData.GetEntity(i).f_Rescued == true) 
 					SwitchRenderers(mRenders, sRenders, true);
 
 				else if ((inMap || inSerpScreen) && i == billyArrayIndex) 
