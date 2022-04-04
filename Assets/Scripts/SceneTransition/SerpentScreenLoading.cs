@@ -24,6 +24,7 @@ namespace Qbism.SceneTransition
 
 		public void StartLoadingSerpentScreen()
 		{
+			mcRef.persRef.progHandler.SaveProgData();
 			StartCoroutine(LoadSerpentScreen());
 		}
 

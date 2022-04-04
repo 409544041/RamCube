@@ -34,6 +34,7 @@ namespace Qbism.WorldMap
 			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
 				E_SegmentsGameplayData.GetEntity(i).f_Rescued = false;
+				E_SegmentsGameplayData.GetEntity(i).f_AddedToSerpScreen = false;
 			}
 
 			for (int i = 0; i < E_ObjectsGameplayData.CountEntities; i++)

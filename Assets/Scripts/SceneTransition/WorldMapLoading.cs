@@ -47,6 +47,7 @@ namespace Qbism.SceneTransition
 
 		public void StartLoadingWorldMap(bool fromLevel)
 		{
+			if (scRef != null) scRef.persRef.progHandler.SaveProgData();
 			StartCoroutine(LoadWorldMap(fromLevel));
 		}
 

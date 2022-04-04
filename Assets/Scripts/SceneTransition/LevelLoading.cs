@@ -27,6 +27,7 @@ namespace Qbism.SceneTransition
 
 		public void StartLoadingLevel(string levelName)
 		{
+			persRef.progHandler.SaveProgData();
 			StartCoroutine(LoadLevel(levelName));
 		}
 

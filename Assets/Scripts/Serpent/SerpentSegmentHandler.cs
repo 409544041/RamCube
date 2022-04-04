@@ -17,7 +17,7 @@ namespace Qbism.Serpent
 		[SerializeField] SerpCoreRefHolder scRef;
 
 		//States
-		int billyArrayIndex;
+		int billyArrayIndex = -1;
 		SegmentRefHolder[] segmentsReordered = null;
 		SegmentRefHolder[] segmentsUpToBilly = null;
 		bool inMap = false, inSerpScreen = false, inLevel = false;
@@ -49,8 +49,9 @@ namespace Qbism.Serpent
         public void EnableSegmentsWithoutBilly()
 		{
 			var segmentsWithoutBilly = new SegmentRefHolder[segRefs.Length - 1];
+			billyArrayIndex = segRefs.Length - 1;
 
-            for (int i = 0; i < segmentsWithoutBilly.Length; i++)
+			for (int i = 0; i < segmentsWithoutBilly.Length; i++)
             {
 				segmentsWithoutBilly[i] = segRefs[i];
             }
