@@ -86,7 +86,7 @@ namespace Qbism.Cubes
 
 			if (progHandler.currentHasSegment && switchBoard.serpentConnected)
 			{
-				refs.segSpawner.SetSegmentToSpawn(); //Needs to be done before AddSegment
+				refs.segSpawner.SetSegmentToSpawn(); 
 				serpProg.AddSegmentToDatabase();
 			}
 			else if (progHandler.currentHasObject && switchBoard.objectsConnected)

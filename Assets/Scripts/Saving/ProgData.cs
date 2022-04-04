@@ -11,11 +11,11 @@ public class ProgData
 	public List<LevelStatusData> savedLevelData;
 	public List<bool> savedBiomeData;
 	public string savedCurrentPin;
-	public List<bool> savedSerpentDataList;
+	public List<SerpentStatusData> savedSerpentDataList;
 	public List<ObjectStatusData> savedObjectsData;
 
 	public ProgData(List<LevelStatusData> levelData, List<bool> biomeData,
-		string currentPin, List<bool> serpentDataList, List<ObjectStatusData> objectsData)
+		string currentPin, List<SerpentStatusData> serpentDataList, List<ObjectStatusData> objectsData)
 	{
 		savedLevelData = levelData;
 		savedBiomeData = biomeData;

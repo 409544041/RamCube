@@ -16,13 +16,22 @@ namespace Qbism.General
 		[SerializeField] SegmentRefHolder segRef;
 
 		//Cache
-		Camera cam;
+		public Camera cam { get; set; }
 
 		private void Awake()
 		{
 			if (peepRef != null) cam = peepRef.cam;
 			else if (pinRef != null) cam = pinRef.mcRef.cam;
 			else if (segRef != null) cam = segRef.cam;
+		}
+
+		private void Start()
+		{
+			if (cam != null) transform.forward = cam.transform.forward;
+		}
+
+		public void FaceToCam()
+		{
 			transform.forward = cam.transform.forward;
 		}
 

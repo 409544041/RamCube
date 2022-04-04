@@ -1,3 +1,4 @@
+using Qbism.General;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace Qbism.Serpent
 	{
 		//Config parameters
 		[SerializeField] SegmentRefHolder refs;
+		[SerializeField] FaceCamera camFacer;
 
 		//States
 		float padding;
@@ -21,8 +23,10 @@ namespace Qbism.Serpent
 
 		private void Update()
 		{
+			if (refs.scRef == null) return;
 			UpdateMarkerPos();
 			UpdateArrowDir();
+			camFacer.FaceToCam();
 		}
 
 		private void UpdateMarkerPos()
@@ -108,6 +112,11 @@ namespace Qbism.Serpent
 
 			if (showMarker) refs.canvasGroup.alpha = 1;
 			else refs.canvasGroup.alpha = 0;
+		}
+
+		public void SetCam()
+		{
+			camFacer.cam = refs.cam;
 		}
 	}
 

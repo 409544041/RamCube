@@ -10,7 +10,7 @@ namespace Qbism.Saving
 	public static class SavingSystem
 	{
 		public static void SaveProgData(List<LevelStatusData> levelDataList, List<bool> biomeDataList,
-			string currentPin, List<bool> serpentDataList, List<ObjectStatusData> objectsDataList)
+			string currentPin, List<SerpentStatusData> serpentDataList, List<ObjectStatusData> objectsDataList)
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
 			string path = Application.persistentDataPath + "/progression.sav";

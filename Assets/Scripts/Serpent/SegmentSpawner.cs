@@ -11,6 +11,7 @@ namespace Qbism.Serpent
 		//Config parameters
 		[SerializeField] float segSpawnY, headSegSpawnY;
 		[SerializeField] float spawnDegrees = 135, headSpawnDegrees = 110;
+		[SerializeField] FinishRefHolder refs;
 
 		//States
 		GameObject segmentToSpawn = null;
@@ -39,20 +40,23 @@ namespace Qbism.Serpent
 			float spawnY = segSpawnY; float spawnDegs = spawnDegrees;
 
 			if (isMother)
-            {
+			{
 				spawnY = headSegSpawnY;
 				spawnDegs = headSpawnDegrees;
-            }
+			}
 
 			Vector3 spawnPos = new Vector3(transform.position.x, spawnY, transform.position.z);
-			GameObject spawnedSegment = Instantiate(segmentToSpawn, spawnPos, 
+			GameObject spawnedSegment = Instantiate(segmentToSpawn, spawnPos,
 				Quaternion.Euler(0f, spawnDegs, 0f));
 
 			segmentToSpawn.transform.position = transform.position;
 
-			if (isMother) spawnedSegment.GetComponentInChildren<MotherDragonAnimator>().
-					Spawn(headSpawnDegrees);
-			else spawnedSegment.GetComponentInChildren<SegmentAnimator>().Spawn();
+			var segRef = spawnedSegment.GetComponent<SegmentRefHolder>();
+			segRef.cam = refs.cam;
+			segRef.uiHandler.SetCam();
+
+			if (isMother) segRef.dragonAnim.Spawn(headSpawnDegrees);
+			else segRef.segAnim.Spawn();
 		}
 	}
 }

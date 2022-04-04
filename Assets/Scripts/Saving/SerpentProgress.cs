@@ -8,7 +8,7 @@ namespace Qbism.Saving
 	public class SerpentProgress : MonoBehaviour
 	{
 		//States
-		public List<bool> serpentDataList { get; private set; } = new List<bool>();
+		public List<SerpentStatusData> serpentDataList { get; private set; } = new List<SerpentStatusData>();
 
 		private void Awake() 
 		{
@@ -20,7 +20,8 @@ namespace Qbism.Saving
 		{
 			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
-				serpentDataList.Add(false);
+				SerpentStatusData newData = new SerpentStatusData();
+				serpentDataList.Add(newData);
 			}
 		}
 
@@ -31,7 +32,10 @@ namespace Qbism.Saving
 
 			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
-				E_SegmentsGameplayData.GetEntity(i).f_Rescued = data.savedSerpentDataList[i];
+				E_SegmentsGameplayData.GetEntity(i).f_Rescued = 
+					data.savedSerpentDataList[i].rescued;
+				E_SegmentsGameplayData.GetEntity(i).f_AddedToSerpScreen =
+					data.savedSerpentDataList[i].addedToSerpScreen;
 			}
 		}
 
@@ -39,7 +43,11 @@ namespace Qbism.Saving
 		{
 			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
-				serpentDataList[i] = E_SegmentsGameplayData.GetEntity(i).f_Rescued;
+				var serpEntity = E_SegmentsGameplayData.GetEntity(i);
+				var serpData = serpentDataList[i];
+
+				serpData.rescued = serpEntity.f_Rescued;
+				serpData.addedToSerpScreen = serpEntity.f_AddedToSerpScreen;
 			}
 		}
 
@@ -48,6 +56,7 @@ namespace Qbism.Saving
 			for (int i = 0; i < E_SegmentsGameplayData.CountEntities; i++)
 			{
 				E_SegmentsGameplayData.GetEntity(i).f_Rescued = false;
+				E_SegmentsGameplayData.GetEntity(i).f_AddedToSerpScreen = false;
 			}
 		}
 
