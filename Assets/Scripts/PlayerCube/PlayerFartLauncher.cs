@@ -66,14 +66,6 @@ namespace Qbism.PlayerCube
 		{
 			HandleFartCounting();
 			KeepImpactOnFinishPos();
-
-			if (flyingBy)
-			{
-				flyByStartPos = refs.cam.ViewportToWorldPoint(new Vector3(flyByStartX, flyByStartY, 
-					flyByStartDisFromScreen));
-				flyByEndPos = refs.cam.ViewportToWorldPoint(new Vector3(flyByTargetX, flyByTargetY, 
-					flyByEndDisFromScreen));
-			}
 		}
 
 		private void KeepImpactOnFinishPos()
@@ -213,7 +205,7 @@ namespace Qbism.PlayerCube
 			float elapsedTime = 0;
 			var startPos = transform.position;
 
-			endSeqHandler.FartLaunchCamResize(launchDur - .2f);
+			endSeqHandler.FartLaunchCamResize();
 			
 			while (Vector3.Distance(transform.position, target.position) > 0.1f)
 			{

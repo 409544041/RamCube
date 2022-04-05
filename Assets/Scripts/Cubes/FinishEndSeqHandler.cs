@@ -29,7 +29,7 @@ namespace Qbism.Cubes
 			shapieEndCamResize = 5.5f;
 		[Space(10)]
 		[SerializeField] float finishImpactResizeDur = .2f;
-		[SerializeField] float endCamDollyDur = 5, endCamMotherDollyDur = 10;
+		[SerializeField] float endCamDollyDur = 5, endCamMotherDollyDur = 10, launchCamResizeDur = .5f;
 		[Space(10)]
 		[SerializeField] float endCamDollyTarget = .3f;
 		[SerializeField] float endCamMotherDollyTarget = 1;
@@ -260,9 +260,9 @@ namespace Qbism.Cubes
 			camResizer.InitiateCamResize(refs.closeUpCam, closeUpResize, dur, camResizeCurve);
 		}
 
-		public void FartLaunchCamResize(float dur)
+		public void FartLaunchCamResize()
 		{
-			camResizer.InitiateCamResize(refs.closeUpCam, launchResize, dur, camResizeCurve);
+			camResizer.InitiateCamResize(refs.closeUpCam, launchResize, launchCamResizeDur, camResizeCurve);
 		}
 
 		private void FinishImpactCamResize() // Called from animation
