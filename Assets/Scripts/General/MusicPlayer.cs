@@ -9,7 +9,7 @@ namespace Qbism.General
 		//Config parameters
 		[SerializeField] MusicTracksScripOb musicSO;
 		[SerializeField] MusicTracksScripOb levelCompSO;
-		[SerializeField] float musicFadeOutDur = .5f;
+		public float musicFadeOutDur = .5f;
 
 		//Cache
 		AudioSource source;
@@ -53,12 +53,12 @@ namespace Qbism.General
 			}
 		}
 
-		public void InitiageLevelCompleteTrack()
+		public void InitiateLevelCompleteTrack(int i)
 		{
-			StartCoroutine(PlayLevelCompTrack());
+			StartCoroutine(PlayLevelCompTrack(i));
 		}
 
-		private IEnumerator PlayLevelCompTrack()
+		private IEnumerator PlayLevelCompTrack(int i)
 		{
 			var startVol = source.volume;
 			float elapsedTime = 0;
@@ -73,9 +73,9 @@ namespace Qbism.General
 				yield return null;
 			}
 
-			source.clip = levelCompSO.musicData[0].track;
-			loopLength = levelCompSO.musicData[0].loopLength;
-			loopEnd = levelCompSO.musicData[0].loopEnd;
+			source.clip = levelCompSO.musicData[i].track;
+			loopLength = levelCompSO.musicData[i].loopLength;
+			loopEnd = levelCompSO.musicData[i].loopEnd;
 
 			source.volume = startVol;
 			source.Play();

@@ -107,12 +107,12 @@ namespace Qbism.PlayerCube
 
 			exprHandler.SetFace(Expressions.shocked, -1);
 
-			refs.gcRef.musicPlayer.InitiageLevelCompleteTrack();
+			
 
 			if (segmentRescue)
 			{
+				refs.gcRef.musicPlayer.InitiateLevelCompleteTrack(0);
 				yield return new WaitForSeconds(shockedFaceTime);
-
 				exprHandler.SetFace(Expressions.gleeful, -1);
 				juicer.BeamFartJuice();
 				onStartFarting();
@@ -122,7 +122,10 @@ namespace Qbism.PlayerCube
 			else
 			{
 				onSwitchToEndCam();
-				yield return new WaitForSeconds(shockedFaceTime);
+				var fadeOutDur = refs.gcRef.musicPlayer.musicFadeOutDur;
+				yield return new WaitForSeconds(shockedFaceTime - fadeOutDur);
+				refs.gcRef.musicPlayer.InitiateLevelCompleteTrack(1);
+				yield return new WaitForSeconds(fadeOutDur);
 				ShapieRescueOrObjectFart();
 			}
 		}
