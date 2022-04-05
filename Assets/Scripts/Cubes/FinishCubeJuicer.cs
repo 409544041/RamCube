@@ -17,6 +17,9 @@ namespace Qbism.Cubes
 		[SerializeField] AudioClip failClip = null;
 		[Header("VFX")]
 		[SerializeField] GameObject glowEmitParticles;
+		[SerializeField] ParticleSystem leftConfetti, rightConfetti;
+		[SerializeField] Vector3 leftViewPos, rightViewPos;
+		[SerializeField] float ySize, hasSegYSize;
 		[Header("Impact VFX")]
 		[SerializeField] MMFeedbacks impactJuice;
 		[Header("Charging VFX")]
@@ -28,6 +31,7 @@ namespace Qbism.Cubes
 		//Cache
 		PlayerFartLauncher farter;
 		PlayerCubeMover playerMover;
+		bool updateConfettiPos = false;
 
 		private void Awake() 
 		{
@@ -48,6 +52,13 @@ namespace Qbism.Cubes
 		private void Update()
 		{
 			if(!refs.finishCube.FetchFinishStatus()) CheckForGlowDeactivation();
+
+			if (updateConfettiPos)
+			{
+				leftConfetti.transform.position = refs.cam.ViewportToWorldPoint(leftViewPos);
+				rightConfetti.transform.position = refs.cam.ViewportToWorldPoint(rightViewPos);
+
+			}
 		}
 
 		private void CheckForGlowDeactivation()
@@ -90,6 +101,8 @@ namespace Qbism.Cubes
 		public void Impact() //Called from animation event
 		{
 			impactJuice.PlayFeedbacks();
+			PlaceAndPlayConfetti(leftConfetti, -.1f, refs.cam.transform.forward);
+			PlaceAndPlayConfetti(rightConfetti, 1.1f, - refs.cam.transform.forward);
 
 			refs.nmCutter.enabled = false;
 			refs.mesh.enabled = false;
@@ -97,6 +110,25 @@ namespace Qbism.Cubes
 			refs.explForce.KnockBack();
 
 			refs.endSeq.Spawn();
+		}
+
+		private void PlaceAndPlayConfetti(ParticleSystem confetti, float viewPortX, Vector3 rotDir)
+		{
+			confetti.transform.parent = refs.cam.transform;
+
+			var allConfetti = confetti.GetComponentsInChildren<ParticleSystem>();
+			foreach (var particle in allConfetti)
+			{
+				var shapeMod = particle.shape;
+				if (refs.endSeq.FetchHasSegment())
+					shapeMod.scale = new Vector3(1, refs.cam.orthographicSize * hasSegYSize, 1);
+				else shapeMod.scale = new Vector3(1, refs.cam.orthographicSize * ySize, 1);
+
+			}
+
+			confetti.transform.forward = rotDir;
+			if (!updateConfettiPos) updateConfettiPos = true;
+			confetti.Play();
 		}
 
 		private void StartGlowing()
