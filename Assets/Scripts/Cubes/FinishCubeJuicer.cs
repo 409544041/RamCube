@@ -18,8 +18,10 @@ namespace Qbism.Cubes
 		[Header("VFX")]
 		[SerializeField] GameObject glowEmitParticles;
 		[SerializeField] ParticleSystem leftConfetti, rightConfetti;
+		[SerializeField] MMFeedbacks leftConfettiJuice, rightConfettiJuice;
+		[SerializeField] float confettiPauze = .25f, confettiDelay = 2, confettiSegDelay = 4;
 		[SerializeField] Vector3 leftViewPos, rightViewPos;
-		[SerializeField] float ySize, hasSegYSize;
+		[SerializeField] float confettiYSize = 4;
 		[Header("Impact VFX")]
 		[SerializeField] MMFeedbacks impactJuice;
 		[Header("Charging VFX")]
@@ -101,9 +103,7 @@ namespace Qbism.Cubes
 		public void Impact() //Called from animation event
 		{
 			impactJuice.PlayFeedbacks();
-			PlaceAndPlayConfetti(leftConfetti, -.1f, refs.cam.transform.forward);
-			PlaceAndPlayConfetti(rightConfetti, 1.1f, - refs.cam.transform.forward);
-
+			StartCoroutine(InitiateConfettiJuice());
 			refs.nmCutter.enabled = false;
 			refs.mesh.enabled = false;
 			refs.glowMesh.enabled = false;
@@ -112,7 +112,17 @@ namespace Qbism.Cubes
 			refs.endSeq.Spawn();
 		}
 
-		private void PlaceAndPlayConfetti(ParticleSystem confetti, float viewPortX, Vector3 rotDir)
+		private IEnumerator InitiateConfettiJuice()
+		{
+			if (refs.endSeq.FetchHasSegment()) yield return new WaitForSeconds(confettiSegDelay);
+			else yield return new WaitForSeconds(confettiDelay);
+			PlaceAndPlayConfetti(leftConfetti, -.1f, refs.cam.transform.forward, leftConfettiJuice);
+			yield return new WaitForSeconds(confettiPauze);
+			PlaceAndPlayConfetti(rightConfetti, 1.1f, -refs.cam.transform.forward, rightConfettiJuice);
+		}
+
+		private void PlaceAndPlayConfetti(ParticleSystem confetti, float viewPortX, Vector3 rotDir,
+			MMFeedbacks confettiJuice)
 		{
 			confetti.transform.parent = refs.cam.transform;
 
@@ -121,14 +131,14 @@ namespace Qbism.Cubes
 			{
 				var shapeMod = particle.shape;
 				if (refs.endSeq.FetchHasSegment())
-					shapeMod.scale = new Vector3(1, refs.cam.orthographicSize * hasSegYSize, 1);
-				else shapeMod.scale = new Vector3(1, refs.cam.orthographicSize * ySize, 1);
+					shapeMod.scale = new Vector3(1, refs.cam.orthographicSize * confettiYSize, 1);
+				else shapeMod.scale = new Vector3(1, refs.cam.orthographicSize * confettiYSize, 1);
 
 			}
 
 			confetti.transform.forward = rotDir;
 			if (!updateConfettiPos) updateConfettiPos = true;
-			confetti.Play();
+			confettiJuice.PlayFeedbacks();
 		}
 
 		private void StartGlowing()
