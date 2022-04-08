@@ -44,6 +44,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5515132871124396404}
   - component: {fileID: 5974409964504162603}
+  - component: {fileID: 7964888170196559349}
   m_Layer: 0
   m_Name: Pillar s1 BG
   m_TagString: Untagged
@@ -81,7 +82,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshParts:
   - {fileID: 4632191850092117090}
-  biomeVarietySO: {fileID: 11400000, guid: fb12a5a7e58797447a17fed8c035ab90, type: 2}
+  lineRender: {fileID: 0}
+  particle: {fileID: 0}
+  meshVarietySO: {fileID: 0}
+  vignetteSO: {fileID: 0}
+  recalculate: 0
+  checkBiomeLocally: 0
+  isSkyBox: 0
+  isVolume: 0
+--- !u!114 &7964888170196559349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5515132871124396405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f894642e3915de4abd98b7b4878ae3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dripsToSpawn:
+  - {fileID: 3651347299998244934}
+  - {fileID: 711819919499968411}
+  - {fileID: 8490719865376229528}
+  - {fileID: 4546609370778545801}
 --- !u!1001 &957444404690452806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,6 +162,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 957444404690452806}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3651347299998244934 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4604288070642606336, guid: c79224082c537fe4a83aca62fcd12e9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 957444404690452806}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6bc1bdf8f0998d459760b78ce29a19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3353752665679363066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -212,6 +249,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3353752665679363066}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8490719865376229528 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6584250545979798370, guid: ab00d4edda046604e89df9b3ef886554,
+    type: 3}
+  m_PrefabInstance: {fileID: 3353752665679363066}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6bc1bdf8f0998d459760b78ce29a19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5515132870584041779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -378,6 +427,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5962502636360666361}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &711819919499968411 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6584250545979798370, guid: dc4698947896f704eb680705aeb861ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 5962502636360666361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6bc1bdf8f0998d459760b78ce29a19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7225807755552726507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -453,3 +514,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7225807755552726507}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4546609370778545801 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6584250545979798370, guid: 0846b56ba60783f4f92d861db3102b5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 7225807755552726507}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6bc1bdf8f0998d459760b78ce29a19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

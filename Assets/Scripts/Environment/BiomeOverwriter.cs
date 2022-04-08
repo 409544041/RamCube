@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Qbism.Environment
 {
+	[ExecuteAlways]
 	public class BiomeOverwriter : MonoBehaviour
 	{
 		//Config parameters

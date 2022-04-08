@@ -8,6 +8,7 @@ namespace Qbism.Environment
 	{
 		//Config parameters
 		public DripHeightID startHeight, endHeight;
-		public MeshRenderer dripMesh = null;
+		public MeshRenderer dripMesh;
+		public FloraSpawner florSpawner;
 	}
 }

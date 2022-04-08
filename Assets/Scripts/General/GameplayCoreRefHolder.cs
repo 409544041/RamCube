@@ -16,6 +16,7 @@ using Qbism.PlayerCube;
 using Qbism.Shapies;
 using Qbism.Serpent;
 
+[ExecuteAlways]
 public class GameplayCoreRefHolder : MonoBehaviour
 {
 	[Header("Cameras")]
@@ -116,9 +117,12 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	private void GetSetPersistentRef()
 	{
 		persRef = FindObjectOfType<PersistentRefHolder>();
-		persRef.cam = cam;
-		persRef.gcRef = this;
-		persRef.glRef = glRef;
+		if (persRef != null)
+		{
+			persRef.cam = cam;
+			persRef.gcRef = this;
+			persRef.glRef = glRef;
+		}
 	}
 
 	private void GetSetPeepRef()
@@ -158,8 +162,11 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		visualSwappers = FindObjectsOfType<BiomeVisualSwapper>();
 		foreach (var swapper in visualSwappers)
 		{
-			swapper.progHandler = persRef.progHandler;
-			swapper.matHandler = persRef.varMatHandler;
+			if (persRef != null)
+			{
+				swapper.progHandler = persRef.progHandler;
+				swapper.matHandler = persRef.varMatHandler;
+			}
 		}
 	}
 }

@@ -4,28 +4,30 @@ using UnityEngine;
 
 namespace Qbism.Environment
 {
-	[ExecuteInEditMode]
+	[ExecuteAlways]
 	public class DripSpawner : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] GameObject[] pillarSegments; //Make sure they're in order from left ot right
+		public PillarSegment[] pillarSegments; //Make sure they're in order from left ot right
+		[SerializeField] bool includeLowDrips = true, connectAllAround = false;
 
 		//Cache
 		public BiomeOverwriter bOverwriter { get; set; }
 
 		//States
 		DripHeightID prevHeight;
+		DripHeightID firstStartHeight;
 
 		private void Start()
 		{
-			if (bOverwriter && bOverwriter.respawnFloraVariety) GenerateDrips();
+			if (bOverwriter != null && bOverwriter.respawnFloraVariety) GenerateDrips();
 		}
 
 		private void GenerateDrips()
 		{
 			for (int i = 0; i < pillarSegments.Length; i++)
 			{
-				DripIdentifier[] drips = pillarSegments[i].GetComponentsInChildren<DripIdentifier>();
+				DripIdentifier[] drips = pillarSegments[i].dripsToSpawn;
 
 				if (i == 0)
 				{
@@ -41,22 +43,33 @@ namespace Qbism.Environment
 
 		private void SpawnFirstDrip(DripIdentifier[] drips)
 		{
-			var dripToShow = drips[Random.Range(0, drips.Length)];
+			DripIdentifier dripToShow = null;
+			if (includeLowDrips) dripToShow = drips[Random.Range(0, drips.Length)];
+			else
+			{
+				List<DripIdentifier> possibleDrips = new List<DripIdentifier>();
+				foreach (var drip in drips)
+				{
+					if (drip.startHeight == DripHeightID.high && drip.endHeight == DripHeightID.high)
+						possibleDrips.Add(drip);
+				}
+
+				dripToShow = possibleDrips[Random.Range(0, possibleDrips.Count)];
+			}
 
 			for (int j = 0; j < drips.Length; j++)
 			{
-				var florSpawn = drips[j].GetComponent<FloraSpawner>();
-
 				if (drips[j] == dripToShow)
 				{
 					drips[j].dripMesh.enabled = true;
-					if (florSpawn) florSpawn.SpawnFlora();
+					if (drips[j].florSpawner != null) drips[j].florSpawner.SpawnFlora();
 					prevHeight = drips[j].endHeight;
+					firstStartHeight = drips[j].startHeight;
 				}
 				else
 				{
 					drips[j].dripMesh.enabled = false;
-					if (florSpawn) florSpawn.DespawnFlora();
+					if (drips[j].florSpawner != null) drips[j].florSpawner.DespawnFlora();
 				} 
 			}
 		}
@@ -65,13 +78,34 @@ namespace Qbism.Environment
 		{
 			List<DripIdentifier> fittingDrips = new List<DripIdentifier>();
 
-			for (int j = 0; j < drips.Length; j++)
+			if (includeLowDrips)
 			{
-				if (drips[j].startHeight == prevHeight)
-					fittingDrips.Add(drips[j]);
-			}
+				for (int i = 0; i < drips.Length; i++)
+				{
+					if (connectAllAround && i == drips.Length - 1)
+					{
+						if (drips[i].startHeight == prevHeight && drips[i].endHeight == firstStartHeight)
+							fittingDrips.Add(drips[i]);
+					}
+					else
+					{
+						if (drips[i].startHeight == prevHeight)
+							fittingDrips.Add(drips[i]);
+					}
+				}
 
-			return fittingDrips;
+				return fittingDrips;
+			}
+			else
+			{
+				foreach (var drip in drips)
+				{
+					if (drip.startHeight == DripHeightID.high && drip.endHeight == DripHeightID.high)
+						fittingDrips.Add(drip);
+				}
+
+				return fittingDrips;
+			}
 		}
 
 		private void SpawnDrips(DripIdentifier[] drips, List<DripIdentifier> fittingDrips)
@@ -80,7 +114,7 @@ namespace Qbism.Environment
 
 			for (int k = 0; k < drips.Length; k++)
 			{
-				var florSpawn = drips[k].GetComponent<FloraSpawner>();
+				var florSpawn = drips[k].florSpawner;
 				
 				if (drips[k] == dripToShow)
 				{

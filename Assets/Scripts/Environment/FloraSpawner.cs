@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Qbism.Environment
 {
-	[ExecuteInEditMode]
+	[ExecuteAlways]
 	public class FloraSpawner : MonoBehaviour
 	{
 		//Config parameters
@@ -24,8 +24,8 @@ namespace Qbism.Environment
 
 		private void Start() 
 		{	
-			if (bOverwriter && bOverwriter.respawnFloraVariety && generateOnStart) SpawnFlora();
-			else if (!bOverwriter && generateOnStart) SpawnFlora();
+			if (bOverwriter != null && bOverwriter.respawnFloraVariety && generateOnStart) SpawnFlora();
+			else if (bOverwriter == null && generateOnStart) SpawnFlora();
 		}
 
 		public void SpawnFlora() 

@@ -10,5 +10,7 @@ public class FloraIdentifier : MonoBehaviour
 	public MeshRenderer[] floraMeshes;
 	public Collider[] colliders;
 	public NavMeshObstacle navMeshOb;
-	public bool canSpawn = true;
+
+	//States
+	public bool canSpawn { get; set; } = true;
 }
