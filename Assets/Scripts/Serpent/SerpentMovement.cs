@@ -61,7 +61,7 @@ namespace Qbism.Serpent
 			{
 				breadcrumbs.RemoveAt(breadcrumbs.Count - 1);
 				breadcrumbs.Insert(0, head.transform.position);
-				headDisplacement = headDisplacement % segmentSpacing;
+				headDisplacement = headDisplacement % segmentSpacing * Time.deltaTime;
 			}
 
 			if (headDisplacement != 0)

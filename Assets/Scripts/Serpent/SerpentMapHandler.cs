@@ -50,7 +50,7 @@ namespace Qbism.Serpent
 		private void SetSplineToTarget(LevelPinRefHolder pin)
 		{
 			currentSpline = mcRef.splineFollower.spline;
-			target = pin.pathPoint.transform;
+			target = pin.transform;
 			currentSpline.SetPointPosition(0, target.position);
 			currentSpline.Rebuild();
 		}
