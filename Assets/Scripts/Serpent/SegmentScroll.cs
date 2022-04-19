@@ -108,7 +108,11 @@ namespace Qbism.Serpent
 		private Vector3 GetScale(int loc)
         {
 			Vector3 scale;
-            var n = serpScroller.focusEnlargement;
+			float n = 0;
+
+			if (refs.mSegments.Entity == E_Segments.GetEntity(0))
+				n = serpScroller.headFocusEnlargement;
+			else n = serpScroller.focusEnlargement;
 
             if (loc == serpScroller.focusIndex) scale = new Vector3(n, n, n);
             else scale = new Vector3(1, 1, 1);

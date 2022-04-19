@@ -11,7 +11,7 @@ namespace Qbism.Serpent
         public Transform[] scrollLocs;
         [SerializeField] SerpentSegmentHandler segHandler;
         public int focusIndex;
-        public float focusEnlargement = 2f;
+		public float focusEnlargement = 2f, headFocusEnlargement = 1.5f;
 		public float scrollDur = .2f;
 		public float scaleJuiceBounce = .3f;
 		public AnimationCurve moveCurve, scaleCurve;
