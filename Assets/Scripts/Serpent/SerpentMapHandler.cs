@@ -10,7 +10,7 @@ namespace Qbism.Serpent
 	public class SerpentMapHandler : MonoBehaviour
 	{
 		//Config parameters
-		public float mapFollowSpeed = 9f;
+		public float mapFollowSpeed = 9, mapFollowSpeedAtTarget = 1;
 		[SerializeField] float sizeAtStart, sizeAtTarget;
 		[SerializeField] MapCoreRefHolder mcRef;
 
@@ -60,7 +60,8 @@ namespace Qbism.Serpent
 			for (int i = 0; i < mcRef.serpSegHandler.segRefs.Length; i++)
 			{
 				var shrinker = mcRef.serpSegHandler.segRefs[i].distShrinker;
-				if (shrinker != null) shrinker.SetTargetData(target.position, sizeAtStart, sizeAtTarget, 0);
+				if (shrinker != null) shrinker.SetTargetData(target.position, sizeAtStart, sizeAtTarget, 0,
+					mapFollowSpeed, mapFollowSpeedAtTarget);
 			}
 		}
 

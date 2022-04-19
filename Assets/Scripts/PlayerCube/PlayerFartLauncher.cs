@@ -238,7 +238,7 @@ namespace Qbism.PlayerCube
 
 			CalculateStartEnd();
 			refs.disShrinker.SetTargetData(flyByEndPos, flyBySizeAtStart, flyBySizeAtEnd, 
-				flyByStartDisFromScreen);
+				flyByStartDisFromScreen, 0, 0);
 
 			flyingBy = true;
 			float elapsedTime = 0;

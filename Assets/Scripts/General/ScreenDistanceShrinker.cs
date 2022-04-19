@@ -12,11 +12,12 @@ namespace Qbism.General
 		//Config parameters
 		[SerializeField] MapCoreRefHolder mcRef;
 		[SerializeField] PlayerRefHolder pRef;
+		[SerializeField] SegmentRefHolder segRef;
 
 		//States
 		float targetDisToScreen, startDisToScreen;
 		public bool resizing { get; set; } = false;
-		float sizeAtStart = 1f, sizeAtTarget = .25f;
+		float sizeAtStart, sizeAtTarget, speedAtStart, speedAtTarget;
 		Camera cam;
 
 		private void Awake()
@@ -39,15 +40,20 @@ namespace Qbism.General
 				var disNormalized = Mathf.Clamp01((disToScreen - startDisToScreen) / 
 					(targetDisToScreen - startDisToScreen));
 				var newSize = Mathf.Lerp(sizeAtStart, sizeAtTarget, disNormalized);
+				var newSpeed = Mathf.Lerp(speedAtStart, speedAtTarget, disNormalized);
 
 				transform.localScale = new Vector3(newSize, newSize, newSize);
+				if (segRef != null && segRef.serpMapHandler != null)
+					mcRef.splineFollower.followSpeed = newSpeed;
 				if (mcRef != null) mcRef.serpMover.segmentSpacing = newSize;
 			}
 		}
 
-		public void SetTargetData(Vector3 targetPos, float startSize, float targetSize, float disAtStart)
+		public void SetTargetData(Vector3 targetPos, float startSize, float targetSize, float disAtStart,
+			float startSpeed, float targetSpeed)
 		{
 			sizeAtStart = startSize; sizeAtTarget = targetSize; startDisToScreen = disAtStart;
+			speedAtStart = startSpeed; speedAtTarget = targetSpeed;
 
 			var targetScreenTrans = cam.WorldToViewportPoint(targetPos);
 			var newTargetScreenTrans = new Vector3(targetScreenTrans.x, targetScreenTrans.y, 0);
