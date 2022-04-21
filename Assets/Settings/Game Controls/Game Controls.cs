@@ -37,7 +37,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Rewind"",
+                    ""name"": ""R-Key"",
                     ""type"": ""Button"",
                     ""id"": ""7bda7651-605e-4c5e-822e-7a395d4498b7"",
                     ""expectedControlType"": ""Button"",
@@ -46,7 +46,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Restart"",
+                    ""name"": ""X-Key"",
                     ""type"": ""Button"",
                     ""id"": ""0d751531-09b3-492f-938c-44c23c1d0e81"",
                     ""expectedControlType"": ""Button"",
@@ -64,16 +64,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Debug Delete Save Data"",
-                    ""type"": ""Button"",
-                    ""id"": ""1d2a28ac-5fc8-41cb-819d-ead0bc855a53"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Debug Complete Level"",
+                    ""name"": ""C-Key"",
                     ""type"": ""Button"",
                     ""id"": ""8a5b591b-0d86-433a-986d-c984ef31dfc3"",
                     ""expectedControlType"": ""Button"",
@@ -118,25 +109,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Debug Next Level"",
-                    ""type"": ""Button"",
-                    ""id"": ""58c59055-1079-482e-a655-0965e526f5f8"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Debug Prev Level"",
-                    ""type"": ""Button"",
-                    ""id"": ""414e89f8-27ab-455b-9967-dcc804407536"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Quit Game"",
+                    ""name"": ""Esc-Key"",
                     ""type"": ""Button"",
                     ""id"": ""1eafc677-770c-4ff9-be0c-d8ef488e700a"",
                     ""expectedControlType"": ""Button"",
@@ -145,7 +118,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Debug Key Z"",
+                    ""name"": ""Z-Key"",
                     ""type"": ""Button"",
                     ""id"": ""c9bb0c94-92b6-446e-b748-eadfaa322c55"",
                     ""expectedControlType"": ""Button"",
@@ -154,12 +127,30 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Back"",
+                    ""name"": ""M-Key"",
                     ""type"": ""Button"",
                     ""id"": ""54702321-07c6-4271-8c7b-f65a279f63d5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Space-Key"",
+                    ""type"": ""Button"",
+                    ""id"": ""de492ee0-9345-4502-a612-27a17117fc55"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Enter-Key"",
+                    ""type"": ""Button"",
+                    ""id"": ""230c3cb3-a0b6-4a88-9603-1d8f784593bd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -391,7 +382,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Rewind"",
+                    ""action"": ""R-Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -402,7 +393,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Rewind"",
+                    ""action"": ""R-Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -413,7 +404,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Restart"",
+                    ""action"": ""X-Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -424,7 +415,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Restart"",
+                    ""action"": ""X-Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -441,23 +432,12 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b4b25746-b65b-413e-b01e-833f2653afc3"",
-                    ""path"": ""<Keyboard>/delete"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Debug Delete Save Data"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9084f9ca-7e5f-400b-b0fe-8fe0747f00ab"",
                     ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Debug Complete Level"",
+                    ""action"": ""C-Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -507,34 +487,12 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""fc2d8dec-7bfe-4694-9b09-5dfe1342c8eb"",
-                    ""path"": ""<Keyboard>/m"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Debug Next Level"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c2822041-f7e9-41a8-92e0-90848a21638e"",
-                    ""path"": ""<Keyboard>/n"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Debug Prev Level"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""770c976a-3f03-4d3e-9a83-a1975dce2dfa"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Quit Game"",
+                    ""action"": ""Esc-Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -545,7 +503,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Debug Key Z"",
+                    ""action"": ""Z-Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -556,7 +514,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Back"",
+                    ""action"": ""M-Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -567,7 +525,29 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Back"",
+                    ""action"": ""M-Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ae5739b-bec7-4eda-9b5f-e8681c323b82"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Space-Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""28a739c7-aa78-4e74-8398-43f0c5fa82db"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Enter-Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -602,20 +582,19 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
-        m_Gameplay_Rewind = m_Gameplay.FindAction("Rewind", throwIfNotFound: true);
-        m_Gameplay_Restart = m_Gameplay.FindAction("Restart", throwIfNotFound: true);
+        m_Gameplay_RKey = m_Gameplay.FindAction("R-Key", throwIfNotFound: true);
+        m_Gameplay_XKey = m_Gameplay.FindAction("X-Key", throwIfNotFound: true);
         m_Gameplay_Click = m_Gameplay.FindAction("Click", throwIfNotFound: true);
-        m_Gameplay_DebugDeleteSaveData = m_Gameplay.FindAction("Debug Delete Save Data", throwIfNotFound: true);
-        m_Gameplay_DebugCompleteLevel = m_Gameplay.FindAction("Debug Complete Level", throwIfNotFound: true);
+        m_Gameplay_CKey = m_Gameplay.FindAction("C-Key", throwIfNotFound: true);
         m_Gameplay_DebugKey1 = m_Gameplay.FindAction("Debug Key 1", throwIfNotFound: true);
         m_Gameplay_DebugKey2 = m_Gameplay.FindAction("Debug Key 2", throwIfNotFound: true);
         m_Gameplay_DebugKey3 = m_Gameplay.FindAction("Debug Key 3", throwIfNotFound: true);
         m_Gameplay_DebugKey4 = m_Gameplay.FindAction("Debug Key 4", throwIfNotFound: true);
-        m_Gameplay_DebugNextLevel = m_Gameplay.FindAction("Debug Next Level", throwIfNotFound: true);
-        m_Gameplay_DebugPrevLevel = m_Gameplay.FindAction("Debug Prev Level", throwIfNotFound: true);
-        m_Gameplay_QuitGame = m_Gameplay.FindAction("Quit Game", throwIfNotFound: true);
-        m_Gameplay_DebugKeyZ = m_Gameplay.FindAction("Debug Key Z", throwIfNotFound: true);
-        m_Gameplay_Back = m_Gameplay.FindAction("Back", throwIfNotFound: true);
+        m_Gameplay_EscKey = m_Gameplay.FindAction("Esc-Key", throwIfNotFound: true);
+        m_Gameplay_ZKey = m_Gameplay.FindAction("Z-Key", throwIfNotFound: true);
+        m_Gameplay_MKey = m_Gameplay.FindAction("M-Key", throwIfNotFound: true);
+        m_Gameplay_SpaceKey = m_Gameplay.FindAction("Space-Key", throwIfNotFound: true);
+        m_Gameplay_EnterKey = m_Gameplay.FindAction("Enter-Key", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -676,39 +655,37 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Movement;
-    private readonly InputAction m_Gameplay_Rewind;
-    private readonly InputAction m_Gameplay_Restart;
+    private readonly InputAction m_Gameplay_RKey;
+    private readonly InputAction m_Gameplay_XKey;
     private readonly InputAction m_Gameplay_Click;
-    private readonly InputAction m_Gameplay_DebugDeleteSaveData;
-    private readonly InputAction m_Gameplay_DebugCompleteLevel;
+    private readonly InputAction m_Gameplay_CKey;
     private readonly InputAction m_Gameplay_DebugKey1;
     private readonly InputAction m_Gameplay_DebugKey2;
     private readonly InputAction m_Gameplay_DebugKey3;
     private readonly InputAction m_Gameplay_DebugKey4;
-    private readonly InputAction m_Gameplay_DebugNextLevel;
-    private readonly InputAction m_Gameplay_DebugPrevLevel;
-    private readonly InputAction m_Gameplay_QuitGame;
-    private readonly InputAction m_Gameplay_DebugKeyZ;
-    private readonly InputAction m_Gameplay_Back;
+    private readonly InputAction m_Gameplay_EscKey;
+    private readonly InputAction m_Gameplay_ZKey;
+    private readonly InputAction m_Gameplay_MKey;
+    private readonly InputAction m_Gameplay_SpaceKey;
+    private readonly InputAction m_Gameplay_EnterKey;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
         public GameplayActions(@GameControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
-        public InputAction @Rewind => m_Wrapper.m_Gameplay_Rewind;
-        public InputAction @Restart => m_Wrapper.m_Gameplay_Restart;
+        public InputAction @RKey => m_Wrapper.m_Gameplay_RKey;
+        public InputAction @XKey => m_Wrapper.m_Gameplay_XKey;
         public InputAction @Click => m_Wrapper.m_Gameplay_Click;
-        public InputAction @DebugDeleteSaveData => m_Wrapper.m_Gameplay_DebugDeleteSaveData;
-        public InputAction @DebugCompleteLevel => m_Wrapper.m_Gameplay_DebugCompleteLevel;
+        public InputAction @CKey => m_Wrapper.m_Gameplay_CKey;
         public InputAction @DebugKey1 => m_Wrapper.m_Gameplay_DebugKey1;
         public InputAction @DebugKey2 => m_Wrapper.m_Gameplay_DebugKey2;
         public InputAction @DebugKey3 => m_Wrapper.m_Gameplay_DebugKey3;
         public InputAction @DebugKey4 => m_Wrapper.m_Gameplay_DebugKey4;
-        public InputAction @DebugNextLevel => m_Wrapper.m_Gameplay_DebugNextLevel;
-        public InputAction @DebugPrevLevel => m_Wrapper.m_Gameplay_DebugPrevLevel;
-        public InputAction @QuitGame => m_Wrapper.m_Gameplay_QuitGame;
-        public InputAction @DebugKeyZ => m_Wrapper.m_Gameplay_DebugKeyZ;
-        public InputAction @Back => m_Wrapper.m_Gameplay_Back;
+        public InputAction @EscKey => m_Wrapper.m_Gameplay_EscKey;
+        public InputAction @ZKey => m_Wrapper.m_Gameplay_ZKey;
+        public InputAction @MKey => m_Wrapper.m_Gameplay_MKey;
+        public InputAction @SpaceKey => m_Wrapper.m_Gameplay_SpaceKey;
+        public InputAction @EnterKey => m_Wrapper.m_Gameplay_EnterKey;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -721,21 +698,18 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
-                @Rewind.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRewind;
-                @Rewind.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRewind;
-                @Rewind.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRewind;
-                @Restart.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRestart;
-                @Restart.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRestart;
-                @Restart.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRestart;
+                @RKey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRKey;
+                @RKey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRKey;
+                @RKey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRKey;
+                @XKey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnXKey;
+                @XKey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnXKey;
+                @XKey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnXKey;
                 @Click.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
                 @Click.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
                 @Click.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
-                @DebugDeleteSaveData.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugDeleteSaveData;
-                @DebugDeleteSaveData.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugDeleteSaveData;
-                @DebugDeleteSaveData.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugDeleteSaveData;
-                @DebugCompleteLevel.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
-                @DebugCompleteLevel.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
-                @DebugCompleteLevel.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugCompleteLevel;
+                @CKey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCKey;
+                @CKey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCKey;
+                @CKey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCKey;
                 @DebugKey1.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey1;
                 @DebugKey1.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey1;
                 @DebugKey1.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey1;
@@ -748,21 +722,21 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 @DebugKey4.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
                 @DebugKey4.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
                 @DebugKey4.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKey4;
-                @DebugNextLevel.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugNextLevel;
-                @DebugNextLevel.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugNextLevel;
-                @DebugNextLevel.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugNextLevel;
-                @DebugPrevLevel.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugPrevLevel;
-                @DebugPrevLevel.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugPrevLevel;
-                @DebugPrevLevel.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugPrevLevel;
-                @QuitGame.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuitGame;
-                @QuitGame.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuitGame;
-                @QuitGame.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuitGame;
-                @DebugKeyZ.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKeyZ;
-                @DebugKeyZ.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKeyZ;
-                @DebugKeyZ.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDebugKeyZ;
-                @Back.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
-                @Back.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
-                @Back.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
+                @EscKey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEscKey;
+                @EscKey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEscKey;
+                @EscKey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEscKey;
+                @ZKey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZKey;
+                @ZKey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZKey;
+                @ZKey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZKey;
+                @MKey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMKey;
+                @MKey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMKey;
+                @MKey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMKey;
+                @SpaceKey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpaceKey;
+                @SpaceKey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpaceKey;
+                @SpaceKey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpaceKey;
+                @EnterKey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnterKey;
+                @EnterKey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnterKey;
+                @EnterKey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnterKey;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -770,21 +744,18 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
-                @Rewind.started += instance.OnRewind;
-                @Rewind.performed += instance.OnRewind;
-                @Rewind.canceled += instance.OnRewind;
-                @Restart.started += instance.OnRestart;
-                @Restart.performed += instance.OnRestart;
-                @Restart.canceled += instance.OnRestart;
+                @RKey.started += instance.OnRKey;
+                @RKey.performed += instance.OnRKey;
+                @RKey.canceled += instance.OnRKey;
+                @XKey.started += instance.OnXKey;
+                @XKey.performed += instance.OnXKey;
+                @XKey.canceled += instance.OnXKey;
                 @Click.started += instance.OnClick;
                 @Click.performed += instance.OnClick;
                 @Click.canceled += instance.OnClick;
-                @DebugDeleteSaveData.started += instance.OnDebugDeleteSaveData;
-                @DebugDeleteSaveData.performed += instance.OnDebugDeleteSaveData;
-                @DebugDeleteSaveData.canceled += instance.OnDebugDeleteSaveData;
-                @DebugCompleteLevel.started += instance.OnDebugCompleteLevel;
-                @DebugCompleteLevel.performed += instance.OnDebugCompleteLevel;
-                @DebugCompleteLevel.canceled += instance.OnDebugCompleteLevel;
+                @CKey.started += instance.OnCKey;
+                @CKey.performed += instance.OnCKey;
+                @CKey.canceled += instance.OnCKey;
                 @DebugKey1.started += instance.OnDebugKey1;
                 @DebugKey1.performed += instance.OnDebugKey1;
                 @DebugKey1.canceled += instance.OnDebugKey1;
@@ -797,21 +768,21 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 @DebugKey4.started += instance.OnDebugKey4;
                 @DebugKey4.performed += instance.OnDebugKey4;
                 @DebugKey4.canceled += instance.OnDebugKey4;
-                @DebugNextLevel.started += instance.OnDebugNextLevel;
-                @DebugNextLevel.performed += instance.OnDebugNextLevel;
-                @DebugNextLevel.canceled += instance.OnDebugNextLevel;
-                @DebugPrevLevel.started += instance.OnDebugPrevLevel;
-                @DebugPrevLevel.performed += instance.OnDebugPrevLevel;
-                @DebugPrevLevel.canceled += instance.OnDebugPrevLevel;
-                @QuitGame.started += instance.OnQuitGame;
-                @QuitGame.performed += instance.OnQuitGame;
-                @QuitGame.canceled += instance.OnQuitGame;
-                @DebugKeyZ.started += instance.OnDebugKeyZ;
-                @DebugKeyZ.performed += instance.OnDebugKeyZ;
-                @DebugKeyZ.canceled += instance.OnDebugKeyZ;
-                @Back.started += instance.OnBack;
-                @Back.performed += instance.OnBack;
-                @Back.canceled += instance.OnBack;
+                @EscKey.started += instance.OnEscKey;
+                @EscKey.performed += instance.OnEscKey;
+                @EscKey.canceled += instance.OnEscKey;
+                @ZKey.started += instance.OnZKey;
+                @ZKey.performed += instance.OnZKey;
+                @ZKey.canceled += instance.OnZKey;
+                @MKey.started += instance.OnMKey;
+                @MKey.performed += instance.OnMKey;
+                @MKey.canceled += instance.OnMKey;
+                @SpaceKey.started += instance.OnSpaceKey;
+                @SpaceKey.performed += instance.OnSpaceKey;
+                @SpaceKey.canceled += instance.OnSpaceKey;
+                @EnterKey.started += instance.OnEnterKey;
+                @EnterKey.performed += instance.OnEnterKey;
+                @EnterKey.canceled += instance.OnEnterKey;
             }
         }
     }
@@ -837,19 +808,18 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
     public interface IGameplayActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnRewind(InputAction.CallbackContext context);
-        void OnRestart(InputAction.CallbackContext context);
+        void OnRKey(InputAction.CallbackContext context);
+        void OnXKey(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
-        void OnDebugDeleteSaveData(InputAction.CallbackContext context);
-        void OnDebugCompleteLevel(InputAction.CallbackContext context);
+        void OnCKey(InputAction.CallbackContext context);
         void OnDebugKey1(InputAction.CallbackContext context);
         void OnDebugKey2(InputAction.CallbackContext context);
         void OnDebugKey3(InputAction.CallbackContext context);
         void OnDebugKey4(InputAction.CallbackContext context);
-        void OnDebugNextLevel(InputAction.CallbackContext context);
-        void OnDebugPrevLevel(InputAction.CallbackContext context);
-        void OnQuitGame(InputAction.CallbackContext context);
-        void OnDebugKeyZ(InputAction.CallbackContext context);
-        void OnBack(InputAction.CallbackContext context);
+        void OnEscKey(InputAction.CallbackContext context);
+        void OnZKey(InputAction.CallbackContext context);
+        void OnMKey(InputAction.CallbackContext context);
+        void OnSpaceKey(InputAction.CallbackContext context);
+        void OnEnterKey(InputAction.CallbackContext context);
     }
 }

@@ -38,14 +38,16 @@ namespace Qbism.Control
 			controls = new GameControls();
 
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
-			controls.Gameplay.Rewind.performed += ctx => Rewind();
-			controls.Gameplay.Restart.performed += ctx => HandleRestartInput();
-			controls.Gameplay.Back.performed += ctx => BackToMap();
-			controls.Gameplay.DebugCompleteLevel.performed += ctx => FinishLevel();
-			controls.Gameplay.DebugNextLevel.performed += ctx  => NextLevel();
-			controls.Gameplay.DebugPrevLevel.performed += ctx => PrevLevel();
+			controls.Gameplay.ZKey.performed += ctx => Rewind();
+			controls.Gameplay.RKey.performed += ctx => HandleRestartInput();
+			controls.Gameplay.EscKey.performed += ctx => BackToMap();
+			controls.Gameplay.CKey.performed += ctx => FinishLevel();
+			controls.Gameplay.XKey.performed += ctx => ContinueDialogue();
+			controls.Gameplay.EnterKey.performed += ctx => ContinueDialogue();
+			controls.Gameplay.SpaceKey.performed += ctx => ContinueDialogue();
+
 		}
-		
+
 		private void OnEnable() 
 		{
 			controls.Gameplay.Enable();	
@@ -100,36 +102,28 @@ namespace Qbism.Control
 			else mover.InitiateWiggle(turnSide, turnAxis);
 		}
 
-		private void NextLevel()
-		{
-			if (switchBoard.allowDebugLevelNav)
-				glRef.sceneHandler.NextLevel();
-		}
-
-		private void PrevLevel()
-		{
-			if (switchBoard.allowDebugLevelNav)
-				glRef.sceneHandler.PreviousLevel();
-		}
-
 		private void FinishLevel()
 		{	
 			if (switchBoard.allowDebugFinish && mover.input) finish.Finish();
 		}
 			
-		public void Rewind()
+		private void Rewind()
 		{
 			if (!finish.hasFinished) glRef.rewindHandler.StartRewinding();
 		}
 
-		public void HandleRestartInput()
+		private void HandleRestartInput()
+		{
+			if (!finish.hasFinished) glRef.sceneHandler.RestartLevel();
+		}
+
+		private void ContinueDialogue()
 		{
 			if (glRef.dialogueManager.inDialogue) glRef.dialogueManager.NextDialogueText();
 			else if (glRef.objColManager.overlayActive) glRef.mapLoader.StartLoadingWorldMap(true);
-			else if (!finish.hasFinished) glRef.sceneHandler.RestartLevel();
 		}
 
-		public void BackToMap()
+		private void BackToMap()
 		{
 			if (!finish.hasFinished) glRef.mapLoader.StartLoadingWorldMap(true);
 		}

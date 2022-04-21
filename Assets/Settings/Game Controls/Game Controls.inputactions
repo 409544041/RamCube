@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Rewind",
+                    "name": "R-Key",
                     "type": "Button",
                     "id": "7bda7651-605e-4c5e-822e-7a395d4498b7",
                     "expectedControlType": "Button",
@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Restart",
+                    "name": "X-Key",
                     "type": "Button",
                     "id": "0d751531-09b3-492f-938c-44c23c1d0e81",
                     "expectedControlType": "Button",
@@ -42,16 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Debug Delete Save Data",
-                    "type": "Button",
-                    "id": "1d2a28ac-5fc8-41cb-819d-ead0bc855a53",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Debug Complete Level",
+                    "name": "C-Key",
                     "type": "Button",
                     "id": "8a5b591b-0d86-433a-986d-c984ef31dfc3",
                     "expectedControlType": "Button",
@@ -96,25 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Debug Next Level",
-                    "type": "Button",
-                    "id": "58c59055-1079-482e-a655-0965e526f5f8",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Debug Prev Level",
-                    "type": "Button",
-                    "id": "414e89f8-27ab-455b-9967-dcc804407536",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Quit Game",
+                    "name": "Esc-Key",
                     "type": "Button",
                     "id": "1eafc677-770c-4ff9-be0c-d8ef488e700a",
                     "expectedControlType": "Button",
@@ -123,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Debug Key Z",
+                    "name": "Z-Key",
                     "type": "Button",
                     "id": "c9bb0c94-92b6-446e-b748-eadfaa322c55",
                     "expectedControlType": "Button",
@@ -132,12 +105,30 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Back",
+                    "name": "M-Key",
                     "type": "Button",
                     "id": "54702321-07c6-4271-8c7b-f65a279f63d5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Space-Key",
+                    "type": "Button",
+                    "id": "de492ee0-9345-4502-a612-27a17117fc55",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Enter-Key",
+                    "type": "Button",
+                    "id": "230c3cb3-a0b6-4a88-9603-1d8f784593bd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -369,7 +360,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Rewind",
+                    "action": "R-Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -380,7 +371,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Rewind",
+                    "action": "R-Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -391,7 +382,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Restart",
+                    "action": "X-Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -402,7 +393,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Restart",
+                    "action": "X-Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -419,23 +410,12 @@
                 },
                 {
                     "name": "",
-                    "id": "b4b25746-b65b-413e-b01e-833f2653afc3",
-                    "path": "<Keyboard>/delete",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Debug Delete Save Data",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9084f9ca-7e5f-400b-b0fe-8fe0747f00ab",
                     "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Debug Complete Level",
+                    "action": "C-Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -485,34 +465,12 @@
                 },
                 {
                     "name": "",
-                    "id": "fc2d8dec-7bfe-4694-9b09-5dfe1342c8eb",
-                    "path": "<Keyboard>/m",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Debug Next Level",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c2822041-f7e9-41a8-92e0-90848a21638e",
-                    "path": "<Keyboard>/n",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Debug Prev Level",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "770c976a-3f03-4d3e-9a83-a1975dce2dfa",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Quit Game",
+                    "action": "Esc-Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -523,7 +481,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Debug Key Z",
+                    "action": "Z-Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -534,7 +492,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Back",
+                    "action": "M-Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -545,7 +503,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Back",
+                    "action": "M-Key",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ae5739b-bec7-4eda-9b5f-e8681c323b82",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Space-Key",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "28a739c7-aa78-4e74-8398-43f0c5fa82db",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enter-Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

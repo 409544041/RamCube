@@ -23,7 +23,7 @@ namespace Qbism.WorldMap
 		//Actions, events, delegates etc
 		public event Action<E_Pin, bool, bool, E_Biome> onSetCurrentData;
 
-		public void LoadAssignedLevel() //Called from Unity Event 
+		public void LoadAssignedLevel() 
 		{				
 			onSetCurrentData(refs.m_levelData.f_Pin, refs.m_levelData.f_SegmentPresent,
 				refs.m_levelData.f_ObjectPresent, refs.m_pin.f_Biome);

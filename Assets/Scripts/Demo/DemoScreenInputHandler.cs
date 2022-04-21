@@ -13,7 +13,7 @@ namespace Qbism.Demo
 		private void Awake()
 		{
 			controls = new GameControls();
-			controls.Gameplay.Restart.performed += ctx => GoNext();
+			controls.Gameplay.XKey.performed += ctx => GoNext();
 
 			navigator = GetComponent<DemoScreenNavigator>();
 		}

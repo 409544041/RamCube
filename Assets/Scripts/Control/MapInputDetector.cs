@@ -25,12 +25,15 @@ namespace Qbism.Control
 		{
 			controls = new GameControls();
 
-			// controls.Gameplay.DebugDeleteSaveData.performed += ctx => DeleteSaveData();
 			controls.Gameplay.DebugKey4.performed += ctx => LoadSerpentScreen();
 			controls.Gameplay.DebugKey2.performed += ctx => UnCompleteAllAndReload();
 			controls.Gameplay.DebugKey3.performed += ctx => CompleteAllAndReload();
 			controls.Gameplay.DebugKey1.performed += ctx => UnlockAllAndReload();
-			controls.Gameplay.Rewind.performed += ctx => ReloadMap();
+			controls.Gameplay.ZKey.performed += ctx => ReloadMap();
+			controls.Gameplay.EscKey.performed += ctx => QuitApplication();
+			controls.Gameplay.EnterKey.performed += ctx => EnterLevel();
+			controls.Gameplay.SpaceKey.performed += ctx => EnterLevel();
+			controls.Gameplay.XKey.performed += ctx => EnterLevel();
 
 			mlRef = mcRef.mlRef;
 			persRef = mcRef.persRef;
@@ -41,9 +44,9 @@ namespace Qbism.Control
 			controls.Gameplay.Enable();
 		}
 
-		private void DeleteSaveData()
+		private void EnterLevel()
 		{
-			persRef.progHandler.WipeProgData();
+			mlRef.pinTracker.selectedPin.pinUI.LoadAssignedLevel();
 		}
 
 		private void LoadSerpentScreen()
@@ -91,6 +94,11 @@ namespace Qbism.Control
 				persRef.progHandler.SaveProgData();
 				mlRef.mapLoader.StartLoadingWorldMap(false);
 			}
+		}
+
+		private void QuitApplication()
+		{
+			Application.Quit();
 		}
 
 		private void OnDisable()

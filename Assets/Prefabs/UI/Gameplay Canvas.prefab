@@ -1860,6 +1860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeTime: 0.1
+  gcRef: {fileID: 0}
 --- !u!1001 &39743917548127243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2017,12 +2018,17 @@ PrefabInstance:
     - target: {fileID: 458725534764341199, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
       propertyPath: m_text
-      value: m
+      value: esc
+      objectReference: {fileID: 0}
+    - target: {fileID: 458725534764341199, guid: d64022ae2f6e08e49b9645e4675f3380,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 458725534764341199, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 33
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 890872582164843056, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
@@ -2385,7 +2391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331ee50c20e24f24484720a3b844820c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceID: 1
   pulser: {fileID: 4594307333288418432}
 --- !u!114 &1292596082642476934
 MonoBehaviour:
@@ -2682,7 +2687,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331ee50c20e24f24484720a3b844820c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceID: 0
   pulser: {fileID: 264724648419780758}
 --- !u!1001 &5375724597242393926
 PrefabInstance:
@@ -2841,7 +2845,7 @@ PrefabInstance:
     - target: {fileID: 458725534764341199, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
       propertyPath: m_text
-      value: r
+      value: z
       objectReference: {fileID: 0}
     - target: {fileID: 890872582164843056, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
@@ -3005,7 +3009,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331ee50c20e24f24484720a3b844820c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceID: 0
   pulser: {fileID: 5312882249180371419}
 --- !u!1001 &8015687161224940230
 PrefabInstance:
@@ -3018,6 +3021,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Reset UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 458725534764341199, guid: d64022ae2f6e08e49b9645e4675f3380,
+        type: 3}
+      propertyPath: m_text
+      value: r
       objectReference: {fileID: 0}
     - target: {fileID: 890872582164843056, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}

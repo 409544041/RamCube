@@ -15,8 +15,8 @@ namespace Qbism.Demo
 		{
 			loader = GetComponent<SceneHandler>();
 			controls = new GameControls();
-			controls.Gameplay.Rewind.performed += ctx => PlayFromStart();
-			controls.Gameplay.QuitGame.performed += ctx => QuitApplication();
+			controls.Gameplay.XKey.performed += ctx => PlayFromStart();
+			controls.Gameplay.EscKey.performed += ctx => QuitApplication();
 		}
 
 		private void OnEnable()

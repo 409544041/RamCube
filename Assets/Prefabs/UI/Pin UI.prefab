@@ -124,19 +124,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8600022624518946827}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3245430101569147753}
-        m_TargetAssemblyTypeName: Qbism.WorldMap.LevelPinUI, Assembly-CSharp
-        m_MethodName: LoadAssignedLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!136 &1424077367188287369
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -726,6 +714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiText: {fileID: 6991267892144684477}
+  refs: {fileID: 0}
 --- !u!114 &3245430101569147753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -738,7 +727,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bdb6ced8449fc49b9e7794d3219875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelPin: {fileID: 0}
   button: {fileID: 2527047452586335606}
   compIcon: {fileID: 7551556985851177943}
   compDiamond: {fileID: 4780532313371253063}
@@ -748,7 +736,7 @@ MonoBehaviour:
   compText: {r: 1, g: 0.99607843, b: 0.7490196, a: 1}
   unCompTextOutline: {r: 0.05882353, g: 0.14117648, b: 0.2509804, a: 1}
   compTextOutline: {r: 0.40392157, g: 0.043137256, b: 0.015686275, a: 1}
-  pinUIJuice: {fileID: 8703079513412777319}
+  refs: {fileID: 0}
 --- !u!114 &8703079513412777319
 MonoBehaviour:
   m_ObjectHideFlags: 0
