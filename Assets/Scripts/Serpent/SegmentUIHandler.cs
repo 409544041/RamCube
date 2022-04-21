@@ -17,7 +17,11 @@ namespace Qbism.Serpent
 
 		private void Start()
 		{
-			if (refs.scRef == null) refs.canvasGroup.alpha = 0;
+			if (refs.scRef == null)
+			{
+				refs.canvasGroup.alpha = 0;
+				return;
+			}
 			ToggleUIDependingOnObjectStatus();
 		}
 
