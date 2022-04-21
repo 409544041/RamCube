@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Qbism.General;
 using Qbism.SceneTransition;
-using Qbism.WorldMap;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Qbism.Demo
@@ -15,7 +12,7 @@ namespace Qbism.Demo
 		[SerializeField] GameObject[] screens;
 		[SerializeField] float fadeTime;
 		[SerializeField] Color fadeColor;
-		[SerializeField] int worldMapIndex, firstLevelIndex;
+		[SerializeField] WorldMapLoading mapLoader;
 
 		//Cache
 		Fader fader;
@@ -23,17 +20,11 @@ namespace Qbism.Demo
 
 		//States
 		int currentScreen = 0;
-		Color originalFadeColor;
 
 		private void Awake() 
 		{
 			fader = FindObjectOfType<Fader>();
 			fadeImage = fader.GetComponentInChildren<Image>();
-		}
-
-		private void Start() 
-		{
-			originalFadeColor = fadeImage.color;
 		}
 
 		public void GoNext()
@@ -57,27 +48,7 @@ namespace Qbism.Demo
 
 			else
 			{
-				GetComponent<DemoScreenInputHandler>().enabled = false;
-				DontDestroyOnLoad(gameObject);
-
-				fadeImage.color = originalFadeColor;
-
-				yield return fader.FadeOut(fader.sceneTransTime);
-				screens[currentScreen].SetActive(false);
-
-				var switchBoard = FindObjectOfType<FeatureSwitchBoard>();
-
-				if (switchBoard.worldMapConnected)
-				{
-					yield return SceneManager.LoadSceneAsync("WorldMap");
-
-					var centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
-					centerPoint.PositionCenterPointOnMapLoad();
-				}
-				else yield return SceneManager.LoadSceneAsync(firstLevelIndex);
-
-				yield return fader.FadeIn(fader.sceneTransTime);
-				Destroy(gameObject);
+				mapLoader.StartLoadingWorldMap(false);
 			}
 		}
 	}

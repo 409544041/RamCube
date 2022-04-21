@@ -43,6 +43,12 @@ namespace Qbism.SceneTransition
 				musicFader = scRef.musicFader;
 				fader = persRef.fader;
 			}
+
+			if (persRef == null)
+			{
+				persRef = FindObjectOfType<PersistentRefHolder>();
+				fader = persRef.fader;
+			}
 		}
 
 		public void StartLoadingWorldMap(bool fromLevel)
@@ -56,11 +62,11 @@ namespace Qbism.SceneTransition
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
-			musicFader.FadeMusicOut();
+			if (musicFader != null) musicFader.FadeMusicOut();
 
 			yield return fader.FadeOut(fader.sceneTransTime);
 
-			musicFader.TurnMusicOff();
+			if (musicFader != null) musicFader.TurnMusicOff();
 			
 			yield return SceneManager.LoadSceneAsync("WorldMap");
 

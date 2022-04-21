@@ -123,6 +123,81 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &122091548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 122091549}
+  - component: {fileID: 122091551}
+  - component: {fileID: 122091550}
+  m_Layer: 5
+  m_Name: Indigo Logo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &122091549
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122091548}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1704807297146136351}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -615, y: 54}
+  m_SizeDelta: {x: 575.25, y: 494.0746}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &122091550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122091548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 1502fa596ffaf3b40b951073633a8639, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &122091551
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122091548}
+  m_CullTransparentMesh: 1
 --- !u!1 &888163106
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +380,24 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 662517715676498841, guid: 8c7e65cce36433842a864bcfface1b0b,
+        type: 3}
+      propertyPath: m_text
+      value: "Dear INDIGO, \n\nThis first submission is a build reflecting the current
+        state of the game.\n\nFor the final submission I'll have a demo build tailored
+        to the occasion with a much more streamlined experience and final visuals
+        for all included levels."
+      objectReference: {fileID: 0}
+    - target: {fileID: 662517715676498841, guid: 8c7e65cce36433842a864bcfface1b0b,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 662517715676498841, guid: 8c7e65cce36433842a864bcfface1b0b,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 1704807297274918200, guid: 8c7e65cce36433842a864bcfface1b0b,
         type: 3}
       propertyPath: m_Pivot.x
@@ -413,13 +506,49 @@ PrefabInstance:
     - target: {fileID: 1704807297274918204, guid: 8c7e65cce36433842a864bcfface1b0b,
         type: 3}
       propertyPath: m_Name
-      value: Demo Q4'21 Canvas
+      value: Demo Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4686826361115104225, guid: 8c7e65cce36433842a864bcfface1b0b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6737581144910970060, guid: 8c7e65cce36433842a864bcfface1b0b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189039583733329818, guid: 8c7e65cce36433842a864bcfface1b0b,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1121.907
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189039583733329818, guid: 8c7e65cce36433842a864bcfface1b0b,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 494.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189039583733329818, guid: 8c7e65cce36433842a864bcfface1b0b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 310.71445
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189039583733329818, guid: 8c7e65cce36433842a864bcfface1b0b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 54.002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c7e65cce36433842a864bcfface1b0b, type: 3}
 --- !u!1 &1704807297146136350 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4686826361115104225, guid: 8c7e65cce36433842a864bcfface1b0b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1704807297146136349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1704807297146136351 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1704807296903777324, guid: 8c7e65cce36433842a864bcfface1b0b,
     type: 3}
   m_PrefabInstance: {fileID: 1704807297146136349}
   m_PrefabAsset: {fileID: 0}
@@ -493,23 +622,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7259275389717932774, guid: 9e58029cd71f10947808e624c1ab998d,
         type: 3}
-      propertyPath: fadeColor.b
-      value: 0.8392157
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259275389717932774, guid: 9e58029cd71f10947808e624c1ab998d,
-        type: 3}
-      propertyPath: fadeColor.g
-      value: 0.65882355
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259275389717932774, guid: 9e58029cd71f10947808e624c1ab998d,
-        type: 3}
-      propertyPath: fadeColor.r
-      value: 0.26666668
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259275389717932774, guid: 9e58029cd71f10947808e624c1ab998d,
-        type: 3}
       propertyPath: screens.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7259275389717932774, guid: 9e58029cd71f10947808e624c1ab998d,
         type: 3}
