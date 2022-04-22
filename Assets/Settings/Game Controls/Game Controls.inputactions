@@ -130,6 +130,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ANY-key",
+                    "type": "Button",
+                    "id": "f73cfdeb-00dc-4d42-bdb2-b1e25c52106e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -526,6 +535,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Enter-Key",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c70f6f97-5eae-4bab-87b9-1084e456d8b2",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ANY-key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

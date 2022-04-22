@@ -152,6 +152,15 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ANY-key"",
+                    ""type"": ""Button"",
+                    ""id"": ""f73cfdeb-00dc-4d42-bdb2-b1e25c52106e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -550,6 +559,17 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""action"": ""Enter-Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c70f6f97-5eae-4bab-87b9-1084e456d8b2"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ANY-key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -595,6 +615,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         m_Gameplay_MKey = m_Gameplay.FindAction("M-Key", throwIfNotFound: true);
         m_Gameplay_SpaceKey = m_Gameplay.FindAction("Space-Key", throwIfNotFound: true);
         m_Gameplay_EnterKey = m_Gameplay.FindAction("Enter-Key", throwIfNotFound: true);
+        m_Gameplay_ANYkey = m_Gameplay.FindAction("ANY-key", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -668,6 +689,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_MKey;
     private readonly InputAction m_Gameplay_SpaceKey;
     private readonly InputAction m_Gameplay_EnterKey;
+    private readonly InputAction m_Gameplay_ANYkey;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -686,6 +708,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         public InputAction @MKey => m_Wrapper.m_Gameplay_MKey;
         public InputAction @SpaceKey => m_Wrapper.m_Gameplay_SpaceKey;
         public InputAction @EnterKey => m_Wrapper.m_Gameplay_EnterKey;
+        public InputAction @ANYkey => m_Wrapper.m_Gameplay_ANYkey;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -737,6 +760,9 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 @EnterKey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnterKey;
                 @EnterKey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnterKey;
                 @EnterKey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnterKey;
+                @ANYkey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnANYkey;
+                @ANYkey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnANYkey;
+                @ANYkey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnANYkey;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -783,6 +809,9 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 @EnterKey.started += instance.OnEnterKey;
                 @EnterKey.performed += instance.OnEnterKey;
                 @EnterKey.canceled += instance.OnEnterKey;
+                @ANYkey.started += instance.OnANYkey;
+                @ANYkey.performed += instance.OnANYkey;
+                @ANYkey.canceled += instance.OnANYkey;
             }
         }
     }
@@ -821,5 +850,6 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         void OnMKey(InputAction.CallbackContext context);
         void OnSpaceKey(InputAction.CallbackContext context);
         void OnEnterKey(InputAction.CallbackContext context);
+        void OnANYkey(InputAction.CallbackContext context);
     }
 }

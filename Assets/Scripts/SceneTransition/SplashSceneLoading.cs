@@ -11,9 +11,23 @@ namespace Qbism.SceneTransition
 	{
 		//Config parameters
 		[SerializeField] int firstLevelIndex;
-		[SerializeField] float splashTime = 1f;
 
-		private void Start() 
+		//Cache
+		GameControls controls;
+
+		private void Awake()
+		{
+			controls = new GameControls();
+
+			controls.Gameplay.ANYkey.performed += ctx => StartSceneTransition();
+		}
+
+		private void OnEnable()
+		{
+			controls.Gameplay.Enable();
+		}
+
+		private void StartSceneTransition()
 		{
 			StartCoroutine(SceneTransition());
 		}
@@ -25,7 +39,6 @@ namespace Qbism.SceneTransition
 			transform.parent = null;
 			DontDestroyOnLoad(gameObject);
 
-			yield return new WaitForSeconds(splashTime);
 			yield return fader.FadeOut(fader.sceneTransTime);
 
 			var switchBoard = FindObjectOfType<FeatureSwitchBoard>();
@@ -45,6 +58,11 @@ namespace Qbism.SceneTransition
 			
 			yield return fader.FadeIn(fader.sceneTransTime); 
 			Destroy(gameObject);
+		}
+
+		private void OnDisable()
+		{
+			controls.Gameplay.Disable();
 		}
 	}
 }
