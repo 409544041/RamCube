@@ -35,7 +35,7 @@ namespace Qbism.Cubes
 
 		private void Update()
 		{
-			if (!finishCube.FetchFinishStatus()) ShowUICheck();
+			if (!finishCube.FetchFinishStatus() && !refs.gcRef.pRef.playerMover.isInIntroSeq) ShowUICheck();
 			if (finishCube.FetchFinishStatus() && !hiddenForFinish)	
 				HideUIForFinish();
 		}
