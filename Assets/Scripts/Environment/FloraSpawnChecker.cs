@@ -10,15 +10,17 @@ namespace Qbism.Environment
 	{
 		//Config Parameters
 		[SerializeField] MeshRenderer meshRenderer;
-		public Collider coll;
-		public NavmeshCut nmCutter;
+		[SerializeField] Collider coll;
 
 		private void Start()
 		{
 			if (!meshRenderer.enabled)
 			{
 				if (coll != null) coll.enabled = false;
-				if (nmCutter != null) nmCutter.enabled = false;
+			}
+			else
+			{
+				if (coll != null) coll.enabled = true;
 			}
 		}
 	}

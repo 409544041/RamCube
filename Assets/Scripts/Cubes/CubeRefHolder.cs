@@ -20,7 +20,6 @@ namespace Qbism.Cubes
 		public Renderer mesh;
 		public Renderer shrinkMesh;
 		public LineRenderer lineRender;
-		public NavmeshCut nmCutter;
 		[Header("Effector")]
 		public BoostCube boostCube;
 		public Transform boostRayOrigin;

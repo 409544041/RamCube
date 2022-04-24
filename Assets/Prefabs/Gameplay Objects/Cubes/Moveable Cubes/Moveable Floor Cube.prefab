@@ -127,7 +127,6 @@ GameObject:
   - component: {fileID: 2630225510120684640}
   - component: {fileID: 2942004548815650826}
   - component: {fileID: 7123817644234092039}
-  - component: {fileID: 3374900512470706626}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -200,34 +199,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3374900512470706626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7240090362733046314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bee0a6fa1f5d4f4db481219040523c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  graphMask:
-    value: -1
-  type: 0
-  mesh: {fileID: 0}
-  rectangleSize: {x: 1, y: 1}
-  circleRadius: 1
-  circleResolution: 6
-  height: 1.1
-  meshScale: 1
-  center: {x: 0, y: 0, z: 0}
-  updateDistance: 0.4
-  isDual: 0
-  cutsAddedGeom: 1
-  updateRotationDistance: 10
-  useRotationAndScale: 0
 --- !u!1 &8028607793029448002
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,7 +380,6 @@ MonoBehaviour:
   mesh: {fileID: 7123817644234092039}
   shrinkMesh: {fileID: 8421745259192764266}
   lineRender: {fileID: 359314076325028110}
-  nmCutter: {fileID: 3374900512470706626}
   boostCube: {fileID: 0}
   boostRayOrigin: {fileID: 0}
   boostDirTrans: {fileID: 0}
@@ -429,7 +399,7 @@ MonoBehaviour:
   uiLineRender: {fileID: 0}
   uiLineTargets: []
   uiElement: {fileID: 0}
-  rewindJuicer: {fileID: 0}
+  rewindJuicer: {fileID: 2489216231011968775}
   turnJuice: {fileID: 0}
   staticFaceShrinkJuice: {fileID: 0}
 --- !u!1 &8414849812941373003

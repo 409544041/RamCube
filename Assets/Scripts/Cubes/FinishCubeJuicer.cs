@@ -104,7 +104,6 @@ namespace Qbism.Cubes
 		{
 			impactJuice.PlayFeedbacks();
 			StartCoroutine(InitiateConfettiJuice());
-			refs.nmCutter.enabled = false;
 			refs.mesh.enabled = false;
 			refs.glowMesh.enabled = false;
 			refs.explForce.KnockBack();

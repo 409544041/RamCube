@@ -21,7 +21,6 @@ namespace Qbism.Cubes
 		[Header("Meshes")]
 		public Renderer mesh;
 		public Renderer glowMesh;
-		public NavmeshCut nmCutter;
 		[Header("End Sequence")]
 		public FinishEndSeqHandler endSeq;
 		public Transform fartTarget;

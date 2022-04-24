@@ -12,6 +12,5 @@ namespace Qbism.Environment
 		public PopUpWall popUpWall;
 		public PopUpWallJuicer wallJuicer;
 		public ExpressionHandler expressHandler;
-		public NavmeshCut nmCutter;
 	}
 }

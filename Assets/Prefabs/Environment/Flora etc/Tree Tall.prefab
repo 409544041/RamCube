@@ -206,7 +206,6 @@ GameObject:
   - component: {fileID: 7220884827492460467}
   - component: {fileID: 3061805345187366561}
   - component: {fileID: 2667977980465893410}
-  - component: {fileID: 9167023566026909303}
   m_Layer: 12
   m_Name: Tree Tall
   m_TagString: Untagged
@@ -250,7 +249,6 @@ MonoBehaviour:
   colliders:
   - {fileID: 3061805345187366561}
   navMeshOb: {fileID: 0}
-  canSpawn: 1
 --- !u!114 &7220884827492460467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,34 +306,6 @@ MonoBehaviour:
   colliders:
   - {fileID: 3061805345187366561}
   navMeshOb: {fileID: 0}
---- !u!114 &9167023566026909303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7504558536335578647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bee0a6fa1f5d4f4db481219040523c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  graphMask:
-    value: -1
-  type: 1
-  mesh: {fileID: 0}
-  rectangleSize: {x: 1, y: 1}
-  circleRadius: 0.6
-  circleResolution: 6
-  height: 1
-  meshScale: 1
-  center: {x: 0, y: 0.5, z: 0}
-  updateDistance: 0.4
-  isDual: 0
-  cutsAddedGeom: 1
-  updateRotationDistance: 10
-  useRotationAndScale: 1
 --- !u!1001 &3566169867334617235
 PrefabInstance:
   m_ObjectHideFlags: 0

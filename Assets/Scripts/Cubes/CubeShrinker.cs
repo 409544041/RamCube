@@ -76,7 +76,6 @@ namespace Qbism.Cubes
 			refs.mesh.enabled = false;
 			refs.shrinkMesh.enabled = true;
 			refs.lineRender.enabled = false;
-			refs.nmCutter.enabled = false;
 
 			if (refs.staticCube != null) refs.staticCube.SwitchFaces();
 

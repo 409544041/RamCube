@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 5652572701872649906}
   - component: {fileID: 7523491965972352830}
   - component: {fileID: 7294688142589990132}
-  - component: {fileID: 6409472534448820190}
   m_Layer: 8
   m_Name: Wall 1x1
   m_TagString: Untagged
@@ -84,7 +83,7 @@ MonoBehaviour:
   popUpWall: {fileID: 0}
   wallJuicer: {fileID: 7294688142589990132}
   expressHandler: {fileID: 0}
-  nmCutter: {fileID: 6409472534448820190}
+  nmCutter: {fileID: 0}
 --- !u!65 &5652572701872649906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -140,34 +139,6 @@ MonoBehaviour:
   source: {fileID: 0}
   burrowTime: 0.3
   wallRef: {fileID: 2837588984947745432}
---- !u!114 &6409472534448820190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3863657441718100578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bee0a6fa1f5d4f4db481219040523c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  graphMask:
-    value: -1
-  type: 0
-  mesh: {fileID: 0}
-  rectangleSize: {x: 1, y: 1}
-  circleRadius: 1
-  circleResolution: 6
-  height: 3
-  meshScale: 1
-  center: {x: 0, y: 1.5, z: 0}
-  updateDistance: 0.4
-  isDual: 0
-  cutsAddedGeom: 1
-  updateRotationDistance: 10
-  useRotationAndScale: 0
 --- !u!1 &7220928402715705878
 GameObject:
   m_ObjectHideFlags: 0

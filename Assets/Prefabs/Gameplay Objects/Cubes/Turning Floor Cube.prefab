@@ -108,7 +108,6 @@ GameObject:
   - component: {fileID: 3405181485817477463}
   - component: {fileID: 7002247770126390487}
   - component: {fileID: 3511147458961298854}
-  - component: {fileID: 3563328718286704659}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -180,34 +179,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3563328718286704659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7377635810446576114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bee0a6fa1f5d4f4db481219040523c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  graphMask:
-    value: -1
-  type: 0
-  mesh: {fileID: 0}
-  rectangleSize: {x: 1, y: 1}
-  circleRadius: 1
-  circleResolution: 6
-  height: 1.1
-  meshScale: 1
-  center: {x: 0, y: 0, z: 0}
-  updateDistance: 0.4
-  isDual: 0
-  cutsAddedGeom: 1
-  updateRotationDistance: 10
-  useRotationAndScale: 0
 --- !u!1 &7527032043082956563
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shrinkFeedback: {fileID: 4233089662698614856}
   refs: {fileID: 4035249614898838886}
+  wallMesh: {fileID: 0}
 --- !u!114 &4765442448934840136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,7 +405,7 @@ MonoBehaviour:
   mesh: {fileID: 3511147458961298854}
   shrinkMesh: {fileID: 8444544265384911107}
   lineRender: {fileID: 4982530462283413556}
-  nmCutter: {fileID: 3563328718286704659}
+  nmCutter: {fileID: 0}
   boostCube: {fileID: 0}
   boostRayOrigin: {fileID: 0}
   boostDirTrans: {fileID: 0}
@@ -443,7 +415,6 @@ MonoBehaviour:
   staticFace: {fileID: 0}
   staticShrinkingFace: {fileID: 0}
   movCube: {fileID: 0}
-  center: {fileID: 0}
   movEffector: {fileID: 0}
   movFaceMesh: {fileID: 0}
   floorCompAdder: {fileID: 0}
@@ -458,7 +429,7 @@ MonoBehaviour:
   - {fileID: 2370207883461154899}
   - {fileID: 5348103083851999230}
   uiElement: {fileID: 1345488140119033389}
-  rwndJuice: {fileID: 0}
+  rewindJuicer: {fileID: 0}
   turnJuice: {fileID: 4048100174578232224}
   staticFaceShrinkJuice: {fileID: 0}
 --- !u!1001 &70230214106306529
@@ -550,12 +521,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d531ea08522a3c44da96e7f94d7cc3f3, type: 3}
---- !u!4 &8985125334972178076 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8955427525567138173, guid: d531ea08522a3c44da96e7f94d7cc3f3,
-    type: 3}
-  m_PrefabInstance: {fileID: 70230214106306529}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4233089662698614856 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4199455603821193129, guid: d531ea08522a3c44da96e7f94d7cc3f3,
@@ -568,6 +533,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8985125334972178076 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8955427525567138173, guid: d531ea08522a3c44da96e7f94d7cc3f3,
+    type: 3}
+  m_PrefabInstance: {fileID: 70230214106306529}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4247240212747779051
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -983,12 +954,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e0d4bb130681a04db6a82eaf9e52adb, type: 3}
---- !u!4 &6952300584118965089 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 926620309646794597, guid: 7e0d4bb130681a04db6a82eaf9e52adb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7829381272090577924}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4048100174578232224 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6091735741990217636, guid: 7e0d4bb130681a04db6a82eaf9e52adb,
@@ -1001,6 +966,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &6952300584118965089 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 926620309646794597, guid: 7e0d4bb130681a04db6a82eaf9e52adb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7829381272090577924}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8879197695810249130
 PrefabInstance:
   m_ObjectHideFlags: 0

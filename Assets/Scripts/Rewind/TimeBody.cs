@@ -233,7 +233,6 @@ namespace Qbism.Rewind
 		private void ResetShrinking(FloorCube cube, Vector2Int cubePos)
 		{
 			cubeRef.cubeShrink.EnableMesh();
-			cubeRef.nmCutter.enabled = true;
 			handler.FromShrunkToFloorDic(cubePos, cube);
 		}
 
