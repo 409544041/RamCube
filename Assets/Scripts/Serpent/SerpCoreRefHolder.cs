@@ -22,6 +22,8 @@ namespace Qbism.Serpent
 		public Canvas serpScreenCanvas;
 		public CanvasGroup serpScreenCanvasGroup;
 		public Image[] objSlotElements;
+		public TextMeshProUGUI namePlateText;
+		[Header("Dialogue Canvas")]
 		public Canvas dialogueCanvas;
 		public CanvasGroup dialogueCanvasGroup;
 		public TextMeshProUGUI characterNameText;
