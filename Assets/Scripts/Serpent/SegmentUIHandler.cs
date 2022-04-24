@@ -93,7 +93,7 @@ namespace Qbism.Serpent
 				rightScreenEdgeWorldPos.y, rightScreenEdgeWorldPos.z);
 		}
 
-		private void ToggleUIDependingOnObjectStatus()
+		public void ToggleUIDependingOnObjectStatus()
 		{
 			bool showMarker = false;
 

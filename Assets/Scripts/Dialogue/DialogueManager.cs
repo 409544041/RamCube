@@ -156,6 +156,7 @@ namespace Qbism.Dialogue
 				scRef.slRef.serpScreenUIHandler.SetSerpScreenAlpha(1);
 				var checker = scRef.slRef.objSegChecker;
 				checker.DecideOnDialogueToPlay(checker.segInFocus);
+				checker.segInFocus.uiHandler.ToggleUIDependingOnObjectStatus();
 			}
 		}
 
