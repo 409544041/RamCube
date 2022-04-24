@@ -31,6 +31,7 @@ namespace Qbism.MoveableCubes
 		public bool isOutOfBounds { get; set; } = false;
 		Quaternion resetRot;
 		public int orderOfMovement { get; set; } = -1;
+		public Vector3 faceScale;
 
 		//Actions, events, delegates etc
 		public Func<Vector2Int, bool> onWallKeyCheck, onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;
@@ -46,6 +47,9 @@ namespace Qbism.MoveableCubes
 		{
 			UpdateCenterPosition();
 			transform.localScale = moveScale;
+			faceScale = refs.movFaceMesh.transform.localScale;
+			refs.movFaceMesh.transform.localScale = 
+				new Vector3(faceScale.x * moveScale.x, faceScale.y, faceScale.z * moveScale.z);
 			resetRot = transform.rotation;
 		}
 
@@ -112,6 +116,7 @@ namespace Qbism.MoveableCubes
 				}
 
 				transform.localScale = new Vector3(1, 1, 1);
+				refs.movFaceMesh.transform.localScale = faceScale;
 				transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
 				if (refs.movEffector != null)
@@ -147,6 +152,7 @@ namespace Qbism.MoveableCubes
 			}
 
 			transform.localScale = new Vector3(1, 1, 1);
+			refs.movFaceMesh.transform.localScale = faceScale;
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 			
 			if (refs.movEffector != null)
