@@ -170,28 +170,28 @@ namespace Qbism.Cubes
 		private void CalculateSide(PlayerCubeMover mover, MoveableCube moveable, Vector2Int cubePos, 
 			ref Transform side, ref Vector3 turnAxis, ref Vector2Int posAhead)
 		{
-			if (V3Equal(transform.forward, Vector3.forward))
+			if (V3Equal(refs.boostDirTrans.transform.forward, Vector3.forward))
 			{
 				if (mover) side = mover.up;
 				if (moveable) side = moveable.up;
 				turnAxis = Vector3.right;
 				posAhead = cubePos + Vector2Int.up;
 			}
-			else if (V3Equal(transform.forward, Vector3.back))
+			else if (V3Equal(refs.boostDirTrans.transform.forward, Vector3.back))
 			{
 				if (mover) side = mover.down;
 				if (moveable) side = moveable.down;
 				turnAxis = Vector3.left;
 				posAhead = cubePos + Vector2Int.down;
 			}
-			else if (V3Equal(transform.forward, Vector3.left))
+			else if (V3Equal(refs.boostDirTrans.transform.forward, Vector3.left))
 			{
 				if (mover) side = mover.left;
 				if (moveable) side = moveable.left;
 				turnAxis = Vector3.forward;
 				posAhead = cubePos + Vector2Int.left;
 			}
-			else if (V3Equal(transform.forward, Vector3.right))
+			else if (V3Equal(refs.boostDirTrans.transform.forward, Vector3.right))
 			{
 				if (mover) side = mover.right;
 				if (moveable) side = moveable.right;
