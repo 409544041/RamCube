@@ -73,8 +73,9 @@ namespace Qbism.Dialogue
 					focuser.SetInitialFocusValues(segRef, i);
 				}
 			}
-
-			expressionHandlers[1].SetFace(dialogueSO.partnerFirstExpression, -1);
+			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
+			if (charIndex == 0) expressionHandlers[1].SetFace(dialogueSO.partnerFirstExpression, -1);
+			else expressionHandlers[0].SetFace(dialogueSO.partnerFirstExpression, -1);
 
 			Dialogue();
 		}

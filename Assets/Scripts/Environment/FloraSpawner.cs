@@ -12,7 +12,6 @@ namespace Qbism.Environment
 		[SerializeField] FloraIdentifier[] flora;
 		[SerializeField] int[] spawnAmountWeight;
 		[SerializeField] Vector2 minMaxBushSize, minMaxRockSize, minMaxMossSize;
-		[SerializeField] bool generateOnStart = false;
 
 		//Cache
 		public BiomeOverwriter bOverwriter { get; set; }
@@ -24,8 +23,8 @@ namespace Qbism.Environment
 
 		private void Start() 
 		{	
-			if (bOverwriter != null && bOverwriter.respawnFloraVariety && generateOnStart) SpawnFlora();
-			else if (bOverwriter == null && generateOnStart) SpawnFlora();
+			if (bOverwriter != null && bOverwriter.respawnFloraVariety) SpawnFlora();
+			else if (bOverwriter == null) SpawnFlora();
 		}
 
 		public void SpawnFlora() 
