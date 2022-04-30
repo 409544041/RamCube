@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mcRef: {fileID: 0}
   gcRef: {fileID: 0}
+  scRef: {fileID: 0}
 --- !u!114 &7202776645888494265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +91,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1930331695011083473
 Transform:
   m_ObjectHideFlags: 0
@@ -121,6 +122,7 @@ MonoBehaviour:
   respawnFloraVariety: 0
   respawnWallPillarVariety: 0
   gcRef: {fileID: 0}
+  mcRef: {fileID: 0}
 --- !u!1 &4453347168743874800
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b5acdc28a010f43908091226e5eded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelPins: []
   mcRef: {fileID: 0}
 --- !u!114 &9195207322977916684
 MonoBehaviour:
@@ -292,6 +293,7 @@ MonoBehaviour:
   pinTracker: {fileID: 4859205134934415561}
   pinSelShape: {fileID: 5492944426490243216}
   centerPoint: {fileID: 3722215608194475144}
+  levelPins: []
   mapLoader: {fileID: 735851156688738823}
   levelLoader: {fileID: 7202776645888494265}
   serpentLoader: {fileID: 3927803264483804855}
