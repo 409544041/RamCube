@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using BansheeGz.BGDatabase;
 using Alias_rifegrt_Pin = E_Pin;
 using Alias_rifegrt_BiomeGameplayData = E_BiomeGameplayData;
-using Alias_rifegrt_BiomeIdentifier = E_BiomeIdentifier;
 using Alias_rifegrt_LevelData = E_LevelData;
 using Alias_rifegrt_LevelGameplayData = E_LevelGameplayData;
 using Alias_rifegrt_MapWalls = E_MapWalls;
@@ -320,19 +319,18 @@ public partial class E_LevelData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_LevelData() : base(MetaDefault)
 	{
 	}
@@ -588,37 +586,24 @@ public partial class E_Biome : BGEntity
 			return _private_result_list;
 		}
 	}
-	public List<E_BiomeIdentifier> RelatedBiomeIdentifierListUsingBiomeRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_BiomeIdentifier._f_Biome.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_BiomeIdentifier>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_BiomeIdentifier) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
 	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_Biome() : base(MetaDefault)
 	{
 	}
@@ -862,19 +847,18 @@ public partial class E_Pin : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_Pin() : base(MetaDefault)
 	{
 	}
@@ -1217,19 +1201,18 @@ public partial class E_LevelGameplayData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_LevelGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1417,19 +1400,18 @@ public partial class E_MapWalls : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_MapWalls() : base(MetaDefault)
 	{
 	}
@@ -1592,19 +1574,18 @@ public partial class E_BiomeGameplayData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_BiomeGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1652,161 +1633,6 @@ public partial class E_BiomeGameplayData : BGEntity
 	public static E_BiomeGameplayData NewEntity()
 	{
 		return (E_BiomeGameplayData) MetaDefault.NewEntity();
-	}
-}
-
-//=============================================================
-//||                   Generated by BansheeGz Code Generator ||
-//=============================================================
-
-public partial class E_BiomeIdentifier : BGEntity
-{
-
-	//=============================================================
-	//||                   Generated by BansheeGz Code Generator ||
-	//=============================================================
-
-	public class Factory : BGEntity.EntityFactory
-	{
-		public BGEntity NewEntity(BGMetaEntity meta)
-		{
-			return new E_BiomeIdentifier(meta);
-		}
-		public BGEntity NewEntity(BGMetaEntity meta, BGId id)
-		{
-			return new E_BiomeIdentifier(meta, id);
-		}
-	}
-	private static BansheeGz.BGDatabase.BGMetaRow _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(5247857210012234322UL,17267769619000920731UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
-	private static readonly List<BGEntity> _find_Entities_Result = new List<BGEntity>();
-	public static int CountEntities
-	{
-		get
-		{
-			return MetaDefault.CountEntities;
-		}
-	}
-	public System.String f_name
-	{
-		get
-		{
-			return _f_name[Index];
-		}
-		set
-		{
-			_f_name[Index] = value;
-		}
-	}
-	public E_Biome f_Biome
-	{
-		get
-		{
-			return (E_Biome) _f_Biome[Index];
-		}
-		set
-		{
-			_f_Biome[Index] = value;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(_ufle12jhs77_f_name==null || _ufle12jhs77_f_name.IsDeleted) _ufle12jhs77_f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(5240021398996626780UL,3225667101278422688UL));
-			return _ufle12jhs77_f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Biome;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Biome
-	{
-		get
-		{
-			if(_ufle12jhs77_f_Biome==null || _ufle12jhs77_f_Biome.IsDeleted) _ufle12jhs77_f_Biome=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5674227258199142705UL,10260737940855049626UL));
-			return _ufle12jhs77_f_Biome;
-		}
-	}
-	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
-	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
-	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
-	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
-	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
-	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
-	private E_BiomeIdentifier() : base(MetaDefault)
-	{
-	}
-	private E_BiomeIdentifier(BGId id) : base(MetaDefault, id)
-	{
-	}
-	private E_BiomeIdentifier(BGMetaEntity meta) : base(meta)
-	{
-	}
-	private E_BiomeIdentifier(BGMetaEntity meta, BGId id) : base(meta, id)
-	{
-	}
-	public static E_BiomeIdentifier FindEntity(Predicate<E_BiomeIdentifier> filter)
-	{
-		return MetaDefault.FindEntity(entity => filter==null || filter((E_BiomeIdentifier) entity)) as E_BiomeIdentifier;
-	}
-	public static List<E_BiomeIdentifier> FindEntities(Predicate<E_BiomeIdentifier> filter, List<E_BiomeIdentifier> result=null, Comparison<E_BiomeIdentifier> sort=null)
-	{
-		result = result ?? new List<E_BiomeIdentifier>();
-		_find_Entities_Result.Clear();
-		MetaDefault.FindEntities(filter == null ? (Predicate<BGEntity>) null: e => filter((E_BiomeIdentifier) e), _find_Entities_Result, sort == null ? (Comparison<BGEntity>) null : (e1, e2) => sort((E_BiomeIdentifier) e1, (E_BiomeIdentifier) e2));
-		if (_find_Entities_Result.Count != 0)
-		{
-			for (var i = 0; i < _find_Entities_Result.Count; i++) result.Add((E_BiomeIdentifier) _find_Entities_Result[i]);
-			_find_Entities_Result.Clear();
-		}
-		return result;
-	}
-	public static void ForEachEntity(Action<E_BiomeIdentifier> action, Predicate<E_BiomeIdentifier> filter=null, Comparison<E_BiomeIdentifier> sort=null)
-	{
-		MetaDefault.ForEachEntity(entity => action((E_BiomeIdentifier) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_BiomeIdentifier) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_BiomeIdentifier)e1,(E_BiomeIdentifier)e2));
-	}
-	public static E_BiomeIdentifier GetEntity(BGId entityId)
-	{
-		return (E_BiomeIdentifier) MetaDefault.GetEntity(entityId);
-	}
-	public static E_BiomeIdentifier GetEntity(int index)
-	{
-		return (E_BiomeIdentifier) MetaDefault[index];
-	}
-	public static E_BiomeIdentifier GetEntity(string entityName)
-	{
-		return (E_BiomeIdentifier) MetaDefault.GetEntity(entityName);
-	}
-	public static E_BiomeIdentifier NewEntity()
-	{
-		return (E_BiomeIdentifier) MetaDefault.NewEntity();
 	}
 }
 
@@ -2031,19 +1857,18 @@ public partial class E_Dialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_Dialogues() : base(MetaDefault)
 	{
 	}
@@ -2363,19 +2188,18 @@ public partial class E_Segments : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_Segments() : base(MetaDefault)
 	{
 	}
@@ -2572,19 +2396,18 @@ public partial class E_QuestDialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_QuestDialogues() : base(MetaDefault)
 	{
 	}
@@ -2767,19 +2590,18 @@ public partial class E_ReturnDialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_ReturnDialogues() : base(MetaDefault)
 	{
 	}
@@ -2962,19 +2784,18 @@ public partial class E_QuestWaitingDialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_QuestWaitingDialogues() : base(MetaDefault)
 	{
 	}
@@ -3194,19 +3015,18 @@ public partial class E_SegmentsGameplayData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_SegmentsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -3498,19 +3318,18 @@ public partial class E_Objects : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_Objects() : base(MetaDefault)
 	{
 	}
@@ -3746,19 +3565,18 @@ public partial class E_ObjectsGameplayData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_ObjectsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -3913,19 +3731,18 @@ public partial class E_BiomeMaterials : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_BiomeMaterials() : base(MetaDefault)
 	{
 	}
@@ -4104,19 +3921,18 @@ public partial class E_AltReturnDialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_AltReturnDialogues() : base(MetaDefault)
 	{
 	}
@@ -4299,19 +4115,18 @@ public partial class E_FluffDialogues : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_FluffDialogues() : base(MetaDefault)
 	{
 	}
@@ -4471,19 +4286,18 @@ public partial class E_FluffDialogueGameplayData : BGEntity
 	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
 	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_BiomeIdentifier.Factory _factory6_PFS = new E_BiomeIdentifier.Factory();
-	private static readonly E_Dialogues.Factory _factory7_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory8_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory9_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory10_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory11_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory12_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory13_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory14_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory15_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory16_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory17_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory18_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
+	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
 	private E_FluffDialogueGameplayData() : base(MetaDefault)
 	{
 	}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Qbism.General;
 using Qbism.Saving;
+using Qbism.WorldMap;
 using UnityEngine;
 
 namespace Qbism.Environment
@@ -14,16 +15,17 @@ namespace Qbism.Environment
 		[SerializeField] ParticleSystem particle;
 		[SerializeField] MeshVarietyScripOb meshVarietySO;
 		[SerializeField] MatBiomeColorsScripOb vignetteSO;
-		[SerializeField] bool recalculate = false, checkBiomeLocally = false;
+		[SerializeField] bool recalculate = false;
 		[SerializeField] bool isSkyBox = false, isVolume = false;
 
 		//Cache
 		public VarietyMaterialHandler matHandler { get; set; }
 		public BiomeOverwriter bOverWriter { get; set; }
 		public ProgressHandler progHandler { get; set; }
+		public MapCoreRefHolder mcRef { get; set; }
 
 		//States
-		E_Biome currentBiome;
+		public E_Biome currentBiome { get; set; }
 
 		private void Start()
 		{
@@ -38,7 +40,7 @@ namespace Qbism.Environment
 
 		private void FetchBiome()
 		{
-			if (!checkBiomeLocally)
+			if (mcRef == null)
 			{
 				if (progHandler != null) currentBiome = progHandler.currentBiome;
 
@@ -48,11 +50,6 @@ namespace Qbism.Environment
 						entity.f_name == bOverWriter.biomeOverwrite.ToString());
 					else Debug.LogError("Progression Handler or Biome Overwriter not Linked. Setting first biome visuals");
 				}
-			}
-			else
-			{
-				var m_biomeID = GetComponentInParent<M_BiomeIdentifier>();
-				if (m_biomeID) currentBiome = m_biomeID.f_Biome;
 			}
 		}
 
