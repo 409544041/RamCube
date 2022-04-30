@@ -20,5 +20,6 @@ public class ExpressionsScripOb : ScriptableObject
 		public BrowStates brows;
 		public EyesStates eyes;
 		public MouthStates mouth;
+		public bool canBlink;
 	}
 }

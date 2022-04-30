@@ -1,5 +1,6 @@
 using Qbism.Cubes;
 using Qbism.PlayerCube;
+using Qbism.Serpent;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ namespace Qbism.SpriteAnimations
 		//Config parameters
 		[SerializeField] ExpressionsScripOb expressionsSO;
 		[SerializeField] SituationsExprsScripOb situationsExprsSO;
-		[SerializeField] bool isPlayer, isBillySegment;
 		[SerializeField] bool hasBrows = true, hasMouth = true;
 		[SerializeField] Vector2 minMaxExpressionTime, minMaxBlinkTime;
 		[SerializeField] float blinkDur = .2f;
@@ -20,31 +20,44 @@ namespace Qbism.SpriteAnimations
 		[SerializeField] SpriteEyesAnimator eyesAnim;
 		[SerializeField] SpriteMouthAnimator mouthAnim;
 		[SerializeField] FaceJuicer faceJuice;
+		[SerializeField] SegmentRefHolder segRef;
+		[SerializeField] PlayerRefHolder pRef;
 
 		//States
 		float expressionTimer = 0f, blinkTimer = 0f;
 		float timeToExpress = 0f, timeToBlink = 0f;
 		public bool hasFinished { get; set; } = false;
-		bool isIdling = true, canBlink = true;
+		bool isIdlingInGame = true, canBlink = true;
+		bool inSerpScreen, pauzeExpressionTimer = false, inDialogue = false;
 
 		//Actions, events, delegates etc
 		public Func<bool> onFetchStunned;
 
+		private void Start()
+		{
+			if (segRef != null && segRef.scRef != null) inSerpScreen = true;
+			if (inSerpScreen) SetFace(Expressions.smiling, GetRandomTime());
+		}
+
 		private void Update()
 		{
-			if (isPlayer && !hasFinished)
+			if (inSerpScreen && segRef.scRef.slRef.dialogueManager != null)
+				inDialogue = segRef.scRef.slRef.dialogueManager.inDialogue;
+			else inDialogue = false;
+
+			if ((pRef != null && !hasFinished) || (inSerpScreen && !inDialogue))
 			{
 				HandleBlinkTimer();
-				HandleExpressionTimer(); 
+				HandleExpressionTimer();
 			}
 		}
 
 		public void SetSituationFace(ExpressionSituations incSituation, float incTime)
 		{
-			if (isPlayer)
+			if (pRef != null || (inSerpScreen && !inDialogue))
 			{
-				if (incSituation == ExpressionSituations.play) isIdling = true;
-				else isIdling = false;
+				if (incSituation == ExpressionSituations.play) isIdlingInGame = true;
+				else isIdlingInGame = false;
 
 				foreach (var situationExpr in situationsExprsSO.situationExpressions)
 				{
@@ -64,22 +77,19 @@ namespace Qbism.SpriteAnimations
 		}
 
 		public void SetFace(Expressions incExpression, float incTime)
-		{
-			// smiling is currently the only idle face that doesn't have it's own eye movement
-			// so only in that face can we activate blink
-			if (incExpression == Expressions.smiling) canBlink = true;
-			else canBlink = false;
-			
+		{			
 			foreach (var expressionFace in expressionsSO.expressionFaces)
 			{
 				if (expressionFace.expression != incExpression) continue;
+
+				canBlink = expressionFace.face.canBlink;
 
 				if (hasBrows) browAnim.SetBrows(expressionFace.face.brows);
 				eyesAnim.SetEyes(expressionFace.face.eyes);
 				if (hasMouth) mouthAnim.SetMouth(expressionFace.face.mouth);
 			}
 			
-			if (isPlayer)
+			if (pRef != null || (inSerpScreen && !inDialogue))
 			{
 				timeToExpress = incTime;
 				expressionTimer = 0;
@@ -95,8 +105,10 @@ namespace Qbism.SpriteAnimations
 		//always go back to neutral
 		private IEnumerator Blink()
 		{
-			if (isIdling && canBlink)
+			if ((isIdlingInGame || (inSerpScreen && !inDialogue)) && canBlink)
 			{
+				pauzeExpressionTimer = true;
+
 				foreach (var expressionFace in expressionsSO.expressionFaces)
 				{
 					if (expressionFace.expression == Expressions.blink)
@@ -110,6 +122,8 @@ namespace Qbism.SpriteAnimations
 					if (expressionFace.expression == Expressions.neutral)
 						eyesAnim.SetEyes(expressionFace.face.eyes);
 				}
+
+				pauzeExpressionTimer = false;
 			}
 		}
 
@@ -126,15 +140,21 @@ namespace Qbism.SpriteAnimations
 
 		private void HandleExpressionTimer()
 		{
-			if (isBillySegment) return;
+			if (pauzeExpressionTimer) return;
 
 			expressionTimer += Time.deltaTime;
 
 			if (expressionTimer < timeToExpress) return;
 
-			if (!onFetchStunned())
-				SetSituationFace(ExpressionSituations.play, GetRandomTime());
-			else SetSituationFace(ExpressionSituations.laserHit, GetRandomTime());
+			if (pRef != null)
+			{
+				if (!onFetchStunned())
+					SetSituationFace(ExpressionSituations.play, GetRandomTime());
+				else SetSituationFace(ExpressionSituations.laserHit, GetRandomTime());
+			}
+			
+			if (inSerpScreen && !inDialogue)
+				SetSituationFace(ExpressionSituations.idle, GetRandomTime());
 		}
 
 		private void SetNeutralFace()
