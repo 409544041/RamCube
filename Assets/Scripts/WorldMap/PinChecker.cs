@@ -32,7 +32,8 @@ namespace Qbism.WorldMap
 			{
 				var pin = mlRef.levelPins[i];
 				List<LevelPinRefHolder> originPins = new List<LevelPinRefHolder>();
-				AddOriginPins(pin, originPins);
+				List<LevelPinRefHolder> unlockPins = new List<LevelPinRefHolder>();
+				AddOriginPins(pin, originPins, unlockPins);
 
 				var levelEntity = E_LevelData.FindEntity(entity =>
 					entity.f_Pin == pin.m_levelData.f_Pin);
@@ -56,12 +57,12 @@ namespace Qbism.WorldMap
 				List<E_MapWalls> uOriginWalls = null; 
 				
 				bool checkedRaiseAndWallStatus = false;
-				List<E_Pin> unlockPins = levelEntity.f_UnlocksPins;
+				List<E_Pin> unlockPinsEntities = levelEntity.f_UnlocksPins;
 
-				for (int j = 0; j < unlockPins.Count; j++)
+				for (int j = 0; j < unlockPinsEntities.Count; j++)
 				{
-					if (unlockPins[j].f_name != "_EMPTY")
-						FetchUnlockData(unlockPins[j], out uUnlocked, out uUnlockAnimPlayed,
+					if (unlockPinsEntities[j].f_name != "_EMPTY")
+						FetchUnlockData(unlockPinsEntities[j], out uUnlocked, out uUnlockAnimPlayed,
 							out uLocksLeft, out uOriginWalls);
 
 					if (!checkedRaiseAndWallStatus)
@@ -71,34 +72,44 @@ namespace Qbism.WorldMap
 						checkedRaiseAndWallStatus = true;
 					}
 
-					if (unlockPins[j].f_name != "_EMPTY")
-						pin.pinPather.CheckPathStatus(unlockPins[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft,
-							completed, unlockPins.Count, uOriginWalls, wallDown, dottedAnimPlayed, unlocked, 
+					if (unlockPinsEntities[j].f_name != "_EMPTY")
+						pin.pinPather.CheckPathStatus(unlockPinsEntities[j], uUnlocked, uUnlockAnimPlayed, uLocksLeft,
+							completed, unlockPinsEntities.Count, uOriginWalls, wallDown, dottedAnimPlayed, unlocked, 
 							unlockAnimPlayed);
 				}
 
 				mlRef.pinHandler.SetPinUI(pin, unlockAnimPlayed, completed, pin.pinPather.justCompleted);
 				mlRef.pinHandler.InitiateRaiseAndDrawPaths(gameplayEntity, pin, originPins, locksAmount, locksLeft,
 					dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn, originWalls,
-					biomeUnlocked);
+					biomeUnlocked, unlockPins);
 			}
 
 			persRef.progHandler.SaveProgData();
 		}
 
-		private void AddOriginPins(LevelPinRefHolder incomingPin, List<LevelPinRefHolder> originPins)
+		private void AddOriginPins(LevelPinRefHolder incomingPin, List<LevelPinRefHolder> originPins,
+			List<LevelPinRefHolder> unlockPins)
 		{
 			for (int i = 0; i < mlRef.levelPins.Length; i++)
 			{
-				var unlockPins = mlRef.levelPins[i].m_levelData.f_UnlocksPins;
+				var unlockPinEntities = mlRef.levelPins[i].m_levelData.f_UnlocksPins;
 
-				if (unlockPins != null)
+				var incUnlockPinEntities = incomingPin.m_levelData.f_UnlocksPins;
+
+				if (unlockPinEntities != null)
 				{
-					for (int j = 0; j < unlockPins.Count; j++)
+					for (int j = 0; j < unlockPinEntities.Count; j++)
 					{
-						if (unlockPins[j] == incomingPin.m_levelData.f_Pin)
+						if (unlockPinEntities[j] == incomingPin.m_levelData.f_Pin)
 							originPins.Add(mlRef.levelPins[i]);
 					}
+				}
+
+				for (int j = 0; j < incUnlockPinEntities.Count; j++)
+				{
+					if (incUnlockPinEntities[j].f_name != "_EMPTY" &&
+						incUnlockPinEntities[j] == mlRef.levelPins[i].m_levelData.f_Pin)
+						unlockPins.Add(mlRef.levelPins[i]);
 				}
 			}
 		}

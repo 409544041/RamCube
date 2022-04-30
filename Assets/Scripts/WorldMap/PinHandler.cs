@@ -28,17 +28,17 @@ namespace Qbism.WorldMap
 		public void InitiateRaiseAndDrawPaths(E_LevelGameplayData entity, LevelPinRefHolder pin,
 			List<LevelPinRefHolder> originPins, int locksAmount, int locksLeft, bool dottedAnimPlayed,
 			bool unlockAnimPlayed, bool unlocked, bool completed, bool pathDrawn,
-			List<E_MapWalls> originWalls, bool biomeUnlocked)
+			List<E_MapWalls> originWalls, bool biomeUnlocked, List<LevelPinRefHolder> unlockPins)
 		{
 			StartCoroutine(RaiseAndDrawPaths(entity, pin, originPins, locksAmount, locksLeft, 
 			dottedAnimPlayed, unlockAnimPlayed, unlocked, completed, pathDrawn,
-			originWalls, biomeUnlocked));
+			originWalls, biomeUnlocked, unlockPins));
 		}
 
 		private IEnumerator RaiseAndDrawPaths(E_LevelGameplayData entity, LevelPinRefHolder pin,
 			List<LevelPinRefHolder> originPins, int locksAmount, int locksLeft, bool dottedAnimPlayed,
 			bool unlockAnimPlayed, bool unlocked, bool completed, bool pathDrawn,
-			List<E_MapWalls> originWalls, bool biomeUnlocked)
+			List<E_MapWalls> originWalls, bool biomeUnlocked, List<LevelPinRefHolder> unlockPins)
 		{
 			bool lessLocks = (locksAmount > locksLeft) && locksLeft != 0;
 			bool raised = false;
@@ -100,7 +100,7 @@ namespace Qbism.WorldMap
 						//the !raised is bc this is not originPin specific and only needs to happen once
 						if (!raised && loweredWalls == wallsFromOrigin)
 						{
-							pin.pinRaiser.InitiateRaising(originPins);
+							pin.pinRaiser.InitiateRaising(originPins, locksLeft != 0, unlockPins);
 							entity.f_UnlockAnimPlayed = true;
 
 							//if unlocking new biome, raise all pins in that biome to correct pos
@@ -130,10 +130,6 @@ namespace Qbism.WorldMap
 						}
 					}
 				}
-				// for pins that have already been unlocked by another level and a second path is 
-				// now coming towards it
-				else if (unlocked && unlockAnimPlayed && originPin.pinPather.justCompleted)
-					originPin.pinPather.DrawNewPath(LineTypes.full, pin.pathPoint);
 			}
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;

@@ -58,15 +58,17 @@ namespace Qbism.WorldMap
 				(transform.position.x, lockedYPos, transform.position.z);
 		}
 
-		public void InitiateRaising(List<LevelPinRefHolder> originPins)
+		public void InitiateRaising(List<LevelPinRefHolder> originPins, bool locksLeft,
+			List<LevelPinRefHolder> unlockPins)
 		{
 			pinVisuals.transform.position = new Vector3
 				(transform.position.x, lockedYPos, transform.position.z);
 
-			StartCoroutine(RaiseCliff(originPins));
+			StartCoroutine(RaiseCliff(originPins, locksLeft, unlockPins));
 		}
 
-		private IEnumerator RaiseCliff(List<LevelPinRefHolder> originPins)
+		private IEnumerator RaiseCliff(List<LevelPinRefHolder> originPins, bool locksLeft, 
+			List<LevelPinRefHolder> unlockPins)
 		{
 			yield return new WaitForSeconds(raiseDelay);
 			
@@ -92,12 +94,22 @@ namespace Qbism.WorldMap
 
 			for (int i = 0; i < originPins.Count; i++)
 			{
-				bool originDottedAnimPlayed = E_LevelGameplayData.FindEntity(entity =>
-					entity.f_Pin == originPins[i].m_levelData.f_Pin).f_DottedAnimPlayed;
+				var entity = E_LevelGameplayData.FindEntity(entity =>
+					entity.f_Pin == originPins[i].m_levelData.f_Pin);
+				bool originUnlocked = entity.f_Unlocked;
 
-				if (originPins[i].pinPather.justCompleted || 
-					!originPins[i].pinPather.justCompleted && originDottedAnimPlayed)
+				if (originPins[i].pinPather.justCompleted || (originUnlocked && !locksLeft))
 					originPins[i].pinPather.DrawNewPath(LineTypes.full, refs.pathPoint);
+			}
+
+			for (int i = 0; i < unlockPins.Count; i++)
+			{
+				var entity = E_LevelGameplayData.FindEntity(entity =>
+					entity.f_Pin == unlockPins[i].m_levelData.f_Pin);
+				bool unlockPinAlreadyUnlocked = entity.f_Unlocked;
+
+				if (unlockPinAlreadyUnlocked && !locksLeft)
+					refs.pinPather.DrawNewPath(LineTypes.full, unlockPins[i].pathPoint);
 			}
 		}
 	}
