@@ -28,6 +28,7 @@ namespace Qbism.Dialogue
 		DialogueFocuser focuser; MMFeedbacks nextButtonJuice;
 		CanvasGroup dialogueCanvasGroup; TextMeshProUGUI charName; Camera cam; Canvas bgCanvas;
 		CanvasGroup bgCanvasGroup; TextMeshProUGUI dialogueText; TextAnimatorPlayer typeWriter;
+		MMFeedbacks textAppearJuice;
 
 		private void Awake()
 		{
@@ -37,6 +38,7 @@ namespace Qbism.Dialogue
 				dialogueCanvasGroup = gcRef.dialogueCanvasGroup; charName = gcRef.characterNameText; 
 				cam = gcRef.cam; bgCanvas = gcRef.bgCanvas; bgCanvasGroup = gcRef.bgCanvasGroup; 
 				dialogueText = gcRef.dialogueText; typeWriter = gcRef.typeWriter;
+				textAppearJuice = gcRef.textAppearJuice;
 			}
 			else if (scRef != null)
 			{
@@ -44,6 +46,7 @@ namespace Qbism.Dialogue
 				dialogueCanvasGroup = scRef.dialogueCanvasGroup; charName = scRef.characterNameText; 
 				cam = scRef.cam; bgCanvas = scRef.bgCanvas; bgCanvasGroup = scRef.bgCanvasGroup; 
 				dialogueText = scRef.dialogueText; typeWriter = scRef.typeWriter;
+				textAppearJuice = scRef.textAppearJuice;
 			}
 		}
 
@@ -85,6 +88,7 @@ namespace Qbism.Dialogue
 		private void Dialogue()
 		{
 			nextButtonJuice.StopFeedbacks();
+			textAppearJuice.PlayFeedbacks();
 			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
 
 			charName.text = names[charIndex];

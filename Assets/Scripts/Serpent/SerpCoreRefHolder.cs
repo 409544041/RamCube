@@ -33,6 +33,7 @@ namespace Qbism.Serpent
 		public Canvas bgCanvas;
 		public CanvasGroup bgCanvasGroup;
 		public TextAnimatorPlayer typeWriter;
+		public MMFeedbacks textAppearJuice;
 		[Header("Serpent")]
 		public SerpentSegmentHandler segHandler;
 
