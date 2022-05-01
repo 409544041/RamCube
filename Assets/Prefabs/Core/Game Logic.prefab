@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7085678595277738791}
   - component: {fileID: 4300353220786692159}
-  - component: {fileID: 2033276200521194020}
   - component: {fileID: 3046887159190210964}
   m_Layer: 0
   m_Name: Dialogue Handling
@@ -50,21 +49,6 @@ MonoBehaviour:
   - {x: 0.75, y: 0.6, z: 5}
   gcRef: {fileID: 0}
   scRef: {fileID: 0}
---- !u!114 &2033276200521194020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186537946365651608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df5293f4a84736c4ba91f7bf721d3cb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gcRef: {fileID: 0}
-  scRef: {fileID: 0}
-  dialogueManager: {fileID: 4300353220786692159}
 --- !u!114 &3046887159190210964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +356,6 @@ MonoBehaviour:
   meshVarietySO: {fileID: 0}
   vignetteSO: {fileID: 0}
   recalculate: 0
-  checkBiomeLocally: 0
   isSkyBox: 1
   isVolume: 0
 --- !u!114 &1073323798743442764
@@ -382,7 +365,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7150426452343985412}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54e2c429881968e4bbeffa61c9b7fa49, type: 3}
   m_Name: 
@@ -501,7 +484,7 @@ MonoBehaviour:
   visualSwapper: {fileID: 1305322747438852717}
   overwriter: {fileID: 1073323798743442764}
   dialogueManager: {fileID: 4300353220786692159}
-  dialogueWriter: {fileID: 2033276200521194020}
+  dialogueWriter: {fileID: 0}
   dialogueFocuser: {fileID: 3046887159190210964}
   objColManager: {fileID: 2856112992625200457}
   navManager: {fileID: 4173270567251923710}

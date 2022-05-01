@@ -98,7 +98,8 @@ namespace Qbism.Serpent
 			slRef.serpScreenUIHandler.ShowObjectUI(e_objs);
 			slRef.objSegChecker.DecideOnDialogueToPlay(refs);
 			scRef.namePlateText.text = refs.mSegments.f_SegmentName;
-			refs.exprHandler.SetFace(Expressions.gleeful, .5f);
+			if (refs.exprHandler != null)
+				refs.exprHandler.SetFace(Expressions.gleeful, .5f);
 		}
 
 		public void PopInJuice()

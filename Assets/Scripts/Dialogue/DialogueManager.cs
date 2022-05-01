@@ -5,6 +5,7 @@ using Qbism.SpriteAnimations;
 using Qbism.Serpent;
 using MoreMountains.Feedbacks;
 using TMPro;
+using Febucci.UI;
 
 namespace Qbism.Dialogue
 {
@@ -21,27 +22,28 @@ namespace Qbism.Dialogue
 		public bool inDialogue { get; set; } = false;
 		GameObject[] heads = new GameObject[2];
 		string[] names = new string[2];
+		bool isTyping = false;
 		ExpressionHandler[] expressionHandlers = new ExpressionHandler[2];
 		SegmentAnimator partnerAnimator;
-		DialogueFocuser focuser; DialogueWriter writer; MMFeedbacks nextButtonJuice;
+		DialogueFocuser focuser; MMFeedbacks nextButtonJuice;
 		CanvasGroup dialogueCanvasGroup; TextMeshProUGUI charName; Camera cam; Canvas bgCanvas;
-		CanvasGroup bgCanvasGroup; TextMeshProUGUI dialogueText;
+		CanvasGroup bgCanvasGroup; TextMeshProUGUI dialogueText; TextAnimatorPlayer typeWriter;
 
 		private void Awake()
 		{
 			if (gcRef != null)
 			{
-				focuser = gcRef.glRef.dialogueFocuser; writer = gcRef.glRef.dialogueWriter;
-				nextButtonJuice = gcRef.dialogueNextButtonJuice; dialogueCanvasGroup = gcRef.dialogueCanvasGroup;
-				charName = gcRef.characterNameText; cam = gcRef.cam; bgCanvas = gcRef.bgCanvas;
-				bgCanvasGroup = gcRef.bgCanvasGroup; dialogueText = gcRef.dialogueText;
+				focuser = gcRef.glRef.dialogueFocuser; nextButtonJuice = gcRef.dialogueNextButtonJuice; 
+				dialogueCanvasGroup = gcRef.dialogueCanvasGroup; charName = gcRef.characterNameText; 
+				cam = gcRef.cam; bgCanvas = gcRef.bgCanvas; bgCanvasGroup = gcRef.bgCanvasGroup; 
+				dialogueText = gcRef.dialogueText; typeWriter = gcRef.typeWriter;
 			}
 			else if (scRef != null)
 			{
-				focuser = scRef.slRef.dialogueFocuser; writer = scRef.slRef.dialogueWriter;
-				nextButtonJuice = scRef.dialogueNextButtonJuice; dialogueCanvasGroup = scRef.dialogueCanvasGroup;
-				charName = scRef.characterNameText; cam = scRef.cam; bgCanvas = scRef.bgCanvas;
-				bgCanvasGroup = scRef.bgCanvasGroup; dialogueText = scRef.dialogueText;
+				focuser = scRef.slRef.dialogueFocuser; nextButtonJuice = scRef.dialogueNextButtonJuice; 
+				dialogueCanvasGroup = scRef.dialogueCanvasGroup; charName = scRef.characterNameText; 
+				cam = scRef.cam; bgCanvas = scRef.bgCanvas; bgCanvasGroup = scRef.bgCanvasGroup; 
+				dialogueText = scRef.dialogueText; typeWriter = scRef.typeWriter;
 			}
 		}
 
@@ -100,8 +102,7 @@ namespace Qbism.Dialogue
 
 		public void NextDialogueText()
 		{
-			if (writer.isTyping) 
-				writer.showFullText = true;
+			if (isTyping) typeWriter.SkipTypewriter();
 			else
 			{
 				dialogueIndex++;
@@ -159,6 +160,11 @@ namespace Qbism.Dialogue
 				checker.DecideOnDialogueToPlay(checker.segInFocus);
 				checker.segInFocus.uiHandler.ToggleUIDependingOnObjectStatus();
 			}
+		}
+
+		public void SetTyping(bool value) //Called from TextAnimatorPlayer events
+		{
+			isTyping = value;
 		}
 
 	}

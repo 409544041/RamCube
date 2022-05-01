@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Qbism.General;
-using UnityEngine.UI;
 using MoreMountains.Feedbacks;
 using TMPro;
 using Qbism.Saving;
@@ -13,8 +12,8 @@ using Qbism.Peep;
 using Qbism.Cubes;
 using Qbism.Rewind;
 using Qbism.PlayerCube;
-using Qbism.Shapies;
 using Qbism.Serpent;
+using Febucci.UI;
 
 [ExecuteAlways]
 public class GameplayCoreRefHolder : MonoBehaviour
@@ -47,6 +46,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public TextMeshProUGUI objectNameText;
 	public TextMeshProUGUI objectSubText;
 	public TextMeshProUGUI objectOwnerText;
+	public TextAnimatorPlayer typeWriter;
 
 	//Cache
 	public PersistentRefHolder persRef { get; private set; }

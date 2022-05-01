@@ -7,6 +7,7 @@ using MoreMountains.Feedbacks;
 using UnityEngine.UI;
 using Qbism.Saving;
 using Qbism.General;
+using Febucci.UI;
 
 namespace Qbism.Serpent
 {
@@ -31,6 +32,7 @@ namespace Qbism.Serpent
 		public MMFeedbacks dialogueNextButtonJuice;
 		public Canvas bgCanvas;
 		public CanvasGroup bgCanvasGroup;
+		public TextAnimatorPlayer typeWriter;
 		[Header("Serpent")]
 		public SerpentSegmentHandler segHandler;
 
