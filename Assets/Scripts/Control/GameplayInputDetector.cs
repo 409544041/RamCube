@@ -24,6 +24,7 @@ namespace Qbism.Control
 		PlayerCubeMover mover;
 		FeatureSwitchBoard switchBoard;
 		FinishCube finish;
+		OverlayMenuHandler levelExitOverlay;
 
 		//States
 		Vector2 stickValue;
@@ -35,6 +36,7 @@ namespace Qbism.Control
 			mover = player.playerMover;
 			switchBoard = gcRef.persRef.switchBoard;
 			finish = gcRef.finishRef.finishCube;
+			levelExitOverlay = gcRef.exitOverlayHandler;
 			controls = new GameControls();
 
 			controls.Gameplay.Movement.performed += ctx => stickValue = ctx.ReadValue<Vector2>();
@@ -54,7 +56,7 @@ namespace Qbism.Control
 		}
 
 		void Update()
-		{	
+		{
 			//inputting is to avoid multiple movement inputs at once
 			if (stickValue.x > -.1 && stickValue.x < .1 && 
 				stickValue.y > -.1 && stickValue.y < .1) 
@@ -109,23 +111,29 @@ namespace Qbism.Control
 			
 		private void Rewind()
 		{
-			if (!finish.hasFinished) glRef.rewindHandler.StartRewinding();
+			if (!finish.hasFinished && !levelExitOverlay.overlayActive)
+				glRef.rewindHandler.StartRewinding();
 		}
 
 		private void HandleRestartInput()
 		{
-			if (!finish.hasFinished) glRef.sceneHandler.RestartLevel();
+			if (!finish.hasFinished && !levelExitOverlay.overlayActive)
+				glRef.sceneHandler.RestartLevel();
 		}
 
 		private void ContinueDialogue()
 		{
 			if (glRef.dialogueManager.inDialogue) glRef.dialogueManager.NextDialogueText();
 			else if (glRef.objColManager.overlayActive) glRef.mapLoader.StartLoadingWorldMap(true);
+			if (levelExitOverlay.overlayActive) glRef.mapLoader.StartLoadingWorldMap(true);
 		}
 
 		private void BackToMap()
 		{
-			if (!finish.hasFinished) glRef.mapLoader.StartLoadingWorldMap(true);
+			if (finish.hasFinished) return;
+
+			if (!levelExitOverlay.overlayActive) levelExitOverlay.ShowOverlay();
+			else levelExitOverlay.InitiateHideOverlay(); ;
 		}
 
 		private void OnDisable() 
