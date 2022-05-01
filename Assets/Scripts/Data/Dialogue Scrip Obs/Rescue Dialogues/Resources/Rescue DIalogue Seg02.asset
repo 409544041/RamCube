@@ -17,7 +17,8 @@ MonoBehaviour:
   dialogues:
   - characterSpeaking: 1
     expression: 17
-    dialogueText: Huh? What happened? Where'd my dark, quiet room go?
+    dialogueText: '{nstate}<tshake2><speed=100>Huh?<speed=1></>{/}<waitfor=.7> What
+      happened? Where''d my dark, quiet room go?'
   - characterSpeaking: 0
     expression: 1
     dialogueText: You mean your prison? I rescued you from it. You're welcome.
@@ -26,17 +27,21 @@ MonoBehaviour:
     dialogueText: Oh... do you think you could put me back?
   - characterSpeaking: 1
     expression: 18
-    dialogueText: It was so peaceful in there. Finally, nobody was bothering me!
+    dialogueText: It was so <twave>peaceful</> in there. Finally, nobody was bothering
+      me!
   - characterSpeaking: 0
     expression: 14
     dialogueText: Dorey, I know you like your privacy, but we really need to find
       the others.
   - characterSpeaking: 1
     expression: 9
-    dialogueText: Ugh, do we have to? They're all so loud...
+    dialogueText: '{nstate}<tshake2><speed=100>Ugh,<speed=1></>{/}<waitfor=.7> do
+      we have to? They''re all so <tshake>loud</>...'
   - characterSpeaking: 0
     expression: 11
-    dialogueText: Nah, I guess no-- OF COURSE WE HAVE TO! They're family!
+    dialogueText: Nah, I guess no-- <tshake>OF COURSE WE HAVE TO!</><waitfor=.5>
+      They're family!
   - characterSpeaking: 1
     expression: 10
-    dialogueText: Fine! This better not take long...
+    dialogueText: '{nstate}<tshake2><speed=100>Fine!<speed=1></>{/}<waitfor=.7> This
+      better not take long...'

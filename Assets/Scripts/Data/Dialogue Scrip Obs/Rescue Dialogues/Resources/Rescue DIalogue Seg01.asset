@@ -17,7 +17,8 @@ MonoBehaviour:
   dialogues:
   - characterSpeaking: 1
     expression: 2
-    dialogueText: Billy! Thank goodness you saved me!
+    dialogueText: '{pstate}<tshake2><speed=100>Billy!<speed=1></>{/}<waitfor=.7>
+      Thank goodness you saved me!'
   - characterSpeaking: 1
     expression: 14
     dialogueText: I mean, I knew you would, of course. I saw you in a vision, sailing
@@ -27,14 +28,15 @@ MonoBehaviour:
     dialogueText: Sure you did, Mikey...
   - characterSpeaking: 1
     expression: 3
-    dialogueText: You mean Magic Mikey, Psychic Extraordinaire!
+    dialogueText: You mean <waitfor=.5><twave>Magic Mikey, Psychic Extraordinaire!
   - characterSpeaking: 0
     expression: 0
     dialogueText: Well, if you're so psychic, do you know where the rest of our friends
       are being imprisoned?
   - characterSpeaking: 1
     expression: 17
-    dialogueText: Oh! Um. Yes, of course. I sense that they're... that way!
+    dialogueText: '{nstate}<tshake2><speed=100>Oh!<speed=1></>{/}<waitfor=.7> Um.
+      Yes, of course. I sense that they''re... that way!'
   - characterSpeaking: 1
     expression: 0
     dialogueText: Or... maybe that way?

@@ -25,7 +25,7 @@ namespace Qbism.Dialogue
 		SegmentAnimator partnerAnimator;
 		DialogueFocuser focuser; DialogueWriter writer; MMFeedbacks nextButtonJuice;
 		CanvasGroup dialogueCanvasGroup; TextMeshProUGUI charName; Camera cam; Canvas bgCanvas;
-		CanvasGroup bgCanvasGroup;
+		CanvasGroup bgCanvasGroup; TextMeshProUGUI dialogueText;
 
 		private void Awake()
 		{
@@ -34,14 +34,14 @@ namespace Qbism.Dialogue
 				focuser = gcRef.glRef.dialogueFocuser; writer = gcRef.glRef.dialogueWriter;
 				nextButtonJuice = gcRef.dialogueNextButtonJuice; dialogueCanvasGroup = gcRef.dialogueCanvasGroup;
 				charName = gcRef.characterNameText; cam = gcRef.cam; bgCanvas = gcRef.bgCanvas;
-				bgCanvasGroup = gcRef.bgCanvasGroup;
+				bgCanvasGroup = gcRef.bgCanvasGroup; dialogueText = gcRef.dialogueText;
 			}
 			else if (scRef != null)
 			{
 				focuser = scRef.slRef.dialogueFocuser; writer = scRef.slRef.dialogueWriter;
 				nextButtonJuice = scRef.dialogueNextButtonJuice; dialogueCanvasGroup = scRef.dialogueCanvasGroup;
 				charName = scRef.characterNameText; cam = scRef.cam; bgCanvas = scRef.bgCanvas;
-				bgCanvasGroup = scRef.bgCanvasGroup;
+				bgCanvasGroup = scRef.bgCanvasGroup; dialogueText = scRef.dialogueText;
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace Qbism.Dialogue
 			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
 
 			charName.text = names[charIndex];
-			writer.StartWritingText(dialogueSO.dialogues[dialogueIndex].dialogueText);
+			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
 
 			focuser.SetFocus(charIndex, heads);
 			SetDialogueExpression();
