@@ -104,6 +104,11 @@ namespace Qbism.Serpent
 
 		public void PopInJuice()
 		{
+			var mmScale = popInJuice.GetComponent<MMFeedbackScale>();
+			if (refs.dragonAnim != null)
+				mmScale.RemapCurveOne = refs.scRef.slRef.scroller.headFocusEnlargement;
+			else mmScale.RemapCurveOne = refs.scRef.slRef.scroller.focusEnlargement;
+
 			popInJuice.Initialization();
 			popInJuice.PlayFeedbacks();
 		}
