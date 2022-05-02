@@ -83,12 +83,6 @@ namespace Qbism.PlayerCube
 				}
 			}
 
-			if (playerAnimator != null)
-			{
-				playerAnimator.onInputSet += SetInput;
-				playerAnimator.onIntroSet += SetInIntro;
-			} 
-
 			if (expresHandler != null) expresHandler.onFetchStunned += FetchIsStunned;
 		}
 
@@ -248,14 +242,10 @@ namespace Qbism.PlayerCube
 			center.position = transform.position;
 		}
 
-		private void SetInput(bool value)
+		public void SetInput(bool value)
 		{
-			input = value;
-		}
-
-		private void SetInIntro(bool value)
-		{
-			isInIntroSeq = value;
+			if (!refs.gcRef.exitOverlayHandler.overlayActive)
+				input = value;
 		}
 
 		private bool FetchIsStunned()
@@ -303,12 +293,6 @@ namespace Qbism.PlayerCube
 					cube.onActivatePlayerMove -= InitiateMoveFromOther;
 					cube.onPlayerPosCheck -= FetchPos;
 				}
-			}
-
-			if (playerAnimator != null)
-			{
-				playerAnimator.onInputSet -= SetInput;
-				playerAnimator.onIntroSet -= SetInIntro;
 			}
 
 			if (expresHandler != null) expresHandler.onFetchStunned += FetchIsStunned;

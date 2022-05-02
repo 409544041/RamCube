@@ -30,7 +30,6 @@ namespace Qbism.PlayerCube
 		//Actions, events, delegates etc
 		public event Action onTriggerLandingReaction;
 		public event Action onShowFF, onTriggerSerpent, onChildSegmentToPlayer;
-		public event Action<bool> onInputSet, onIntroSet;
 
 		public delegate Vector3 FinishPosDel();
 		public FinishPosDel onGetFinishPos;
@@ -69,8 +68,8 @@ namespace Qbism.PlayerCube
 
 		private IEnumerator DisableInputForDrop()
 		{
-			onIntroSet(true);
-			onInputSet(false);
+			refs.playerMover.isInIntroSeq = true;
+			refs.playerMover.SetInput(false);
 
 			animator.speed = 0; //pauze intro animation
 			yield return new WaitForSeconds(introDelay);
@@ -82,8 +81,8 @@ namespace Qbism.PlayerCube
 			float clipLength = currentClipinfo[0].clip.length;
 			yield return new WaitForSeconds(clipLength);
 
-			onInputSet(true);
-			onIntroSet(false);
+			refs.playerMover.SetInput(true);
+			refs.playerMover.isInIntroSeq = false;
 			onShowFF();
 		}
 
