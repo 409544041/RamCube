@@ -22,7 +22,11 @@ namespace Qbism.Serpent
 		{
 			if (E_SegmentsGameplayData.GetEntity(0).f_Rescued == false) return;
 			mcRef.mlRef.input.allowInput = false;
-			
+			foreach (var levelPin in mcRef.mlRef.levelPins)
+			{
+				levelPin.button.enabled = false;
+			}
+
 			SetSpline();
 			SetSplineToTarget(pin);
 			SetShrinkingData();

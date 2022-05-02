@@ -12,6 +12,7 @@ namespace Qbism.General
 		[SerializeField] CanvasGroup canvasGroup;
 		[SerializeField] MMFeedbacks popInJuice, popOutJuice;
 		[SerializeField] GameplayCoreRefHolder gcRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//States
 		public bool overlayActive { get; private set; }
@@ -27,6 +28,13 @@ namespace Qbism.General
 			popInJuice.PlayFeedbacks();
 
 			if (gcRef != null) gcRef.pRef.playerMover.input = false;
+			if (mcRef != null)
+			{
+				foreach (var pin in mcRef.mlRef.levelPins)
+				{
+					pin.button.enabled = false;
+				}
+			}
 		}
 
 		public void InitiateHideOverlay()
@@ -44,6 +52,13 @@ namespace Qbism.General
 			canvasGroup.alpha = 0;
 
 			if (gcRef != null) gcRef.pRef.playerMover.input = true;
+			if (mcRef != null)
+			{
+				foreach (var pin in mcRef.mlRef.levelPins)
+				{
+					pin.button.enabled = true;
+				}
+			}
 		}
 
 	}

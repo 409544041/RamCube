@@ -25,6 +25,7 @@ namespace Qbism.WorldMap
 		[Header("UI")]
 		public LevelPinUI pinUI;
 		public Canvas pinUICanvas;
+		public Button button;
 		[Header("Juice")]
 		public LevelPinRaiseJuicer pinRaiseJuicer;
 		public LevelPinUIJuicer pinUIJuicer;
