@@ -16,10 +16,11 @@ namespace Qbism.Control
 
 		//Cache
 		GameControls controls;
-
-		//States
 		MapLogicRefHolder mlRef;
 		PersistentRefHolder persRef;
+
+		//States
+		public bool allowInput { get; set; } = true;
 
 		void Awake()
 		{
@@ -30,7 +31,7 @@ namespace Qbism.Control
 			controls.Gameplay.DebugKey3.performed += ctx => CompleteAllAndReload();
 			controls.Gameplay.DebugKey1.performed += ctx => UnlockAllAndReload();
 			controls.Gameplay.ZKey.performed += ctx => ReloadMap();
-			controls.Gameplay.EscKey.performed += ctx => QuitApplication();
+			controls.Gameplay.EscKey.performed += ctx => ShowQuitOverlay();
 			controls.Gameplay.EnterKey.performed += ctx => EnterLevel();
 			controls.Gameplay.SpaceKey.performed += ctx => EnterLevel();
 			controls.Gameplay.XKey.performed += ctx => EnterLevel();
@@ -46,11 +47,18 @@ namespace Qbism.Control
 
 		private void EnterLevel()
 		{
-			mlRef.pinTracker.selectedPin.pinUI.LoadAssignedLevel();
+			if (!allowInput) return;
+
+			if (!mcRef.quitOverlay.overlayActive)
+				mlRef.pinTracker.selectedPin.pinUI.LoadAssignedLevel();
+			else Application.Quit();
 		}
 
 		private void LoadSerpentScreen()
 		{
+			if (!allowInput) return;
+			if (mcRef.quitOverlay.overlayActive) return;
+
 			if (persRef.switchBoard.serpentScreenConnected)
 			{
 				mlRef.serpentLoader.StartLoadingSerpentScreen();
@@ -59,6 +67,9 @@ namespace Qbism.Control
 
 		private void ReloadMap()
 		{
+			if (!allowInput) return;
+			if (mcRef.quitOverlay.overlayActive) return;
+
 			if (persRef.switchBoard.allowDebugMapReload)
 			{
 				persRef.progHandler.SaveProgData();
@@ -68,6 +79,9 @@ namespace Qbism.Control
 
 		private void UnCompleteAllAndReload()
 		{
+			if (!allowInput) return;
+			if (mcRef.quitOverlay.overlayActive) return;
+
 			if (persRef.switchBoard.allowDebugDeleteProgress)
 			{
 				mlRef.debugCompleter.UnCompleteAll();
@@ -78,6 +92,9 @@ namespace Qbism.Control
 
 		private void CompleteAllAndReload()
 		{
+			if (!allowInput) return;
+			if (mcRef.quitOverlay.overlayActive) return;
+
 			if (persRef.switchBoard.allowDebugCompleteAll)
 			{
 				mlRef.debugCompleter.CompleteAll();
@@ -88,6 +105,9 @@ namespace Qbism.Control
 
 		private void UnlockAllAndReload()
 		{
+			if (!allowInput) return;
+			if (mcRef.quitOverlay.overlayActive) return;
+
 			if (persRef.switchBoard.allowDebugUnlockAll)
 			{
 				mlRef.debugCompleter.UnlockAll();
@@ -96,9 +116,13 @@ namespace Qbism.Control
 			}
 		}
 
-		private void QuitApplication()
+		private void ShowQuitOverlay()
 		{
-			Application.Quit();
+			if (!allowInput) return;
+
+			if (!mcRef.quitOverlay.overlayActive)
+				mcRef.quitOverlay.ShowOverlay();
+			else mcRef.quitOverlay.InitiateHideOverlay();
 		}
 
 		private void OnDisable()

@@ -1,4 +1,5 @@
 using MoreMountains.Feedbacks;
+using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +25,8 @@ namespace Qbism.General
 		{
 			canvasGroup.alpha = 1;
 			popInJuice.PlayFeedbacks();
-			gcRef.pRef.playerMover.input = false;
+
+			if (gcRef != null) gcRef.pRef.playerMover.input = false;
 		}
 
 		public void InitiateHideOverlay()
@@ -41,7 +43,7 @@ namespace Qbism.General
 			yield return new WaitForSeconds(dur);
 			canvasGroup.alpha = 0;
 
-			gcRef.pRef.playerMover.input = true;
+			if (gcRef != null) gcRef.pRef.playerMover.input = true;
 		}
 
 	}

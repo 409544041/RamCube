@@ -21,6 +21,7 @@ namespace Qbism.Serpent
 		public void ActivateSerpent(LevelPinRefHolder pin)
 		{
 			if (E_SegmentsGameplayData.GetEntity(0).f_Rescued == false) return;
+			mcRef.mlRef.input.allowInput = false;
 			
 			SetSpline();
 			SetSplineToTarget(pin);
