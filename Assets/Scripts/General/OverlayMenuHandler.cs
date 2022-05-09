@@ -64,6 +64,15 @@ namespace Qbism.General
 			}
 		}
 
+		public void SelectTopMostButton()
+		{
+			buttonHandlers[0].SelectButton(selectedTextColor);
+			for (int i = 1; i < buttonHandlers.Length; i++)
+			{
+				buttonHandlers[i].DeselectButton(textColor);
+			}
+		}
+
 		public void InitiateHideOverlay()
 		{
 			StartCoroutine(HideOverlay());

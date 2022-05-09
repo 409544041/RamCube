@@ -61,7 +61,7 @@ namespace Qbism.General
 		{
 			if (!allowInput) return;
 
-			mcRef.quitOverlay.ShowOverlay();
+			stateMngr.SwitchState(stateMngr.pauseOverlayState);
 		}
 
 		public void HandleDebugUnlockAllInput()

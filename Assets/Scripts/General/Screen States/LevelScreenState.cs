@@ -83,7 +83,7 @@ namespace Qbism.General
 
 		public void HandleEscapeInput()
 		{
-			gcRef.exitOverlayHandler.ShowOverlay();
+			stateMngr.SwitchState(stateMngr.pauseOverlayState);
 		}
 
 		public void HandleDebugCompleteInput()

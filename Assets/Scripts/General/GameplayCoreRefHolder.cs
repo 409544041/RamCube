@@ -48,7 +48,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public TextMeshProUGUI objectOwnerText;
 	public TextAnimatorPlayer typeWriter;
 	public MMFeedbacks textAppearJuice;
-	public OverlayMenuHandler exitOverlayHandler;
+	public OverlayMenuHandler pauseOverlayHandler;
 
 	//Cache
 	public PersistentRefHolder persRef { get; private set; }

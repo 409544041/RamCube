@@ -27,7 +27,7 @@ namespace Qbism.WorldMap
 		public MapLogicRefHolder mlRef;
 		[Header("Canvasses")]
 		public Canvas worldMapCanvas;
-		public OverlayMenuHandler quitOverlay;
+		public OverlayMenuHandler pauzeOverlayHandler;
 		[Header("Music")]
 		public AudioSource musicSource;
 		public MusicFadeOut musicFader;

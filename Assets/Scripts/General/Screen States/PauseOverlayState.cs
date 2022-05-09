@@ -9,30 +9,36 @@ namespace Qbism.General
 	{
 		//Cache
 		ScreenStateManager stateMngr;
+		OverlayMenuHandler menuHandler;
 
 		public void StateEnter(ScreenStateManager ssm)
 		{
 			if (stateMngr == null)
 			{
 				stateMngr = ssm;
+				if (stateMngr.gcRef != null) menuHandler = stateMngr.gcRef.pauseOverlayHandler;
+				if (stateMngr.mcRef != null) menuHandler = stateMngr.mcRef.pauzeOverlayHandler;
 			}
 
-			//TO DO: pop up relevant pause overlay
+			menuHandler.SelectTopMostButton();
+			menuHandler.ShowOverlay();
 			//freeze rest of game?
 		}
 
 		public void HandleActionInput()
 		{
-			//TO DO: press button and do the thing of the button
+			menuHandler.PressSelectedButton();
 		}
 
 		public void HandleEscapeInput()
 		{
-			//TO DO: go back to prev state
+			if (stateMngr.gcRef != null) stateMngr.SwitchState(stateMngr.levelScreenState); 
+			if (stateMngr.mcRef != null) stateMngr.SwitchState(stateMngr.mapScreenState);
 		}
 
 		public void StateExit()
 		{
+			menuHandler.InitiateHideOverlay();
 		}
 
 		public void HandleAnyInput()
