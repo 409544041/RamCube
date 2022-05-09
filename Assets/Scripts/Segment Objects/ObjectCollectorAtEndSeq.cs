@@ -23,6 +23,10 @@ namespace Qbism.Objects
 		public void InitiateShowingObjectOverlay()
 		{
 			overlayActive = true;
+
+			var screenStateMngr = gcRef.glRef.screenStateMngr;
+			screenStateMngr.SwitchState(screenStateMngr.objectOverlayState);
+
 			StartCoroutine(ShowObjectOverlay());
 		}
 

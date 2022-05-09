@@ -6,6 +6,7 @@ using Qbism.Serpent;
 using MoreMountains.Feedbacks;
 using TMPro;
 using Febucci.UI;
+using Qbism.General;
 
 namespace Qbism.Dialogue
 {
@@ -28,7 +29,7 @@ namespace Qbism.Dialogue
 		DialogueFocuser focuser; MMFeedbacks nextButtonJuice;
 		CanvasGroup dialogueCanvasGroup; TextMeshProUGUI charName; Camera cam; Canvas bgCanvas;
 		CanvasGroup bgCanvasGroup; TextMeshProUGUI dialogueText; TextAnimatorPlayer typeWriter;
-		MMFeedbacks textAppearJuice;
+		MMFeedbacks textAppearJuice; ScreenStateManager screenStateMngr;
 
 		private void Awake()
 		{
@@ -38,7 +39,7 @@ namespace Qbism.Dialogue
 				dialogueCanvasGroup = gcRef.dialogueCanvasGroup; charName = gcRef.characterNameText; 
 				cam = gcRef.cam; bgCanvas = gcRef.bgCanvas; bgCanvasGroup = gcRef.bgCanvasGroup; 
 				dialogueText = gcRef.dialogueText; typeWriter = gcRef.typeWriter;
-				textAppearJuice = gcRef.textAppearJuice;
+				textAppearJuice = gcRef.textAppearJuice; screenStateMngr = gcRef.glRef.screenStateMngr;
 			}
 			else if (scRef != null)
 			{
@@ -46,13 +47,14 @@ namespace Qbism.Dialogue
 				dialogueCanvasGroup = scRef.dialogueCanvasGroup; charName = scRef.characterNameText; 
 				cam = scRef.cam; bgCanvas = scRef.bgCanvas; bgCanvasGroup = scRef.bgCanvasGroup; 
 				dialogueText = scRef.dialogueText; typeWriter = scRef.typeWriter;
-				textAppearJuice = scRef.textAppearJuice;
+				textAppearJuice = scRef.textAppearJuice; screenStateMngr = scRef.slRef.screenStateMngr;
 			}
 		}
 
 		public void StartDialogue(DialogueScripOb incDialogueSO, GameObject[] objs, Vector3[] rots,
 			SegmentAnimator segAnimator)
 		{
+			screenStateMngr.SwitchState(screenStateMngr.dialogueOverlayState);
 			dialogueSO = incDialogueSO;
 			partnerAnimator = segAnimator;
 			inDialogue = true;
@@ -145,6 +147,9 @@ namespace Qbism.Dialogue
 			if (gcRef != null) partnerAnimator.InitiateHappyWiggle();
 
 			yield return new WaitForSeconds(.5f); //So when dialogue UI disappears animation is already playing
+
+			if (gcRef != null) screenStateMngr.SwitchState(screenStateMngr.levelEndSeqState);
+			if (scRef != null) screenStateMngr.SwitchState(screenStateMngr.serpentScreenState);
 
 			inDialogue = false;
 			nextButtonJuice.StopFeedbacks();

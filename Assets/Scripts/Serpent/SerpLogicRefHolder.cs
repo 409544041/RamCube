@@ -1,5 +1,6 @@
 using Qbism.Control;
 using Qbism.Dialogue;
+using Qbism.General;
 using Qbism.Objects;
 using Qbism.SceneTransition;
 using System.Collections;
@@ -12,7 +13,7 @@ namespace Qbism.Serpent
 	{
 		//Config parameters
 		public SerpCoreRefHolder scRef;
-		public SerpentScreenInputDetector input;
+		public ScreenStateManager screenStateMngr;
 		public SerpentScreenScroller scroller;
 		[Header("Level Loading")]
 		public WorldMapLoading mapLoader;
@@ -23,7 +24,5 @@ namespace Qbism.Serpent
 		[Header("Dialogue")]
 		public DialogueManager dialogueManager;
 		public DialogueFocuser dialogueFocuser;
-		public DialogueWriter dialogueWriter;
-
 	}
 }
