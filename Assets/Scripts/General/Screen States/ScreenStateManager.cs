@@ -17,7 +17,6 @@ namespace Qbism.General
 		public MapScreenState mapScreenState;
 		public SerpentScreenState serpentScreenState;
 		public PauseOverlayState pauseOverlayState;
-		public ConfirmOverlayState confirmOverlayState;
 		public SettingsOverlayState settingsOverlayState;
 		public DialogueOverlayState dialogueOverlayState;
 		public ObjectOverlayState objectOverlayState;

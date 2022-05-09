@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 2618024861770657310}
   - component: {fileID: 847458300750802555}
   - component: {fileID: 352783382498737907}
-  - component: {fileID: 5358872299312990861}
   - component: {fileID: 4479431644089761556}
   - component: {fileID: 80423275357989753}
   - component: {fileID: 6180483777538866500}
@@ -62,7 +61,7 @@ MonoBehaviour:
   mapScreenState: {fileID: 2618024861770657310}
   serpentScreenState: {fileID: 847458300750802555}
   pauseOverlayState: {fileID: 352783382498737907}
-  confirmOverlayState: {fileID: 5358872299312990861}
+  confirmOverlayState: {fileID: 0}
   settingsOverlayState: {fileID: 4479431644089761556}
   dialogueOverlayState: {fileID: 80423275357989753}
   objectOverlayState: {fileID: 6180483777538866500}
@@ -72,6 +71,9 @@ MonoBehaviour:
   gcRef: {fileID: 0}
   mcRef: {fileID: 0}
   scRef: {fileID: 0}
+  isSplash: 0
+  isDemoIntro: 0
+  isDemoEnd: 0
 --- !u!114 &1037948965700858708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,18 +144,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 879fbe5354189dc4ba3522d230b94fe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5358872299312990861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7927826227167248565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa5e5be15d6944e47a094ab8d5203443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4479431644089761556
