@@ -27,7 +27,7 @@ namespace Qbism.WorldMap
 		public MapLogicRefHolder mlRef;
 		[Header("Canvasses")]
 		public Canvas worldMapCanvas;
-		public OverlayMenuHandler pauzeOverlayHandler;
+		public OverlayMenuHandler pauseOverlayHandler;
 		[Header("Music")]
 		public AudioSource musicSource;
 		public MusicFadeOut musicFader;
@@ -43,6 +43,8 @@ namespace Qbism.WorldMap
 			persRef.cam = cam;
 			persRef.mcRef = this;
 			persRef.mlRef = mlRef;
+			persRef.settingsOverlayHandler.mcRef = this;
+			persRef.settingsOverlayHandler.FixLinks();
 
 			visualSwappers = FindObjectsOfType<BiomeVisualSwapper>();
 			foreach (var swapper in visualSwappers)

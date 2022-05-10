@@ -64,6 +64,10 @@ MonoBehaviour:
   musicPlayer: {fileID: 6641302433356164098}
   source: {fileID: 785573994526582284}
   musicFader: {fileID: 221665115949508014}
+  gameplayCanvas: {fileID: 7790806738891159094}
+  gameplayCanvasGroup: {fileID: 7346393184999236426}
+  gameplayCanvasFader: {fileID: 6902434960863894627}
+  rewindPulser: {fileID: 5530918682332788822}
   dialogueCanvas: {fileID: 5289846657194471745}
   dialogueCanvasGroup: {fileID: 5481912615426603943}
   characterNameText: {fileID: 4034289100654425620}
@@ -71,17 +75,13 @@ MonoBehaviour:
   dialogueNextButtonJuice: {fileID: 3323505004955788038}
   bgCanvas: {fileID: 144639894378730326}
   bgCanvasGroup: {fileID: 8849451278136454140}
-  gameplayCanvas: {fileID: 7790806738891159094}
-  gameplayCanvasGroup: {fileID: 7346393184999236426}
-  gameplayCanvasFader: {fileID: 6902434960863894627}
-  rewindPulser: {fileID: 5530918682332788822}
+  typeWriter: {fileID: 3336989993210951146}
+  textAppearJuice: {fileID: 3781891227294698309}
   objectCanvas: {fileID: 4769682312095064573}
   objectCanvasGroup: {fileID: 5137399026525858587}
   objectNameText: {fileID: 406591661453707147}
   objectSubText: {fileID: 5559370792826431371}
   objectOwnerText: {fileID: 223297946485459150}
-  typeWriter: {fileID: 3336989993210951146}
-  textAppearJuice: {fileID: 3781891227294698309}
   pauseOverlayHandler: {fileID: 8351040152025929183}
 --- !u!1 &1228188295300127881
 GameObject:
@@ -145,29 +145,22 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 616a36ca20364bd4ead280262f811baa,
     type: 3}
-  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_PointAction: {fileID: 0}
+  m_MoveAction: {fileID: -7318099664200539417, guid: 616a36ca20364bd4ead280262f811baa,
     type: 3}
-  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_SubmitAction: {fileID: 7504376141257602038, guid: 616a36ca20364bd4ead280262f811baa,
     type: 3}
-  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_CancelAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 7207354785907394337, guid: 616a36ca20364bd4ead280262f811baa,
     type: 3}
-  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
 --- !u!1 &2086229167230672177
 GameObject:

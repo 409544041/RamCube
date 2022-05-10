@@ -29,7 +29,12 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public MusicPlayer musicPlayer;
 	public AudioSource source;
 	public MusicFadeOut musicFader;
-	[Header("Canvasses")]
+	[Header("Gameplay Canvas")]
+	public Canvas gameplayCanvas;
+	public CanvasGroup gameplayCanvasGroup;
+	public ImageFader gameplayCanvasFader;
+	public InterfacePulser rewindPulser;
+	[Header("Dialogue Canvas")]
 	public Canvas dialogueCanvas;
 	public CanvasGroup dialogueCanvasGroup;
 	public TextMeshProUGUI characterNameText;
@@ -37,17 +42,15 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public MMFeedbacks dialogueNextButtonJuice;
 	public Canvas bgCanvas;
 	public CanvasGroup bgCanvasGroup;
-	public Canvas gameplayCanvas;
-	public CanvasGroup gameplayCanvasGroup;
-	public ImageFader gameplayCanvasFader;
-	public InterfacePulser rewindPulser;
+	public TextAnimatorPlayer typeWriter;
+	public MMFeedbacks textAppearJuice;
+	[Header("Object Canvas")]
 	public Canvas objectCanvas;
 	public CanvasGroup objectCanvasGroup;
 	public TextMeshProUGUI objectNameText;
 	public TextMeshProUGUI objectSubText;
 	public TextMeshProUGUI objectOwnerText;
-	public TextAnimatorPlayer typeWriter;
-	public MMFeedbacks textAppearJuice;
+	[Header("Pause Canvas")]
 	public OverlayMenuHandler pauseOverlayHandler;
 
 	//Cache
@@ -124,6 +127,8 @@ public class GameplayCoreRefHolder : MonoBehaviour
 			persRef.cam = cam;
 			persRef.gcRef = this;
 			persRef.glRef = glRef;
+			persRef.settingsOverlayHandler.gcRef = this;
+			persRef.settingsOverlayHandler.FixLinks();
 		}
 	}
 

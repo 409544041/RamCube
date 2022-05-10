@@ -1,4 +1,7 @@
 using MoreMountains.Feedbacks;
+using Qbism.Saving;
+using Qbism.SceneTransition;
+using Qbism.Serpent;
 using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,18 +18,35 @@ namespace Qbism.General
 		[SerializeField] OverlayButtonHandler[] buttonHandlers;
 		[SerializeField] Color textColor, selectedTextColor;
 		[SerializeField] MMFeedbacks popInJuice, popOutJuice;
-		[SerializeField] GameplayCoreRefHolder gcRef;
-		[SerializeField] MapCoreRefHolder mcRef;
+		public GameplayCoreRefHolder gcRef;
+		public MapCoreRefHolder mcRef;
+		public SerpCoreRefHolder scRef;
+
+		//Cache
+		public ScreenStateManager screenStateMngr;
 
 		//States
 		public bool overlayActive { get; private set; }
 		OverlayButtonHandler selectedButtonHandler, prevButtonHandler;
-		OverlayButtons selectedButtonType;
-		
+
+		private void Awake()
+		{
+			if (gcRef != null) screenStateMngr = gcRef.glRef.screenStateMngr;
+			if (mcRef != null) screenStateMngr = mcRef.mlRef.screenStateMngr;
+			if (scRef != null) screenStateMngr = scRef.slRef.screenStateMngr;
+		}
+
+		public void FixLinks()
+		{
+			if (gcRef != null) screenStateMngr = gcRef.glRef.screenStateMngr;
+			if (mcRef != null) screenStateMngr = mcRef.mlRef.screenStateMngr;
+			if (scRef != null) screenStateMngr = scRef.slRef.screenStateMngr;
+		}
 
 		private void Update()
 		{
 			overlayActive = canvasGroup.alpha == 1;
+
 
 			prevButtonHandler = selectedButtonHandler;
 			GameObject selected = EventSystem.current.currentSelectedGameObject;
@@ -42,7 +62,7 @@ namespace Qbism.General
 
 			if (selectedButtonHandler != prevButtonHandler)
 			{
-				selectedButtonType = selectedButtonHandler.SelectButton(selectedTextColor);
+				selectedButtonHandler.SelectButton(selectedTextColor, this, screenStateMngr);
 				if (prevButtonHandler != null) prevButtonHandler.DeselectButton(textColor);
 			}
 		}
@@ -51,7 +71,12 @@ namespace Qbism.General
 		{
 			canvasGroup.alpha = 1;
 			popInJuice.PlayFeedbacks();
-			selectedButtonType = buttonHandlers[0].SelectButton(selectedTextColor);
+			buttonHandlers[0].SelectButton(selectedTextColor, this, screenStateMngr);
+
+			foreach (var buttonHandler in buttonHandlers)
+			{
+				buttonHandler.button.interactable = true;
+			}
 
 
 			if (gcRef != null) gcRef.pRef.playerMover.input = false;
@@ -66,7 +91,7 @@ namespace Qbism.General
 
 		public void SelectTopMostButton()
 		{
-			buttonHandlers[0].SelectButton(selectedTextColor);
+			buttonHandlers[0].SelectButton(selectedTextColor, this, screenStateMngr);
 			for (int i = 1; i < buttonHandlers.Length; i++)
 			{
 				buttonHandlers[i].DeselectButton(textColor);
@@ -83,6 +108,11 @@ namespace Qbism.General
 			MMFeedbackScale mmScale = popOutJuice.GetComponent<MMFeedbackScale>();
 			var dur = mmScale.FeedbackDuration;
 
+			foreach (var buttonHandler in buttonHandlers)
+			{
+				buttonHandler.button.interactable = false;
+			}
+
 			popOutJuice.PlayFeedbacks();
 			yield return new WaitForSeconds(dur);
 			canvasGroup.alpha = 0;
@@ -96,19 +126,5 @@ namespace Qbism.General
 				}
 			}
 		}
-
-		public void PressSelectedButton()
-		{
-			if (selectedButtonType == OverlayButtons.resume) 
-				StartCoroutine(HideOverlay());
-			else if (selectedButtonType == OverlayButtons.restartLevel) 
-				gcRef.glRef.sceneHandler.RestartLevel();
-			else if (selectedButtonType == OverlayButtons.levelSelect)
-				gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
-			//else if (selectedButtonType == OverlayButtons.settings)
-			else if (selectedButtonType == OverlayButtons.quitGame)
-				Application.Quit();
-		}
-
 	}
 }

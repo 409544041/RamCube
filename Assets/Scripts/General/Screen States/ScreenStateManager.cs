@@ -31,32 +31,60 @@ namespace Qbism.General
 		//States
 		public IScreenBaseState currentScreenState { get; private set; }
 		public IScreenBaseState prevScreenState { get; private set; }
-		string currentStateString; //just for easy reading in debug inspector
-		string prevStateString;
+		public ScreenStates currentStateEnum { get; private set; }
+		public ScreenStates prevStateEnum { get; private set; }
 
 		private void Awake()
 		{
-			if (gcRef != null) currentScreenState = levelIntroState;
-			if (mcRef != null) currentScreenState = mapScreenState;
-			if (scRef != null) currentScreenState = serpentScreenState;
-			if (isSplash) currentScreenState = splashScreenState;
-			if (isDemoIntro) currentScreenState = demoIntroScreenState;
-			if (isDemoEnd) currentScreenState = demoEndScreenState;
+			if (gcRef != null)
+			{
+				currentScreenState = levelIntroState;
+				currentStateEnum = ScreenStates.levelIntroState;
+			}
+
+			if (mcRef != null)
+			{
+				currentScreenState = mapScreenState;
+				currentStateEnum = ScreenStates.mapScreenState;
+			}
+
+			if (scRef != null)
+			{
+				currentScreenState = serpentScreenState;
+				currentStateEnum = ScreenStates.serpentScreenState;
+			}
+
+			if (isSplash)
+			{
+				currentScreenState = splashScreenState;
+				currentStateEnum = ScreenStates.splashScreenState;
+			}
+
+			if (isDemoIntro)
+			{
+				currentScreenState = demoIntroScreenState;
+				currentStateEnum = ScreenStates.demoIntroScreenState;
+			}
+
+			if (isDemoEnd)
+			{
+				currentScreenState = demoEndScreenState;
+				currentStateEnum = ScreenStates.demoEndScreenState;
+			}
 		}
 
 		private void Start()
 		{
-			currentStateString = currentScreenState.ToString();
 			currentScreenState.StateEnter(this);
 		}
 
-		public void SwitchState(IScreenBaseState state)
+		public void SwitchState(IScreenBaseState state, ScreenStates stateEnum)
 		{
 			prevScreenState = currentScreenState;
-			currentScreenState = state;
+			prevStateEnum = currentStateEnum;
 
-			currentStateString = currentScreenState.ToString();
-			prevStateString = prevScreenState.ToString();
+			currentScreenState = state;
+			currentStateEnum = stateEnum;
 
 			prevScreenState.StateExit();
 			currentScreenState.StateEnter(this);

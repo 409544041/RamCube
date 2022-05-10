@@ -80,7 +80,7 @@ namespace Qbism.Cubes
 		public void Finish()
 		{
 			var screenStateMngr = refs.gcRef.glRef.screenStateMngr;
-			screenStateMngr.SwitchState(screenStateMngr.levelEndSeqState);
+			screenStateMngr.SwitchState(screenStateMngr.levelEndSeqState, ScreenStates.levelEndSeqState);
 
 			if (switchBoard.allowDebugFinish) PositionPlayerForFinish();
 

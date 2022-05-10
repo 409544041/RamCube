@@ -85,7 +85,7 @@ namespace Qbism.PlayerCube
 			refs.playerMover.isInIntroSeq = false;
 
 			var screenStateMngr = refs.gcRef.glRef.screenStateMngr;
-			screenStateMngr.SwitchState(screenStateMngr.levelScreenState);
+			screenStateMngr.SwitchState(screenStateMngr.levelScreenState, ScreenStates.levelScreenState);
 
 			onShowFF();
 		}

@@ -782,6 +782,8 @@ MonoBehaviour:
   popOutJuice: {fileID: 534329989183560684}
   gcRef: {fileID: 0}
   mcRef: {fileID: 0}
+  scRef: {fileID: 0}
+  screenStateMngr: {fileID: 0}
 --- !u!1 &8829981346760251092
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,6 +963,46 @@ PrefabInstance:
       propertyPath: buttonType
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 4969080734169906638}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 9128591892185095683}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 915021586792189950}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PressSettingsButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Qbism.General.OverlayButtonHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6040407003198329687, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
         type: 3}
       propertyPath: m_text
@@ -1083,12 +1125,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0823a1c588b37aa4fbfc3cb3165a919f, type: 3}
---- !u!224 &5266497579057852409 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7604323960141834472, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
-    type: 3}
-  m_PrefabInstance: {fileID: 2346841594814809873}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &915021586792189950 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3180500893042493679, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
@@ -1101,6 +1137,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4505c893a230c24499c58f497a6c75ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &894405425366122790 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2346841594814809873}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &5266497579057852409 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7604323960141834472, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2346841594814809873}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4047969436479568480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1108,6 +1162,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8758304350963082128}
     m_Modifications:
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 9128591892185095683}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 8497901624091925324}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1445143620991382159}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PressResumeButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Qbism.General.OverlayButtonHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6040407003198329687, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
         type: 3}
       propertyPath: m_text
@@ -1225,6 +1319,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0823a1c588b37aa4fbfc3cb3165a919f, type: 3}
+--- !u!114 &1501231122664504407 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4047969436479568480}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5884721039375487624 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7604323960141834472, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
@@ -1254,6 +1360,46 @@ PrefabInstance:
         type: 3}
       propertyPath: buttonType
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 894405425366122790}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1501231122664504407}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9111936817040806107}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PressQuitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Qbism.General.OverlayButtonHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6040407003198329687, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
         type: 3}
@@ -1377,12 +1523,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0823a1c588b37aa4fbfc3cb3165a919f, type: 3}
---- !u!224 &4310101722093056220 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7604323960141834472, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5933337426819356724}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &9111936817040806107 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3180500893042493679, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
@@ -1395,6 +1535,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4505c893a230c24499c58f497a6c75ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9128591892185095683 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5933337426819356724}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &4310101722093056220 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7604323960141834472, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5933337426819356724}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6419506890125598075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1406,6 +1564,46 @@ PrefabInstance:
         type: 3}
       propertyPath: buttonType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1501231122664504407}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 4969080734169906638}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8445871318175815060}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PressRestartButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Qbism.General.OverlayButtonHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6040407003198329687, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
         type: 3}
@@ -1547,6 +1745,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6419506890125598075}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8497901624091925324 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6419506890125598075}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7497806838835067897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1558,6 +1768,46 @@ PrefabInstance:
         type: 3}
       propertyPath: buttonType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 8497901624091925324}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 894405425366122790}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4913118429719720726}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PressLevelSelectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Qbism.General.OverlayButtonHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6040407003198329687, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
         type: 3}
@@ -1697,6 +1947,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4505c893a230c24499c58f497a6c75ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4969080734169906638 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7497806838835067897}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &9063372004919794043

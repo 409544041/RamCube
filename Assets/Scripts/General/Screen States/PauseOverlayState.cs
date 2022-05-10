@@ -17,7 +17,8 @@ namespace Qbism.General
 			{
 				stateMngr = ssm;
 				if (stateMngr.gcRef != null) menuHandler = stateMngr.gcRef.pauseOverlayHandler;
-				if (stateMngr.mcRef != null) menuHandler = stateMngr.mcRef.pauzeOverlayHandler;
+				if (stateMngr.mcRef != null) menuHandler = stateMngr.mcRef.pauseOverlayHandler;
+				if (stateMngr.scRef != null) menuHandler = stateMngr.scRef.pauseOverlayHandler;
 			}
 
 			menuHandler.SelectTopMostButton();
@@ -25,15 +26,12 @@ namespace Qbism.General
 			//freeze rest of game?
 		}
 
-		public void HandleActionInput()
-		{
-			menuHandler.PressSelectedButton();
-		}
-
 		public void HandleEscapeInput()
 		{
-			if (stateMngr.gcRef != null) stateMngr.SwitchState(stateMngr.levelScreenState); 
-			if (stateMngr.mcRef != null) stateMngr.SwitchState(stateMngr.mapScreenState);
+			if (stateMngr.gcRef != null) stateMngr.SwitchState(stateMngr.levelScreenState,
+				ScreenStates.levelScreenState); 
+			if (stateMngr.mcRef != null) stateMngr.SwitchState(stateMngr.mapScreenState,
+				ScreenStates.mapScreenState);
 		}
 
 		public void StateExit()
@@ -41,6 +39,9 @@ namespace Qbism.General
 			menuHandler.InitiateHideOverlay();
 		}
 
+		public void HandleActionInput()
+		{
+		}
 		public void HandleAnyInput()
 		{
 		}

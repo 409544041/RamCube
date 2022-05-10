@@ -54,7 +54,7 @@ namespace Qbism.Dialogue
 		public void StartDialogue(DialogueScripOb incDialogueSO, GameObject[] objs, Vector3[] rots,
 			SegmentAnimator segAnimator)
 		{
-			screenStateMngr.SwitchState(screenStateMngr.dialogueOverlayState);
+			screenStateMngr.SwitchState(screenStateMngr.dialogueOverlayState, ScreenStates.dialogueOverlayState);
 			dialogueSO = incDialogueSO;
 			partnerAnimator = segAnimator;
 			inDialogue = true;
@@ -148,8 +148,10 @@ namespace Qbism.Dialogue
 
 			yield return new WaitForSeconds(.5f); //So when dialogue UI disappears animation is already playing
 
-			if (gcRef != null) screenStateMngr.SwitchState(screenStateMngr.levelEndSeqState);
-			if (scRef != null) screenStateMngr.SwitchState(screenStateMngr.serpentScreenState);
+			if (gcRef != null) screenStateMngr.SwitchState(screenStateMngr.levelEndSeqState,
+				ScreenStates.levelEndSeqState);
+			if (scRef != null) screenStateMngr.SwitchState(screenStateMngr.serpentScreenState,
+				ScreenStates.serpentScreenState);
 
 			inDialogue = false;
 			nextButtonJuice.StopFeedbacks();

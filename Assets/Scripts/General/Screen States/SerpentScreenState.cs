@@ -54,7 +54,8 @@ namespace Qbism.General
 
 		public void HandleEscapeInput()
 		{
-			//TO DO: trigger pause overlay
+			if (!allowInput) return;
+			stateMngr.SwitchState(stateMngr.pauseOverlayState, ScreenStates.pauseOverlayState);
 		}
 
 		public void StateExit()

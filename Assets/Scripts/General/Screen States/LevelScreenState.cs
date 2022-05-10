@@ -83,7 +83,7 @@ namespace Qbism.General
 
 		public void HandleEscapeInput()
 		{
-			stateMngr.SwitchState(stateMngr.pauseOverlayState);
+			stateMngr.SwitchState(stateMngr.pauseOverlayState, ScreenStates.pauseOverlayState);
 		}
 
 		public void HandleDebugCompleteInput()

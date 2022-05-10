@@ -34,6 +34,9 @@ namespace Qbism.Serpent
 		public CanvasGroup bgCanvasGroup;
 		public TextAnimatorPlayer typeWriter;
 		public MMFeedbacks textAppearJuice;
+		[Header("Pause Canvas")]
+		public OverlayMenuHandler pauseOverlayHandler;
+		public CanvasGroup pauseOverlayCanvasGroup;
 		[Header("Serpent")]
 		public SerpentSegmentHandler segHandler;
 
@@ -46,6 +49,8 @@ namespace Qbism.Serpent
 			persRef = FindObjectOfType<PersistentRefHolder>();
 			persRef.scRef = this;
 			persRef.cam = cam;
+			persRef.settingsOverlayHandler.scRef = this;
+			persRef.settingsOverlayHandler.FixLinks();
 
 			segRefs = FindObjectsOfType<SegmentRefHolder>();
 			foreach (var segRef in segRefs)
