@@ -12,6 +12,7 @@ namespace Qbism.General
 		//Config parameters
 		public TextMeshProUGUI buttonText, valueText;
 		public Button button;
+		public Slider slider;
 
 		//Cache
 		OverlayMenuHandler menuHandler;

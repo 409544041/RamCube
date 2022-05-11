@@ -105,6 +105,17 @@ namespace Qbism.General
 			}
 		}
 
+		public void SlideSlider(float slideValue)
+		{
+			var slider = selectedButtonHandler.slider;
+			if (slider == null) return;
+
+			slider.value += slideValue;
+
+			if (slider.value < 0) slider.value = 0;
+			if (slider.value > 1) slider.value = 1;
+		}
+
 		public void InitiateHideOverlay()
 		{
 			StartCoroutine(HideOverlay());

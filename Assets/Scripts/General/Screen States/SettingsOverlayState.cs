@@ -31,6 +31,18 @@ namespace Qbism.General
 			stateMngr.SwitchState(stateMngr.prevScreenState, stateMngr.prevStateEnum);
 		}
 
+		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
+		{
+			if (stickValue.x > .5)
+			{
+				menuHandler.SlideSlider(.1f);
+			}
+			else if (stickValue.x < -.5)
+			{
+				menuHandler.SlideSlider(-.1f);
+			}
+		}
+
 		public void StateExit()
 		{
 			menuHandler.InitiateHideOverlay();
@@ -58,9 +70,6 @@ namespace Qbism.General
 		{
 		}
 		public void HandleRewindInput()
-		{
-		}
-		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
 		{
 		}
 		public void HandleBackInput()
