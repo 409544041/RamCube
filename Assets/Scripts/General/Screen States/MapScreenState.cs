@@ -36,16 +36,6 @@ namespace Qbism.General
 			mlRef.pinTracker.selectedPin.pinUI.LoadAssignedLevel();
 		}
 
-		public void HandleRewindInput()
-		{
-			if (!allowInput) return;
-
-			if (persRef.switchBoard.serpentScreenConnected)
-			{
-				mlRef.serpentLoader.StartLoadingSerpentScreen();
-			}
-		}
-
 		public void HandleResetInput()
 		{
 			if (!allowInput) return;
@@ -54,6 +44,16 @@ namespace Qbism.General
 			{
 				persRef.progHandler.SaveProgData();
 				mlRef.mapLoader.StartLoadingWorldMap(false);
+			}
+		}
+
+		public void HandleBackInput()
+		{
+			if (!allowInput) return;
+
+			if (persRef.switchBoard.serpentScreenConnected)
+			{
+				mlRef.serpentLoader.StartLoadingSerpentScreen();
 			}
 		}
 
@@ -111,6 +111,9 @@ namespace Qbism.General
 		{
 		}
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
+		{
+		}
+		public void HandleRewindInput()
 		{
 		}
 	}

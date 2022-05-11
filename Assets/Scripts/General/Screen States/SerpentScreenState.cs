@@ -58,6 +58,11 @@ namespace Qbism.General
 			stateMngr.SwitchState(stateMngr.pauseOverlayState, ScreenStates.pauseOverlayState);
 		}
 
+		public void HandleBackInput()
+		{
+			scRef.slRef.mapLoader.StartLoadingWorldMap(false);
+		}
+
 		public void StateExit()
 		{
 		}

@@ -105,21 +105,21 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "M-Key",
-                    "type": "Button",
-                    "id": "54702321-07c6-4271-8c7b-f65a279f63d5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ANY-key",
                     "type": "Button",
                     "id": "f73cfdeb-00dc-4d42-bdb2-b1e25c52106e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "3451f2a3-ff78-47df-9f82-5dcce58aae06",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -358,7 +358,7 @@
                 {
                     "name": "",
                     "id": "9ff9f1c5-041f-4f61-a694-6c667ab575fe",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -489,6 +489,17 @@
                 },
                 {
                     "name": "",
+                    "id": "324c63cc-5a32-47b6-bdd3-432687112a89",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b7a2751c-1206-4386-80b4-72ad08b7ddc1",
                     "path": "<Keyboard>/z",
                     "interactions": "",
@@ -500,23 +511,12 @@
                 },
                 {
                     "name": "",
-                    "id": "f5cd738c-52a2-4f23-9155-1882fe5f0073",
-                    "path": "<Keyboard>/m",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "M-Key",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "080c1ca2-221f-4dec-bfa3-47709394be87",
-                    "path": "<Gamepad>/buttonEast",
+                    "id": "3adb3f12-0a37-48c4-a3bb-d2294a1054b7",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "M-Key",
+                    "action": "Rewind",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -528,6 +528,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "ANY-key",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c93bb5bb-357f-4440-8c3d-987264eeccb5",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ccc6489-d4c1-42d3-944e-0d276b151253",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

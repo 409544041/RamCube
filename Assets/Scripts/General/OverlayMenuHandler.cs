@@ -15,7 +15,7 @@ namespace Qbism.General
 	{
 		//Config parameters
 		[SerializeField] CanvasGroup canvasGroup;
-		[SerializeField] OverlayButtonHandler[] buttonHandlers;
+		public OverlayButtonHandler[] buttonHandlers;
 		[SerializeField] Color textColor, selectedTextColor;
 		[SerializeField] MMFeedbacks popInJuice, popOutJuice;
 		public GameplayCoreRefHolder gcRef;
@@ -31,7 +31,7 @@ namespace Qbism.General
 
 		private void Awake()
 		{
-			SetStateManager();
+			SetStateManager(); //for overlays already in scene
 
 			canvasGroup.alpha = 0;
 
@@ -41,23 +41,11 @@ namespace Qbism.General
 			}
 		}
 
-		public void SetStateManager()
+		public void SetStateManager() //called from refs for overlay in persref
 		{
-			if (gcRef != null)
-			{
-				screenStateMngr = gcRef.glRef.screenStateMngr;
-				print(this.gameObject.name + " mngr from gcRef");
-			}
-			if (mcRef != null)
-			{
-				screenStateMngr = mcRef.mlRef.screenStateMngr;
-				print(this.gameObject.name + " mngr from mcRef");
-			}
-			if (scRef != null)
-			{
-				screenStateMngr = scRef.slRef.screenStateMngr;
-				print(this.gameObject.name + " mngr from scRef");
-			}
+			if (gcRef != null) screenStateMngr = gcRef.glRef.screenStateMngr;
+			if (mcRef != null) screenStateMngr = mcRef.mlRef.screenStateMngr;
+			if (scRef != null) screenStateMngr = scRef.slRef.screenStateMngr;
 		}
 
 		private void Update()
@@ -88,7 +76,6 @@ namespace Qbism.General
 		{
 			canvasGroup.alpha = 1;
 			popInJuice.PlayFeedbacks();
-			buttonHandlers[0].SelectButton(selectedTextColor, this, screenStateMngr);
 
 			foreach (var buttonHandler in buttonHandlers)
 			{
@@ -107,12 +94,14 @@ namespace Qbism.General
 			}
 		}
 
-		public void SelectTopMostButton()
+		public void SelectButton(int i)
 		{
-			buttonHandlers[0].SelectButton(selectedTextColor, this, screenStateMngr);
-			for (int i = 1; i < buttonHandlers.Length; i++)
+			buttonHandlers[i].SelectButton(selectedTextColor, this, screenStateMngr);
+
+			for (int j = 0; j < buttonHandlers.Length; j++)
 			{
-				buttonHandlers[i].DeselectButton(textColor);
+				if (j == i) continue;
+				buttonHandlers[j].DeselectButton(textColor);
 			}
 		}
 

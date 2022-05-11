@@ -18,6 +18,7 @@ namespace Qbism.General
 		void HandleDebugDeleteProgressInput();
 		void HandleDebugCompleteAllInput();
 		void HandleAnyInput();
+		void HandleBackInput();
 		void StateExit();
 	}
 }

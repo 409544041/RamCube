@@ -10,7 +10,7 @@ namespace Qbism.General
 	public class OverlayButtonHandler : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] TextMeshProUGUI buttonText, valueText;
+		public TextMeshProUGUI buttonText, valueText;
 		public Button button;
 
 		//Cache

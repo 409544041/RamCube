@@ -53,5 +53,8 @@ namespace Qbism.General
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
 		{
 		}
+		public void HandleBackInput()
+		{
+		}
 	}
 }

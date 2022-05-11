@@ -21,9 +21,24 @@ namespace Qbism.General
 				if (stateMngr.scRef != null) menuHandler = stateMngr.scRef.pauseOverlayHandler;
 			}
 
-			menuHandler.SelectTopMostButton();
+			SelectCorrectButton();
 			menuHandler.ShowOverlay();
 			//freeze rest of game?
+		}
+
+		private void SelectCorrectButton()
+		{
+			if (stateMngr.prevStateEnum != ScreenStates.settingsOverlayState)
+				menuHandler.SelectButton(0);
+			else
+			{
+				for (int i = 0; i < menuHandler.buttonHandlers.Length; i++)
+				{
+					var button = menuHandler.buttonHandlers[i];
+					if (button.buttonText.text != "SETTINGS") continue;
+					menuHandler.SelectButton(i);
+				}
+			}
 		}
 
 		public void HandleEscapeInput()
@@ -69,6 +84,9 @@ namespace Qbism.General
 		{
 		}
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
+		{
+		}
+		public void HandleBackInput()
 		{
 		}
 	}

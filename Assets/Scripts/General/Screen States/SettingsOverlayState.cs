@@ -21,15 +21,14 @@ namespace Qbism.General
 				if (stateMngr.scRef != null) menuHandler = stateMngr.scRef.persRef.settingsOverlayHandler;
 			}
 
-			menuHandler.SelectTopMostButton();
+			menuHandler.SelectButton(0);
 			menuHandler.ShowOverlay();
 			//freeze rest of game?
 		}
 
 		public void HandleEscapeInput()
 		{
-			if (stateMngr.gcRef != null) stateMngr.SwitchState(stateMngr.prevScreenState,
-				stateMngr.prevStateEnum);
+			stateMngr.SwitchState(stateMngr.prevScreenState, stateMngr.prevStateEnum);
 		}
 
 		public void StateExit()
@@ -62,6 +61,9 @@ namespace Qbism.General
 		{
 		}
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
+		{
+		}
+		public void HandleBackInput()
 		{
 		}
 	}

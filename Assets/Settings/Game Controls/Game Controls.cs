@@ -127,21 +127,21 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""M-Key"",
-                    ""type"": ""Button"",
-                    ""id"": ""54702321-07c6-4271-8c7b-f65a279f63d5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ANY-key"",
                     ""type"": ""Button"",
                     ""id"": ""f73cfdeb-00dc-4d42-bdb2-b1e25c52106e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""3451f2a3-ff78-47df-9f82-5dcce58aae06"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -380,7 +380,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9ff9f1c5-041f-4f61-a694-6c667ab575fe"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -511,6 +511,17 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""324c63cc-5a32-47b6-bdd3-432687112a89"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""b7a2751c-1206-4386-80b4-72ad08b7ddc1"",
                     ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
@@ -522,23 +533,12 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f5cd738c-52a2-4f23-9155-1882fe5f0073"",
-                    ""path"": ""<Keyboard>/m"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""M-Key"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""080c1ca2-221f-4dec-bfa3-47709394be87"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""id"": ""3adb3f12-0a37-48c4-a3bb-d2294a1054b7"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""M-Key"",
+                    ""action"": ""Rewind"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -550,6 +550,28 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ANY-key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c93bb5bb-357f-4440-8c3d-987264eeccb5"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ccc6489-d4c1-42d3-944e-0d276b151253"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -594,8 +616,8 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         m_Gameplay_DebugKey4 = m_Gameplay.FindAction("Debug Key 4", throwIfNotFound: true);
         m_Gameplay_Escape = m_Gameplay.FindAction("Escape", throwIfNotFound: true);
         m_Gameplay_Rewind = m_Gameplay.FindAction("Rewind", throwIfNotFound: true);
-        m_Gameplay_MKey = m_Gameplay.FindAction("M-Key", throwIfNotFound: true);
         m_Gameplay_ANYkey = m_Gameplay.FindAction("ANY-key", throwIfNotFound: true);
+        m_Gameplay_Back = m_Gameplay.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -666,8 +688,8 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_DebugKey4;
     private readonly InputAction m_Gameplay_Escape;
     private readonly InputAction m_Gameplay_Rewind;
-    private readonly InputAction m_Gameplay_MKey;
     private readonly InputAction m_Gameplay_ANYkey;
+    private readonly InputAction m_Gameplay_Back;
     public struct GameplayActions
     {
         private @GameControls m_Wrapper;
@@ -683,8 +705,8 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         public InputAction @DebugKey4 => m_Wrapper.m_Gameplay_DebugKey4;
         public InputAction @Escape => m_Wrapper.m_Gameplay_Escape;
         public InputAction @Rewind => m_Wrapper.m_Gameplay_Rewind;
-        public InputAction @MKey => m_Wrapper.m_Gameplay_MKey;
         public InputAction @ANYkey => m_Wrapper.m_Gameplay_ANYkey;
+        public InputAction @Back => m_Wrapper.m_Gameplay_Back;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -727,12 +749,12 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 @Rewind.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRewind;
                 @Rewind.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRewind;
                 @Rewind.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRewind;
-                @MKey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMKey;
-                @MKey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMKey;
-                @MKey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMKey;
                 @ANYkey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnANYkey;
                 @ANYkey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnANYkey;
                 @ANYkey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnANYkey;
+                @Back.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -770,12 +792,12 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 @Rewind.started += instance.OnRewind;
                 @Rewind.performed += instance.OnRewind;
                 @Rewind.canceled += instance.OnRewind;
-                @MKey.started += instance.OnMKey;
-                @MKey.performed += instance.OnMKey;
-                @MKey.canceled += instance.OnMKey;
                 @ANYkey.started += instance.OnANYkey;
                 @ANYkey.performed += instance.OnANYkey;
                 @ANYkey.canceled += instance.OnANYkey;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
             }
         }
     }
@@ -811,7 +833,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         void OnDebugKey4(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
         void OnRewind(InputAction.CallbackContext context);
-        void OnMKey(InputAction.CallbackContext context);
         void OnANYkey(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }

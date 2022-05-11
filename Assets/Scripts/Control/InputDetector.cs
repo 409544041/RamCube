@@ -28,6 +28,7 @@ namespace Qbism.Control
 			controls.Gameplay.Action.performed += ctx => screenStateMngr.currentScreenState.HandleActionInput();
 			controls.Gameplay.Escape.performed += ctx => screenStateMngr.currentScreenState.HandleEscapeInput();
 			controls.Gameplay.ANYkey.performed += ctx => screenStateMngr.currentScreenState.HandleAnyInput();
+			controls.Gameplay.Back.performed += ctx => screenStateMngr.currentScreenState.HandleBackInput();
 			
 			controls.Gameplay.DebugKey1.performed += ctx =>
 				screenStateMngr.currentScreenState.HandleDebugUnlockAllInput();

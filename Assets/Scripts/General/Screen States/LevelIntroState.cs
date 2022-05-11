@@ -18,6 +18,11 @@ namespace Qbism.General
 			}
 		}
 
+		public void HandleBackInput()
+		{
+			stateMngr.gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
+		}
+
 		public void StateExit()
 		{
 		}
