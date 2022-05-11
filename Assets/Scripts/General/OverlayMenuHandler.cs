@@ -27,7 +27,8 @@ namespace Qbism.General
 
 		//States
 		public bool overlayActive { get; private set; }
-		OverlayButtonHandler selectedButtonHandler, prevButtonHandler;
+		public OverlayButtonHandler selectedButtonHandler { get; private set; }
+		OverlayButtonHandler prevButtonHandler;
 
 		private void Awake()
 		{
@@ -103,17 +104,6 @@ namespace Qbism.General
 				if (j == i) continue;
 				buttonHandlers[j].DeselectButton(textColor);
 			}
-		}
-
-		public void SlideSlider(float slideValue)
-		{
-			var slider = selectedButtonHandler.slider;
-			if (slider == null) return;
-
-			slider.value += slideValue;
-
-			if (slider.value < 0) slider.value = 0;
-			if (slider.value > 1) slider.value = 1;
 		}
 
 		public void InitiateHideOverlay()

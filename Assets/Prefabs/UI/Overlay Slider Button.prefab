@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4746359969092795674}
   - component: {fileID: 1350393230957726830}
+  - component: {fileID: 7859313987286134091}
   m_Layer: 0
   m_Name: Music Volume Slider
   m_TagString: Untagged
@@ -83,13 +84,26 @@ MonoBehaviour:
   m_FillRect: {fileID: 1222561251375743118}
   m_HandleRect: {fileID: 3011929340891906456}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7859313987286134091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379133606957909011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766840f96530a1048bce85070d9b2b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: d8b69ae9391253847bfe5b88f7d4b409, type: 2}
 --- !u!1 &662949678159312738
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,6 +366,7 @@ MonoBehaviour:
   valueText: {fileID: 0}
   button: {fileID: 8213354487554718987}
   slider: {fileID: 1350393230957726830}
+  sliderJump: 0.05
 --- !u!1 &4192199320967052341
 GameObject:
   m_ObjectHideFlags: 0

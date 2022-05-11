@@ -35,11 +35,11 @@ namespace Qbism.General
 		{
 			if (stickValue.x > .5)
 			{
-				menuHandler.SlideSlider(.1f);
+				menuHandler.selectedButtonHandler.SlideSlider(1);
 			}
 			else if (stickValue.x < -.5)
 			{
-				menuHandler.SlideSlider(-.1f);
+				menuHandler.selectedButtonHandler.SlideSlider(-1);
 			}
 		}
 

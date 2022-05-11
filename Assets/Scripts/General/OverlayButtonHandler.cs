@@ -13,6 +13,7 @@ namespace Qbism.General
 		public TextMeshProUGUI buttonText, valueText;
 		public Button button;
 		public Slider slider;
+		[SerializeField] float sliderJump = .1f;
 
 		//Cache
 		OverlayMenuHandler menuHandler;
@@ -42,6 +43,17 @@ namespace Qbism.General
 		{
 			if (selectedGameObject == this.gameObject) return this;
 			else return null;
+		}
+
+		public void SlideSlider(int slideValue)
+		{
+			var value = slideValue * sliderJump;
+			if (slider == null) return;
+
+			slider.value += value;
+
+			if (slider.value < slider.minValue) slider.value = slider.minValue;
+			if (slider.value > slider.maxValue) slider.value = slider.maxValue;
 		}
 
 		public void PressResumeButton() //Called from button event
