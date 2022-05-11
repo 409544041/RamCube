@@ -44,7 +44,7 @@ namespace Qbism.WorldMap
 			persRef.mcRef = this;
 			persRef.mlRef = mlRef;
 			persRef.settingsOverlayHandler.mcRef = this;
-			persRef.settingsOverlayHandler.FixLinks();
+			persRef.settingsOverlayHandler.SetStateManager();
 
 			visualSwappers = FindObjectsOfType<BiomeVisualSwapper>();
 			foreach (var swapper in visualSwappers)
@@ -65,6 +65,11 @@ namespace Qbism.WorldMap
 				segRef.mcRef = this;
 				segRef.cam = cam;
 			}
+		}
+
+		private void OnDisable()
+		{
+			persRef.settingsOverlayHandler.mcRef = null;
 		}
 	}
 }

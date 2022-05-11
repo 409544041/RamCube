@@ -31,16 +31,33 @@ namespace Qbism.General
 
 		private void Awake()
 		{
-			if (gcRef != null) screenStateMngr = gcRef.glRef.screenStateMngr;
-			if (mcRef != null) screenStateMngr = mcRef.mlRef.screenStateMngr;
-			if (scRef != null) screenStateMngr = scRef.slRef.screenStateMngr;
+			SetStateManager();
+
+			canvasGroup.alpha = 0;
+
+			foreach (var buttonHandler in buttonHandlers)
+			{
+				buttonHandler.button.interactable = false;
+			}
 		}
 
-		public void FixLinks()
+		public void SetStateManager()
 		{
-			if (gcRef != null) screenStateMngr = gcRef.glRef.screenStateMngr;
-			if (mcRef != null) screenStateMngr = mcRef.mlRef.screenStateMngr;
-			if (scRef != null) screenStateMngr = scRef.slRef.screenStateMngr;
+			if (gcRef != null)
+			{
+				screenStateMngr = gcRef.glRef.screenStateMngr;
+				print(this.gameObject.name + " mngr from gcRef");
+			}
+			if (mcRef != null)
+			{
+				screenStateMngr = mcRef.mlRef.screenStateMngr;
+				print(this.gameObject.name + " mngr from mcRef");
+			}
+			if (scRef != null)
+			{
+				screenStateMngr = scRef.slRef.screenStateMngr;
+				print(this.gameObject.name + " mngr from scRef");
+			}
 		}
 
 		private void Update()
@@ -84,7 +101,8 @@ namespace Qbism.General
 			{
 				foreach (var pin in mcRef.mlRef.levelPins)
 				{
-					pin.button.enabled = false;
+					if (pin.button.enabled == true)
+						pin.button.interactable = false;
 				}
 			}
 		}
@@ -122,7 +140,8 @@ namespace Qbism.General
 			{
 				foreach (var pin in mcRef.mlRef.levelPins)
 				{
-					pin.button.enabled = true;
+					if (pin.button.enabled == true)
+						pin.button.interactable = true;
 				}
 			}
 		}

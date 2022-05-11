@@ -50,7 +50,7 @@ namespace Qbism.Serpent
 			persRef.scRef = this;
 			persRef.cam = cam;
 			persRef.settingsOverlayHandler.scRef = this;
-			persRef.settingsOverlayHandler.FixLinks();
+			persRef.settingsOverlayHandler.SetStateManager();
 
 			segRefs = FindObjectsOfType<SegmentRefHolder>();
 			foreach (var segRef in segRefs)
@@ -58,6 +58,11 @@ namespace Qbism.Serpent
 				segRef.scRef = this;
 				segRef.cam = cam;
 			}
+		}
+
+		private void OnDisable()
+		{
+			persRef.settingsOverlayHandler.scRef = null;
 		}
 	}
 }

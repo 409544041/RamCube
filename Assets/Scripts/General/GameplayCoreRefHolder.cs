@@ -128,7 +128,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 			persRef.gcRef = this;
 			persRef.glRef = glRef;
 			persRef.settingsOverlayHandler.gcRef = this;
-			persRef.settingsOverlayHandler.FixLinks();
+			persRef.settingsOverlayHandler.SetStateManager();
 		}
 	}
 
@@ -175,5 +175,10 @@ public class GameplayCoreRefHolder : MonoBehaviour
 				swapper.matHandler = persRef.varMatHandler;
 			}
 		}
+	}
+
+	private void OnDisable()
+	{
+		persRef.settingsOverlayHandler.gcRef = null;
 	}
 }

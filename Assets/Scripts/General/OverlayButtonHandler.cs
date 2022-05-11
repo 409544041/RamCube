@@ -45,7 +45,7 @@ namespace Qbism.General
 
 		public void PressResumeButton() //Called from button event
 		{
-			menuHandler.InitiateHideOverlay();
+			screenStateMngr.currentScreenState.HandleEscapeInput();
 		}
 
 		public void PressRestartButton() //Called from button event

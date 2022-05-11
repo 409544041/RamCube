@@ -29,9 +29,14 @@ namespace Qbism.General
 		public void HandleEscapeInput()
 		{
 			if (stateMngr.gcRef != null) stateMngr.SwitchState(stateMngr.levelScreenState,
-				ScreenStates.levelScreenState); 
-			if (stateMngr.mcRef != null) stateMngr.SwitchState(stateMngr.mapScreenState,
-				ScreenStates.mapScreenState);
+				ScreenStates.levelScreenState);
+			if (stateMngr.mcRef != null)
+			{
+				stateMngr.SwitchState(stateMngr.mapScreenState, ScreenStates.mapScreenState);
+				stateMngr.mcRef.mlRef.pinTracker.selectedPin.pinUI.SelectPinUI();
+			}
+			if (stateMngr.scRef != null) stateMngr.SwitchState(stateMngr.serpentScreenState,
+				ScreenStates.serpentScreenState);
 		}
 
 		public void StateExit()
