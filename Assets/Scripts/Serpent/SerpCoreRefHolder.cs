@@ -34,6 +34,12 @@ namespace Qbism.Serpent
 		public CanvasGroup bgCanvasGroup;
 		public TextAnimatorPlayer typeWriter;
 		public MMFeedbacks textAppearJuice;
+		[Header("Pause Canvas")]
+		public OverlayMenuHandler pauseOverlayHandler;
+		public CanvasGroup pauseOverlayCanvasGroup;
+		[Header("Settings Canvas")]
+		public OverlayMenuHandler settingsOverlayHandler;
+		public CanvasGroup settingsOverlayCanvasGroup;
 		[Header("Serpent")]
 		public SerpentSegmentHandler segHandler;
 

@@ -19,6 +19,7 @@ namespace Qbism.Cubes
 		//States
 		float disToPlayer = 0;
 		bool hiddenForFinish = false;
+		public bool showCubeUI { get; set; } = false;
 
 		private void Awake() 
 		{
@@ -35,7 +36,7 @@ namespace Qbism.Cubes
 
 		private void Update()
 		{
-			if (!finishCube.FetchFinishStatus() && !refs.gcRef.pRef.playerMover.isInIntroSeq) ShowUICheck();
+			if (showCubeUI) ShowUICheck();
 			if (finishCube.FetchFinishStatus() && !hiddenForFinish)	
 				HideUIForFinish();
 		}

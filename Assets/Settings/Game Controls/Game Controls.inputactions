@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "R-Key",
+                    "name": "Reset",
                     "type": "Button",
                     "id": "7bda7651-605e-4c5e-822e-7a395d4498b7",
                     "expectedControlType": "Button",
@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "X-Key",
+                    "name": "Action",
                     "type": "Button",
                     "id": "0d751531-09b3-492f-938c-44c23c1d0e81",
                     "expectedControlType": "Button",
@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Esc-Key",
+                    "name": "Escape",
                     "type": "Button",
                     "id": "1eafc677-770c-4ff9-be0c-d8ef488e700a",
                     "expectedControlType": "Button",
@@ -96,39 +96,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Z-Key",
+                    "name": "Rewind",
                     "type": "Button",
                     "id": "c9bb0c94-92b6-446e-b748-eadfaa322c55",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "M-Key",
-                    "type": "Button",
-                    "id": "54702321-07c6-4271-8c7b-f65a279f63d5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Space-Key",
-                    "type": "Button",
-                    "id": "de492ee0-9345-4502-a612-27a17117fc55",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Enter-Key",
-                    "type": "Button",
-                    "id": "230c3cb3-a0b6-4a88-9603-1d8f784593bd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -138,6 +111,15 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "3451f2a3-ff78-47df-9f82-5dcce58aae06",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -369,18 +351,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "R-Key",
+                    "action": "Reset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "9ff9f1c5-041f-4f61-a694-6c667ab575fe",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "R-Key",
+                    "action": "Reset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -391,7 +373,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "X-Key",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -402,7 +384,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "X-Key",
+                    "action": "Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c171b764-ecec-424a-b61d-fdebb1544e95",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "951a3a8b-6780-429e-8ffd-0d2aebc23c6b",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -479,7 +483,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Esc-Key",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "324c63cc-5a32-47b6-bdd3-432687112a89",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -490,51 +505,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Z-Key",
+                    "action": "Rewind",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "f5cd738c-52a2-4f23-9155-1882fe5f0073",
-                    "path": "<Keyboard>/m",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "M-Key",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "080c1ca2-221f-4dec-bfa3-47709394be87",
-                    "path": "<Gamepad>/buttonEast",
+                    "id": "3adb3f12-0a37-48c4-a3bb-d2294a1054b7",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "M-Key",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6ae5739b-bec7-4eda-9b5f-e8681c323b82",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Space-Key",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "28a739c7-aa78-4e74-8398-43f0c5fa82db",
-                    "path": "<Keyboard>/enter",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Enter-Key",
+                    "action": "Rewind",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -546,6 +528,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "ANY-key",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c93bb5bb-357f-4440-8c3d-987264eeccb5",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ccc6489-d4c1-42d3-944e-0d276b151253",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

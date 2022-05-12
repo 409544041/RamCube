@@ -1,5 +1,6 @@
 using Qbism.Control;
 using Qbism.Environment;
+using Qbism.General;
 using Qbism.SceneTransition;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public MapCoreRefHolder mcRef;
-		public MapInputDetector input;
 		public MapDebugCompleter debugCompleter;
+		public ScreenStateManager screenStateMngr;
 		[Header("Pin Handling")]
 		public PinChecker pinChecker;
 		public PinHandler pinHandler;

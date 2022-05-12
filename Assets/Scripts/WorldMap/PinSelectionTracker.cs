@@ -65,7 +65,7 @@ namespace Qbism.WorldMap
 
 			currentBiome = selectedPin.m_pin.f_Biome;
 
-			if(selectedPin != prevPin)
+			if (selectedPin != prevPin)
 			{
 				mlRef.centerPoint.StartPositionCenterPoint(currentBiome, selectedPin, false, 
 					false, true, new Vector2(0, 0));

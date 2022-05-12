@@ -56,7 +56,7 @@ namespace Qbism.Serpent
 
 		private IEnumerator PopInNewSegments()
 		{
-			scRef.slRef.input.allowInput = false;
+			scRef.slRef.screenStateMngr.serpentScreenState.allowInput = false;
 
 			yield return new WaitForSeconds(.5f);
 
@@ -79,7 +79,7 @@ namespace Qbism.Serpent
 				yield return new WaitForSeconds(.5f);
 			}
 
-			scRef.slRef.input.allowInput = true;
+			scRef.slRef.screenStateMngr.serpentScreenState.allowInput = true;
 		}
 
 		private void SetSegmentInFocus()

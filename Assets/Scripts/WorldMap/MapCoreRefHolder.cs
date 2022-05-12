@@ -25,9 +25,13 @@ namespace Qbism.WorldMap
 		public SplineComputer[] splines;
 		[Header("Logic")]
 		public MapLogicRefHolder mlRef;
-		[Header("Canvasses")]
+		[Header("Map Canvas")]
 		public Canvas worldMapCanvas;
-		public OverlayMenuHandler quitOverlay;
+		[Header("Pause Canvas")]
+		public OverlayMenuHandler pauseOverlayHandler;
+		[Header("Settings Canvas")]
+		public OverlayMenuHandler settingsOverlayHandler;
+		public CanvasGroup settingsOverlayCanvasGroup;
 		[Header("Music")]
 		public AudioSource musicSource;
 		public MusicFadeOut musicFader;

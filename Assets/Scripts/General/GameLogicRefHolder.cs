@@ -16,9 +16,7 @@ public class GameLogicRefHolder : MonoBehaviour
 {
 	public GameplayCoreRefHolder gcRef;
 	public CamResizer camResizer;
-	[Header("Input")]
-	public SwipeDetector swipeDetector;
-	public GameplayInputDetector inputDetector;
+	public ScreenStateManager screenStateMngr;
 	[Header("Cube Handling")]
 	public CubeHandler cubeHandler;
 	public MoveableCubeHandler movCubeHandler;
@@ -35,7 +33,6 @@ public class GameLogicRefHolder : MonoBehaviour
 	public BiomeOverwriter overwriter;
 	[Header("Dialogue Handling")]
 	public DialogueManager dialogueManager;
-	public DialogueWriter dialogueWriter;
 	public DialogueFocuser dialogueFocuser;
 	[Header("Object Collect Handling")]
 	public ObjectCollectorAtEndSeq objColManager;

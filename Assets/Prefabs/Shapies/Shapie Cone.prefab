@@ -469,7 +469,8 @@ AudioSource:
   m_GameObject: {fileID: 2613036143613409788}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7889780642528997429, guid: d8b69ae9391253847bfe5b88f7d4b409,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.1
@@ -930,8 +931,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expressionsSO: {fileID: 11400000, guid: 4e27811ad6c79584bb073b7ce0d537ac, type: 2}
   situationsExprsSO: {fileID: 0}
-  isPlayer: 0
-  isBillySegment: 0
   hasBrows: 0
   hasMouth: 1
   minMaxExpressionTime: {x: 1, y: 2}
@@ -941,6 +940,8 @@ MonoBehaviour:
   eyesAnim: {fileID: 4107771889176775607}
   mouthAnim: {fileID: 6753838756617684527}
   faceJuice: {fileID: 0}
+  segRef: {fileID: 0}
+  pRef: {fileID: 0}
 --- !u!114 &8849745757914512756
 MonoBehaviour:
   m_ObjectHideFlags: 0

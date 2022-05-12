@@ -244,7 +244,7 @@ namespace Qbism.PlayerCube
 
 		public void SetInput(bool value)
 		{
-			if (!refs.gcRef.exitOverlayHandler.overlayActive)
+			if (!refs.gcRef.pauseOverlayHandler.overlayActive)
 				input = value;
 		}
 
