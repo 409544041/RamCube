@@ -25,8 +25,15 @@ namespace Qbism.Serpent
 
 		private void Awake()
 		{
-			gcRef = FindObjectOfType<GameplayCoreRefHolder>();
+			gcRef = refs.gcRef;
 			if (gcRef != null) playerAnim = gcRef.pRef.playerAnim;
+
+			var scRef = refs.scRef;
+			if (scRef != null)
+			{
+				animator.SetTrigger("MouthSmile");
+				animator.SetTrigger("IrisFront");
+			}
 		}
 
 		public void ActivateFlyByJuice()
