@@ -26,9 +26,6 @@ namespace Qbism.Saving
 		public CanvasGroup fadeCanvasGroup;
 		public CircleTransition circTransition;
 		public Canvas circCanvas;
-		[Header("Settings UI")]
-		public OverlayMenuHandler settingsOverlayHandler;
-		public CanvasGroup settingsOverlayCanvasGroup;
 
 		//States
 		public Camera cam { get; set; }

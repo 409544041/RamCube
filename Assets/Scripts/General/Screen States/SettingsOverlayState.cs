@@ -16,9 +16,9 @@ namespace Qbism.General
 			if (stateMngr == null)
 			{
 				stateMngr = ssm;
-				if (stateMngr.gcRef != null) menuHandler = stateMngr.gcRef.persRef.settingsOverlayHandler;
-				if (stateMngr.mcRef != null) menuHandler = stateMngr.mcRef.persRef.settingsOverlayHandler;
-				if (stateMngr.scRef != null) menuHandler = stateMngr.scRef.persRef.settingsOverlayHandler;
+				if (stateMngr.gcRef != null) menuHandler = stateMngr.gcRef.settingsOverlayHandler;
+				if (stateMngr.mcRef != null) menuHandler = stateMngr.mcRef.settingsOverlayHandler;
+				if (stateMngr.scRef != null) menuHandler = stateMngr.scRef.settingsOverlayHandler;
 			}
 
 			menuHandler.SelectButton(0);

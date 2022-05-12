@@ -25,9 +25,13 @@ namespace Qbism.WorldMap
 		public SplineComputer[] splines;
 		[Header("Logic")]
 		public MapLogicRefHolder mlRef;
-		[Header("Canvasses")]
+		[Header("Map Canvas")]
 		public Canvas worldMapCanvas;
+		[Header("Pause Canvas")]
 		public OverlayMenuHandler pauseOverlayHandler;
+		[Header("Settings Canvas")]
+		public OverlayMenuHandler settingsOverlayHandler;
+		public CanvasGroup settingsOverlayCanvasGroup;
 		[Header("Music")]
 		public AudioSource musicSource;
 		public MusicFadeOut musicFader;
@@ -43,8 +47,6 @@ namespace Qbism.WorldMap
 			persRef.cam = cam;
 			persRef.mcRef = this;
 			persRef.mlRef = mlRef;
-			persRef.settingsOverlayHandler.mcRef = this;
-			persRef.settingsOverlayHandler.SetStateManager();
 
 			visualSwappers = FindObjectsOfType<BiomeVisualSwapper>();
 			foreach (var swapper in visualSwappers)
@@ -65,11 +67,6 @@ namespace Qbism.WorldMap
 				segRef.mcRef = this;
 				segRef.cam = cam;
 			}
-		}
-
-		private void OnDisable()
-		{
-			persRef.settingsOverlayHandler.mcRef = null;
 		}
 	}
 }

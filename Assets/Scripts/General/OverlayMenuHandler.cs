@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Qbism.General
 {
@@ -32,7 +31,9 @@ namespace Qbism.General
 
 		private void Awake()
 		{
-			SetStateManager(); //for overlays already in scene
+			if (gcRef != null) screenStateMngr = gcRef.glRef.screenStateMngr;
+			if (mcRef != null) screenStateMngr = mcRef.mlRef.screenStateMngr;
+			if (scRef != null) screenStateMngr = scRef.slRef.screenStateMngr;
 
 			canvasGroup.alpha = 0;
 
@@ -40,13 +41,6 @@ namespace Qbism.General
 			{
 				buttonHandler.button.interactable = false;
 			}
-		}
-
-		public void SetStateManager() //called from refs for overlay in persref
-		{
-			if (gcRef != null) screenStateMngr = gcRef.glRef.screenStateMngr;
-			if (mcRef != null) screenStateMngr = mcRef.mlRef.screenStateMngr;
-			if (scRef != null) screenStateMngr = scRef.slRef.screenStateMngr;
 		}
 
 		private void Update()

@@ -52,6 +52,9 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public TextMeshProUGUI objectOwnerText;
 	[Header("Pause Canvas")]
 	public OverlayMenuHandler pauseOverlayHandler;
+	[Header("Settings Canvas")]
+	public OverlayMenuHandler settingsOverlayHandler;
+	public CanvasGroup settingsOverlayCanvasGroup;
 
 	//Cache
 	public PersistentRefHolder persRef { get; private set; }
@@ -127,8 +130,6 @@ public class GameplayCoreRefHolder : MonoBehaviour
 			persRef.cam = cam;
 			persRef.gcRef = this;
 			persRef.glRef = glRef;
-			persRef.settingsOverlayHandler.gcRef = this;
-			persRef.settingsOverlayHandler.SetStateManager();
 		}
 	}
 
@@ -175,10 +176,5 @@ public class GameplayCoreRefHolder : MonoBehaviour
 				swapper.matHandler = persRef.varMatHandler;
 			}
 		}
-	}
-
-	private void OnDisable()
-	{
-		persRef.settingsOverlayHandler.gcRef = null;
 	}
 }

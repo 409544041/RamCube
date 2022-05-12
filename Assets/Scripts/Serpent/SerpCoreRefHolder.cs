@@ -37,6 +37,9 @@ namespace Qbism.Serpent
 		[Header("Pause Canvas")]
 		public OverlayMenuHandler pauseOverlayHandler;
 		public CanvasGroup pauseOverlayCanvasGroup;
+		[Header("Settings Canvas")]
+		public OverlayMenuHandler settingsOverlayHandler;
+		public CanvasGroup settingsOverlayCanvasGroup;
 		[Header("Serpent")]
 		public SerpentSegmentHandler segHandler;
 
@@ -49,8 +52,6 @@ namespace Qbism.Serpent
 			persRef = FindObjectOfType<PersistentRefHolder>();
 			persRef.scRef = this;
 			persRef.cam = cam;
-			persRef.settingsOverlayHandler.scRef = this;
-			persRef.settingsOverlayHandler.SetStateManager();
 
 			segRefs = FindObjectsOfType<SegmentRefHolder>();
 			foreach (var segRef in segRefs)
@@ -58,11 +59,6 @@ namespace Qbism.Serpent
 				segRef.scRef = this;
 				segRef.cam = cam;
 			}
-		}
-
-		private void OnDisable()
-		{
-			persRef.settingsOverlayHandler.scRef = null;
 		}
 	}
 }
