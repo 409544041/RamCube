@@ -36,17 +36,6 @@ namespace Qbism.General
 			mlRef.pinTracker.selectedPin.pinUI.LoadAssignedLevel();
 		}
 
-		public void HandleResetInput()
-		{
-			if (!allowInput) return;
-
-			if (persRef.switchBoard.allowDebugMapReload)
-			{
-				persRef.progHandler.SaveProgData();
-				mlRef.mapLoader.StartLoadingWorldMap(false);
-			}
-		}
-
 		public void HandleBackInput()
 		{
 			if (!allowInput) return;
@@ -62,6 +51,17 @@ namespace Qbism.General
 			if (!allowInput) return;
 
 			stateMngr.SwitchState(stateMngr.pauseOverlayState, ScreenStates.pauseOverlayState);
+		}
+
+		public void HandleDebugCompleteInput()
+		{
+			if (!allowInput) return;
+
+			if (persRef.switchBoard.allowDebugMapReload)
+			{
+				persRef.progHandler.SaveProgData();
+				mlRef.mapLoader.StartLoadingWorldMap(false);
+			}
 		}
 
 		public void HandleDebugUnlockAllInput()
@@ -107,13 +107,13 @@ namespace Qbism.General
 		public void HandleAnyInput()
 		{
 		}
-		public void HandleDebugCompleteInput()
-		{
-		}
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
 		{
 		}
 		public void HandleRewindInput()
+		{
+		}
+		public void HandleResetInput()
 		{
 		}
 	}
