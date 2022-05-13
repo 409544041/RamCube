@@ -14,6 +14,7 @@ namespace Qbism.General
 		public Button button;
 		public Slider slider;
 		[SerializeField] float sliderJump = .1f;
+		[SerializeField] Image[] arrows;
 		public string label;
 
 		//Cache
@@ -32,12 +33,25 @@ namespace Qbism.General
 			button.Select();
 			buttonText.color = selectedColor;
 			if (valueText != null) valueText.color = selectedColor;
+			ShowHideArrows(true);
 		}
 
 		public void DeselectButton(Color defaultColor)
 		{
 			buttonText.color = defaultColor;
 			if (valueText != null) valueText.color = defaultColor;
+			ShowHideArrows(false);
+		}
+
+		private void ShowHideArrows(bool value)
+		{
+			if (arrows != null)
+			{
+				foreach (var arrow in arrows)
+				{
+					arrow.enabled = value;
+				}
+			}
 		}
 
 		public OverlayButtonHandler FetchButtonHandler(GameObject selectedGameObject)
