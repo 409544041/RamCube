@@ -25,12 +25,13 @@ namespace Qbism.Serpent
 
 		private void Awake()
 		{
-			gcRef = refs.gcRef;
+			gcRef = FindObjectOfType<GameplayCoreRefHolder>();
 			if (gcRef != null) playerAnim = gcRef.pRef.playerAnim;
 
 			var scRef = refs.scRef;
 			if (scRef != null)
 			{
+				animator.SetLayerWeight(0, 0);
 				animator.SetTrigger("MouthSmile");
 				animator.SetTrigger("IrisFront");
 			}
@@ -52,6 +53,7 @@ namespace Qbism.Serpent
 			spawnJuice.Initialization();
 			spawnJuice.PlayFeedbacks();
 
+			animator.SetLayerWeight(0, 1);
 			animator.SetTrigger("SpawnWiggle");
         }
 

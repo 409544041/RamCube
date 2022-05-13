@@ -53,10 +53,10 @@
                 {
                     "name": "Debug Key 1",
                     "type": "Button",
-                    "id": "607ce4e9-7ba6-44b4-9d0c-527befba9380",
+                    "id": "d19b2fef-d7ac-43db-91fd-5416767ffecf",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
                 },
                 {
@@ -422,59 +422,136 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "9084f9ca-7e5f-400b-b0fe-8fe0747f00ab",
+                    "name": "ShiftC",
+                    "id": "87986ec4-ff38-4a79-be29-5f4763eb86ca",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "C-Key",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "dcd608d4-197f-436f-84a0-8ca55353a858",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "C-Key",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "c01e6c58-999e-4be9-8dd2-5cab8051c8a8",
                     "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "C-Key",
                     "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Shift2",
+                    "id": "1e854da8-abb5-4447-8ddd-2551dc3536a4",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug Key 2",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "b8f5d0be-3a97-40c8-b431-720fd2816e05",
-                    "path": "<Keyboard>/1",
+                    "name": "modifier",
+                    "id": "edb98d09-a00a-4768-9d08-aa3bae31ee1e",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Debug Key 1",
+                    "action": "Debug Key 2",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "b86ac861-fde8-458d-a07b-e861a6913238",
+                    "name": "binding",
+                    "id": "d8c78b07-5fda-4951-b8ac-3c24f4b3f0b7",
                     "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Debug Key 2",
                     "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Shift3",
+                    "id": "76a11ba6-4171-4382-982f-c52c267733c7",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug Key 3",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "c4ef3048-61a5-4f5d-bc1a-d35b05cd827d",
+                    "name": "modifier",
+                    "id": "fc802d04-b712-4674-8926-4cad6b771933",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Debug Key 3",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "2c9384cb-73c4-4e82-84fc-6f5cfb96c04e",
                     "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Debug Key 3",
                     "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Shift4",
+                    "id": "170b67b9-bc46-48b0-8518-c097024a9b96",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug Key 4",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "490b77b6-d16c-4f4a-8c95-701292fd5a8b",
+                    "name": "modifier",
+                    "id": "9c91dcee-62de-4741-b9d7-05336768cfc1",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Debug Key 4",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "7f782dfd-509d-4548-af0d-a31d2695b059",
                     "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Debug Key 4",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -552,6 +629,39 @@
                     "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Shift1",
+                    "id": "b38ea5d2-6270-451a-bff3-45ff62ba1386",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug Key 1",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "b5fdca32-b828-4d42-8dcd-fb50ada8b567",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Debug Key 1",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "05e66fb0-a39c-4b54-9de8-cea796eb4650",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Debug Key 1",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
