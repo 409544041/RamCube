@@ -10,14 +10,15 @@ namespace Qbism.Saving
 	public static class SavingSystem
 	{
 		public static void SaveProgData(List<LevelStatusData> levelDataList, List<bool> biomeDataList,
-			string currentPin, List<SerpentStatusData> serpentDataList, List<ObjectStatusData> objectsDataList)
+			string currentPin, List<SerpentStatusData> serpentDataList, List<ObjectStatusData> objectsDataList,
+			SettingsValueData settingsData)
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
 			string path = Application.persistentDataPath + "/progression.sav";
 			FileStream stream = new FileStream(path, FileMode.Create);
 
 			ProgData data = new ProgData(levelDataList, biomeDataList, currentPin, 
-				serpentDataList, objectsDataList);
+				serpentDataList, objectsDataList, settingsData);
 
 			formatter.Serialize(stream, data);
 			stream.Close();
@@ -38,7 +39,7 @@ namespace Qbism.Saving
 			}
 			else
 			{
-				Debug.LogError("Progress Handler save file not found in " + path);
+				Debug.Log("Progress Handler save file not found in " + path);
 				return null;
 			}
 		}

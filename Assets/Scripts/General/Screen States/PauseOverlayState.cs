@@ -35,7 +35,7 @@ namespace Qbism.General
 				for (int i = 0; i < menuHandler.buttonHandlers.Length; i++)
 				{
 					var button = menuHandler.buttonHandlers[i];
-					if (button.buttonText.text != "SETTINGS") continue;
+					if (button.label != "settings") continue;
 					menuHandler.SelectButton(i);
 				}
 			}

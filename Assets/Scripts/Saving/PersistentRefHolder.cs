@@ -26,6 +26,8 @@ namespace Qbism.Saving
 		public CanvasGroup fadeCanvasGroup;
 		public CircleTransition circTransition;
 		public Canvas circCanvas;
+		[Header("Settings")]
+		public SettingsSaveLoad settingsSaveLoad;
 
 		//States
 		public Camera cam { get; set; }

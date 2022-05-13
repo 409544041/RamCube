@@ -46,6 +46,8 @@ namespace Qbism.General
 		public void StateExit()
 		{
 			menuHandler.InitiateHideOverlay();
+			stateMngr.persRef.settingsSaveLoad.SaveSettingsValues(menuHandler.musicSlider,
+				menuHandler.sfxSlider);
 		}
 
 		public void HandleActionInput()

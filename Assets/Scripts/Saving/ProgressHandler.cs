@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BansheeGz.BGDatabase;
+using Qbism.General;
 using Qbism.WorldMap;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace Qbism.Saving
 		PinSelectionTracker pinSelTrack;
 		LevelPinUI[] pinUIs;
 		PositionBiomeCenterpoint centerPoint;
+		SettingsSaveLoad settingsSaveLoad;
 		
 		//States
 		public E_Pin currentPin { get; set; }
@@ -38,6 +40,7 @@ namespace Qbism.Saving
 			objProg = persRef.objProg;
 			currentPin = E_LevelData.GetEntity(0).f_Pin;
 			currentBiome = currentPin.f_Biome;
+			settingsSaveLoad = persRef.settingsSaveLoad;
 			BuildDataLists();
 			LoadProgHandlerData();
 		}
@@ -267,7 +270,7 @@ namespace Qbism.Saving
 			objProg.SaveObjectsData();
 
 			SavingSystem.SaveProgData(levelDataList, biomeDataList, currentPin.f_name.ToString(),
-				serpProg.serpentDataList, objProg.objectsDataList);
+				serpProg.serpentDataList, objProg.objectsDataList, settingsSaveLoad.settingsData);
 		}
 
 		public void LoadProgHandlerData()

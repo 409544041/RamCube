@@ -912,6 +912,7 @@ MonoBehaviour:
   selectedTextColor: {r: 1, g: 0.62352943, b: 0.19215687, a: 1}
   popInJuice: {fileID: 5476194434500032911}
   popOutJuice: {fileID: 3287503961337048539}
+  isSettingsOverlay: 1
   gcRef: {fileID: 0}
   mcRef: {fileID: 0}
   scRef: {fileID: 0}
@@ -1137,6 +1138,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6016354193237431719}
     m_Modifications:
+    - target: {fileID: 3180500893042493679, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: label
+      value: display
+      objectReference: {fileID: 0}
     - target: {fileID: 3180500893042493679, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
         type: 3}
       propertyPath: valueText
@@ -1465,6 +1471,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3180500893042493679, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
         type: 3}
+      propertyPath: label
+      value: language
+      objectReference: {fileID: 0}
+    - target: {fileID: 3180500893042493679, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
       propertyPath: valueText
       value: 
       objectReference: {fileID: 1526872860310401440}
@@ -1660,6 +1671,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0823a1c588b37aa4fbfc3cb3165a919f, type: 3}
+--- !u!224 &3134416170372572454 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7604323960141834472, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4825697969685843406}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7926447209537588217 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3240400413407381047, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
@@ -1684,12 +1701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4505c893a230c24499c58f497a6c75ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &3134416170372572454 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7604323960141834472, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
-    type: 3}
-  m_PrefabInstance: {fileID: 4825697969685843406}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5109112343569468371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2053,7 +2064,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1763069865625670449}
+      objectReference: {fileID: 8409749754070769512}
     - target: {fileID: 1350393230957726830, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -2067,7 +2078,7 @@ PrefabInstance:
     - target: {fileID: 1350393230957726830, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Qbism.General.SoundManager, Assembly-CSharp
+      value: Qbism.General.VolumeSetter, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1350393230957726830, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
         type: 3}
@@ -2220,6 +2231,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -7889780642528997429, guid: d8b69ae9391253847bfe5b88f7d4b409,
         type: 2}
+    - target: {fileID: 8151776820459369427, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
+        type: 3}
+      propertyPath: label
+      value: sfxVolume
+      objectReference: {fileID: 0}
     - target: {fileID: 8213354487554718987, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
         type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -2230,7 +2246,8 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 7926447209537588217}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7859313987286134091, guid: 3ea9bea2f72e85a4b8833ec9afd1e334, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3ea9bea2f72e85a4b8833ec9afd1e334, type: 3}
 --- !u!224 &4747414019864685998 stripped
 RectTransform:
@@ -2262,30 +2279,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4505c893a230c24499c58f497a6c75ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8080793485482998377 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 379133606957909011, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
+    type: 3}
+  m_PrefabInstance: {fileID: 8459531266476392058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7483792500800451092 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1350393230957726830, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
     type: 3}
   m_PrefabInstance: {fileID: 8459531266476392058}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8080793485482998377}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1763069865625670449 stripped
+--- !u!114 &8409749754070769512
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7859313987286134091, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
-    type: 3}
-  m_PrefabInstance: {fileID: 8459531266476392058}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8080793485482998377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 766840f96530a1048bce85070d9b2b0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e27fa98445dcdf4db7334ce4e48cc01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: d8b69ae9391253847bfe5b88f7d4b409, type: 2}
 --- !u!1001 &8498932236788963879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2317,7 +2341,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1793454894068201324}
+      objectReference: {fileID: 7510564788477950106}
     - target: {fileID: 1350393230957726830, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -2331,7 +2355,7 @@ PrefabInstance:
     - target: {fileID: 1350393230957726830, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Qbism.General.SoundManager, Assembly-CSharp
+      value: Qbism.General.VolumeSetter, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1350393230957726830, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
         type: 3}
@@ -2479,6 +2503,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -9203527701616754454, guid: d8b69ae9391253847bfe5b88f7d4b409,
         type: 2}
+    - target: {fileID: 8151776820459369427, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
+        type: 3}
+      propertyPath: label
+      value: musicVolume
+      objectReference: {fileID: 0}
     - target: {fileID: 8213354487554718987, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
         type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -2489,14 +2518,27 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 332695443189105521}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7859313987286134091, guid: 3ea9bea2f72e85a4b8833ec9afd1e334, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3ea9bea2f72e85a4b8833ec9afd1e334, type: 3}
---- !u!224 &4717024657598892531 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3784282868979389396, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
+--- !u!1 &8120185663830072884 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 379133606957909011, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
     type: 3}
   m_PrefabInstance: {fileID: 8498932236788963879}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7444391541260408393 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1350393230957726830, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
+    type: 3}
+  m_PrefabInstance: {fileID: 8498932236788963879}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8120185663830072884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &291036007349036844 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8213354487554718987, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
@@ -2509,6 +2551,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &4717024657598892531 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3784282868979389396, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
+    type: 3}
+  m_PrefabInstance: {fileID: 8498932236788963879}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &347524852238936564 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8151776820459369427, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
@@ -2521,30 +2569,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4505c893a230c24499c58f497a6c75ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7444391541260408393 stripped
+--- !u!114 &7510564788477950106
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1350393230957726830, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
-    type: 3}
-  m_PrefabInstance: {fileID: 8498932236788963879}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8120185663830072884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e27fa98445dcdf4db7334ce4e48cc01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1793454894068201324 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7859313987286134091, guid: 3ea9bea2f72e85a4b8833ec9afd1e334,
-    type: 3}
-  m_PrefabInstance: {fileID: 8498932236788963879}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 766840f96530a1048bce85070d9b2b0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: d8b69ae9391253847bfe5b88f7d4b409, type: 2}
 --- !u!1001 &8692703538686062083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2552,6 +2589,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6016354193237431719}
     m_Modifications:
+    - target: {fileID: 3180500893042493679, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
+        type: 3}
+      propertyPath: label
+      value: back
+      objectReference: {fileID: 0}
     - target: {fileID: 3180500893042493679, guid: 0823a1c588b37aa4fbfc3cb3165a919f,
         type: 3}
       propertyPath: buttonType

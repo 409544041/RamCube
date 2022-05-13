@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8759774887741219546}
   - component: {fileID: -8736633158906518576}
   - component: {fileID: 3746189926911478469}
+  - component: {fileID: 3580720044106388931}
   - component: {fileID: 6898763950629518534}
   m_Layer: 0
   m_Name: Persistent Objects
@@ -140,6 +141,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6bf7fc033a71c049aaeac069664ad5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3580720044106388931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4077030962127744786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f77ec84cb980eb44b225b74348c5f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: d8b69ae9391253847bfe5b88f7d4b409, type: 2}
+  persRef: {fileID: 6898763950629518534}
 --- !u!114 &6898763950629518534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,8 +178,7 @@ MonoBehaviour:
   fadeCanvasGroup: {fileID: 1918777678143941965}
   circTransition: {fileID: 562029899342363840}
   circCanvas: {fileID: 8205841500424300071}
-  settingsOverlayHandler: {fileID: 0}
-  settingsOverlayCanvasGroup: {fileID: 0}
+  settingsSaveLoad: {fileID: 3580720044106388931}
 --- !u!1001 &3131975201887657184
 PrefabInstance:
   m_ObjectHideFlags: 0

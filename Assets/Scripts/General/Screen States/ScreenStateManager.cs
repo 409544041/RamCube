@@ -1,5 +1,6 @@
 using Qbism.Control;
 using Qbism.PlayerCube;
+using Qbism.Saving;
 using Qbism.Serpent;
 using Qbism.WorldMap;
 using System.Collections;
@@ -28,6 +29,9 @@ namespace Qbism.General
 		public SerpCoreRefHolder scRef;
 		[SerializeField] bool isSplash = false, isDemoIntro = false, isDemoEnd = false;
 
+		//Cache
+		public PersistentRefHolder persRef { get; private set; }
+
 		//States
 		public IScreenBaseState currentScreenState { get; private set; }
 		public IScreenBaseState prevScreenState { get; private set; }
@@ -40,18 +44,21 @@ namespace Qbism.General
 			{
 				currentScreenState = levelIntroState;
 				currentStateEnum = ScreenStates.levelIntroState;
+				persRef = gcRef.persRef;
 			}
 
 			if (mcRef != null)
 			{
 				currentScreenState = mapScreenState;
 				currentStateEnum = ScreenStates.mapScreenState;
+				persRef = mcRef.persRef;
 			}
 
 			if (scRef != null)
 			{
 				currentScreenState = serpentScreenState;
 				currentStateEnum = ScreenStates.serpentScreenState;
+				persRef = scRef.persRef;
 			}
 
 			if (isSplash)

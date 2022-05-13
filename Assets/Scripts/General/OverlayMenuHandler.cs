@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Qbism.General
 {
@@ -17,29 +18,59 @@ namespace Qbism.General
 		public OverlayButtonHandler[] buttonHandlers;
 		[SerializeField] Color textColor, selectedTextColor;
 		[SerializeField] MMFeedbacks popInJuice, popOutJuice;
+		[SerializeField] bool isSettingsOverlay;
 		public GameplayCoreRefHolder gcRef;
 		public MapCoreRefHolder mcRef;
 		public SerpCoreRefHolder scRef;
 
 		//Cache
 		public ScreenStateManager screenStateMngr;
+		PersistentRefHolder persRef;
 
 		//States
 		public bool overlayActive { get; private set; }
 		public OverlayButtonHandler selectedButtonHandler { get; private set; }
 		OverlayButtonHandler prevButtonHandler;
+		public Slider musicSlider { get; private set; }  public Slider sfxSlider { get; private set; }
 
 		private void Awake()
 		{
-			if (gcRef != null) screenStateMngr = gcRef.glRef.screenStateMngr;
-			if (mcRef != null) screenStateMngr = mcRef.mlRef.screenStateMngr;
-			if (scRef != null) screenStateMngr = scRef.slRef.screenStateMngr;
+			if (gcRef != null)
+			{
+				screenStateMngr = gcRef.glRef.screenStateMngr;
+				persRef = gcRef.persRef;
+			}
+			if (mcRef != null)
+			{
+				screenStateMngr = mcRef.mlRef.screenStateMngr;
+				persRef = mcRef.persRef;
+			}
+			if (scRef != null)
+			{
+				screenStateMngr = scRef.slRef.screenStateMngr;
+				persRef = scRef.persRef;
+			}
+
+			LoadSettingsData();
 
 			canvasGroup.alpha = 0;
 
-			foreach (var buttonHandler in buttonHandlers)
+			SetButtonsInteractable(false);
+		}
+
+		private void LoadSettingsData()
+		{
+			if (isSettingsOverlay)
 			{
-				buttonHandler.button.interactable = false;
+				foreach (var buttonHandler in buttonHandlers)
+				{
+					if (buttonHandler.slider == null) continue;
+
+					if (buttonHandler.label == "musicVolume") musicSlider = buttonHandler.slider;
+					if (buttonHandler.label == "sfxVolume") sfxSlider = buttonHandler.slider;
+				}
+
+				persRef.settingsSaveLoad.AssignLoadedSettingsValues(musicSlider, sfxSlider);
 			}
 		}
 
@@ -72,10 +103,7 @@ namespace Qbism.General
 			canvasGroup.alpha = 1;
 			popInJuice.PlayFeedbacks();
 
-			foreach (var buttonHandler in buttonHandlers)
-			{
-				buttonHandler.button.interactable = true;
-			}
+			SetButtonsInteractable(true);
 
 
 			if (gcRef != null) gcRef.pRef.playerMover.input = false;
@@ -100,6 +128,14 @@ namespace Qbism.General
 			}
 		}
 
+		private void SetButtonsInteractable(bool value)
+		{
+			foreach (var buttonHandler in buttonHandlers)
+			{
+				buttonHandler.button.interactable = value;
+			}
+		}
+
 		public void InitiateHideOverlay()
 		{
 			StartCoroutine(HideOverlay());
@@ -110,10 +146,7 @@ namespace Qbism.General
 			MMFeedbackScale mmScale = popOutJuice.GetComponent<MMFeedbackScale>();
 			var dur = mmScale.FeedbackDuration;
 
-			foreach (var buttonHandler in buttonHandlers)
-			{
-				buttonHandler.button.interactable = false;
-			}
+			SetButtonsInteractable(false);
 
 			popOutJuice.PlayFeedbacks();
 			yield return new WaitForSeconds(dur);

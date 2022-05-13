@@ -14,6 +14,7 @@ namespace Qbism.General
 		public Button button;
 		public Slider slider;
 		[SerializeField] float sliderJump = .1f;
+		public string label;
 
 		//Cache
 		OverlayMenuHandler menuHandler;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Qbism.General
 {
-	public class SoundManager : MonoBehaviour
+	public class VolumeSetter : MonoBehaviour
 	{
 		[SerializeField] AudioMixer audioMixer;
 
