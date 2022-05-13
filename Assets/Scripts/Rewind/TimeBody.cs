@@ -56,9 +56,9 @@ namespace Qbism.Rewind
 				cubeRef.movCube.onUpdateOrderInTimebody += AddToMoveOrderList;
 		}
 
-		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale)
+		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale, Quaternion faceRot)
 		{
-			rewindList.Insert(0, new PointInTime(pos, rot, scale));
+			rewindList.Insert(0, new PointInTime(pos, rot, scale, faceRot));
 
 			if (cubeRef != null && cubeRef.floorCube != null)
 			{
@@ -150,8 +150,7 @@ namespace Qbism.Rewind
 			transform.position = rewindList[0].position;
 			transform.rotation = rewindList[0].rotation;
 			transform.localScale = rewindList[0].scale;
-			rewindList.RemoveAt(0);
-
+			
 			if (pRef != null)
 			{
 				pRef.cubePos.RoundPosition();
@@ -194,6 +193,8 @@ namespace Qbism.Rewind
 					cubeRef.movCube.UpdateCenterPosition();
 					ResetOutOfBounds(cubeRef.movCube);
 					movementOrderList.RemoveAt(0);
+					if (cubeRef.movFaceMesh != null)
+						cubeRef.movFaceMesh.transform.rotation = rewindList[0].faceRot;
 					
 					if (cubeRef.floorCube == null)
 					{
@@ -202,6 +203,8 @@ namespace Qbism.Rewind
 					}
 				}
 			}
+
+			rewindList.RemoveAt(0);
 		}
 
 		private void ResetShrunkStatus(FloorCube cube)

@@ -141,28 +141,28 @@ namespace Qbism.Rewind
 			}
 		}
 
-		private void AddInitialPlayerRecording(Vector3 pos, Quaternion rot, Vector3 scale)
+		private void AddInitialPlayerRecording(Vector3 pos, Quaternion rot, Vector3 scale, Quaternion faceRot)
 		{
-			glRef.gcRef.pRef.timeBody.InitialRecord(pos, rot, scale);
+			glRef.gcRef.pRef.timeBody.InitialRecord(pos, rot, scale, faceRot);
 		}
 
-		private void AddInitialCubeRecording(CubeRefHolder cubeRef, Vector3 pos, Quaternion rot, Vector3 scale)
+		private void AddInitialCubeRecording(CubeRefHolder cubeRef, Vector3 pos, Quaternion rot, Vector3 scale, Quaternion faceRot)
 		{
 			var body = cubeRef.timeBody;
 
 			if (body != null)
 			{
-				body.InitialRecord(pos, rot, scale);
+				body.InitialRecord(pos, rot, scale, faceRot);
 			}
 		}
 
-		private void AddInitialMoveableRecording(CubeRefHolder cubeRef, Vector3 pos, Quaternion rot, Vector3 scale)
+		private void AddInitialMoveableRecording(CubeRefHolder cubeRef, Vector3 pos, Quaternion rot, Vector3 scale, Quaternion faceRot)
 		{
 			var body = cubeRef.timeBody;
 
 			if (body != null)
 			{
-				body.InitialRecord(pos, rot, scale);
+				body.InitialRecord(pos, rot, scale, faceRot);
 			}
 		}
 

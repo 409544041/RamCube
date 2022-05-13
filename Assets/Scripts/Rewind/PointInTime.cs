@@ -9,12 +9,14 @@ namespace Qbism.Rewind
 		public Vector3 position { get; set; }
 		public Quaternion rotation { get; set; }
 		public Vector3 scale { get; set; }
+		public Quaternion faceRot { get; set; }
 
-		public PointInTime(Vector3 objPosition, Quaternion objRotation, Vector3 objScale)
+		public PointInTime(Vector3 objPosition, Quaternion objRotation, Vector3 objScale, Quaternion faceRotation)
 		{
 			position = objPosition;
 			rotation = objRotation;
 			scale = objScale;
+			faceRot = faceRotation;
 		}
 
 	}
