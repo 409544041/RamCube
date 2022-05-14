@@ -28,6 +28,7 @@ namespace Qbism.Saving
 		public Canvas circCanvas;
 		[Header("Settings")]
 		public SettingsSaveLoad settingsSaveLoad;
+		public ToggleHud hudToggler;
 
 		//States
 		public Camera cam { get; set; }

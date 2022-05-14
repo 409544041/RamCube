@@ -17,6 +17,7 @@ namespace Qbism.General
 		void HandleDebugUnlockAllInput();
 		void HandleDebugDeleteProgressInput();
 		void HandleDebugCompleteAllInput();
+		void HandleDebugToggleHudInput();
 		void HandleAnyInput();
 		void HandleBackInput();
 		void StateExit();

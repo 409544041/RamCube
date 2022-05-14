@@ -77,5 +77,8 @@ namespace Qbism.General
 		public void HandleBackInput()
 		{
 		}
+		public void HandleDebugToggleHudInput()
+		{
+		}
 	}
 }

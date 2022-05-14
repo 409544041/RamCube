@@ -63,6 +63,20 @@ namespace Qbism.General
 			scRef.slRef.mapLoader.StartLoadingWorldMap(false);
 		}
 
+		public void HandleDebugToggleHudInput()
+		{
+			if (stateMngr.scRef.serpScreenCanvasGroup.alpha == 1)
+			{
+				stateMngr.scRef.serpScreenCanvasGroup.alpha = 0;
+				stateMngr.scRef.persRef.hudToggler.hudVisible = false;
+			}
+			else
+			{
+				stateMngr.scRef.serpScreenCanvasGroup.alpha = 1;
+				stateMngr.scRef.persRef.hudToggler.hudVisible = true;
+			}
+		}
+
 		public void StateExit()
 		{
 		}

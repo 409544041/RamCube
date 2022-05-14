@@ -23,6 +23,20 @@ namespace Qbism.General
 			stateMngr.gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
 		}
 
+		public void HandleDebugToggleHudInput()
+		{
+			if (stateMngr.gcRef.gameplayCanvasGroup.alpha == 1)
+			{
+				stateMngr.gcRef.gameplayCanvasGroup.alpha = 0;
+				stateMngr.gcRef.persRef.hudToggler.hudVisible = false;
+			}
+			else
+			{
+				stateMngr.gcRef.gameplayCanvasGroup.alpha = 1;
+				stateMngr.gcRef.persRef.hudToggler.hudVisible = true;
+			}
+		}
+
 		public void StateExit()
 		{
 		}

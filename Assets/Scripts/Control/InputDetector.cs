@@ -36,6 +36,8 @@ namespace Qbism.Control
 				screenStateMngr.currentScreenState.HandleDebugDeleteProgressInput();
 			controls.Gameplay.DebugKey3.performed += ctx =>
 				screenStateMngr.currentScreenState.HandleDebugCompleteAllInput();
+			controls.Gameplay.DebugKey4.performed += ctx =>
+				screenStateMngr.currentScreenState.HandleDebugToggleHudInput();
 			controls.Gameplay.CKey.performed += ctx =>
 				screenStateMngr.currentScreenState.HandleDebugCompleteInput();
 		}

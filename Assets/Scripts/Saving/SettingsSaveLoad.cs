@@ -5,13 +5,12 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-namespace Qbism.General
+namespace Qbism.Saving
 {
 	public class SettingsSaveLoad : MonoBehaviour
 	{
 		//Config parameters
 		[SerializeField] AudioMixer audioMixer;
-		[SerializeField] PersistentRefHolder persRef;
 
 		//States
 		public SettingsValueData settingsData { get; private set; }

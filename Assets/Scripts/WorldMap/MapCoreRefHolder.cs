@@ -27,6 +27,7 @@ namespace Qbism.WorldMap
 		public MapLogicRefHolder mlRef;
 		[Header("Map Canvas")]
 		public Canvas worldMapCanvas;
+		public CanvasGroup mapCanvasGroup;
 		[Header("Pause Canvas")]
 		public OverlayMenuHandler pauseOverlayHandler;
 		[Header("Settings Canvas")]

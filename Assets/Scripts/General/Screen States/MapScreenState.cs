@@ -100,6 +100,20 @@ namespace Qbism.General
 			}
 		}
 
+		public void HandleDebugToggleHudInput()
+		{
+			if (stateMngr.mcRef.mapCanvasGroup.alpha == 1)
+			{
+				stateMngr.mcRef.mapCanvasGroup.alpha = 0;
+				stateMngr.mcRef.persRef.hudToggler.hudVisible = false;
+			}
+			else
+			{
+				stateMngr.mcRef.mapCanvasGroup.alpha = 1;
+				stateMngr.mcRef.persRef.hudToggler.hudVisible = true;
+			}
+		}
+
 		public void StateExit()
 		{
 		}

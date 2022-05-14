@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -8736633158906518576}
   - component: {fileID: 3746189926911478469}
   - component: {fileID: 3580720044106388931}
+  - component: {fileID: 530116744080181141}
   - component: {fileID: 6898763950629518534}
   m_Layer: 0
   m_Name: Persistent Objects
@@ -154,7 +155,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: d8b69ae9391253847bfe5b88f7d4b409, type: 2}
-  persRef: {fileID: 6898763950629518534}
+--- !u!114 &530116744080181141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4077030962127744786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a28cbae237b7c6469e896591ccca21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6898763950629518534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +191,7 @@ MonoBehaviour:
   circTransition: {fileID: 562029899342363840}
   circCanvas: {fileID: 8205841500424300071}
   settingsSaveLoad: {fileID: 3580720044106388931}
+  hudToggler: {fileID: 530116744080181141}
 --- !u!1001 &3131975201887657184
 PrefabInstance:
   m_ObjectHideFlags: 0
