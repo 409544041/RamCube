@@ -36,9 +36,6 @@ namespace Qbism.Saving
 
 			for (int i = 0; i < E_ObjectsGameplayData.CountEntities; i++)
 			{
-				E_ObjectsGameplayData.GetEntity(i).f_QuestMarkerShown = 
-					data.savedObjectsData[i].questMarkerShown;
-				E_ObjectsGameplayData.GetEntity(i).f_ObjectQuestGiven = data.savedObjectsData[i].questGiven;
 				E_ObjectsGameplayData.GetEntity(i).f_ObjectFound = data.savedObjectsData[i].found;
 				E_ObjectsGameplayData.GetEntity(i).f_ObjectReturned = data.savedObjectsData[i].returned;
 			}
@@ -51,8 +48,6 @@ namespace Qbism.Saving
 				var objEntity = E_ObjectsGameplayData.GetEntity(i);
 				var objData = objectsDataList[i];
 
-				objData.questMarkerShown = objEntity.f_QuestMarkerShown;
-				objData.questGiven = objEntity.f_ObjectQuestGiven;
 				objData.found = objEntity.f_ObjectFound;
 				objData.returned = objEntity.f_ObjectReturned;				
 			}

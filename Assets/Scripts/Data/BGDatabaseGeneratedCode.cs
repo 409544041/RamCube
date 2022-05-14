@@ -10,11 +10,9 @@ using Alias_rifegrt_Segments = E_Segments;
 using Alias_rifegrt_Dialogues = E_Dialogues;
 using Alias_rifegrt_SegmentsGameplayData = E_SegmentsGameplayData;
 using Alias_rifegrt_Objects = E_Objects;
-using Alias_rifegrt_QuestDialogues = E_QuestDialogues;
 using Alias_rifegrt_ReturnDialogues = E_ReturnDialogues;
-using Alias_rifegrt_QuestWaitingDialogues = E_QuestWaitingDialogues;
 using Alias_rifegrt_ObjectsGameplayData = E_ObjectsGameplayData;
-using Alias_rifegrt_AltReturnDialogues = E_AltReturnDialogues;
+using Alias_rifegrt_QuestDialogues = E_QuestDialogues;
 using Alias_rifegrt_FluffDialogues = E_FluffDialogues;
 
 //=============================================================
@@ -214,6 +212,17 @@ public partial class E_LevelData : BGEntity
 			_f_Visuals[Index] = value;
 		}
 	}
+	public E_Objects f_ForceObject
+	{
+		get
+		{
+			return (E_Objects) _f_ForceObject[Index];
+		}
+		set
+		{
+			_f_ForceObject[Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -313,6 +322,15 @@ public partial class E_LevelData : BGEntity
 			return _ufle12jhs77_f_Visuals;
 		}
 	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_ForceObject;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForceObject
+	{
+		get
+		{
+			if(_ufle12jhs77_f_ForceObject==null || _ufle12jhs77_f_ForceObject.IsDeleted) _ufle12jhs77_f_ForceObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5492051446524140481UL,7396505186639121819UL));
+			return _ufle12jhs77_f_ForceObject;
+		}
+	}
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
 	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
@@ -321,16 +339,14 @@ public partial class E_LevelData : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_LevelData() : base(MetaDefault)
 	{
 	}
@@ -594,16 +610,14 @@ public partial class E_Biome : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_Biome() : base(MetaDefault)
 	{
 	}
@@ -849,16 +863,14 @@ public partial class E_Pin : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_Pin() : base(MetaDefault)
 	{
 	}
@@ -1203,16 +1215,14 @@ public partial class E_LevelGameplayData : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_LevelGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1402,16 +1412,14 @@ public partial class E_MapWalls : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_MapWalls() : base(MetaDefault)
 	{
 	}
@@ -1576,16 +1584,14 @@ public partial class E_BiomeGameplayData : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_BiomeGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1722,17 +1728,6 @@ public partial class E_Dialogues : BGEntity
 			return _ufle12jhs_QuestDialogues;
 		}
 	}
-	public List<E_QuestWaitingDialogues> f_QuestWaitingDialogues
-	{
-		get
-		{
-			var val = _f_QuestWaitingDialogues[Index];
-			if(val==null || val.Count==0) return null;
-			var _ufle12jhs_QuestWaitingDialogues = new List<E_QuestWaitingDialogues>();
-			for (var i = 0; i < val.Count; i++) _ufle12jhs_QuestWaitingDialogues.Add((E_QuestWaitingDialogues) val[i]);
-			return _ufle12jhs_QuestWaitingDialogues;
-		}
-	}
 	public List<E_ReturnDialogues> f_ReturnDialogues
 	{
 		get
@@ -1742,17 +1737,6 @@ public partial class E_Dialogues : BGEntity
 			var _ufle12jhs_ReturnDialogues = new List<E_ReturnDialogues>();
 			for (var i = 0; i < val.Count; i++) _ufle12jhs_ReturnDialogues.Add((E_ReturnDialogues) val[i]);
 			return _ufle12jhs_ReturnDialogues;
-		}
-	}
-	public List<E_AltReturnDialogues> f_AltReturnDialogues
-	{
-		get
-		{
-			var val = _f_AltReturnDialogues[Index];
-			if(val==null || val.Count==0) return null;
-			var _ufle12jhs_AltReturnDialogues = new List<E_AltReturnDialogues>();
-			for (var i = 0; i < val.Count; i++) _ufle12jhs_AltReturnDialogues.Add((E_AltReturnDialogues) val[i]);
-			return _ufle12jhs_AltReturnDialogues;
 		}
 	}
 	public List<E_FluffDialogues> f_FluffDialogues
@@ -1798,17 +1782,8 @@ public partial class E_Dialogues : BGEntity
 	{
 		get
 		{
-			if(_ufle12jhs77_f_QuestDialogues==null || _ufle12jhs77_f_QuestDialogues.IsDeleted) _ufle12jhs77_f_QuestDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5283433954133549919UL,4931491506496442543UL));
+			if(_ufle12jhs77_f_QuestDialogues==null || _ufle12jhs77_f_QuestDialogues.IsDeleted) _ufle12jhs77_f_QuestDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5372269783875973831UL,3537631246474358957UL));
 			return _ufle12jhs77_f_QuestDialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_QuestWaitingDialogues;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_QuestWaitingDialogues
-	{
-		get
-		{
-			if(_ufle12jhs77_f_QuestWaitingDialogues==null || _ufle12jhs77_f_QuestWaitingDialogues.IsDeleted) _ufle12jhs77_f_QuestWaitingDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5428041660786546183UL,4300236321036646299UL));
-			return _ufle12jhs77_f_QuestWaitingDialogues;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_ReturnDialogues;
@@ -1818,15 +1793,6 @@ public partial class E_Dialogues : BGEntity
 		{
 			if(_ufle12jhs77_f_ReturnDialogues==null || _ufle12jhs77_f_ReturnDialogues.IsDeleted) _ufle12jhs77_f_ReturnDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5510717961828634056UL,9806892908304910006UL));
 			return _ufle12jhs77_f_ReturnDialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_AltReturnDialogues;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_AltReturnDialogues
-	{
-		get
-		{
-			if(_ufle12jhs77_f_AltReturnDialogues==null || _ufle12jhs77_f_AltReturnDialogues.IsDeleted) _ufle12jhs77_f_AltReturnDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5070407350080768397UL,9859837574045701809UL));
-			return _ufle12jhs77_f_AltReturnDialogues;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogues;
@@ -1859,16 +1825,14 @@ public partial class E_Dialogues : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_Dialogues() : base(MetaDefault)
 	{
 	}
@@ -2190,16 +2154,14 @@ public partial class E_Segments : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_Segments() : base(MetaDefault)
 	{
 	}
@@ -2265,200 +2227,6 @@ public partial class E_Segments : BGEntity
 			val.RemoveAll(e => Equals(e, related));
 			_f_Objects[Index] = val.Count == 0 ? null : val;
 		}
-	}
-}
-
-//=============================================================
-//||                   Generated by BansheeGz Code Generator ||
-//=============================================================
-
-public partial class E_QuestDialogues : BGEntity
-{
-
-	//=============================================================
-	//||                   Generated by BansheeGz Code Generator ||
-	//=============================================================
-
-	public class Factory : BGEntity.EntityFactory
-	{
-		public BGEntity NewEntity(BGMetaEntity meta)
-		{
-			return new E_QuestDialogues(meta);
-		}
-		public BGEntity NewEntity(BGMetaEntity meta, BGId id)
-		{
-			return new E_QuestDialogues(meta, id);
-		}
-	}
-	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(4808130919358401807UL,52346600882199431UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
-	private static readonly List<BGEntity> _find_Entities_Result = new List<BGEntity>();
-	public static int CountEntities
-	{
-		get
-		{
-			return MetaDefault.CountEntities;
-		}
-	}
-	public System.String f_name
-	{
-		get
-		{
-			return _f_name[Index];
-		}
-		set
-		{
-			_f_name[Index] = value;
-		}
-	}
-	public E_Dialogues f_Dialogues
-	{
-		get
-		{
-			return (E_Dialogues) _f_Dialogues[Index];
-		}
-		set
-		{
-			_f_Dialogues[Index] = value;
-		}
-	}
-	public UnityEngine.ScriptableObject f_QuestDialogue
-	{
-		get
-		{
-			return _f_QuestDialogue[Index];
-		}
-	}
-	public E_Objects f_ForObject
-	{
-		get
-		{
-			return (E_Objects) _f_ForObject[Index];
-		}
-		set
-		{
-			_f_ForObject[Index] = value;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(_ufle12jhs77_f_name==null || _ufle12jhs77_f_name.IsDeleted) _ufle12jhs77_f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(5266780885273243854UL,4959441787887254671UL));
-			return _ufle12jhs77_f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues
-	{
-		get
-		{
-			if(_ufle12jhs77_f_Dialogues==null || _ufle12jhs77_f_Dialogues.IsDeleted) _ufle12jhs77_f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5321635391406516302UL,10948997418535215012UL));
-			return _ufle12jhs77_f_Dialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _ufle12jhs77_f_QuestDialogue;
-	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_QuestDialogue
-	{
-		get
-		{
-			if(_ufle12jhs77_f_QuestDialogue==null || _ufle12jhs77_f_QuestDialogue.IsDeleted) _ufle12jhs77_f_QuestDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5688831178092183995UL,10495045604489321390UL));
-			return _ufle12jhs77_f_QuestDialogue;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_ForObject;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForObject
-	{
-		get
-		{
-			if(_ufle12jhs77_f_ForObject==null || _ufle12jhs77_f_ForObject.IsDeleted) _ufle12jhs77_f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5004266668345210568UL,9845439169215335097UL));
-			return _ufle12jhs77_f_ForObject;
-		}
-	}
-	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
-	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
-	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
-	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
-	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
-	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
-	private E_QuestDialogues() : base(MetaDefault)
-	{
-	}
-	private E_QuestDialogues(BGId id) : base(MetaDefault, id)
-	{
-	}
-	private E_QuestDialogues(BGMetaEntity meta) : base(meta)
-	{
-	}
-	private E_QuestDialogues(BGMetaEntity meta, BGId id) : base(meta, id)
-	{
-	}
-	public static E_QuestDialogues FindEntity(Predicate<E_QuestDialogues> filter)
-	{
-		return MetaDefault.FindEntity(entity => filter==null || filter((E_QuestDialogues) entity)) as E_QuestDialogues;
-	}
-	public static List<E_QuestDialogues> FindEntities(Predicate<E_QuestDialogues> filter, List<E_QuestDialogues> result=null, Comparison<E_QuestDialogues> sort=null)
-	{
-		result = result ?? new List<E_QuestDialogues>();
-		_find_Entities_Result.Clear();
-		MetaDefault.FindEntities(filter == null ? (Predicate<BGEntity>) null: e => filter((E_QuestDialogues) e), _find_Entities_Result, sort == null ? (Comparison<BGEntity>) null : (e1, e2) => sort((E_QuestDialogues) e1, (E_QuestDialogues) e2));
-		if (_find_Entities_Result.Count != 0)
-		{
-			for (var i = 0; i < _find_Entities_Result.Count; i++) result.Add((E_QuestDialogues) _find_Entities_Result[i]);
-			_find_Entities_Result.Clear();
-		}
-		return result;
-	}
-	public static void ForEachEntity(Action<E_QuestDialogues> action, Predicate<E_QuestDialogues> filter=null, Comparison<E_QuestDialogues> sort=null)
-	{
-		MetaDefault.ForEachEntity(entity => action((E_QuestDialogues) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_QuestDialogues) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_QuestDialogues)e1,(E_QuestDialogues)e2));
-	}
-	public static E_QuestDialogues GetEntity(BGId entityId)
-	{
-		return (E_QuestDialogues) MetaDefault.GetEntity(entityId);
-	}
-	public static E_QuestDialogues GetEntity(int index)
-	{
-		return (E_QuestDialogues) MetaDefault[index];
-	}
-	public static E_QuestDialogues GetEntity(string entityName)
-	{
-		return (E_QuestDialogues) MetaDefault.GetEntity(entityName);
-	}
-	public static E_QuestDialogues NewEntity()
-	{
-		return (E_QuestDialogues) MetaDefault.NewEntity();
-	}
-	public static E_QuestDialogues NewEntity(E_Dialogues owner)
-	{
-		return (E_QuestDialogues) MetaDefault.NewEntity(owner);
 	}
 }
 
@@ -2592,16 +2360,14 @@ public partial class E_ReturnDialogues : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_ReturnDialogues() : base(MetaDefault)
 	{
 	}
@@ -2653,200 +2419,6 @@ public partial class E_ReturnDialogues : BGEntity
 	public static E_ReturnDialogues NewEntity(E_Dialogues owner)
 	{
 		return (E_ReturnDialogues) MetaDefault.NewEntity(owner);
-	}
-}
-
-//=============================================================
-//||                   Generated by BansheeGz Code Generator ||
-//=============================================================
-
-public partial class E_QuestWaitingDialogues : BGEntity
-{
-
-	//=============================================================
-	//||                   Generated by BansheeGz Code Generator ||
-	//=============================================================
-
-	public class Factory : BGEntity.EntityFactory
-	{
-		public BGEntity NewEntity(BGMetaEntity meta)
-		{
-			return new E_QuestWaitingDialogues(meta);
-		}
-		public BGEntity NewEntity(BGMetaEntity meta, BGId id)
-		{
-			return new E_QuestWaitingDialogues(meta, id);
-		}
-	}
-	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5004842750203547889UL,14256004012873493661UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
-	private static readonly List<BGEntity> _find_Entities_Result = new List<BGEntity>();
-	public static int CountEntities
-	{
-		get
-		{
-			return MetaDefault.CountEntities;
-		}
-	}
-	public System.String f_name
-	{
-		get
-		{
-			return _f_name[Index];
-		}
-		set
-		{
-			_f_name[Index] = value;
-		}
-	}
-	public E_Dialogues f_Dialogues
-	{
-		get
-		{
-			return (E_Dialogues) _f_Dialogues[Index];
-		}
-		set
-		{
-			_f_Dialogues[Index] = value;
-		}
-	}
-	public UnityEngine.ScriptableObject f_WaitingDialogue
-	{
-		get
-		{
-			return _f_WaitingDialogue[Index];
-		}
-	}
-	public E_Objects f_ForObject
-	{
-		get
-		{
-			return (E_Objects) _f_ForObject[Index];
-		}
-		set
-		{
-			_f_ForObject[Index] = value;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(_ufle12jhs77_f_name==null || _ufle12jhs77_f_name.IsDeleted) _ufle12jhs77_f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(4789571189893784818UL,13042627285573052349UL));
-			return _ufle12jhs77_f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues
-	{
-		get
-		{
-			if(_ufle12jhs77_f_Dialogues==null || _ufle12jhs77_f_Dialogues.IsDeleted) _ufle12jhs77_f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4632842694941744361UL,16499129772787124644UL));
-			return _ufle12jhs77_f_Dialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _ufle12jhs77_f_WaitingDialogue;
-	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_WaitingDialogue
-	{
-		get
-		{
-			if(_ufle12jhs77_f_WaitingDialogue==null || _ufle12jhs77_f_WaitingDialogue.IsDeleted) _ufle12jhs77_f_WaitingDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5075957454151973099UL,8866328356865390467UL));
-			return _ufle12jhs77_f_WaitingDialogue;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_ForObject;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForObject
-	{
-		get
-		{
-			if(_ufle12jhs77_f_ForObject==null || _ufle12jhs77_f_ForObject.IsDeleted) _ufle12jhs77_f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4892145133406715386UL,8464972153410059912UL));
-			return _ufle12jhs77_f_ForObject;
-		}
-	}
-	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
-	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
-	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
-	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
-	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
-	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
-	private E_QuestWaitingDialogues() : base(MetaDefault)
-	{
-	}
-	private E_QuestWaitingDialogues(BGId id) : base(MetaDefault, id)
-	{
-	}
-	private E_QuestWaitingDialogues(BGMetaEntity meta) : base(meta)
-	{
-	}
-	private E_QuestWaitingDialogues(BGMetaEntity meta, BGId id) : base(meta, id)
-	{
-	}
-	public static E_QuestWaitingDialogues FindEntity(Predicate<E_QuestWaitingDialogues> filter)
-	{
-		return MetaDefault.FindEntity(entity => filter==null || filter((E_QuestWaitingDialogues) entity)) as E_QuestWaitingDialogues;
-	}
-	public static List<E_QuestWaitingDialogues> FindEntities(Predicate<E_QuestWaitingDialogues> filter, List<E_QuestWaitingDialogues> result=null, Comparison<E_QuestWaitingDialogues> sort=null)
-	{
-		result = result ?? new List<E_QuestWaitingDialogues>();
-		_find_Entities_Result.Clear();
-		MetaDefault.FindEntities(filter == null ? (Predicate<BGEntity>) null: e => filter((E_QuestWaitingDialogues) e), _find_Entities_Result, sort == null ? (Comparison<BGEntity>) null : (e1, e2) => sort((E_QuestWaitingDialogues) e1, (E_QuestWaitingDialogues) e2));
-		if (_find_Entities_Result.Count != 0)
-		{
-			for (var i = 0; i < _find_Entities_Result.Count; i++) result.Add((E_QuestWaitingDialogues) _find_Entities_Result[i]);
-			_find_Entities_Result.Clear();
-		}
-		return result;
-	}
-	public static void ForEachEntity(Action<E_QuestWaitingDialogues> action, Predicate<E_QuestWaitingDialogues> filter=null, Comparison<E_QuestWaitingDialogues> sort=null)
-	{
-		MetaDefault.ForEachEntity(entity => action((E_QuestWaitingDialogues) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_QuestWaitingDialogues) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_QuestWaitingDialogues)e1,(E_QuestWaitingDialogues)e2));
-	}
-	public static E_QuestWaitingDialogues GetEntity(BGId entityId)
-	{
-		return (E_QuestWaitingDialogues) MetaDefault.GetEntity(entityId);
-	}
-	public static E_QuestWaitingDialogues GetEntity(int index)
-	{
-		return (E_QuestWaitingDialogues) MetaDefault[index];
-	}
-	public static E_QuestWaitingDialogues GetEntity(string entityName)
-	{
-		return (E_QuestWaitingDialogues) MetaDefault.GetEntity(entityName);
-	}
-	public static E_QuestWaitingDialogues NewEntity()
-	{
-		return (E_QuestWaitingDialogues) MetaDefault.NewEntity();
-	}
-	public static E_QuestWaitingDialogues NewEntity(E_Dialogues owner)
-	{
-		return (E_QuestWaitingDialogues) MetaDefault.NewEntity(owner);
 	}
 }
 
@@ -3017,16 +2589,14 @@ public partial class E_SegmentsGameplayData : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_SegmentsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -3240,6 +2810,18 @@ public partial class E_Objects : BGEntity
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
+	public List<E_LevelData> RelatedLevelDataListUsingForceObjectRelation
+	{
+		get
+		{
+			var _private_related_list = Alias_rifegrt_LevelData._f_ForceObject.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
+			if (_private_related_list.Count == 0) return null;
+			var _private_result_list = new List<E_LevelData>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_LevelData) _private_related_list[i]);
+			_tugjbyuhfv_reusableList.Clear();
+			return _private_result_list;
+		}
+	}
 	public List<E_Segments> RelatedSegmentsListUsingObjectsRelation
 	{
 		get
@@ -3248,18 +2830,6 @@ public partial class E_Objects : BGEntity
 			if (_private_related_list.Count == 0) return null;
 			var _private_result_list = new List<E_Segments>(_private_related_list.Count);
 			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Segments) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
-	public List<E_QuestDialogues> RelatedQuestDialoguesListUsingForObjectRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_QuestDialogues._f_ForObject.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_QuestDialogues>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_QuestDialogues) _private_related_list[i]);
 			_tugjbyuhfv_reusableList.Clear();
 			return _private_result_list;
 		}
@@ -3276,18 +2846,6 @@ public partial class E_Objects : BGEntity
 			return _private_result_list;
 		}
 	}
-	public List<E_QuestWaitingDialogues> RelatedQuestWaitingDialoguesListUsingForObjectRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_QuestWaitingDialogues._f_ForObject.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_QuestWaitingDialogues>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_QuestWaitingDialogues) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
 	public List<E_ObjectsGameplayData> RelatedObjectsGameplayDataListUsingObjectRelation
 	{
 		get
@@ -3300,14 +2858,14 @@ public partial class E_Objects : BGEntity
 			return _private_result_list;
 		}
 	}
-	public List<E_AltReturnDialogues> RelatedAltReturnDialoguesListUsingForObjectRelation
+	public List<E_QuestDialogues> RelatedQuestDialoguesListUsingForObjectRelation
 	{
 		get
 		{
-			var _private_related_list = Alias_rifegrt_AltReturnDialogues._f_ForObject.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
+			var _private_related_list = Alias_rifegrt_QuestDialogues._f_ForObject.GetRelatedIn(Id, _tugjbyuhfv_reusableList);
 			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_AltReturnDialogues>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_AltReturnDialogues) _private_related_list[i]);
+			var _private_result_list = new List<E_QuestDialogues>(_private_related_list.Count);
+			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_QuestDialogues) _private_related_list[i]);
 			_tugjbyuhfv_reusableList.Clear();
 			return _private_result_list;
 		}
@@ -3320,16 +2878,14 @@ public partial class E_Objects : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_Objects() : base(MetaDefault)
 	{
 	}
@@ -3448,28 +3004,6 @@ public partial class E_ObjectsGameplayData : BGEntity
 			_f_Object[Index] = value;
 		}
 	}
-	public System.Boolean f_QuestMarkerShown
-	{
-		get
-		{
-			return _f_QuestMarkerShown[Index];
-		}
-		set
-		{
-			_f_QuestMarkerShown[Index] = value;
-		}
-	}
-	public System.Boolean f_ObjectQuestGiven
-	{
-		get
-		{
-			return _f_ObjectQuestGiven[Index];
-		}
-		set
-		{
-			_f_ObjectQuestGiven[Index] = value;
-		}
-	}
 	public System.Boolean f_ObjectFound
 	{
 		get
@@ -3508,24 +3042,6 @@ public partial class E_ObjectsGameplayData : BGEntity
 		{
 			if(_ufle12jhs77_f_Object==null || _ufle12jhs77_f_Object.IsDeleted) _ufle12jhs77_f_Object=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5575310436151618600UL,1591952302039477673UL));
 			return _ufle12jhs77_f_Object;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_QuestMarkerShown;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_QuestMarkerShown
-	{
-		get
-		{
-			if(_ufle12jhs77_f_QuestMarkerShown==null || _ufle12jhs77_f_QuestMarkerShown.IsDeleted) _ufle12jhs77_f_QuestMarkerShown=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5441579611133312618UL,5205218947404216211UL));
-			return _ufle12jhs77_f_QuestMarkerShown;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_ObjectQuestGiven;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_ObjectQuestGiven
-	{
-		get
-		{
-			if(_ufle12jhs77_f_ObjectQuestGiven==null || _ufle12jhs77_f_ObjectQuestGiven.IsDeleted) _ufle12jhs77_f_ObjectQuestGiven=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4691334056568724199UL,3732333455379869369UL));
-			return _ufle12jhs77_f_ObjectQuestGiven;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_ObjectFound;
@@ -3567,16 +3083,14 @@ public partial class E_ObjectsGameplayData : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_ObjectsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -3733,16 +3247,14 @@ public partial class E_BiomeMaterials : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_BiomeMaterials() : base(MetaDefault)
 	{
 	}
@@ -3790,200 +3302,6 @@ public partial class E_BiomeMaterials : BGEntity
 	public static E_BiomeMaterials NewEntity()
 	{
 		return (E_BiomeMaterials) MetaDefault.NewEntity();
-	}
-}
-
-//=============================================================
-//||                   Generated by BansheeGz Code Generator ||
-//=============================================================
-
-public partial class E_AltReturnDialogues : BGEntity
-{
-
-	//=============================================================
-	//||                   Generated by BansheeGz Code Generator ||
-	//=============================================================
-
-	public class Factory : BGEntity.EntityFactory
-	{
-		public BGEntity NewEntity(BGMetaEntity meta)
-		{
-			return new E_AltReturnDialogues(meta);
-		}
-		public BGEntity NewEntity(BGMetaEntity meta, BGId id)
-		{
-			return new E_AltReturnDialogues(meta, id);
-		}
-	}
-	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5116211647076336472UL,1029247132276741789UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
-	private static readonly List<BGEntity> _find_Entities_Result = new List<BGEntity>();
-	public static int CountEntities
-	{
-		get
-		{
-			return MetaDefault.CountEntities;
-		}
-	}
-	public System.String f_name
-	{
-		get
-		{
-			return _f_name[Index];
-		}
-		set
-		{
-			_f_name[Index] = value;
-		}
-	}
-	public E_Dialogues f_Dialogues
-	{
-		get
-		{
-			return (E_Dialogues) _f_Dialogues[Index];
-		}
-		set
-		{
-			_f_Dialogues[Index] = value;
-		}
-	}
-	public UnityEngine.ScriptableObject f_AltReturnDialogue
-	{
-		get
-		{
-			return _f_AltReturnDialogue[Index];
-		}
-	}
-	public E_Objects f_ForObject
-	{
-		get
-		{
-			return (E_Objects) _f_ForObject[Index];
-		}
-		set
-		{
-			_f_ForObject[Index] = value;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(_ufle12jhs77_f_name==null || _ufle12jhs77_f_name.IsDeleted) _ufle12jhs77_f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(5630188164082248730UL,3653813906008458128UL));
-			return _ufle12jhs77_f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues
-	{
-		get
-		{
-			if(_ufle12jhs77_f_Dialogues==null || _ufle12jhs77_f_Dialogues.IsDeleted) _ufle12jhs77_f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4903345113090519767UL,5243101848848291474UL));
-			return _ufle12jhs77_f_Dialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _ufle12jhs77_f_AltReturnDialogue;
-	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_AltReturnDialogue
-	{
-		get
-		{
-			if(_ufle12jhs77_f_AltReturnDialogue==null || _ufle12jhs77_f_AltReturnDialogue.IsDeleted) _ufle12jhs77_f_AltReturnDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(4789403982547808403UL,11727554669750760104UL));
-			return _ufle12jhs77_f_AltReturnDialogue;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_ForObject;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForObject
-	{
-		get
-		{
-			if(_ufle12jhs77_f_ForObject==null || _ufle12jhs77_f_ForObject.IsDeleted) _ufle12jhs77_f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5443773460688572763UL,4573129114968502200UL));
-			return _ufle12jhs77_f_ForObject;
-		}
-	}
-	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
-	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
-	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
-	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
-	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
-	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
-	private E_AltReturnDialogues() : base(MetaDefault)
-	{
-	}
-	private E_AltReturnDialogues(BGId id) : base(MetaDefault, id)
-	{
-	}
-	private E_AltReturnDialogues(BGMetaEntity meta) : base(meta)
-	{
-	}
-	private E_AltReturnDialogues(BGMetaEntity meta, BGId id) : base(meta, id)
-	{
-	}
-	public static E_AltReturnDialogues FindEntity(Predicate<E_AltReturnDialogues> filter)
-	{
-		return MetaDefault.FindEntity(entity => filter==null || filter((E_AltReturnDialogues) entity)) as E_AltReturnDialogues;
-	}
-	public static List<E_AltReturnDialogues> FindEntities(Predicate<E_AltReturnDialogues> filter, List<E_AltReturnDialogues> result=null, Comparison<E_AltReturnDialogues> sort=null)
-	{
-		result = result ?? new List<E_AltReturnDialogues>();
-		_find_Entities_Result.Clear();
-		MetaDefault.FindEntities(filter == null ? (Predicate<BGEntity>) null: e => filter((E_AltReturnDialogues) e), _find_Entities_Result, sort == null ? (Comparison<BGEntity>) null : (e1, e2) => sort((E_AltReturnDialogues) e1, (E_AltReturnDialogues) e2));
-		if (_find_Entities_Result.Count != 0)
-		{
-			for (var i = 0; i < _find_Entities_Result.Count; i++) result.Add((E_AltReturnDialogues) _find_Entities_Result[i]);
-			_find_Entities_Result.Clear();
-		}
-		return result;
-	}
-	public static void ForEachEntity(Action<E_AltReturnDialogues> action, Predicate<E_AltReturnDialogues> filter=null, Comparison<E_AltReturnDialogues> sort=null)
-	{
-		MetaDefault.ForEachEntity(entity => action((E_AltReturnDialogues) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_AltReturnDialogues) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_AltReturnDialogues)e1,(E_AltReturnDialogues)e2));
-	}
-	public static E_AltReturnDialogues GetEntity(BGId entityId)
-	{
-		return (E_AltReturnDialogues) MetaDefault.GetEntity(entityId);
-	}
-	public static E_AltReturnDialogues GetEntity(int index)
-	{
-		return (E_AltReturnDialogues) MetaDefault[index];
-	}
-	public static E_AltReturnDialogues GetEntity(string entityName)
-	{
-		return (E_AltReturnDialogues) MetaDefault.GetEntity(entityName);
-	}
-	public static E_AltReturnDialogues NewEntity()
-	{
-		return (E_AltReturnDialogues) MetaDefault.NewEntity();
-	}
-	public static E_AltReturnDialogues NewEntity(E_Dialogues owner)
-	{
-		return (E_AltReturnDialogues) MetaDefault.NewEntity(owner);
 	}
 }
 
@@ -4117,16 +3435,14 @@ public partial class E_FluffDialogues : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_FluffDialogues() : base(MetaDefault)
 	{
 	}
@@ -4288,16 +3604,14 @@ public partial class E_FluffDialogueGameplayData : BGEntity
 	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
 	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
 	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_QuestDialogues.Factory _factory8_PFS = new E_QuestDialogues.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory9_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_QuestWaitingDialogues.Factory _factory10_PFS = new E_QuestWaitingDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory11_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory12_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory13_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory14_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_AltReturnDialogues.Factory _factory15_PFS = new E_AltReturnDialogues.Factory();
-	private static readonly E_FluffDialogues.Factory _factory16_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory17_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
 	private E_FluffDialogueGameplayData() : base(MetaDefault)
 	{
 	}
@@ -4349,6 +3663,198 @@ public partial class E_FluffDialogueGameplayData : BGEntity
 	public static E_FluffDialogueGameplayData NewEntity(E_SegmentsGameplayData owner)
 	{
 		return (E_FluffDialogueGameplayData) MetaDefault.NewEntity(owner);
+	}
+}
+
+//=============================================================
+//||                   Generated by BansheeGz Code Generator ||
+//=============================================================
+
+public partial class E_QuestDialogues : BGEntity
+{
+
+	//=============================================================
+	//||                   Generated by BansheeGz Code Generator ||
+	//=============================================================
+
+	public class Factory : BGEntity.EntityFactory
+	{
+		public BGEntity NewEntity(BGMetaEntity meta)
+		{
+			return new E_QuestDialogues(meta);
+		}
+		public BGEntity NewEntity(BGMetaEntity meta, BGId id)
+		{
+			return new E_QuestDialogues(meta, id);
+		}
+	}
+	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
+	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault
+	{
+		get
+		{
+			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5503257030617903894UL,358723636942138047UL));
+			return _metaDefault;
+		}
+	}
+	public static BansheeGz.BGDatabase.BGRepoEvents Events
+	{
+		get
+		{
+			return BGRepo.I.Events;
+		}
+	}
+	private static readonly List<BGEntity> _find_Entities_Result = new List<BGEntity>();
+	public static int CountEntities
+	{
+		get
+		{
+			return MetaDefault.CountEntities;
+		}
+	}
+	public System.String f_name
+	{
+		get
+		{
+			return _f_name[Index];
+		}
+		set
+		{
+			_f_name[Index] = value;
+		}
+	}
+	public E_Dialogues f_Dialogues
+	{
+		get
+		{
+			return (E_Dialogues) _f_Dialogues[Index];
+		}
+		set
+		{
+			_f_Dialogues[Index] = value;
+		}
+	}
+	public UnityEngine.ScriptableObject f_QuestDialogue
+	{
+		get
+		{
+			return _f_QuestDialogue[Index];
+		}
+	}
+	public E_Objects f_ForObject
+	{
+		get
+		{
+			return (E_Objects) _f_ForObject[Index];
+		}
+		set
+		{
+			_f_ForObject[Index] = value;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
+	{
+		get
+		{
+			if(_ufle12jhs77_f_name==null || _ufle12jhs77_f_name.IsDeleted) _ufle12jhs77_f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(4764986383718879764UL,8675008786051762827UL));
+			return _ufle12jhs77_f_name;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues
+	{
+		get
+		{
+			if(_ufle12jhs77_f_Dialogues==null || _ufle12jhs77_f_Dialogues.IsDeleted) _ufle12jhs77_f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4767490707910217262UL,8945415167558946972UL));
+			return _ufle12jhs77_f_Dialogues;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _ufle12jhs77_f_QuestDialogue;
+	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_QuestDialogue
+	{
+		get
+		{
+			if(_ufle12jhs77_f_QuestDialogue==null || _ufle12jhs77_f_QuestDialogue.IsDeleted) _ufle12jhs77_f_QuestDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5015554300779603963UL,10462615780432765847UL));
+			return _ufle12jhs77_f_QuestDialogue;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_ForObject;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForObject
+	{
+		get
+		{
+			if(_ufle12jhs77_f_ForObject==null || _ufle12jhs77_f_ForObject.IsDeleted) _ufle12jhs77_f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5074545082147027882UL,7619194573817355670UL));
+			return _ufle12jhs77_f_ForObject;
+		}
+	}
+	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
+	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
+	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
+	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
+	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
+	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
+	private static readonly E_QuestDialogues.Factory _factory15_PFS = new E_QuestDialogues.Factory();
+	private E_QuestDialogues() : base(MetaDefault)
+	{
+	}
+	private E_QuestDialogues(BGId id) : base(MetaDefault, id)
+	{
+	}
+	private E_QuestDialogues(BGMetaEntity meta) : base(meta)
+	{
+	}
+	private E_QuestDialogues(BGMetaEntity meta, BGId id) : base(meta, id)
+	{
+	}
+	public static E_QuestDialogues FindEntity(Predicate<E_QuestDialogues> filter)
+	{
+		return MetaDefault.FindEntity(entity => filter==null || filter((E_QuestDialogues) entity)) as E_QuestDialogues;
+	}
+	public static List<E_QuestDialogues> FindEntities(Predicate<E_QuestDialogues> filter, List<E_QuestDialogues> result=null, Comparison<E_QuestDialogues> sort=null)
+	{
+		result = result ?? new List<E_QuestDialogues>();
+		_find_Entities_Result.Clear();
+		MetaDefault.FindEntities(filter == null ? (Predicate<BGEntity>) null: e => filter((E_QuestDialogues) e), _find_Entities_Result, sort == null ? (Comparison<BGEntity>) null : (e1, e2) => sort((E_QuestDialogues) e1, (E_QuestDialogues) e2));
+		if (_find_Entities_Result.Count != 0)
+		{
+			for (var i = 0; i < _find_Entities_Result.Count; i++) result.Add((E_QuestDialogues) _find_Entities_Result[i]);
+			_find_Entities_Result.Clear();
+		}
+		return result;
+	}
+	public static void ForEachEntity(Action<E_QuestDialogues> action, Predicate<E_QuestDialogues> filter=null, Comparison<E_QuestDialogues> sort=null)
+	{
+		MetaDefault.ForEachEntity(entity => action((E_QuestDialogues) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_QuestDialogues) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_QuestDialogues)e1,(E_QuestDialogues)e2));
+	}
+	public static E_QuestDialogues GetEntity(BGId entityId)
+	{
+		return (E_QuestDialogues) MetaDefault.GetEntity(entityId);
+	}
+	public static E_QuestDialogues GetEntity(int index)
+	{
+		return (E_QuestDialogues) MetaDefault[index];
+	}
+	public static E_QuestDialogues GetEntity(string entityName)
+	{
+		return (E_QuestDialogues) MetaDefault.GetEntity(entityName);
+	}
+	public static E_QuestDialogues NewEntity()
+	{
+		return (E_QuestDialogues) MetaDefault.NewEntity();
+	}
+	public static E_QuestDialogues NewEntity(E_Dialogues owner)
+	{
+		return (E_QuestDialogues) MetaDefault.NewEntity(owner);
 	}
 }
 #pragma warning restore 414

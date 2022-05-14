@@ -14,7 +14,7 @@ namespace Qbism.Objects
 		//States
 		DialogueScripOb dialogueToPlay;
 		public SegmentRefHolder segInFocus { get; private set; }
-		bool checkQuestGiven, checkObjectReturned;
+		bool checkObjectReturned;
 		E_Objects objToCheck;
 
 		public void DecideOnDialogueToPlay(SegmentRefHolder segRef)
@@ -22,7 +22,7 @@ namespace Qbism.Objects
 			segInFocus = segRef;
 			var eSegment = segRef.mSegments;
 			dialogueToPlay = null;
-			checkQuestGiven = false; checkObjectReturned = false;
+			checkObjectReturned = false;
 
 			if (eSegment.f_Dialogues == null)
 			{
@@ -36,13 +36,12 @@ namespace Qbism.Objects
 				for (int i = 0; i < eSegment.f_Objects.Count; i++)
 				{
 					var obj = eSegment.f_Objects[i];
-					bool objHasQuestMarker, objQuestGiven, objFound, objReturned;
+					bool objFound, objReturned;
 
-					FetchObjValues(obj.f_GameplayData, out objHasQuestMarker, out objQuestGiven,
-						out objFound, out objReturned);
+					FetchObjValues(obj.f_GameplayData, out objFound, out objReturned);
 
-					if (dialogueToPlay == null) dialogueToPlay = FetchCorrectDialogue(objHasQuestMarker,
-						objQuestGiven, objFound, objReturned, obj, i);
+					if (dialogueToPlay == null) dialogueToPlay = 
+							FetchCorrectDialogue(objFound, objReturned, obj, i);
 				}
 			}
 
@@ -60,75 +59,34 @@ namespace Qbism.Objects
 				var objGameplayEntity = E_ObjectsGameplayData.FindEntity(entity =>
 					entity.f_Object == objToCheck);
 
-				if (checkQuestGiven) objGameplayEntity.f_ObjectQuestGiven = true;
 				if (checkObjectReturned) objGameplayEntity.f_ObjectReturned = true;
 			}
 		}
 
-		private DialogueScripOb FetchCorrectDialogue(bool hasQuestMarker, bool questGiven,
-			bool found, bool returned, E_Objects eObj, int i)
+		private DialogueScripOb FetchCorrectDialogue(bool found, bool returned, E_Objects eObj, int i)
 		{
 			if (returned) return null;
 
-			if (hasQuestMarker)
+			if (!found)
 			{
-				if (found)
-				{
-					var dialogueEntity = E_AltReturnDialogues.FindEntity(entity =>
+				var dialogueEntity = E_QuestDialogues.FindEntity(entity =>
 						entity.f_ForObject == eObj);
-					objToCheck = eObj;
-					checkObjectReturned = true;
-					return (DialogueScripOb)dialogueEntity.f_AltReturnDialogue;
-				}
-				else
-				{
-					var dialogueEntity = E_QuestDialogues.FindEntity(entity =>
-						entity.f_ForObject == eObj);
-					objToCheck = eObj;
-					checkQuestGiven = true;
-					return (DialogueScripOb)dialogueEntity.f_QuestDialogue;
-				}
+				objToCheck = eObj;
+				return (DialogueScripOb)dialogueEntity.f_QuestDialogue;
 			}
-
-			else
+			else if (found && !returned)
 			{
-				if (found)
-				{
-					if (questGiven)
-					{
-						var dialogueEntity = E_ReturnDialogues.FindEntity(entity =>
+				var dialogueEntity = E_ReturnDialogues.FindEntity(entity =>
 							entity.f_ForObject == eObj);
-						objToCheck = eObj;
-						checkObjectReturned = true;
-						return (DialogueScripOb)dialogueEntity.f_ReturnDialogue;
-					}
-					else
-					{
-						var dialogueEntity = E_AltReturnDialogues.FindEntity(entity =>
-							entity.f_ForObject == eObj);
-						objToCheck = eObj;
-						checkObjectReturned = true;
-						return (DialogueScripOb)dialogueEntity.f_AltReturnDialogue;
-					}
-				}
-				else
-				{
-					if (questGiven)
-					{
-						var dialogueEntity = E_QuestWaitingDialogues.FindEntity(entity =>
-							entity.f_ForObject == eObj);
-						return (DialogueScripOb)dialogueEntity.f_WaitingDialogue;
-					}
-					else return null;
-				}
+				objToCheck = eObj;
+				checkObjectReturned = true;
+				return (DialogueScripOb)dialogueEntity.f_ReturnDialogue;
 			}
+			else return null;
 		}
 
-		private void FetchObjValues(E_ObjectsGameplayData obj, out bool hasQuestMarker, out bool questGiven,
-			out bool objFound, out bool objReturned)
+		private void FetchObjValues(E_ObjectsGameplayData obj, out bool objFound, out bool objReturned)
 		{
-			hasQuestMarker = (obj.f_QuestMarkerShown && !obj.f_ObjectQuestGiven);
-			questGiven = obj.f_ObjectQuestGiven;
 			objFound = obj.f_ObjectFound;
 			objReturned = obj.f_ObjectReturned;
 		}

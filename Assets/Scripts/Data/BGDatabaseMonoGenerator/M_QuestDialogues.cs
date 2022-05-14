@@ -22,7 +22,7 @@ public partial class M_QuestDialogues : BGEntityGo
 	{
 		get
 		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(4808130919358401807UL,52346600882199431UL));
+			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5503257030617903894UL,358723636942138047UL));
 			return _metaDefault;
 		}
 	}
@@ -73,23 +73,12 @@ public partial class M_QuestDialogues : BGEntityGo
 			_f_ForObject[Entity.Index] = value;
 		}
 	}
-	public System.Boolean f_Played
-	{
-		get
-		{
-			return _f_Played[Entity.Index];
-		}
-		set
-		{
-			_f_Played[Entity.Index] = value;
-		}
-	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
 		get
 		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(5266780885273243854UL,4959441787887254671UL));
+			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(4764986383718879764UL,8675008786051762827UL));
 			return __f_name;
 		}
 	}
@@ -98,7 +87,7 @@ public partial class M_QuestDialogues : BGEntityGo
 	{
 		get
 		{
-			if(__f_Dialogues==null || __f_Dialogues.IsDeleted) __f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5321635391406516302UL,10948997418535215012UL));
+			if(__f_Dialogues==null || __f_Dialogues.IsDeleted) __f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4767490707910217262UL,8945415167558946972UL));
 			return __f_Dialogues;
 		}
 	}
@@ -107,7 +96,7 @@ public partial class M_QuestDialogues : BGEntityGo
 	{
 		get
 		{
-			if(__f_QuestDialogue==null || __f_QuestDialogue.IsDeleted) __f_QuestDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5688831178092183995UL,10495045604489321390UL));
+			if(__f_QuestDialogue==null || __f_QuestDialogue.IsDeleted) __f_QuestDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5015554300779603963UL,10462615780432765847UL));
 			return __f_QuestDialogue;
 		}
 	}
@@ -116,17 +105,8 @@ public partial class M_QuestDialogues : BGEntityGo
 	{
 		get
 		{
-			if(__f_ForObject==null || __f_ForObject.IsDeleted) __f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5004266668345210568UL,9845439169215335097UL));
+			if(__f_ForObject==null || __f_ForObject.IsDeleted) __f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5074545082147027882UL,7619194573817355670UL));
 			return __f_ForObject;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_Played;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_Played
-	{
-		get
-		{
-			if(__f_Played==null || __f_Played.IsDeleted) __f_Played=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5610891607708365715UL,14651620147662419376UL));
-			return __f_Played;
 		}
 	}
 }

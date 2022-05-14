@@ -109,8 +109,6 @@ namespace Qbism.Serpent
 				var objData = objs[i].f_GameplayData;
 
 				if (showMarker) continue;
-				if (!objData.f_QuestMarkerShown) continue;
-				if (objData.f_QuestMarkerShown && !objData.f_ObjectQuestGiven) showMarker = true;
 				if (objData.f_ObjectFound && !objData.f_ObjectReturned) showMarker = true;
 			}
 

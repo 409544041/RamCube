@@ -1,3 +1,4 @@
+using Qbism.Cubes;
 using Qbism.Saving;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,11 +10,23 @@ namespace Qbism.Objects
 	{
 		//Config parameters
 		[SerializeField] float objSpawnY;
+		[SerializeField] FinishRefHolder fRef;
 
 		//States
 		public E_Objects objectToSpawn { get; private set; }
 
 		public void SetObjectToSpawn()
+		{
+			var currenPin = fRef.gcRef.persRef.progHandler.currentPin;
+			var currentLevelEntity = E_LevelData.FindEntity(entity =>
+				entity.f_Pin == currenPin);
+
+			if (currentLevelEntity.f_ForceObject != null)
+				objectToSpawn = currentLevelEntity.f_ForceObject;
+			else SemiRandomSpawnObject();
+		}
+
+		private void SemiRandomSpawnObject()
 		{
 			List<E_Objects> spawnables = new List<E_Objects>();
 			List<E_Objects> backupSpawnables = new List<E_Objects>();

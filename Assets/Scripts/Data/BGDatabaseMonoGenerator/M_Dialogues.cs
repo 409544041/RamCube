@@ -74,17 +74,6 @@ public partial class M_Dialogues : BGEntityGo
 			return ___QuestDialogues;
 		}
 	}
-	public List<E_QuestWaitingDialogues> f_QuestWaitingDialogues
-	{
-		get
-		{
-			var val = _f_QuestWaitingDialogues[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___QuestWaitingDialogues = new List<E_QuestWaitingDialogues>();
-			for (var i = 0; i < val.Count; i++) ___QuestWaitingDialogues.Add((E_QuestWaitingDialogues) val[i]);
-			return ___QuestWaitingDialogues;
-		}
-	}
 	public List<E_ReturnDialogues> f_ReturnDialogues
 	{
 		get
@@ -94,17 +83,6 @@ public partial class M_Dialogues : BGEntityGo
 			var ___ReturnDialogues = new List<E_ReturnDialogues>();
 			for (var i = 0; i < val.Count; i++) ___ReturnDialogues.Add((E_ReturnDialogues) val[i]);
 			return ___ReturnDialogues;
-		}
-	}
-	public List<E_AltReturnDialogues> f_AltReturnDialogues
-	{
-		get
-		{
-			var val = _f_AltReturnDialogues[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___AltReturnDialogues = new List<E_AltReturnDialogues>();
-			for (var i = 0; i < val.Count; i++) ___AltReturnDialogues.Add((E_AltReturnDialogues) val[i]);
-			return ___AltReturnDialogues;
 		}
 	}
 	public List<E_FluffDialogues> f_FluffDialogues
@@ -150,17 +128,8 @@ public partial class M_Dialogues : BGEntityGo
 	{
 		get
 		{
-			if(__f_QuestDialogues==null || __f_QuestDialogues.IsDeleted) __f_QuestDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5283433954133549919UL,4931491506496442543UL));
+			if(__f_QuestDialogues==null || __f_QuestDialogues.IsDeleted) __f_QuestDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5372269783875973831UL,3537631246474358957UL));
 			return __f_QuestDialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldNested __f_QuestWaitingDialogues;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_QuestWaitingDialogues
-	{
-		get
-		{
-			if(__f_QuestWaitingDialogues==null || __f_QuestWaitingDialogues.IsDeleted) __f_QuestWaitingDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5428041660786546183UL,4300236321036646299UL));
-			return __f_QuestWaitingDialogues;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldNested __f_ReturnDialogues;
@@ -170,15 +139,6 @@ public partial class M_Dialogues : BGEntityGo
 		{
 			if(__f_ReturnDialogues==null || __f_ReturnDialogues.IsDeleted) __f_ReturnDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5510717961828634056UL,9806892908304910006UL));
 			return __f_ReturnDialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldNested __f_AltReturnDialogues;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_AltReturnDialogues
-	{
-		get
-		{
-			if(__f_AltReturnDialogues==null || __f_AltReturnDialogues.IsDeleted) __f_AltReturnDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5070407350080768397UL,9859837574045701809UL));
-			return __f_AltReturnDialogues;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldNested __f_FluffDialogues;

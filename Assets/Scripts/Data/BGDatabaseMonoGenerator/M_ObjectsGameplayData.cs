@@ -56,28 +56,6 @@ public partial class M_ObjectsGameplayData : BGEntityGo
 			_f_Object[Entity.Index] = value;
 		}
 	}
-	public System.Boolean f_QuestMarkerShown
-	{
-		get
-		{
-			return _f_QuestMarkerShown[Entity.Index];
-		}
-		set
-		{
-			_f_QuestMarkerShown[Entity.Index] = value;
-		}
-	}
-	public System.Boolean f_ObjectQuestGiven
-	{
-		get
-		{
-			return _f_ObjectQuestGiven[Entity.Index];
-		}
-		set
-		{
-			_f_ObjectQuestGiven[Entity.Index] = value;
-		}
-	}
 	public System.Boolean f_ObjectFound
 	{
 		get
@@ -116,24 +94,6 @@ public partial class M_ObjectsGameplayData : BGEntityGo
 		{
 			if(__f_Object==null || __f_Object.IsDeleted) __f_Object=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5575310436151618600UL,1591952302039477673UL));
 			return __f_Object;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_QuestMarkerShown;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_QuestMarkerShown
-	{
-		get
-		{
-			if(__f_QuestMarkerShown==null || __f_QuestMarkerShown.IsDeleted) __f_QuestMarkerShown=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5441579611133312618UL,5205218947404216211UL));
-			return __f_QuestMarkerShown;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_ObjectQuestGiven;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_ObjectQuestGiven
-	{
-		get
-		{
-			if(__f_ObjectQuestGiven==null || __f_ObjectQuestGiven.IsDeleted) __f_ObjectQuestGiven=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4691334056568724199UL,3732333455379869369UL));
-			return __f_ObjectQuestGiven;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldBool __f_ObjectFound;
