@@ -8,6 +8,7 @@ namespace Qbism.Serpent
 	public class SegmentUIHandler : MonoBehaviour
 	{
 		//Config parameters
+		public float markerY = 1f, loweredMarkerY = .75f;
 		[SerializeField] SegmentRefHolder refs;
 		[SerializeField] FaceCamera camFacer;
 

@@ -57,6 +57,15 @@ namespace Qbism.Serpent
 			var startScale = refs.meshParent.transform.localScale;
 			var targetScale = GetScale(loc);
 
+			var startMarkerPos = new Vector3(0, 0, 0);
+			var targetMarkerPos = new Vector3(0, 0, 0);
+
+			if (refs.markerTrans != null)
+			{
+				startMarkerPos = refs.markerTrans.localPosition;
+				targetMarkerPos = GetMarker(loc, startMarkerPos);
+			}
+
 			newInput = false;
 
 			elapsedTime = 0;
@@ -73,6 +82,9 @@ namespace Qbism.Serpent
 					serpScroller.moveCurve.Evaluate(percentageComplete));
 				refs.meshParent.transform.localScale = Vector3.Lerp(startScale, targetScale, 
 					serpScroller.scaleCurve.Evaluate(percentageComplete));
+				if (refs.markerTrans != null)
+					refs.markerTrans.localPosition = Vector3.Lerp(startMarkerPos, targetMarkerPos,
+						serpScroller.moveCurve.Evaluate(percentageComplete));
 
 				yield return null;
 			}
@@ -80,6 +92,7 @@ namespace Qbism.Serpent
 			transform.position = target;
 			transform.rotation = rotTarget;
 			refs.meshParent.transform.localScale = targetScale;
+			if (refs.markerTrans != null) refs.markerTrans.localPosition = targetMarkerPos;
 
 			if (setAtStart && refs.uiHandler != null)
 				refs.uiHandler.SetScreenEdgePosWithPadding();
@@ -111,6 +124,17 @@ namespace Qbism.Serpent
 
 			popInJuice.Initialization();
 			popInJuice.PlayFeedbacks();
+		}
+
+		private Vector3 GetMarker(int loc, Vector3 currentLocalPos)
+		{
+			Vector3 newLocalPos;
+
+			if (loc == serpScroller.focusIndex)
+				newLocalPos = new Vector3(currentLocalPos.x, refs.uiHandler.loweredMarkerY, currentLocalPos.z);
+			else newLocalPos = new Vector3(currentLocalPos.x, refs.uiHandler.markerY, currentLocalPos.z);
+			
+			return newLocalPos;
 		}
 
 		private Vector3 GetScale(int loc)
