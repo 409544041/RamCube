@@ -59,7 +59,7 @@ namespace Qbism.WorldMap
 			}
 
 			//same as below but now if there's a wall in between
-			else if (!refs.pinPather.justCompleted && completed && uUnlocked &&
+			else if (!justCompleted && completed && uUnlocked &&
 				!uUnlockAnimPlayed && linkedWall && dottedAnimPlayed)
 			{
 				SetWallPathPoint(dest);
@@ -69,16 +69,16 @@ namespace Qbism.WorldMap
 			//if uPin still has a lock left or if uPin has no locks left but on map load
 			//the uPin unlock anim hasn't been played yet so dotted line is still needed
 			else if ((completed && uLessLocks && dottedAnimPlayed) || 
-				(!refs.pinPather.justCompleted && completed && 
+				(!justCompleted && completed && 
 				uUnlocked && !uUnlockAnimPlayed && dottedAnimPlayed))
 				FillAndAddDrawData(lineDestList, dest, LineTypes.dotted);
 
 			//if uPin is unlocked and unlock anim played etc drawing full line
-			else if (!refs.pinPather.justCompleted && completed && uUnlocked && uUnlockAnimPlayed)
+			else if (completed && uUnlocked && uUnlockAnimPlayed)
 				FillAndAddDrawData(lineDestList, dest, LineTypes.full);
 
 			//when debug-unlocking
-			else if (!refs.pinPather.justCompleted && unlocked && unlockAnimPlayed && 
+			else if (!justCompleted && unlocked && unlockAnimPlayed && 
 				uUnlocked && uUnlockAnimPlayed)
 				FillAndAddDrawData(lineDestList, dest, LineTypes.full);
 		}
