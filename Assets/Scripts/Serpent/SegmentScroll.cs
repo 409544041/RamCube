@@ -54,7 +54,7 @@ namespace Qbism.Serpent
 			var rot = GetRotation(loc);
 			var rotTarget = Quaternion.Euler(rot.x, rot.y, rot.z);
 
-			var startScale = transform.localScale;
+			var startScale = refs.meshParent.transform.localScale;
 			var targetScale = GetScale(loc);
 
 			newInput = false;
@@ -71,7 +71,7 @@ namespace Qbism.Serpent
 					serpScroller.moveCurve.Evaluate(percentageComplete));
 				transform.rotation = Quaternion.Lerp(startRot, rotTarget, 
 					serpScroller.moveCurve.Evaluate(percentageComplete));
-				transform.localScale = Vector3.Lerp(startScale, targetScale, 
+				refs.meshParent.transform.localScale = Vector3.Lerp(startScale, targetScale, 
 					serpScroller.scaleCurve.Evaluate(percentageComplete));
 
 				yield return null;
@@ -79,7 +79,7 @@ namespace Qbism.Serpent
 
 			transform.position = target;
 			transform.rotation = rotTarget;
-			transform.localScale = targetScale;
+			refs.meshParent.transform.localScale = targetScale;
 
 			if (setAtStart && refs.uiHandler != null)
 				refs.uiHandler.SetScreenEdgePosWithPadding();

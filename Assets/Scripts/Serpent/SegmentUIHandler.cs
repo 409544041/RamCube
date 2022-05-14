@@ -22,7 +22,6 @@ namespace Qbism.Serpent
 				refs.canvasGroup.alpha = 0;
 				return;
 			}
-			ToggleUIDependingOnObjectStatus();
 		}
 
 		private void Update()
@@ -98,7 +97,7 @@ namespace Qbism.Serpent
 			bool showMarker = false;
 
 			var objs = refs.mSegments.f_Objects;
-			if (objs == null)
+			if (objs == null || !refs.mSegments.f_GameplayData.f_Rescued || refs.scRef == null)
 			{
 				refs.canvasGroup.alpha = 0;
 				return;

@@ -12,6 +12,7 @@ namespace Qbism.Serpent
 	{
 		//Config parameters
 		public M_Segments mSegments;
+		public GameObject meshParent;
 		public Renderer[] meshes;
 		public SerpentSegmentHandler segHandler;
 		[Header("Animation")]

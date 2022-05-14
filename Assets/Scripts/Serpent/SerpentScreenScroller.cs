@@ -52,6 +52,7 @@ namespace Qbism.Serpent
 			}
 
 			if (newSegments.Count > 0) StartCoroutine(PopInNewSegments());
+			else ActivateSegmentsUI();
 		}
 
 		private IEnumerator PopInNewSegments()
@@ -79,6 +80,7 @@ namespace Qbism.Serpent
 				yield return new WaitForSeconds(.5f);
 			}
 
+			ActivateSegmentsUI();
 			scRef.slRef.screenStateMngr.serpentScreenState.allowInput = true;
 		}
 
@@ -113,6 +115,15 @@ namespace Qbism.Serpent
 			{
 				if (segment.segScroll.locIndex > focusIndex) continue;
 				segment.segScroll.InitiateSegmentScroll(-1, false);
+			}
+		}
+
+		private void ActivateSegmentsUI()
+		{
+			foreach (var seg in segHandler.segRefs)
+			{
+				if (seg.uiHandler == null) continue;
+				seg.uiHandler.ToggleUIDependingOnObjectStatus();
 			}
 		}
 
