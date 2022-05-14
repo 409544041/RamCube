@@ -62,7 +62,7 @@ namespace Qbism.Cubes
 			if (handler.FetchCube(myPosition, true) == handler.FetchCube(player.cubePos.FetchGridPos(), true))
 			{
 				if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.up), -1))
-					Finish();	
+					Finish(false);	
 
 				else
 				{
@@ -77,12 +77,12 @@ namespace Qbism.Cubes
 			} 
 		}
 
-		public void Finish()
+		public void Finish(bool isDebug)
 		{
 			var screenStateMngr = refs.gcRef.glRef.screenStateMngr;
 			screenStateMngr.SwitchState(screenStateMngr.levelEndSeqState, ScreenStates.levelEndSeqState);
 
-			if (switchBoard.allowDebugFinish) PositionPlayerForFinish();
+			if (isDebug) PositionPlayerForFinish();
 
 			if (switchBoard.worldMapConnected)
 				progHandler.SetLevelToComplete(progHandler.currentPin);

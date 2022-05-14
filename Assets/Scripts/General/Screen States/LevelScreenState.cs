@@ -94,7 +94,7 @@ namespace Qbism.General
 		public void HandleDebugCompleteInput()
 		{
 			if (gcRef.persRef.switchBoard.allowDebugFinish && mover.input) 
-				gcRef.finishRef.finishCube.Finish();
+				gcRef.finishRef.finishCube.Finish(true);
 		}
 
 		public void StateExit()
