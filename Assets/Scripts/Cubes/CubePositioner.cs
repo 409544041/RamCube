@@ -23,6 +23,12 @@ namespace Qbism.Cubes
 
 			transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
 				yPos, Mathf.RoundToInt(transform.position.z));
+
+			var eulers = transform.eulerAngles;
+			eulers.x = Mathf.Round(eulers.x / 90) * 90;
+			eulers.y = Mathf.Round(eulers.y / 90) * 90;
+			eulers.z = Mathf.Round(eulers.z / 90) * 90;
+			transform.eulerAngles = eulers;
 		}
 
 		public Vector2Int FetchGridPos()

@@ -34,7 +34,6 @@ namespace Qbism.PlayerCube
 		WallHandler wallHandler;
 		MoveableCube[] moveableCubes;
 		PlayerCubeFlipJuicer playerFlipJuicer;
-		PlayerAnimator playerAnimator;
 		PlayerCubeBoostJuicer boostJuicer;
 		ExpressionHandler expresHandler;
 
@@ -51,6 +50,7 @@ namespace Qbism.PlayerCube
 		public bool isInIntroSeq { get; set; } = false;
 		public bool isLowered { get; set; } = false;
 		public bool justBoosted { get; set; } = false;
+		public bool isRewinding { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
@@ -65,7 +65,6 @@ namespace Qbism.PlayerCube
 			wallHandler = refs.gcRef.glRef.wallHandler;
 			moveableCubes = refs.gcRef.movCubes;
 			playerFlipJuicer = refs.flipJuicer;
-			playerAnimator = refs.playerAnim;
 			boostJuicer = refs.boostJuicer;
 			expresHandler = refs.exprHandler;
 		}
@@ -163,16 +162,20 @@ namespace Qbism.PlayerCube
 
 		private IEnumerator Wiggle(Transform side, Vector3 turnAxis)
 		{
-			for (int i = 0; i < (8 / wiggleTurnStep); i++)
+			for (int i = 0; i < (wiggleRotation / wiggleTurnStep); i++)
 			{
+				if (isRewinding) yield break;
+
 				transform.RotateAround(side.position, turnAxis, wiggleTurnStep);
-				yield return new WaitForSeconds(timeStep);
+				yield return null;
 			}
 
 			for (int i = 0; i < (wiggleRotation / wiggleTurnStep); i++)
 			{
+				if (isRewinding) yield break;
+
 				transform.RotateAround(side.position, -turnAxis, wiggleTurnStep);
-				yield return new WaitForSeconds(timeStep);
+				yield return null;
 			}
 		}
 

@@ -141,6 +141,8 @@ namespace Qbism.Rewind
 		{
 			var preRewPos = new Vector2Int(Mathf.RoundToInt(transform.position.x),
 				Mathf.RoundToInt(transform.position.z));
+
+			if (pRef != null) mover.isRewinding = true;
 			
 			if (cubeRef != null && cubeRef.movCube != null)
 			{
@@ -177,6 +179,9 @@ namespace Qbism.Rewind
 				pRef.rewindJuicer.StartPostRewindJuice();
 				pRef.fartLauncher.ResetFartCollided();
 				expresHandler.SetFace(Expressions.smiling, expresHandler.GetRandomTime());
+
+				yield return null; //To ensure isRewinding registers at all in mover
+				mover.isRewinding = false;
 			}
 
 			if (this.tag == "Environment" || this.tag == "Moveable")
