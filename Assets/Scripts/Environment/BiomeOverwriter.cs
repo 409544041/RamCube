@@ -28,6 +28,8 @@ namespace Qbism.Environment
 			if (gcRef != null) visualSwappers = gcRef.visualSwappers;
 			else visualSwappers = mcRef.visualSwappers;
 
+			if (visualSwappers.Length == 0) return;
+
 			foreach (var swapper in visualSwappers)
 			{
 				swapper.bOverWriter = this;

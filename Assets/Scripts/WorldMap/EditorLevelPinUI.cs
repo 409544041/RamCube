@@ -6,7 +6,6 @@ using TMPro;
 
 namespace Qbism.WorldMap
 {
-	[ExecuteAlways]
 	public class EditorLevelPinUI : MonoBehaviour
 	{
 		//Config parameters
