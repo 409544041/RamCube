@@ -16,6 +16,9 @@ namespace Qbism.General
 		//Cache
 		ScreenStateManager stateMngr;
 
+		//States
+		bool anyKeyPressed = false;
+
 		public void StateEnter(ScreenStateManager ssm)
 		{
 			if (stateMngr == null)
@@ -26,7 +29,11 @@ namespace Qbism.General
 
 		public void HandleAnyInput()
 		{
-			loader.StartSceneTransition();
+			if (!anyKeyPressed)
+			{
+				loader.StartSceneTransition();
+				anyKeyPressed = true;
+			}
 		}
 
 		public void StateExit()
