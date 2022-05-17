@@ -31,8 +31,7 @@ namespace Qbism.Peep
 		private void Start()
 		{
 			currentSpline = follower.spline;
-			addHeight = 0 + Random.Range(0, maxAddHeight);
-			follower.spline.transform.localPosition = new Vector3(0, addHeight, 0);
+			VaryHeight();
 		}
 
 		private void Update()
@@ -60,7 +59,6 @@ namespace Qbism.Peep
 
 		private void RespawnBalloon()
 		{
-			print("Respawning");
 			if (viableSplines.Length > 1)
 			{
 				SplineComputer[] otherSplines = new SplineComputer[viableSplines.Length - 1];
@@ -77,8 +75,7 @@ namespace Qbism.Peep
 			}
 
 			follower.spline = currentSpline;
-			addHeight = 0 + Random.Range(0, maxAddHeight);
-			follower.spline.transform.localPosition = new Vector3(0, addHeight, 0);
+			VaryHeight();
 			follower.Restart(1);
 			ToggleMeshes(true);
 		}
@@ -89,6 +86,12 @@ namespace Qbism.Peep
 			{
 				mesh.enabled = value;
 			}
+		}
+
+		private void VaryHeight()
+		{
+			addHeight = 0 + Random.Range(0, maxAddHeight);
+			follower.spline.transform.localPosition = new Vector3(0, addHeight, 0);
 		}
 	}
 }
