@@ -21,16 +21,13 @@ namespace Qbism.Serpent
 
 		//Cache
 		PlayerAnimator playerAnim;
-		GameplayCoreRefHolder gcRef;
 
 		//States
 		public bool justSpawned { get; private set; } = false;
 
 		public void Spawn()
 		{
-			gcRef = FindObjectOfType<GameplayCoreRefHolder>();
-			playerAnim = gcRef.pRef.playerAnim;
-			refs.gcRef = gcRef;
+			playerAnim = refs.gcRef.pRef.playerAnim;
 
 			justSpawned = true;
 			spawnJuice.Initialization();

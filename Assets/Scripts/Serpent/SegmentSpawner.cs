@@ -52,6 +52,7 @@ namespace Qbism.Serpent
 			segmentToSpawn.transform.position = transform.position;
 
 			var segRef = spawnedSegment.GetComponent<SegmentRefHolder>();
+			segRef.gcRef = refs.gcRef;
 			segRef.cam = refs.cam;
 			if (segRef.uiHandler != null) segRef.uiHandler.SetCam();
 

@@ -78,11 +78,20 @@ namespace Qbism.Dialogue
 					names[i] = segRef.mSegments.f_SegmentName;
 					focuser.SetJuiceValues(segRef, i);
 					focuser.SetInitialFocusValues(segRef, i);
+					if (segRef.dragonAnim != null) segRef.dragonAnim.DragonSmile();
 				}
 			}
 			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
-			if (charIndex == 0) expressionHandlers[1].SetFace(dialogueSO.partnerFirstExpression, -1);
-			else expressionHandlers[0].SetFace(dialogueSO.partnerFirstExpression, -1);
+			if (charIndex == 0)
+			{
+				if (expressionHandlers[1] != null)
+					expressionHandlers[1].SetFace(dialogueSO.partnerFirstExpression, -1);
+			}
+			else
+			{
+				if (expressionHandlers[0] != null)
+					expressionHandlers[0].SetFace(dialogueSO.partnerFirstExpression, -1);
+			}
 
 			Dialogue();
 		}
@@ -103,7 +112,8 @@ namespace Qbism.Dialogue
 		private void SetDialogueExpression()
 		{
 			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
-			expressionHandlers[charIndex].SetFace(dialogueSO.dialogues[dialogueIndex].expression, -1);
+			if (expressionHandlers[charIndex] != null) expressionHandlers[charIndex].
+					SetFace(dialogueSO.dialogues[dialogueIndex].expression, -1);
 		}
 
 		public void NextDialogueText()
@@ -144,7 +154,12 @@ namespace Qbism.Dialogue
 
 		private IEnumerator ExitDialogue()
 		{
-			if (gcRef != null) partnerAnimator.InitiateHappyWiggle();
+			if (gcRef != null && partnerAnimator != null) partnerAnimator.InitiateHappyWiggle();
+			if (gcRef != null && partnerAnimator == null) //means this is dragon head
+			{
+				gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
+				yield break;
+			}
 
 			yield return new WaitForSeconds(.5f); //So when dialogue UI disappears animation is already playing
 

@@ -12,34 +12,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab872e800b59014c8b97b5c7546d24b, type: 3}
   m_Name: Rescue DIalogue Head
   m_EditorClassIdentifier: 
-  characters: 1400000001000000
+  characters: 1400000000000000
   partnerFirstExpression: 1
   dialogues:
   - characterSpeaking: 1
     expression: 2
-    dialogueText: '{pstate}<tshake2><speed=100>Billy!<speed=1></>{/}<waitfor=.7>
-      Thank goodness you saved me!'
-  - characterSpeaking: 1
-    expression: 14
-    dialogueText: I mean, I knew you would, of course. I saw you in a vision, sailing
-      in on your magic farts!
+    dialogueText: '{pstate}<tshake2><speed=100>WOOF <waitfor=.7> WOOF!'
   - characterSpeaking: 0
-    expression: 16
-    dialogueText: Sure you did, Mikey...
-  - characterSpeaking: 1
     expression: 3
-    dialogueText: You mean <waitfor=.5><twave>Magic Mikey, Psychic Extraordinaire!
+    dialogueText: Hi, Mama! Gosh, I'm so glad you're okay!
+  - characterSpeaking: 1
+    expression: 16
+    dialogueText: '{pstate}<tshake2><speed=100>WOOF <waitfor=.7> WOOF <waitfor=.7>
+      WOOF!'
+  - characterSpeaking: 0
+    expression: 2
+    dialogueText: Haha! It's good to see you too.
   - characterSpeaking: 0
     expression: 0
-    dialogueText: Well, if you're so psychic, do you know where the rest of our friends
-      are being imprisoned?
+    dialogueText: You wouldn't happen to know where the others are, would you?
   - characterSpeaking: 1
     expression: 17
-    dialogueText: '{nstate}<tshake2><speed=100>Oh!<speed=1></>{/}<waitfor=.7> Um.
-      Yes, of course. I sense that they''re... that way!'
-  - characterSpeaking: 1
-    expression: 0
-    dialogueText: Or... maybe that way?
+    dialogueText: '{pstate}<tshake2><speed=100>WOOF <waitfor=.7> WOOF!'
   - characterSpeaking: 0
+    expression: 1
+    dialogueText: Really?! Which way did they go?!
+  - characterSpeaking: 1
     expression: 11
-    dialogueText: ...
+    dialogueText: '*SNIFF, SNIFF*...'
+  - characterSpeaking: 1
+    expression: 11
+    dialogueText: '{pstate}<tshake2><speed=100>WOOF <speed=1><waitfor=.7> <tshake2><speed=100>WOOF
+      <speed=1><waitfor=.7> <tshake2><speed=100>WOOF!'
+  - characterSpeaking: 0
+    expression: 3
+    dialogueText: Awesome! Let's go!

@@ -31,16 +31,26 @@ namespace Qbism.Serpent
 			var scRef = refs.scRef;
 			if (scRef != null)
 			{
-				animator.SetLayerWeight(0, 0);
-				animator.SetTrigger("MouthSmile");
-				animator.SetTrigger("IrisFront");
+				DragonSmile();
 			}
+		}
+
+		public void DragonSmile()
+		{
+			animator.SetLayerWeight(0, 0);
+			animator.SetTrigger("MouthSmile");
+			animator.SetTrigger("IrisFront");
 		}
 
 		public void ActivateFlyByJuice()
 		{
 			flybyJuice.Initialization();
 			flybyJuice.PlayFeedbacks();
+		}
+
+		public void StartRescueDialogue()
+		{
+			refs.dialogueStarter.StartRescueDialogue(null);
 		}
 
 		public void Spawn(float headSpawnDeg)
