@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4746359969092795674}
   - component: {fileID: 1350393230957726830}
-  - component: {fileID: 7859313987286134091}
+  - component: {fileID: 8903450758514460481}
   m_Layer: 0
   m_Name: Music Volume Slider
   m_TagString: Untagged
@@ -63,9 +63,9 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -90,8 +90,20 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &7859313987286134091
+      m_Calls:
+      - m_Target: {fileID: 8903450758514460481}
+        m_TargetAssemblyTypeName: Qbism.General.VolumeSetter, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8903450758514460481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,7 +112,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 379133606957909011}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 766840f96530a1048bce85070d9b2b0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e27fa98445dcdf4db7334ce4e48cc01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: d8b69ae9391253847bfe5b88f7d4b409, type: 2}
@@ -169,8 +181,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 479ac1af6cfa36e45b780dcafae9be22, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -367,6 +379,8 @@ MonoBehaviour:
   button: {fileID: 8213354487554718987}
   slider: {fileID: 1350393230957726830}
   sliderJump: 0.05
+  arrows: []
+  label: 
 --- !u!1 &4192199320967052341
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,8 +581,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 50a4e9f2f03d8ab4c8402ab8b5079a0f, type: 3}
+  m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -676,7 +690,7 @@ RectTransform:
   m_GameObject: {fileID: 7860657289451201194}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 3225948143227475946}
   m_RootOrder: 0
@@ -714,7 +728,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 9de5673680bc95346887cc2872495d91, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
