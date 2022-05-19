@@ -387,6 +387,7 @@ GameObject:
   - component: {fileID: 1532914687393087819}
   - component: {fileID: 6170541825463313304}
   - component: {fileID: 5924007430084180936}
+  - component: {fileID: 7895307155722108918}
   - component: {fileID: 7286304185802157844}
   m_Layer: 0
   m_Name: Game Logic
@@ -457,6 +458,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e7e63e51d8dab45ab237086f37df06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7895307155722108918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573582724643509009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78777f939bc2369498fe4f56406babd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7286304185802157844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,8 +485,7 @@ MonoBehaviour:
   gcRef: {fileID: 0}
   camResizer: {fileID: 5924007430084180936}
   screenStateMngr: {fileID: 511896134078674302}
-  swipeDetector: {fileID: 1532914687393087819}
-  inputDetector: {fileID: 0}
+  levelTimer: {fileID: 7895307155722108918}
   cubeHandler: {fileID: 2957358092620856976}
   movCubeHandler: {fileID: 7897787388083789460}
   wallHandler: {fileID: 4427148236981019360}
@@ -485,7 +497,6 @@ MonoBehaviour:
   visualSwapper: {fileID: 1305322747438852717}
   overwriter: {fileID: 1073323798743442764}
   dialogueManager: {fileID: 4300353220786692159}
-  dialogueWriter: {fileID: 0}
   dialogueFocuser: {fileID: 3046887159190210964}
   objColManager: {fileID: 2856112992625200457}
   navManager: {fileID: 4173270567251923710}
@@ -618,6 +629,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a19c164a66c4ce41ba5b3d3d6cba83c, type: 3}
+--- !u!4 &618837015307145324 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4311148304204155820, guid: 0a19c164a66c4ce41ba5b3d3d6cba83c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3693737252973910976}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &511896134078674302 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3771857753296121534, guid: 0a19c164a66c4ce41ba5b3d3d6cba83c,
@@ -630,12 +647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be43386cf56c9794e85b0448843d016b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &618837015307145324 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4311148304204155820, guid: 0a19c164a66c4ce41ba5b3d3d6cba83c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3693737252973910976}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9051227584093515110
 PrefabInstance:
   m_ObjectHideFlags: 0

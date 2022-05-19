@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
+using Qbism.Saving;
+using UnityEngine.Analytics;
 
 namespace Qbism.General
 {
@@ -100,7 +102,33 @@ namespace Qbism.General
 
 		public void PressQuitButton() //Called from button event
 		{
+			SendSessionTimeAnalyticsEvent();
+			SendLevelExitAnalyticsEvent();
 			Application.Quit();
+		}
+
+		private static void SendSessionTimeAnalyticsEvent()
+		{
+			var persRef = FindObjectOfType<PersistentRefHolder>();
+			persRef.sessionTimer.StopCountingTimer();
+
+			Analytics.CustomEvent(AnalyticsEvents.SessionTime, new Dictionary<string, object>
+			{
+				{AnalyticsEvents.TimeWindow, persRef.sessionTimer.timeWindow}
+			});
+		}
+
+		private void SendLevelExitAnalyticsEvent()
+		{
+			var gcRef = FindObjectOfType<GameplayCoreRefHolder>();
+			if (gcRef != null)
+			{
+				Analytics.CustomEvent(AnalyticsEvents.LevelExit, new Dictionary<string, object>()
+				{
+					{AnalyticsEvents.Level, gcRef.persRef.progHandler.debugCurrentPin},
+				});
+			}
+
 		}
 	}
 }

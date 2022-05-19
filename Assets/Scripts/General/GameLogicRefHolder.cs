@@ -17,6 +17,7 @@ public class GameLogicRefHolder : MonoBehaviour
 	public GameplayCoreRefHolder gcRef;
 	public CamResizer camResizer;
 	public ScreenStateManager screenStateMngr;
+	public Timer levelTimer;
 	[Header("Cube Handling")]
 	public CubeHandler cubeHandler;
 	public MoveableCubeHandler movCubeHandler;

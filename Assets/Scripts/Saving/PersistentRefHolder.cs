@@ -12,6 +12,7 @@ namespace Qbism.Saving
 	{
 		//Config parameters
 		public FeatureSwitchBoard switchBoard;
+		public Timer sessionTimer;
 		[Header("Progress")]
 		public ProgressHandler progHandler;
 		public SerpentProgress serpProg;

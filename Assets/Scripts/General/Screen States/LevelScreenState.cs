@@ -3,6 +3,7 @@ using Qbism.PlayerCube;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace Qbism.General
 {
@@ -29,6 +30,8 @@ namespace Qbism.General
 				var cubeUI = cubeRef.cubeUI;
 				if (cubeUI != null) cubeUI.showCubeUI = true;
 			}
+
+			glRef.levelTimer.StartCountingTimer();
 		}
 
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
@@ -73,11 +76,13 @@ namespace Qbism.General
 
 		public void HandleResetInput()
 		{
+			SendRewindResetAnalyticsEvent();
 			glRef.sceneHandler.RestartLevel();
 		}
 
 		public void HandleRewindInput()
 		{
+			SendRewindResetAnalyticsEvent();
 			glRef.rewindHandler.StartRewinding();
 		}
 
@@ -88,6 +93,7 @@ namespace Qbism.General
 
 		public void HandleBackInput()
 		{
+			SendLevelExitAnalyticsEvent();
 			gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
 		}
 
@@ -111,13 +117,31 @@ namespace Qbism.General
 			}
 		}
 
-			public void StateExit()
+		public void StateExit()
 		{
 			foreach (var cubeRef in gcRef.cubeRefs)
 			{
 				var cubeUI = cubeRef.cubeUI;
 				if (cubeUI != null) cubeUI.showCubeUI = false;
 			}
+
+			glRef.levelTimer.StopCountingTimer();
+		}
+
+		private void SendRewindResetAnalyticsEvent()
+		{
+			Analytics.CustomEvent(AnalyticsEvents.RewindedReset, new Dictionary<string, object>()
+			{
+				{AnalyticsEvents.Level, gcRef.persRef.progHandler.debugCurrentPin},
+			});
+		}
+
+		private void SendLevelExitAnalyticsEvent()
+		{
+			Analytics.CustomEvent(AnalyticsEvents.LevelExit, new Dictionary<string, object>()
+			{
+				{AnalyticsEvents.Level, gcRef.persRef.progHandler.debugCurrentPin},
+			});
 		}
 
 		public void HandleActionInput()

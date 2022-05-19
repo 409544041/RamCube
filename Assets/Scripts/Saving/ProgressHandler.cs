@@ -24,7 +24,8 @@ namespace Qbism.Saving
 		//States
 		public E_Pin currentPin { get; set; }
 		public E_Biome currentBiome { get; set ; }
-		string debugCurrentPin, debugCurrentBiome;
+		public string debugCurrentPin { get; private set; }
+		string debugCurrentBiome;
 		public bool currentHasSegment { get ; set ; }
 		public bool currentHasObject { get; set ; }
 
@@ -43,6 +44,7 @@ namespace Qbism.Saving
 			settingsSaveLoad = persRef.settingsSaveLoad;
 			BuildDataLists();
 			LoadProgHandlerData();
+			persRef.sessionTimer.StartCountingTimer();
 		}
 
 		private void Update() 
