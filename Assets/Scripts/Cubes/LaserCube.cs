@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.PlayerCube;
-using Qbism.SceneTransition;
 using UnityEngine;
 
 namespace Qbism.Cubes
@@ -11,7 +10,8 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		public float distance = 1;
-		[SerializeField] Transform laserOrigin = null;
+		[SerializeField] Transform laserOrigin;
+		[SerializeField] float radius = .3f;
 		[SerializeField] LayerMask chosenLayers;
 		[SerializeField] float idleLaserDelay = .5f;
 		[SerializeField] LaserRefHolder refs;
@@ -130,9 +130,9 @@ namespace Qbism.Cubes
 
 		private RaycastHit[] SortedSphereCasts()
 		{
-			RaycastHit[] hits = Physics.SphereCastAll(laserOrigin.position, .05f,
-				transform.forward, distance, chosenLayers , QueryTriggerInteraction.Ignore);
-			
+			RaycastHit[] hits = Physics.SphereCastAll(laserOrigin.position, radius,
+				transform.forward, distance, chosenLayers, QueryTriggerInteraction.Ignore);
+
 			Debug.DrawRay(laserOrigin.position, transform.forward, Color.red, distance);
 
 			float[] hitDistances = new float[hits.Length];
@@ -149,8 +149,8 @@ namespace Qbism.Cubes
 
 		private void AdjustBeamLength(RaycastHit[] hits)
 		{
-			if (hits.Length <= 0) dist = distance;
-			else dist = hits[0].distance;
+			if (hits.Length <= 0) dist = distance + radius + .2f;
+			else dist = hits[0].distance + radius + .2f;
 
 			if (dist != currentLength)
 			{
