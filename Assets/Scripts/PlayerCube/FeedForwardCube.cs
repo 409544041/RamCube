@@ -29,18 +29,15 @@ namespace Qbism.PlayerCube
 
 		public void SwitchFF(bool value)
 		{
+			isBoosting = false;
+			isOutOfBounds = false;
+
 			if (value == true)
 			{
 				ffJuicer.TriggerJuice();
 				visualSwitch.SwitchMeshes(true);
 			}
 			else visualSwitch.SwitchMeshes(false);
-		}
-
-		private void OnDisable()
-		{
-			isBoosting = false;
-			isOutOfBounds = false;
 		}
 	}
 }
