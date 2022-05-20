@@ -120,9 +120,13 @@ namespace Qbism.Cubes
 
 			if (!levelEntity.f_Completed)
 			{
-				Analytics.CustomEvent(AnalyticsEvents.LevelComp, new Dictionary<string, object>
+				Analytics.CustomEvent(AnalyticsEvents.LevelsComp, new Dictionary<string, object>
 				{
 					{AnalyticsEvents.Level, refs.persRef.progHandler.debugCurrentPin},
+				});
+				Analytics.CustomEvent(AnalyticsEvents.LevelComp + " " + 
+					refs.persRef.progHandler.debugCurrentPin, new Dictionary<string, object>
+				{
 					{AnalyticsEvents.TimeWindow, refs.gcRef.glRef.levelTimer.timeWindow}
 				});
 			}
