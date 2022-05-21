@@ -9,13 +9,17 @@ namespace Qbism.General
 	{
 		//Cache
 		ScreenStateManager stateMngr;
+		GameplayCoreRefHolder gcRef;
 
 		public void StateEnter(ScreenStateManager ssm)
 		{
 			if (stateMngr == null)
 			{
 				stateMngr = ssm;
+				gcRef = stateMngr.gcRef;
 			}
+
+			gcRef.pRef.outroJuicer.EnableSwallowColl();
 		}
 
 		public void StateExit()

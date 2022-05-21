@@ -50,8 +50,7 @@ namespace Qbism.PlayerCube
 
 		private void DisableFeedForwardOnMove()
 		{
-			if (mover.isMoving || mover.isBoosting || mover.isTurning || 
-				mover.isInIntroSeq || onFinishCheck())
+			if (mover.isMoving || mover.isInIntroSeq || onFinishCheck())
 			{
 				foreach (FeedForwardCube ffCube in feedForwardCubes)
 				{

@@ -34,7 +34,8 @@ namespace Qbism.Cubes
 
 			PopUpWall popWall = null;
 			GameObject wallObject = null;
-			Vector3 boostTarget = GetBoostTarget(boostMaskPlayer, out wallObject);
+			bool remainOnBoost = false;
+			Vector3 boostTarget = GetBoostTarget(boostMaskPlayer, out wallObject, out remainOnBoost);
 			if (wallObject) popWall = wallObject.GetComponent<PopUpWall>();
 
 			mover.input = false;
@@ -84,7 +85,8 @@ namespace Qbism.Cubes
 			ff.isBoosting = true;
 
 			GameObject wallObject = null;
-			Vector3 boostTarget = GetBoostTarget(boostMaskPlayer, out wallObject);
+			bool remainOnBoost = false;
+			Vector3 boostTarget = GetBoostTarget(boostMaskPlayer, out wallObject, out remainOnBoost);
 
 			while (ff.isBoosting)
 			{
@@ -117,9 +119,9 @@ namespace Qbism.Cubes
 			movCube.isBoosting = true;
 
 			GameObject wallObject = null;
-			Vector3 boostTarget = GetBoostTarget(boostMaskMoveable, out wallObject);
-
-			while (movCube.isBoosting)
+			bool remainOnBoost = false;
+			Vector3 boostTarget = GetBoostTarget(boostMaskMoveable, out wallObject, out remainOnBoost);
+			while (movCube.isBoosting && !remainOnBoost)
 			{
 				cube.transform.position = Vector3.MoveTowards(cube.transform.position,
 					boostTarget, boostSpeed * Time.deltaTime);
@@ -130,6 +132,7 @@ namespace Qbism.Cubes
 				yield return null;
 			}
 
+			movCube.isBoosting = false;
 			movRef.cubePos.RoundPosition();
 			movCube.UpdateCenterPosition();
 
@@ -140,7 +143,7 @@ namespace Qbism.Cubes
 			movCube.CheckFloorInNewPos(side, turnAxis, posAhead, originPos, launchPos);
 		}
 
-		private Vector3 GetBoostTarget(LayerMask mask, out GameObject wallObject)
+		private Vector3 GetBoostTarget(LayerMask mask, out GameObject wallObject, out bool remainOnBoost)
 		{
 			RaycastHit wallHit;
 			Vector3 target = new Vector3(0, 0, 0);
@@ -149,12 +152,27 @@ namespace Qbism.Cubes
 				refs.boostDirTrans.transform.TransformDirection(Vector3.forward), out wallHit, 20, mask, 
 				QueryTriggerInteraction.Collide))
 			{
+				wallObject = wallHit.transform.gameObject;
+				var playerTarget = wallObject.tag == "Player";
+
 				//For this to work, wall or other blocker objects needs to be placed on 
 				//'the grid', just like cubes
-				float distance = Vector3.Distance(refs.boostRayOrigin.position, wallHit.point) - .5f;
+				float distance = Mathf.RoundToInt(Vector3.Distance(refs.boostRayOrigin.position, 
+					wallHit.point) - .5f);
+
+				// Probs only situation is when pushing mov directly onto boost
+				// and hitting player next to it again	
+				if (playerTarget && distance < 1)
+				{
+					target = refs.boostRayOrigin.position;
+					remainOnBoost = true;
+					return target;
+				}
+
 				target = refs.boostRayOrigin.position + 
 					(refs.boostDirTrans.transform.TransformDirection(Vector3.forward) * distance);
-				wallObject = wallHit.transform.gameObject;
+				remainOnBoost = false;
+				return target;
 			}
 
 			//this else is for when it flies out of bounds
@@ -163,8 +181,9 @@ namespace Qbism.Cubes
 				target = refs.boostRayOrigin.position + 
 					(refs.boostDirTrans.transform.TransformDirection(Vector3.forward) * 30);
 				wallObject = null;
+				remainOnBoost = false;
+				return target;
 			}
-			return target;
 		}
 
 		private void CalculateSide(PlayerCubeMover mover, MoveableCube moveable, Vector2Int cubePos, 

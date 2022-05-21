@@ -10,6 +10,7 @@ namespace Qbism.PlayerCube
 		//Config parameters
 		[SerializeField] AudioClip screamingClip, ouchClip, ouchClipAlt, boingShortClip, 
 			boingLongClip, endLaughClip, smallSurpriseClip, toothyLaughClip, swallowClip;
+		[SerializeField] Collider swallowColl;
 		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
@@ -27,6 +28,11 @@ namespace Qbism.PlayerCube
 				serpCollHandler.onTriggerPlayerAudio += StopLaughing;
 				serpCollHandler.onTriggerPlayerAudio += PlayOuchSoundFromPickup;
 			} 
+		}
+
+		public void EnableSwallowColl()
+		{
+			swallowColl.enabled = true;
 		}
 
 		public void PlayFallingSound()

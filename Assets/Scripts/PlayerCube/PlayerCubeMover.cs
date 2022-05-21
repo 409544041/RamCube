@@ -51,6 +51,7 @@ namespace Qbism.PlayerCube
 		public bool isLowered { get; set; } = false;
 		public bool justBoosted { get; set; } = false;
 		public bool isRewinding { get; set; } = false;
+		public bool movReversed { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
@@ -105,10 +106,10 @@ namespace Qbism.PlayerCube
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
 
-		private void InitiateMoveFromOther(MoveableCube cube, Transform side, Vector3 turnAxis, Vector2Int posAhead)
+		public void InitiateMoveFromOther(MoveableCube cube, Transform side, Vector3 turnAxis, 
+			Vector2Int posAhead)
 		{
 			SetSide(cube, ref side, ref posAhead);
-
 			initiatedByPlayer = false;
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
@@ -147,7 +148,6 @@ namespace Qbism.PlayerCube
 
 			refs.cubePos.RoundPosition();
 			UpdateCenterPosition();
-			isMoving = false;
 			onCubeShrink(cubeToShrink);
 
 			yield return null;
@@ -191,7 +191,6 @@ namespace Qbism.PlayerCube
 		private IEnumerator LowerCube(Vector3 targetPos, float step, 
 			Vector2Int cubePos, bool fromBoost)
 		{
-			isMoving = true;
 			input = false;
 			
 			if (fromBoost)
@@ -213,6 +212,7 @@ namespace Qbism.PlayerCube
 
 			isLowered = true;
 			if (moveHandler.movingMoveables == 0) input = true;
+			isMoving = false;
 			refs.cubePos.RoundPosition();
 			refs.gcRef.rewindPulser.InitiatePulse();
 		}

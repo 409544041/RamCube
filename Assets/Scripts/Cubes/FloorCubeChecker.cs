@@ -91,6 +91,7 @@ namespace Qbism.Cubes
 						//landing on same cube, like after having turned
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
 						if (moveHandler.movingMoveables == 0) mover.input = true;
+						mover.isMoving = false;
 						if (previousCube.FetchType() == CubeTypes.Boosting)
 							playerBoostJuicer.PlayPostBoostJuice();
 					}
@@ -141,6 +142,8 @@ namespace Qbism.Cubes
 			if (!mover.isStunned) cubeFF.ShowFeedForward();
 			if (moveHandler.movingMoveables == 0) mover.input = true;
 			onCheckForFinish();
+
+			mover.isMoving = false;
 
 			if (previousCube.FetchType() != CubeTypes.Boosting)
 				playerFlipJuicer.PlayPostFlipJuice();

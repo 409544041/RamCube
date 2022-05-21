@@ -47,8 +47,7 @@ namespace Qbism.Cubes
 				(refs.floorCube.transform.position, mover.transform.position);
 
 			//The last part is to avoid bug when static cube becomes floor cube
-			if (mover.isMoving || mover.isBoosting || mover.isTurning ||
-				disToPlayer < triggerDis || refs.floorCube.type == CubeTypes.Shrinking) 
+			if (mover.isMoving || disToPlayer < triggerDis || refs.floorCube.type == CubeTypes.Shrinking) 
 			{
 				ShowOrHideUI(false);
 				return;
