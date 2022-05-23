@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using Qbism.Cubes;
 using Qbism.SpriteAnimations;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] AudioClip loweringClip;
 		[SerializeField] float loweringVolume;
 		[SerializeField] Transform visualsTrans;
-		[SerializeField] PlayerRefHolder refs;
+		[SerializeField] PlayerRefHolder pRef;
 
 		//Cache
 		MMFeedbackScale[] postBoostMMScalers;
@@ -37,7 +38,7 @@ namespace Qbism.PlayerCube
 			postBoostMMScalers = postBoostJuice.GetComponents<MMFeedbackScale>();
 			postBoostMMPos = postBoostJuice.GetComponent<MMFeedbackPosition>();
 			boostMMScalers = boostJuice.GetComponents<MMFeedbackScale>();
-			expresHandler = refs.exprHandler;
+			if (pRef != null) expresHandler = pRef.exprHandler;
 			boostParticles = boostJuice.GetComponent<MMFeedbackParticles>().BoundParticleSystem;
 			postBoostMMParticles = postBoostJuice.GetComponent<MMFeedbackParticlesInstantiation>();
 			postBoostParticles = postBoostMMParticles.ParticlesPrefab;
@@ -78,7 +79,7 @@ namespace Qbism.PlayerCube
 			boostJuice.PlayFeedbacks();
 			boostTrailTimer = 0;
 			boostTrailCounting = true;
-			expresHandler.SetSituationFace(ExpressionSituations.boosting, 
+			if (expresHandler != null) expresHandler.SetSituationFace(ExpressionSituations.boosting, 
 				expresHandler.GetRandomTime());
 		}
 
@@ -99,7 +100,7 @@ namespace Qbism.PlayerCube
 			boostJuice.StopFeedbacks();
 			postBoostJuice.Initialization();
 			postBoostJuice.PlayFeedbacks();
-			expresHandler.SetSituationFace(ExpressionSituations.wallHit, .5f);
+			if (expresHandler != null) expresHandler.SetSituationFace(ExpressionSituations.wallHit, .5f);
 		}
 
 		public float FetchJuiceDur()
@@ -109,7 +110,8 @@ namespace Qbism.PlayerCube
 
 		public void PlayLoweringSFX()
 		{
-			refs.source.PlayOneShot(loweringClip, loweringVolume);
+			if (pRef != null)
+				pRef.source.PlayOneShot(loweringClip, loweringVolume);
 		}
 
 		private void CalculatePostBoostScaleMoveDir()

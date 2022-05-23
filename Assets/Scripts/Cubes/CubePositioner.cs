@@ -8,13 +8,13 @@ namespace Qbism.Cubes
 	public class CubePositioner : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] bool isPlayer = false;
+		[SerializeField] bool isPlayer = false, isMoveable = false;
 
 		public void RoundPosition()
 		{
 			float yPos;
 
-			if (isPlayer)
+			if (isPlayer || isMoveable)
 			{
 				if (transform.position.y > .5f) yPos = .905f;
 				else yPos = 0;

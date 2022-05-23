@@ -22,7 +22,8 @@ namespace Qbism.MoveableCubes
 		[SerializeField] float lowerStep = 0.5f;
 		[Header("Feedback")]
 		[SerializeField] AudioClip landClip = null;
-		[SerializeField] Vector3 moveScale = new Vector3( .9f, .9f, .9f);
+		public Vector3 moveScale = new Vector3(.8f, .8f, .8f);
+		[SerializeField] Vector3 dockedScale = new Vector3(.9f, .9f, .9f);
 		public CubeRefHolder refs;
 
 		//States
@@ -46,6 +47,7 @@ namespace Qbism.MoveableCubes
 		private void Start()
 		{
 			UpdateCenterPosition();
+			refs.cubePos.RoundPosition();
 			transform.localScale = moveScale;
 			if (refs.movFaceMesh != null)
 			{
@@ -118,7 +120,7 @@ namespace Qbism.MoveableCubes
 					yield return new WaitForSeconds(timeStep);
 				}
 
-				transform.localScale = new Vector3(1, 1, 1);
+				transform.localScale = dockedScale;
 				if (refs.movFaceMesh != null) refs.movFaceMesh.transform.localScale = faceScale;
 				transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
@@ -136,25 +138,32 @@ namespace Qbism.MoveableCubes
 			}
 		}
 
-		public void InitiateLowering(Vector2Int cubePos)
+		public void InitiateLowering(Vector2Int cubePos, bool fromBoost)
 		{
 			Vector3 targetPos = new Vector3(transform.position.x,
 				transform.position.y - 1, transform.position.z);
 			float step = lowerStep * Time.deltaTime;
 
-			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos));
+			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos, fromBoost));
 		}
 
 		private IEnumerator BecomeFloorByLowering(Vector3 targetPos, float step, 
-			Vector2Int cubePos)
+			Vector2Int cubePos, bool fromBoost)
 		{
-			while(transform.position.y > targetPos.y)
+			if (fromBoost)
+			{
+				var juiceDur = refs.boostJuicer.FetchJuiceDur();
+				refs.boostJuicer.PlayPostBoostJuice();
+				yield return new WaitForSeconds(juiceDur);
+			}
+
+			while (transform.position.y > targetPos.y)
 			{
 				transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 				yield return timeStep;
 			}
 
-			transform.localScale = new Vector3(1, 1, 1);
+			transform.localScale = dockedScale;
 			if (refs.movFaceMesh != null) refs.movFaceMesh.transform.localScale = faceScale;
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 			

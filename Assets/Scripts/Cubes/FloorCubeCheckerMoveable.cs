@@ -47,10 +47,13 @@ namespace Qbism.Cubes
 
 				if (currentCube.FetchType() == CubeTypes.Boosting && currentCube != prevCube)
 				{
-					HandleBoostingIntoMoveable(turnAxis, posAhead, cubePos, prevCube);
+					HandleBoostingIntoMoveable(turnAxis, posAhead, cubePos, prevCube, cube);
 
 					if (prevCube.FetchType() == CubeTypes.Boosting && posAhead == pRef.cubePos.FetchGridPos())
+					{
 						pRef.playerMover.InitiateMoveFromOther(cube, side, turnAxis, posAhead);
+						cube.refs.boostJuicer.PlayPostBoostJuice();
+					}
 
 					currentCube.GetComponent<ICubeInfluencer>().PrepareActionForMoveable(side, turnAxis,
 						posAhead, cube.gameObject, originPos, prevCube);
@@ -63,7 +66,7 @@ namespace Qbism.Cubes
 
 				if (currentCube.FetchType() == CubeTypes.Turning)
 				{
-					HandleBoostingIntoMoveable(turnAxis, posAhead, cubePos, prevCube);
+					HandleBoostingIntoMoveable(turnAxis, posAhead, cubePos, prevCube, cube);
 
 					currentCube.GetComponent<ICubeInfluencer>().PrepareActionForMoveable(side, turnAxis,
 						posAhead, cube.gameObject, originPos, prevCube);
@@ -85,6 +88,8 @@ namespace Qbism.Cubes
 							pRef.playerMover.InitiateMoveFromOther(cube, side, turnAxis, posAhead);
 							cube.hasBumped = true;
 						}
+
+						cube.refs.boostJuicer.PlayPostBoostJuice();
 					}
 
 					cube.InitiateMove(side, turnAxis, posAhead, originPos);
@@ -94,13 +99,22 @@ namespace Qbism.Cubes
 					moveHandler.StopMovingMoveables(cubePos, cube, false);
 			}
 
-			else cube.InitiateLowering(cubePos);
+			else
+			{
+				//if (prevCube.type == CubeTypes.Boosting)
+				//	cube.InitiateLowering(cubePos, true);
+				cube.InitiateLowering(cubePos, false);
+			}
 		}
 
-		private void HandleBoostingIntoMoveable(Vector3 turnAxis, Vector2Int posAhead, Vector2Int cubePos, FloorCube prevCube)
+		private void HandleBoostingIntoMoveable(Vector3 turnAxis, Vector2Int posAhead, Vector2Int cubePos, 
+			FloorCube prevCube, MoveableCube cube)
 		{
 			if (prevCube.type == CubeTypes.Boosting && moveHandler.CheckMoveableCubeDicKey(posAhead))
+			{
 				moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos);
+				cube.refs.boostJuicer.PlayPostBoostJuice();
+			}
 		}
 
 		private IEnumerator HandleRemainOnBoost(FloorCube currentCube, Transform side, Vector3 turnAxis,
@@ -110,7 +124,10 @@ namespace Qbism.Cubes
 				yield return null;
 
 			if (posAhead == pRef.cubePos.FetchGridPos())
+			{
 				pRef.playerMover.InitiateMoveFromOther(cube, side, turnAxis, posAhead);
+				cube.refs.boostJuicer.PlayPostBoostJuice();
+			}
 
 			//TO DO: Add initiating moveable?
 

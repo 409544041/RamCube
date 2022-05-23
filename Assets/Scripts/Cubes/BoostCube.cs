@@ -121,6 +121,8 @@ namespace Qbism.Cubes
 			GameObject wallObject = null;
 			bool remainOnBoost = false;
 			Vector3 boostTarget = GetBoostTarget(boostMaskMoveable, out wallObject, out remainOnBoost);
+			if (!remainOnBoost) movRef.boostJuicer.PlayBoostJuice(refs.boostDirTrans.transform.forward);
+
 			while (movCube.isBoosting && !remainOnBoost)
 			{
 				cube.transform.position = Vector3.MoveTowards(cube.transform.position,
@@ -157,8 +159,8 @@ namespace Qbism.Cubes
 
 				//For this to work, wall or other blocker objects needs to be placed on 
 				//'the grid', just like cubes
-				float distance = Mathf.RoundToInt(Vector3.Distance(refs.boostRayOrigin.position, 
-					wallHit.point) - .5f);
+				float distance = Vector3.Distance(refs.boostRayOrigin.position, 
+					wallHit.point) - .5f;
 
 				// Probs only situation is when pushing mov directly onto boost
 				// and hitting player next to it again	
@@ -169,8 +171,8 @@ namespace Qbism.Cubes
 					return target;
 				}
 
-				target = refs.boostRayOrigin.position + 
-					(refs.boostDirTrans.transform.TransformDirection(Vector3.forward) * distance);
+				target = refs.boostRayOrigin.position + (refs.boostDirTrans.transform.
+					TransformDirection(Vector3.forward) * Mathf.RoundToInt(distance));
 				remainOnBoost = false;
 				return target;
 			}

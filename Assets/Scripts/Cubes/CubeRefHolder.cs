@@ -2,6 +2,7 @@ using MoreMountains.Feedbacks;
 using Pathfinding;
 using Qbism.General;
 using Qbism.MoveableCubes;
+using Qbism.PlayerCube;
 using Qbism.Rewind;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,6 +47,7 @@ namespace Qbism.Cubes
 		public RewindJuicer rewindJuicer;
 		public MMFeedbacks turnJuice;
 		public MMFeedbacks staticFaceShrinkJuice;
+		public PlayerCubeBoostJuicer boostJuicer;
 
 		//Cache
 		public GameplayCoreRefHolder gcRef { get; set; }
