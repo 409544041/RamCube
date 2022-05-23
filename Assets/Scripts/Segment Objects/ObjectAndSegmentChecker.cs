@@ -33,21 +33,19 @@ namespace Qbism.Objects
 
 			if (eSegment.f_Objects != null)
 			{
-				for (int i = 0; i < eSegment.f_Objects.Count; i++)
-				{
-					var obj = eSegment.f_Objects[i];
-					bool objFound, objReturned;
+				var obj1 = eSegment.f_Objects[0];
+				var obj2 = eSegment.f_Objects[1];
+				bool obj1Found, obj1Returned, obj2Found, obj2Returned;
 
-					FetchObjValues(obj.f_GameplayData, out objFound, out objReturned);
+				FetchObjValues(obj1.f_GameplayData, out obj1Found, out obj1Returned);
+				FetchObjValues(obj2.f_GameplayData, out obj2Found, out obj2Returned);
 
-					if (dialogueToPlay == null) dialogueToPlay = 
-							FetchCorrectDialogue(objFound, objReturned, obj, i);
-				}
+				if (dialogueToPlay == null) dialogueToPlay = 
+					FetchCorrectDialogue(obj1Found, obj1Returned, obj1, 
+					obj2Found, obj2Returned, obj2, eSegment);
 			}
 
 			//TO DO: change up fluff dialogue options based on progression
-			if (dialogueToPlay == null) dialogueToPlay =
-					(DialogueScripOb)eSegment.f_Dialogues.f_FluffDialogues[0].f_FluffDialogue;
 		}
 
 		public void StartDialogue()
@@ -56,33 +54,44 @@ namespace Qbism.Objects
 			{
 				segInFocus.dialogueStarter.StartDialogue(dialogueToPlay, null);
 
-				var objGameplayEntity = E_ObjectsGameplayData.FindEntity(entity =>
+				if (checkObjectReturned)
+				{
+					var objGameplayEntity = E_ObjectsGameplayData.FindEntity(entity =>
 					entity.f_Object == objToCheck);
 
-				if (checkObjectReturned) objGameplayEntity.f_ObjectReturned = true;
+					objGameplayEntity.f_ObjectReturned = true;
+				}
 			}
 		}
 
-		private DialogueScripOb FetchCorrectDialogue(bool found, bool returned, E_Objects eObj, int i)
+		private DialogueScripOb FetchCorrectDialogue(bool found1, bool returned1, E_Objects eObj1,
+			bool found2, bool returned2, E_Objects eObj2, M_Segments eSegment)
 		{
-			if (returned) return null;
+			var dialEntity = E_Dialogues.FindEntity(entity =>
+				entity.f_Segment == eSegment.Entity);
 
-			if (!found)
+			if (!found1)
+				return (DialogueScripOb)dialEntity.f_FluffDialogues[0].f_FluffDialogue;
+
+			else if (found1 && !returned1)
 			{
-				var dialogueEntity = E_QuestDialogues.FindEntity(entity =>
-						entity.f_ForObject == eObj);
-				objToCheck = eObj;
-				return (DialogueScripOb)dialogueEntity.f_QuestDialogue;
-			}
-			else if (found && !returned)
-			{
-				var dialogueEntity = E_ReturnDialogues.FindEntity(entity =>
-							entity.f_ForObject == eObj);
-				objToCheck = eObj;
+				objToCheck = eObj1;
 				checkObjectReturned = true;
-				return (DialogueScripOb)dialogueEntity.f_ReturnDialogue;
+				return (DialogueScripOb)dialEntity.f_ReturnDialogues[0].f_ReturnDialogue;
 			}
-			else return null;
+
+			else if (!found2)
+				return (DialogueScripOb)dialEntity.f_FluffDialogues[1].f_FluffDialogue;
+
+			else if (found2 && !returned2)
+			{
+				objToCheck = eObj2;
+				checkObjectReturned = true;
+				return (DialogueScripOb)dialEntity.f_ReturnDialogues[1].f_ReturnDialogue;
+
+			}
+
+			else return (DialogueScripOb)dialEntity.f_FluffDialogues[2].f_FluffDialogue;
 		}
 
 		private void FetchObjValues(E_ObjectsGameplayData obj, out bool objFound, out bool objReturned)

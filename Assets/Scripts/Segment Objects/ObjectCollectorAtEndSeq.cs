@@ -41,7 +41,7 @@ namespace Qbism.Objects
 
 			gcRef.objectNameText.text = m_Object.f_ObjectTitle;
 			gcRef.objectSubText.text = m_Object.f_ObjectSubText;
-			gcRef.objectOwnerText.text = "Belongs to " + m_Object.f_Owner.f_SegmentName;
+			gcRef.objectOwnerText.text = "Give to " + m_Object.f_Owner.f_SegmentName;
 
 			gcRef.objectCanvasGroup.alpha = 1;
 		}

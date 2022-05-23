@@ -73,6 +73,17 @@ public partial class M_FluffDialogues : BGEntityGo
 			_f_GameplayData[Entity.Index] = value;
 		}
 	}
+	public System.Boolean f_Played
+	{
+		get
+		{
+			return _f_Played[Entity.Index];
+		}
+		set
+		{
+			_f_Played[Entity.Index] = value;
+		}
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
 	{
@@ -107,6 +118,15 @@ public partial class M_FluffDialogues : BGEntityGo
 		{
 			if(__f_GameplayData==null || __f_GameplayData.IsDeleted) __f_GameplayData=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5366881371379425601UL,3453028088459494838UL));
 			return __f_GameplayData;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldBool __f_Played;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_Played
+	{
+		get
+		{
+			if(__f_Played==null || __f_Played.IsDeleted) __f_Played=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5547494182720534484UL,12540949173131056551UL));
+			return __f_Played;
 		}
 	}
 }
