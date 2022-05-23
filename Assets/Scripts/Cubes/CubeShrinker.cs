@@ -77,8 +77,11 @@ namespace Qbism.Cubes
 			refs.shrinkMesh.enabled = true;
 			refs.lineRender.enabled = false;
 
-			if (refs.staticCube != null && refs.floorCube.type == CubeTypes.Static)
-				refs.staticCube.SwitchFaces();
+			if (refs.effectorFace != null)
+			{
+				refs.effectorFace.enabled = false;
+				refs.effectorShrinkingFace.enabled = true;
+			}
 
 			// checking for floor bc it might be moveable that gets shrunk at end of level
 			if (refs.floorCube != null)

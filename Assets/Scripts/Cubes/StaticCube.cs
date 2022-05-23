@@ -17,12 +17,6 @@ namespace Qbism.Cubes
 			refs.staticFaceShrinkJuice.PlayFeedbacks();
 			refs.floorCube.type = CubeTypes.Shrinking;
 		}
-
-		public void SwitchFaces()
-		{
-			refs.staticFace.SetActive(false);
-			refs.staticShrinkingFace.SetActive(true);
-		}
 	}
 }
 

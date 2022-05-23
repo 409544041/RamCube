@@ -258,7 +258,8 @@ namespace Qbism.Rewind
 				cube.type == CubeTypes.Shrinking)
 			{
 				cube.type = CubeTypes.Static;
-				cubeRef.staticFace.SetActive(true);
+				cubeRef.effectorFace.gameObject.SetActive(true);
+				cubeRef.effectorFace.enabled = true;
 			}
 
 			isStaticList.RemoveAt(0);

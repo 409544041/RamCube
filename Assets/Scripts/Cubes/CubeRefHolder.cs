@@ -28,8 +28,8 @@ namespace Qbism.Cubes
 		public TurningCube turnCube;
 		public EditorFlipArrows arrowFlip;
 		public StaticCube staticCube;
-		public GameObject staticFace;
-		public GameObject staticShrinkingFace;
+		public Renderer effectorFace;
+		public Renderer effectorShrinkingFace;
 		[Header("Moveables")]
 		public MoveableCube movCube;
 		public MoveableEffector movEffector;
