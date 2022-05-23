@@ -15,6 +15,7 @@ namespace Qbism.PlayerCube
 		[Header ("Audio")]
 		[SerializeField] AudioClip loweringClip;
 		[SerializeField] float loweringVolume;
+		[SerializeField] Transform visualsTrans;
 		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
@@ -113,16 +114,22 @@ namespace Qbism.PlayerCube
 
 		private void CalculatePostBoostScaleMoveDir()
 		{
-			if (V3Equal(boostImpactDir, Vector3.forward))
+			if (V3Equal(boostImpactDir, visualsTrans.transform.forward))
 				SetBoostMoveValues(false, false, true, 1);
 
-			if (V3Equal(boostImpactDir, Vector3.back))
+			if (V3Equal(boostImpactDir, -visualsTrans.transform.forward))
 				SetBoostMoveValues(false, false, true, -1);
 
-			if (V3Equal(boostImpactDir, Vector3.right))
+			if (V3Equal(boostImpactDir, visualsTrans.transform.up))
+				SetBoostMoveValues(false, true, false, 1);
+
+			if (V3Equal(boostImpactDir, -visualsTrans.transform.up))
+				SetBoostMoveValues(false, true, false, -1);
+
+			if (V3Equal(boostImpactDir, visualsTrans.transform.right))
 				SetBoostMoveValues(true, false, false, 1);
 
-			if (V3Equal(boostImpactDir, Vector3.left))
+			if (V3Equal(boostImpactDir, -visualsTrans.transform.right))
 				SetBoostMoveValues(true, false, false, -1);
 		}
 
