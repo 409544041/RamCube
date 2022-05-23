@@ -56,7 +56,7 @@ namespace Qbism.PlayerCube
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
 		public event Action<Vector2Int, GameObject, Transform, Vector3, Vector2Int> onFloorCheck;
-		public event Action<Vector3, Quaternion, Vector3, Quaternion> onInitialRecord;
+		public event Action<Vector3, Quaternion, Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action onInitialFloorCubeRecord;
 		public event Action<bool> onSetLaserTriggers;
 
@@ -123,7 +123,8 @@ namespace Qbism.PlayerCube
 
 			if (initiatedByPlayer)
 			{
-				onInitialRecord(transform.position, transform.rotation, startScale, transform.rotation);
+				onInitialRecord(transform.position, transform.rotation, startScale, transform.rotation, 
+					startScale);
 				onInitialFloorCubeRecord();
 				moveHandler.InitialRecordMoveables();
 			} 

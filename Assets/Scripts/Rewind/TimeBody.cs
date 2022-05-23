@@ -56,10 +56,9 @@ namespace Qbism.Rewind
 				cubeRef.movCube.onUpdateOrderInTimebody += AddToMoveOrderList;
 		}
 
-		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale, Quaternion faceRot)
+		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale, Quaternion faceRot, Vector3 faceScale)
 		{
-			rewindList.Insert(0, new PointInTime(pos, rot, scale, faceRot));
-
+			rewindList.Insert(0, new PointInTime(pos, rot, scale, faceRot, faceScale));
 			if (cubeRef != null && cubeRef.floorCube != null)
 			{
 				var cubePos = cubeRef.cubePos.FetchGridPos();
@@ -147,8 +146,8 @@ namespace Qbism.Rewind
 			if (cubeRef != null && cubeRef.movCube != null)
 			{
 				ResetDocked(cubeRef.movCube, rewindList[0].position);
-			} 
-			
+			}
+
 			transform.position = rewindList[0].position;
 			transform.rotation = rewindList[0].rotation;
 			transform.localScale = rewindList[0].scale;
@@ -198,9 +197,16 @@ namespace Qbism.Rewind
 					cubeRef.movCube.UpdateCenterPosition();
 					ResetOutOfBounds(cubeRef.movCube);
 					movementOrderList.RemoveAt(0);
+					var rewPos = new Vector2Int(Mathf.RoundToInt(rewindList[0].position.x),
+						Mathf.RoundToInt(rewindList[0].position.z));
+					if (preRewPos != rewPos) cubeRef.rewindJuicer.StartPostRewindJuice();
+
 					if (cubeRef.movFaceMesh != null)
+					{
 						cubeRef.movFaceMesh.transform.rotation = rewindList[0].faceRot;
-					
+						cubeRef.movFaceMesh.transform.localScale = rewindList[0].faceScale;
+					}
+
 					if (cubeRef.floorCube == null)
 					{
 						moveHandler.RemoveFromMoveableDic(preRewPos);
@@ -271,7 +277,6 @@ namespace Qbism.Rewind
 				cubeRef.lineRender.enabled = false;
 				handler.movFloorCubeDic.Remove(cubePos);
 				moveHandler.moveableCubeDic.Add(rewPos, moveable);
-				cubeRef.rewindJuicer.StartPostRewindJuice();
 
 				if (cubeRef.movEffector != null)
 				{

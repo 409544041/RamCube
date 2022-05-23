@@ -35,7 +35,7 @@ namespace Qbism.Cubes
 			new Dictionary<Vector2Int, List<FloorCube>>();
 
 		//Actions, events, delegates etc
-		public event Action<CubeRefHolder, Vector3, Quaternion, Vector3, Quaternion> onInitialCubeRecording;
+		public event Action<CubeRefHolder, Vector3, Quaternion, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
 		private void Awake()
 		{
@@ -200,7 +200,8 @@ namespace Qbism.Cubes
 		private void TriggerRecord(CubeRefHolder cube)
 		{
 			onInitialCubeRecording(cube, cube.transform.position,
-				cube.transform.rotation, cube.transform.localScale, cube.transform.rotation);
+				cube.transform.rotation, cube.transform.localScale, cube.transform.rotation,
+				cube.transform.localScale);
 		}
 
 		public bool CheckFloorCubeDicKey(Vector2Int cubePos)

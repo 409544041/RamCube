@@ -23,7 +23,7 @@ namespace Qbism.MoveableCubes
 		[Header("Feedback")]
 		[SerializeField] AudioClip landClip = null;
 		public Vector3 moveScale = new Vector3(.8f, .8f, .8f);
-		[SerializeField] Vector3 dockedScale = new Vector3(.9f, .9f, .9f);
+		public Vector3 dockedScale = new Vector3(.9f, .9f, .9f);
 		public CubeRefHolder refs;
 
 		//States
@@ -32,7 +32,7 @@ namespace Qbism.MoveableCubes
 		public bool isOutOfBounds { get; set; } = false;
 		Quaternion resetRot;
 		public int orderOfMovement { get; set; } = -1;
-		public Vector3 faceScale;
+		Vector3 faceScale;
 
 		//Actions, events, delegates etc
 		public Func<Vector2Int, bool> onWallKeyCheck, onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;

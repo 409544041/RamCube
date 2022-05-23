@@ -328,8 +328,8 @@ MonoBehaviour:
   lowerStep: 2.5
   landClip: {fileID: 8300000, guid: 216733143506beb4aa2455d68078a4af, type: 3}
   moveScale: {x: 0.8, y: 0.8, z: 0.8}
+  dockedScale: {x: 0.9, y: 0.9, z: 0.9}
   refs: {fileID: 8619169692785287922}
-  faceScale: {x: 0, y: 0, z: 0}
 --- !u!114 &8650881215713484142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,8 +342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5516e84b9c2e1d4eae51d0e4a85f60c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 0
-  isMoveable: 1
+  pRef: {fileID: 0}
+  cRef: {fileID: 8619169692785287922}
 --- !u!114 &5508458773026103034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1181,6 +1181,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Post Rewind Juice
+      objectReference: {fileID: 0}
+    - target: {fileID: 7513540037562889285, guid: 2fb61297bbbe2044dbb237843ba9d99d,
+        type: 3}
+      propertyPath: RemapCurveOne
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7513540037562889285, guid: 2fb61297bbbe2044dbb237843ba9d99d,
         type: 3}
