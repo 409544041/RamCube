@@ -13,18 +13,27 @@ namespace Qbism.General
 
 		private void Start() 
 		{
+			var baseScale = Vector3.one;
+
 			if (refs.turnCube.isLeftTurning)
 			{
-				refs.mesh.transform.localScale = new Vector3 (Mathf.Abs(refs.mesh.transform.localScale.x) * -1,
-					refs.mesh.transform.localScale.y, refs.mesh.transform.localScale.z);
+				refs.effectorFace.transform.localScale = SetLocalScale(-1, baseScale);
+				refs.effectorShrinkingFace.transform.localScale = SetLocalScale(-1, baseScale);
 				refs.turnCube.turnAxis = Vector3.down;
 			}
 			else
 			{
-				refs.mesh.transform.localScale = new Vector3(Mathf.Abs(refs.mesh.transform.localScale.x),
-					refs.mesh.transform.localScale.y, refs.mesh.transform.localScale.z);
+				refs.effectorFace.transform.localScale = SetLocalScale(1, baseScale);
+				refs.effectorShrinkingFace.transform.localScale = SetLocalScale(1, baseScale);
 				refs.turnCube.turnAxis = Vector3.up;
 			} 
+		}
+
+		private Vector3 SetLocalScale(int i, Vector3 baseScale)
+		{
+			Vector3 newScale = new Vector3(Mathf.Abs(baseScale.x) * i,
+				baseScale.y, baseScale.z);
+			return newScale;
 		}
 	}
 }

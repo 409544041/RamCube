@@ -28,10 +28,13 @@ namespace Qbism.Environment
 		{
 			currentFollowerIndex = Random.Range(0, followers.Length);
 			currentFollower = followers[currentFollowerIndex];
-
-			int j = Random.Range(0, viableSplines.Length);
-			currentSpline = viableSplines[j];
-			currentFollower.spline = currentSpline;
+			
+			if (viableSplines.Length > 0)
+			{
+				int j = Random.Range(0, viableSplines.Length);
+				currentSpline = viableSplines[j];
+				currentFollower.spline = currentSpline;
+			}
 
 			VaryHeight();
 			TogglePlatform();
@@ -108,9 +111,17 @@ namespace Qbism.Environment
 		{
 			for (int i = 0; i < followers.Length; i++)
 			{
-				if (i == currentFollowerIndex) 
+				if (i == currentFollowerIndex)
+				{
 					followers[i].gameObject.SetActive(true);
-				else followers[i].gameObject.SetActive(false);
+
+					if (currentSpline != null) followers[i].enabled = true;
+				}
+				else
+				{
+					followers[i].gameObject.SetActive(false);
+					followers[i].enabled = false;
+				}
 			}
 		}
 
