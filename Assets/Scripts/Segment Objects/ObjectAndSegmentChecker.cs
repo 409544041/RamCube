@@ -40,10 +40,14 @@ namespace Qbism.Objects
 				FetchObjValues(obj1.f_GameplayData, out obj1Found, out obj1Returned);
 				FetchObjValues(obj2.f_GameplayData, out obj2Found, out obj2Returned);
 
-				if (dialogueToPlay == null) dialogueToPlay = 
-					FetchCorrectDialogue(obj1Found, obj1Returned, obj1, 
+				if (dialogueToPlay == null) dialogueToPlay =
+					FetchCorrectDialogue(obj1Found, obj1Returned, obj1,
 					obj2Found, obj2Returned, obj2, eSegment);
 			}
+
+			//TO DO: switch this up to a robuster system allowing for multiple fluff texts?
+			else if (eSegment.Entity == E_Segments.GetEntity(0))
+				dialogueToPlay = (DialogueScripOb)eSegment.f_Dialogues.f_FluffDialogues[0].f_FluffDialogue;
 
 			//TO DO: change up fluff dialogue options based on progression
 		}

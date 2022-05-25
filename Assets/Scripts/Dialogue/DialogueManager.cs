@@ -185,7 +185,9 @@ namespace Qbism.Dialogue
 
 				var checker = scRef.slRef.objSegChecker;
 				checker.DecideOnDialogueToPlay(checker.segInFocus);
-				checker.segInFocus.uiHandler.ToggleUIDependingOnObjectStatus();
+
+				if (checker.segInFocus.uiHandler != null)
+					checker.segInFocus.uiHandler.ToggleUIDependingOnObjectStatus();
 
 				var serpUIHandler = scRef.slRef.serpScreenUIHandler;
 				var objs = checker.segInFocus.mSegments.f_Objects;
