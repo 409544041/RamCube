@@ -130,7 +130,8 @@ namespace Qbism.Environment
 			if (varyHeight)
 			{
 				addHeight = 0 + Random.Range(0, maxAddHeight);
-				currentFollower.spline.transform.localPosition = new Vector3(0, addHeight, 0);
+				if (currentFollower.spline != null)
+					currentFollower.spline.transform.localPosition = new Vector3(0, addHeight, 0);
 			}
 		}
 	}
