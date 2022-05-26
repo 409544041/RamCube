@@ -39,11 +39,10 @@ namespace Qbism.General
 		public void HandleBackInput()
 		{
 			if (!allowInput) return;
-
-			if (persRef.switchBoard.serpentScreenConnected)
-			{
-				mlRef.serpentLoader.StartLoadingSerpentScreen();
-			}
+			if (!persRef.switchBoard.serpentScreenConnected) return;
+			if (!E_SegmentsGameplayData.GetEntity(0).f_Rescued) return;
+			
+			mlRef.serpentLoader.StartLoadingSerpentScreen();
 		}
 
 		public void HandleEscapeInput()
