@@ -164,7 +164,7 @@ namespace Qbism.Cubes
 					wallRef.wallJuicer.Burrow();
 					wallRef.col.enabled = false;
 
-					yield return new WaitForSeconds(wallRef.wallJuicer.burrowTime);
+					yield return new WaitForSeconds(wallRef.wallJuicer.burrowTime / 2);
 				}
 
 				yield return new WaitForSeconds(shrinkInterval);
@@ -208,6 +208,7 @@ namespace Qbism.Cubes
 		{
 			if (switchBoard.serpentConnected)
 			{
+				yield return new WaitForSeconds(.5f); //to show shapies dance a bit
 				ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
 				yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
 			} 
