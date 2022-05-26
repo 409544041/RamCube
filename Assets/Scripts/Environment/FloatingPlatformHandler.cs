@@ -1,4 +1,5 @@
 using Dreamteck.Splines;
+using MoreMountains.Feedbacks;
 using Qbism.General;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,9 +12,16 @@ namespace Qbism.Environment
 		//Config parameters
 		[SerializeField] bool respawn, varyHeight;
 		[SerializeField] Vector2 minMaxSpawnDelay;
+		[SerializeField] Vector2 minMaxRotDur;
 		[SerializeField] float maxAddHeight = 2;
 		[SerializeField] SplineComputer[] viableSplines;
 		[SerializeField] SplineFollower[] followers;
+		[SerializeField] Transform[] transToJuice;
+		[SerializeField] MMFeedbacks floatJuice;
+
+		//Cache
+		MMFeedbackRotation mmRot;
+		MMFeedbackPosition mmPos;
 
 		//States
 		float respawnTimer;
@@ -23,11 +31,20 @@ namespace Qbism.Environment
 		SplineFollower currentFollower;
 		int currentFollowerIndex;
 		float addHeight;
+		float rotDur;
+		int rotDir;
+
+		private void Awake()
+		{
+			mmRot = floatJuice.GetComponent<MMFeedbackRotation>();
+			mmPos = floatJuice.GetComponent<MMFeedbackPosition>();
+		}
 
 		private void Start()
 		{
 			currentFollowerIndex = Random.Range(0, followers.Length);
 			currentFollower = followers[currentFollowerIndex];
+			rotDur = Random.Range(minMaxRotDur.x, minMaxRotDur.y);
 			
 			if (viableSplines.Length > 0)
 			{
@@ -123,6 +140,21 @@ namespace Qbism.Environment
 					followers[i].enabled = false;
 				}
 			}
+
+			SetJuiceValues();
+			floatJuice.PlayFeedbacks();
+		}
+
+		private void SetJuiceValues()
+		{
+			mmPos.AnimatePositionTarget = transToJuice[currentFollowerIndex].gameObject;
+			mmRot.AnimateRotationTarget = transToJuice[currentFollowerIndex];
+			mmRot.AnimateRotationDuration = rotDur;
+
+			var rotDirs = new int[2] { -1, 1 };
+			var i = Random.Range(0, rotDirs.Length);
+			rotDir = rotDirs[i];
+			mmRot.RemapCurveOne *= rotDir;
 		}
 
 		private void VaryHeight()
