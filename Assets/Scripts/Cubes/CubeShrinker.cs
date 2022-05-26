@@ -10,7 +10,7 @@ namespace Qbism.Cubes
 	public class CubeShrinker : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks shrinkFeedback;
+		[SerializeField] MMFeedbacks shrinkFeedback, markShrinkFeedback;
 		[SerializeField] CubeRefHolder refs;
 		[SerializeField] Renderer wallMesh;
 
@@ -59,6 +59,14 @@ namespace Qbism.Cubes
 				StartCoroutine(ShrinkWalls());
 
 			else StartCoroutine(ShrinkFloorCubes()); 			
+		}
+
+		public void ShrinkGroundMarks()
+		{
+			if (markShrinkFeedback == null) return;
+			
+			markShrinkFeedback.Initialization();
+			markShrinkFeedback.PlayFeedbacks();
 		}
 
 		private IEnumerator ShrinkWalls ()
