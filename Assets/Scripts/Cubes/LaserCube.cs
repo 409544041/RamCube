@@ -111,6 +111,7 @@ namespace Qbism.Cubes
 			else if (!isClosed && !laserPause)
 			{
 				juicer.TriggerIdleJuice();
+				CastDottedLines(dist, distance);
 			}
 		}
 
@@ -120,6 +121,7 @@ namespace Qbism.Cubes
 			yield return new WaitForSeconds(idleLaserDelay);
 			juicer.TriggerIdleJuice();
 			laserPause = false;
+			CastDottedLines(dist, distance);
 		}
 
 		public void CloseEye() //Called from fart particle collision
@@ -152,7 +154,7 @@ namespace Qbism.Cubes
 			if (hits.Length <= 0) dist = distance + radius + .2f;
 			else dist = hits[0].distance + radius + .2f;
 
-			if (dist != currentLength)
+			if (dist != currentLength && !isClosed)
 			{
 				CastDottedLines(dist, distance);
 				juicer.AdjustBeamVisualLength(dist);
@@ -185,7 +187,6 @@ namespace Qbism.Cubes
 				Vector2Int roundedCheckPos = new Vector2Int
 					(Mathf.RoundToInt(checkPos.x), Mathf.RoundToInt(checkPos.z));
 
-				//checks if point has a cube
 				if (cubeHandler.CheckFloorCubeDicKey(roundedCheckPos))
 				{
 					var cube = cubeHandler.FetchCube(roundedCheckPos, true);
