@@ -13,7 +13,7 @@ namespace Qbism.SceneTransition
 		//Config parameters
 		public Image circle;
 		[SerializeField] float circleStartSize = 2500;
-		[SerializeField] float shrinkSpeed = 3000f;
+		[SerializeField] float transDur = 1;
 		[SerializeField] PersistentRefHolder persRef;
 
 		//Cache
@@ -47,14 +47,17 @@ namespace Qbism.SceneTransition
 
 		private IEnumerator AnimateTransition(int target)
 		{
+			var startSize = circle.rectTransform.sizeDelta;
 			var scaleTarget = circleStartSize * target;
+			var endSize = new Vector2(scaleTarget, scaleTarget);
+			float elapsedTime = 0;
 
 			while (!Mathf.Approximately(circle.rectTransform.sizeDelta.x, scaleTarget))
 			{
-				var size = Mathf.MoveTowards(circle.rectTransform.sizeDelta.x, scaleTarget,
-					shrinkSpeed * Time.deltaTime);
+				elapsedTime += Time.deltaTime;
+				var percentageComplete = elapsedTime / transDur;
 
-				circle.rectTransform.sizeDelta = new Vector2(size, size);
+				circle.rectTransform.sizeDelta = Vector2.Lerp(startSize, endSize, percentageComplete);
 
 				yield return null;
 			}
