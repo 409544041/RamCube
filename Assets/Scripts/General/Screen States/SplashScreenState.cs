@@ -12,6 +12,7 @@ namespace Qbism.General
 	{
 		//Config parameters
 		[SerializeField] SplashSceneLoading loader;
+		[SerializeField] FeatureSwitchBoard switchBoard;
 
 		//Cache
 		ScreenStateManager stateMngr;
@@ -29,7 +30,7 @@ namespace Qbism.General
 
 		public void HandleAnyInput()
 		{
-			if (!anyKeyPressed)
+			if (!switchBoard.isPublicDemo && !anyKeyPressed)
 			{
 				loader.StartSceneTransition();
 				anyKeyPressed = true;

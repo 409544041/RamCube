@@ -19,6 +19,7 @@ namespace Qbism.General
 		[SerializeField] Color textColor, selectedTextColor;
 		[SerializeField] MMFeedbacks popInJuice, popOutJuice;
 		[SerializeField] bool isSettingsOverlay;
+		[SerializeField] float selectedButtonSize = 1;
 		public GameplayCoreRefHolder gcRef;
 		public MapCoreRefHolder mcRef;
 		public SerpCoreRefHolder scRef;
@@ -93,7 +94,8 @@ namespace Qbism.General
 
 			if (selectedButtonHandler != prevButtonHandler)
 			{
-				selectedButtonHandler.SelectButton(selectedTextColor, this, screenStateMngr);
+				selectedButtonHandler.SelectButton(selectedTextColor, selectedButtonSize,
+					this, null, screenStateMngr);
 				if (prevButtonHandler != null) prevButtonHandler.DeselectButton(textColor);
 			}
 		}
@@ -119,7 +121,8 @@ namespace Qbism.General
 
 		public void SelectButton(int i)
 		{
-			buttonHandlers[i].SelectButton(selectedTextColor, this, screenStateMngr);
+			buttonHandlers[i].SelectButton(selectedTextColor, selectedButtonSize,
+				this, null, screenStateMngr);
 
 			for (int j = 0; j < buttonHandlers.Length; j++)
 			{

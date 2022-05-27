@@ -38,5 +38,10 @@ namespace Qbism.Saving
 		public GameplayCoreRefHolder gcRef { get; set; }
 		public GameLogicRefHolder glRef { get; set; }
 		public SerpCoreRefHolder scRef { get; set; }
+
+		private void Awake()
+		{
+			DontDestroyOnLoad(this.gameObject);
+		}
 	}
 }
