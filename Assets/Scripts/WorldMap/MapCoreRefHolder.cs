@@ -28,6 +28,7 @@ namespace Qbism.WorldMap
 		[Header("Map Canvas")]
 		public Canvas worldMapCanvas;
 		public CanvasGroup mapCanvasGroup;
+		public SerpScreenButtonToggler serpButtonToggler;
 		[Header("Pause Canvas")]
 		public OverlayMenuHandler pauseOverlayHandler;
 		[Header("Settings Canvas")]

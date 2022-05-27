@@ -74,6 +74,12 @@ namespace Qbism.WorldMap
 			
 			refs.pinRaiseJuicer.PlayRaiseJuice();
 			raising = true;
+			LevelPinRefHolder justCompletedPin = null;
+
+			foreach (var pin in originPins)
+			{
+				if (pin.pinPather.justCompleted) justCompletedPin = pin;
+			}
 
 			while (raising)
 			{
@@ -111,6 +117,9 @@ namespace Qbism.WorldMap
 				if (unlockPinAlreadyUnlocked && !locksLeft)
 					refs.pinPather.DrawNewPath(LineTypes.full, unlockPins[i].pathPoint);
 			}
+
+			if (justCompletedPin.m_pin.Entity == E_Pin.GetEntity(0))
+				refs.mcRef.serpButtonToggler.PopInButtonForFirstTime();
 		}
 	}
 }
