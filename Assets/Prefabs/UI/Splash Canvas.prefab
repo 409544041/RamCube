@@ -209,6 +209,7 @@ RectTransform:
   - {fileID: 472555271659453584}
   - {fileID: 2124209775541640734}
   - {fileID: 2686735955166499601}
+  - {fileID: 4124130088758768842}
   m_Father: {fileID: 622988989017847344}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -589,7 +590,7 @@ PrefabInstance:
     - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
         type: 3}
@@ -625,14 +626,35 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
-      objectReference: {fileID: 4895713922858619471}
+      objectReference: {fileID: 8954300843317041685}
     - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 4819230542487220776}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenLink
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Qbism.General.OpenExternalLink, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0433e636cdbe9649aef21699fe5e49a, type: 3}
+--- !u!1 &2572496095193184281 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3203031048869111432, guid: f0433e636cdbe9649aef21699fe5e49a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1134947055273402001}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2686735955166499601 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
@@ -645,12 +667,221 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1134947055273402001}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2572496095193184281}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4819230542487220776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2572496095193184281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4dcb66864bd5644b949f91262728555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  URL: https://www.billybumbum.com/newsletter-sign-up/
+--- !u!1001 &1419419207518206282
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2224691249680225899}
+    m_Modifications:
+    - target: {fileID: 1215191490643342911, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_text
+      value: twitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3203031048869111432, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_Name
+      value: Twitter Text Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265468621341887584, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_Name
+      value: Twitter Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 6933009352612380110}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 4895713922858619471}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3439820579401975346}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenLink
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Qbism.General.OpenExternalLink, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f0433e636cdbe9649aef21699fe5e49a, type: 3}
+--- !u!1 &4594157584513949634 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3203031048869111432, guid: f0433e636cdbe9649aef21699fe5e49a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1419419207518206282}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &4124130088758768842 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1419419207518206282}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8954300843317041685 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1419419207518206282}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594157584513949634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3439820579401975346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594157584513949634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4dcb66864bd5644b949f91262728555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  URL: https://twitter.com/Frambosa
 --- !u!1001 &3172727442971668752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -777,7 +1008,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
-      objectReference: {fileID: 6933009352612380110}
+      objectReference: {fileID: 8954300843317041685}
     - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
         type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
@@ -918,7 +1149,7 @@ PrefabInstance:
     - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
         type: 3}
@@ -959,9 +1190,30 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 5096081918933300651}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenLink
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Qbism.General.OpenExternalLink, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067876658785919839, guid: f0433e636cdbe9649aef21699fe5e49a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0433e636cdbe9649aef21699fe5e49a, type: 3}
+--- !u!1 &1981819153735742742 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3203031048869111432, guid: f0433e636cdbe9649aef21699fe5e49a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4031748343718220702}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2124209775541640734 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3064998925519441280, guid: f0433e636cdbe9649aef21699fe5e49a,
@@ -974,12 +1226,25 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 4031748343718220702}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1981819153735742742}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5096081918933300651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981819153735742742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4dcb66864bd5644b949f91262728555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  URL: https://store.steampowered.com/app/1752730/Billy_Bumbum_A_Cheeky_Puzzler/
 --- !u!1001 &7798369048721943392
 PrefabInstance:
   m_ObjectHideFlags: 0
