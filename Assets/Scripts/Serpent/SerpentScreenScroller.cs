@@ -81,6 +81,7 @@ namespace Qbism.Serpent
 			}
 
 			ActivateSegmentsUI();
+			scRef.persRef.progHandler.SaveProgData();
 			scRef.slRef.screenStateMngr.serpentScreenState.allowInput = true;
 		}
 
