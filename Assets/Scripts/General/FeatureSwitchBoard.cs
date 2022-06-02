@@ -26,6 +26,7 @@ namespace Qbism.General
 		public bool serpentScreenConnected;
 		[Header("Object Collection")]
 		public bool objectsConnected;
-
+		[Header("For Trailer")]
+		public bool allowHudToggle;
 	}
 }

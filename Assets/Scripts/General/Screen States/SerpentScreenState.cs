@@ -65,15 +65,17 @@ namespace Qbism.General
 
 		public void HandleDebugToggleHudInput()
 		{
-			if (stateMngr.scRef.serpScreenCanvasGroup.alpha == 1)
+			if (!scRef.persRef.switchBoard.allowHudToggle) return;
+
+			if (scRef.serpScreenCanvasGroup.alpha == 1)
 			{
-				stateMngr.scRef.serpScreenCanvasGroup.alpha = 0;
-				stateMngr.scRef.persRef.hudToggler.hudVisible = false;
+				scRef.serpScreenCanvasGroup.alpha = 0;
+				scRef.persRef.hudToggler.hudVisible = false;
 			}
 			else
 			{
-				stateMngr.scRef.serpScreenCanvasGroup.alpha = 1;
-				stateMngr.scRef.persRef.hudToggler.hudVisible = true;
+				scRef.serpScreenCanvasGroup.alpha = 1;
+				scRef.persRef.hudToggler.hudVisible = true;
 			}
 		}
 

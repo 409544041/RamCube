@@ -1,4 +1,5 @@
 using Qbism.Control;
+using Qbism.Saving;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,31 +10,37 @@ namespace Qbism.General
 	{
 		//Cache
 		ScreenStateManager stateMngr;
+		GameplayCoreRefHolder gcRef;
+		PersistentRefHolder persRef;
 
 		public void StateEnter(ScreenStateManager ssm)
 		{
 			if (stateMngr == null)
 			{
 				stateMngr = ssm;
+				gcRef = stateMngr.gcRef;
+				persRef = gcRef.persRef;
 			}
 		}
 
 		public void HandleBackInput()
 		{
-			stateMngr.gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
+			gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
 		}
 
 		public void HandleDebugToggleHudInput()
 		{
-			if (stateMngr.gcRef.gameplayCanvasGroup.alpha == 1)
+			if (!persRef.switchBoard.allowHudToggle) return;
+
+			if (gcRef.gameplayCanvasGroup.alpha == 1)
 			{
-				stateMngr.gcRef.gameplayCanvasGroup.alpha = 0;
-				stateMngr.gcRef.persRef.hudToggler.hudVisible = false;
+				gcRef.gameplayCanvasGroup.alpha = 0;
+				persRef.hudToggler.hudVisible = false;
 			}
 			else
 			{
-				stateMngr.gcRef.gameplayCanvasGroup.alpha = 1;
-				stateMngr.gcRef.persRef.hudToggler.hudVisible = true;
+				gcRef.gameplayCanvasGroup.alpha = 1;
+				persRef.hudToggler.hudVisible = true;
 			}
 		}
 
