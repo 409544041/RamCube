@@ -29,7 +29,7 @@ namespace Qbism.Dialogue
 		DialogueFocuser focuser; MMFeedbacks nextButtonJuice;
 		CanvasGroup dialogueCanvasGroup; TextMeshProUGUI charName; Camera cam; Canvas bgCanvas;
 		CanvasGroup bgCanvasGroup; TextMeshProUGUI dialogueText; TextAnimatorPlayer typeWriter;
-		MMFeedbacks textAppearJuice; ScreenStateManager screenStateMngr;
+		MMFeedbacks textAppearJuice; ScreenStateManager screenStateMngr; Camera gCam;
 
 		private void Awake()
 		{
@@ -38,7 +38,7 @@ namespace Qbism.Dialogue
 				focuser = gcRef.glRef.dialogueFocuser; nextButtonJuice = gcRef.dialogueNextButtonJuice; 
 				dialogueCanvasGroup = gcRef.dialogueCanvasGroup; charName = gcRef.characterNameText; 
 				cam = gcRef.cam; bgCanvas = gcRef.bgCanvas; bgCanvasGroup = gcRef.bgCanvasGroup; 
-				dialogueText = gcRef.dialogueText; typeWriter = gcRef.typeWriter;
+				dialogueText = gcRef.dialogueText; typeWriter = gcRef.typeWriter; gCam = gcRef.gausCam;
 				textAppearJuice = gcRef.textAppearJuice; screenStateMngr = gcRef.glRef.screenStateMngr;
 			}
 			else if (scRef != null)
@@ -46,7 +46,7 @@ namespace Qbism.Dialogue
 				focuser = scRef.slRef.dialogueFocuser; nextButtonJuice = scRef.dialogueNextButtonJuice; 
 				dialogueCanvasGroup = scRef.dialogueCanvasGroup; charName = scRef.characterNameText; 
 				cam = scRef.cam; bgCanvas = scRef.bgCanvas; bgCanvasGroup = scRef.bgCanvasGroup; 
-				dialogueText = scRef.dialogueText; typeWriter = scRef.typeWriter;
+				dialogueText = scRef.dialogueText; typeWriter = scRef.typeWriter; gCam = scRef.gausCam;
 				textAppearJuice = scRef.textAppearJuice; screenStateMngr = scRef.slRef.screenStateMngr;
 			}
 		}
@@ -141,6 +141,8 @@ namespace Qbism.Dialogue
 
 		private void SetupBackgroundCanvas()
 		{
+			if (scRef != null) scRef.bgSerpCanvas.worldCamera = gCam;
+			gCam.orthographicSize = cam.orthographicSize;
 			bgCanvas.transform.parent = cam.transform;
 			bgCanvas.transform.rotation = cam.transform.rotation;
 			bgCanvas.transform.localPosition = new Vector3(0, 0, 10);
@@ -176,6 +178,7 @@ namespace Qbism.Dialogue
 				GameObject.Destroy(heads[i]);
 			}
 
+			if (scRef != null) scRef.bgSerpCanvas.worldCamera = cam;
 			dialogueCanvasGroup.alpha = 0;
 			bgCanvasGroup.alpha = 0;
 

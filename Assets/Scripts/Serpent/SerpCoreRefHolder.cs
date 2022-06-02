@@ -22,6 +22,7 @@ namespace Qbism.Serpent
 		[Header("Canvas")]
 		public Canvas serpScreenCanvas;
 		public CanvasGroup serpScreenCanvasGroup;
+		public Canvas bgSerpCanvas;
 		public Image[] objSlotElements;
 		public TextMeshProUGUI namePlateText;
 		[Header("Dialogue Canvas")]
@@ -34,6 +35,7 @@ namespace Qbism.Serpent
 		public CanvasGroup bgCanvasGroup;
 		public TextAnimatorPlayer typeWriter;
 		public MMFeedbacks textAppearJuice;
+		public Camera gausCam;
 		[Header("Pause Canvas")]
 		public OverlayMenuHandler pauseOverlayHandler;
 		public CanvasGroup pauseOverlayCanvasGroup;
