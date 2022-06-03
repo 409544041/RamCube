@@ -71,6 +71,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public PlayerRefHolder pRef { get; private set; }
 	public LaserRefHolder[] laserRefs { get; private set; }
 	public SegmentRefHolder[] segRefs { get; private set; }
+	public WallRefHolder[] wallRefs { get; private set; }
 
 	private void Awake()
 	{
@@ -87,6 +88,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		GetSetPlayer(timeBodyList);
 		GetSetLasers();
 		GetSetSegments();
+		GetWallRefs();
 
 		walls = GameObject.FindGameObjectsWithTag("Wall");
 
@@ -176,6 +178,15 @@ public class GameplayCoreRefHolder : MonoBehaviour
 				swapper.progHandler = persRef.progHandler;
 				swapper.matHandler = persRef.varMatHandler;
 			}
+		}
+	}
+
+	private void GetWallRefs()
+	{
+		wallRefs = FindObjectsOfType<WallRefHolder>();
+		foreach (var wall in wallRefs)
+		{
+			wall.gcRef = this;
 		}
 	}
 }
