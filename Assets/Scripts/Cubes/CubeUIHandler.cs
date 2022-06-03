@@ -20,6 +20,7 @@ namespace Qbism.Cubes
 		float disToPlayer = 0;
 		bool hiddenForFinish = false;
 		public bool showCubeUI { get; set; } = false;
+		public bool debugShowCubeUI { get; set; } = true;
 
 		private void Awake() 
 		{
@@ -36,7 +37,7 @@ namespace Qbism.Cubes
 
 		private void Update()
 		{
-			if (showCubeUI) ShowUICheck();
+			if (showCubeUI && debugShowCubeUI) ShowUICheck();
 			if (finishCube.FetchFinishStatus() && !hiddenForFinish)	
 				HideUIForFinish();
 		}
@@ -78,7 +79,7 @@ namespace Qbism.Cubes
 			ShowOrHideUI(false);
 		}
 
-		private void ShowOrHideUI(bool value)
+		public void ShowOrHideUI(bool value)
 		{
 			refs.uiElement.SetActive(value);
 			refs.uiLineRender.enabled = value;

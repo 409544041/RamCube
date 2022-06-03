@@ -232,6 +232,22 @@ namespace Qbism.Cubes
 			else return movFloorCubeDic[cubePos];
 		}
 
+		public void ToggleCubeUI()
+		{
+			if (!gcRef.persRef.switchBoard.allowCubeUIToggle) return;
+
+			foreach (KeyValuePair<Vector2Int, FloorCube> pair in floorCubeDic)
+			{
+				var cubeRef = pair.Value.refs;
+				if (cubeRef != null && cubeRef.cubeUI != null)
+				{
+					if (cubeRef.cubeUI.debugShowCubeUI) cubeRef.cubeUI.ShowOrHideUI(false);
+					cubeRef.cubeUI.debugShowCubeUI = !cubeRef.cubeUI.debugShowCubeUI;
+				}
+					
+			}
+		}
+
 		private void OnDisable()
 		{
 			if (mover != null)

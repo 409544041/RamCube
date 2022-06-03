@@ -28,5 +28,6 @@ namespace Qbism.General
 		public bool objectsConnected;
 		[Header("For Trailer")]
 		public bool allowHudToggle;
+		public bool allowCubeUIToggle;
 	}
 }

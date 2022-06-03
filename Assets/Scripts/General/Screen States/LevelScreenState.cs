@@ -119,6 +119,11 @@ namespace Qbism.General
 			}
 		}
 
+		public void HandleDebugCompleteAllInput()
+		{
+			gcRef.glRef.cubeHandler.ToggleCubeUI();
+		}
+
 		public void StateExit()
 		{
 			foreach (var cubeRef in gcRef.cubeRefs)
@@ -155,9 +160,7 @@ namespace Qbism.General
 		public void HandleDebugDeleteProgressInput()
 		{
 		}
-		public void HandleDebugCompleteAllInput()
-		{
-		}
+
 		public void HandleAnyInput()
 		{ }
 	}
