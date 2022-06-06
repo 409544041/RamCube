@@ -39,11 +39,13 @@ namespace Qbism.Cubes
 		private void CheckFloorTypeForMoveable(Transform side, Vector3 turnAxis, Vector2Int posAhead,
 			MoveableCube cube, Vector2Int cubePos, Vector2Int originPos, Vector2Int prevPos)
 		{
+			FloorCube prevCube = cube.currentFloorCube;
+
 			if (handler.floorCubeDic.ContainsKey(cubePos)
 				|| handler.movFloorCubeDic.ContainsKey(cubePos))
 			{
-				FloorCube currentCube = handler.FetchCube(cubePos, true);
-				FloorCube prevCube = handler.FetchCube(prevPos, true);
+				cube.currentFloorCube = handler.FetchCube(cubePos, true);
+				var currentCube = cube.currentFloorCube;
 
 				if (currentCube.FetchType() == CubeTypes.Boosting && currentCube != prevCube)
 				{
@@ -101,9 +103,9 @@ namespace Qbism.Cubes
 
 			else
 			{
-				//if (prevCube.type == CubeTypes.Boosting)
-				//	cube.InitiateLowering(cubePos, true);
-				cube.InitiateLowering(cubePos, false);
+				if (prevCube.type == CubeTypes.Boosting)
+					cube.InitiateLowering(cubePos, true);
+				else cube.InitiateLowering(cubePos, false);
 			}
 		}
 

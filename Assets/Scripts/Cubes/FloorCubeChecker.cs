@@ -62,9 +62,7 @@ namespace Qbism.Cubes
 		private void CheckFloorType(Vector2Int cubePos, GameObject cube,
 			Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			FloorCube previousCube;
-
-			previousCube = currentCube;
+			FloorCube previousCube = currentCube;
 
 			if (previousCube.FetchType() == CubeTypes.Static)
 				previousCube.refs.staticCube.BecomeShrinkingCube();

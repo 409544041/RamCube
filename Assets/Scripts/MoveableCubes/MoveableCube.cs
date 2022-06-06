@@ -33,6 +33,7 @@ namespace Qbism.MoveableCubes
 		Quaternion resetRot;
 		public int orderOfMovement { get; set; } = -1;
 		Vector3 faceScale;
+		public FloorCube currentFloorCube { get; set; }
 
 		//Actions, events, delegates etc
 		public Func<Vector2Int, bool> onWallKeyCheck, onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;
@@ -56,6 +57,8 @@ namespace Qbism.MoveableCubes
 					new Vector3(faceScale.x * moveScale.x, faceScale.y, faceScale.z * moveScale.z);
 			}
 			resetRot = transform.rotation;
+			currentFloorCube = 
+				refs.gcRef.glRef.cubeHandler.FetchCube(refs.cubePos.FetchGridPos(), true); ;
 		}
 
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
