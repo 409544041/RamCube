@@ -30,6 +30,36 @@ Transform:
   m_Father: {fileID: 7232080737172288176}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4792504219839252491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9019321425586852237}
+  m_Layer: 0
+  m_Name: UI Ray Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9019321425586852237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4792504219839252491}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.95, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 621497533122257927}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &85459558685493643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37,10 +67,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 621497533122257927}
     m_Modifications:
+    - target: {fileID: 2893814966064770875, guid: 32187a0cc23f8c44e810448b2351ce28,
+        type: 3}
+      propertyPath: refs
+      value: 
+      objectReference: {fileID: 4191546278630998217}
+    - target: {fileID: 2893814966064770875, guid: 32187a0cc23f8c44e810448b2351ce28,
+        type: 3}
+      propertyPath: uiRayOrigin
+      value: 
+      objectReference: {fileID: 9019321425586852237}
     - target: {fileID: 3567006266810191283, guid: 32187a0cc23f8c44e810448b2351ce28,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3567006266810191283, guid: 32187a0cc23f8c44e810448b2351ce28,
         type: 3}
@@ -123,8 +163,25 @@ PrefabInstance:
       propertyPath: refs
       value: 
       objectReference: {fileID: 4191546278630998217}
+    - target: {fileID: 8315277979353129492, guid: 32187a0cc23f8c44e810448b2351ce28,
+        type: 3}
+      propertyPath: uiRayOrigin
+      value: 
+      objectReference: {fileID: 9019321425586852237}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32187a0cc23f8c44e810448b2351ce28, type: 3}
+--- !u!114 &2956464056248280752 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2893814966064770875, guid: 32187a0cc23f8c44e810448b2351ce28,
+    type: 3}
+  m_PrefabInstance: {fileID: 85459558685493643}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6922df92923e474bbcf91e171daa3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &9020910454581509680 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8943914970902198203, guid: 32187a0cc23f8c44e810448b2351ce28,
@@ -149,18 +206,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 85459558685493643}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8235483104842935199 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8315277979353129492, guid: 32187a0cc23f8c44e810448b2351ce28,
-    type: 3}
-  m_PrefabInstance: {fileID: 85459558685493643}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6922df92923e474bbcf91e171daa3cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!120 &5889387039320225954 stripped
 LineRenderer:
   m_CorrespondingSourceObject: {fileID: 5806498139089465641, guid: 32187a0cc23f8c44e810448b2351ce28,
@@ -279,7 +324,7 @@ PrefabInstance:
         type: 3}
       propertyPath: cubeUI
       value: 
-      objectReference: {fileID: 8235483104842935199}
+      objectReference: {fileID: 2956464056248280752}
     - target: {fileID: 8619169692785287922, guid: 5b5fa2872d1584e40a118c8292466417,
         type: 3}
       propertyPath: uiElement
@@ -420,7 +465,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8919bfa915fb37e448d1938bb25bd2c9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8919bfa915fb37e448d1938bb25bd2c9,
         type: 3}
