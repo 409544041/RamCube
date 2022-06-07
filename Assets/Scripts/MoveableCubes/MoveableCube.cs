@@ -131,6 +131,7 @@ namespace Qbism.MoveableCubes
 				{
 					refs.movEffector.UpdateFacePos();
 					refs.movEffector.ToggleEffectFace(true);
+					refs.cubeUI.UpdateUIPos();
 				}
 
 				refs.cubePos.RoundPosition();
@@ -138,6 +139,7 @@ namespace Qbism.MoveableCubes
 				var cubePos = refs.cubePos.FetchGridPos();
 				onStopMovingMoveable(cubePos, this, true);				
 				AddComponents(cubePos);
+				if (refs.cubeUI != null) refs.cubeUI.showCubeUI = true;
 			}
 		}
 
@@ -174,12 +176,14 @@ namespace Qbism.MoveableCubes
 			{
 				refs.movEffector.UpdateFacePos();
 				refs.movEffector.ToggleEffectFace(true);
+				refs.cubeUI.UpdateUIPos();
 			}
 
 			refs.cubePos.RoundPosition();
 			hasBumped = false;
 			onStopMovingMoveable(cubePos, this, true);
 			AddComponents(cubePos);
+			refs.cubeUI.showCubeUI = true;
 		}
 
 		private void AddComponents(Vector2Int cubePos)
@@ -214,7 +218,11 @@ namespace Qbism.MoveableCubes
 			refs.lineRender.transform.position = new Vector3 (transform.position.x, 
 				refs.lineRender.transform.position.y, transform.position.z);
 
-			if (refs.movEffector != null) refs.movEffector.UpdateFacePos();
+			if (refs.movEffector != null)
+			{
+				refs.movEffector.UpdateFacePos();
+				refs.cubeUI.UpdateUIPos();
+			}
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead,

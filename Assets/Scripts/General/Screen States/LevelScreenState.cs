@@ -27,8 +27,9 @@ namespace Qbism.General
 
 			foreach (var cubeRef in gcRef.cubeRefs)
 			{
-				var cubeUI = cubeRef.cubeUI;
-				if (cubeUI != null) cubeUI.showCubeUI = true;
+				var cubeUI = cubeRef.cubeUI; 
+				var floorCube = cubeRef.floorCube;
+				if (cubeUI != null && floorCube != null) cubeUI.showCubeUI = true;
 			}
 
 			glRef.levelTimer.StartCountingTimer();

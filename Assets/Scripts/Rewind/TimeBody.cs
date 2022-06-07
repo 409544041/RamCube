@@ -248,6 +248,8 @@ namespace Qbism.Rewind
 		{
 			cubeRef.cubeShrink.EnableMesh();
 			handler.FromShrunkToFloorDic(cubePos, cube);
+			if (cube.refs.movEffector != null) cube.refs.effectorShrinkingFace.transform.parent =
+				cube.refs.effectorFace.transform;
 		}
 
 		private void ResetStatic(FloorCube cube)
@@ -278,6 +280,7 @@ namespace Qbism.Rewind
 				cubeRef.lineRender.enabled = false;
 				handler.movFloorCubeDic.Remove(cubePos);
 				moveHandler.moveableCubeDic.Add(rewPos, moveable);
+				if (moveable.refs.cubeUI != null) moveable.refs.cubeUI.showCubeUI = false;
 
 				if (cubeRef.movEffector != null)
 				{

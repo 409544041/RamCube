@@ -90,8 +90,14 @@ namespace Qbism.Cubes
 			if (refs.turnCube != null)
 			{
 				if (refs.turnCube.isLeftTurning)
-					refs.uiElement.transform.localScale = new Vector3(-1, 1, 1);
+					refs.uiElement.transform.localScale = new Vector3(1, -1, 1);
 			}
+		}
+
+		public void UpdateUIPos()
+		{
+			transform.parent.position = refs.movCube.transform.position;
+			transform.parent.rotation = refs.effectorFace.transform.rotation;
 		}
 	}
 }

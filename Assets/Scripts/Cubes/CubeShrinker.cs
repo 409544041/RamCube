@@ -89,6 +89,8 @@ namespace Qbism.Cubes
 			{
 				refs.effectorFace.enabled = false;
 				refs.effectorShrinkingFace.enabled = true;
+				if (refs.movEffector != null) refs.effectorShrinkingFace.transform.parent =
+					refs.shrinkMesh.transform;
 			}
 
 			// checking for floor bc it might be moveable that gets shrunk at end of level
