@@ -281,6 +281,8 @@ namespace Qbism.Rewind
 				handler.movFloorCubeDic.Remove(cubePos);
 				moveHandler.moveableCubeDic.Add(rewPos, moveable);
 				if (moveable.refs.cubeUI != null) moveable.refs.cubeUI.showCubeUI = false;
+				moveable.refs.floorCompAdder.markOnGround.enabled = false;
+				moveable.refs.cubeShrink.ResetTransform();
 
 				if (cubeRef.movEffector != null)
 				{

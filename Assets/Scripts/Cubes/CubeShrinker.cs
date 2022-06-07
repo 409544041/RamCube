@@ -100,9 +100,7 @@ namespace Qbism.Cubes
 				handler.FromFloorToShrunkDic(cubePos, refs.floorCube);
 
 				//Makes sure all values are reset in case this is the second shrink
-				refs.shrinkMesh.transform.position = resetPos;
-				refs.shrinkMesh.transform.rotation = resetRot;
-				refs.shrinkMesh.transform.localScale = resetScale;
+				ResetTransform();
 			}
 
 			MMFeedbackPosition[] posFeedbacks =
@@ -129,6 +127,13 @@ namespace Qbism.Cubes
 			yield return new WaitForSeconds(totalFeedbackDur);
 
 			refs.shrinkMesh.enabled = false;
+		}
+
+		public void ResetTransform()
+		{
+			refs.shrinkMesh.transform.position = resetPos;
+			refs.shrinkMesh.transform.rotation = resetRot;
+			refs.shrinkMesh.transform.localScale = resetScale;
 		}
 
 		public void EnableMesh()
