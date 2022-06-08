@@ -32,8 +32,8 @@ namespace Qbism.General
 		public bool overlayActive { get; private set; }
 		public OverlayButtonHandler selectedButtonHandler { get; private set; }
 		OverlayButtonHandler prevButtonHandler;
-		public Slider musicSlider { get; private set; }  public Slider sfxSlider { get; private set; }
-
+		public Slider musicSlider { get; private set; } public Slider sfxSlider { get; private set; }
+		public OverlayButtonHandler displayButton { get; private set; } 
 		private void Awake()
 		{
 			if (gcRef != null)
@@ -59,22 +59,6 @@ namespace Qbism.General
 			SetButtonsInteractable(false);
 		}
 
-		private void LoadSettingsData()
-		{
-			if (isSettingsOverlay)
-			{
-				foreach (var buttonHandler in buttonHandlers)
-				{
-					if (buttonHandler.slider == null) continue;
-
-					if (buttonHandler.label == "musicVolume") musicSlider = buttonHandler.slider;
-					if (buttonHandler.label == "sfxVolume") sfxSlider = buttonHandler.slider;
-				}
-
-				persRef.settingsSaveLoad.AssignLoadedSettingsValues(musicSlider, sfxSlider);
-			}
-		}
-
 		private void Update()
 		{
 			overlayActive = canvasGroup.alpha == 1;
@@ -97,6 +81,24 @@ namespace Qbism.General
 				selectedButtonHandler.SelectButton(selectedTextColor, selectedButtonSize,
 					this, null, screenStateMngr);
 				if (prevButtonHandler != null) prevButtonHandler.DeselectButton(textColor);
+			}
+		}
+
+		private void LoadSettingsData()
+		{
+			if (isSettingsOverlay)
+			{
+				foreach (var buttonHandler in buttonHandlers)
+				{
+					if (buttonHandler.label == "display") displayButton = buttonHandler;
+
+					if (buttonHandler.slider == null) continue;
+					if (buttonHandler.label == "musicVolume") musicSlider = buttonHandler.slider;
+					if (buttonHandler.label == "sfxVolume") sfxSlider = buttonHandler.slider;
+				}
+
+				persRef.settingsSaveLoad.AssignLoadedSettingsValues(musicSlider, sfxSlider,
+					displayButton);
 			}
 		}
 

@@ -1,4 +1,5 @@
 using Qbism.Control;
+using Qbism.Settings;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,13 @@ namespace Qbism.General
 
 			menuHandler.SelectButton(0);
 			menuHandler.ShowOverlay();
+
+			foreach (var buttonHandler in menuHandler.buttonHandlers)
+			{
+				if (buttonHandler.label != "display") return;
+				var displaySwapper = buttonHandler.GetComponent<DisplaySwapper>();
+				displaySwapper.SetDisplayValueText();
+			}
 			//freeze rest of game?
 		}
 
@@ -47,7 +55,8 @@ namespace Qbism.General
 		{
 			menuHandler.InitiateHideOverlay();
 			stateMngr.persRef.settingsSaveLoad.SaveSettingsValues(menuHandler.musicSlider,
-				menuHandler.sfxSlider);
+				menuHandler.sfxSlider, menuHandler.displayButton);
+			stateMngr.persRef.progHandler.SaveProgData();
 		}
 
 		public void HandleActionInput()
