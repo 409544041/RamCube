@@ -1,4 +1,5 @@
 using Qbism.Control;
+using Qbism.General;
 using Qbism.SceneTransition;
 using Qbism.WorldMap;
 using System.Collections;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Qbism.General
+namespace Qbism.ScreenStateMachine
 {
 	public class SplashScreenState : MonoBehaviour, IScreenBaseState
 	{

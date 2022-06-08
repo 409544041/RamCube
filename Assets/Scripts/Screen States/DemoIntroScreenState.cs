@@ -1,12 +1,16 @@
 using Qbism.Control;
+using Qbism.Demo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.ScreenStateMachine
 {
-	public class DemoEndScreenState : MonoBehaviour, IScreenBaseState
+	public class DemoIntroScreenState : MonoBehaviour, IScreenBaseState
 	{
+		//Config parameters
+		[SerializeField] DemoScreenNavigator navigator;
+
 		//Cache
 		ScreenStateManager stateMngr;
 
@@ -20,6 +24,7 @@ namespace Qbism.General
 
 		public void HandleActionInput()
 		{
+			navigator.GoNext();
 		}
 
 		public void StateExit()

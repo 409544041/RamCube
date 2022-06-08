@@ -3,32 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.ScreenStateMachine
 {
-	public class LevelEndSeqState : MonoBehaviour, IScreenBaseState
+	public class DemoEndScreenState : MonoBehaviour, IScreenBaseState
 	{
 		//Cache
 		ScreenStateManager stateMngr;
-		GameplayCoreRefHolder gcRef;
 
 		public void StateEnter(ScreenStateManager ssm)
 		{
 			if (stateMngr == null)
 			{
 				stateMngr = ssm;
-				gcRef = stateMngr.gcRef;
 			}
+		}
 
-			gcRef.pRef.outroJuicer.EnableSwallowColl();
+		public void HandleActionInput()
+		{
 		}
 
 		public void StateExit()
 		{
 		}
 
-		public void HandleActionInput()
-		{
-		}
 		public void HandleAnyInput()
 		{
 		}

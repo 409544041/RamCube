@@ -1,38 +1,39 @@
 using Qbism.Control;
+using Qbism.Dialogue;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.ScreenStateMachine
 {
-	public class ObjectOverlayState : MonoBehaviour, IScreenBaseState
+	public class DialogueOverlayState : MonoBehaviour, IScreenBaseState
 	{
 		//Cache
 		ScreenStateManager stateMngr;
-		GameLogicRefHolder glRef;
+		DialogueManager dialogueMngr;
 
 		public void StateEnter(ScreenStateManager ssm)
 		{
 			if (stateMngr == null)
 			{
 				stateMngr = ssm;
-				glRef = stateMngr.gcRef.glRef;
+				if (stateMngr.gcRef != null) dialogueMngr = stateMngr.gcRef.glRef.dialogueManager;
+				if (stateMngr.scRef != null) dialogueMngr = stateMngr.scRef.slRef.dialogueManager;
 			}
-			//TO DO: activate object overlay ui
+
+			//TO DO: trigger dialogue UI and start convo
 		}
 
 		public void HandleActionInput()
 		{
-			glRef.mapLoader.StartLoadingWorldMap(true);
+			dialogueMngr.NextDialogueText();
 		}
 
 		public void StateExit()
 		{
+			//TO DO: exit dialogue UI
 		}
 
-		public void HandleAnyInput()
-		{
-		}
 		public void HandleDebugCompleteAllInput()
 		{
 		}
@@ -52,6 +53,9 @@ namespace Qbism.General
 		{
 		}
 		public void HandleEscapeInput()
+		{
+		}
+		public void HandleAnyInput()
 		{
 		}
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)

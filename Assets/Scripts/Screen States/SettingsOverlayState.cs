@@ -1,10 +1,11 @@
 using Qbism.Control;
+using Qbism.General;
 using Qbism.Settings;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.ScreenStateMachine
 {
 	public class SettingsOverlayState : MonoBehaviour, IScreenBaseState
 	{

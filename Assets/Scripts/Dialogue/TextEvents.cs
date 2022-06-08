@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-namespace Qbism.General
+namespace Qbism.Dialogue
 {
 	public class TextEvents : MonoBehaviour
 	{

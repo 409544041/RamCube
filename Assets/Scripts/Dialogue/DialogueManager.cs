@@ -6,7 +6,7 @@ using Qbism.Serpent;
 using MoreMountains.Feedbacks;
 using TMPro;
 using Febucci.UI;
-using Qbism.General;
+using Qbism.ScreenStateMachine;
 
 namespace Qbism.Dialogue
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.Rewind
 {
 	public class RewindJuicer : MonoBehaviour
 	{

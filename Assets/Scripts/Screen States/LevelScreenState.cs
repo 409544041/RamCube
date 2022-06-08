@@ -1,11 +1,12 @@
 using Qbism.Control;
+using Qbism.General;
 using Qbism.PlayerCube;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 
-namespace Qbism.General
+namespace Qbism.ScreenStateMachine
 {
 	public class LevelScreenState : MonoBehaviour, IScreenBaseState
 	{

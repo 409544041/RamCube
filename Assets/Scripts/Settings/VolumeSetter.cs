@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-namespace Qbism.General
+namespace Qbism.Settings
 {
 	public class VolumeSetter : MonoBehaviour
 	{

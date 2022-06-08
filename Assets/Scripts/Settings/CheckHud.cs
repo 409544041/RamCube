@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.Settings
 {
 	public class CheckHud : MonoBehaviour
 	{

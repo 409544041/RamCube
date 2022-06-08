@@ -1,30 +1,29 @@
 using Qbism.Control;
-using Qbism.Demo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.ScreenStateMachine
 {
-	public class DemoIntroScreenState : MonoBehaviour, IScreenBaseState
+	public class ObjectOverlayState : MonoBehaviour, IScreenBaseState
 	{
-		//Config parameters
-		[SerializeField] DemoScreenNavigator navigator;
-
 		//Cache
 		ScreenStateManager stateMngr;
+		GameLogicRefHolder glRef;
 
 		public void StateEnter(ScreenStateManager ssm)
 		{
 			if (stateMngr == null)
 			{
 				stateMngr = ssm;
+				glRef = stateMngr.gcRef.glRef;
 			}
+			//TO DO: activate object overlay ui
 		}
 
 		public void HandleActionInput()
 		{
-			navigator.GoNext();
+			glRef.mapLoader.StartLoadingWorldMap(true);
 		}
 
 		public void StateExit()
@@ -46,13 +45,13 @@ namespace Qbism.General
 		public void HandleDebugUnlockAllInput()
 		{
 		}
-		public void HandleEscapeInput()
-		{
-		}
 		public void HandleResetInput()
 		{
 		}
 		public void HandleRewindInput()
+		{
+		}
+		public void HandleEscapeInput()
 		{
 		}
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)

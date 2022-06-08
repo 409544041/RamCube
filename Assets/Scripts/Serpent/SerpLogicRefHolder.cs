@@ -1,8 +1,7 @@
-using Qbism.Control;
 using Qbism.Dialogue;
-using Qbism.General;
 using Qbism.Objects;
 using Qbism.SceneTransition;
+using Qbism.ScreenStateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

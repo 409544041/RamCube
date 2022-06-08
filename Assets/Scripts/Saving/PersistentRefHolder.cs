@@ -1,6 +1,7 @@
 using Qbism.General;
 using Qbism.SceneTransition;
 using Qbism.Serpent;
+using Qbism.Settings;
 using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;

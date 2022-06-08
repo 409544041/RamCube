@@ -1,39 +1,37 @@
 using Qbism.Control;
-using Qbism.Dialogue;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Qbism.General
+namespace Qbism.ScreenStateMachine
 {
-	public class DialogueOverlayState : MonoBehaviour, IScreenBaseState
+	public class LevelEndSeqState : MonoBehaviour, IScreenBaseState
 	{
 		//Cache
 		ScreenStateManager stateMngr;
-		DialogueManager dialogueMngr;
+		GameplayCoreRefHolder gcRef;
 
 		public void StateEnter(ScreenStateManager ssm)
 		{
 			if (stateMngr == null)
 			{
 				stateMngr = ssm;
-				if (stateMngr.gcRef != null) dialogueMngr = stateMngr.gcRef.glRef.dialogueManager;
-				if (stateMngr.scRef != null) dialogueMngr = stateMngr.scRef.slRef.dialogueManager;
+				gcRef = stateMngr.gcRef;
 			}
 
-			//TO DO: trigger dialogue UI and start convo
-		}
-
-		public void HandleActionInput()
-		{
-			dialogueMngr.NextDialogueText();
+			gcRef.pRef.outroJuicer.EnableSwallowColl();
 		}
 
 		public void StateExit()
 		{
-			//TO DO: exit dialogue UI
 		}
 
+		public void HandleActionInput()
+		{
+		}
+		public void HandleAnyInput()
+		{
+		}
 		public void HandleDebugCompleteAllInput()
 		{
 		}
@@ -46,16 +44,13 @@ namespace Qbism.General
 		public void HandleDebugUnlockAllInput()
 		{
 		}
+		public void HandleEscapeInput()
+		{
+		}
 		public void HandleResetInput()
 		{
 		}
 		public void HandleRewindInput()
-		{
-		}
-		public void HandleEscapeInput()
-		{
-		}
-		public void HandleAnyInput()
 		{
 		}
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
