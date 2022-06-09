@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7578344605544435802}
   - component: {fileID: 1480608582245449265}
   - component: {fileID: 8915169703561020159}
+  - component: {fileID: 4169547915554215338}
   m_Layer: 0
   m_Name: Dialogue BG Canvas
   m_TagString: Untagged
@@ -30,6 +31,7 @@ RectTransform:
   m_LocalRotation: {x: 0.23911765, y: -0.3696438, z: 0.09904577, w: 0.89239913}
   m_LocalPosition: {x: 0, y: 0, z: 11.863724}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 461698505738439710}
   - {fileID: 7223934514848501552}
@@ -55,11 +57,11 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 395471975
   m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &7578344605544435802
@@ -114,6 +116,24 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &4169547915554215338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4205359319006909248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863b1281e38c40f4aab5cc34f7d560ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 249747086854863445}
+  group: {fileID: 8915169703561020159}
+  gaussianCam: {fileID: 946126595102839929}
+  gcRef: {fileID: 0}
+  scRef: {fileID: 0}
+  mcRef: {fileID: 0}
 --- !u!1 &5982618054255183109
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +162,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4887891785939197224}
   m_RootOrder: 0
@@ -217,6 +238,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4887891785939197224}
   m_RootOrder: 1

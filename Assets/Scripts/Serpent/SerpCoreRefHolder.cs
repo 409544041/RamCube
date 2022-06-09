@@ -36,6 +36,7 @@ namespace Qbism.Serpent
 		public TextAnimatorPlayer typeWriter;
 		public MMFeedbacks textAppearJuice;
 		public Camera gausCam;
+		public GaussianCanvas gausCanvas;
 		[Header("Pause Canvas")]
 		public OverlayMenuHandler pauseOverlayHandler;
 		public CanvasGroup pauseOverlayCanvasGroup;

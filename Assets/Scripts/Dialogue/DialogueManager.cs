@@ -7,6 +7,7 @@ using MoreMountains.Feedbacks;
 using TMPro;
 using Febucci.UI;
 using Qbism.ScreenStateMachine;
+using Qbism.General;
 
 namespace Qbism.Dialogue
 {
@@ -29,7 +30,7 @@ namespace Qbism.Dialogue
 		DialogueFocuser focuser; MMFeedbacks nextButtonJuice;
 		CanvasGroup dialogueCanvasGroup; TextMeshProUGUI charName; Camera cam; Canvas bgCanvas;
 		CanvasGroup bgCanvasGroup; TextMeshProUGUI dialogueText; TextAnimatorPlayer typeWriter;
-		MMFeedbacks textAppearJuice; ScreenStateManager screenStateMngr; Camera gCam;
+		MMFeedbacks textAppearJuice; ScreenStateManager screenStateMngr; Camera gCam; GaussianCanvas gCanvas;
 
 		private void Awake()
 		{
@@ -40,6 +41,7 @@ namespace Qbism.Dialogue
 				cam = gcRef.cam; bgCanvas = gcRef.bgCanvas; bgCanvasGroup = gcRef.bgCanvasGroup; 
 				dialogueText = gcRef.dialogueText; typeWriter = gcRef.typeWriter; gCam = gcRef.gausCam;
 				textAppearJuice = gcRef.textAppearJuice; screenStateMngr = gcRef.glRef.screenStateMngr;
+				gCanvas = gcRef.gausCanvas;
 			}
 			else if (scRef != null)
 			{
@@ -48,6 +50,7 @@ namespace Qbism.Dialogue
 				cam = scRef.cam; bgCanvas = scRef.bgCanvas; bgCanvasGroup = scRef.bgCanvasGroup; 
 				dialogueText = scRef.dialogueText; typeWriter = scRef.typeWriter; gCam = scRef.gausCam;
 				textAppearJuice = scRef.textAppearJuice; screenStateMngr = scRef.slRef.screenStateMngr;
+				gCanvas = scRef.gausCanvas;
 			}
 		}
 
@@ -61,7 +64,7 @@ namespace Qbism.Dialogue
 			nextButtonJuice.Initialization();
 			dialogueIndex = 0;
 
-			SetupBackgroundCanvas();
+			gCanvas.SetUpGaussianCanvas();
 			dialogueCanvasGroup.alpha = 1;
 			if (scRef != null) scRef.slRef.serpScreenUIHandler.SetSerpScreenAlpha(0);
 
@@ -139,16 +142,6 @@ namespace Qbism.Dialogue
 			return head;
 		}
 
-		private void SetupBackgroundCanvas()
-		{
-			if (scRef != null) scRef.bgSerpCanvas.worldCamera = gCam;
-			gCam.orthographicSize = cam.orthographicSize;
-			bgCanvas.transform.parent = cam.transform;
-			bgCanvas.transform.rotation = cam.transform.rotation;
-			bgCanvas.transform.localPosition = new Vector3(0, 0, 10);
-			bgCanvasGroup.alpha = 1;
-		}
-
 		public void PulseNextButton()
 		{
 			nextButtonJuice.PlayFeedbacks();
@@ -178,9 +171,9 @@ namespace Qbism.Dialogue
 				GameObject.Destroy(heads[i]);
 			}
 
-			if (scRef != null) scRef.bgSerpCanvas.worldCamera = cam;
+			
 			dialogueCanvasGroup.alpha = 0;
-			bgCanvasGroup.alpha = 0;
+			gCanvas.TurnOffGaussianCanvas();
 
 			if (scRef != null)
 			{

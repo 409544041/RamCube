@@ -34,6 +34,7 @@ namespace Qbism.WorldMap
 		[Header("Settings Canvas")]
 		public OverlayMenuHandler settingsOverlayHandler;
 		public CanvasGroup settingsOverlayCanvasGroup;
+		public GaussianCanvas gausCanvas;
 		[Header("Music")]
 		public AudioSource musicSource;
 		public MusicFadeOut musicFader;

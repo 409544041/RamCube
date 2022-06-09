@@ -32,6 +32,7 @@ namespace Qbism.General
 		public bool overlayActive { get; private set; }
 		public OverlayButtonHandler selectedButtonHandler { get; private set; }
 		OverlayButtonHandler prevButtonHandler;
+		GaussianCanvas gausCanvas;
 		public Slider musicSlider { get; private set; } public Slider sfxSlider { get; private set; }
 		public OverlayButtonHandler displayButton { get; private set; } 
 		private void Awake()
@@ -39,17 +40,17 @@ namespace Qbism.General
 			if (gcRef != null)
 			{
 				screenStateMngr = gcRef.glRef.screenStateMngr;
-				persRef = gcRef.persRef;
+				persRef = gcRef.persRef; gausCanvas = gcRef.gausCanvas;
 			}
 			if (mcRef != null)
 			{
 				screenStateMngr = mcRef.mlRef.screenStateMngr;
-				persRef = mcRef.persRef;
+				persRef = mcRef.persRef; gausCanvas = mcRef.gausCanvas;
 			}
 			if (scRef != null)
 			{
 				screenStateMngr = scRef.slRef.screenStateMngr;
-				persRef = scRef.persRef;
+				persRef = scRef.persRef; gausCanvas = scRef.gausCanvas;
 			}
 
 			LoadSettingsData();
@@ -104,6 +105,7 @@ namespace Qbism.General
 
 		public void ShowOverlay()
 		{
+			gausCanvas.SetUpGaussianCanvas();
 			canvasGroup.alpha = 1;
 			popInJuice.PlayFeedbacks();
 
@@ -152,7 +154,7 @@ namespace Qbism.General
 			var dur = mmScale.FeedbackDuration;
 
 			SetButtonsInteractable(false);
-
+			gausCanvas.TurnOffGaussianCanvas();
 			popOutJuice.PlayFeedbacks();
 			yield return new WaitForSeconds(dur);
 			canvasGroup.alpha = 0;

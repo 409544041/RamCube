@@ -45,6 +45,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public TextAnimatorPlayer typeWriter;
 	public MMFeedbacks textAppearJuice;
 	public Camera gausCam;
+	public GaussianCanvas gausCanvas;
 	[Header("Object Canvas")]
 	public Canvas objectCanvas;
 	public CanvasGroup objectCanvasGroup;
