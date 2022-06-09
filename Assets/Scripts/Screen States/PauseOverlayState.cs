@@ -12,18 +12,34 @@ namespace Qbism.ScreenStateMachine
 		ScreenStateManager stateMngr;
 		OverlayMenuHandler menuHandler;
 
+		//States
+		CanvasGroup canvasToTurnOff;
+
 		public void StateEnter(ScreenStateManager ssm)
 		{
 			if (stateMngr == null)
 			{
 				stateMngr = ssm;
-				if (stateMngr.gcRef != null) menuHandler = stateMngr.gcRef.pauseOverlayHandler;
-				if (stateMngr.mcRef != null) menuHandler = stateMngr.mcRef.pauseOverlayHandler;
-				if (stateMngr.scRef != null) menuHandler = stateMngr.scRef.pauseOverlayHandler;
+				if (stateMngr.gcRef != null)
+				{
+					menuHandler = stateMngr.gcRef.pauseOverlayHandler;
+					canvasToTurnOff = stateMngr.gcRef.gameplayCanvasGroup;
+				}
+				if (stateMngr.mcRef != null)
+				{
+					menuHandler = stateMngr.mcRef.pauseOverlayHandler;
+					canvasToTurnOff = stateMngr.mcRef.mapCanvasGroup;
+				}
+				if (stateMngr.scRef != null)
+				{
+					menuHandler = stateMngr.scRef.pauseOverlayHandler;
+					canvasToTurnOff = stateMngr.scRef.serpScreenCanvasGroup;
+				}
 			}
 
 			SelectCorrectButton();
 			menuHandler.ShowOverlay();
+			canvasToTurnOff.alpha = 0;
 			//freeze rest of game?
 		}
 
@@ -53,6 +69,8 @@ namespace Qbism.ScreenStateMachine
 			}
 			if (stateMngr.scRef != null) stateMngr.SwitchState(stateMngr.serpentScreenState,
 				ScreenStates.serpentScreenState);
+
+			canvasToTurnOff.alpha = 1;
 		}
 
 		public void StateExit()
