@@ -9,40 +9,45 @@ namespace Qbism.Settings
 	public class DisplaySwapper : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] OverlayButtonHandler buttonHandler;
-		[SerializeField] string[] valueTexts;
+		[SerializeField] ButtonScroller scroller;
 
 		//States
 		public DisplayTypes currentDisplay { get; set; }
 
-		public void SetDisplayValueText()
+		private void OnEnable()
 		{
-			if (Screen.fullScreenMode == FullScreenMode.Windowed)
-			{
-				buttonHandler.valueText.text = valueTexts[0];
-				currentDisplay = DisplayTypes.windowed;
-			}
-			else if (Screen.fullScreenMode == FullScreenMode.ExclusiveFullScreen)
-			{
-				buttonHandler.valueText.text = valueTexts[1];
-				currentDisplay = DisplayTypes.full;
-			}
+			if (scroller.buttonHandler.label == "display")
+				scroller.onScroll += HandleScroll;
 		}
 
-		public void SwapDisplay() //Called from button event
+		public void HandleScroll(string valueText)
 		{
 			if (currentDisplay == DisplayTypes.full)
-			{
-				buttonHandler.valueText.text = valueTexts[0];
-				currentDisplay = DisplayTypes.windowed;
-			}
+				SetValues(DisplayTypes.windowed);
 			else if (currentDisplay == DisplayTypes.windowed)
-			{
-				buttonHandler.valueText.text = valueTexts[1];
-				currentDisplay = DisplayTypes.full;
-			}
+				SetValues(DisplayTypes.full);
 
 			SetDisplay();
+		}
+
+		public void SetInitialValues()
+		{
+			if (Screen.fullScreenMode == FullScreenMode.Windowed)
+				SetValues(DisplayTypes.windowed);
+			else if (Screen.fullScreenMode == FullScreenMode.ExclusiveFullScreen)
+				SetValues(DisplayTypes.full);
+		}
+
+		private void SetValues(DisplayTypes displayType)
+		{
+			for (int i = 0; i < scroller.valueTexts.Length; i++)
+			{
+				if (scroller.valueTexts[i] != displayType.ToString()) continue;
+
+				scroller.currentValueText = scroller.valueTexts[i];
+				scroller.currentValueIndex = i;
+				currentDisplay = displayType;
+			}
 		}
 
 		private void SetDisplay()
@@ -55,6 +60,12 @@ namespace Qbism.Settings
 			else if (currentDisplay == DisplayTypes.windowed &&
 				Screen.fullScreenMode != FullScreenMode.Windowed)
 				Screen.SetResolution(1366, 768, false);
+		}
+
+		private void OnDisable()
+		{
+			if (scroller.buttonHandler.label == "display")
+				scroller.onScroll -= HandleScroll;
 		}
 	}
 }

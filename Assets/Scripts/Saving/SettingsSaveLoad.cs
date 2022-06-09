@@ -47,8 +47,8 @@ namespace Qbism.Saving
 			audioMixer.SetFloat("sfxVolume", Mathf.Log10(settingsData.sfxSliderValue) * 20);
 
 			displayButton.valueText.text = settingsData.display;
-			DisplayTypes displayEnum = (DisplayTypes)System.Enum.Parse(typeof(DisplayTypes),
-				settingsData.display);
+			DisplayTypes displayEnum = 
+				(DisplayTypes)System.Enum.Parse(typeof(DisplayTypes), settingsData.display);
 			displayButton.GetComponent<DisplaySwapper>().currentDisplay = displayEnum;
 		}
 

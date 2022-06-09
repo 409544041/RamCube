@@ -30,7 +30,7 @@ namespace Qbism.ScreenStateMachine
 			{
 				if (buttonHandler.label != "display") return;
 				var displaySwapper = buttonHandler.GetComponent<DisplaySwapper>();
-				displaySwapper.SetDisplayValueText();
+				displaySwapper.SetInitialValues();
 			}
 			//freeze rest of game?
 		}
@@ -45,10 +45,13 @@ namespace Qbism.ScreenStateMachine
 			if (stickValue.x > .5)
 			{
 				menuHandler.selectedButtonHandler.SlideSlider(1);
+				menuHandler.selectedButtonHandler.ScrollButton(1);
 			}
 			else if (stickValue.x < -.5)
 			{
 				menuHandler.selectedButtonHandler.SlideSlider(-1);
+				menuHandler.selectedButtonHandler.ScrollButton(-1);
+
 			}
 		}
 

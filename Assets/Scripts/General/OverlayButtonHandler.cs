@@ -17,6 +17,7 @@ namespace Qbism.General
 		public TextMeshProUGUI buttonText, valueText;
 		public Button button;
 		public Slider slider;
+		[SerializeField] ButtonScroller scroller;
 		[SerializeField] float sliderJump = .1f;
 		[SerializeField] Image[] arrows;
 		public string label;
@@ -87,6 +88,12 @@ namespace Qbism.General
 
 			if (slider.value < slider.minValue) slider.value = slider.minValue;
 			if (slider.value > slider.maxValue) slider.value = slider.maxValue;
+		}
+
+		public void ScrollButton(int scrollValue)
+		{
+			if (scroller == null) return;
+			scroller.Scroll(scrollValue);
 		}
 
 		public void PressResumeButton() //Called from button event
