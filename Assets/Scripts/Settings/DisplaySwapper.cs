@@ -46,8 +46,9 @@ namespace Qbism.Settings
 
 				scroller.currentValueText = scroller.valueTexts[i];
 				scroller.currentValueIndex = i;
-				currentDisplay = displayType;
 			}
+
+			currentDisplay = displayType;
 		}
 
 		private void SetDisplay()
