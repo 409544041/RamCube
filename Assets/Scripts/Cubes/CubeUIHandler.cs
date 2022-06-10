@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
 using UnityEngine;
 
@@ -10,33 +12,44 @@ namespace Qbism.Cubes
 		//Config parameters
 		[SerializeField] LayerMask lineLayers;
 		[SerializeField] float triggerDis = 0.3f;
+		[SerializeField] LayerMask lineRayLayers;
+		[SerializeField] Transform uiRayOrigin;
+		[SerializeField] float uiRayDist = 3;
+		[SerializeField] float elevatedLinePadding = 40;
 		[SerializeField] CubeRefHolder refs;
 
 		//Cache
+		PlayerRefHolder pRef;
 		PlayerCubeMover mover;
 		FinishCube finishCube;
+		MoveableCubeHandler movCubeHandler;
 
 		//States
 		float disToPlayer = 0;
 		bool hiddenForFinish = false;
 		public bool showCubeUI { get; set; } = false;
+		public bool debugShowCubeUI { get; set; } = true;
+		Vector3 lineTopPos;
 
 		private void Awake() 
 		{
-			mover = refs.gcRef.pRef.playerMover;
+			pRef = refs.gcRef.pRef;
+			mover = pRef.playerMover;
 			finishCube = refs.gcRef.finishRef.finishCube;
+			movCubeHandler = refs.gcRef.glRef.movCubeHandler;
+			var uiPos = refs.uiElement.transform.localPosition;
+			lineTopPos = new Vector3(uiPos.x, uiPos.y, uiPos.z + 10);
 		}
 
 		private void Start()
 		{
 			CheckForMirror();
-
-			refs.uiLineRender.SetPosition(1, refs.uiElement.transform.localPosition);
+			refs.uiLineRender.SetPosition(1, lineTopPos);
 		}
 
 		private void Update()
 		{
-			if (showCubeUI) ShowUICheck();
+			if (showCubeUI && debugShowCubeUI) ShowUICheck();
 			if (finishCube.FetchFinishStatus() && !hiddenForFinish)	
 				HideUIForFinish();
 		}
@@ -46,13 +59,14 @@ namespace Qbism.Cubes
 			disToPlayer = Vector3.Distance
 				(refs.floorCube.transform.position, mover.transform.position);
 
+			AdjustLineRenderLength();
+
 			//The last part is to avoid bug when static cube becomes floor cube
-			if (mover.isMoving || mover.isBoosting || mover.isTurning ||
-				disToPlayer < triggerDis || refs.floorCube.type == CubeTypes.Shrinking) 
+			if (mover.isMoving || disToPlayer < triggerDis || refs.floorCube.type == CubeTypes.Shrinking)
 			{
 				ShowOrHideUI(false);
 				return;
-			} 
+			}
 
 			foreach (Transform point in refs.uiLineTargets)
 			{
@@ -69,8 +83,39 @@ namespace Qbism.Cubes
 				else
 				{
 					ShowOrHideUI(false);
-				} 
+				}
 			}
+		}
+
+		private void AdjustLineRenderLength()
+		{
+			RaycastHit[] hits = SortedRayCasts();
+			if (hits.Length > 0)
+			{
+				var distToRayOrigin = Vector3.Distance(this.transform.position, 
+					uiRayOrigin.position);
+				var newDist = distToRayOrigin - hits[0].distance;
+				refs.uiLineRender.SetPosition(0, new Vector3(0, 0, (newDist * -100) + 
+					elevatedLinePadding));
+			}
+			else refs.uiLineRender.SetPosition(0, Vector3.zero);
+		}
+
+		private RaycastHit[] SortedRayCasts()
+		{
+			RaycastHit[] hits = Physics.RaycastAll(uiRayOrigin.position, Vector3.down, uiRayDist, 
+				lineRayLayers, QueryTriggerInteraction.Ignore);
+
+			float[] hitDistances = new float[hits.Length];
+
+			for (int hit = 0; hit < hitDistances.Length; hit++)
+			{
+				hitDistances[hit] = hits[hit].distance;
+			}
+
+			Array.Sort(hitDistances, hits);
+
+			return hits;
 		}
 
 		private void HideUIForFinish()
@@ -79,7 +124,7 @@ namespace Qbism.Cubes
 			ShowOrHideUI(false);
 		}
 
-		private void ShowOrHideUI(bool value)
+		public void ShowOrHideUI(bool value)
 		{
 			refs.uiElement.SetActive(value);
 			refs.uiLineRender.enabled = value;
@@ -90,8 +135,16 @@ namespace Qbism.Cubes
 			if (refs.turnCube != null)
 			{
 				if (refs.turnCube.isLeftTurning)
-					refs.uiElement.transform.localScale = new Vector3(-1, 1, 1);
+					refs.uiElement.transform.localScale = new Vector3(1, -1, 1);
 			}
+		}
+
+		public void UpdateUIPos()
+		{
+			transform.position = refs.movCube.transform.position;
+			transform.rotation = refs.effectorFace.transform.rotation;
+			uiRayOrigin.transform.position = new Vector3(transform.parent.position.x,
+				transform.parent.position.y + 2.95f, transform.parent.position.z);
 		}
 	}
 }

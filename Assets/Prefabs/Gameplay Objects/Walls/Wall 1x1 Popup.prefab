@@ -244,7 +244,6 @@ MonoBehaviour:
   popUpWall: {fileID: 4812613619775896406}
   wallJuicer: {fileID: 1920451314068686181}
   expressHandler: {fileID: 610684731719733337}
-  nmCutter: {fileID: 0}
 --- !u!65 &1329861834296670582
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -296,7 +295,6 @@ MonoBehaviour:
   meshVarietySO: {fileID: 0}
   vignetteSO: {fileID: 0}
   recalculate: 0
-  checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 0
 --- !u!114 &1920451314068686181
@@ -332,8 +330,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expressionsSO: {fileID: 11400000, guid: 2259c97855d9668478ca3450277442cf, type: 2}
   situationsExprsSO: {fileID: 0}
-  isPlayer: 0
-  isBillySegment: 0
   hasBrows: 0
   hasMouth: 1
   minMaxExpressionTime: {x: 0, y: 0}
@@ -343,6 +339,8 @@ MonoBehaviour:
   eyesAnim: {fileID: 1508276965208595888}
   mouthAnim: {fileID: 6528402987773381010}
   faceJuice: {fileID: 0}
+  segRef: {fileID: 0}
+  pRef: {fileID: 0}
 --- !u!1 &1633505259693551104
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +383,8 @@ AudioSource:
   m_GameObject: {fileID: 1633505259693551104}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7889780642528997429, guid: d8b69ae9391253847bfe5b88f7d4b409,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.5

@@ -63,17 +63,6 @@ public partial class M_Dialogues : BGEntityGo
 			return _f_RescueDialogue[Entity.Index];
 		}
 	}
-	public List<E_QuestDialogues> f_QuestDialogues
-	{
-		get
-		{
-			var val = _f_QuestDialogues[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___QuestDialogues = new List<E_QuestDialogues>();
-			for (var i = 0; i < val.Count; i++) ___QuestDialogues.Add((E_QuestDialogues) val[i]);
-			return ___QuestDialogues;
-		}
-	}
 	public List<E_ReturnDialogues> f_ReturnDialogues
 	{
 		get
@@ -94,6 +83,17 @@ public partial class M_Dialogues : BGEntityGo
 			var ___FluffDialogues = new List<E_FluffDialogues>();
 			for (var i = 0; i < val.Count; i++) ___FluffDialogues.Add((E_FluffDialogues) val[i]);
 			return ___FluffDialogues;
+		}
+	}
+	public List<E_ShortDialogues> f_ShortDialogues
+	{
+		get
+		{
+			var val = _f_ShortDialogues[Entity.Index];
+			if(val==null || val.Count==0) return null;
+			var ___ShortDialogues = new List<E_ShortDialogues>();
+			for (var i = 0; i < val.Count; i++) ___ShortDialogues.Add((E_ShortDialogues) val[i]);
+			return ___ShortDialogues;
 		}
 	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
@@ -123,15 +123,6 @@ public partial class M_Dialogues : BGEntityGo
 			return __f_RescueDialogue;
 		}
 	}
-	private static BansheeGz.BGDatabase.BGFieldNested __f_QuestDialogues;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_QuestDialogues
-	{
-		get
-		{
-			if(__f_QuestDialogues==null || __f_QuestDialogues.IsDeleted) __f_QuestDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5372269783875973831UL,3537631246474358957UL));
-			return __f_QuestDialogues;
-		}
-	}
 	private static BansheeGz.BGDatabase.BGFieldNested __f_ReturnDialogues;
 	public static BansheeGz.BGDatabase.BGFieldNested _f_ReturnDialogues
 	{
@@ -148,6 +139,15 @@ public partial class M_Dialogues : BGEntityGo
 		{
 			if(__f_FluffDialogues==null || __f_FluffDialogues.IsDeleted) __f_FluffDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5478707207032614291UL,13273353822579157894UL));
 			return __f_FluffDialogues;
+		}
+	}
+	private static BansheeGz.BGDatabase.BGFieldNested __f_ShortDialogues;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_ShortDialogues
+	{
+		get
+		{
+			if(__f_ShortDialogues==null || __f_ShortDialogues.IsDeleted) __f_ShortDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5124572410662557455UL,6331992675011935619UL));
+			return __f_ShortDialogues;
 		}
 	}
 	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();

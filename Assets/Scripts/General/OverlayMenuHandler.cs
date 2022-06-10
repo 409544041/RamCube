@@ -1,6 +1,6 @@
 using MoreMountains.Feedbacks;
 using Qbism.Saving;
-using Qbism.SceneTransition;
+using Qbism.ScreenStateMachine;
 using Qbism.Serpent;
 using Qbism.WorldMap;
 using System.Collections;
@@ -19,6 +19,7 @@ namespace Qbism.General
 		[SerializeField] Color textColor, selectedTextColor;
 		[SerializeField] MMFeedbacks popInJuice, popOutJuice;
 		[SerializeField] bool isSettingsOverlay;
+		[SerializeField] float selectedButtonSize = 1;
 		public GameplayCoreRefHolder gcRef;
 		public MapCoreRefHolder mcRef;
 		public SerpCoreRefHolder scRef;
@@ -31,24 +32,25 @@ namespace Qbism.General
 		public bool overlayActive { get; private set; }
 		public OverlayButtonHandler selectedButtonHandler { get; private set; }
 		OverlayButtonHandler prevButtonHandler;
-		public Slider musicSlider { get; private set; }  public Slider sfxSlider { get; private set; }
-
+		GaussianCanvas gausCanvas;
+		public Slider musicSlider { get; private set; } public Slider sfxSlider { get; private set; }
+		public OverlayButtonHandler displayButton { get; private set; } 
 		private void Awake()
 		{
 			if (gcRef != null)
 			{
 				screenStateMngr = gcRef.glRef.screenStateMngr;
-				persRef = gcRef.persRef;
+				persRef = gcRef.persRef; gausCanvas = gcRef.gausCanvas;
 			}
 			if (mcRef != null)
 			{
 				screenStateMngr = mcRef.mlRef.screenStateMngr;
-				persRef = mcRef.persRef;
+				persRef = mcRef.persRef; gausCanvas = mcRef.gausCanvas;
 			}
 			if (scRef != null)
 			{
 				screenStateMngr = scRef.slRef.screenStateMngr;
-				persRef = scRef.persRef;
+				persRef = scRef.persRef; gausCanvas = scRef.gausCanvas;
 			}
 
 			LoadSettingsData();
@@ -56,22 +58,6 @@ namespace Qbism.General
 			canvasGroup.alpha = 0;
 
 			SetButtonsInteractable(false);
-		}
-
-		private void LoadSettingsData()
-		{
-			if (isSettingsOverlay)
-			{
-				foreach (var buttonHandler in buttonHandlers)
-				{
-					if (buttonHandler.slider == null) continue;
-
-					if (buttonHandler.label == "musicVolume") musicSlider = buttonHandler.slider;
-					if (buttonHandler.label == "sfxVolume") sfxSlider = buttonHandler.slider;
-				}
-
-				persRef.settingsSaveLoad.AssignLoadedSettingsValues(musicSlider, sfxSlider);
-			}
 		}
 
 		private void Update()
@@ -93,13 +79,33 @@ namespace Qbism.General
 
 			if (selectedButtonHandler != prevButtonHandler)
 			{
-				selectedButtonHandler.SelectButton(selectedTextColor, this, screenStateMngr);
+				selectedButtonHandler.SelectButton(selectedTextColor, selectedButtonSize,
+					this, null, screenStateMngr);
 				if (prevButtonHandler != null) prevButtonHandler.DeselectButton(textColor);
+			}
+		}
+
+		private void LoadSettingsData()
+		{
+			if (isSettingsOverlay)
+			{
+				foreach (var buttonHandler in buttonHandlers)
+				{
+					if (buttonHandler.label == "display") displayButton = buttonHandler;
+
+					if (buttonHandler.slider == null) continue;
+					if (buttonHandler.label == "musicVolume") musicSlider = buttonHandler.slider;
+					if (buttonHandler.label == "sfxVolume") sfxSlider = buttonHandler.slider;
+				}
+
+				persRef.settingsSaveLoad.AssignLoadedSettingsValues(musicSlider, sfxSlider,
+					displayButton);
 			}
 		}
 
 		public void ShowOverlay()
 		{
+			gausCanvas.SetUpGaussianCanvas();
 			canvasGroup.alpha = 1;
 			popInJuice.PlayFeedbacks();
 
@@ -119,7 +125,8 @@ namespace Qbism.General
 
 		public void SelectButton(int i)
 		{
-			buttonHandlers[i].SelectButton(selectedTextColor, this, screenStateMngr);
+			buttonHandlers[i].SelectButton(selectedTextColor, selectedButtonSize,
+				this, null, screenStateMngr);
 
 			for (int j = 0; j < buttonHandlers.Length; j++)
 			{
@@ -147,7 +154,7 @@ namespace Qbism.General
 			var dur = mmScale.FeedbackDuration;
 
 			SetButtonsInteractable(false);
-
+			gausCanvas.TurnOffGaussianCanvas();
 			popOutJuice.PlayFeedbacks();
 			yield return new WaitForSeconds(dur);
 			canvasGroup.alpha = 0;

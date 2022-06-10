@@ -390,6 +390,7 @@ GameObject:
   - component: {fileID: 6559859310490878777}
   - component: {fileID: 8414670337062396083}
   - component: {fileID: 3690936284506816996}
+  - component: {fileID: 3278988391064736711}
   m_Layer: 5
   m_Name: Dialogue Text
   m_TagString: Untagged
@@ -1058,7 +1059,19 @@ MonoBehaviour:
   disappearanceOrientation: 0
   onTextShowed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onTypewriterStart:
     m_PersistentCalls:
       m_Calls: []
@@ -1071,12 +1084,27 @@ MonoBehaviour:
   waitForNormalChars: 0.03
   waitLong: 0.4
   waitMiddle: 0.1
-  avoidMultiplePunctuactionWait: 0
+  avoidMultiplePunctuactionWait: 1
   waitForNewLines: 1
   waitForLastCharacter: 1
   useTypewriterWaitForDisappearances: 1
   disappearanceWaitTime: 0.015
   disappearanceSpeedMultiplier: 1
+--- !u!114 &3278988391064736711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4948415586667170272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2291c579f75be43b8919eae91ca356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textAnim: {fileID: 8414670337062396083}
+  text: {fileID: 6559859310490878777}
+  whisperFontSize: 30
 --- !u!1 &5070984283194271980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,7 +1188,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &2981822824170181810
 MonoBehaviour:
   m_ObjectHideFlags: 0

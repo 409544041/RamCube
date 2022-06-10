@@ -21,7 +21,7 @@ namespace Qbism.MoveableCubes
 		public Dictionary<Vector2Int, MoveableCube> moveableCubeDic = 
 			new Dictionary<Vector2Int, MoveableCube>();
 
-		public event Action<CubeRefHolder, Vector3, Quaternion, Vector3, Quaternion> onInitialCubeRecording;
+		public event Action<CubeRefHolder, Vector3, Quaternion, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 		public event Action<bool> onSetPlayerInput;
 
 		private void Awake() 
@@ -112,11 +112,16 @@ namespace Qbism.MoveableCubes
 				var cube = pair.Value;
 
 				Quaternion faceRot = new Quaternion(0, 0, 0, 0);
+				Vector3 faceScale = Vector3.one;
 				if (cube.refs.movFaceMesh != null)
+				{
 					faceRot = cube.refs.movFaceMesh.transform.rotation;
+					faceScale = cube.refs.movFaceMesh.transform.localScale;
+				}
 
 				onInitialCubeRecording(cube.refs, cube.transform.position,
-					cube.transform.rotation, cube.transform.localScale, faceRot);
+					cube.transform.rotation, cube.transform.localScale, faceRot,
+					faceScale);
 			}
 		}
 

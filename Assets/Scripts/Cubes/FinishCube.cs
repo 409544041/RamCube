@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using Qbism.PlayerCube;
 using UnityEngine;
+using UnityEngine.Analytics;
 using Qbism.Saving;
 using System;
-using Qbism.SpriteAnimations;
 using Qbism.General;
-using Qbism.Serpent;
-using Qbism.Objects;
+
 
 namespace Qbism.Cubes
 {
@@ -81,6 +80,8 @@ namespace Qbism.Cubes
 		{
 			var screenStateMngr = refs.gcRef.glRef.screenStateMngr;
 			screenStateMngr.SwitchState(screenStateMngr.levelEndSeqState, ScreenStates.levelEndSeqState);
+			
+			SendAnalyticsEvent();
 
 			if (isDebug) PositionPlayerForFinish();
 
@@ -89,7 +90,7 @@ namespace Qbism.Cubes
 
 			if (progHandler.currentHasSegment && switchBoard.serpentConnected)
 			{
-				refs.segSpawner.SetSegmentToSpawn(); 
+				refs.segSpawner.SetSegmentToSpawn();
 				serpProg.AddSegmentToDatabase();
 			}
 			else if (progHandler.currentHasObject && switchBoard.objectsConnected)
@@ -110,6 +111,32 @@ namespace Qbism.Cubes
 			DisableOutOfBounds();
 
 			refs.endSeq.InitiateEndSeq();
+		}
+
+		private void SendAnalyticsEvent()
+		{
+			var levelEntity = E_LevelGameplayData.FindEntity(entity =>
+								entity.f_Pin == refs.persRef.progHandler.currentPin);
+
+			if (!levelEntity.f_Completed)
+			{
+				Analytics.CustomEvent(AnalyticsEvents.LevelsComp, new Dictionary<string, object>
+				{
+					{AnalyticsEvents.Level, refs.persRef.progHandler.debugCurrentPin},
+				});
+				Analytics.CustomEvent(AnalyticsEvents.LevelComp + " " + 
+					refs.persRef.progHandler.debugCurrentPin, new Dictionary<string, object>
+				{
+					{AnalyticsEvents.TimeWindow, refs.gcRef.glRef.levelTimer.timeWindow}
+				});
+			}
+			else
+			{
+				Analytics.CustomEvent(AnalyticsEvents.LevelReplayComp, new Dictionary<string, object>
+				{
+					{AnalyticsEvents.Level, refs.persRef.progHandler.debugCurrentPin},
+				});
+			}
 		}
 
 		private void PositionPlayerForFinish()

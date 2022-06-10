@@ -87,7 +87,8 @@ namespace Qbism.Environment
 
 			juicer.PlayDownSFX();
 
-			while (goingDown)
+			while (goingDown && 
+				refs.gcRef.glRef.screenStateMngr.currentStateEnum == ScreenStates.levelScreenState)
 			{
 				wallMesh.transform.position = Vector3.MoveTowards(wallMesh.transform.position,
 					startPos, speed * Time.deltaTime);

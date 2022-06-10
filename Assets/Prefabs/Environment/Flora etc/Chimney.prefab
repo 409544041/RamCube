@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2064104553382925778}
+  - component: {fileID: 6354774811287472302}
   m_Layer: 0
   m_Name: Broken Parts
   m_TagString: Untagged
@@ -32,6 +33,28 @@ Transform:
   m_Father: {fileID: 8780189988871579931}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6354774811287472302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361749384842012285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshParts:
+  - {fileID: 6448292054642891922}
+  - {fileID: 3315939628534849802}
+  lineRender: {fileID: 0}
+  particle: {fileID: 0}
+  meshVarietySO: {fileID: 0}
+  vignetteSO: {fileID: 0}
+  recalculate: 0
+  isSkyBox: 0
+  isVolume: 0
 --- !u!1 &2558894735770539329
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +203,6 @@ MonoBehaviour:
   meshVarietySO: {fileID: 0}
   vignetteSO: {fileID: 0}
   recalculate: 0
-  checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 0
 --- !u!1 &8608068639817780971
@@ -470,7 +492,6 @@ MonoBehaviour:
   meshVarietySO: {fileID: 0}
   vignetteSO: {fileID: 0}
   recalculate: 0
-  checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 0
 --- !u!1001 &3533660342217365514
@@ -578,7 +599,6 @@ MonoBehaviour:
   meshVarietySO: {fileID: 0}
   vignetteSO: {fileID: 0}
   recalculate: 0
-  checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 0
 --- !u!1001 &4379331684363360509
@@ -686,7 +706,6 @@ MonoBehaviour:
   meshVarietySO: {fileID: 0}
   vignetteSO: {fileID: 0}
   recalculate: 0
-  checkBiomeLocally: 0
   isSkyBox: 0
   isVolume: 0
 --- !u!1001 &6178242304516268483
@@ -841,24 +860,3 @@ MonoBehaviour:
   bubbleVFX: {fileID: 2585827765421138311}
   impactVFX: {fileID: 4939121288003251816}
   torqueForce: 100000
---- !u!114 &7585512850631704423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6448292054642891922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1250cc0a2e45034c928f120f7662076, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meshParts: []
-  lineRender: {fileID: 0}
-  particle: {fileID: 0}
-  meshVarietySO: {fileID: 0}
-  vignetteSO: {fileID: 0}
-  recalculate: 0
-  checkBiomeLocally: 0
-  isSkyBox: 0
-  isVolume: 0

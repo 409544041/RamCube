@@ -22,7 +22,8 @@ namespace Qbism.MoveableCubes
 		[SerializeField] float lowerStep = 0.5f;
 		[Header("Feedback")]
 		[SerializeField] AudioClip landClip = null;
-		[SerializeField] Vector3 moveScale = new Vector3( .9f, .9f, .9f);
+		public Vector3 moveScale = new Vector3(.8f, .8f, .8f);
+		public Vector3 dockedScale = new Vector3(.9f, .9f, .9f);
 		public CubeRefHolder refs;
 
 		//States
@@ -31,7 +32,8 @@ namespace Qbism.MoveableCubes
 		public bool isOutOfBounds { get; set; } = false;
 		Quaternion resetRot;
 		public int orderOfMovement { get; set; } = -1;
-		public Vector3 faceScale;
+		Vector3 faceScale;
+		public FloorCube currentFloorCube { get; set; }
 
 		//Actions, events, delegates etc
 		public Func<Vector2Int, bool> onWallKeyCheck, onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;
@@ -46,6 +48,7 @@ namespace Qbism.MoveableCubes
 		private void Start()
 		{
 			UpdateCenterPosition();
+			refs.cubePos.RoundPosition();
 			transform.localScale = moveScale;
 			if (refs.movFaceMesh != null)
 			{
@@ -54,6 +57,8 @@ namespace Qbism.MoveableCubes
 					new Vector3(faceScale.x * moveScale.x, faceScale.y, faceScale.z * moveScale.z);
 			}
 			resetRot = transform.rotation;
+			currentFloorCube = 
+				refs.gcRef.glRef.cubeHandler.FetchCube(refs.cubePos.FetchGridPos(), true); ;
 		}
 
 		public void InitiateMove(Transform side, Vector3 turnAxis, Vector2Int posAhead, Vector2Int originPos)
@@ -118,7 +123,7 @@ namespace Qbism.MoveableCubes
 					yield return new WaitForSeconds(timeStep);
 				}
 
-				transform.localScale = new Vector3(1, 1, 1);
+				transform.localScale = dockedScale;
 				if (refs.movFaceMesh != null) refs.movFaceMesh.transform.localScale = faceScale;
 				transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 
@@ -126,6 +131,7 @@ namespace Qbism.MoveableCubes
 				{
 					refs.movEffector.UpdateFacePos();
 					refs.movEffector.ToggleEffectFace(true);
+					refs.cubeUI.UpdateUIPos();
 				}
 
 				refs.cubePos.RoundPosition();
@@ -133,28 +139,36 @@ namespace Qbism.MoveableCubes
 				var cubePos = refs.cubePos.FetchGridPos();
 				onStopMovingMoveable(cubePos, this, true);				
 				AddComponents(cubePos);
+				if (refs.cubeUI != null) refs.cubeUI.showCubeUI = true;
 			}
 		}
 
-		public void InitiateLowering(Vector2Int cubePos)
+		public void InitiateLowering(Vector2Int cubePos, bool fromBoost)
 		{
 			Vector3 targetPos = new Vector3(transform.position.x,
 				transform.position.y - 1, transform.position.z);
 			float step = lowerStep * Time.deltaTime;
 
-			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos));
+			StartCoroutine(BecomeFloorByLowering(targetPos, step, cubePos, fromBoost));
 		}
 
 		private IEnumerator BecomeFloorByLowering(Vector3 targetPos, float step, 
-			Vector2Int cubePos)
+			Vector2Int cubePos, bool fromBoost)
 		{
-			while(transform.position.y > targetPos.y)
+			if (fromBoost)
+			{
+				var juiceDur = refs.boostJuicer.FetchJuiceDur();
+				refs.boostJuicer.PlayPostBoostJuice();
+				yield return new WaitForSeconds(juiceDur);
+			}
+
+			while (transform.position.y > targetPos.y)
 			{
 				transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 				yield return timeStep;
 			}
 
-			transform.localScale = new Vector3(1, 1, 1);
+			transform.localScale = dockedScale;
 			if (refs.movFaceMesh != null) refs.movFaceMesh.transform.localScale = faceScale;
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
 			
@@ -162,12 +176,14 @@ namespace Qbism.MoveableCubes
 			{
 				refs.movEffector.UpdateFacePos();
 				refs.movEffector.ToggleEffectFace(true);
+				refs.cubeUI.UpdateUIPos();
 			}
 
 			refs.cubePos.RoundPosition();
 			hasBumped = false;
 			onStopMovingMoveable(cubePos, this, true);
 			AddComponents(cubePos);
+			refs.cubeUI.showCubeUI = true;
 		}
 
 		private void AddComponents(Vector2Int cubePos)
@@ -202,7 +218,11 @@ namespace Qbism.MoveableCubes
 			refs.lineRender.transform.position = new Vector3 (transform.position.x, 
 				refs.lineRender.transform.position.y, transform.position.z);
 
-			if (refs.movEffector != null) refs.movEffector.UpdateFacePos();
+			if (refs.movEffector != null)
+			{
+				refs.movEffector.UpdateFacePos();
+				refs.cubeUI.UpdateUIPos();
+			}
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead,

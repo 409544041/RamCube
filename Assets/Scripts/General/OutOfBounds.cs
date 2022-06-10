@@ -35,9 +35,11 @@ namespace Qbism.General
 			if (other.tag == "Moveable")
 			{
 				var movRef = other.GetComponent<CubeRefHolder>();
-				movRef.movCube.isBoosting = false;
-				movRef.movCube.isOutOfBounds = true;
+				var movCube = movRef.movCube;
+				movCube.isBoosting = false;
+				movCube.isOutOfBounds = true;
 				movRef.mesh.enabled = false;
+				movRef.mesh.transform.localScale = Vector3.one;
 			}
 
 		}

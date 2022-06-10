@@ -1,6 +1,7 @@
 using Qbism.General;
 using Qbism.SceneTransition;
 using Qbism.Serpent;
+using Qbism.Settings;
 using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Qbism.Saving
 	{
 		//Config parameters
 		public FeatureSwitchBoard switchBoard;
+		public Timer sessionTimer;
 		[Header("Progress")]
 		public ProgressHandler progHandler;
 		public SerpentProgress serpProg;
@@ -37,5 +39,10 @@ namespace Qbism.Saving
 		public GameplayCoreRefHolder gcRef { get; set; }
 		public GameLogicRefHolder glRef { get; set; }
 		public SerpCoreRefHolder scRef { get; set; }
+
+		private void Awake()
+		{
+			DontDestroyOnLoad(this.gameObject);
+		}
 	}
 }

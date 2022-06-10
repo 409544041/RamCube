@@ -28,11 +28,13 @@ namespace Qbism.WorldMap
 		[Header("Map Canvas")]
 		public Canvas worldMapCanvas;
 		public CanvasGroup mapCanvasGroup;
+		public SerpScreenButtonToggler serpButtonToggler;
 		[Header("Pause Canvas")]
 		public OverlayMenuHandler pauseOverlayHandler;
 		[Header("Settings Canvas")]
 		public OverlayMenuHandler settingsOverlayHandler;
 		public CanvasGroup settingsOverlayCanvasGroup;
+		public GaussianCanvas gausCanvas;
 		[Header("Music")]
 		public AudioSource musicSource;
 		public MusicFadeOut musicFader;

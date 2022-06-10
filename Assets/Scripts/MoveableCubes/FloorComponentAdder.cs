@@ -10,6 +10,8 @@ namespace Qbism.MoveableCubes
 	public class FloorComponentAdder : MonoBehaviour
 	{
 		//Config parameters
+		public Renderer markOnGround;
+		[SerializeField] float markY = -0.495f;
 		[SerializeField] CubeRefHolder refs;
 
 		//Actions, events, delegates etc
@@ -28,6 +30,15 @@ namespace Qbism.MoveableCubes
 			onAddToMovFloorDic(cubePos, newFloor);
 			LaserDottedLineCheck();
 			refs.cubeShrink.SetResetData();
+			PlaceMarkOnGround();
+		}
+
+		private void PlaceMarkOnGround()
+		{
+			var markPos = new Vector3(refs.movCube.transform.position.x,
+				markY, refs.movCube.transform.position.z);
+			markOnGround.transform.position = markPos;
+			markOnGround.enabled = true;
 		}
 
 		private void LaserDottedLineCheck()

@@ -107,7 +107,8 @@ MonoBehaviour:
   maxBoostTrailTime: 0.75
   loweringClip: {fileID: 8300000, guid: b264fc38c36ef4a49b19bfc61e250bbb, type: 3}
   loweringVolume: 2.25
-  refs: {fileID: 7988945769779994986}
+  visualsTrans: {fileID: 3732406614777037197}
+  pRef: {fileID: 7988945769779994986}
 --- !u!114 &3695437121466883356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +216,7 @@ MonoBehaviour:
   smallSurpriseClip: {fileID: 8300000, guid: bd7007854cd38a74fb32dbda7bce78a7, type: 3}
   toothyLaughClip: {fileID: 8300000, guid: 58b597a1fe5597b43bdb7c45fd5aa8d2, type: 3}
   swallowClip: {fileID: 8300000, guid: fb73cd6dc513a8241a3f8c46d7856242, type: 3}
+  swallowColl: {fileID: 6540279181786686105}
   refs: {fileID: 7988945769779994986}
 --- !u!1 &1337350239783104245
 GameObject:
@@ -360,7 +362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5516e84b9c2e1d4eae51d0e4a85f60c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 1
+  pRef: {fileID: 7988945769779994986}
+  cRef: {fileID: 0}
 --- !u!114 &7696613664066083821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -953,7 +956,7 @@ BoxCollider:
   m_GameObject: {fileID: 2392172349771063964}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 1}
   m_Center: {x: 0, y: 0.25, z: -0.1}

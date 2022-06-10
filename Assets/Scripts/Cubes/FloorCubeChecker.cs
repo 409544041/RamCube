@@ -62,9 +62,7 @@ namespace Qbism.Cubes
 		private void CheckFloorType(Vector2Int cubePos, GameObject cube,
 			Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			FloorCube previousCube;
-
-			previousCube = currentCube;
+			FloorCube previousCube = currentCube;
 
 			if (previousCube.FetchType() == CubeTypes.Static)
 				previousCube.refs.staticCube.BecomeShrinkingCube();
@@ -91,6 +89,7 @@ namespace Qbism.Cubes
 						//landing on same cube, like after having turned
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
 						if (moveHandler.movingMoveables == 0) mover.input = true;
+						mover.isMoving = false;
 						if (previousCube.FetchType() == CubeTypes.Boosting)
 							playerBoostJuicer.PlayPostBoostJuice();
 					}
@@ -141,6 +140,8 @@ namespace Qbism.Cubes
 			if (!mover.isStunned) cubeFF.ShowFeedForward();
 			if (moveHandler.movingMoveables == 0) mover.input = true;
 			onCheckForFinish();
+
+			mover.isMoving = false;
 
 			if (previousCube.FetchType() != CubeTypes.Boosting)
 				playerFlipJuicer.PlayPostFlipJuice();

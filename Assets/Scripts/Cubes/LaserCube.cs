@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.PlayerCube;
-using Qbism.SceneTransition;
 using UnityEngine;
 
 namespace Qbism.Cubes
@@ -11,7 +10,8 @@ namespace Qbism.Cubes
 	{
 		//Config parameters
 		public float distance = 1;
-		[SerializeField] Transform laserOrigin = null;
+		[SerializeField] Transform laserOrigin;
+		[SerializeField] float radius = .3f;
 		[SerializeField] LayerMask chosenLayers;
 		[SerializeField] float idleLaserDelay = .5f;
 		[SerializeField] LaserRefHolder refs;
@@ -111,6 +111,7 @@ namespace Qbism.Cubes
 			else if (!isClosed && !laserPause)
 			{
 				juicer.TriggerIdleJuice();
+				CastDottedLines(dist, distance);
 			}
 		}
 
@@ -120,6 +121,7 @@ namespace Qbism.Cubes
 			yield return new WaitForSeconds(idleLaserDelay);
 			juicer.TriggerIdleJuice();
 			laserPause = false;
+			CastDottedLines(dist, distance);
 		}
 
 		public void CloseEye() //Called from fart particle collision
@@ -130,9 +132,9 @@ namespace Qbism.Cubes
 
 		private RaycastHit[] SortedSphereCasts()
 		{
-			RaycastHit[] hits = Physics.SphereCastAll(laserOrigin.position, .05f,
-				transform.forward, distance, chosenLayers , QueryTriggerInteraction.Ignore);
-			
+			RaycastHit[] hits = Physics.SphereCastAll(laserOrigin.position, radius,
+				transform.forward, distance, chosenLayers, QueryTriggerInteraction.Ignore);
+
 			Debug.DrawRay(laserOrigin.position, transform.forward, Color.red, distance);
 
 			float[] hitDistances = new float[hits.Length];
@@ -149,10 +151,10 @@ namespace Qbism.Cubes
 
 		private void AdjustBeamLength(RaycastHit[] hits)
 		{
-			if (hits.Length <= 0) dist = distance;
-			else dist = hits[0].distance;
+			if (hits.Length <= 0) dist = distance + radius + .2f;
+			else dist = hits[0].distance + radius + .2f;
 
-			if (dist != currentLength)
+			if (dist != currentLength && !isClosed)
 			{
 				CastDottedLines(dist, distance);
 				juicer.AdjustBeamVisualLength(dist);
@@ -185,7 +187,6 @@ namespace Qbism.Cubes
 				Vector2Int roundedCheckPos = new Vector2Int
 					(Mathf.RoundToInt(checkPos.x), Mathf.RoundToInt(checkPos.z));
 
-				//checks if point has a cube
 				if (cubeHandler.CheckFloorCubeDicKey(roundedCheckPos))
 				{
 					var cube = cubeHandler.FetchCube(roundedCheckPos, true);

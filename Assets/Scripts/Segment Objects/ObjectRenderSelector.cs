@@ -33,19 +33,5 @@ namespace Qbism.Objects
 				}
 			}
 		}
-
-		public void HideObjects()
-		{
-			foreach (var obj in objectsToRender)
-			{
-				if (obj.gameObject.activeSelf == true)
-				{
-					foreach (var mesh in obj.meshes)
-					{
-						mesh.enabled = false;
-					}
-				}
-			}
-		}
 	}
 }

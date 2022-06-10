@@ -10,7 +10,7 @@ namespace Qbism.Cubes
 	public class CubeShrinker : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks shrinkFeedback;
+		[SerializeField] MMFeedbacks shrinkFeedback, markShrinkFeedback;
 		[SerializeField] CubeRefHolder refs;
 		[SerializeField] Renderer wallMesh;
 
@@ -61,6 +61,14 @@ namespace Qbism.Cubes
 			else StartCoroutine(ShrinkFloorCubes()); 			
 		}
 
+		public void ShrinkGroundMarks()
+		{
+			if (markShrinkFeedback == null) return;
+			
+			markShrinkFeedback.Initialization();
+			markShrinkFeedback.PlayFeedbacks();
+		}
+
 		private IEnumerator ShrinkWalls ()
 		{
 			shrinkFeedback.Initialization();
@@ -77,8 +85,13 @@ namespace Qbism.Cubes
 			refs.shrinkMesh.enabled = true;
 			refs.lineRender.enabled = false;
 
-			if (refs.staticCube != null && refs.floorCube.type == CubeTypes.Static)
-				refs.staticCube.SwitchFaces();
+			if (refs.effectorFace != null)
+			{
+				refs.effectorFace.enabled = false;
+				refs.effectorShrinkingFace.enabled = true;
+				if (refs.movEffector != null) refs.effectorShrinkingFace.transform.parent =
+					refs.shrinkMesh.transform;
+			}
 
 			// checking for floor bc it might be moveable that gets shrunk at end of level
 			if (refs.floorCube != null)
@@ -87,9 +100,7 @@ namespace Qbism.Cubes
 				handler.FromFloorToShrunkDic(cubePos, refs.floorCube);
 
 				//Makes sure all values are reset in case this is the second shrink
-				refs.shrinkMesh.transform.position = resetPos;
-				refs.shrinkMesh.transform.rotation = resetRot;
-				refs.shrinkMesh.transform.localScale = resetScale;
+				ResetTransform();
 			}
 
 			MMFeedbackPosition[] posFeedbacks =
@@ -116,6 +127,13 @@ namespace Qbism.Cubes
 			yield return new WaitForSeconds(totalFeedbackDur);
 
 			refs.shrinkMesh.enabled = false;
+		}
+
+		public void ResetTransform()
+		{
+			refs.shrinkMesh.transform.position = resetPos;
+			refs.shrinkMesh.transform.rotation = resetRot;
+			refs.shrinkMesh.transform.localScale = resetScale;
 		}
 
 		public void EnableMesh()

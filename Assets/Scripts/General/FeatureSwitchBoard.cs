@@ -21,10 +21,13 @@ namespace Qbism.General
 		public bool allowDebugDeleteProgress;
 		[Header("Demo")]
 		public bool demoSplashConnected;
+		public bool isPublicDemo;
 		[Header("Serpent Screen")]
 		public bool serpentScreenConnected;
 		[Header("Object Collection")]
 		public bool objectsConnected;
-
+		[Header("For Trailer")]
+		public bool allowHudToggle;
+		public bool allowCubeUIToggle;
 	}
 }

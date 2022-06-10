@@ -8,6 +8,7 @@ using Qbism.Objects;
 using Qbism.Peep;
 using Qbism.Rewind;
 using Qbism.SceneTransition;
+using Qbism.ScreenStateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class GameLogicRefHolder : MonoBehaviour
 	public GameplayCoreRefHolder gcRef;
 	public CamResizer camResizer;
 	public ScreenStateManager screenStateMngr;
+	public Timer levelTimer;
 	[Header("Cube Handling")]
 	public CubeHandler cubeHandler;
 	public MoveableCubeHandler movCubeHandler;

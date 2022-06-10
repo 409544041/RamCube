@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3746189926911478469}
   - component: {fileID: 3580720044106388931}
   - component: {fileID: 530116744080181141}
+  - component: {fileID: 6485285775792202440}
   - component: {fileID: 6898763950629518534}
   m_Layer: 0
   m_Name: Persistent Objects
@@ -64,8 +65,11 @@ MonoBehaviour:
   allowDebugUnlockAll: 1
   allowDebugDeleteProgress: 1
   demoSplashConnected: 0
+  isPublicDemo: 1
   serpentScreenConnected: 1
   objectsConnected: 1
+  allowHudToggle: 0
+  allowCubeUIToggle: 0
 --- !u!114 &84290119721343332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +171,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a28cbae237b7c6469e896591ccca21c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6485285775792202440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4077030962127744786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78777f939bc2369498fe4f56406babd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6898763950629518534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   switchBoard: {fileID: 8534403391603950583}
+  sessionTimer: {fileID: 6485285775792202440}
   progHandler: {fileID: 84290119721343332}
   serpProg: {fileID: 2986816208914692546}
   objProg: {fileID: 1539512549707175130}

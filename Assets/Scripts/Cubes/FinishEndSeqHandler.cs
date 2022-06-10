@@ -108,6 +108,7 @@ namespace Qbism.Cubes
 		private IEnumerator ShrinkAllFloorCubes()
 		{
 			List<CubeShrinker> cubesToShrinkList = new List<CubeShrinker>();
+			List<CubeShrinker> marksToShrinkList = new List<CubeShrinker>();
 
 			foreach (KeyValuePair<Vector2Int, MoveableCube> pair in movHandler.moveableCubeDic)
 			{
@@ -127,6 +128,7 @@ namespace Qbism.Cubes
 				var cube = pair.Value;
 				if (cube.type == CubeTypes.Finish) continue;
 				cubesToShrinkList.Add(cube.refs.cubeShrink);
+				marksToShrinkList.Add(cube.refs.cubeShrink);
 			}
 
 			foreach (KeyValuePair<Vector2Int, FloorCube> pair in handler.movFloorCubeDic)
@@ -138,6 +140,32 @@ namespace Qbism.Cubes
 				if (effector != null) effector.ToggleEffectFace(false);
 
 				cubesToShrinkList.Add(cube.refs.cubeShrink);
+				marksToShrinkList.Add(cube.refs.cubeShrink);
+			}
+
+			foreach (KeyValuePair<Vector2Int, List<FloorCube>> pair in handler.shrunkFloorCubeDic)
+			{
+				var cubes = pair.Value;
+				foreach (var cube in cubes)
+				{
+					if (cube.type == CubeTypes.Finish) continue;
+					marksToShrinkList.Add(cube.refs.cubeShrink);
+				}
+			}
+
+			foreach (KeyValuePair<Vector2Int, List<FloorCube>> pair in handler.shrunkMovFloorCubeDic)
+			{
+				var cubes = pair.Value;
+				foreach (var cube in cubes)
+				{
+					if (cube.type == CubeTypes.Finish) continue;
+					marksToShrinkList.Add(cube.refs.cubeShrink);
+				}
+			}
+
+			foreach (var mark in marksToShrinkList)
+			{
+				mark.ShrinkGroundMarks();
 			}
 
 			for (int i = 0; i < cubesToShrinkList.Count; i++)
@@ -164,7 +192,7 @@ namespace Qbism.Cubes
 					wallRef.wallJuicer.Burrow();
 					wallRef.col.enabled = false;
 
-					yield return new WaitForSeconds(wallRef.wallJuicer.burrowTime);
+					yield return new WaitForSeconds(wallRef.wallJuicer.burrowTime / 2);
 				}
 
 				yield return new WaitForSeconds(shrinkInterval);
@@ -208,6 +236,7 @@ namespace Qbism.Cubes
 		{
 			if (switchBoard.serpentConnected)
 			{
+				yield return new WaitForSeconds(.5f); //to show shapies dance a bit
 				ActivateSerpent(); //TO DO: eventually these checks should be obsolete bc every level will have serpent
 				yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
 			} 

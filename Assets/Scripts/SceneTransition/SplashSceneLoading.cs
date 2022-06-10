@@ -11,6 +11,7 @@ namespace Qbism.SceneTransition
 	{
 		//Config parameters
 		[SerializeField] int firstLevelIndex;
+		[SerializeField] FeatureSwitchBoard switchBoard;
 
 		public void StartSceneTransition()
 		{
@@ -25,8 +26,6 @@ namespace Qbism.SceneTransition
 			DontDestroyOnLoad(gameObject);
 
 			yield return fader.FadeOut(fader.sceneTransTime);
-
-			var switchBoard = FindObjectOfType<FeatureSwitchBoard>();
 			
 			if (switchBoard.demoSplashConnected)
 				yield return SceneManager.LoadSceneAsync("DemoSplashScene");

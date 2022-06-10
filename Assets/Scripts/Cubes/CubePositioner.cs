@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.MoveableCubes;
+using Qbism.PlayerCube;
 using UnityEngine;
 
 namespace Qbism.Cubes
@@ -8,13 +9,14 @@ namespace Qbism.Cubes
 	public class CubePositioner : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] bool isPlayer = false;
+		[SerializeField] PlayerRefHolder pRef;
+		[SerializeField] CubeRefHolder cRef;
 
 		public void RoundPosition()
 		{
 			float yPos;
 
-			if (isPlayer)
+			if (pRef != null || (cRef != null && cRef.movCube != null))
 			{
 				if (transform.position.y > .5f) yPos = .905f;
 				else yPos = 0;
@@ -23,6 +25,10 @@ namespace Qbism.Cubes
 
 			transform.position = new Vector3(Mathf.RoundToInt(transform.position.x),
 				yPos, Mathf.RoundToInt(transform.position.z));
+
+			if (cRef != null && cRef.movFaceMesh != null) cRef.movFaceMesh.transform.position =
+				new Vector3(Mathf.RoundToInt(cRef.movFaceMesh.transform.position.x),
+				yPos, Mathf.RoundToInt(cRef.movFaceMesh.transform.position.z));
 
 			var eulers = transform.eulerAngles;
 			eulers.x = Mathf.Round(eulers.x / 90) * 90;

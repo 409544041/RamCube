@@ -35,7 +35,7 @@ namespace Qbism.Cubes
 			new Dictionary<Vector2Int, List<FloorCube>>();
 
 		//Actions, events, delegates etc
-		public event Action<CubeRefHolder, Vector3, Quaternion, Vector3, Quaternion> onInitialCubeRecording;
+		public event Action<CubeRefHolder, Vector3, Quaternion, Vector3, Quaternion, Vector3> onInitialCubeRecording;
 
 		private void Awake()
 		{
@@ -200,7 +200,8 @@ namespace Qbism.Cubes
 		private void TriggerRecord(CubeRefHolder cube)
 		{
 			onInitialCubeRecording(cube, cube.transform.position,
-				cube.transform.rotation, cube.transform.localScale, cube.transform.rotation);
+				cube.transform.rotation, cube.transform.localScale, cube.transform.rotation,
+				cube.transform.localScale);
 		}
 
 		public bool CheckFloorCubeDicKey(Vector2Int cubePos)
@@ -229,6 +230,22 @@ namespace Qbism.Cubes
 			if (floorCubeDic.ContainsKey(cubePos))
 				return floorCubeDic[cubePos];
 			else return movFloorCubeDic[cubePos];
+		}
+
+		public void ToggleCubeUI()
+		{
+			if (!gcRef.persRef.switchBoard.allowCubeUIToggle) return;
+
+			foreach (KeyValuePair<Vector2Int, FloorCube> pair in floorCubeDic)
+			{
+				var cubeRef = pair.Value.refs;
+				if (cubeRef != null && cubeRef.cubeUI != null)
+				{
+					if (cubeRef.cubeUI.debugShowCubeUI) cubeRef.cubeUI.ShowOrHideUI(false);
+					cubeRef.cubeUI.debugShowCubeUI = !cubeRef.cubeUI.debugShowCubeUI;
+				}
+					
+			}
 		}
 
 		private void OnDisable()

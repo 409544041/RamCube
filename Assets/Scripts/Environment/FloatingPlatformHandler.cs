@@ -1,4 +1,5 @@
 using Dreamteck.Splines;
+using MoreMountains.Feedbacks;
 using Qbism.General;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,9 +12,16 @@ namespace Qbism.Environment
 		//Config parameters
 		[SerializeField] bool respawn, varyHeight;
 		[SerializeField] Vector2 minMaxSpawnDelay;
+		[SerializeField] Vector2 minMaxRotDur;
 		[SerializeField] float maxAddHeight = 2;
 		[SerializeField] SplineComputer[] viableSplines;
 		[SerializeField] SplineFollower[] followers;
+		[SerializeField] Transform[] transToJuice;
+		[SerializeField] MMFeedbacks floatJuice;
+
+		//Cache
+		MMFeedbackRotation mmRot;
+		MMFeedbackPosition mmPos;
 
 		//States
 		float respawnTimer;
@@ -23,15 +31,27 @@ namespace Qbism.Environment
 		SplineFollower currentFollower;
 		int currentFollowerIndex;
 		float addHeight;
+		float rotDur;
+		int rotDir;
+
+		private void Awake()
+		{
+			mmRot = floatJuice.GetComponent<MMFeedbackRotation>();
+			mmPos = floatJuice.GetComponent<MMFeedbackPosition>();
+		}
 
 		private void Start()
 		{
 			currentFollowerIndex = Random.Range(0, followers.Length);
 			currentFollower = followers[currentFollowerIndex];
-
-			int j = Random.Range(0, viableSplines.Length);
-			currentSpline = viableSplines[j];
-			currentFollower.spline = currentSpline;
+			rotDur = Random.Range(minMaxRotDur.x, minMaxRotDur.y);
+			
+			if (viableSplines.Length > 0)
+			{
+				int j = Random.Range(0, viableSplines.Length);
+				currentSpline = viableSplines[j];
+				currentFollower.spline = currentSpline;
+			}
 
 			VaryHeight();
 			TogglePlatform();
@@ -108,10 +128,33 @@ namespace Qbism.Environment
 		{
 			for (int i = 0; i < followers.Length; i++)
 			{
-				if (i == currentFollowerIndex) 
+				if (i == currentFollowerIndex)
+				{
 					followers[i].gameObject.SetActive(true);
-				else followers[i].gameObject.SetActive(false);
+
+					if (currentSpline != null) followers[i].enabled = true;
+				}
+				else
+				{
+					followers[i].gameObject.SetActive(false);
+					followers[i].enabled = false;
+				}
 			}
+
+			SetJuiceValues();
+			floatJuice.PlayFeedbacks();
+		}
+
+		private void SetJuiceValues()
+		{
+			mmPos.AnimatePositionTarget = transToJuice[currentFollowerIndex].gameObject;
+			mmRot.AnimateRotationTarget = transToJuice[currentFollowerIndex];
+			mmRot.AnimateRotationDuration = rotDur;
+
+			var rotDirs = new int[2] { -1, 1 };
+			var i = Random.Range(0, rotDirs.Length);
+			rotDir = rotDirs[i];
+			mmRot.RemapCurveOne *= rotDir;
 		}
 
 		private void VaryHeight()
@@ -119,7 +162,8 @@ namespace Qbism.Environment
 			if (varyHeight)
 			{
 				addHeight = 0 + Random.Range(0, maxAddHeight);
-				currentFollower.spline.transform.localPosition = new Vector3(0, addHeight, 0);
+				if (currentFollower.spline != null)
+					currentFollower.spline.transform.localPosition = new Vector3(0, addHeight, 0);
 			}
 		}
 	}
