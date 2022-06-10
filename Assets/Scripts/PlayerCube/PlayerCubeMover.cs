@@ -52,6 +52,7 @@ namespace Qbism.PlayerCube
 		public bool justBoosted { get; set; } = false;
 		public bool isRewinding { get; set; } = false;
 		public bool newInput { get; set; } = false;
+		public bool prevMoveNewInput { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
@@ -118,7 +119,7 @@ namespace Qbism.PlayerCube
 		{
 			var cubeToShrink = refs.cubePos.FetchGridPos();
 			moveHandler.ResetMovedMoveables();
-
+			
 			isMoving = true;
 
 			if (initiatedByPlayer)
@@ -136,7 +137,7 @@ namespace Qbism.PlayerCube
 			input = false;
 			var startRot = transform.rotation;
 
-			if (initiatedByPlayer)
+			if (initiatedByPlayer && !prevMoveNewInput)
 			{
 				playerFlipJuicer.PlayFlipJuice();
 				yield return new WaitForSeconds(playerFlipJuicer.preFlipJuiceDuration);
@@ -157,6 +158,8 @@ namespace Qbism.PlayerCube
 					break;
 				}
 			}
+
+			if (!newInput) prevMoveNewInput = false;
 
 			refs.cubePos.RoundPosition();
 			UpdateCenterPosition();
