@@ -94,11 +94,23 @@ namespace Qbism.MoveableCubes
 			if(onFloorKeyCheck(posAhead)) //Normal movement
 			{
 				if (refs.movEffector != null) refs.movEffector.ToggleEffectFace(false);
+				var mover = refs.gcRef.pRef.playerMover;
+				var startRot = transform.rotation;
 
 				for (int i = 0; i < (90 / turnStep); i++)
 				{
-					transform.RotateAround(side.position, turnAxis, turnStep);
-					yield return new WaitForSeconds(timeStep);
+					if (!mover.newInput)
+					{
+						transform.RotateAround(side.position, turnAxis, turnStep);
+						yield return new WaitForSeconds(timeStep);
+					}
+					else
+					{
+						transform.rotation = startRot;
+						transform.Rotate(turnAxis, 90, Space.World);
+						transform.position = new Vector3(posAhead.x, transform.position.y, posAhead.y);
+						break;
+					}
 				}
 
 				refs.cubePos.RoundPosition();

@@ -58,9 +58,14 @@ namespace Qbism.ScreenStateMachine
 		public void HandleMoveInput(Transform turnSide, Vector2Int posAheadDir, Vector3 turnAxis,
 			InputDetector inputDetector)
 		{
-			if (mover.isOutOfBounds || !mover.input) return;
+			if (mover.isOutOfBounds /*|| !mover.input*/) return;
 
 			inputDetector.inputting = true;
+			if (mover.isMoving)
+			{
+				mover.newInput = true;
+				return;
+			}
 			var posAhead = gcRef.pRef.cubePos.FetchGridPos() + posAheadDir;
 
 			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(turnSide, turnAxis);

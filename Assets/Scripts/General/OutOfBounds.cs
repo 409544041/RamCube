@@ -21,6 +21,7 @@ namespace Qbism.General
 				var playerMover = gcRef.pRef.playerMover;
 				playerMover.isOutOfBounds = true;
 				playerMover.isBoosting = false;
+				playerMover.isMoving = false;
 				if (gcRef.glRef.movCubeHandler.movingMoveables == 0)
 					playerMover.input = true; //This here else wont let you rewind
 				gcRef.rewindPulser.InitiatePulse();				

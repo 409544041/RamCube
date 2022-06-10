@@ -47,6 +47,7 @@ namespace Qbism.Cubes
 			mover.isTurning = true;
 
 			var axis = transform.TransformDirection(turnAxis);
+			var startRot = cube.transform.rotation;
 
 			refs.turnJuice.PlayFeedbacks();
 
@@ -55,8 +56,16 @@ namespace Qbism.Cubes
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
-				cube.transform.Rotate(axis, turnStep, Space.World);
-				yield return new WaitForSeconds(timeStep);
+				if (!mover.newInput)
+				{
+					cube.transform.Rotate(axis, turnStep, Space.World);
+					yield return new WaitForSeconds(timeStep);
+				}
+				else
+				{
+					cube.transform.rotation = startRot;
+					cube.transform.Rotate(axis, 90, Space.World);
+				}
 			}
 
 			player.cubePos.RoundPosition();
@@ -97,6 +106,7 @@ namespace Qbism.Cubes
 			var moveEffector = movRef.movEffector;
 
 			var axis = transform.TransformDirection(turnAxis);
+			var startRot = cube.transform.rotation;
 
 			if (moveEffector != null)
 			{
@@ -109,8 +119,16 @@ namespace Qbism.Cubes
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
-				cube.transform.Rotate(axis, turnStep, Space.World);
-				yield return new WaitForSeconds(timeStep);
+				if (!mover.newInput)
+				{
+					cube.transform.Rotate(axis, turnStep, Space.World);
+					yield return new WaitForSeconds(timeStep);
+				}
+				else
+				{
+					cube.transform.rotation = startRot;
+					cube.transform.Rotate(axis, 90, Space.World);
+				}
 			}
 
 			movRef.cubePos.RoundPosition();

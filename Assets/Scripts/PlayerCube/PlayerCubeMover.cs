@@ -51,7 +51,7 @@ namespace Qbism.PlayerCube
 		public bool isLowered { get; set; } = false;
 		public bool justBoosted { get; set; } = false;
 		public bool isRewinding { get; set; } = false;
-		public bool movReversed { get; set; } = false;
+		public bool newInput { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
@@ -134,6 +134,7 @@ namespace Qbism.PlayerCube
 			ActivateMoveableAhead(posAhead, turnAxis);
 
 			input = false;
+			var startRot = transform.rotation;
 
 			if (initiatedByPlayer)
 			{
@@ -143,8 +144,18 @@ namespace Qbism.PlayerCube
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
-				transform.RotateAround(side.position, turnAxis, turnStep);
-				yield return new WaitForSeconds(timeStep);
+				if (!newInput)
+				{
+					transform.RotateAround(side.position, turnAxis, turnStep);
+					yield return new WaitForSeconds(timeStep);
+				}
+				else
+				{
+					transform.rotation = startRot;
+					transform.Rotate(turnAxis, 90, Space.World);
+					transform.position = new Vector3(posAhead.x, transform.position.y, posAhead.y);
+					break;
+				}
 			}
 
 			refs.cubePos.RoundPosition();
@@ -214,6 +225,7 @@ namespace Qbism.PlayerCube
 			isLowered = true;
 			if (moveHandler.movingMoveables == 0) input = true;
 			isMoving = false;
+			newInput = false;
 			refs.cubePos.RoundPosition();
 			refs.gcRef.rewindPulser.InitiatePulse();
 		}

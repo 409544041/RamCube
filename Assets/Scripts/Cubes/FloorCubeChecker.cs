@@ -90,6 +90,8 @@ namespace Qbism.Cubes
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
 						if (moveHandler.movingMoveables == 0) mover.input = true;
 						mover.isMoving = false;
+						mover.newInput = false;
+
 						if (previousCube.FetchType() == CubeTypes.Boosting)
 							playerBoostJuicer.PlayPostBoostJuice();
 					}
@@ -142,6 +144,7 @@ namespace Qbism.Cubes
 			onCheckForFinish();
 
 			mover.isMoving = false;
+			mover.newInput = false;
 
 			if (previousCube.FetchType() != CubeTypes.Boosting)
 				playerFlipJuicer.PlayPostFlipJuice();

@@ -52,7 +52,7 @@ namespace Qbism.Cubes
 				if (popWall && Vector3.Distance(cube.transform.position, boostTarget) < 2f)
 					popWall.InitiatePopUp();
 				
-				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.5f)
+				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.5f || mover.newInput)
 				{
 					mover.isBoosting = false;
 					cube.transform.position = boostTarget;
@@ -109,13 +109,13 @@ namespace Qbism.Cubes
 			}
 		}
 
-		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis, 
+		public IEnumerator ExecuteActionOnMoveable(Transform side, Vector3 turnAxis,
 			Vector2Int posAhead, GameObject cube, Vector2Int originPos, FloorCube prevCube)
 		{
 			var movRef = cube.GetComponent<CubeRefHolder>();
 			var movCube = movRef.movCube;
 			Vector2Int launchPos = movRef.cubePos.FetchGridPos();
-
+			var mover = refs.gcRef.pRef.playerMover;
 			movCube.isBoosting = true;
 
 			GameObject wallObject = null;
@@ -128,7 +128,8 @@ namespace Qbism.Cubes
 				cube.transform.position = Vector3.MoveTowards(cube.transform.position,
 					boostTarget, boostSpeed * Time.deltaTime);
 
-				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.001f)
+				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.001f ||
+					mover.newInput)
 					movCube.isBoosting = false;
 
 				yield return null;
