@@ -23,7 +23,7 @@ namespace Qbism.General
 				playerMover.isBoosting = false;
 				playerMover.isMoving = false;
 				if (gcRef.glRef.movCubeHandler.movingMoveables == 0)
-					playerMover.input = true; //This here else wont let you rewind
+					playerMover.allowRewind = true; //This here else wont let you rewind
 				gcRef.rewindPulser.InitiatePulse();				
 			}
 

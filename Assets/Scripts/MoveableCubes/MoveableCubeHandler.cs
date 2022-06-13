@@ -22,7 +22,7 @@ namespace Qbism.MoveableCubes
 			new Dictionary<Vector2Int, MoveableCube>();
 
 		public event Action<CubeRefHolder, Vector3, Quaternion, Vector3, Quaternion, Vector3> onInitialCubeRecording;
-		public event Action<bool> onSetPlayerInput;
+		public event Action<bool> onSetAllowRewind;
 
 		private void Awake() 
 		{
@@ -85,7 +85,11 @@ namespace Qbism.MoveableCubes
 
 		public void CheckForMovingMoveables()
 		{
-			if (movingMoveables == 0) onSetPlayerInput(true);
+			if (movingMoveables == 0)
+			{
+				onSetAllowRewind(true);
+				gcRef.pRef.playerMover.initiatedByPlayer = true;
+			}
 		}
 
 		public void StartMovingMoveable(Vector2Int posAhead, Vector3 turnAxis,

@@ -37,9 +37,6 @@ namespace Qbism.MoveableCubes
 		public FloorCube currentFloorCube { get; set; }
 		public bool newPlayerMove { get; set; } = false;
 
-		//Cache
-		PlayerCubeMover mover;
-
 		//Actions, events, delegates etc
 		public Func<Vector2Int, bool> onWallKeyCheck, onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;
 		public Func<Vector2Int> onPlayerPosCheck;
@@ -49,11 +46,6 @@ namespace Qbism.MoveableCubes
 		public event Action<Vector2Int, MoveableCube, bool> onStopMovingMoveable;
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
 		public event Action<int, MoveableCube> onUpdateOrderInTimebody;
-
-		private void Awake()
-		{
-			mover = refs.gcRef.pRef.playerMover;
-		}
 
 		private void Start()
 		{

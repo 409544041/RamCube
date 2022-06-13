@@ -38,7 +38,6 @@ namespace Qbism.Cubes
 			Vector3 boostTarget = GetBoostTarget(boostMaskPlayer, out wallObject, out remainOnBoost);
 			if (wallObject) popWall = wallObject.GetComponent<PopUpWall>();
 
-			mover.input = false;
 			mover.isBoosting = true;
 			mover.justBoosted = true;
 

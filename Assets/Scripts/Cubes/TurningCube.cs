@@ -43,7 +43,6 @@ namespace Qbism.Cubes
 
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
-			mover.input = false;
 			mover.isTurning = true;
 
 			var axis = transform.TransformDirection(turnAxis);

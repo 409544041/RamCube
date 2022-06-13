@@ -88,7 +88,11 @@ namespace Qbism.Cubes
 					{
 						//landing on same cube, like after having turned
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
-						if (moveHandler.movingMoveables == 0) mover.input = true;
+						if (moveHandler.movingMoveables == 0)
+						{
+							mover.allowRewind = true;
+							mover.initiatedByPlayer = true;
+						}
 						mover.isMoving = false;
 						mover.newInput = false;
 
@@ -140,7 +144,11 @@ namespace Qbism.Cubes
 		private void HandleLandingOnFinalPos(FloorCube previousCube)
 		{
 			if (!mover.isStunned) cubeFF.ShowFeedForward();
-			if (moveHandler.movingMoveables == 0) mover.input = true;
+			if (moveHandler.movingMoveables == 0)
+			{
+				mover.allowRewind = true;
+				mover.initiatedByPlayer = true;
+			}
 			onCheckForFinish();
 
 			mover.isMoving = false;

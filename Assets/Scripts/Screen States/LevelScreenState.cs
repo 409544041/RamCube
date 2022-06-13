@@ -58,7 +58,7 @@ namespace Qbism.ScreenStateMachine
 		public void HandleMoveInput(Transform turnSide, Vector2Int posAheadDir, Vector3 turnAxis,
 			InputDetector inputDetector)
 		{
-			if (mover.isOutOfBounds /*|| !mover.input*/) return;
+			if (mover.isOutOfBounds || !mover.initiatedByPlayer) return;
 
 			inputDetector.inputting = true;
 			if (mover.isMoving && !mover.newInput)
@@ -115,7 +115,7 @@ namespace Qbism.ScreenStateMachine
 
 		public void HandleDebugCompleteInput()
 		{
-			if (gcRef.persRef.switchBoard.allowDebugFinish && mover.input) 
+			if (gcRef.persRef.switchBoard.allowDebugFinish && mover.allowRewind) 
 				gcRef.finishRef.finishCube.Finish(true);
 		}
 

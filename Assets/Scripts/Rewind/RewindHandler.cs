@@ -45,7 +45,7 @@ namespace Qbism.Rewind
 
 		public void StartRewinding()
 		{
-			if (!mover.input) return;
+			if (!mover.allowRewind) return;
 
 			LaserRewindStuff();
 			

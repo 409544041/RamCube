@@ -38,10 +38,10 @@ namespace Qbism.PlayerCube
 		ExpressionHandler expresHandler;
 
 		//States
-		public bool input { get; set; } = true;
+		public bool allowRewind { get; set; } = true;
 		public bool isBoosting { get; set; } = false;
 		public bool isTurning { get; set; } = false;
-		bool initiatedByPlayer = true;
+		public bool initiatedByPlayer { get; set; } = true;
 		public bool isMoving { get; set; } = false;
 		public bool lasersInLevel { get; set; } = false;
 		private Vector3 startScale = new Vector3(1, 1, 1);
@@ -73,7 +73,7 @@ namespace Qbism.PlayerCube
 
 		private void OnEnable() 
 		{
-			if (moveHandler != null) moveHandler.onSetPlayerInput += SetInput;
+			if (moveHandler != null) moveHandler.onSetAllowRewind += SetAllowRewind;
 
 			if (moveableCubes != null)
 			{
@@ -96,7 +96,7 @@ namespace Qbism.PlayerCube
 
 		public void HandleSwipeInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			if (!input) return;
+			if (!allowRewind) return;
 			initiatedByPlayer = true;
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
@@ -118,11 +118,18 @@ namespace Qbism.PlayerCube
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			var cubeToShrink = refs.cubePos.FetchGridPos();
-			if (moveHandler.movingMoveables > 0) moveHandler.InstantFinishMovingMoveables();
-			while (moveHandler.movingMoveables > 0) yield return null;
+			if (moveHandler.movingMoveables > 0 && initiatedByPlayer) moveHandler.InstantFinishMovingMoveables();
+			while (moveHandler.movingMoveables > 0 && initiatedByPlayer) yield return null;
 			moveHandler.ResetMovedMoveables();
+
+			if (CheckForWallAhead(posAhead)) //to avoid ffInputting into newly created mov wall
+			{
+				InitiateWiggle(side, turnAxis);
+				yield break;
+			}
 			
 			isMoving = true;
+			allowRewind = false;
 
 			if (initiatedByPlayer)
 			{
@@ -136,7 +143,6 @@ namespace Qbism.PlayerCube
 
 			ActivateMoveableAhead(posAhead, turnAxis);
 
-			input = false;
 			var startRot = transform.rotation;
 
 			if (initiatedByPlayer && !prevMoveNewInput)
@@ -208,8 +214,6 @@ namespace Qbism.PlayerCube
 		private IEnumerator LowerCube(Vector3 targetPos, float step, 
 			Vector2Int cubePos, bool fromBoost)
 		{
-			input = false;
-			
 			if (fromBoost)
 			{
 				var juiceDur = boostJuicer.FetchJuiceDur();
@@ -228,7 +232,11 @@ namespace Qbism.PlayerCube
 			}
 
 			isLowered = true;
-			if (moveHandler.movingMoveables == 0) input = true;
+			if (moveHandler.movingMoveables == 0)
+			{
+				allowRewind = true;
+				initiatedByPlayer = true;
+			}
 			isMoving = false;
 			newInput = false;
 			refs.cubePos.RoundPosition();
@@ -263,10 +271,10 @@ namespace Qbism.PlayerCube
 			center.position = transform.position;
 		}
 
-		public void SetInput(bool value)
+		public void SetAllowRewind(bool value)
 		{
 			if (!refs.gcRef.pauseOverlayHandler.overlayActive)
-				input = value;
+				allowRewind = value;
 		}
 
 		private bool FetchIsStunned()
@@ -305,7 +313,7 @@ namespace Qbism.PlayerCube
 
 		private void OnDisable()
 		{
-			if (moveHandler != null) moveHandler.onSetPlayerInput -= SetInput;
+			if (moveHandler != null) moveHandler.onSetAllowRewind -= SetAllowRewind;
 
 			if (moveableCubes != null)
 			{
