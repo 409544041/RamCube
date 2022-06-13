@@ -120,7 +120,7 @@ namespace Qbism.Cubes
 				var posAheadOfAhead = posAhead + (posAhead - cubePos);
 
 				if (!glRef.wallHandler.CheckForWallAheadOfAhead(posAhead, posAheadOfAhead))
-					moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos, null);
+					moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos);
 			}
 		}
 

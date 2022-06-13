@@ -89,13 +89,11 @@ namespace Qbism.MoveableCubes
 		}
 
 		public void StartMovingMoveable(Vector2Int posAhead, Vector3 turnAxis,
-			Vector2Int pos, MoveableCube bumperMoveable)
+			Vector2Int pos)
 		{
 			moveableCubeDic[posAhead].ApplyOrderOfMovement(moveablesMovedThisTurn);
 			moveablesMovedThisTurn++;
 			movingMoveables++;
-			if (bumperMoveable != null && bumperMoveable.newPlayerMove == true)
-				moveableCubeDic[posAhead].newPlayerMove = true;
 
 			ActivateMoveableCube(posAhead, turnAxis, pos);
 		}

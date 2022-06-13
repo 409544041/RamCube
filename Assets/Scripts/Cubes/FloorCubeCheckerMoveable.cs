@@ -81,7 +81,7 @@ namespace Qbism.Cubes
 					{
 						if (moveHandler.CheckMoveableCubeDicKey(posAhead))
 						{
-							moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos, cube);
+							moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos);
 							cube.hasBumped = true;
 						}
 
@@ -114,7 +114,7 @@ namespace Qbism.Cubes
 		{
 			if (prevCube.type == CubeTypes.Boosting && moveHandler.CheckMoveableCubeDicKey(posAhead))
 			{
-				moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos, cube);
+				moveHandler.StartMovingMoveable(posAhead, turnAxis, cubePos);
 				cube.refs.boostJuicer.PlayPostBoostJuice();
 			}
 		}

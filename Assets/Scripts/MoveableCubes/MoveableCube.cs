@@ -45,7 +45,7 @@ namespace Qbism.MoveableCubes
 		public Func<Vector2Int> onPlayerPosCheck;
 		public Func<Vector2Int, Vector2Int, bool> onWallForCubeAheadCheck;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
-		public event Action<Vector2Int, Vector3, Vector2Int, MoveableCube> onStartMovingMoveable;
+		public event Action<Vector2Int, Vector3, Vector2Int> onStartMovingMoveable;
 		public event Action<Vector2Int, MoveableCube, bool> onStopMovingMoveable;
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
 		public event Action<int, MoveableCube> onUpdateOrderInTimebody;
@@ -93,7 +93,7 @@ namespace Qbism.MoveableCubes
 			if(onMoveableKeyCheck(posAhead))
 			{
 				hasBumped = true;
-				onStartMovingMoveable(posAhead, turnAxis, refs.cubePos.FetchGridPos(), this);
+				onStartMovingMoveable(posAhead, turnAxis, refs.cubePos.FetchGridPos());
 			} 	
 
 			if(posAhead == onPlayerPosCheck())	//Checking if it bumps into player

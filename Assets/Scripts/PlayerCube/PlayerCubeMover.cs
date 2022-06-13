@@ -250,8 +250,7 @@ namespace Qbism.PlayerCube
 		private void ActivateMoveableAhead(Vector2Int posAhead, Vector3 turnAxis)
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
-				moveHandler.StartMovingMoveable(posAhead, turnAxis, 
-				refs.cubePos.FetchGridPos(), null);
+				moveHandler.StartMovingMoveable(posAhead, turnAxis, refs.cubePos.FetchGridPos());
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead)

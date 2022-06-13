@@ -68,8 +68,7 @@ namespace Qbism.ScreenStateMachine
 				return;
 			}
 			var posAhead = gcRef.pRef.cubePos.FetchGridPos() + posAheadDir;
-			print("Pos Ahead = " + posAhead + 
-				" and current grid pos = " + gcRef.pRef.cubePos.FetchGridPos());
+
 			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(turnSide, turnAxis);
 
 			else if (gcRef.glRef.cubeHandler.floorCubeDic.ContainsKey(posAhead) ||
