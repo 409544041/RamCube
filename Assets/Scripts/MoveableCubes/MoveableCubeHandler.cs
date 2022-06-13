@@ -76,11 +76,11 @@ namespace Qbism.MoveableCubes
 			Vector2Int posAhead = new Vector2Int(0, 0);
 			Vector2Int originPos = cubePos;
 
-			CalculateSide(cubePos, activatorPos, cube, ref side, ref posAhead);
-			cube.InitiateMove(side, turnAxis, posAhead, originPos);
-
-			if (!cube.CheckForWallAhead(cubePos, posAhead)) 
+			if (!cube.CheckForWallAhead(cubePos, posAhead))
 				RemoveFromMoveableDic(cubePos);
+
+			CalculateSide(cubePos, activatorPos, cube, ref side, ref posAhead);
+			cube.InitiateMove(side, turnAxis, posAhead, originPos);;
 		}
 
 		public void CheckForMovingMoveables()
@@ -89,11 +89,14 @@ namespace Qbism.MoveableCubes
 		}
 
 		public void StartMovingMoveable(Vector2Int posAhead, Vector3 turnAxis,
-			Vector2Int pos)
+			Vector2Int pos, MoveableCube bumperMoveable)
 		{
 			moveableCubeDic[posAhead].ApplyOrderOfMovement(moveablesMovedThisTurn);
 			moveablesMovedThisTurn++;
 			movingMoveables++;
+			if (bumperMoveable != null && bumperMoveable.newPlayerMove == true)
+				moveableCubeDic[posAhead].newPlayerMove = true;
+
 			ActivateMoveableCube(posAhead, turnAxis, pos);
 		}
 
@@ -102,6 +105,7 @@ namespace Qbism.MoveableCubes
 		{
 			movingMoveables--;
 			if (!becomeFloor) AddToMoveableDic(cubePos, moveable);
+			moveable.newPlayerMove = false;
 			CheckForMovingMoveables();
 		}
 
@@ -177,6 +181,15 @@ namespace Qbism.MoveableCubes
 			foreach (var cube in moveableCubes)
 			{
 				cube.orderOfMovement = -1;
+				cube.newPlayerMove = false;
+			}
+		}
+
+		public void InstantFinishMovingMoveables()
+		{
+			foreach (var cube in moveableCubes)
+			{
+				cube.newPlayerMove = true;
 			}
 		}
 

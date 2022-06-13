@@ -129,8 +129,11 @@ namespace Qbism.Cubes
 					boostTarget, boostSpeed * Time.deltaTime);
 
 				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.001f ||
-					mover.newInput)
+					movCube.newPlayerMove)
+				{
 					movCube.isBoosting = false;
+					cube.transform.position = boostTarget;
+				}
 
 				yield return null;
 			}

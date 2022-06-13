@@ -82,9 +82,9 @@ namespace Qbism.Rewind
 
 				if (refs != null && moveable != null)
 				{
-					if (moveable.orderOfMovement == -1) break;
+					if (refs.timeBody.movementOrderList[0] == -1) break;
 
-					rewindFirstDic.Add(moveable.orderOfMovement, body);
+					rewindFirstDic.Add(refs.timeBody.movementOrderList[0], body);
 					body.priorityRewind = true;
 				}
 			}

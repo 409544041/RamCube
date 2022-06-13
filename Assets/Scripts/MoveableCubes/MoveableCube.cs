@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using Qbism.Cubes;
+using Qbism.PlayerCube;
 using UnityEngine;
 
 namespace Qbism.MoveableCubes
@@ -34,16 +35,25 @@ namespace Qbism.MoveableCubes
 		public int orderOfMovement { get; set; } = -1;
 		Vector3 faceScale;
 		public FloorCube currentFloorCube { get; set; }
+		public bool newPlayerMove { get; set; } = false;
+
+		//Cache
+		PlayerCubeMover mover;
 
 		//Actions, events, delegates etc
 		public Func<Vector2Int, bool> onWallKeyCheck, onFloorKeyCheck, onMoveableKeyCheck, onMovingCheck;
 		public Func<Vector2Int> onPlayerPosCheck;
 		public Func<Vector2Int, Vector2Int, bool> onWallForCubeAheadCheck;
 		public event Action<Transform, Vector3, Vector2Int, MoveableCube, Vector2Int, Vector2Int, Vector2Int> onFloorCheck;
-		public event Action<Vector2Int, Vector3, Vector2Int> onStartMovingMoveable;
+		public event Action<Vector2Int, Vector3, Vector2Int, MoveableCube> onStartMovingMoveable;
 		public event Action<Vector2Int, MoveableCube, bool> onStopMovingMoveable;
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
 		public event Action<int, MoveableCube> onUpdateOrderInTimebody;
+
+		private void Awake()
+		{
+			mover = refs.gcRef.pRef.playerMover;
+		}
 
 		private void Start()
 		{
@@ -69,6 +79,7 @@ namespace Qbism.MoveableCubes
 			{
 				hasBumped = false;
 				onStopMovingMoveable(currentPos, this, false);
+				
 				if (refs.movEffector != null) refs.movEffector.ToggleEffectFace(true);
 				return;
 			}
@@ -78,11 +89,11 @@ namespace Qbism.MoveableCubes
 
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead, 
 			Vector2Int originPos, Vector2Int prevPos)
-		{	
+		{
 			if(onMoveableKeyCheck(posAhead))
 			{
 				hasBumped = true;
-				onStartMovingMoveable(posAhead, turnAxis, refs.cubePos.FetchGridPos());
+				onStartMovingMoveable(posAhead, turnAxis, refs.cubePos.FetchGridPos(), this);
 			} 	
 
 			if(posAhead == onPlayerPosCheck())	//Checking if it bumps into player
@@ -94,12 +105,11 @@ namespace Qbism.MoveableCubes
 			if(onFloorKeyCheck(posAhead)) //Normal movement
 			{
 				if (refs.movEffector != null) refs.movEffector.ToggleEffectFace(false);
-				var mover = refs.gcRef.pRef.playerMover;
 				var startRot = transform.rotation;
 
 				for (int i = 0; i < (90 / turnStep); i++)
 				{
-					if (!mover.newInput)
+					if (!newPlayerMove)
 					{
 						transform.RotateAround(side.position, turnAxis, turnStep);
 						yield return new WaitForSeconds(timeStep);
@@ -128,11 +138,23 @@ namespace Qbism.MoveableCubes
 			else if(!onFloorKeyCheck(posAhead))
 			{
 				if (refs.movEffector != null) refs.movEffector.ToggleEffectFace(false);
+				var startRot = transform.rotation;
 
 				for (int i = 0; i < (180 / turnStep); i++)
 				{
-					transform.RotateAround(side.position, turnAxis, turnStep);
-					yield return new WaitForSeconds(timeStep);
+					if (!newPlayerMove)
+					{
+						transform.RotateAround(side.position, turnAxis, turnStep);
+						yield return new WaitForSeconds(timeStep);
+					}
+					else
+					{
+						transform.rotation = startRot;
+						transform.Rotate(turnAxis, 180, Space.World);
+						transform.position = 
+							new Vector3(posAhead.x, transform.position.y - 1, posAhead.y);
+						break;
+					}
 				}
 
 				transform.localScale = dockedScale;
@@ -149,7 +171,8 @@ namespace Qbism.MoveableCubes
 				refs.cubePos.RoundPosition();
 				hasBumped = false;
 				var cubePos = refs.cubePos.FetchGridPos();
-				onStopMovingMoveable(cubePos, this, true);				
+				onStopMovingMoveable(cubePos, this, true);
+
 				AddComponents(cubePos);
 				if (refs.cubeUI != null) refs.cubeUI.showCubeUI = true;
 			}
@@ -167,19 +190,20 @@ namespace Qbism.MoveableCubes
 		private IEnumerator BecomeFloorByLowering(Vector3 targetPos, float step, 
 			Vector2Int cubePos, bool fromBoost)
 		{
-			if (fromBoost)
+			if (fromBoost && !newPlayerMove)
 			{
 				var juiceDur = refs.boostJuicer.FetchJuiceDur();
 				refs.boostJuicer.PlayPostBoostJuice();
 				yield return new WaitForSeconds(juiceDur);
 			}
 
-			while (transform.position.y > targetPos.y)
+			while (transform.position.y > targetPos.y && !newPlayerMove)
 			{
 				transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 				yield return timeStep;
 			}
 
+			transform.position = targetPos;
 			transform.localScale = dockedScale;
 			if (refs.movFaceMesh != null) refs.movFaceMesh.transform.localScale = faceScale;
 			transform.rotation = resetRot; //reset rotation so shrink anim plays correct way up
@@ -193,7 +217,9 @@ namespace Qbism.MoveableCubes
 
 			refs.cubePos.RoundPosition();
 			hasBumped = false;
+
 			onStopMovingMoveable(cubePos, this, true);
+
 			AddComponents(cubePos);
 			refs.cubeUI.showCubeUI = true;
 		}

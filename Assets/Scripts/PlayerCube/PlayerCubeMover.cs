@@ -118,6 +118,8 @@ namespace Qbism.PlayerCube
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			var cubeToShrink = refs.cubePos.FetchGridPos();
+			if (moveHandler.movingMoveables > 0) moveHandler.InstantFinishMovingMoveables();
+			while (moveHandler.movingMoveables > 0) yield return null;
 			moveHandler.ResetMovedMoveables();
 			
 			isMoving = true;
@@ -248,7 +250,8 @@ namespace Qbism.PlayerCube
 		private void ActivateMoveableAhead(Vector2Int posAhead, Vector3 turnAxis)
 		{
 			if(moveHandler.CheckMoveableCubeDicKey(posAhead))
-				moveHandler.StartMovingMoveable(posAhead, turnAxis, refs.cubePos.FetchGridPos());
+				moveHandler.StartMovingMoveable(posAhead, turnAxis, 
+				refs.cubePos.FetchGridPos(), null);
 		}
 
 		public void CheckFloorInNewPos(Transform side, Vector3 turnAxis, Vector2Int posAhead)

@@ -119,7 +119,7 @@ namespace Qbism.Cubes
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
-				if (!mover.newInput)
+				if (!movCube.newPlayerMove)
 				{
 					cube.transform.Rotate(axis, turnStep, Space.World);
 					yield return new WaitForSeconds(timeStep);
@@ -139,12 +139,11 @@ namespace Qbism.Cubes
 
 			if (prevCube.FetchType() != CubeTypes.Boosting)
 				movCube.InitiateMove(side, movingTurnAxis, posAhead, originPos);
-			else 
+			else
 			{
 				var moveHandler = refs.gcRef.glRef.movCubeHandler;
 				moveHandler.StopMovingMoveables(cubePos, movCube, false);
 			}
-
 		}
 
 		private void CalculateSide(ref Transform side, ref Vector3 movingTurnAxis, ref Vector2Int posAhead, MoveableCube moveable, Vector2Int cubePos)
