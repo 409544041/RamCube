@@ -69,7 +69,7 @@ namespace Qbism.PlayerCube
 		private IEnumerator DisableInputForDrop()
 		{
 			refs.playerMover.isInIntroSeq = true;
-			refs.playerMover.SetAllowRewind(false);
+			refs.playerMover.SetAllowInput(false);
 
 			animator.speed = 0; //pauze intro animation
 			yield return new WaitForSeconds(introDelay);
@@ -81,7 +81,7 @@ namespace Qbism.PlayerCube
 			float clipLength = currentClipinfo[0].clip.length;
 			yield return new WaitForSeconds(clipLength);
 
-			refs.playerMover.SetAllowRewind(true);
+			refs.playerMover.SetAllowInput(true);
 			refs.playerMover.isInIntroSeq = false;
 
 			var screenStateMngr = refs.gcRef.glRef.screenStateMngr;

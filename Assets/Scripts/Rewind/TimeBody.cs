@@ -164,6 +164,7 @@ namespace Qbism.Rewind
 					mover.isOutOfBounds = false;
 					mover.isLowered = false;
 					pRef.gcRef.rewindPulser.StopPulse();
+					mover.allowMoveInput = true;
 				}
 				
 				if (mover.isStunned)

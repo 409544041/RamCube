@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.Cubes;
-using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
-using Qbism.Rewind;
 using UnityEngine;
 
 namespace Qbism.General
@@ -23,7 +21,10 @@ namespace Qbism.General
 				playerMover.isBoosting = false;
 				playerMover.isMoving = false;
 				if (gcRef.glRef.movCubeHandler.movingMoveables == 0)
-					playerMover.allowRewind = true; //This here else wont let you rewind
+				{
+					playerMover.allowRewind = true;
+					playerMover.allowMoveInput = false;
+				}
 				gcRef.rewindPulser.InitiatePulse();				
 			}
 

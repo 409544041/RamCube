@@ -38,6 +38,7 @@ namespace Qbism.PlayerCube
 		ExpressionHandler expresHandler;
 
 		//States
+		public bool allowMoveInput { get; set; } = true;
 		public bool allowRewind { get; set; } = true;
 		public bool isBoosting { get; set; } = false;
 		public bool isTurning { get; set; } = false;
@@ -73,8 +74,6 @@ namespace Qbism.PlayerCube
 
 		private void OnEnable() 
 		{
-			if (moveHandler != null) moveHandler.onSetAllowRewind += SetAllowRewind;
-
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
@@ -96,7 +95,6 @@ namespace Qbism.PlayerCube
 
 		public void HandleSwipeInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			if (!allowRewind) return;
 			initiatedByPlayer = true;
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
@@ -271,10 +269,12 @@ namespace Qbism.PlayerCube
 			center.position = transform.position;
 		}
 
-		public void SetAllowRewind(bool value)
+		public void SetAllowInput(bool value)
 		{
-			if (!refs.gcRef.pauseOverlayHandler.overlayActive)
-				allowRewind = value;
+			if (refs.gcRef.pauseOverlayHandler.overlayActive) return;
+			
+			allowRewind = value;
+			allowMoveInput = value;
 		}
 
 		private bool FetchIsStunned()
@@ -313,8 +313,6 @@ namespace Qbism.PlayerCube
 
 		private void OnDisable()
 		{
-			if (moveHandler != null) moveHandler.onSetAllowRewind -= SetAllowRewind;
-
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)

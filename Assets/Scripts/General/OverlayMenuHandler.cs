@@ -112,7 +112,12 @@ namespace Qbism.General
 			SetButtonsInteractable(true);
 
 
-			if (gcRef != null) gcRef.pRef.playerMover.allowRewind = false;
+			if (gcRef != null)
+			{
+				gcRef.pRef.playerMover.allowRewind = false;
+				gcRef.pRef.playerMover.allowMoveInput = false;
+			}
+
 			if (mcRef != null)
 			{
 				foreach (var pin in mcRef.mlRef.levelPins)
@@ -159,7 +164,12 @@ namespace Qbism.General
 			yield return new WaitForSeconds(dur);
 			canvasGroup.alpha = 0;
 
-			if (gcRef != null) gcRef.pRef.playerMover.allowRewind = true;
+			if (gcRef != null)
+			{
+				gcRef.pRef.playerMover.allowRewind = true;
+				gcRef.pRef.playerMover.allowMoveInput = true;
+			}
+
 			if (mcRef != null)
 			{
 				foreach (var pin in mcRef.mlRef.levelPins)

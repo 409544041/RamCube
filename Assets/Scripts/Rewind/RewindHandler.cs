@@ -80,7 +80,8 @@ namespace Qbism.Rewind
 				MoveableCube moveable = null;
 				if (refs != null) moveable = body.cubeRef.movCube;
 
-				if (refs != null && moveable != null)
+				if (refs != null && moveable != null &&
+					refs.timeBody.movementOrderList.Count > 0)
 				{
 					if (refs.timeBody.movementOrderList[0] == -1) break;
 
