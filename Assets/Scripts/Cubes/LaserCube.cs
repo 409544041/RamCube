@@ -41,13 +41,17 @@ namespace Qbism.Cubes
 
 		private void OnEnable() 
 		{
-			if(mover != null) mover.onSetLaserTriggers += SetLaserTrigger;
+			if (mover != null) mover.onSetLaserTriggers += SetLaserTrigger;
+
 		}
 
 		private void Start()
 		{
 			mover.lasersInLevel = true;
 		}
+
+		//TO DO: update function with 'checkForBoostingPlayer' bool. if true,
+		// have a 'if dist < X, player farts' function. then set to false again.
 
 		private void FixedUpdate()
 		{
@@ -64,64 +68,70 @@ namespace Qbism.Cubes
 			RaycastHit[] hits = SortedSphereCasts();
 
 			AdjustBeamLength(hits);
+		}
 
-			if (hits.Length > 0 && (mover.allowRewind || mover.justBoosted))
+		public void HandleLaser()
+		{
+			int lengthRoundedDown = (int)(Math.Floor(currentLength));
+			Vector3 laserDir = transform.forward;
+			bool playerHit = false;
+
+			for (int i = 1; i <= lengthRoundedDown; i++)
 			{
-				if (hits[0].transform.gameObject.tag == "Player" &&
-				Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
-				{
-					if(shouldTrigger)
-					{
-						shouldTrigger = false;
-						var fartLauncher = refs.gcRef.pRef.fartLauncher;
-						bool hasHit = false;
-						RaycastHit hit = fartLauncher.FireRayCast(out hasHit);
-						if (hasHit) fartLauncher.FireBulletFart();
-						isClosed = true;
-					}
-				}
+				if (playerHit) return;
 
-				else if (hits[0].transform.gameObject.tag == "Player" &&
-					!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
-				{
-					if (shouldTrigger)
-					{
-						shouldTrigger = false;
-						juicer.TriggerDenyJuice(currentLength);
-						refs.gcRef.rewindPulser.InitiatePulse();
-						refs.gcRef.pRef.stunJuicer.PlayStunVFX();
-						mover.isStunned = true;						
-					}
-				}
+				Vector3 checkPos = transform.position + (laserDir * i);
 
-				else GoIdle();
+				Vector2Int roundedCheckPos = new Vector2Int
+					(Mathf.RoundToInt(checkPos.x), Mathf.RoundToInt(checkPos.z));
+
+				if (roundedCheckPos == refs.gcRef.pRef.cubePos.FetchGridPos())
+				{
+					HandleHittingPlayer();
+					playerHit = true;
+				}
 			}
 
-			else GoIdle();
+			GoIdle();
+		}
+
+		private void HandleHittingPlayer()
+		{
+			if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1)
+				&& shouldTrigger)
+			{
+				shouldTrigger = false;
+				var fartLauncher = refs.gcRef.pRef.fartLauncher;
+				bool hasHit = false;
+				RaycastHit hit = fartLauncher.FireRayCast(out hasHit);
+				if (hasHit) fartLauncher.FireBulletFart();
+				isClosed = true;
+			}
+
+			else if (!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward),
+				-1) && shouldTrigger)
+			{
+				shouldTrigger = false;
+				juicer.TriggerDenyJuice(currentLength);
+				refs.gcRef.rewindPulser.InitiatePulse();
+				refs.gcRef.pRef.stunJuicer.PlayStunVFX();
+				mover.isStunned = true;
+			}
 		}
 
 		private void GoIdle()
 		{
-			if (isClosed && !laserPause)
+			if (isClosed)
 			{
 				isClosed = false;
-				laserPause = true;
-				StartCoroutine(TriggerIdleLaserOnDelay());
+				juicer.TriggerIdleJuice();
+				CastDottedLines(dist, distance);
 			}
-			else if (!isClosed && !laserPause)
+			else
 			{
 				juicer.TriggerIdleJuice();
 				CastDottedLines(dist, distance);
 			}
-		}
-
-		private IEnumerator TriggerIdleLaserOnDelay()
-		{
-			//So laser turns back on when player has had time to move on
-			yield return new WaitForSeconds(idleLaserDelay);
-			juicer.TriggerIdleJuice();
-			laserPause = false;
-			CastDottedLines(dist, distance);
 		}
 
 		public void CloseEye() //Called from fart particle collision
@@ -151,13 +161,20 @@ namespace Qbism.Cubes
 
 		private void AdjustBeamLength(RaycastHit[] hits)
 		{
+			bool playerFirstHit = false;
 			if (hits.Length <= 0) dist = distance + radius + .2f;
-			else dist = hits[0].distance + radius + .2f;
+			else
+			{
+				if (hits[0].collider.tag == "Player") playerFirstHit = true;
+				dist = hits[0].distance + radius + .2f;
+			}
 
 			if (dist != currentLength && !isClosed)
 			{
+				var visualDist = dist;
+				if (playerFirstHit) dist += 1;
 				CastDottedLines(dist, distance);
-				juicer.AdjustBeamVisualLength(dist);
+				juicer.AdjustBeamVisualLength(visualDist);
 				currentLength = dist;
 			}
 		}
@@ -167,6 +184,8 @@ namespace Qbism.Cubes
 			int distRoundDown = (int)(Math.Floor(dist));
 			int startDistRoundDown = (int)(Math.Floor(startDist));
 			Vector3 laserDir = transform.forward;
+			//TO DO: Use this system to get the coordinates
+			// to take into acount for boost overlap
 
 			//enables dotted lines on cubes within distance
 			CheckForCubes(laserDir, 1, distRoundDown, true);

@@ -22,6 +22,7 @@ namespace Qbism.Cubes
 		PlayerCubeFlipJuicer playerFlipJuicer;
 		FeedForwardCube[] ffCubes;
 		PlayerRefHolder player;
+		LaserRefHolder[] lasers;
 
 		//States
 		public FloorCube currentCube { get; set; } = null;
@@ -39,6 +40,7 @@ namespace Qbism.Cubes
 			playerFlipJuicer = player.flipJuicer;
 			playerBoostJuicer = player.boostJuicer;
 			ffCubes = player.ffCubes;
+			lasers = glRef.gcRef.laserRefs;
 		}
 
 		private void OnEnable() 
@@ -74,6 +76,11 @@ namespace Qbism.Cubes
 			{
 				currentCube = handler.FetchCube(cubePos, true);
 				bool differentCubes = currentCube != previousCube;
+
+				foreach (var lRef in lasers)
+				{
+					lRef.laser.HandleLaser();
+				}
 
 				if (currentCube.FetchType() == CubeTypes.Boosting && differentCubes)
 					currentCube.refs.boostCube.PrepareAction(cube);

@@ -38,6 +38,10 @@ namespace Qbism.Cubes
 			Vector3 boostTarget = GetBoostTarget(boostMaskPlayer, out wallObject, out remainOnBoost);
 			if (wallObject) popWall = wallObject.GetComponent<PopUpWall>();
 
+			//TO DO: Create list of v2int coordinates that the boost will cover
+			// if overlap with laser > set bool in laser script to true to check for player
+			// distance to overlap point to trigger fart
+
 			mover.isBoosting = true;
 			mover.justBoosted = true;
 
