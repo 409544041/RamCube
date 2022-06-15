@@ -90,6 +90,7 @@ namespace Qbism.Cubes
 			denyBeam.Stop();
 			laserBeam.Stop();
 			pinkEyeVFX.Stop();
+			laserTipLight.enabled = false;
 		}
 
 		public void TriggerDenyJuice(float dist)
