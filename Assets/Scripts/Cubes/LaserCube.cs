@@ -53,9 +53,6 @@ namespace Qbism.Cubes
 			mover.lasersInLevel = true;
 		}
 
-		//TO DO: update function with 'checkForBoostingPlayer' bool. if true,
-		// have a 'if dist < X, player farts' function. then set to false again.
-
 		private void FixedUpdate()
 		{
 			if (!finish.hasFinished) FireSphereCast();
@@ -95,7 +92,7 @@ namespace Qbism.Cubes
 				}
 			}
 
-			GoIdle();
+			if (!playerHit) GoIdle();
 		}
 
 		public void HandleHittingPlayerInBoost(Vector3 crossPoint, bool bulletFart)
@@ -132,7 +129,7 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private void GoIdle()
+		public void GoIdle()
 		{
 			if (isClosed)
 			{

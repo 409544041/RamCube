@@ -239,6 +239,11 @@ namespace Qbism.PlayerCube
 			newInput = false;
 			refs.cubePos.RoundPosition();
 			refs.gcRef.rewindPulser.InitiatePulse();
+
+			foreach (var lRef in refs.gcRef.laserRefs)
+			{
+				lRef.laser.GoIdle();
+			}
 		}
 
 		public bool CheckForWallAhead(Vector2Int posAhead)

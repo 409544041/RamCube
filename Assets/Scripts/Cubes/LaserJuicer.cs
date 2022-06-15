@@ -72,7 +72,6 @@ namespace Qbism.Cubes
 		public void TriggerPassJuice()
 		{
 			isDenying = false;
-
 			laserBeam.Stop();
 			denyBeam.Stop();
 			pinkEyeVFX.Play();
