@@ -213,7 +213,8 @@ namespace Qbism.Cubes
 			GameObject wallObject = null;
 			bool remainOnBoost = false;
 			Vector3 boostTarget = GetBoostTarget(boostMaskMoveable, out wallObject, out remainOnBoost);
-			if (!remainOnBoost) movRef.boostJuicer.PlayBoostJuice(refs.boostDirTrans.transform.forward);
+			if (!remainOnBoost && !movCube.newPlayerMove)
+				movRef.boostJuicer.PlayBoostJuice(refs.boostDirTrans.transform.forward);
 
 			while (movCube.isBoosting && !remainOnBoost)
 			{

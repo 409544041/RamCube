@@ -214,6 +214,10 @@ namespace Qbism.MoveableCubes
 
 			AddComponents(cubePos);
 			refs.cubeUI.showCubeUI = true;
+
+			//below to avoid scaling bug when boosting into wall and then lowering while fastforward moving
+			yield return new WaitForSeconds(.15f);
+			refs.mesh.transform.localScale = Vector3.one;
 		}
 
 		private void AddComponents(Vector2Int cubePos)

@@ -230,11 +230,13 @@ namespace Qbism.PlayerCube
 			}
 
 			isLowered = true;
+
 			if (moveHandler.movingMoveables == 0)
 			{
 				allowRewind = true;
 				initiatedByPlayer = true;
 			}
+
 			isMoving = false;
 			newInput = false;
 			refs.cubePos.RoundPosition();
