@@ -21,6 +21,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] float shockedFaceTime = .5f, launchDur = 1, flyByDelay, flyByDur = 1,
 			flyByStartDisFromScreen = 50, flyByEndDisFromScreen = -15, flyBySizeAtStart = .5f,
 			flyBySizeAtEnd = 5;
+		public ParticleSystem bulletFart;
 		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
@@ -43,6 +44,9 @@ namespace Qbism.PlayerCube
 		float flyByStartX, flyByStartY, flyByTargetX, flyByTargetY;
 		Vector3 flyByStartPos, flyByEndPos;
 		public bool hasSegObj { get; set; } = false;
+		Vector3 bulletFartLocalPos;
+		Quaternion bulletFartRot;
+		Transform bulletFartParent;
 
 		//Actions, events, delegates etc
 		public event Action onDoneFarting;
@@ -60,6 +64,9 @@ namespace Qbism.PlayerCube
 		private void Start()
 		{
 			SaveOriginalScales();
+			bulletFartLocalPos = bulletFart.transform.localPosition;
+			bulletFartRot = bulletFart.transform.localRotation;
+			bulletFartParent = bulletFart.transform.parent;
 		}
 
 		private void Update()
@@ -106,8 +113,6 @@ namespace Qbism.PlayerCube
 			yield return new WaitForSeconds(feedbackDuration);
 
 			exprHandler.SetFace(Expressions.shocked, -1);
-
-			
 
 			if (segmentRescue)
 			{
@@ -191,6 +196,19 @@ namespace Qbism.PlayerCube
 		{
 			juicer.BulletFartJuice();
 			exprHandler.SetSituationFace(ExpressionSituations.fart, .75f);
+		}
+
+		public void SetBulletFartToPos(Vector3 pos)
+		{
+			bulletFart.transform.parent = null;
+			bulletFart.transform.position = pos;
+		}
+
+		public void SetBulletFartBackToParent()
+		{
+			bulletFart.transform.parent = bulletFartParent;
+			bulletFart.transform.localRotation = bulletFartRot;
+			bulletFart.transform.localPosition = bulletFartLocalPos;
 		}
 
 		private void StopFartHit()

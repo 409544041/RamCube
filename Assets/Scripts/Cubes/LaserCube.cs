@@ -21,6 +21,7 @@ namespace Qbism.Cubes
 		LaserJuicer juicer;
 		CubeHandler cubeHandler;
 		FinishCube finish;
+		PlayerFartLauncher fartLauncher;
 
 
 		//States
@@ -30,13 +31,15 @@ namespace Qbism.Cubes
 		public bool laserPause { get; set; } = false;
 		public float dist { get; set; }
 		bool eyeClosedForFinish = false;
+		public List<Vector2Int> posInLaserPath { get; set; } = new List<Vector2Int>();
 
 		private void Awake()
 		{
 			mover = refs.gcRef.pRef.playerMover;
 			juicer = refs.juicer;
 			cubeHandler = refs.gcRef.glRef.cubeHandler;
-			finish = refs.gcRef.finishRef.finishCube; 
+			finish = refs.gcRef.finishRef.finishCube;
+			fartLauncher = refs.gcRef.pRef.fartLauncher;
 		}
 
 		private void OnEnable() 
@@ -87,7 +90,7 @@ namespace Qbism.Cubes
 
 				if (roundedCheckPos == refs.gcRef.pRef.cubePos.FetchGridPos())
 				{
-					HandleHittingPlayer();
+					HandleHittingPlayer(true);
 					playerHit = true;
 				}
 			}
@@ -95,16 +98,26 @@ namespace Qbism.Cubes
 			GoIdle();
 		}
 
-		private void HandleHittingPlayer()
+		public void HandleHittingPlayerInBoost(Vector3 crossPoint, bool bulletFart)
+		{
+			fartLauncher.SetBulletFartToPos(crossPoint);
+			HandleHittingPlayer(bulletFart);
+		}
+
+		private void HandleHittingPlayer(bool bulletFart)
 		{
 			if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1)
 				&& shouldTrigger)
 			{
 				shouldTrigger = false;
-				var fartLauncher = refs.gcRef.pRef.fartLauncher;
-				bool hasHit = false;
-				RaycastHit hit = fartLauncher.FireRayCast(out hasHit);
-				if (hasHit) fartLauncher.FireBulletFart();
+
+				if (bulletFart)
+				{
+					fartLauncher.SetBulletFartBackToParent();
+					fartLauncher.FireBulletFart();
+				}
+
+				CloseEye();
 				isClosed = true;
 			}
 
@@ -134,7 +147,7 @@ namespace Qbism.Cubes
 			}
 		}
 
-		public void CloseEye() //Called from fart particle collision
+		public void CloseEye()
 		{
 			juicer.TriggerPassJuice();
 			CheckForCubes(transform.forward, 1, (int)(Math.Floor(distance)), false);
@@ -198,6 +211,8 @@ namespace Qbism.Cubes
 		private void CheckForCubes(Vector3 laserDir, int iStart, 
 			int iCondition, bool enable)
 		{
+			if (enable) posInLaserPath.Clear();
+
 			//checks each int within the laser distance
 			for (int i = iStart; i <= iCondition; i++)
 			{
@@ -205,6 +220,8 @@ namespace Qbism.Cubes
 
 				Vector2Int roundedCheckPos = new Vector2Int
 					(Mathf.RoundToInt(checkPos.x), Mathf.RoundToInt(checkPos.z));
+
+				if (enable) posInLaserPath.Add(roundedCheckPos);
 
 				if (cubeHandler.CheckFloorCubeDicKey(roundedCheckPos))
 				{
