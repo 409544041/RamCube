@@ -87,7 +87,9 @@ namespace Qbism.PlayerCube
 		{
 			ResetMMPosValues();
 
-			postBoostParticles.transform.forward = transform.TransformDirection(boostImpactDir);
+			//the if statement prevents look rotation vector zero error
+			if (transform.TransformDirection(boostImpactDir) != Vector3.zero)
+				postBoostParticles.transform.forward = transform.TransformDirection(boostImpactDir);
 			postBoostMMParticles.Offset = boostImpactDir * .5f;
 
 			for (int i = 0; i < postBoostMMScalers.Length; i++)

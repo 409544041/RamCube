@@ -102,7 +102,7 @@ namespace Qbism.PlayerCube
 		public void HandleKeyInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			initiatedByPlayer = true;
-			StartCoroutine(Move(side, turnAxis, posAhead));
+			StartCoroutine(MoveableAndInitiationSourceCheck(side, turnAxis, posAhead));
 		}
 
 		public void InitiateMoveFromOther(MoveableCube cube, Transform side, Vector3 turnAxis, 
@@ -113,12 +113,22 @@ namespace Qbism.PlayerCube
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
 
+		private IEnumerator MoveableAndInitiationSourceCheck(Transform side, 
+			Vector3 turnAxis, Vector2Int posAhead)
+		{
+			if (moveHandler.movingMoveables > 0 && initiatedByPlayer) moveHandler.InstantFinishMovingMoveables();
+			while (moveHandler.movingMoveables > 0 && initiatedByPlayer)
+			{
+				yield return null;
+			}
+			moveHandler.ResetMovedMoveables();
+			//Check if while waiting initiatedByPlayer hasn't been set to false
+			if (initiatedByPlayer) StartCoroutine(Move(side, turnAxis, posAhead));
+		}
+
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			var cubeToShrink = refs.cubePos.FetchGridPos();
-			if (moveHandler.movingMoveables > 0 && initiatedByPlayer) moveHandler.InstantFinishMovingMoveables();
-			while (moveHandler.movingMoveables > 0 && initiatedByPlayer) yield return null;
-			moveHandler.ResetMovedMoveables();
 
 			if (CheckForWallAhead(posAhead)) //to avoid ffInputting into newly created mov wall
 			{

@@ -213,7 +213,7 @@ namespace Qbism.MoveableCubes
 			onStopMovingMoveable(cubePos, this, true);
 
 			AddComponents(cubePos);
-			refs.cubeUI.showCubeUI = true;
+			if (refs.cubeUI != null) refs.cubeUI.showCubeUI = true;
 
 			//below to avoid scaling bug when boosting into wall and then lowering while fastforward moving
 			yield return new WaitForSeconds(.15f);
