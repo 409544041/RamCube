@@ -16,6 +16,7 @@ namespace Qbism.Cubes
 		MoveableCubeHandler moveHandler;
 		MoveableCube[] moveableCubes;
 		PlayerRefHolder pRef;
+		LaserRefHolder[] lasers;
 
 		private void Awake() 
 		{
@@ -23,6 +24,7 @@ namespace Qbism.Cubes
 			moveHandler = glRef.movCubeHandler;
 			moveableCubes = glRef.gcRef.movCubes;
 			pRef = glRef.gcRef.pRef;
+			lasers = glRef.gcRef.laserRefs;
 		}
 
 		private void OnEnable() 
@@ -46,6 +48,11 @@ namespace Qbism.Cubes
 			{
 				cube.currentFloorCube = handler.FetchCube(cubePos, true);
 				var currentCube = cube.currentFloorCube;
+
+				foreach (var lRef in lasers)
+				{
+					lRef.laser.HandleLaser();
+				}
 
 				if (currentCube.FetchType() == CubeTypes.Boosting && currentCube != prevCube)
 				{

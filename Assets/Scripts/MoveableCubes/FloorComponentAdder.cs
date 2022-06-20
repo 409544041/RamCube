@@ -28,9 +28,9 @@ namespace Qbism.MoveableCubes
 			newFloor.refs = refs;
 
 			onAddToMovFloorDic(cubePos, newFloor);
-			LaserDottedLineCheck();
 			refs.cubeShrink.SetResetData();
 			PlaceMarkOnGround();
+			LaserDottedLineCheck();
 		}
 
 		private void PlaceMarkOnGround()
@@ -43,13 +43,11 @@ namespace Qbism.MoveableCubes
 
 		private void LaserDottedLineCheck()
 		{
-			LaserCube[] lasers = FindObjectsOfType<LaserCube>();
-			if (lasers.Length > 0)
+			var lasers = refs.gcRef.laserRefs;
+
+			foreach (var lRef in lasers)
 			{
-				foreach (var laser in lasers)
-				{
-					laser.CastDottedLines(laser.dist, laser.distance);
-				}
+				lRef.laser.HandleLaser();
 			}
 		}
 	}

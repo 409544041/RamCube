@@ -44,7 +44,6 @@ namespace Qbism.PlayerCube
 		public bool isTurning { get; set; } = false;
 		public bool initiatedByPlayer { get; set; } = true;
 		public bool isMoving { get; set; } = false;
-		public bool lasersInLevel { get; set; } = false;
 		private Vector3 startScale = new Vector3(1, 1, 1);
 		public bool isStunned { get; set; }	= false;
 		public bool isOutOfBounds { get; set; } = false;
@@ -60,7 +59,6 @@ namespace Qbism.PlayerCube
 		public event Action<Vector2Int, GameObject, Transform, Vector3, Vector2Int> onFloorCheck;
 		public event Action<Vector3, Quaternion, Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action onInitialFloorCubeRecord;
-		public event Action<bool> onSetLaserTriggers;
 
 		private void Awake()
 		{
@@ -135,7 +133,8 @@ namespace Qbism.PlayerCube
 				InitiateWiggle(side, turnAxis);
 				yield break;
 			}
-			
+
+			refs.stunJuicer.StopStunVFX();
 			isMoving = true;
 			allowRewind = false;
 
@@ -146,8 +145,6 @@ namespace Qbism.PlayerCube
 				onInitialFloorCubeRecord();
 				moveHandler.InitialRecordMoveables();
 			} 
-
-			if(lasersInLevel) onSetLaserTriggers(true);
 
 			ActivateMoveableAhead(posAhead, turnAxis);
 

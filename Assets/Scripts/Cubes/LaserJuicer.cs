@@ -15,10 +15,6 @@ namespace Qbism.Cubes
 		[Header ("Particles")]
 		[SerializeField] ParticleSystem laserBeam; 
 		[SerializeField] ParticleSystem denyBeam, denySunSpots, pinkEyeVFX;
-		[Header ("Audio")]
-		[SerializeField] float stunSoundDelay = .2f;
-		[SerializeField] AudioClip[] stunClips;
-		[SerializeField] AudioSource stunSource;
 
 		//Cache
 		LaserMouthAnimator mouthAnim;
@@ -26,7 +22,7 @@ namespace Qbism.Cubes
 		MMFeedbackWiggle denyMMWiggle;
 
 		//States
-		bool isDenying = false;
+		public bool isDenying { get; private set; } = false;
 		float shakeTimer = 0;
 		float shakeDur = 0;
 		float stunTimer = 0;
@@ -39,15 +35,9 @@ namespace Qbism.Cubes
 			shakeDur = denyMMWiggle.WigglePositionDuration;
 		}
 
-		private void Start() 
-		{
-			stunTimer = stunSoundDelay;
-		}
-
 		private void Update()
 		{
 			HandleShakeTimer();
-			HandleStunSoundTimer();
 		}
 
 		public void AdjustBeamVisualLength(float dist)
@@ -139,29 +129,6 @@ namespace Qbism.Cubes
 					shakeTimer = 0;
 				}
 			}
-		}
-
-		private void HandleStunSoundTimer()
-		{
-			if (isDenying)
-			{
-				stunTimer += Time.deltaTime;
-
-				if (stunTimer >= stunSoundDelay)
-				{
-					PlayDenySounds();
-					stunTimer = 0;
-				}
-			}
-		}
-
-		private void PlayDenySounds()
-		{
-			float pitchValue = Random.Range(.3f, .5f);
-			stunSource.pitch = pitchValue;
-
-			int i = Random.Range(0, stunClips.Length);
-			stunSource.PlayOneShot(stunClips[i], .75f);
 		}
 
 		private void MoveTipLight(float dist)

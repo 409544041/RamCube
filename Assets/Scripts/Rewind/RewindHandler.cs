@@ -120,7 +120,6 @@ namespace Qbism.Rewind
 				foreach (var laserRef in laserRefs)
 				{
 					laserRef.laser.HandleLaser();
-					laserRef.laser.shouldTrigger = true;
 				}
 			}
 		}
