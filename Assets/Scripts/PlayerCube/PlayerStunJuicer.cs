@@ -14,6 +14,7 @@ namespace Qbism.PlayerCube
 		[SerializeField] GameObject stunMesh;
 		[SerializeField] AudioClip[] stunClips;
 		[SerializeField] float stunSoundDelay = .2f;
+		[SerializeField] AudioSource stunSource;
 		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
@@ -23,12 +24,14 @@ namespace Qbism.PlayerCube
 		float shakeTimer = 0;
 		float shakeDur = 0;
 		float stunTimer = 0;
+		float originalVolume;
 
 		private void Awake()
 		{
 			stunMMWiggle = stunWiggleJuice.GetComponent<MMFeedbackWiggle>();
 			shakeDur = stunMMWiggle.WigglePositionDuration;
 			stunTimer = stunSoundDelay;
+			originalVolume = stunSource.volume;
 		}
 
 		private void Update()
@@ -53,6 +56,7 @@ namespace Qbism.PlayerCube
 		{
 			stunVFX.Stop();
 			stunMesh.SetActive(false);
+			stunSource.volume = 0;
 		}
 
 		private void HandleShakeTimer()
@@ -82,11 +86,13 @@ namespace Qbism.PlayerCube
 
 		private void PlayDenySounds()
 		{
+			if(stunSource.volume != originalVolume) stunSource.volume = originalVolume;
+
 			float pitchValue = Random.Range(.3f, .5f);
-			refs.source.pitch = pitchValue;
+			stunSource.pitch = pitchValue;
 
 			int i = Random.Range(0, stunClips.Length);
-			refs.source.PlayOneShot(stunClips[i], .75f);
+			stunSource.PlayOneShot(stunClips[i], .75f);
 		}
 
 		private void Shake()
