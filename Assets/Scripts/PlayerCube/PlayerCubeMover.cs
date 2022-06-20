@@ -38,12 +38,12 @@ namespace Qbism.PlayerCube
 		ExpressionHandler expresHandler;
 
 		//States
-		public bool input { get; set; } = true;
+		public bool allowMoveInput { get; set; } = true;
+		public bool allowRewind { get; set; } = true;
 		public bool isBoosting { get; set; } = false;
 		public bool isTurning { get; set; } = false;
-		bool initiatedByPlayer = true;
+		public bool initiatedByPlayer { get; set; } = true;
 		public bool isMoving { get; set; } = false;
-		public bool lasersInLevel { get; set; } = false;
 		private Vector3 startScale = new Vector3(1, 1, 1);
 		public bool isStunned { get; set; }	= false;
 		public bool isOutOfBounds { get; set; } = false;
@@ -51,14 +51,14 @@ namespace Qbism.PlayerCube
 		public bool isLowered { get; set; } = false;
 		public bool justBoosted { get; set; } = false;
 		public bool isRewinding { get; set; } = false;
-		public bool movReversed { get; set; } = false;
+		public bool newInput { get; set; } = false;
+		public bool prevMoveNewInput { get; set; } = false;
 
 		//Actions, events, delegates etc
 		public event Action<Vector2Int> onCubeShrink;
 		public event Action<Vector2Int, GameObject, Transform, Vector3, Vector2Int> onFloorCheck;
 		public event Action<Vector3, Quaternion, Vector3, Quaternion, Vector3> onInitialRecord;
 		public event Action onInitialFloorCubeRecord;
-		public event Action<bool> onSetLaserTriggers;
 
 		private void Awake()
 		{
@@ -72,8 +72,6 @@ namespace Qbism.PlayerCube
 
 		private void OnEnable() 
 		{
-			if (moveHandler != null) moveHandler.onSetPlayerInput += SetInput;
-
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)
@@ -95,7 +93,6 @@ namespace Qbism.PlayerCube
 
 		public void HandleSwipeInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
-			if (!input) return;
 			initiatedByPlayer = true;
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
@@ -103,7 +100,7 @@ namespace Qbism.PlayerCube
 		public void HandleKeyInput(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			initiatedByPlayer = true;
-			StartCoroutine(Move(side, turnAxis, posAhead));
+			StartCoroutine(MoveableAndInitiationSourceCheck(side, turnAxis, posAhead));
 		}
 
 		public void InitiateMoveFromOther(MoveableCube cube, Transform side, Vector3 turnAxis, 
@@ -114,12 +111,32 @@ namespace Qbism.PlayerCube
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
 
+		private IEnumerator MoveableAndInitiationSourceCheck(Transform side, 
+			Vector3 turnAxis, Vector2Int posAhead)
+		{
+			if (moveHandler.movingMoveables > 0 && initiatedByPlayer) moveHandler.InstantFinishMovingMoveables();
+			while (moveHandler.movingMoveables > 0 && initiatedByPlayer)
+			{
+				yield return null;
+			}
+			moveHandler.ResetMovedMoveables();
+			//Check if while waiting initiatedByPlayer hasn't been set to false
+			if (initiatedByPlayer) StartCoroutine(Move(side, turnAxis, posAhead));
+		}
+
 		public IEnumerator Move(Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			var cubeToShrink = refs.cubePos.FetchGridPos();
-			moveHandler.ResetMovedMoveables();
 
+			if (CheckForWallAhead(posAhead)) //to avoid ffInputting into newly created mov wall
+			{
+				InitiateWiggle(side, turnAxis);
+				yield break;
+			}
+
+			refs.stunJuicer.StopStunVFX();
 			isMoving = true;
+			allowRewind = false;
 
 			if (initiatedByPlayer)
 			{
@@ -129,13 +146,11 @@ namespace Qbism.PlayerCube
 				moveHandler.InitialRecordMoveables();
 			} 
 
-			if(lasersInLevel) onSetLaserTriggers(true);
-
 			ActivateMoveableAhead(posAhead, turnAxis);
 
-			input = false;
+			var startRot = transform.rotation;
 
-			if (initiatedByPlayer)
+			if (initiatedByPlayer && !prevMoveNewInput)
 			{
 				playerFlipJuicer.PlayFlipJuice();
 				yield return new WaitForSeconds(playerFlipJuicer.preFlipJuiceDuration);
@@ -143,9 +158,21 @@ namespace Qbism.PlayerCube
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
-				transform.RotateAround(side.position, turnAxis, turnStep);
-				yield return new WaitForSeconds(timeStep);
+				if (!newInput)
+				{
+					transform.RotateAround(side.position, turnAxis, turnStep);
+					yield return new WaitForSeconds(timeStep);
+				}
+				else
+				{
+					transform.rotation = startRot;
+					transform.Rotate(turnAxis, 90, Space.World);
+					transform.position = new Vector3(posAhead.x, transform.position.y, posAhead.y);
+					break;
+				}
 			}
+
+			if (!newInput) prevMoveNewInput = false;
 
 			refs.cubePos.RoundPosition();
 			UpdateCenterPosition();
@@ -192,8 +219,6 @@ namespace Qbism.PlayerCube
 		private IEnumerator LowerCube(Vector3 targetPos, float step, 
 			Vector2Int cubePos, bool fromBoost)
 		{
-			input = false;
-			
 			if (fromBoost)
 			{
 				var juiceDur = boostJuicer.FetchJuiceDur();
@@ -212,10 +237,22 @@ namespace Qbism.PlayerCube
 			}
 
 			isLowered = true;
-			if (moveHandler.movingMoveables == 0) input = true;
+
+			if (moveHandler.movingMoveables == 0)
+			{
+				allowRewind = true;
+				initiatedByPlayer = true;
+			}
+
 			isMoving = false;
+			newInput = false;
 			refs.cubePos.RoundPosition();
 			refs.gcRef.rewindPulser.InitiatePulse();
+
+			foreach (var lRef in refs.gcRef.laserRefs)
+			{
+				lRef.laser.GoIdle();
+			}
 		}
 
 		public bool CheckForWallAhead(Vector2Int posAhead)
@@ -246,10 +283,12 @@ namespace Qbism.PlayerCube
 			center.position = transform.position;
 		}
 
-		public void SetInput(bool value)
+		public void SetAllowInput(bool value)
 		{
-			if (!refs.gcRef.pauseOverlayHandler.overlayActive)
-				input = value;
+			if (refs.gcRef.pauseOverlayHandler.overlayActive) return;
+			
+			allowRewind = value;
+			allowMoveInput = value;
 		}
 
 		private bool FetchIsStunned()
@@ -288,8 +327,6 @@ namespace Qbism.PlayerCube
 
 		private void OnDisable()
 		{
-			if (moveHandler != null) moveHandler.onSetPlayerInput -= SetInput;
-
 			if (moveableCubes != null)
 			{
 				foreach (MoveableCube cube in moveableCubes)

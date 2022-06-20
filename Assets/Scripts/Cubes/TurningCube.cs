@@ -43,10 +43,10 @@ namespace Qbism.Cubes
 
 		public IEnumerator ExecuteActionOnPlayer(GameObject cube)
 		{
-			mover.input = false;
 			mover.isTurning = true;
 
 			var axis = transform.TransformDirection(turnAxis);
+			var startRot = cube.transform.rotation;
 
 			refs.turnJuice.PlayFeedbacks();
 
@@ -55,8 +55,16 @@ namespace Qbism.Cubes
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
-				cube.transform.Rotate(axis, turnStep, Space.World);
-				yield return new WaitForSeconds(timeStep);
+				if (!mover.newInput)
+				{
+					cube.transform.Rotate(axis, turnStep, Space.World);
+					yield return new WaitForSeconds(timeStep);
+				}
+				else
+				{
+					cube.transform.rotation = startRot;
+					cube.transform.Rotate(axis, 90, Space.World);
+				}
 			}
 
 			player.cubePos.RoundPosition();
@@ -97,6 +105,7 @@ namespace Qbism.Cubes
 			var moveEffector = movRef.movEffector;
 
 			var axis = transform.TransformDirection(turnAxis);
+			var startRot = cube.transform.rotation;
 
 			if (moveEffector != null)
 			{
@@ -109,8 +118,16 @@ namespace Qbism.Cubes
 
 			for (int i = 0; i < (90 / turnStep); i++)
 			{
-				cube.transform.Rotate(axis, turnStep, Space.World);
-				yield return new WaitForSeconds(timeStep);
+				if (!movCube.newPlayerMove)
+				{
+					cube.transform.Rotate(axis, turnStep, Space.World);
+					yield return new WaitForSeconds(timeStep);
+				}
+				else
+				{
+					cube.transform.rotation = startRot;
+					cube.transform.Rotate(axis, 90, Space.World);
+				}
 			}
 
 			movRef.cubePos.RoundPosition();
@@ -121,12 +138,11 @@ namespace Qbism.Cubes
 
 			if (prevCube.FetchType() != CubeTypes.Boosting)
 				movCube.InitiateMove(side, movingTurnAxis, posAhead, originPos);
-			else 
+			else
 			{
 				var moveHandler = refs.gcRef.glRef.movCubeHandler;
 				moveHandler.StopMovingMoveables(cubePos, movCube, false);
 			}
-
 		}
 
 		private void CalculateSide(ref Transform side, ref Vector3 movingTurnAxis, ref Vector2Int posAhead, MoveableCube moveable, Vector2Int cubePos)

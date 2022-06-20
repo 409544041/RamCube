@@ -45,16 +45,13 @@ namespace Qbism.Rewind
 
 		public void StartRewinding()
 		{
-			if (!mover.input) return;
-
-			LaserRewindStuff();
+			if (!mover.allowRewind) return;
 			
 			RewindTimeBodies();
 
 			//To stop rewind UI element from pulsing if rewinding off finish
 			if (finish.wrongOnFinish) glRef.gcRef.rewindPulser.StopPulse();
-
-			StartCoroutine(DelayedLaserRewindStuff());
+			LaserRewindStuff();
 
 			handler.shrunkToFloorThisRewind = new Vector2Int(99, 99);
 		}
@@ -80,11 +77,12 @@ namespace Qbism.Rewind
 				MoveableCube moveable = null;
 				if (refs != null) moveable = body.cubeRef.movCube;
 
-				if (refs != null && moveable != null)
+				if (refs != null && moveable != null &&
+					refs.timeBody.movementOrderList.Count > 0)
 				{
-					if (moveable.orderOfMovement == -1) break;
+					if (refs.timeBody.movementOrderList[0] == -1) break;
 
-					rewindFirstDic.Add(moveable.orderOfMovement, body);
+					rewindFirstDic.Add(refs.timeBody.movementOrderList[0], body);
 					body.priorityRewind = true;
 				}
 			}
@@ -121,22 +119,7 @@ namespace Qbism.Rewind
 			{
 				foreach (var laserRef in laserRefs)
 				{
-					//To make sure there's no delay on turning on laser again upon rewind
-					laserRef.laser.laserPause = false;
-				}
-			}
-		}
-
-		private IEnumerator DelayedLaserRewindStuff()
-		{
-			yield return new WaitForSeconds(.05f); 
-			//to avoid laser reading player eventhough player already rewinded
-
-			if (laserRefs.Length > 0)
-			{
-				foreach (var laserRef in laserRefs)
-				{
-					laserRef.laser.shouldTrigger = true;
+					laserRef.laser.HandleLaser();
 				}
 			}
 		}

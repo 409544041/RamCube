@@ -103,7 +103,8 @@ namespace Qbism.Cubes
 
 			hasFinished = true;
 			player.exprHandler.hasFinished = true;
-			mover.input = false;
+			mover.allowRewind = false;
+			mover.allowMoveInput = false;
 
 			refs.finishJuicer.DeactivateGlow();
 			refs.finishJuicer.PlaySuccesSound();

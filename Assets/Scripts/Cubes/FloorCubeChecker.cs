@@ -22,6 +22,7 @@ namespace Qbism.Cubes
 		PlayerCubeFlipJuicer playerFlipJuicer;
 		FeedForwardCube[] ffCubes;
 		PlayerRefHolder player;
+		LaserRefHolder[] lasers;
 
 		//States
 		public FloorCube currentCube { get; set; } = null;
@@ -39,6 +40,7 @@ namespace Qbism.Cubes
 			playerFlipJuicer = player.flipJuicer;
 			playerBoostJuicer = player.boostJuicer;
 			ffCubes = player.ffCubes;
+			lasers = glRef.gcRef.laserRefs;
 		}
 
 		private void OnEnable() 
@@ -75,6 +77,11 @@ namespace Qbism.Cubes
 				currentCube = handler.FetchCube(cubePos, true);
 				bool differentCubes = currentCube != previousCube;
 
+				foreach (var lRef in lasers)
+				{
+					lRef.laser.HandleLaser();
+				}
+
 				if (currentCube.FetchType() == CubeTypes.Boosting && differentCubes)
 					currentCube.refs.boostCube.PrepareAction(cube);
 
@@ -88,8 +95,14 @@ namespace Qbism.Cubes
 					{
 						//landing on same cube, like after having turned
 						if (!mover.isStunned) cubeFF.ShowFeedForward();
-						if (moveHandler.movingMoveables == 0) mover.input = true;
+						if (moveHandler.movingMoveables == 0)
+						{
+							mover.allowRewind = true;
+							mover.initiatedByPlayer = true;
+						}
 						mover.isMoving = false;
+						mover.newInput = false;
+
 						if (previousCube.FetchType() == CubeTypes.Boosting)
 							playerBoostJuicer.PlayPostBoostJuice();
 					}
@@ -138,10 +151,15 @@ namespace Qbism.Cubes
 		private void HandleLandingOnFinalPos(FloorCube previousCube)
 		{
 			if (!mover.isStunned) cubeFF.ShowFeedForward();
-			if (moveHandler.movingMoveables == 0) mover.input = true;
+			if (moveHandler.movingMoveables == 0)
+			{
+				mover.allowRewind = true;
+				mover.initiatedByPlayer = true;
+			}
 			onCheckForFinish();
 
 			mover.isMoving = false;
+			mover.newInput = false;
 
 			if (previousCube.FetchType() != CubeTypes.Boosting)
 				playerFlipJuicer.PlayPostFlipJuice();

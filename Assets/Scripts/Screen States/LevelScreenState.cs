@@ -58,9 +58,15 @@ namespace Qbism.ScreenStateMachine
 		public void HandleMoveInput(Transform turnSide, Vector2Int posAheadDir, Vector3 turnAxis,
 			InputDetector inputDetector)
 		{
-			if (mover.isOutOfBounds || !mover.input) return;
+			if (mover.isOutOfBounds || !mover.initiatedByPlayer || !mover.allowMoveInput) return;
 
 			inputDetector.inputting = true;
+			if (mover.isMoving && !mover.newInput)
+			{
+				mover.newInput = true;
+				StartCoroutine(NextInput(turnSide, posAheadDir, turnAxis, inputDetector));
+				return;
+			}
 			var posAhead = gcRef.pRef.cubePos.FetchGridPos() + posAheadDir;
 
 			if (mover.isStunned || mover.isLowered) mover.InitiateWiggle(turnSide, turnAxis);
@@ -74,6 +80,14 @@ namespace Qbism.ScreenStateMachine
 			}
 
 			else mover.InitiateWiggle(turnSide, turnAxis);
+		}
+
+		private IEnumerator NextInput(Transform turnSide, Vector2Int posAheadDir, Vector3 turnAxis,
+			InputDetector inputDetector)
+		{
+			while (mover.newInput) yield return null;
+			mover.prevMoveNewInput = true;
+			HandleMoveInput(turnSide, posAheadDir, turnAxis, inputDetector);
 		}
 
 		public void HandleResetInput()
@@ -101,7 +115,7 @@ namespace Qbism.ScreenStateMachine
 
 		public void HandleDebugCompleteInput()
 		{
-			if (gcRef.persRef.switchBoard.allowDebugFinish && mover.input) 
+			if (gcRef.persRef.switchBoard.allowDebugFinish && mover.allowMoveInput) 
 				gcRef.finishRef.finishCube.Finish(true);
 		}
 

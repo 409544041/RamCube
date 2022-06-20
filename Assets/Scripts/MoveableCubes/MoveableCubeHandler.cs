@@ -22,7 +22,6 @@ namespace Qbism.MoveableCubes
 			new Dictionary<Vector2Int, MoveableCube>();
 
 		public event Action<CubeRefHolder, Vector3, Quaternion, Vector3, Quaternion, Vector3> onInitialCubeRecording;
-		public event Action<bool> onSetPlayerInput;
 
 		private void Awake() 
 		{
@@ -76,16 +75,20 @@ namespace Qbism.MoveableCubes
 			Vector2Int posAhead = new Vector2Int(0, 0);
 			Vector2Int originPos = cubePos;
 
-			CalculateSide(cubePos, activatorPos, cube, ref side, ref posAhead);
-			cube.InitiateMove(side, turnAxis, posAhead, originPos);
-
-			if (!cube.CheckForWallAhead(cubePos, posAhead)) 
+			if (!cube.CheckForWallAhead(cubePos, posAhead))
 				RemoveFromMoveableDic(cubePos);
+
+			CalculateSide(cubePos, activatorPos, cube, ref side, ref posAhead);
+			cube.InitiateMove(side, turnAxis, posAhead, originPos);;
 		}
 
 		public void CheckForMovingMoveables()
 		{
-			if (movingMoveables == 0) onSetPlayerInput(true);
+			if (movingMoveables == 0)
+			{
+				gcRef.pRef.playerMover.SetAllowInput(true);
+				gcRef.pRef.playerMover.initiatedByPlayer = true;
+			}
 		}
 
 		public void StartMovingMoveable(Vector2Int posAhead, Vector3 turnAxis,
@@ -94,6 +97,7 @@ namespace Qbism.MoveableCubes
 			moveableCubeDic[posAhead].ApplyOrderOfMovement(moveablesMovedThisTurn);
 			moveablesMovedThisTurn++;
 			movingMoveables++;
+
 			ActivateMoveableCube(posAhead, turnAxis, pos);
 		}
 
@@ -102,6 +106,7 @@ namespace Qbism.MoveableCubes
 		{
 			movingMoveables--;
 			if (!becomeFloor) AddToMoveableDic(cubePos, moveable);
+			moveable.newPlayerMove = false;
 			CheckForMovingMoveables();
 		}
 
@@ -177,6 +182,15 @@ namespace Qbism.MoveableCubes
 			foreach (var cube in moveableCubes)
 			{
 				cube.orderOfMovement = -1;
+				cube.newPlayerMove = false;
+			}
+		}
+
+		public void InstantFinishMovingMoveables()
+		{
+			foreach (var cube in moveableCubes)
+			{
+				cube.newPlayerMove = true;
 			}
 		}
 
