@@ -57,7 +57,6 @@ namespace Qbism.Rewind
 			
 			RewindTimeBodies();
 
-			//To stop rewind UI element from pulsing if rewinding off finish
 			if (finish.wrongOnFinish) glRef.gcRef.rewindPulser.StopPulse();
 			LaserRewindStuff();
 
@@ -67,10 +66,7 @@ namespace Qbism.Rewind
 		private void RewindTimeBodies()
 		{
 			FillMovRewindDic();
-			//SortedDictionary<int, TimeBody> rewindFirstDic = CreateRewindFirstDic();
-			//PriorityRewind(rewindFirstDic);
 			NormalRewind();
-			//ResetPriorityRewindValue(rewindFirstDic);
 		}
 
 		private void FillMovRewindDic()
@@ -111,39 +107,6 @@ namespace Qbism.Rewind
 			}
 		}
 
-		//private SortedDictionary<int, TimeBody> CreateRewindFirstDic()
-		//{
-		//	SortedDictionary<int, TimeBody> rewindFirstDic =
-		//					new SortedDictionary<int, TimeBody>();
-
-		//	//Order in which moveables get rewinded is important to avoid dic errors
-		//	foreach (TimeBody body in timeBodies)
-		//	{
-		//		var refs = body.cubeRef;
-
-		//		MoveableCube moveable = null;
-		//		if (refs != null) moveable = body.cubeRef.movCube;
-
-		//		if (refs != null && moveable != null &&
-		//			refs.timeBody.movementOrderList.Count > 0)
-		//		{
-		//			if (refs.timeBody.movementOrderList[0] == -1) break;
-
-		//			rewindFirstDic.Add(refs.timeBody.movementOrderList[0], body);
-		//			body.priorityRewind = true;
-		//		}
-		//	}
-		//	return rewindFirstDic;
-		//}
-
-		//private static void PriorityRewind(SortedDictionary<int, TimeBody> rewindFirstDic)
-		//{
-		//	for (int j = 0; j < rewindFirstDic.Count; j++)
-		//	{
-		//		rewindFirstDic[j].StartRewind();
-		//	}
-		//}
-
 		private void NormalRewind()
 		{
 			foreach (var body in timeBodies)
@@ -151,14 +114,6 @@ namespace Qbism.Rewind
 				body.StartRewind();
 			}
 		}
-
-		//private static void ResetPriorityRewindValue(SortedDictionary<int, TimeBody> rewindFirstDic)
-		//{
-		//	foreach (var pair in rewindFirstDic)
-		//	{
-		//		pair.Value.priorityRewind = false;
-		//	}
-		//}
 
 		private void LaserRewindStuff()
 		{

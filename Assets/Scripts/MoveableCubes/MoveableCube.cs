@@ -32,7 +32,6 @@ namespace Qbism.MoveableCubes
 		public bool hasBumped { get; set; } = false;
 		public bool isOutOfBounds { get; set; } = false;
 		Quaternion resetRot;
-		public int orderOfMovement { get; set; } = -1;
 		Vector3 faceScale;
 		public FloorCube currentFloorCube { get; set; }
 		public bool newPlayerMove { get; set; } = false;
@@ -45,7 +44,6 @@ namespace Qbism.MoveableCubes
 		public event Action<Vector2Int, Vector3, Vector2Int> onStartMovingMoveable;
 		public event Action<Vector2Int, MoveableCube, bool> onStopMovingMoveable;
 		public event Action<MoveableCube, Transform, Vector3, Vector2Int> onActivatePlayerMove;
-		public event Action<int, MoveableCube> onUpdateOrderInTimebody;
 
 		private void Start()
 		{
@@ -238,12 +236,6 @@ namespace Qbism.MoveableCubes
 				return onWallForCubeAheadCheck(posAhead, posAheadOfAhead);
 			}
 			else return onWallKeyCheck(posAhead);
-		}
-
-		public void ApplyOrderOfMovement(int order)
-		{
-			orderOfMovement = order;
-			onUpdateOrderInTimebody(order, this);
 		}
 
 		public void UpdateCenterPosition()

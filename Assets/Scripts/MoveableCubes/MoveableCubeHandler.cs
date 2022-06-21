@@ -16,7 +16,6 @@ namespace Qbism.MoveableCubes
 
 		//States
 		public int movingMoveables { get; set; } = 0;
-		public int moveablesMovedThisTurn { get; set; } = 0;
 
 		public Dictionary<Vector2Int, MoveableCube> moveableCubeDic = 
 			new Dictionary<Vector2Int, MoveableCube>();
@@ -94,10 +93,7 @@ namespace Qbism.MoveableCubes
 		public void StartMovingMoveable(Vector2Int posAhead, Vector3 turnAxis,
 			Vector2Int pos)
 		{
-			moveableCubeDic[posAhead].ApplyOrderOfMovement(moveablesMovedThisTurn);
-			moveablesMovedThisTurn++;
 			movingMoveables++;
-
 			ActivateMoveableCube(posAhead, turnAxis, pos);
 		}
 
@@ -177,11 +173,8 @@ namespace Qbism.MoveableCubes
 
 		public void ResetMovedMoveables()
 		{
-			moveablesMovedThisTurn = 0;
-
 			foreach (var cube in moveableCubes)
-			{
-				cube.orderOfMovement = -1;
+			{ 
 				cube.newPlayerMove = false;
 			}
 		}
