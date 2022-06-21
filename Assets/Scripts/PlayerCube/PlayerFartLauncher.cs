@@ -194,6 +194,7 @@ namespace Qbism.PlayerCube
 
 		public void FireBulletFart()
 		{
+			if (refs.playerMover.isResetting) return;
 			juicer.BulletFartJuice();
 			exprHandler.SetSituationFace(ExpressionSituations.fart, .75f);
 		}

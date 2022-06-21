@@ -24,7 +24,7 @@ namespace Qbism.Rewind
 		RewindHandler rewHandler;
 
 		//States
-		private List<PointInTime> rewindList = new List<PointInTime>(); 
+		public List<PointInTime> rewindList { get; private set; } = new List<PointInTime>(); 
 		private List<bool> hasShrunkList = new List<bool>();
 		private List<CubeTypes> isStaticList = new List<CubeTypes>();
 		private List<bool> isDockedList = new List<bool>();
@@ -161,12 +161,11 @@ namespace Qbism.Rewind
 					pRef.stunJuicer.StopStunVFX();
 				}
 
-				pRef.rewindJuicer.StartPostRewindJuice();
+				if (!mover.isResetting) pRef.rewindJuicer.StartPostRewindJuice();
+				else if (rewindList.Count == 1) pRef.rewindJuicer.StartPostRewindJuice();
+
 				pRef.fartLauncher.ResetFartCollided();
 				expresHandler.SetFace(Expressions.smiling, expresHandler.GetRandomTime());
-
-				yield return null; //To ensure isRewinding registers at all in mover
-				mover.isRewinding = false;
 			}
 
 			if (this.tag == "Environment" || this.tag == "Moveable")
@@ -199,6 +198,13 @@ namespace Qbism.Rewind
 			}
 
 			rewindList.RemoveAt(0);
+			yield return null;
+
+			if (mover != null)
+			{
+				mover.isRewinding = false;
+				mover.isResetting = false;
+			}
 		}
 
 		private void ResetShrunkStatus(FloorCube cube)
@@ -264,8 +270,6 @@ namespace Qbism.Rewind
 				Destroy(cubeRef.floorCube);
 				cubeRef.floorCube = null;
 				cubeRef.lineRender.enabled = false;
-				//handler.movFloorCubeDic.Remove(cubePos);
-				//moveHandler.AddToMoveableDic(rewPos, moveable);
 				if (moveable.refs.cubeUI != null) moveable.refs.cubeUI.showCubeUI = false;
 				moveable.refs.floorCompAdder.markOnGround.enabled = false;
 				moveable.refs.cubeShrink.ResetTransform();

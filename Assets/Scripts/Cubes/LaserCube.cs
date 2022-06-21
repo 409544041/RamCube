@@ -73,7 +73,7 @@ namespace Qbism.Cubes
 
 			if (hitDist < distance)
 			{
-				if (playerHit) HandleHittingPlayer(true);
+				if (playerHit && !mover.isResetting) HandleHittingPlayer(true);
 				else GoIdle();
 				CastDottedLines(dist, distance);
 			}

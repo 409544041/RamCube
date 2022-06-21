@@ -51,6 +51,7 @@ namespace Qbism.PlayerCube
 		public bool isLowered { get; set; } = false;
 		public bool justBoosted { get; set; } = false;
 		public bool isRewinding { get; set; } = false;
+		public bool isResetting { get; set; } = false;
 		public bool newInput { get; set; } = false;
 		public bool prevMoveNewInput { get; set; } = false;
 

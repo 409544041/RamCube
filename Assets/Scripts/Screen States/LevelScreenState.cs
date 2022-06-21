@@ -93,7 +93,7 @@ namespace Qbism.ScreenStateMachine
 		public void HandleResetInput()
 		{
 			SendRewindResetAnalyticsEvent();
-			glRef.sceneHandler.RestartLevel();
+			glRef.rewindHandler.ResetLevel();
 		}
 
 		public void HandleRewindInput()

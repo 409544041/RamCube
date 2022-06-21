@@ -51,22 +51,31 @@ namespace Qbism.Rewind
 				moveHandler.onInitialCubeRecording += AddInitialMoveableRecording;
 		}
 
+		public void ResetLevel()
+		{
+			if (!mover.allowRewind) return;
+
+			var playerTimeBody = glRef.gcRef.pRef.timeBody;
+			var count = playerTimeBody.rewindList.Count;
+			mover.isResetting = true;
+
+			for (int i = 0; i < count; i++)
+			{
+				StartRewinding();
+			}
+		}
+
 		public void StartRewinding()
 		{
 			if (!mover.allowRewind) return;
-			
-			RewindTimeBodies();
+
+			FillMovRewindDic();
+			NormalRewind();
 
 			if (finish.wrongOnFinish) glRef.gcRef.rewindPulser.StopPulse();
 			LaserRewindStuff();
 
 			handler.shrunkToFloorThisRewind = new Vector2Int(99, 99);
-		}
-
-		private void RewindTimeBodies()
-		{
-			FillMovRewindDic();
-			NormalRewind();
 		}
 
 		private void FillMovRewindDic()
