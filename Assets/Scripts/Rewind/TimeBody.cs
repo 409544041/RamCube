@@ -210,10 +210,8 @@ namespace Qbism.Rewind
 					}
 
 					if (cubeRef.floorCube == null)
-					{
-						//moveHandler.RemoveFromMoveableDic(preRewPos);
 						moveHandler.AddToMoveableDic(cubeRef.cubePos.FetchGridPos(), cubeRef.movCube);
-					}
+					else handler.AddToMovFloorCubeDic(cubeRef.cubePos.FetchGridPos(), cubeRef.floorCube);
 				}
 			}
 

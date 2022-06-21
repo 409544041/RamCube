@@ -140,16 +140,16 @@ namespace Qbism.Cubes
 			//Always check movDic before checking floorDic
 			if (shrunkMovFloorCubeDic.ContainsKey(cubePos))
 			{
-				HandleRemoveFromShrunkDic(cubePos, null, shrunkMovFloorCubeDic, null);
+				HandleFromShrunkToFLoor(cubePos, null, shrunkMovFloorCubeDic, null);
 			}
 
 			else if (shrunkFloorCubeDic.ContainsKey(cubePos))
 			{
-				HandleRemoveFromShrunkDic(cubePos, cube, shrunkFloorCubeDic, floorCubeDic);
+				HandleFromShrunkToFLoor(cubePos, cube, shrunkFloorCubeDic, floorCubeDic);
 			}
 		}
 
-		public void HandleRemoveFromShrunkDic(Vector2Int cubePos, FloorCube cube,
+		public void HandleFromShrunkToFLoor(Vector2Int cubePos, FloorCube cube,
 		Dictionary<Vector2Int, List<FloorCube>> shrunkDic, Dictionary<Vector2Int, FloorCube> dic)
 		{
 			//checking 'thisRewind' to make sure only the top floorcube off the
