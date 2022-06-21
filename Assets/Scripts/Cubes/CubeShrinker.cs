@@ -37,8 +37,8 @@ namespace Qbism.Cubes
 
 		public void SetResetData()
 		{
-			resetPos = refs.shrinkMesh.transform.position;
-			resetRot = refs.shrinkMesh.transform.rotation;
+			resetPos = refs.shrinkMesh.transform.localPosition;
+			resetRot = refs.shrinkMesh.transform.localRotation;
 			resetScale = refs.shrinkMesh.transform.localScale;
 			refs.shrinkMesh.enabled = false;
 		}
@@ -131,8 +131,8 @@ namespace Qbism.Cubes
 
 		public void ResetTransform()
 		{
-			refs.shrinkMesh.transform.position = resetPos;
-			refs.shrinkMesh.transform.rotation = resetRot;
+			refs.shrinkMesh.transform.localPosition = resetPos;
+			refs.shrinkMesh.transform.localRotation = resetRot;
 			refs.shrinkMesh.transform.localScale = resetScale;
 		}
 

@@ -198,7 +198,6 @@ namespace Qbism.Rewind
 					cubeRef.cubePos.RoundPosition();
 					cubeRef.movCube.UpdateCenterPosition();
 					ResetOutOfBounds(cubeRef.movCube);
-					//movementOrderList.RemoveAt(0);						
 					var rewPos = new Vector2Int(Mathf.RoundToInt(rewindList[0].position.x),
 						Mathf.RoundToInt(rewindList[0].position.z));
 					if (preRewPos != rewPos) cubeRef.rewindJuicer.StartPostRewindJuice();
@@ -241,7 +240,7 @@ namespace Qbism.Rewind
 					ResetShrinking(cube, cubePos);
 				}
 			}
-
+			cubeRef.shrinkMesh.enabled = false;
 			hasShrunkList.RemoveAt(0);
 		}
 

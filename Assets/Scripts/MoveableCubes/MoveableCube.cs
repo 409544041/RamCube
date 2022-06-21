@@ -114,7 +114,7 @@ namespace Qbism.MoveableCubes
 						break;
 					}
 				}
-
+				refs.cubeShrink.ResetTransform();
 				refs.cubePos.RoundPosition();
 				UpdateCenterPosition();
 
