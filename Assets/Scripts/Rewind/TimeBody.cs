@@ -21,6 +21,7 @@ namespace Qbism.Rewind
 		CubeHandler handler;
 		FloorCubeChecker floorChecker;
 		ExpressionHandler expresHandler;
+		RewindHandler rewHandler;
 
 		//States
 		public bool priorityRewind { get; set; } = false;
@@ -41,12 +42,14 @@ namespace Qbism.Rewind
 				handler = pRef.gcRef.glRef.cubeHandler;
 				moveHandler = pRef.gcRef.glRef.movCubeHandler;
 				floorChecker = pRef.gcRef.glRef.floorChecker;
+				rewHandler = pRef.gcRef.glRef.rewindHandler;
 			}
 			else
 			{
 				handler = cubeRef.gcRef.glRef.cubeHandler;
 				moveHandler = cubeRef.gcRef.glRef.movCubeHandler;
 				floorChecker = cubeRef.gcRef.glRef.floorChecker;
+				rewHandler = cubeRef.gcRef.glRef.rewindHandler;
 			}
 		}
 
@@ -169,8 +172,6 @@ namespace Qbism.Rewind
 				
 				if (mover.isStunned)
 				{
-					//yield here bc otherwise laser detects cube collider again and player stays stunned
-					yield return null;
 					mover.isStunned = false;
 					pRef.gcRef.rewindPulser.StopPulse();
 					pRef.stunJuicer.StopStunVFX();
@@ -197,7 +198,7 @@ namespace Qbism.Rewind
 					cubeRef.cubePos.RoundPosition();
 					cubeRef.movCube.UpdateCenterPosition();
 					ResetOutOfBounds(cubeRef.movCube);
-					movementOrderList.RemoveAt(0);
+					//movementOrderList.RemoveAt(0);						
 					var rewPos = new Vector2Int(Mathf.RoundToInt(rewindList[0].position.x),
 						Mathf.RoundToInt(rewindList[0].position.z));
 					if (preRewPos != rewPos) cubeRef.rewindJuicer.StartPostRewindJuice();
@@ -210,7 +211,7 @@ namespace Qbism.Rewind
 
 					if (cubeRef.floorCube == null)
 					{
-						moveHandler.RemoveFromMoveableDic(preRewPos);
+						//moveHandler.RemoveFromMoveableDic(preRewPos);
 						moveHandler.AddToMoveableDic(cubeRef.cubePos.FetchGridPos(), cubeRef.movCube);
 					}
 				}
@@ -226,11 +227,12 @@ namespace Qbism.Rewind
 
 			if (cubeRef.movCube != null)
 			{
-				if (hasShrunkList[0] == false
-					&& handler.shrunkMovFloorCubeDic.ContainsKey(cubePos))
+				if (rewHandler.shrunkMovRewindDic.ContainsKey(cubePos))
 				{
-					if (handler.shrunkMovFloorCubeDic[cubePos][0] == cube)
+					if (hasShrunkList[0] == false)
 						ResetShrinking(cube, cubePos);
+					else handler.HandleFromFloorToShrunk(cubePos, cube, null, 
+						handler.shrunkMovFloorCubeDic);
 				}
 			}
 			else
@@ -248,7 +250,10 @@ namespace Qbism.Rewind
 		private void ResetShrinking(FloorCube cube, Vector2Int cubePos)
 		{
 			cubeRef.cubeShrink.EnableMesh();
-			handler.FromShrunkToFloorDic(cubePos, cube);
+			if (cube.refs.movCube == null) handler.FromShrunkToFloor(cubePos, cube);
+
+			if (cube.refs.movCube != null) handler.AddToMovFloorCubeDic(cubePos, cube);
+
 			if (cube.refs.movEffector != null) cube.refs.effectorShrinkingFace.transform.parent =
 				cube.refs.effectorFace.transform;
 		}
@@ -274,13 +279,14 @@ namespace Qbism.Rewind
 			var rewPos = new Vector2Int(Mathf.RoundToInt(rewindPos.x), Mathf.RoundToInt(rewindPos.z));
 
 			if(isDockedList.Count > 0 && isDockedList[0] == false 
-				&& handler.movFloorCubeDic.ContainsKey(cubePos))
+				&& rewHandler.dockedMovRewindDic.ContainsKey(cubePos))
 			{
 				this.tag = "Moveable";
 				Destroy(cubeRef.floorCube);
+				cubeRef.floorCube = null;
 				cubeRef.lineRender.enabled = false;
-				handler.movFloorCubeDic.Remove(cubePos);
-				moveHandler.moveableCubeDic.Add(rewPos, moveable);
+				//handler.movFloorCubeDic.Remove(cubePos);
+				//moveHandler.AddToMoveableDic(rewPos, moveable);
 				if (moveable.refs.cubeUI != null) moveable.refs.cubeUI.showCubeUI = false;
 				moveable.refs.floorCompAdder.markOnGround.enabled = false;
 				moveable.refs.cubeShrink.ResetTransform();
