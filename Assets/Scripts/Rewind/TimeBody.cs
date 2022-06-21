@@ -250,8 +250,6 @@ namespace Qbism.Rewind
 			cubeRef.cubeShrink.EnableMesh();
 			if (cube.refs.movCube == null) handler.FromShrunkToFloor(cubePos, cube);
 
-			if (cube.refs.movCube != null) handler.AddToMovFloorCubeDic(cubePos, cube);
-
 			if (cube.refs.movEffector != null) cube.refs.effectorShrinkingFace.transform.parent =
 				cube.refs.effectorFace.transform;
 		}
