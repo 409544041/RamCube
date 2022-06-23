@@ -68,6 +68,7 @@ namespace Qbism.Rewind
 		public void StartRewinding()
 		{
 			if (!mover.allowRewind) return;
+			if (glRef.gcRef.pRef.timeBody.rewindList.Count == 0) return;
 
 			FillMovRewindDic();
 			NormalRewind();
