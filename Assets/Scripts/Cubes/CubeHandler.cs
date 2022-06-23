@@ -132,7 +132,8 @@ namespace Qbism.Cubes
 				shrunkDic.Add(cubePos, floorCubeList);
 			}
 
-			shrunkDic[cubePos].Insert(0, cube);
+			if (shrunkDic[cubePos].Count > 0 && shrunkDic[cubePos][0] == cube) return;
+			else shrunkDic[cubePos].Insert(0, cube);
 		}
 
 		public void FromShrunkToFloor(Vector2Int cubePos, FloorCube cube)

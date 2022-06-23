@@ -22,6 +22,7 @@ namespace Qbism.Cubes
 		Quaternion resetRot;
 		Vector3 resetScale;
 		float totalFeedbackDur;
+		public bool hasShrunk { get; set; } = false;
 
 		private void Awake()
 		{
@@ -84,6 +85,7 @@ namespace Qbism.Cubes
 			refs.mesh.enabled = false;
 			refs.shrinkMesh.enabled = true;
 			refs.lineRender.enabled = false;
+			hasShrunk = true;
 
 			if (refs.effectorFace != null)
 			{

@@ -193,7 +193,8 @@ namespace Qbism.Rewind
 
 					if (cubeRef.floorCube == null)
 						moveHandler.AddToMoveableDic(cubeRef.cubePos.FetchGridPos(), cubeRef.movCube);
-					else handler.AddToMovFloorCubeDic(cubeRef.cubePos.FetchGridPos(), cubeRef.floorCube);
+					else if (!cubeRef.cubeShrink.hasShrunk)
+						handler.AddToMovFloorCubeDic(cubeRef.cubePos.FetchGridPos(), cubeRef.floorCube);
 				}
 			}
 
@@ -211,13 +212,11 @@ namespace Qbism.Rewind
 		{
 			if (hasShrunkList.Count <= 0) return;
 			var cubePos = cubeRef.cubePos.FetchGridPos();
-
 			if (cubeRef.movCube != null)
 			{
 				if (rewHandler.shrunkMovRewindDic.ContainsKey(cubePos))
 				{
-					if (hasShrunkList[0] == false)
-						ResetShrinking(cube, cubePos);
+					if (hasShrunkList[0] == false) ResetShrinking(cube, cubePos);
 					else handler.HandleFromFloorToShrunk(cubePos, cube, null, 
 						handler.shrunkMovFloorCubeDic);
 				}
@@ -237,6 +236,7 @@ namespace Qbism.Rewind
 		private void ResetShrinking(FloorCube cube, Vector2Int cubePos)
 		{
 			cubeRef.cubeShrink.EnableMesh();
+			cubeRef.cubeShrink.hasShrunk = false;
 			if (cube.refs.movCube == null) handler.FromShrunkToFloor(cubePos, cube);
 
 			if (cube.refs.movEffector != null) cube.refs.effectorShrinkingFace.transform.parent =
