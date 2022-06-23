@@ -220,6 +220,8 @@ namespace Qbism.PlayerCube
 		private IEnumerator LowerCube(Vector3 targetPos, float step, 
 			Vector2Int cubePos, bool fromBoost)
 		{
+			isLowered = true;
+
 			if (fromBoost)
 			{
 				var juiceDur = boostJuicer.FetchJuiceDur();
@@ -236,8 +238,6 @@ namespace Qbism.PlayerCube
 				transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 				yield return timeStep;
 			}
-
-			isLowered = true;
 
 			if (moveHandler.movingMoveables == 0)
 			{

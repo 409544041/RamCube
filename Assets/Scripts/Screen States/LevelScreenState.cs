@@ -61,7 +61,7 @@ namespace Qbism.ScreenStateMachine
 			if (mover.isOutOfBounds || !mover.initiatedByPlayer || !mover.allowMoveInput) return;
 
 			inputDetector.inputting = true;
-			if (mover.isMoving && !mover.newInput)
+			if (mover.isMoving && !mover.newInput && !mover.isLowered)
 			{
 				mover.newInput = true;
 				StartCoroutine(NextInput(turnSide, posAheadDir, turnAxis, inputDetector));
