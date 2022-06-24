@@ -12,132 +12,38 @@ using Alias_rifegrt_BiomeGameplayData = E_BiomeGameplayData;
 [AddComponentMenu("BansheeGz/Generated/M_Biome")]
 public partial class M_Biome : BGEntityGo
 {
-	public override BGMetaEntity MetaConstraint
-	{
-		get
-		{
-			return MetaDefault;
-		}
-	}
+	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaRow _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(5318121685371950766UL,2942031341061376408UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
+	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(5318121685371950766UL,2942031341061376408UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
-		get
-		{
-			return _f_name[Entity.Index];
-		}
-		set
-		{
-			_f_name[Entity.Index] = value;
-		}
+		get => _f_name[Entity.Index];
+		set => _f_name[Entity.Index] = value;
 	}
 	public UnityEngine.Vector2 f_MinMaxX
 	{
-		get
-		{
-			return _f_MinMaxX[Entity.Index];
-		}
-		set
-		{
-			_f_MinMaxX[Entity.Index] = value;
-		}
+		get => _f_MinMaxX[Entity.Index];
+		set => _f_MinMaxX[Entity.Index] = value;
 	}
 	public UnityEngine.Vector2 f_MinMaxZ
 	{
-		get
-		{
-			return _f_MinMaxZ[Entity.Index];
-		}
-		set
-		{
-			_f_MinMaxZ[Entity.Index] = value;
-		}
+		get => _f_MinMaxZ[Entity.Index];
+		set => _f_MinMaxZ[Entity.Index] = value;
 	}
 	public Biomes f_BiomeEnum
 	{
-		get
-		{
-			return (Biomes) _f_BiomeEnum[Entity.Index];
-		}
-		set
-		{
-			_f_BiomeEnum[Entity.Index] = value;
-		}
+		get => (Biomes) _f_BiomeEnum[Entity.Index];
+		set => _f_BiomeEnum[Entity.Index] = value;
 	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(4811910356762317652UL,6316590992709792654UL));
-			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldVector2 __f_MinMaxX;
-	public static BansheeGz.BGDatabase.BGFieldVector2 _f_MinMaxX
-	{
-		get
-		{
-			if(__f_MinMaxX==null || __f_MinMaxX.IsDeleted) __f_MinMaxX=(BansheeGz.BGDatabase.BGFieldVector2) MetaDefault.GetField(new BGId(5540830184506237896UL,8565432699577718708UL));
-			return __f_MinMaxX;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldVector2 __f_MinMaxZ;
-	public static BansheeGz.BGDatabase.BGFieldVector2 _f_MinMaxZ
-	{
-		get
-		{
-			if(__f_MinMaxZ==null || __f_MinMaxZ.IsDeleted) __f_MinMaxZ=(BansheeGz.BGDatabase.BGFieldVector2) MetaDefault.GetField(new BGId(5028550124850018592UL,7548933405663777956UL));
-			return __f_MinMaxZ;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldEnum __f_BiomeEnum;
-	public static BansheeGz.BGDatabase.BGFieldEnum _f_BiomeEnum
-	{
-		get
-		{
-			if(__f_BiomeEnum==null || __f_BiomeEnum.IsDeleted) __f_BiomeEnum=(BansheeGz.BGDatabase.BGFieldEnum) MetaDefault.GetField(new BGId(5459334516898714152UL,14924872184031788952UL));
-			return __f_BiomeEnum;
-		}
-	}
-	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
-	public List<E_Pin> RelatedPinListUsingBiomeRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_Pin._f_Biome.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_Pin>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Pin) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
-	public List<E_BiomeGameplayData> RelatedBiomeGameplayDataListUsingBiomeRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_BiomeGameplayData._f_Biome.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_BiomeGameplayData>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_BiomeGameplayData) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4811910356762317652UL, 6316590992709792654UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldVector2 _ufle12jhs77_f_MinMaxX;
+	public static BansheeGz.BGDatabase.BGFieldVector2 _f_MinMaxX => _ufle12jhs77_f_MinMaxX ?? (_ufle12jhs77_f_MinMaxX = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldVector2>(MetaDefault, new BGId(5540830184506237896UL, 8565432699577718708UL), () => _ufle12jhs77_f_MinMaxX = null));
+	private static BansheeGz.BGDatabase.BGFieldVector2 _ufle12jhs77_f_MinMaxZ;
+	public static BansheeGz.BGDatabase.BGFieldVector2 _f_MinMaxZ => _ufle12jhs77_f_MinMaxZ ?? (_ufle12jhs77_f_MinMaxZ = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldVector2>(MetaDefault, new BGId(5028550124850018592UL, 7548933405663777956UL), () => _ufle12jhs77_f_MinMaxZ = null));
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_BiomeEnum;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_BiomeEnum => _ufle12jhs77_f_BiomeEnum ?? (_ufle12jhs77_f_BiomeEnum = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5459334516898714152UL, 14924872184031788952UL), () => _ufle12jhs77_f_BiomeEnum = null));
+	public List<Alias_rifegrt_Pin> RelatedPinListUsingBiomeRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Pin>(Alias_rifegrt_Pin._f_Biome, Entity.Id);
+	public List<Alias_rifegrt_BiomeGameplayData> RelatedBiomeGameplayDataListUsingBiomeRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_BiomeGameplayData>(Alias_rifegrt_BiomeGameplayData._f_Biome, Entity.Id);
 }

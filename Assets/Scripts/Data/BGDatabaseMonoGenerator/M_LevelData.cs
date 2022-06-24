@@ -10,291 +10,92 @@ using BansheeGz.BGDatabase;
 [AddComponentMenu("BansheeGz/Generated/M_LevelData")]
 public partial class M_LevelData : BGEntityGo
 {
-	public override BGMetaEntity MetaConstraint
-	{
-		get
-		{
-			return MetaDefault;
-		}
-	}
+	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaRow _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(4612244309294333557UL,1881374458602735547UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
+	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(4612244309294333557UL,1881374458602735547UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
-		get
-		{
-			return _f_name[Entity.Index];
-		}
-		set
-		{
-			_f_name[Entity.Index] = value;
-		}
+		get => _f_name[Entity.Index];
+		set => _f_name[Entity.Index] = value;
 	}
 	public E_Pin f_Pin
 	{
-		get
-		{
-			return (E_Pin) _f_Pin[Entity.Index];
-		}
-		set
-		{
-			_f_Pin[Entity.Index] = value;
-		}
+		get => (E_Pin) _f_Pin[Entity.Index];
+		set => _f_Pin[Entity.Index] = value;
 	}
 	public System.String f_Level
 	{
-		get
-		{
-			return _f_Level[Entity.Index];
-		}
-		set
-		{
-			_f_Level[Entity.Index] = value;
-		}
+		get => _f_Level[Entity.Index];
+		set => _f_Level[Entity.Index] = value;
 	}
 	public System.Boolean f_InMap
 	{
-		get
-		{
-			return _f_InMap[Entity.Index];
-		}
-		set
-		{
-			_f_InMap[Entity.Index] = value;
-		}
+		get => _f_InMap[Entity.Index];
+		set => _f_InMap[Entity.Index] = value;
 	}
 	public System.Int32 f_LocksAmount
 	{
-		get
-		{
-			return _f_LocksAmount[Entity.Index];
-		}
-		set
-		{
-			_f_LocksAmount[Entity.Index] = value;
-		}
+		get => _f_LocksAmount[Entity.Index];
+		set => _f_LocksAmount[Entity.Index] = value;
 	}
 	public System.Boolean f_SegmentPresent
 	{
-		get
-		{
-			return _f_SegmentPresent[Entity.Index];
-		}
-		set
-		{
-			_f_SegmentPresent[Entity.Index] = value;
-		}
+		get => _f_SegmentPresent[Entity.Index];
+		set => _f_SegmentPresent[Entity.Index] = value;
 	}
 	public System.Boolean f_ObjectPresent
 	{
-		get
-		{
-			return _f_ObjectPresent[Entity.Index];
-		}
-		set
-		{
-			_f_ObjectPresent[Entity.Index] = value;
-		}
+		get => _f_ObjectPresent[Entity.Index];
+		set => _f_ObjectPresent[Entity.Index] = value;
 	}
 	public List<E_Pin> f_UnlocksPins
 	{
-		get
-		{
-			var val = _f_UnlocksPins[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___UnlocksPins = new List<E_Pin>();
-			for (var i = 0; i < val.Count; i++) ___UnlocksPins.Add((E_Pin) val[i]);
-			return ___UnlocksPins;
-		}
-		set
-		{
-			var val = _f_UnlocksPins[Entity.Index];
-			if(val==null) val = new List<BGEntity>();
-			val.Clear();
-			if(value!=null) for (var i = 0; i < value.Count; i++) val.Add(value[i]);
-			_f_UnlocksPins[Entity.Index] = val;
-		}
+		get => BGCodeGenUtils.MultipleRelationGet<E_Pin>(_f_UnlocksPins, Entity.Index);
+		set => BGCodeGenUtils.MultipleRelationSet<E_Pin>(_f_UnlocksPins, Entity.Index, value);
 	}
 	public List<E_MapWalls> f_WallsToDest
 	{
-		get
-		{
-			var val = _f_WallsToDest[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___WallsToDest = new List<E_MapWalls>();
-			for (var i = 0; i < val.Count; i++) ___WallsToDest.Add((E_MapWalls) val[i]);
-			return ___WallsToDest;
-		}
-		set
-		{
-			var val = _f_WallsToDest[Entity.Index];
-			if(val==null) val = new List<BGEntity>();
-			val.Clear();
-			if(value!=null) for (var i = 0; i < value.Count; i++) val.Add(value[i]);
-			_f_WallsToDest[Entity.Index] = val;
-		}
+		get => BGCodeGenUtils.MultipleRelationGet<E_MapWalls>(_f_WallsToDest, Entity.Index);
+		set => BGCodeGenUtils.MultipleRelationSet<E_MapWalls>(_f_WallsToDest, Entity.Index, value);
 	}
 	public List<E_MapWalls> f_WallsFromOrigin
 	{
-		get
-		{
-			var val = _f_WallsFromOrigin[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___WallsFromOrigin = new List<E_MapWalls>();
-			for (var i = 0; i < val.Count; i++) ___WallsFromOrigin.Add((E_MapWalls) val[i]);
-			return ___WallsFromOrigin;
-		}
-		set
-		{
-			var val = _f_WallsFromOrigin[Entity.Index];
-			if(val==null) val = new List<BGEntity>();
-			val.Clear();
-			if(value!=null) for (var i = 0; i < value.Count; i++) val.Add(value[i]);
-			_f_WallsFromOrigin[Entity.Index] = val;
-		}
+		get => BGCodeGenUtils.MultipleRelationGet<E_MapWalls>(_f_WallsFromOrigin, Entity.Index);
+		set => BGCodeGenUtils.MultipleRelationSet<E_MapWalls>(_f_WallsFromOrigin, Entity.Index, value);
 	}
 	public System.Boolean f_Visuals
 	{
-		get
-		{
-			return _f_Visuals[Entity.Index];
-		}
-		set
-		{
-			_f_Visuals[Entity.Index] = value;
-		}
+		get => _f_Visuals[Entity.Index];
+		set => _f_Visuals[Entity.Index] = value;
 	}
 	public E_Objects f_ForceObject
 	{
-		get
-		{
-			return (E_Objects) _f_ForceObject[Entity.Index];
-		}
-		set
-		{
-			_f_ForceObject[Entity.Index] = value;
-		}
+		get => (E_Objects) _f_ForceObject[Entity.Index];
+		set => _f_ForceObject[Entity.Index] = value;
 	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(4740419652275606489UL,16281884087163071164UL));
-			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_Pin;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Pin
-	{
-		get
-		{
-			if(__f_Pin==null || __f_Pin.IsDeleted) __f_Pin=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4755775874130559592UL,9555642772104298655UL));
-			return __f_Pin;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldString __f_Level;
-	public static BansheeGz.BGDatabase.BGFieldString _f_Level
-	{
-		get
-		{
-			if(__f_Level==null || __f_Level.IsDeleted) __f_Level=(BansheeGz.BGDatabase.BGFieldString) MetaDefault.GetField(new BGId(4793347658190675977UL,5994557562632312988UL));
-			return __f_Level;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_InMap;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_InMap
-	{
-		get
-		{
-			if(__f_InMap==null || __f_InMap.IsDeleted) __f_InMap=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4858229157076024160UL,2433292969023106195UL));
-			return __f_InMap;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldInt __f_LocksAmount;
-	public static BansheeGz.BGDatabase.BGFieldInt _f_LocksAmount
-	{
-		get
-		{
-			if(__f_LocksAmount==null || __f_LocksAmount.IsDeleted) __f_LocksAmount=(BansheeGz.BGDatabase.BGFieldInt) MetaDefault.GetField(new BGId(5389772333846653446UL,11461131677490296486UL));
-			return __f_LocksAmount;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_SegmentPresent;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_SegmentPresent
-	{
-		get
-		{
-			if(__f_SegmentPresent==null || __f_SegmentPresent.IsDeleted) __f_SegmentPresent=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5708768082108931619UL,17251627778783522965UL));
-			return __f_SegmentPresent;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_ObjectPresent;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_ObjectPresent
-	{
-		get
-		{
-			if(__f_ObjectPresent==null || __f_ObjectPresent.IsDeleted) __f_ObjectPresent=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5035583959570880310UL,15876700667616842681UL));
-			return __f_ObjectPresent;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationMultiple __f_UnlocksPins;
-	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_UnlocksPins
-	{
-		get
-		{
-			if(__f_UnlocksPins==null || __f_UnlocksPins.IsDeleted) __f_UnlocksPins=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5421760005998256390UL,4758386679893286829UL));
-			return __f_UnlocksPins;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationMultiple __f_WallsToDest;
-	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_WallsToDest
-	{
-		get
-		{
-			if(__f_WallsToDest==null || __f_WallsToDest.IsDeleted) __f_WallsToDest=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5242919301705000379UL,3930519681876219828UL));
-			return __f_WallsToDest;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationMultiple __f_WallsFromOrigin;
-	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_WallsFromOrigin
-	{
-		get
-		{
-			if(__f_WallsFromOrigin==null || __f_WallsFromOrigin.IsDeleted) __f_WallsFromOrigin=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5300666196508900259UL,13485411823914233985UL));
-			return __f_WallsFromOrigin;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_Visuals;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_Visuals
-	{
-		get
-		{
-			if(__f_Visuals==null || __f_Visuals.IsDeleted) __f_Visuals=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5556000267342264102UL,15804675842545476242UL));
-			return __f_Visuals;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_ForceObject;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForceObject
-	{
-		get
-		{
-			if(__f_ForceObject==null || __f_ForceObject.IsDeleted) __f_ForceObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5492051446524140481UL,7396505186639121819UL));
-			return __f_ForceObject;
-		}
-	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4740419652275606489UL, 16281884087163071164UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Pin;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Pin => _ufle12jhs77_f_Pin ?? (_ufle12jhs77_f_Pin = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(4755775874130559592UL, 9555642772104298655UL), () => _ufle12jhs77_f_Pin = null));
+	private static BansheeGz.BGDatabase.BGFieldString _ufle12jhs77_f_Level;
+	public static BansheeGz.BGDatabase.BGFieldString _f_Level => _ufle12jhs77_f_Level ?? (_ufle12jhs77_f_Level = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldString>(MetaDefault, new BGId(4793347658190675977UL, 5994557562632312988UL), () => _ufle12jhs77_f_Level = null));
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_InMap;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_InMap => _ufle12jhs77_f_InMap ?? (_ufle12jhs77_f_InMap = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(4858229157076024160UL, 2433292969023106195UL), () => _ufle12jhs77_f_InMap = null));
+	private static BansheeGz.BGDatabase.BGFieldInt _ufle12jhs77_f_LocksAmount;
+	public static BansheeGz.BGDatabase.BGFieldInt _f_LocksAmount => _ufle12jhs77_f_LocksAmount ?? (_ufle12jhs77_f_LocksAmount = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldInt>(MetaDefault, new BGId(5389772333846653446UL, 11461131677490296486UL), () => _ufle12jhs77_f_LocksAmount = null));
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_SegmentPresent;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_SegmentPresent => _ufle12jhs77_f_SegmentPresent ?? (_ufle12jhs77_f_SegmentPresent = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(5708768082108931619UL, 17251627778783522965UL), () => _ufle12jhs77_f_SegmentPresent = null));
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_ObjectPresent;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_ObjectPresent => _ufle12jhs77_f_ObjectPresent ?? (_ufle12jhs77_f_ObjectPresent = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(5035583959570880310UL, 15876700667616842681UL), () => _ufle12jhs77_f_ObjectPresent = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationMultiple _ufle12jhs77_f_UnlocksPins;
+	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_UnlocksPins => _ufle12jhs77_f_UnlocksPins ?? (_ufle12jhs77_f_UnlocksPins = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationMultiple>(MetaDefault, new BGId(5421760005998256390UL, 4758386679893286829UL), () => _ufle12jhs77_f_UnlocksPins = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationMultiple _ufle12jhs77_f_WallsToDest;
+	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_WallsToDest => _ufle12jhs77_f_WallsToDest ?? (_ufle12jhs77_f_WallsToDest = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationMultiple>(MetaDefault, new BGId(5242919301705000379UL, 3930519681876219828UL), () => _ufle12jhs77_f_WallsToDest = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationMultiple _ufle12jhs77_f_WallsFromOrigin;
+	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_WallsFromOrigin => _ufle12jhs77_f_WallsFromOrigin ?? (_ufle12jhs77_f_WallsFromOrigin = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationMultiple>(MetaDefault, new BGId(5300666196508900259UL, 13485411823914233985UL), () => _ufle12jhs77_f_WallsFromOrigin = null));
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_Visuals;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_Visuals => _ufle12jhs77_f_Visuals ?? (_ufle12jhs77_f_Visuals = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(5556000267342264102UL, 15804675842545476242UL), () => _ufle12jhs77_f_Visuals = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_ForceObject;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForceObject => _ufle12jhs77_f_ForceObject ?? (_ufle12jhs77_f_ForceObject = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5492051446524140481UL, 7396505186639121819UL), () => _ufle12jhs77_f_ForceObject = null));
 }

@@ -36,6 +36,7 @@ public class GameLogicRefHolder : MonoBehaviour
 	[Header("Dialogue Handling")]
 	public DialogueManager dialogueManager;
 	public DialogueFocuser dialogueFocuser;
+	public InGameDialogueManager inGameDialogueManager;
 	[Header("Object Collect Handling")]
 	public ObjectCollectorAtEndSeq objColManager;
 	[Header("Pathfinding")]

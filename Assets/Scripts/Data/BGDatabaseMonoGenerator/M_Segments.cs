@@ -13,244 +13,80 @@ using Alias_rifegrt_Objects = E_Objects;
 [AddComponentMenu("BansheeGz/Generated/M_Segments")]
 public partial class M_Segments : BGEntityGo
 {
-	public override BGMetaEntity MetaConstraint
-	{
-		get
-		{
-			return MetaDefault;
-		}
-	}
+	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaRow _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(5644026291501976503UL,5194951680243965827UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
+	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(5644026291501976503UL,5194951680243965827UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
-		get
-		{
-			return _f_name[Entity.Index];
-		}
-		set
-		{
-			_f_name[Entity.Index] = value;
-		}
+		get => _f_name[Entity.Index];
+		set => _f_name[Entity.Index] = value;
 	}
 	public System.String f_SegmentName
 	{
-		get
-		{
-			return _f_SegmentName[Entity.Index];
-		}
-		set
-		{
-			_f_SegmentName[Entity.Index] = value;
-		}
+		get => _f_SegmentName[Entity.Index];
+		set => _f_SegmentName[Entity.Index] = value;
 	}
-	public UnityEngine.Object f_Prefab
-	{
-		get
-		{
-			return _f_Prefab[Entity.Index];
-		}
-	}
+	public UnityEngine.Object f_Prefab => _f_Prefab[Entity.Index];
 	public List<E_Objects> f_Objects
 	{
-		get
-		{
-			var val = _f_Objects[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___Objects = new List<E_Objects>();
-			for (var i = 0; i < val.Count; i++) ___Objects.Add((E_Objects) val[i]);
-			return ___Objects;
-		}
-		set
-		{
-			var val = _f_Objects[Entity.Index];
-			if(val==null) val = new List<BGEntity>();
-			val.Clear();
-			if(value!=null) for (var i = 0; i < value.Count; i++) val.Add(value[i]);
-			_f_Objects[Entity.Index] = val;
-		}
+		get => BGCodeGenUtils.MultipleRelationGet<E_Objects>(_f_Objects, Entity.Index);
+		set => BGCodeGenUtils.MultipleRelationSet<E_Objects>(_f_Objects, Entity.Index, value);
 	}
 	public E_Dialogues f_Dialogues
 	{
-		get
-		{
-			return (E_Dialogues) _f_Dialogues[Entity.Index];
-		}
-		set
-		{
-			_f_Dialogues[Entity.Index] = value;
-		}
+		get => (E_Dialogues) _f_Dialogues[Entity.Index];
+		set => _f_Dialogues[Entity.Index] = value;
 	}
-	public UnityEngine.Object f_SpawnPrefab
-	{
-		get
-		{
-			return _f_SpawnPrefab[Entity.Index];
-		}
-	}
+	public UnityEngine.Object f_SpawnPrefab => _f_SpawnPrefab[Entity.Index];
 	public UnityEngine.Vector3 f_DialogueRotation
 	{
-		get
-		{
-			return _f_DialogueRotation[Entity.Index];
-		}
-		set
-		{
-			_f_DialogueRotation[Entity.Index] = value;
-		}
+		get => _f_DialogueRotation[Entity.Index];
+		set => _f_DialogueRotation[Entity.Index] = value;
+	}
+	public UnityEngine.Vector3 f_InGameDialogueRotation
+	{
+		get => _f_InGameDialogueRotation[Entity.Index];
+		set => _f_InGameDialogueRotation[Entity.Index] = value;
 	}
 	public UnityEngine.Vector2 f_DialogueLightPitchYaw
 	{
-		get
-		{
-			return _f_DialogueLightPitchYaw[Entity.Index];
-		}
-		set
-		{
-			_f_DialogueLightPitchYaw[Entity.Index] = value;
-		}
+		get => _f_DialogueLightPitchYaw[Entity.Index];
+		set => _f_DialogueLightPitchYaw[Entity.Index] = value;
+	}
+	public UnityEngine.Vector2 f_InGameDialogueLightPitchYaw
+	{
+		get => _f_InGameDialogueLightPitchYaw[Entity.Index];
+		set => _f_InGameDialogueLightPitchYaw[Entity.Index] = value;
 	}
 	public E_SegmentsGameplayData f_GameplayData
 	{
-		get
-		{
-			return (E_SegmentsGameplayData) _f_GameplayData[Entity.Index];
-		}
-		set
-		{
-			_f_GameplayData[Entity.Index] = value;
-		}
+		get => (E_SegmentsGameplayData) _f_GameplayData[Entity.Index];
+		set => _f_GameplayData[Entity.Index] = value;
 	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(5670569073695034891UL,14796031301428454317UL));
-			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldString __f_SegmentName;
-	public static BansheeGz.BGDatabase.BGFieldString _f_SegmentName
-	{
-		get
-		{
-			if(__f_SegmentName==null || __f_SegmentName.IsDeleted) __f_SegmentName=(BansheeGz.BGDatabase.BGFieldString) MetaDefault.GetField(new BGId(4705691430409051370UL,10398669542945010076UL));
-			return __f_SegmentName;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldUnityObject __f_Prefab;
-	public static BansheeGz.BGDatabase.BGFieldUnityObject _f_Prefab
-	{
-		get
-		{
-			if(__f_Prefab==null || __f_Prefab.IsDeleted) __f_Prefab=(BansheeGz.BGDatabase.BGFieldUnityObject) MetaDefault.GetField(new BGId(5042412784670426887UL,3798303333898769295UL));
-			return __f_Prefab;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationMultiple __f_Objects;
-	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_Objects
-	{
-		get
-		{
-			if(__f_Objects==null || __f_Objects.IsDeleted) __f_Objects=(BansheeGz.BGDatabase.BGFieldRelationMultiple) MetaDefault.GetField(new BGId(5414509257987170800UL,16375924262376720830UL));
-			return __f_Objects;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_Dialogues;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues
-	{
-		get
-		{
-			if(__f_Dialogues==null || __f_Dialogues.IsDeleted) __f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5043863872193162925UL,15580842669602972338UL));
-			return __f_Dialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldUnityObject __f_SpawnPrefab;
-	public static BansheeGz.BGDatabase.BGFieldUnityObject _f_SpawnPrefab
-	{
-		get
-		{
-			if(__f_SpawnPrefab==null || __f_SpawnPrefab.IsDeleted) __f_SpawnPrefab=(BansheeGz.BGDatabase.BGFieldUnityObject) MetaDefault.GetField(new BGId(5584655967112634227UL,13267101346744214414UL));
-			return __f_SpawnPrefab;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldVector3 __f_DialogueRotation;
-	public static BansheeGz.BGDatabase.BGFieldVector3 _f_DialogueRotation
-	{
-		get
-		{
-			if(__f_DialogueRotation==null || __f_DialogueRotation.IsDeleted) __f_DialogueRotation=(BansheeGz.BGDatabase.BGFieldVector3) MetaDefault.GetField(new BGId(5760607302971462463UL,3672824699726006442UL));
-			return __f_DialogueRotation;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldVector2 __f_DialogueLightPitchYaw;
-	public static BansheeGz.BGDatabase.BGFieldVector2 _f_DialogueLightPitchYaw
-	{
-		get
-		{
-			if(__f_DialogueLightPitchYaw==null || __f_DialogueLightPitchYaw.IsDeleted) __f_DialogueLightPitchYaw=(BansheeGz.BGDatabase.BGFieldVector2) MetaDefault.GetField(new BGId(5395289116548682697UL,15975294921309799602UL));
-			return __f_DialogueLightPitchYaw;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_GameplayData;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData
-	{
-		get
-		{
-			if(__f_GameplayData==null || __f_GameplayData.IsDeleted) __f_GameplayData=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4909705211094579299UL,13210900775542928543UL));
-			return __f_GameplayData;
-		}
-	}
-	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
-	public List<E_Dialogues> RelatedDialoguesListUsingSegmentRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_Dialogues._f_Segment.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_Dialogues>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Dialogues) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
-	public List<E_SegmentsGameplayData> RelatedSegmentsGameplayDataListUsingSegmentRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_SegmentsGameplayData._f_Segment.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_SegmentsGameplayData>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_SegmentsGameplayData) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
-	public List<E_Objects> RelatedObjectsListUsingOwnerRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_Objects._f_Owner.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_Objects>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Objects) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5670569073695034891UL, 14796031301428454317UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldString _ufle12jhs77_f_SegmentName;
+	public static BansheeGz.BGDatabase.BGFieldString _f_SegmentName => _ufle12jhs77_f_SegmentName ?? (_ufle12jhs77_f_SegmentName = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldString>(MetaDefault, new BGId(4705691430409051370UL, 10398669542945010076UL), () => _ufle12jhs77_f_SegmentName = null));
+	private static BansheeGz.BGDatabase.BGFieldUnityObject _ufle12jhs77_f_Prefab;
+	public static BansheeGz.BGDatabase.BGFieldUnityObject _f_Prefab => _ufle12jhs77_f_Prefab ?? (_ufle12jhs77_f_Prefab = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldUnityObject>(MetaDefault, new BGId(5042412784670426887UL, 3798303333898769295UL), () => _ufle12jhs77_f_Prefab = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationMultiple _ufle12jhs77_f_Objects;
+	public static BansheeGz.BGDatabase.BGFieldRelationMultiple _f_Objects => _ufle12jhs77_f_Objects ?? (_ufle12jhs77_f_Objects = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationMultiple>(MetaDefault, new BGId(5414509257987170800UL, 16375924262376720830UL), () => _ufle12jhs77_f_Objects = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues => _ufle12jhs77_f_Dialogues ?? (_ufle12jhs77_f_Dialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5043863872193162925UL, 15580842669602972338UL), () => _ufle12jhs77_f_Dialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldUnityObject _ufle12jhs77_f_SpawnPrefab;
+	public static BansheeGz.BGDatabase.BGFieldUnityObject _f_SpawnPrefab => _ufle12jhs77_f_SpawnPrefab ?? (_ufle12jhs77_f_SpawnPrefab = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldUnityObject>(MetaDefault, new BGId(5584655967112634227UL, 13267101346744214414UL), () => _ufle12jhs77_f_SpawnPrefab = null));
+	private static BansheeGz.BGDatabase.BGFieldVector3 _ufle12jhs77_f_DialogueRotation;
+	public static BansheeGz.BGDatabase.BGFieldVector3 _f_DialogueRotation => _ufle12jhs77_f_DialogueRotation ?? (_ufle12jhs77_f_DialogueRotation = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldVector3>(MetaDefault, new BGId(5760607302971462463UL, 3672824699726006442UL), () => _ufle12jhs77_f_DialogueRotation = null));
+	private static BansheeGz.BGDatabase.BGFieldVector3 _ufle12jhs77_f_InGameDialogueRotation;
+	public static BansheeGz.BGDatabase.BGFieldVector3 _f_InGameDialogueRotation => _ufle12jhs77_f_InGameDialogueRotation ?? (_ufle12jhs77_f_InGameDialogueRotation = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldVector3>(MetaDefault, new BGId(4917617894530905501UL, 14489070524609965239UL), () => _ufle12jhs77_f_InGameDialogueRotation = null));
+	private static BansheeGz.BGDatabase.BGFieldVector2 _ufle12jhs77_f_DialogueLightPitchYaw;
+	public static BansheeGz.BGDatabase.BGFieldVector2 _f_DialogueLightPitchYaw => _ufle12jhs77_f_DialogueLightPitchYaw ?? (_ufle12jhs77_f_DialogueLightPitchYaw = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldVector2>(MetaDefault, new BGId(5395289116548682697UL, 15975294921309799602UL), () => _ufle12jhs77_f_DialogueLightPitchYaw = null));
+	private static BansheeGz.BGDatabase.BGFieldVector2 _ufle12jhs77_f_InGameDialogueLightPitchYaw;
+	public static BansheeGz.BGDatabase.BGFieldVector2 _f_InGameDialogueLightPitchYaw => _ufle12jhs77_f_InGameDialogueLightPitchYaw ?? (_ufle12jhs77_f_InGameDialogueLightPitchYaw = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldVector2>(MetaDefault, new BGId(5419589714363862926UL, 14735752373480144282UL), () => _ufle12jhs77_f_InGameDialogueLightPitchYaw = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_GameplayData;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData => _ufle12jhs77_f_GameplayData ?? (_ufle12jhs77_f_GameplayData = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(4909705211094579299UL, 13210900775542928543UL), () => _ufle12jhs77_f_GameplayData = null));
+	public List<Alias_rifegrt_Dialogues> RelatedDialoguesListUsingSegmentRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Dialogues>(Alias_rifegrt_Dialogues._f_Segment, Entity.Id);
+	public List<Alias_rifegrt_SegmentsGameplayData> RelatedSegmentsGameplayDataListUsingSegmentRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_SegmentsGameplayData>(Alias_rifegrt_SegmentsGameplayData._f_Segment, Entity.Id);
+	public List<Alias_rifegrt_Objects> RelatedObjectsListUsingOwnerRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Objects>(Alias_rifegrt_Objects._f_Owner, Entity.Id);
 }

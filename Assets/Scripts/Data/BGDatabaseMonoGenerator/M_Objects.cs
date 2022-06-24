@@ -14,192 +14,50 @@ using Alias_rifegrt_ObjectsGameplayData = E_ObjectsGameplayData;
 [AddComponentMenu("BansheeGz/Generated/M_Objects")]
 public partial class M_Objects : BGEntityGo
 {
-	public override BGMetaEntity MetaConstraint
-	{
-		get
-		{
-			return MetaDefault;
-		}
-	}
+	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaRow _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(4871657982410721797UL,750137968299760546UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
+	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(4871657982410721797UL,750137968299760546UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
-		get
-		{
-			return _f_name[Entity.Index];
-		}
-		set
-		{
-			_f_name[Entity.Index] = value;
-		}
+		get => _f_name[Entity.Index];
+		set => _f_name[Entity.Index] = value;
 	}
 	public System.String f_ObjectTitle
 	{
-		get
-		{
-			return _f_ObjectTitle[Entity.Index];
-		}
-		set
-		{
-			_f_ObjectTitle[Entity.Index] = value;
-		}
+		get => _f_ObjectTitle[Entity.Index];
+		set => _f_ObjectTitle[Entity.Index] = value;
 	}
 	public System.String f_ObjectSubText
 	{
-		get
-		{
-			return _f_ObjectSubText[Entity.Index];
-		}
-		set
-		{
-			_f_ObjectSubText[Entity.Index] = value;
-		}
+		get => _f_ObjectSubText[Entity.Index];
+		set => _f_ObjectSubText[Entity.Index] = value;
 	}
-	public UnityEngine.GameObject f_Prefab
-	{
-		get
-		{
-			return _f_Prefab[Entity.Index];
-		}
-	}
+	public UnityEngine.GameObject f_Prefab => _f_Prefab[Entity.Index];
 	public E_Segments f_Owner
 	{
-		get
-		{
-			return (E_Segments) _f_Owner[Entity.Index];
-		}
-		set
-		{
-			_f_Owner[Entity.Index] = value;
-		}
+		get => (E_Segments) _f_Owner[Entity.Index];
+		set => _f_Owner[Entity.Index] = value;
 	}
 	public E_ObjectsGameplayData f_GameplayData
 	{
-		get
-		{
-			return (E_ObjectsGameplayData) _f_GameplayData[Entity.Index];
-		}
-		set
-		{
-			_f_GameplayData[Entity.Index] = value;
-		}
+		get => (E_ObjectsGameplayData) _f_GameplayData[Entity.Index];
+		set => _f_GameplayData[Entity.Index] = value;
 	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(5270256987534184595UL,7271033944239394211UL));
-			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldString __f_ObjectTitle;
-	public static BansheeGz.BGDatabase.BGFieldString _f_ObjectTitle
-	{
-		get
-		{
-			if(__f_ObjectTitle==null || __f_ObjectTitle.IsDeleted) __f_ObjectTitle=(BansheeGz.BGDatabase.BGFieldString) MetaDefault.GetField(new BGId(5394372170959802640UL,9009507287611560632UL));
-			return __f_ObjectTitle;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldString __f_ObjectSubText;
-	public static BansheeGz.BGDatabase.BGFieldString _f_ObjectSubText
-	{
-		get
-		{
-			if(__f_ObjectSubText==null || __f_ObjectSubText.IsDeleted) __f_ObjectSubText=(BansheeGz.BGDatabase.BGFieldString) MetaDefault.GetField(new BGId(5594065245607900864UL,6912274191189485987UL));
-			return __f_ObjectSubText;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldUnityPrefab __f_Prefab;
-	public static BansheeGz.BGDatabase.BGFieldUnityPrefab _f_Prefab
-	{
-		get
-		{
-			if(__f_Prefab==null || __f_Prefab.IsDeleted) __f_Prefab=(BansheeGz.BGDatabase.BGFieldUnityPrefab) MetaDefault.GetField(new BGId(4702383594286821901UL,9980623028393390773UL));
-			return __f_Prefab;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_Owner;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Owner
-	{
-		get
-		{
-			if(__f_Owner==null || __f_Owner.IsDeleted) __f_Owner=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5020747016533988793UL,12419271386286385327UL));
-			return __f_Owner;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_GameplayData;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData
-	{
-		get
-		{
-			if(__f_GameplayData==null || __f_GameplayData.IsDeleted) __f_GameplayData=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5680102043031229158UL,4949064207623274920UL));
-			return __f_GameplayData;
-		}
-	}
-	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
-	public List<E_LevelData> RelatedLevelDataListUsingForceObjectRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_LevelData._f_ForceObject.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_LevelData>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_LevelData) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
-	public List<E_Segments> RelatedSegmentsListUsingObjectsRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_Segments._f_Objects.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_Segments>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Segments) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
-	public List<E_ReturnDialogues> RelatedReturnDialoguesListUsingForObjectRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_ReturnDialogues._f_ForObject.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_ReturnDialogues>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_ReturnDialogues) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
-	public List<E_ObjectsGameplayData> RelatedObjectsGameplayDataListUsingObjectRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_ObjectsGameplayData._f_Object.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_ObjectsGameplayData>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_ObjectsGameplayData) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5270256987534184595UL, 7271033944239394211UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldString _ufle12jhs77_f_ObjectTitle;
+	public static BansheeGz.BGDatabase.BGFieldString _f_ObjectTitle => _ufle12jhs77_f_ObjectTitle ?? (_ufle12jhs77_f_ObjectTitle = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldString>(MetaDefault, new BGId(5394372170959802640UL, 9009507287611560632UL), () => _ufle12jhs77_f_ObjectTitle = null));
+	private static BansheeGz.BGDatabase.BGFieldString _ufle12jhs77_f_ObjectSubText;
+	public static BansheeGz.BGDatabase.BGFieldString _f_ObjectSubText => _ufle12jhs77_f_ObjectSubText ?? (_ufle12jhs77_f_ObjectSubText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldString>(MetaDefault, new BGId(5594065245607900864UL, 6912274191189485987UL), () => _ufle12jhs77_f_ObjectSubText = null));
+	private static BansheeGz.BGDatabase.BGFieldUnityPrefab _ufle12jhs77_f_Prefab;
+	public static BansheeGz.BGDatabase.BGFieldUnityPrefab _f_Prefab => _ufle12jhs77_f_Prefab ?? (_ufle12jhs77_f_Prefab = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldUnityPrefab>(MetaDefault, new BGId(4702383594286821901UL, 9980623028393390773UL), () => _ufle12jhs77_f_Prefab = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Owner;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Owner => _ufle12jhs77_f_Owner ?? (_ufle12jhs77_f_Owner = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5020747016533988793UL, 12419271386286385327UL), () => _ufle12jhs77_f_Owner = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_GameplayData;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData => _ufle12jhs77_f_GameplayData ?? (_ufle12jhs77_f_GameplayData = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5680102043031229158UL, 4949064207623274920UL), () => _ufle12jhs77_f_GameplayData = null));
+	public List<Alias_rifegrt_LevelData> RelatedLevelDataListUsingForceObjectRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_LevelData>(Alias_rifegrt_LevelData._f_ForceObject, Entity.Id);
+	public List<Alias_rifegrt_Segments> RelatedSegmentsListUsingObjectsRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Segments>(Alias_rifegrt_Segments._f_Objects, Entity.Id);
+	public List<Alias_rifegrt_ReturnDialogues> RelatedReturnDialoguesListUsingForObjectRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_ReturnDialogues>(Alias_rifegrt_ReturnDialogues._f_ForObject, Entity.Id);
+	public List<Alias_rifegrt_ObjectsGameplayData> RelatedObjectsGameplayDataListUsingObjectRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_ObjectsGameplayData>(Alias_rifegrt_ObjectsGameplayData._f_Object, Entity.Id);
 }

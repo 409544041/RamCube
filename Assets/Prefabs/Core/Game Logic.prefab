@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7085678595277738791}
   - component: {fileID: 4300353220786692159}
   - component: {fileID: 3046887159190210964}
+  - component: {fileID: 613446600291284439}
   m_Layer: 0
   m_Name: Dialogue Handling
   m_TagString: Untagged
@@ -28,6 +29,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8573582724643509015}
   m_RootOrder: 5
@@ -91,6 +93,21 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   spriteUnfocusColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+--- !u!114 &613446600291284439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186537946365651608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3b173427bc5d9419922e7bc24b9026, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glRef: {fileID: 7286304185802157844}
+  floatingHeadPos: {x: 0.15, y: 0.2, z: 5}
+  floatingHeadScale: 4.5
 --- !u!1 &3319944025908594892
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +139,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8573582724643509015}
   m_RootOrder: 1
@@ -218,6 +236,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8573582724643509015}
   m_RootOrder: 2
@@ -262,6 +281,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8573582724643509015}
   m_RootOrder: 6
@@ -334,6 +354,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8573582724643509015}
   m_RootOrder: 4
@@ -406,6 +427,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 618837015307145324}
   - {fileID: 6003332839369240843}
@@ -498,6 +520,7 @@ MonoBehaviour:
   overwriter: {fileID: 1073323798743442764}
   dialogueManager: {fileID: 4300353220786692159}
   dialogueFocuser: {fileID: 3046887159190210964}
+  inGameDialogueManager: {fileID: 613446600291284439}
   objColManager: {fileID: 2856112992625200457}
   navManager: {fileID: 4173270567251923710}
   pathFinder: {fileID: 5754706651169593126}
@@ -529,6 +552,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8573582724643509015}
   m_RootOrder: 3
@@ -629,12 +653,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a19c164a66c4ce41ba5b3d3d6cba83c, type: 3}
---- !u!4 &618837015307145324 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4311148304204155820, guid: 0a19c164a66c4ce41ba5b3d3d6cba83c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3693737252973910976}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &511896134078674302 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3771857753296121534, guid: 0a19c164a66c4ce41ba5b3d3d6cba83c,
@@ -647,6 +665,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be43386cf56c9794e85b0448843d016b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &618837015307145324 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4311148304204155820, guid: 0a19c164a66c4ce41ba5b3d3d6cba83c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3693737252973910976}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9051227584093515110
 PrefabInstance:
   m_ObjectHideFlags: 0

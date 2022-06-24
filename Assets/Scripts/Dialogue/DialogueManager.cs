@@ -18,19 +18,21 @@ namespace Qbism.Dialogue
 		[SerializeField] GameplayCoreRefHolder gcRef;
 		[SerializeField] SerpCoreRefHolder scRef;
 
+		//Cache
+		SegmentAnimator partnerAnimator;
+		DialogueFocuser focuser; MMFeedbacks nextButtonJuice;
+		CanvasGroup dialogueCanvasGroup; TextMeshProUGUI charName; Camera cam;
+		TextMeshProUGUI dialogueText; TextAnimatorPlayer typeWriter;
+		MMFeedbacks textAppearJuice; ScreenStateManager screenStateMngr; GaussianCanvas gCanvas;
+
 		//States
 		DialogueScripOb dialogueSO;
 		int dialogueIndex;
-		public bool inDialogue { get; set; } = false;
 		GameObject[] heads = new GameObject[2];
 		string[] names = new string[2];
 		bool isTyping = false;
 		ExpressionHandler[] expressionHandlers = new ExpressionHandler[2];
-		SegmentAnimator partnerAnimator;
-		DialogueFocuser focuser; MMFeedbacks nextButtonJuice;
-		CanvasGroup dialogueCanvasGroup; TextMeshProUGUI charName; Camera cam; Canvas bgCanvas;
-		CanvasGroup bgCanvasGroup; TextMeshProUGUI dialogueText; TextAnimatorPlayer typeWriter;
-		MMFeedbacks textAppearJuice; ScreenStateManager screenStateMngr; Camera gCam; GaussianCanvas gCanvas;
+
 
 		private void Awake()
 		{
@@ -38,8 +40,7 @@ namespace Qbism.Dialogue
 			{
 				focuser = gcRef.glRef.dialogueFocuser; nextButtonJuice = gcRef.dialogueNextButtonJuice; 
 				dialogueCanvasGroup = gcRef.dialogueCanvasGroup; charName = gcRef.characterNameText; 
-				cam = gcRef.cam; bgCanvas = gcRef.bgCanvas; bgCanvasGroup = gcRef.bgCanvasGroup; 
-				dialogueText = gcRef.dialogueText; typeWriter = gcRef.typeWriter; gCam = gcRef.gausCam;
+				cam = gcRef.cam; dialogueText = gcRef.dialogueText; typeWriter = gcRef.typeWriter; 
 				textAppearJuice = gcRef.textAppearJuice; screenStateMngr = gcRef.glRef.screenStateMngr;
 				gCanvas = gcRef.gausCanvas;
 			}
@@ -47,8 +48,7 @@ namespace Qbism.Dialogue
 			{
 				focuser = scRef.slRef.dialogueFocuser; nextButtonJuice = scRef.dialogueNextButtonJuice; 
 				dialogueCanvasGroup = scRef.dialogueCanvasGroup; charName = scRef.characterNameText; 
-				cam = scRef.cam; bgCanvas = scRef.bgCanvas; bgCanvasGroup = scRef.bgCanvasGroup; 
-				dialogueText = scRef.dialogueText; typeWriter = scRef.typeWriter; gCam = scRef.gausCam;
+				cam = scRef.cam; dialogueText = scRef.dialogueText; typeWriter = scRef.typeWriter; 
 				textAppearJuice = scRef.textAppearJuice; screenStateMngr = scRef.slRef.screenStateMngr;
 				gCanvas = scRef.gausCanvas;
 			}
@@ -60,7 +60,6 @@ namespace Qbism.Dialogue
 			screenStateMngr.SwitchState(screenStateMngr.dialogueOverlayState, ScreenStates.dialogueOverlayState);
 			dialogueSO = incDialogueSO;
 			partnerAnimator = segAnimator;
-			inDialogue = true;
 			nextButtonJuice.Initialization();
 			dialogueIndex = 0;
 
@@ -142,7 +141,7 @@ namespace Qbism.Dialogue
 			return head;
 		}
 
-		public void PulseNextButton()
+		public void PulseNextButton() //Called from TextAnimatorPlayer events
 		{
 			nextButtonJuice.PlayFeedbacks();
 		}
@@ -163,7 +162,6 @@ namespace Qbism.Dialogue
 			if (scRef != null) screenStateMngr.SwitchState(screenStateMngr.serpentScreenState,
 				ScreenStates.serpentScreenState);
 
-			inDialogue = false;
 			nextButtonJuice.StopFeedbacks();
 
 			for (int i = 0; i < heads.Length; i++)

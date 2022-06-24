@@ -11,156 +11,35 @@ using Alias_rifegrt_Segments = E_Segments;
 [AddComponentMenu("BansheeGz/Generated/M_Dialogues")]
 public partial class M_Dialogues : BGEntityGo
 {
-	public override BGMetaEntity MetaConstraint
-	{
-		get
-		{
-			return MetaDefault;
-		}
-	}
+	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaRow _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(5691908276886008238UL,14353315125813875389UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
+	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(5691908276886008238UL,14353315125813875389UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
-		get
-		{
-			return _f_name[Entity.Index];
-		}
-		set
-		{
-			_f_name[Entity.Index] = value;
-		}
+		get => _f_name[Entity.Index];
+		set => _f_name[Entity.Index] = value;
 	}
 	public E_Segments f_Segment
 	{
-		get
-		{
-			return (E_Segments) _f_Segment[Entity.Index];
-		}
-		set
-		{
-			_f_Segment[Entity.Index] = value;
-		}
+		get => (E_Segments) _f_Segment[Entity.Index];
+		set => _f_Segment[Entity.Index] = value;
 	}
-	public UnityEngine.ScriptableObject f_RescueDialogue
-	{
-		get
-		{
-			return _f_RescueDialogue[Entity.Index];
-		}
-	}
-	public List<E_ReturnDialogues> f_ReturnDialogues
-	{
-		get
-		{
-			var val = _f_ReturnDialogues[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___ReturnDialogues = new List<E_ReturnDialogues>();
-			for (var i = 0; i < val.Count; i++) ___ReturnDialogues.Add((E_ReturnDialogues) val[i]);
-			return ___ReturnDialogues;
-		}
-	}
-	public List<E_FluffDialogues> f_FluffDialogues
-	{
-		get
-		{
-			var val = _f_FluffDialogues[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___FluffDialogues = new List<E_FluffDialogues>();
-			for (var i = 0; i < val.Count; i++) ___FluffDialogues.Add((E_FluffDialogues) val[i]);
-			return ___FluffDialogues;
-		}
-	}
-	public List<E_ShortDialogues> f_ShortDialogues
-	{
-		get
-		{
-			var val = _f_ShortDialogues[Entity.Index];
-			if(val==null || val.Count==0) return null;
-			var ___ShortDialogues = new List<E_ShortDialogues>();
-			for (var i = 0; i < val.Count; i++) ___ShortDialogues.Add((E_ShortDialogues) val[i]);
-			return ___ShortDialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(5300970025127205706UL,3063305633938667929UL));
-			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_Segment;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Segment
-	{
-		get
-		{
-			if(__f_Segment==null || __f_Segment.IsDeleted) __f_Segment=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5362655967193847021UL,8794766217772961702UL));
-			return __f_Segment;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject __f_RescueDialogue;
-	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_RescueDialogue
-	{
-		get
-		{
-			if(__f_RescueDialogue==null || __f_RescueDialogue.IsDeleted) __f_RescueDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5658430206875923811UL,17589914016796226975UL));
-			return __f_RescueDialogue;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldNested __f_ReturnDialogues;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_ReturnDialogues
-	{
-		get
-		{
-			if(__f_ReturnDialogues==null || __f_ReturnDialogues.IsDeleted) __f_ReturnDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5510717961828634056UL,9806892908304910006UL));
-			return __f_ReturnDialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldNested __f_FluffDialogues;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogues
-	{
-		get
-		{
-			if(__f_FluffDialogues==null || __f_FluffDialogues.IsDeleted) __f_FluffDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5478707207032614291UL,13273353822579157894UL));
-			return __f_FluffDialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldNested __f_ShortDialogues;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_ShortDialogues
-	{
-		get
-		{
-			if(__f_ShortDialogues==null || __f_ShortDialogues.IsDeleted) __f_ShortDialogues=(BansheeGz.BGDatabase.BGFieldNested) MetaDefault.GetField(new BGId(5124572410662557455UL,6331992675011935619UL));
-			return __f_ShortDialogues;
-		}
-	}
-	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
-	public List<E_Segments> RelatedSegmentsListUsingDialoguesRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_Segments._f_Dialogues.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_Segments>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Segments) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
+	public UnityEngine.ScriptableObject f_RescueDialogue => _f_RescueDialogue[Entity.Index];
+	public List<E_ReturnDialogues> f_ReturnDialogues => BGCodeGenUtils.GetNested<E_ReturnDialogues>(_f_ReturnDialogues, Entity.Index);
+	public List<E_FluffDialogues> f_FluffDialogues => BGCodeGenUtils.GetNested<E_FluffDialogues>(_f_FluffDialogues, Entity.Index);
+	public List<E_ShortDialogues> f_ShortDialogues => BGCodeGenUtils.GetNested<E_ShortDialogues>(_f_ShortDialogues, Entity.Index);
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5300970025127205706UL, 3063305633938667929UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Segment;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Segment => _ufle12jhs77_f_Segment ?? (_ufle12jhs77_f_Segment = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5362655967193847021UL, 8794766217772961702UL), () => _ufle12jhs77_f_Segment = null));
+	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _ufle12jhs77_f_RescueDialogue;
+	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_RescueDialogue => _ufle12jhs77_f_RescueDialogue ?? (_ufle12jhs77_f_RescueDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldUnityScriptableObject>(MetaDefault, new BGId(5658430206875923811UL, 17589914016796226975UL), () => _ufle12jhs77_f_RescueDialogue = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_ReturnDialogues;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_ReturnDialogues => _ufle12jhs77_f_ReturnDialogues ?? (_ufle12jhs77_f_ReturnDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5510717961828634056UL, 9806892908304910006UL), () => _ufle12jhs77_f_ReturnDialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogues;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogues => _ufle12jhs77_f_FluffDialogues ?? (_ufle12jhs77_f_FluffDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5478707207032614291UL, 13273353822579157894UL), () => _ufle12jhs77_f_FluffDialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_ShortDialogues;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_ShortDialogues => _ufle12jhs77_f_ShortDialogues ?? (_ufle12jhs77_f_ShortDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5124572410662557455UL, 6331992675011935619UL), () => _ufle12jhs77_f_ShortDialogues = null));
+	public List<Alias_rifegrt_Segments> RelatedSegmentsListUsingDialoguesRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Segments>(Alias_rifegrt_Segments._f_Dialogues, Entity.Id);
 }

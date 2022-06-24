@@ -1,5 +1,6 @@
 using Qbism.Control;
 using Qbism.Dialogue;
+using Qbism.Serpent;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,14 +12,29 @@ namespace Qbism.ScreenStateMachine
 		//Cache
 		ScreenStateManager stateMngr;
 		DialogueManager dialogueMngr;
+		CanvasGroup dialogueCanvasGroup;
+		InGameDialogueManager inGameDialogueMngr;
+		CanvasGroup inGameDialogueCanvasGroup;
 
 		public void StateEnter(ScreenStateManager ssm)
 		{
 			if (stateMngr == null)
 			{
 				stateMngr = ssm;
-				if (stateMngr.gcRef != null) dialogueMngr = stateMngr.gcRef.glRef.dialogueManager;
-				if (stateMngr.scRef != null) dialogueMngr = stateMngr.scRef.slRef.dialogueManager;
+
+				if (stateMngr.gcRef != null)
+				{
+					dialogueMngr = stateMngr.gcRef.glRef.dialogueManager;
+					dialogueCanvasGroup = stateMngr.gcRef.dialogueCanvasGroup;
+					inGameDialogueMngr = stateMngr.gcRef.glRef.inGameDialogueManager;
+					inGameDialogueCanvasGroup = stateMngr.gcRef.inGameDialogueCanvasGroup;
+				}
+
+				if (stateMngr.scRef != null)
+				{
+					dialogueMngr = stateMngr.scRef.slRef.dialogueManager;
+					dialogueCanvasGroup = stateMngr.scRef.dialogueCanvasGroup;
+				}
 			}
 
 			//TO DO: trigger dialogue UI and start convo
@@ -26,7 +42,9 @@ namespace Qbism.ScreenStateMachine
 
 		public void HandleActionInput()
 		{
-			dialogueMngr.NextDialogueText();
+			if (inGameDialogueMngr != null && inGameDialogueCanvasGroup.alpha == 1)
+				inGameDialogueMngr.NextDialogueText();
+			else dialogueMngr.NextDialogueText();
 		}
 
 		public void StateExit()

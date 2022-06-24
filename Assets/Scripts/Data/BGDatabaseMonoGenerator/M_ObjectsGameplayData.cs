@@ -11,120 +11,37 @@ using Alias_rifegrt_Objects = E_Objects;
 [AddComponentMenu("BansheeGz/Generated/M_ObjectsGameplayData")]
 public partial class M_ObjectsGameplayData : BGEntityGo
 {
-	public override BGMetaEntity MetaConstraint
-	{
-		get
-		{
-			return MetaDefault;
-		}
-	}
+	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaRow _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(4658376294490806110UL,6950373328361257866UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
+	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(4658376294490806110UL,6950373328361257866UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
-		get
-		{
-			return _f_name[Entity.Index];
-		}
-		set
-		{
-			_f_name[Entity.Index] = value;
-		}
+		get => _f_name[Entity.Index];
+		set => _f_name[Entity.Index] = value;
 	}
 	public E_Objects f_Object
 	{
-		get
-		{
-			return (E_Objects) _f_Object[Entity.Index];
-		}
-		set
-		{
-			_f_Object[Entity.Index] = value;
-		}
+		get => (E_Objects) _f_Object[Entity.Index];
+		set => _f_Object[Entity.Index] = value;
 	}
 	public System.Boolean f_ObjectFound
 	{
-		get
-		{
-			return _f_ObjectFound[Entity.Index];
-		}
-		set
-		{
-			_f_ObjectFound[Entity.Index] = value;
-		}
+		get => _f_ObjectFound[Entity.Index];
+		set => _f_ObjectFound[Entity.Index] = value;
 	}
 	public System.Boolean f_ObjectReturned
 	{
-		get
-		{
-			return _f_ObjectReturned[Entity.Index];
-		}
-		set
-		{
-			_f_ObjectReturned[Entity.Index] = value;
-		}
+		get => _f_ObjectReturned[Entity.Index];
+		set => _f_ObjectReturned[Entity.Index] = value;
 	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(4704137733006346466UL,6507642195071752856UL));
-			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_Object;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Object
-	{
-		get
-		{
-			if(__f_Object==null || __f_Object.IsDeleted) __f_Object=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5575310436151618600UL,1591952302039477673UL));
-			return __f_Object;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_ObjectFound;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_ObjectFound
-	{
-		get
-		{
-			if(__f_ObjectFound==null || __f_ObjectFound.IsDeleted) __f_ObjectFound=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5418712494444133144UL,10507902628022803586UL));
-			return __f_ObjectFound;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_ObjectReturned;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_ObjectReturned
-	{
-		get
-		{
-			if(__f_ObjectReturned==null || __f_ObjectReturned.IsDeleted) __f_ObjectReturned=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(4762361548636797324UL,11593070393711443599UL));
-			return __f_ObjectReturned;
-		}
-	}
-	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
-	public List<E_Objects> RelatedObjectsListUsingGameplayDataRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_Objects._f_GameplayData.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_Objects>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_Objects) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4704137733006346466UL, 6507642195071752856UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Object;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Object => _ufle12jhs77_f_Object ?? (_ufle12jhs77_f_Object = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5575310436151618600UL, 1591952302039477673UL), () => _ufle12jhs77_f_Object = null));
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_ObjectFound;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_ObjectFound => _ufle12jhs77_f_ObjectFound ?? (_ufle12jhs77_f_ObjectFound = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(5418712494444133144UL, 10507902628022803586UL), () => _ufle12jhs77_f_ObjectFound = null));
+	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_ObjectReturned;
+	public static BansheeGz.BGDatabase.BGFieldBool _f_ObjectReturned => _ufle12jhs77_f_ObjectReturned ?? (_ufle12jhs77_f_ObjectReturned = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(4762361548636797324UL, 11593070393711443599UL), () => _ufle12jhs77_f_ObjectReturned = null));
+	public List<Alias_rifegrt_Objects> RelatedObjectsListUsingGameplayDataRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Objects>(Alias_rifegrt_Objects._f_GameplayData, Entity.Id);
 }

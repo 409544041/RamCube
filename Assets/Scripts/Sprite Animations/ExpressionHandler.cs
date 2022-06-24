@@ -1,6 +1,7 @@
 using Qbism.Cubes;
 using Qbism.PlayerCube;
 using Qbism.Serpent;
+using Qbism.Shapies;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,13 +23,15 @@ namespace Qbism.SpriteAnimations
 		[SerializeField] FaceJuicer faceJuice;
 		[SerializeField] SegmentRefHolder segRef;
 		[SerializeField] PlayerRefHolder pRef;
+		[SerializeField] ShapieRefHolder sRef;
 
 		//States
 		float expressionTimer = 0f, blinkTimer = 0f;
 		float timeToExpress = 0f, timeToBlink = 0f;
 		public bool hasFinished { get; set; } = false;
 		bool isIdlingInGame = true, canBlink = true;
-		bool inSerpScreen, pauzeExpressionTimer = false, inDialogue = false;
+		bool inSerpScreen, pauzeExpressionTimer = false;
+		ScreenStates currentScreenState;
 
 		//Actions, events, delegates etc
 		public Func<bool> onFetchStunned;
@@ -41,11 +44,10 @@ namespace Qbism.SpriteAnimations
 
 		private void Update()
 		{
-			if (inSerpScreen && segRef.scRef.slRef.dialogueManager != null)
-				inDialogue = segRef.scRef.slRef.dialogueManager.inDialogue;
-			else inDialogue = false;
+			GetCurrentScreenState();
 
-			if ((pRef != null && !hasFinished) || (inSerpScreen && !inDialogue))
+			if ((pRef != null && !hasFinished) || sRef != null ||
+				(inSerpScreen && currentScreenState != ScreenStates.dialogueOverlayState))
 			{
 				HandleBlinkTimer();
 				HandleExpressionTimer();
@@ -54,7 +56,8 @@ namespace Qbism.SpriteAnimations
 
 		public void SetSituationFace(ExpressionSituations incSituation, float incTime)
 		{
-			if (pRef != null || (inSerpScreen && !inDialogue))
+			if (pRef != null || sRef != null ||
+				(inSerpScreen && currentScreenState != ScreenStates.dialogueOverlayState))
 			{
 				if (incSituation == ExpressionSituations.play) isIdlingInGame = true;
 				else isIdlingInGame = false;
@@ -89,7 +92,8 @@ namespace Qbism.SpriteAnimations
 				if (hasMouth) mouthAnim.SetMouth(expressionFace.face.mouth);
 			}
 			
-			if (pRef != null || (inSerpScreen && !inDialogue))
+			if (pRef != null || sRef != null ||(inSerpScreen &&
+				currentScreenState != ScreenStates.dialogueOverlayState))
 			{
 				timeToExpress = incTime;
 				expressionTimer = 0;
@@ -105,7 +109,8 @@ namespace Qbism.SpriteAnimations
 		//always go back to neutral
 		private IEnumerator Blink()
 		{
-			if ((isIdlingInGame || (inSerpScreen && !inDialogue)) && canBlink)
+			if ((isIdlingInGame || sRef != null || (inSerpScreen &&
+				currentScreenState != ScreenStates.dialogueOverlayState)) && canBlink)
 			{
 				pauzeExpressionTimer = true;
 
@@ -153,8 +158,23 @@ namespace Qbism.SpriteAnimations
 				else SetSituationFace(ExpressionSituations.laserHit, GetRandomTime());
 			}
 			
-			if (inSerpScreen && !inDialogue)
+			if (sRef == null && inSerpScreen && currentScreenState != ScreenStates.dialogueOverlayState)
 				SetSituationFace(ExpressionSituations.idle, GetRandomTime());
+		}
+
+		private void GetCurrentScreenState()
+		{
+			if (sRef != null) return;
+			if (segRef != null)
+			{
+				if (segRef.gcRef != null)
+					currentScreenState = segRef.gcRef.glRef.screenStateMngr.currentStateEnum;
+				else if (segRef.mcRef != null)
+					currentScreenState = segRef.mcRef.mlRef.screenStateMngr.currentStateEnum;
+				else if (segRef.scRef != null)
+					currentScreenState = segRef.scRef.slRef.screenStateMngr.currentStateEnum;
+			}
+			else currentScreenState = pRef.gcRef.glRef.screenStateMngr.currentStateEnum;
 		}
 
 		private void SetNeutralFace()

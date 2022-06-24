@@ -46,6 +46,13 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public MMFeedbacks textAppearJuice;
 	public Camera gausCam;
 	public GaussianCanvas gausCanvas;
+	[Header("In Game Dialogue Canvas")]
+	public CanvasGroup inGameDialogueCanvasGroup;
+	public TextMeshProUGUI inGameCharacterNameText;
+	public TextMeshProUGUI inGameDialogueText;
+	public MMFeedbacks inGameDialogueNextButtonJuice;
+	public TextAnimatorPlayer inGameTypeWriter;
+	public MMFeedbacks inGameTextAppearJuice;
 	[Header("Object Canvas")]
 	public Canvas objectCanvas;
 	public CanvasGroup objectCanvasGroup;

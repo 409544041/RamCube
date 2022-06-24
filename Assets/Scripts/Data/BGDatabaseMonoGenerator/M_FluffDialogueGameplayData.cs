@@ -11,80 +11,23 @@ using Alias_rifegrt_FluffDialogues = E_FluffDialogues;
 [AddComponentMenu("BansheeGz/Generated/M_FluffDialogueGameplayData")]
 public partial class M_FluffDialogueGameplayData : BGEntityGo
 {
-	public override BGMetaEntity MetaConstraint
-	{
-		get
-		{
-			return MetaDefault;
-		}
-	}
+	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5635743854043088856UL,17727459658554333612UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
+	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5635743854043088856UL,17727459658554333612UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
-		get
-		{
-			return _f_name[Entity.Index];
-		}
-		set
-		{
-			_f_name[Entity.Index] = value;
-		}
+		get => _f_name[Entity.Index];
+		set => _f_name[Entity.Index] = value;
 	}
 	public E_SegmentsGameplayData f_SegmentsGameplayData
 	{
-		get
-		{
-			return (E_SegmentsGameplayData) _f_SegmentsGameplayData[Entity.Index];
-		}
-		set
-		{
-			_f_SegmentsGameplayData[Entity.Index] = value;
-		}
+		get => (E_SegmentsGameplayData) _f_SegmentsGameplayData[Entity.Index];
+		set => _f_SegmentsGameplayData[Entity.Index] = value;
 	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(5084205847461478916UL,6488143047621156767UL));
-			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_SegmentsGameplayData;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_SegmentsGameplayData
-	{
-		get
-		{
-			if(__f_SegmentsGameplayData==null || __f_SegmentsGameplayData.IsDeleted) __f_SegmentsGameplayData=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5633271626414292479UL,9592474805348906911UL));
-			return __f_SegmentsGameplayData;
-		}
-	}
-	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
-	public List<E_FluffDialogues> RelatedFluffDialoguesListUsingGameplayDataRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_FluffDialogues._f_GameplayData.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_FluffDialogues>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_FluffDialogues) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5084205847461478916UL, 6488143047621156767UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_SegmentsGameplayData;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_SegmentsGameplayData => _ufle12jhs77_f_SegmentsGameplayData ?? (_ufle12jhs77_f_SegmentsGameplayData = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5633271626414292479UL, 9592474805348906911UL), () => _ufle12jhs77_f_SegmentsGameplayData = null));
+	public List<Alias_rifegrt_FluffDialogues> RelatedFluffDialoguesListUsingGameplayDataRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_FluffDialogues>(Alias_rifegrt_FluffDialogues._f_GameplayData, Entity.Id);
 }

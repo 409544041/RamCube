@@ -11,112 +11,31 @@ using Alias_rifegrt_LevelData = E_LevelData;
 [AddComponentMenu("BansheeGz/Generated/M_MapWalls")]
 public partial class M_MapWalls : BGEntityGo
 {
-	public override BGMetaEntity MetaConstraint
-	{
-		get
-		{
-			return MetaDefault;
-		}
-	}
+	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaRow _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(4959565327689654965UL,2471908366607778707UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
+	public static BansheeGz.BGDatabase.BGMetaRow MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaRow>(new BGId(4959565327689654965UL,2471908366607778707UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
-		get
-		{
-			return _f_name[Entity.Index];
-		}
-		set
-		{
-			_f_name[Entity.Index] = value;
-		}
+		get => _f_name[Entity.Index];
+		set => _f_name[Entity.Index] = value;
 	}
 	public E_Pin f_OriginPin
 	{
-		get
-		{
-			return (E_Pin) _f_OriginPin[Entity.Index];
-		}
-		set
-		{
-			_f_OriginPin[Entity.Index] = value;
-		}
+		get => (E_Pin) _f_OriginPin[Entity.Index];
+		set => _f_OriginPin[Entity.Index] = value;
 	}
 	public E_Pin f_DestPin
 	{
-		get
-		{
-			return (E_Pin) _f_DestPin[Entity.Index];
-		}
-		set
-		{
-			_f_DestPin[Entity.Index] = value;
-		}
+		get => (E_Pin) _f_DestPin[Entity.Index];
+		set => _f_DestPin[Entity.Index] = value;
 	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(5712327967688250671UL,6283100240849974687UL));
-			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_OriginPin;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_OriginPin
-	{
-		get
-		{
-			if(__f_OriginPin==null || __f_OriginPin.IsDeleted) __f_OriginPin=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(4679121713698528948UL,1872479915702842775UL));
-			return __f_OriginPin;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_DestPin;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_DestPin
-	{
-		get
-		{
-			if(__f_DestPin==null || __f_DestPin.IsDeleted) __f_DestPin=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5682693562927262261UL,886020703537969570UL));
-			return __f_DestPin;
-		}
-	}
-	private static readonly List<BGEntity> _tugjbyuhfv_reusableList = new List<BGEntity>();
-	public List<E_LevelData> RelatedLevelDataListUsingWallsToDestRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_LevelData._f_WallsToDest.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_LevelData>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_LevelData) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
-	public List<E_LevelData> RelatedLevelDataListUsingWallsFromOriginRelation
-	{
-		get
-		{
-			var _private_related_list = Alias_rifegrt_LevelData._f_WallsFromOrigin.GetRelatedIn(Entity.Id, _tugjbyuhfv_reusableList);
-			if (_private_related_list.Count == 0) return null;
-			var _private_result_list = new List<E_LevelData>(_private_related_list.Count);
-			for (var i = 0; i < _private_related_list.Count; i++) _private_result_list.Add((E_LevelData) _private_related_list[i]);
-			_tugjbyuhfv_reusableList.Clear();
-			return _private_result_list;
-		}
-	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5712327967688250671UL, 6283100240849974687UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_OriginPin;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_OriginPin => _ufle12jhs77_f_OriginPin ?? (_ufle12jhs77_f_OriginPin = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(4679121713698528948UL, 1872479915702842775UL), () => _ufle12jhs77_f_OriginPin = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_DestPin;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_DestPin => _ufle12jhs77_f_DestPin ?? (_ufle12jhs77_f_DestPin = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5682693562927262261UL, 886020703537969570UL), () => _ufle12jhs77_f_DestPin = null));
+	public List<Alias_rifegrt_LevelData> RelatedLevelDataListUsingWallsToDestRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_LevelData>(Alias_rifegrt_LevelData._f_WallsToDest, Entity.Id);
+	public List<Alias_rifegrt_LevelData> RelatedLevelDataListUsingWallsFromOriginRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_LevelData>(Alias_rifegrt_LevelData._f_WallsFromOrigin, Entity.Id);
 }
