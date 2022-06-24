@@ -121,10 +121,10 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private void HandleFromFloorToShrunk(Vector2Int cubePos, FloorCube cube, 
+		public void HandleFromFloorToShrunk(Vector2Int cubePos, FloorCube cube, 
 			Dictionary<Vector2Int, FloorCube> dic, Dictionary<Vector2Int, List<FloorCube>> shrunkDic)
 		{
-			dic.Remove(cubePos);
+			if (dic != null) dic.Remove(cubePos);
 
 			if (!shrunkDic.ContainsKey(cubePos))
 			{
@@ -132,24 +132,25 @@ namespace Qbism.Cubes
 				shrunkDic.Add(cubePos, floorCubeList);
 			}
 
-			shrunkDic[cubePos].Insert(0, cube);
+			if (shrunkDic[cubePos].Count > 0 && shrunkDic[cubePos][0] == cube) return;
+			else shrunkDic[cubePos].Insert(0, cube);
 		}
 
-		public void FromShrunkToFloorDic(Vector2Int cubePos, FloorCube cube)
+		public void FromShrunkToFloor(Vector2Int cubePos, FloorCube cube)
 		{
 			//Always check movDic before checking floorDic
 			if (shrunkMovFloorCubeDic.ContainsKey(cubePos))
 			{
-				HandleFromShrunkToFloor(cubePos, cube, shrunkMovFloorCubeDic, movFloorCubeDic);
+				HandleFromShrunkToFLoor(cubePos, null, shrunkMovFloorCubeDic, null);
 			}
 
 			else if (shrunkFloorCubeDic.ContainsKey(cubePos))
 			{
-				HandleFromShrunkToFloor(cubePos, cube, shrunkFloorCubeDic, floorCubeDic);
+				HandleFromShrunkToFLoor(cubePos, cube, shrunkFloorCubeDic, floorCubeDic);
 			}
 		}
 
-		private void HandleFromShrunkToFloor(Vector2Int cubePos, FloorCube cube,
+		public void HandleFromShrunkToFLoor(Vector2Int cubePos, FloorCube cube,
 		Dictionary<Vector2Int, List<FloorCube>> shrunkDic, Dictionary<Vector2Int, FloorCube> dic)
 		{
 			//checking 'thisRewind' to make sure only the top floorcube off the
@@ -162,7 +163,7 @@ namespace Qbism.Cubes
 					shrunkDic[cubePos].RemoveAt(0);
 				else shrunkDic.Remove(cubePos);
 
-				dic.Add(cubePos, cube);
+				if (cube != null) dic.Add(cubePos, cube);
 			}
 		}
 
@@ -210,7 +211,7 @@ namespace Qbism.Cubes
 			else return false;
 		}
 
-		private void AddToMovFloorCubeDic(Vector2Int cubePos, FloorCube cube)
+		public void AddToMovFloorCubeDic(Vector2Int cubePos, FloorCube cube)
 		{
 			if (!movFloorCubeDic.ContainsKey(cubePos))
 				movFloorCubeDic.Add(cubePos, cube);

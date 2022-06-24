@@ -21,6 +21,14 @@ namespace Qbism.Rewind
 		LaserRefHolder[] laserRefs;
 		FinishCube finish;
 
+		//States
+		public Dictionary<Vector2Int, MoveableCube> movRewindDic { get; private set; }
+			= new Dictionary<Vector2Int, MoveableCube>();
+		public Dictionary<Vector2Int, MoveableCube> dockedMovRewindDic { get; private set; }
+			= new Dictionary<Vector2Int, MoveableCube>();
+		public Dictionary<Vector2Int, MoveableCube> shrunkMovRewindDic { get; private set; }
+			= new Dictionary<Vector2Int, MoveableCube>();
+
 		private void Awake() 
 		{
 			timeBodies = glRef.gcRef.timeBodies;
@@ -43,57 +51,69 @@ namespace Qbism.Rewind
 				moveHandler.onInitialCubeRecording += AddInitialMoveableRecording;
 		}
 
+		public void ResetLevel()
+		{
+			if (!mover.allowRewind) return;
+
+			var playerTimeBody = glRef.gcRef.pRef.timeBody;
+			var count = playerTimeBody.rewindList.Count;
+			mover.isResetting = true;
+
+			for (int i = 0; i < count; i++)
+			{
+				StartRewinding();
+			}
+		}
+
 		public void StartRewinding()
 		{
 			if (!mover.allowRewind) return;
-			
-			RewindTimeBodies();
+			if (glRef.gcRef.pRef.timeBody.rewindList.Count == 0) return;
 
-			//To stop rewind UI element from pulsing if rewinding off finish
+			FillMovRewindDic();
+			NormalRewind();
+
 			if (finish.wrongOnFinish) glRef.gcRef.rewindPulser.StopPulse();
 			LaserRewindStuff();
 
 			handler.shrunkToFloorThisRewind = new Vector2Int(99, 99);
 		}
 
-		private void RewindTimeBodies()
+		private void FillMovRewindDic()
 		{
-			SortedDictionary<int, TimeBody> rewindFirstDic = CreateRewindFirstDic();
-			PriorityRewind(rewindFirstDic);
-			NormalRewind();
-			ResetPriorityRewindValue(rewindFirstDic);
-		}
+			movRewindDic.Clear();
+			dockedMovRewindDic.Clear();
+			shrunkMovRewindDic.Clear();
 
-		private SortedDictionary<int, TimeBody> CreateRewindFirstDic()
-		{
-			SortedDictionary<int, TimeBody> rewindFirstDic =
-							new SortedDictionary<int, TimeBody>();
-
-			//Order in which moveables get rewinded is important to avoid dic errors
 			foreach (TimeBody body in timeBodies)
 			{
 				var refs = body.cubeRef;
 
 				MoveableCube moveable = null;
+				FloorCube floor = null;
+				if (refs != null) floor = body.cubeRef.floorCube;
 				if (refs != null) moveable = body.cubeRef.movCube;
+				if (moveable == null) continue;
+				
+				var cubePos = refs.cubePos.FetchGridPos();
 
-				if (refs != null && moveable != null &&
-					refs.timeBody.movementOrderList.Count > 0)
+				if (moveHandler.moveableCubeDic.ContainsKey(cubePos))
 				{
-					if (refs.timeBody.movementOrderList[0] == -1) break;
-
-					rewindFirstDic.Add(refs.timeBody.movementOrderList[0], body);
-					body.priorityRewind = true;
+					moveHandler.moveableCubeDic.Remove(cubePos);
+					movRewindDic.Add(cubePos, moveable);
 				}
-			}
-			return rewindFirstDic;
-		}
-
-		private static void PriorityRewind(SortedDictionary<int, TimeBody> rewindFirstDic)
-		{
-			for (int j = 0; j < rewindFirstDic.Count; j++)
-			{
-				rewindFirstDic[j].StartRewind();
+				else if (handler.movFloorCubeDic.ContainsKey(cubePos))
+				{
+					handler.movFloorCubeDic.Remove(cubePos);
+					dockedMovRewindDic.Add(cubePos, moveable);
+					
+				}
+				else if (handler.shrunkMovFloorCubeDic.ContainsKey(cubePos) &&
+					handler.shrunkMovFloorCubeDic[cubePos][0] == floor)
+				{
+					handler.FromShrunkToFloor(cubePos, null);
+					shrunkMovRewindDic.Add(cubePos, moveable);
+				}
 			}
 		}
 
@@ -101,15 +121,7 @@ namespace Qbism.Rewind
 		{
 			foreach (var body in timeBodies)
 			{
-				if (!body.priorityRewind) body.StartRewind();
-			}
-		}
-
-		private static void ResetPriorityRewindValue(SortedDictionary<int, TimeBody> rewindFirstDic)
-		{
-			foreach (var pair in rewindFirstDic)
-			{
-				pair.Value.priorityRewind = false;
+				body.StartRewind();
 			}
 		}
 

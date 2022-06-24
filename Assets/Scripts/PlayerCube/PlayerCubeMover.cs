@@ -51,6 +51,7 @@ namespace Qbism.PlayerCube
 		public bool isLowered { get; set; } = false;
 		public bool justBoosted { get; set; } = false;
 		public bool isRewinding { get; set; } = false;
+		public bool isResetting { get; set; } = false;
 		public bool newInput { get; set; } = false;
 		public bool prevMoveNewInput { get; set; } = false;
 
@@ -219,6 +220,8 @@ namespace Qbism.PlayerCube
 		private IEnumerator LowerCube(Vector3 targetPos, float step, 
 			Vector2Int cubePos, bool fromBoost)
 		{
+			isLowered = true;
+
 			if (fromBoost)
 			{
 				var juiceDur = boostJuicer.FetchJuiceDur();
@@ -235,8 +238,6 @@ namespace Qbism.PlayerCube
 				transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 				yield return timeStep;
 			}
-
-			isLowered = true;
 
 			if (moveHandler.movingMoveables == 0)
 			{

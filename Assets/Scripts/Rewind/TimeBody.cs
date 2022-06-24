@@ -21,16 +21,14 @@ namespace Qbism.Rewind
 		CubeHandler handler;
 		FloorCubeChecker floorChecker;
 		ExpressionHandler expresHandler;
+		RewindHandler rewHandler;
 
 		//States
-		public bool priorityRewind { get; set; } = false;
-
-		private List<PointInTime> rewindList = new List<PointInTime>(); 
+		public List<PointInTime> rewindList { get; private set; } = new List<PointInTime>(); 
 		private List<bool> hasShrunkList = new List<bool>();
 		private List<CubeTypes> isStaticList = new List<CubeTypes>();
 		private List<bool> isDockedList = new List<bool>();
 		private List<bool> isOutOfBoundsList = new List<bool>();
-		public List<int> movementOrderList { get; set; } = new List<int>();
 
 		private void Awake() 
 		{
@@ -41,19 +39,15 @@ namespace Qbism.Rewind
 				handler = pRef.gcRef.glRef.cubeHandler;
 				moveHandler = pRef.gcRef.glRef.movCubeHandler;
 				floorChecker = pRef.gcRef.glRef.floorChecker;
+				rewHandler = pRef.gcRef.glRef.rewindHandler;
 			}
 			else
 			{
 				handler = cubeRef.gcRef.glRef.cubeHandler;
 				moveHandler = cubeRef.gcRef.glRef.movCubeHandler;
 				floorChecker = cubeRef.gcRef.glRef.floorChecker;
+				rewHandler = cubeRef.gcRef.glRef.rewindHandler;
 			}
-		}
-
-		private void OnEnable() 
-		{
-			if (cubeRef != null && cubeRef.movCube != null) 
-				cubeRef.movCube.onUpdateOrderInTimebody += AddToMoveOrderList;
 		}
 
 		public void InitialRecord(Vector3 pos, Quaternion rot, Vector3 scale, Quaternion faceRot, Vector3 faceScale)
@@ -70,7 +64,6 @@ namespace Qbism.Rewind
 			{
 				AddToDockedList(cubeRef.movCube);
 				AddToOutOfBoundsList(cubeRef.movCube);
-				AddToMoveOrderList(-1, cubeRef.movCube);
 			}
 		}
 
@@ -124,12 +117,6 @@ namespace Qbism.Rewind
 			else isOutOfBoundsList.Insert(0, false);
 		}
 
-		private void AddToMoveOrderList(int order, MoveableCube moveable)
-		{
-			if (order == -1) movementOrderList.Insert(0, moveable.orderOfMovement);
-			else movementOrderList[0] = order;
-		}
-
 		public void StartRewind()
 		{
 			if (rewindList.Count <= 0) return;
@@ -169,19 +156,16 @@ namespace Qbism.Rewind
 				
 				if (mover.isStunned)
 				{
-					//yield here bc otherwise laser detects cube collider again and player stays stunned
-					yield return null;
 					mover.isStunned = false;
 					pRef.gcRef.rewindPulser.StopPulse();
 					pRef.stunJuicer.StopStunVFX();
 				}
 
-				pRef.rewindJuicer.StartPostRewindJuice();
+				if (!mover.isResetting) pRef.rewindJuicer.StartPostRewindJuice();
+				else if (rewindList.Count == 1) pRef.rewindJuicer.StartPostRewindJuice();
+
 				pRef.fartLauncher.ResetFartCollided();
 				expresHandler.SetFace(Expressions.smiling, expresHandler.GetRandomTime());
-
-				yield return null; //To ensure isRewinding registers at all in mover
-				mover.isRewinding = false;
 			}
 
 			if (this.tag == "Environment" || this.tag == "Moveable")
@@ -197,7 +181,6 @@ namespace Qbism.Rewind
 					cubeRef.cubePos.RoundPosition();
 					cubeRef.movCube.UpdateCenterPosition();
 					ResetOutOfBounds(cubeRef.movCube);
-					movementOrderList.RemoveAt(0);
 					var rewPos = new Vector2Int(Mathf.RoundToInt(rewindList[0].position.x),
 						Mathf.RoundToInt(rewindList[0].position.z));
 					if (preRewPos != rewPos) cubeRef.rewindJuicer.StartPostRewindJuice();
@@ -209,28 +192,33 @@ namespace Qbism.Rewind
 					}
 
 					if (cubeRef.floorCube == null)
-					{
-						moveHandler.RemoveFromMoveableDic(preRewPos);
 						moveHandler.AddToMoveableDic(cubeRef.cubePos.FetchGridPos(), cubeRef.movCube);
-					}
+					else if (!cubeRef.cubeShrink.hasShrunk)
+						handler.AddToMovFloorCubeDic(cubeRef.cubePos.FetchGridPos(), cubeRef.floorCube);
 				}
 			}
 
 			rewindList.RemoveAt(0);
+			yield return null;
+
+			if (mover != null)
+			{
+				mover.isRewinding = false;
+				mover.isResetting = false;
+			}
 		}
 
 		private void ResetShrunkStatus(FloorCube cube)
 		{
 			if (hasShrunkList.Count <= 0) return;
 			var cubePos = cubeRef.cubePos.FetchGridPos();
-
 			if (cubeRef.movCube != null)
 			{
-				if (hasShrunkList[0] == false
-					&& handler.shrunkMovFloorCubeDic.ContainsKey(cubePos))
+				if (rewHandler.shrunkMovRewindDic.ContainsKey(cubePos))
 				{
-					if (handler.shrunkMovFloorCubeDic[cubePos][0] == cube)
-						ResetShrinking(cube, cubePos);
+					if (hasShrunkList[0] == false) ResetShrinking(cube, cubePos);
+					else handler.HandleFromFloorToShrunk(cubePos, cube, null, 
+						handler.shrunkMovFloorCubeDic);
 				}
 			}
 			else
@@ -241,14 +229,16 @@ namespace Qbism.Rewind
 					ResetShrinking(cube, cubePos);
 				}
 			}
-
+			cubeRef.shrinkMesh.enabled = false;
 			hasShrunkList.RemoveAt(0);
 		}
 
 		private void ResetShrinking(FloorCube cube, Vector2Int cubePos)
 		{
 			cubeRef.cubeShrink.EnableMesh();
-			handler.FromShrunkToFloorDic(cubePos, cube);
+			cubeRef.cubeShrink.hasShrunk = false;
+			if (cube.refs.movCube == null) handler.FromShrunkToFloor(cubePos, cube);
+
 			if (cube.refs.movEffector != null) cube.refs.effectorShrinkingFace.transform.parent =
 				cube.refs.effectorFace.transform;
 		}
@@ -274,13 +264,12 @@ namespace Qbism.Rewind
 			var rewPos = new Vector2Int(Mathf.RoundToInt(rewindPos.x), Mathf.RoundToInt(rewindPos.z));
 
 			if(isDockedList.Count > 0 && isDockedList[0] == false 
-				&& handler.movFloorCubeDic.ContainsKey(cubePos))
+				&& rewHandler.dockedMovRewindDic.ContainsKey(cubePos))
 			{
 				this.tag = "Moveable";
 				Destroy(cubeRef.floorCube);
+				cubeRef.floorCube = null;
 				cubeRef.lineRender.enabled = false;
-				handler.movFloorCubeDic.Remove(cubePos);
-				moveHandler.moveableCubeDic.Add(rewPos, moveable);
 				if (moveable.refs.cubeUI != null) moveable.refs.cubeUI.showCubeUI = false;
 				moveable.refs.floorCompAdder.markOnGround.enabled = false;
 				moveable.refs.cubeShrink.ResetTransform();
@@ -311,12 +300,6 @@ namespace Qbism.Rewind
 			}
 
 			isOutOfBoundsList.RemoveAt(0);
-		}
-
-		private void OnDisable()
-		{
-			if (cubeRef != null && cubeRef.movCube != null) 
-				cubeRef.movCube.onUpdateOrderInTimebody -= AddToMoveOrderList;
 		}
 	}
 }
