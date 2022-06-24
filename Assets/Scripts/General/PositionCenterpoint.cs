@@ -24,7 +24,7 @@ namespace Qbism.General
 			handler = gcRef.glRef.cubeHandler;
 		}
 
-		private void Start() 
+		private void OnEnable() 
 		{
 			FindEdgeCubes();
 		}
@@ -40,7 +40,7 @@ namespace Qbism.General
 			transform.position = centerPoint;
 		}
 
-		private void FindEdgeCubes()
+		public void FindEdgeCubes()
 		{
 			Vector2 highCubePort = new Vector2(0, 0), lowCubePort = new Vector2(0, 0), 
 				leftCubePort = new Vector2(0, 0), rightCubePort = new Vector2(0, 0);	

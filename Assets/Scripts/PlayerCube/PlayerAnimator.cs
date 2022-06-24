@@ -26,6 +26,7 @@ namespace Qbism.PlayerCube
 		Vector3 playerFinishLandPos;
 		bool fallen = false;
 		bool serpentActivated = false;
+		public bool introDrop { get; set; } = true;
 
 		//Actions, events, delegates etc
 		public event Action onTriggerLandingReaction;
@@ -44,10 +45,14 @@ namespace Qbism.PlayerCube
 
 		private void Start() 
 		{
-			refs.visualSwitch.SwitchMeshes(false);
-			refs.visualSwitch.SwitchSprites(false);
 			playerFinishLandPos = onGetFinishPos();
-			StartCoroutine(DisableInputForDrop());
+
+			if (introDrop)
+			{
+				refs.visualSwitch.SwitchMeshes(false);
+				refs.visualSwitch.SwitchSprites(false);
+				StartCoroutine(DisableInputForDrop());
+			}
 		}
 
 		private void FindRescuedSegRef()

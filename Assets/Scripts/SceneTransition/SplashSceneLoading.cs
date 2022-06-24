@@ -13,6 +13,14 @@ namespace Qbism.SceneTransition
 		[SerializeField] int firstLevelIndex;
 		[SerializeField] FeatureSwitchBoard switchBoard;
 
+		//States
+		bool firstLevelCompleted;
+
+		private void Start()
+		{
+			firstLevelCompleted = E_LevelGameplayData.GetEntity(0).f_Completed;
+		}
+
 		public void StartSceneTransition()
 		{
 			StartCoroutine(SceneTransition());
@@ -26,17 +34,20 @@ namespace Qbism.SceneTransition
 			DontDestroyOnLoad(gameObject);
 
 			yield return fader.FadeOut(fader.sceneTransTime);
-			
+
 			if (switchBoard.demoSplashConnected)
 				yield return SceneManager.LoadSceneAsync("DemoSplashScene");
 
-			else if (switchBoard.worldMapConnected)
+			else if (switchBoard.worldMapConnected && firstLevelCompleted)
 			{
 				yield return SceneManager.LoadSceneAsync("WorldMap");
 
 				var centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
 				centerPoint.PositionCenterPointOnMapLoad();
 			}
+
+			else if (!firstLevelCompleted)
+				yield return SceneManager.LoadSceneAsync(E_LevelData.GetEntity(0).f_Level);
 
 			else yield return SceneManager.LoadSceneAsync(firstLevelIndex);
 			

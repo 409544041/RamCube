@@ -84,7 +84,7 @@ namespace Qbism.Cubes
 			AddToFloorCubeDic(finish.cubePos.FetchGridPos(), finish.floorCube);
 		}
 
-		private void AddToFloorCubeDic(Vector2Int pos, FloorCube cube)
+		public void AddToFloorCubeDic(Vector2Int pos, FloorCube cube)
 		{
 			if (floorCubeDic.ContainsKey(pos))
 				Debug.Log("Overlapping cube " + cube + " & " + floorCubeDic[pos]);
