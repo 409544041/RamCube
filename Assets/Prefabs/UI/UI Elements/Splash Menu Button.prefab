@@ -26,6 +26,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5070448008693040268}
   - {fileID: 1823318980435845373}
@@ -66,6 +67,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 483.4693, y: 361.01215, z: -308.40933}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2849633443680531636}
   m_RootOrder: 1
@@ -315,7 +317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5510736059636421903
 RectTransform:
   m_ObjectHideFlags: 0
@@ -326,6 +328,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2574166239936445727}
   m_RootOrder: 1
@@ -403,6 +406,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2574166239936445727}
   - {fileID: 8910750928041185818}
@@ -524,8 +528,8 @@ MonoBehaviour:
   valueText: {fileID: 0}
   button: {fileID: 8067876658785919839}
   slider: {fileID: 0}
+  scroller: {fileID: 0}
   sliderJump: 0.1
-  buttonSelectSize: 1.5
   arrows:
   - {fileID: 3762771021922069846}
   label: 
@@ -557,16 +561,17 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2439578437443025534}
   - {fileID: 5510736059636421903}
   m_Father: {fileID: 3064998925519441280}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 50, y: 0}
+  m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4213657011337034761
 GameObject:
@@ -594,6 +599,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2849633443680531636}
   m_Father: {fileID: 3064998925519441280}
@@ -632,14 +638,15 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2574166239936445727}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 37.5, y: 0}
-  m_SizeDelta: {x: 325, y: -50}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 200, y: 0}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1051389012553938794
 CanvasRenderer:
@@ -938,12 +945,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eecaacf7094b196478085d6ba840b00d, type: 3}
---- !u!224 &5070448008693040268 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
-    type: 3}
-  m_PrefabInstance: {fileID: 2840608954364964340}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2171637336842262550 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4127806816077936098, guid: eecaacf7094b196478085d6ba840b00d,
@@ -956,6 +957,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &5070448008693040268 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7004794320474335608, guid: eecaacf7094b196478085d6ba840b00d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2840608954364964340}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3177000399807013263
 PrefabInstance:
   m_ObjectHideFlags: 0
