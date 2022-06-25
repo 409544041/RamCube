@@ -44,9 +44,11 @@ namespace Qbism.SpriteAnimations
 
 		private void Update()
 		{
+			if (sRef != null) return;
+
 			GetCurrentScreenState();
 
-			if ((pRef != null && !hasFinished) || sRef != null ||
+			if ((pRef != null && !hasFinished) ||
 				(inSerpScreen && currentScreenState != ScreenStates.dialogueOverlayState))
 			{
 				HandleBlinkTimer();
