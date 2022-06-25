@@ -12,9 +12,10 @@ namespace Qbism.PlayerCube
 	{
 		//Config parameters
 		[SerializeField] InGameDialogueTrigger dialogueTrigger;
-		[SerializeField] int flipsToStartPos;
 		[SerializeField] FloorCube[] extraFloorCubes;
-		[SerializeField] Vector3 startPos, camCenterStartPos;
+		[SerializeField] FloorCube startCube, targetCube;
+		[SerializeField] Vector3 playerStartRot;
+		[SerializeField] Vector3 camCenterStartPos;
 		[SerializeField]
 		float flipDelay = .25f, delayAtStartPos = 1, entryDelay = .75f,
 							camStartSize = 10, zoomDur = 10, sfxStartVolume = .2f;
@@ -48,7 +49,10 @@ namespace Qbism.PlayerCube
 			pRef.animator.SetBool("IntroDrop", false);
 			pRef.playerAnim.introDrop = false;
 
-			pRef.transform.position = startPos;
+			pRef.transform.position = new Vector3(startCube.transform.position.x,
+				startCube.transform.position.y + 1, startCube.transform.position.z);
+			pRef.transform.localRotation = Quaternion.Euler(playerStartRot);
+			glRef.gcRef.persRef.progHandler.currentHasSegment = true;
 		}
 
 		private void Start()
@@ -74,10 +78,12 @@ namespace Qbism.PlayerCube
 		private IEnumerator MoveToStartPos()
 		{
 			var posAheadDir = Vector2Int.up;
+			var dist = Vector3.Distance(startCube.transform.position,
+				targetCube.transform.position);
 
 			yield return new WaitForSeconds(entryDelay);
 
-			for (int i = 0; i < flipsToStartPos; i++)
+			for (int i = 0; i < dist; i++)
 			{
 				var posAhead = pRef.cubePos.FetchGridPos() + posAheadDir;
 

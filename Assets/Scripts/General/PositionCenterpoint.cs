@@ -24,7 +24,7 @@ namespace Qbism.General
 			handler = gcRef.glRef.cubeHandler;
 		}
 
-		private void OnEnable() 
+		private void Start() 
 		{
 			FindEdgeCubes();
 		}
