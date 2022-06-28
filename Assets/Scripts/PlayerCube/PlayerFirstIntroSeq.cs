@@ -5,6 +5,7 @@ using Qbism.General;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Qbism.PlayerCube
 {
@@ -71,6 +72,8 @@ namespace Qbism.PlayerCube
 			camCenter.enabled = false;
 			camCenter.transform.position = camCenterStartPos;
 
+			DeselectLevelSelectOption();
+
 			StartCoroutine(MoveToStartPos());
 			StartCoroutine(ZoomCamToOriginalSize());
 		}
@@ -123,6 +126,78 @@ namespace Qbism.PlayerCube
 
 				yield return null;
 			}
+		}
+
+		private void DeselectLevelSelectOption()
+		{
+			var pauseOverlay = glRef.gcRef.pauseOverlayHandler;
+			var levelSelectIndex = FetchLevelSelectIndex(pauseOverlay);
+
+			if (levelSelectIndex == 99)
+			{
+				Debug.Log("Can't find level select index");
+				return;
+			}
+
+			var levelSelectButton = pauseOverlay.buttonHandlers[levelSelectIndex];
+			levelSelectButton.buttonText.color = pauseOverlay.inactiveTextColor;
+			levelSelectButton.button.interactable = false;
+
+			if (levelSelectIndex - 1 >= 0) SetButtonAboveNav(levelSelectIndex, pauseOverlay);
+			if (levelSelectIndex + 1 < pauseOverlay.buttonHandlers.Length) 
+				SetButtonBelowNav(levelSelectIndex, pauseOverlay);
+
+			OverlayButtonHandler[] newButtonHandlerArray = 
+				new OverlayButtonHandler[pauseOverlay.buttonHandlers.Length - 1];
+
+			var j = 0;
+			for (int i = 0; i < pauseOverlay.buttonHandlers.Length; i ++)
+			{
+				if (i == levelSelectIndex) continue;
+				newButtonHandlerArray[j] = pauseOverlay.buttonHandlers[i];
+				j++;
+			}
+
+			pauseOverlay.buttonHandlers = newButtonHandlerArray;
+		}
+
+		private int FetchLevelSelectIndex(OverlayMenuHandler pauseOverlay)
+		{
+			var index = 99;
+			for (int i = 0; i < pauseOverlay.buttonHandlers.Length; i++)
+			{
+				if (pauseOverlay.buttonHandlers[i].label == "level select")
+					index = i;
+			}
+			return index;
+		}
+
+		private void SetButtonAboveNav(int levelSelectIndex, OverlayMenuHandler pauseOverlay)
+		{
+			var buttonAboveIndex = levelSelectIndex - 1;
+			var buttonAbove = pauseOverlay.buttonHandlers[buttonAboveIndex];
+			Button selectUp = buttonAbove.button.navigation.selectOnUp.GetComponent<Button>();
+
+			Navigation nav = new Navigation();
+			nav.mode = Navigation.Mode.Explicit;
+			nav.selectOnDown = pauseOverlay.buttonHandlers[levelSelectIndex + 1].button;
+			nav.selectOnUp = selectUp;
+
+			buttonAbove.button.navigation = nav;
+		}
+
+		private void SetButtonBelowNav(int levelSelectIndex, OverlayMenuHandler pauseOverlay)
+		{
+			var buttonBelowIndex = levelSelectIndex + 1;
+			var buttonBelow = pauseOverlay.buttonHandlers[buttonBelowIndex];
+			Button selectDown = buttonBelow.button.navigation.selectOnDown.GetComponent<Button>();
+
+			Navigation nav = new Navigation();
+			nav.mode = Navigation.Mode.Explicit;
+			nav.selectOnUp = pauseOverlay.buttonHandlers[levelSelectIndex - 1].button;
+			nav.selectOnDown = selectDown;
+
+			buttonBelow.button.navigation = nav;
 		}
 	}
 }

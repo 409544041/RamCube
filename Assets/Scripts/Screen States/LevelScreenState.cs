@@ -107,12 +107,6 @@ namespace Qbism.ScreenStateMachine
 			stateMngr.SwitchState(stateMngr.pauseOverlayState, ScreenStates.pauseOverlayState);
 		}
 
-		public void HandleBackInput()
-		{
-			SendLevelExitAnalyticsEvent();
-			gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
-		}
-
 		public void HandleDebugCompleteInput()
 		{
 			if (gcRef.persRef.switchBoard.allowDebugFinish && mover.allowMoveInput) 
@@ -179,6 +173,10 @@ namespace Qbism.ScreenStateMachine
 
 		public void HandleAnyInput()
 		{ }
+
+		public void HandleBackInput()
+		{
+		}
 	}
 
 }

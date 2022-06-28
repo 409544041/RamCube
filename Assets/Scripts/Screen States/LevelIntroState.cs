@@ -23,11 +23,6 @@ namespace Qbism.ScreenStateMachine
 			}
 		}
 
-		public void HandleBackInput()
-		{
-			gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
-		}
-
 		public void HandleDebugToggleHudInput()
 		{
 			if (!persRef.switchBoard.allowHudToggle) return;
@@ -76,6 +71,10 @@ namespace Qbism.ScreenStateMachine
 		{
 		}
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
+		{
+		}
+
+		public void HandleBackInput()
 		{
 		}
 	}

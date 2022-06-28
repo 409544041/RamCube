@@ -16,7 +16,7 @@ namespace Qbism.General
 		//Config parameters
 		[SerializeField] CanvasGroup canvasGroup;
 		public OverlayButtonHandler[] buttonHandlers;
-		[SerializeField] Color textColor, selectedTextColor;
+		public Color textColor, selectedTextColor, inactiveTextColor;
 		[SerializeField] MMFeedbacks popInJuice, popOutJuice;
 		[SerializeField] bool isSettingsOverlay;
 		[SerializeField] float selectedButtonSize = 1;
