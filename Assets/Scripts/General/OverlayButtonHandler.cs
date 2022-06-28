@@ -8,6 +8,7 @@ using Qbism.Saving;
 using UnityEngine.Analytics;
 using MoreMountains.Feedbacks;
 using Qbism.ScreenStateMachine;
+using Qbism.SceneTransition;
 
 namespace Qbism.General
 {
@@ -24,9 +25,12 @@ namespace Qbism.General
 		[SerializeField] MMFeedbacks buttonSelectJuice, buttonPressJuice;
 
 		//Cache
-		OverlayMenuHandler menuHandler;
-		SplashMenuHandler splashMenuHandler;
+		public OverlayMenuHandler menuHandler { get; set; }
+		public SplashMenuHandler splashMenuHandler { get; set; }
 		ScreenStateManager screenStateMngr;
+		public WorldMapLoading mapLoader { get; set; }
+		public SplashSceneLoading splashLoader { get; set; }
+		public GameplayCoreRefHolder gcRef { get; set; }
 
 		//States
 		Vector3 buttonOriginalSize;
@@ -36,15 +40,9 @@ namespace Qbism.General
 			buttonOriginalSize = transform.localScale;
 		}
 
-		public void SelectButton(Color selectedColor, float selectSize, OverlayMenuHandler handler, 
-			SplashMenuHandler splashHandler, ScreenStateManager stateMngr)
+		public void SelectButton(Color selectedColor, float selectSize, ScreenStateManager stateMngr)
 		{
-			if (menuHandler == null)
-			{
-				menuHandler = handler;
-				splashMenuHandler = splashHandler;
-				screenStateMngr = stateMngr;
-			}
+			if (menuHandler == null) screenStateMngr = stateMngr;
 
 			button.Select();
 			buttonText.color = selectedColor;
@@ -103,18 +101,12 @@ namespace Qbism.General
 			screenStateMngr.currentScreenState.HandleEscapeInput();
 		}
 
-		public void PressRestartButton() //Called from button event
-		{
-			if (buttonPressJuice != null) buttonPressJuice.PlayFeedbacks();
-
-			menuHandler.gcRef.glRef.sceneHandler.RestartLevel();
-		}
-
 		public void PressLevelSelectButton() //Called from button event
 		{
 			if (buttonPressJuice != null) buttonPressJuice.PlayFeedbacks();
 
-			menuHandler.gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
+			if (mapLoader != null) mapLoader.StartLoadingWorldMap(true);
+
 		}
 
 		public void PressSettingsButton() //Called from button event
@@ -147,7 +139,7 @@ namespace Qbism.General
 		{
 			if (buttonPressJuice != null) buttonPressJuice.PlayFeedbacks();
 
-			splashMenuHandler.splashLoader.StartSceneTransition();
+			splashLoader.StartSceneTransition();
 			button.interactable = false;
 		}
 
@@ -164,7 +156,6 @@ namespace Qbism.General
 
 		private void SendLevelExitAnalyticsEvent()
 		{
-			var gcRef = FindObjectOfType<GameplayCoreRefHolder>();
 			if (gcRef != null)
 			{
 				Analytics.CustomEvent(AnalyticsEvents.LevelExit, new Dictionary<string, object>()

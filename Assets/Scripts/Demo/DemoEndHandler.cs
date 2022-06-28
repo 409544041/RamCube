@@ -1,3 +1,4 @@
+using Qbism.General;
 using Qbism.SceneTransition;
 using Qbism.ScreenStateMachine;
 using System.Collections;
@@ -5,18 +6,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Qbism.General
+namespace Qbism.Demo
 {
-	public class SplashMenuHandler : MonoBehaviour
+	public class DemoEndHandler : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] FeatureSwitchBoard switchBoard;
-		public SplashSceneLoading splashLoader;
-		[SerializeField] CanvasGroup normalCanvasGroup, demoCanvasGroup;
-		[SerializeField] OverlayButtonHandler[] demoCanvasButtons;
+		[SerializeField] OverlayButtonHandler[] buttons;
 		[SerializeField] Color textColor, selectedTextColor;
 		[SerializeField] float selectedButtonSize = 1.5f;
 		[SerializeField] ScreenStateManager screenStateMngr;
+		[SerializeField] WorldMapLoading mapLoader;
 
 		//States
 		public OverlayButtonHandler selectedButtonHandler { get; private set; }
@@ -24,23 +23,16 @@ namespace Qbism.General
 
 		private void Awake()
 		{
-			if (switchBoard.isPublicDemo)
+			foreach (var button in buttons)
 			{
-				normalCanvasGroup.alpha = 0;
-				demoCanvasGroup.alpha = 1;
-				SetButtonsInteractable(true);
+				button.mapLoader = mapLoader;
 			}
-			else
-			{
-				normalCanvasGroup.alpha = 1;
-				demoCanvasGroup.alpha = 0;
-				SetButtonsInteractable(false);
-			}
+		}
 
-			foreach (var button in demoCanvasButtons)
-			{
-				button.splashLoader = splashLoader;
-			}
+		private void Start()
+		{
+			buttons[0].SelectButton(selectedTextColor, selectedButtonSize,
+				screenStateMngr);
 		}
 
 		private void Update()
@@ -48,9 +40,9 @@ namespace Qbism.General
 			prevButtonHandler = selectedButtonHandler;
 			GameObject selected = EventSystem.current.currentSelectedGameObject;
 
-			for (int i = 0; i < demoCanvasButtons.Length; i++)
+			for (int i = 0; i < buttons.Length; i++)
 			{
-				var buttonHandler = demoCanvasButtons[i].FetchButtonHandler(selected); //Sets new selected button
+				var buttonHandler = buttons[i].FetchButtonHandler(selected); //Sets new selected button
 				if (buttonHandler == null) continue;
 
 				selectedButtonHandler = buttonHandler;
@@ -63,14 +55,6 @@ namespace Qbism.General
 					screenStateMngr);
 
 				if (prevButtonHandler != null) prevButtonHandler.DeselectButton(textColor);
-			}
-		}
-
-		private void SetButtonsInteractable(bool value)
-		{
-			foreach (var buttonHandler in demoCanvasButtons)
-			{
-				buttonHandler.button.interactable = value;
 			}
 		}
 	}

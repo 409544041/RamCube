@@ -58,6 +58,17 @@ namespace Qbism.General
 			canvasGroup.alpha = 0;
 
 			SetButtonsInteractable(false);
+
+			foreach (var button in buttonHandlers)
+			{
+				button.menuHandler = this;
+
+				if (gcRef != null)
+				{
+					button.mapLoader = gcRef.glRef.mapLoader;
+					button.gcRef = gcRef;
+				}
+			}
 		}
 
 		private void Update()
@@ -80,7 +91,7 @@ namespace Qbism.General
 			if (selectedButtonHandler != prevButtonHandler)
 			{
 				selectedButtonHandler.SelectButton(selectedTextColor, selectedButtonSize,
-					this, null, screenStateMngr);
+					screenStateMngr);
 				if (prevButtonHandler != null) prevButtonHandler.DeselectButton(textColor);
 			}
 		}
@@ -130,8 +141,7 @@ namespace Qbism.General
 
 		public void SelectButton(int i)
 		{
-			buttonHandlers[i].SelectButton(selectedTextColor, selectedButtonSize,
-				this, null, screenStateMngr);
+			buttonHandlers[i].SelectButton(selectedTextColor, selectedButtonSize, screenStateMngr);
 
 			for (int j = 0; j < buttonHandlers.Length; j++)
 			{
