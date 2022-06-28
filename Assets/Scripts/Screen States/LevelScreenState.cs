@@ -34,6 +34,7 @@ namespace Qbism.ScreenStateMachine
 			}
 
 			glRef.levelTimer.StartCountingTimer();
+			StartCoroutine(ShowGameplayCanvas());
 		}
 
 		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
@@ -88,6 +89,22 @@ namespace Qbism.ScreenStateMachine
 			while (mover.newInput) yield return null;
 			mover.prevMoveNewInput = true;
 			HandleMoveInput(turnSide, posAheadDir, turnAxis, inputDetector);
+		}
+
+		private IEnumerator ShowGameplayCanvas()
+		{
+			var startAlpha = 0;
+			float elapsedTime = 0;
+
+			while (!Mathf.Approximately(gcRef.gameplayCanvasGroup.alpha, 1))
+			{
+				elapsedTime += Time.deltaTime;
+				var percentageComplete = elapsedTime / .25f;
+
+				gcRef.gameplayCanvasGroup.alpha = Mathf.Lerp(startAlpha, 1, percentageComplete);
+
+				yield return null;
+			}
 		}
 
 		public void HandleResetInput()

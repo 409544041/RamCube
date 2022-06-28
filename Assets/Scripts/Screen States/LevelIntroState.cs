@@ -21,6 +21,8 @@ namespace Qbism.ScreenStateMachine
 				gcRef = stateMngr.gcRef;
 				persRef = gcRef.persRef;
 			}
+
+			gcRef.gameplayCanvasGroup.alpha = 0;
 		}
 
 		public void HandleDebugToggleHudInput()
