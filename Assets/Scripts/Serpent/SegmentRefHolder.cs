@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using Qbism.Dialogue;
 using Qbism.General;
 using Qbism.SpriteAnimations;
@@ -35,6 +36,8 @@ namespace Qbism.Serpent
 		public Transform markerTrans;
 		public RectTransform notificationMarker;
 		public RectTransform notificationArrow;
+		[Header("Juice")]
+		public MMFeedbacks dialoguePopInJuice;
 
 		//Cache
 		public SerpCoreRefHolder scRef { get; set; }

@@ -11,7 +11,7 @@ namespace Qbism.Dialogue
 		//Config parameters
 		[SerializeField] GameLogicRefHolder glRef;
 		[SerializeField] Vector3 floatingHeadPos;
-		[SerializeField] float floatingHeadScale = 2.5f;
+		[SerializeField] float floatingHeadScale = 2.5f, firstTextDelay = .25f;
 
 		//Cache
 		GameplayCoreRefHolder gcRef;
@@ -39,7 +39,9 @@ namespace Qbism.Dialogue
 
 			dialogueSO = incDialogueSO;
 			gcRef.inGameDialogueNextButtonJuice.Initialization();
+			gcRef.inGameTextAppearJuice.Initialization();
 			dialogueIndex = 0;
+			gcRef.inGameTextAppearJuice.PlayFeedbacks();
 			gcRef.inGameDialogueCanvasGroup.alpha = 1;
 			gcRef.gameplayCanvasGroup.alpha = 0;
 
@@ -74,18 +76,19 @@ namespace Qbism.Dialogue
 				if (segRef.dragonAnim != null) segRef.dragonAnim.DragonSmile();
 			}
 
-			Dialogue();
+			StartCoroutine(Dialogue());
 		}
 
-		private void Dialogue()
+		private IEnumerator Dialogue()
 		{
 			gcRef.inGameDialogueNextButtonJuice.StopFeedbacks();
 			gcRef.inGameTextAppearJuice.PlayFeedbacks();
 
-			gcRef.inGameDialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
-
 			if (exprHandler != null)
 				exprHandler.SetFace(dialogueSO.dialogues[dialogueIndex].expression, -1);
+
+			if (dialogueIndex == 0) yield return new WaitForSeconds(firstTextDelay);
+			gcRef.inGameDialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
 		}
 
 		public void NextDialogueText()
@@ -95,7 +98,7 @@ namespace Qbism.Dialogue
 			{
 				dialogueIndex++;
 				if (dialogueIndex >= dialogueSO.dialogues.Length) ExitDialogue();
-				else Dialogue();
+				else StartCoroutine(Dialogue());
 			}
 		}
 
@@ -133,6 +136,9 @@ namespace Qbism.Dialogue
 			floatingHead.transform.localRotation = 
 				Quaternion.Euler(headRot.x, headRot.y, headRot.z);
 			floatingHead.transform.localScale = transform.localScale * floatingHeadScale;
+			var segRef = floatingHead.GetComponent<SegmentRefHolder>();
+			segRef.dialoguePopInJuice.Initialization();
+			segRef.dialoguePopInJuice.PlayFeedbacks();
 		}
 
 		public void PulseNextButton() //Called from TextAnimatorPlayer events

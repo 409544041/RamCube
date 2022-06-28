@@ -15,6 +15,7 @@ namespace Qbism.Dialogue
 	{
 		//Config parameters
 		[SerializeField] Vector3[] floatingHeadPos;
+		[SerializeField] float firstTextDelay = .25f;
 		[SerializeField] GameplayCoreRefHolder gcRef;
 		[SerializeField] SerpCoreRefHolder scRef;
 
@@ -61,9 +62,11 @@ namespace Qbism.Dialogue
 			dialogueSO = incDialogueSO;
 			partnerAnimator = segAnimator;
 			nextButtonJuice.Initialization();
+			textAppearJuice.Initialization();
 			dialogueIndex = 0;
 
 			gCanvas.SetUpGaussianCanvas();
+			textAppearJuice.PlayFeedbacks();
 			dialogueCanvasGroup.alpha = 1;
 			if (scRef != null) scRef.slRef.serpScreenUIHandler.SetSerpScreenAlpha(0);
 
@@ -95,20 +98,22 @@ namespace Qbism.Dialogue
 					expressionHandlers[0].SetFace(dialogueSO.partnerFirstExpression, -1);
 			}
 
-			Dialogue();
+			StartCoroutine(Dialogue());
 		}
 
-		private void Dialogue()
+		private IEnumerator Dialogue()
 		{
 			nextButtonJuice.StopFeedbacks();
 			textAppearJuice.PlayFeedbacks();
 			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
 
 			charName.text = names[charIndex];
-			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
 
 			focuser.SetFocus(charIndex, heads);
 			SetDialogueExpression();
+
+			if (dialogueIndex == 0) yield return new WaitForSeconds(firstTextDelay);
+			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
 		}
 
 		private void SetDialogueExpression()
@@ -125,11 +130,12 @@ namespace Qbism.Dialogue
 			{
 				dialogueIndex++;
 				if (dialogueIndex >= dialogueSO.dialogues.Length) StartCoroutine(ExitDialogue());
-				else Dialogue();
+				else StartCoroutine(Dialogue());
 			}
 		}
 
-		private GameObject SpawnDialogueFloatingHeads(GameObject obj, Vector3 rot, Vector3 pos, float scale)
+		private GameObject SpawnDialogueFloatingHeads(GameObject obj, Vector3 rot, Vector3 pos, 
+			float scale)
 		{
 			var spawnPos = cam.ViewportToWorldPoint(pos);
 
