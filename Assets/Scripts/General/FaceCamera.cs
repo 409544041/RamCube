@@ -23,6 +23,7 @@ namespace Qbism.General
 			if (peepRef != null) cam = peepRef.cam;
 			else if (pinRef != null) cam = pinRef.mcRef.cam;
 			else if (segRef != null) cam = segRef.cam;
+			else cam = Camera.main;
 		}
 
 		private void Start()
