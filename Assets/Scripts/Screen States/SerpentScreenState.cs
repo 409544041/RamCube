@@ -46,12 +46,6 @@ namespace Qbism.ScreenStateMachine
 			scRef.slRef.objSegChecker.StartDialogue();
 		}
 
-		public void HandleRewindInput()
-		{
-			if (!allowInput) return;
-			scRef.slRef.mapLoader.StartLoadingWorldMap(false);
-		}
-
 		public void HandleEscapeInput()
 		{
 			if (!allowInput) return;
@@ -100,6 +94,9 @@ namespace Qbism.ScreenStateMachine
 		}
 		public void HandleResetInput()
 		{
-		}	
+		}
+		public void HandleRewindInput()
+		{
+		}
 	}
 }
