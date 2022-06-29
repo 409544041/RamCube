@@ -241,7 +241,7 @@ namespace Qbism.Cubes
 				yield return new WaitForSeconds(2); //TO DO: this should be the length of serpent anim
 			} 
 
-			StartCoroutine(LevelTransition(switchBoard.worldMapConnected, false));
+			StartCoroutine(LevelTransition());
 		}
 
 		private void ActivateSerpent()
@@ -260,17 +260,18 @@ namespace Qbism.Cubes
 			else refs.shapieSpawner.SpawnShapie();
 		}
 
-		private IEnumerator LevelTransition(bool mapConnected, bool restart)
+		private IEnumerator LevelTransition()
 		{
 			yield return new WaitWhile(() => refs.source.isPlaying);
 			//TO DO: Make timing wait for animations that are to come
 
-			if (restart)
-			{
-				finishJuicer.PlayFailSound();
-				loader.RestartLevel();
-			}
-			else if (mapConnected) refs.gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
+			var entity = E_LevelData.FindEntity(entity =>
+				entity.f_Pin == refs.gcRef.persRef.progHandler.currentPin);
+
+			bool isLastLevel = entity.f_UnlocksPins[0].f_name == "_EMPTY";
+
+			if (switchBoard.isPublicDemo && isLastLevel) loader.LoadEndOfDemo();
+			else if (switchBoard.worldMapConnected) refs.gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
 			else loader.NextLevel();
 		}
 

@@ -48,5 +48,10 @@ namespace Qbism.SceneTransition
 		{
 			SceneManager.LoadSceneAsync(index);
 		}
+
+		public void LoadEndOfDemo()
+		{
+			SceneManager.LoadSceneAsync("EndOfDemoScene");
+		}
 	}
 }
