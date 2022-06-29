@@ -1,4 +1,5 @@
 using Qbism.Cubes;
+using Qbism.Environment;
 using Qbism.PlayerCube;
 using Qbism.Serpent;
 using Qbism.Shapies;
@@ -24,6 +25,7 @@ namespace Qbism.SpriteAnimations
 		[SerializeField] SegmentRefHolder segRef;
 		[SerializeField] PlayerRefHolder pRef;
 		[SerializeField] ShapieRefHolder sRef;
+		[SerializeField] WallRefHolder wRef;
 
 		//States
 		float expressionTimer = 0f, blinkTimer = 0f;
@@ -44,6 +46,8 @@ namespace Qbism.SpriteAnimations
 
 		private void Update()
 		{
+			if (wRef != null) return;
+			
 			GetCurrentScreenState();
 
 			if ((pRef != null && !hasFinished) || sRef != null ||

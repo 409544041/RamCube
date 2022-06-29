@@ -87,7 +87,12 @@ namespace Qbism.Dialogue
 			if (exprHandler != null)
 				exprHandler.SetFace(dialogueSO.dialogues[dialogueIndex].expression, -1);
 
-			if (dialogueIndex == 0) yield return new WaitForSeconds(firstTextDelay);
+			if (dialogueIndex == 0)
+			{
+				gcRef.inGameDialogueText.text = " ";
+				yield return new WaitForSeconds(firstTextDelay);
+			}
+
 			gcRef.inGameDialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
 		}
 
@@ -108,6 +113,7 @@ namespace Qbism.Dialogue
 			GameObject.Destroy(floatingHead);
 			gcRef.inGameDialogueCanvasGroup.alpha = 0;
 			gcRef.gameplayCanvasGroup.alpha = 1;
+			gcRef.inGameDialogueText.text = " ";
 
 			glRef.screenStateMngr.SwitchState(glRef.screenStateMngr.levelScreenState,
 				ScreenStates.levelScreenState);

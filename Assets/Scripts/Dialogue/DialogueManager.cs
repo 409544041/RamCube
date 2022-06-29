@@ -33,6 +33,7 @@ namespace Qbism.Dialogue
 		string[] names = new string[2];
 		bool isTyping = false;
 		ExpressionHandler[] expressionHandlers = new ExpressionHandler[2];
+		bool exiting = false;
 
 
 		private void Awake()
@@ -64,6 +65,7 @@ namespace Qbism.Dialogue
 			nextButtonJuice.Initialization();
 			textAppearJuice.Initialization();
 			dialogueIndex = 0;
+			exiting = false;
 
 			gCanvas.SetUpGaussianCanvas();
 			textAppearJuice.PlayFeedbacks();
@@ -112,7 +114,12 @@ namespace Qbism.Dialogue
 			focuser.SetFocus(charIndex, heads);
 			SetDialogueExpression();
 
-			if (dialogueIndex == 0) yield return new WaitForSeconds(firstTextDelay);
+			if (dialogueIndex == 0)
+			{
+				dialogueText.text = " ";
+				yield return new WaitForSeconds(firstTextDelay);
+			}
+
 			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
 		}
 
@@ -154,14 +161,23 @@ namespace Qbism.Dialogue
 
 		private IEnumerator ExitDialogue()
 		{
-			if (gcRef != null && partnerAnimator != null) partnerAnimator.InitiateHappyWiggle();
+			if (exiting) yield break;
+			exiting = true;
+
+			if (gcRef != null && partnerAnimator != null)
+			{
+				partnerAnimator.InitiateHappyWiggle();
+				yield return new WaitForSeconds(.5f); //So when dialogue UI disappears animation is already playing
+			}
+			
 			if (gcRef != null && partnerAnimator == null) //means this is dragon head
 			{
+				exiting = true;
 				gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
 				yield break;
 			}
 
-			yield return new WaitForSeconds(.5f); //So when dialogue UI disappears animation is already playing
+			dialogueText.text = " ";
 
 			if (gcRef != null) screenStateMngr.SwitchState(screenStateMngr.levelEndSeqState,
 				ScreenStates.levelEndSeqState);
