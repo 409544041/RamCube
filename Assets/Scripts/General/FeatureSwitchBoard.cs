@@ -12,7 +12,7 @@ namespace Qbism.General
 		public bool showEndLevelSeq;	
 		public bool serpentConnected;
 		public bool allowDebugFinish;
-		public bool allowDebugLevelNav;
+		public bool showLevelName;
 		public bool showFirstLevelIntroRoll;
 		[Header("World Map")]
 		public bool worldMapConnected;

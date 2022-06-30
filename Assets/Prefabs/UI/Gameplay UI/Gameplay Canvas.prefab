@@ -727,7 +727,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5033256492980185547}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
@@ -766,7 +766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e11c6c1b7d798942aa2547f537cf22b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstLevelIndex: 3
+  nameText: {fileID: 1689304272108603175}
+  gcRef: {fileID: 0}
 --- !u!1 &5248399163342279552
 GameObject:
   m_ObjectHideFlags: 0
@@ -2754,19 +2755,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6050471508723463409}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4093953692187408334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6309600690663966366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 331ee50c20e24f24484720a3b844820c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pulser: {fileID: 5312882249180371419}
 --- !u!114 &544568887422558964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2781,11 +2769,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brightnessDelta: 0.3
   saturationDelta: 0.2
+  alphaDelta: 0.5
   elementImages:
   - {fileID: 3164795429594837714}
   - {fileID: 6893485059585048257}
   tm: {fileID: 6172798699271545662}
   gcRef: {fileID: 0}
+--- !u!114 &4093953692187408334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6309600690663966366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 331ee50c20e24f24484720a3b844820c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pulser: {fileID: 5312882249180371419}
 --- !u!114 &6893485059585048257 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 890872582164843056, guid: d64022ae2f6e08e49b9645e4675f3380,
@@ -3015,6 +3017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brightnessDelta: 0.3
   saturationDelta: 0.2
+  alphaDelta: 0.5
   elementImages:
   - {fileID: 1666747933823470821}
   - {fileID: 7160849738268066038}

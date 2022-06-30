@@ -9,11 +9,13 @@ namespace Qbism.General
 	public class LevelDisplay : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] int firstLevelIndex;
+		[SerializeField] Text nameText;
+		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		private void Start()
 		{	
-			GetComponent<Text>().text = SceneManager.GetActiveScene().name;
+			if (gcRef.persRef.switchBoard.showLevelName)
+				nameText.text = SceneManager.GetActiveScene().name;
 		}
 	}
 }
