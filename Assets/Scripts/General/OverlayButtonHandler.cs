@@ -42,7 +42,7 @@ namespace Qbism.General
 
 		public void SelectButton(Color selectedColor, float selectSize, ScreenStateManager stateMngr)
 		{
-			if (menuHandler == null) screenStateMngr = stateMngr;
+			if (screenStateMngr == null) screenStateMngr = stateMngr;
 
 			button.Select();
 			buttonText.color = selectedColor;

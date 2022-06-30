@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8128989018599272998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 147507314158100650}
+  - component: {fileID: 2084526961226119712}
+  - component: {fileID: 123380720804768003}
+  m_Layer: 0
+  m_Name: Button Select Juice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &147507314158100650
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8128989018599272998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2084526961226119712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8128989018599272998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Feedbacks:
+  - {fileID: 123380720804768003}
+  InitializationMode: 2
+  SafeMode: 3
+  AutoPlayOnStart: 0
+  DebugActive: 0
+--- !u!114 &123380720804768003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8128989018599272998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d958a52145b19904aa2a5bcb3849eafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Scale
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  Mode: 0
+  TimeScale: 0
+  AnimateScaleTarget: {fileID: 0}
+  AnimateScaleDuration: 0.3
+  RemapCurveZero: 1
+  RemapCurveOne: 1.5
+  Offset: 0
+  AnimateX: 1
+  AnimateScaleX:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2473042
+      value: 0.2030971
+      inSlope: 0.1058125
+      outSlope: 0.1058125
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23478451
+      outWeight: 0.24219833
+    - serializedVersion: 3
+      time: 0.73050874
+      value: -0.047639832
+      inSlope: -0.036541827
+      outSlope: -0.036541827
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23867483
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.99798584
+      value: -0.004371643
+      inSlope: -0.42005947
+      outSlope: -0.42005947
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.4337105
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  AnimateY: 1
+  AnimateScaleY:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2473042
+      value: 0.2030971
+      inSlope: 0.1058125
+      outSlope: 0.1058125
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23478451
+      outWeight: 0.24219833
+    - serializedVersion: 3
+      time: 0.73050874
+      value: -0.047639832
+      inSlope: -0.036541827
+      outSlope: -0.036541827
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23867483
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.99798584
+      value: -0.004371643
+      inSlope: -0.42005947
+      outSlope: -0.42005947
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.4337105
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  AnimateZ: 0
+  AnimateScaleZ:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7366688
+      value: 1.0741985
+      inSlope: 0.1058125
+      outSlope: 0.1058125
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23478451
+      outWeight: 0.24219833
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.42005947
+      outSlope: -0.42005947
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.4337105
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  DestinationScale: {x: 0.5, y: 0.5, z: 0.5}
