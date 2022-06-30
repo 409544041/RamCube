@@ -94,6 +94,7 @@ namespace Qbism.PlayerCube
 				yield return new WaitForSeconds(flipDelay);
 			}
 
+			pRef.timeBody.rewindList.Clear();
 			yield return new WaitForSeconds(delayAtStartPos);
 
 			dialogueTrigger.TriggerInGameDialogue();
