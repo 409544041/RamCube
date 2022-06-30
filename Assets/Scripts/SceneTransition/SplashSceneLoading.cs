@@ -38,7 +38,8 @@ namespace Qbism.SceneTransition
 			if (switchBoard.demoSplashConnected)
 				yield return SceneManager.LoadSceneAsync("DemoSplashScene");
 
-			else if (switchBoard.worldMapConnected && firstLevelCompleted)
+			else if ((switchBoard.worldMapConnected && firstLevelCompleted) ||
+				!switchBoard.showFirstLevelIntroRoll)
 			{
 				yield return SceneManager.LoadSceneAsync("WorldMap");
 
@@ -46,7 +47,7 @@ namespace Qbism.SceneTransition
 				centerPoint.PositionCenterPointOnMapLoad();
 			}
 
-			else if (!firstLevelCompleted)
+			else if (!firstLevelCompleted && switchBoard.showFirstLevelIntroRoll)
 				yield return SceneManager.LoadSceneAsync(E_LevelData.GetEntity(0).f_Level);
 
 			else yield return SceneManager.LoadSceneAsync(firstLevelIndex);

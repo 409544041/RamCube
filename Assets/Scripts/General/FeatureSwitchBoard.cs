@@ -13,6 +13,7 @@ namespace Qbism.General
 		public bool serpentConnected;
 		public bool allowDebugFinish;
 		public bool allowDebugLevelNav;
+		public bool showFirstLevelIntroRoll;
 		[Header("World Map")]
 		public bool worldMapConnected;
 		public bool allowDebugMapReload;
@@ -29,5 +30,7 @@ namespace Qbism.General
 		[Header("For Trailer")]
 		public bool allowHudToggle;
 		public bool allowCubeUIToggle;
+		[Header("Splash")]
+		public bool showLogos;
 	}
 }

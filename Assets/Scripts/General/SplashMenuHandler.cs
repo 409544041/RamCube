@@ -12,7 +12,7 @@ namespace Qbism.General
 		//Config parameters
 		[SerializeField] FeatureSwitchBoard switchBoard;
 		public SplashSceneLoading splashLoader;
-		[SerializeField] CanvasGroup normalCanvasGroup, demoCanvasGroup;
+		[SerializeField] CanvasGroup normalCanvasGroup, demoCanvasGroup; 	
 		[SerializeField] OverlayButtonHandler[] demoCanvasButtons;
 		[SerializeField] Color textColor, selectedTextColor;
 		[SerializeField] float selectedButtonSize = 1.5f;
@@ -21,6 +21,7 @@ namespace Qbism.General
 		//States
 		public OverlayButtonHandler selectedButtonHandler { get; private set; }
 		OverlayButtonHandler prevButtonHandler;
+		bool isVisible = false;
 
 		private void Awake()
 		{
@@ -28,7 +29,7 @@ namespace Qbism.General
 			{
 				normalCanvasGroup.alpha = 0;
 				demoCanvasGroup.alpha = 1;
-				SetButtonsInteractable(true);
+				if (!switchBoard.showLogos) ActivateMenu();
 			}
 			else
 			{
@@ -43,8 +44,21 @@ namespace Qbism.General
 			}
 		}
 
+		public void ActivateMenu()
+		{
+			if (switchBoard.isPublicDemo)
+			{
+				SetButtonsInteractable(true);
+				demoCanvasButtons[0].SelectButton(selectedTextColor, selectedButtonSize,
+					screenStateMngr);
+			}
+			isVisible = true;
+		}
+
 		private void Update()
 		{
+			if (!isVisible) return;
+
 			prevButtonHandler = selectedButtonHandler;
 			GameObject selected = EventSystem.current.currentSelectedGameObject;
 
