@@ -13,9 +13,10 @@ namespace Qbism.General
 		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		private void Start()
-		{	
+		{
 			if (gcRef.persRef.switchBoard.showLevelName)
 				nameText.text = SceneManager.GetActiveScene().name;
+			else nameText.enabled = false;
 		}
 	}
 }
