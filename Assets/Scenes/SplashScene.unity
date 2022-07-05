@@ -135,6 +135,18 @@ Canvas:
     type: 3}
   m_PrefabInstance: {fileID: 622988989146620949}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &367347305 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1691474300534259297, guid: 89c1ebefbadc8a943afc8bfa652cc69e,
+    type: 3}
+  m_PrefabInstance: {fileID: 622988989146620949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &625038784 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2158266930660454671, guid: 89c1ebefbadc8a943afc8bfa652cc69e,
@@ -632,6 +644,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f77ec84cb980eb44b225b74348c5f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1961118160 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 95566004898137943, guid: 89c1ebefbadc8a943afc8bfa652cc69e,
+    type: 3}
+  m_PrefabInstance: {fileID: 622988989146620949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &622988989146620949
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -639,6 +663,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 95566004898137943, guid: 89c1ebefbadc8a943afc8bfa652cc69e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 234294823781650013, guid: 89c1ebefbadc8a943afc8bfa652cc69e,
         type: 3}
       propertyPath: m_fontColor.b
@@ -1124,6 +1153,8 @@ MonoBehaviour:
   logoFadeTime: 0.5
   splashMenu: {fileID: 8241611423514452428}
   switchBoard: {fileID: 1926625905}
+  devJuice: {fileID: 1961118160}
+  pubJuice: {fileID: 367347305}
 --- !u!114 &8241611423514452428 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4796203069895510348, guid: 0ede51befdcdf9a42affc3ad14082d8a,

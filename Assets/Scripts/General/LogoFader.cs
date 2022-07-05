@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Qbism.General
 		[SerializeField] float logoDelay, logoVisible, logoInterval, logoFadeTime;
 		[SerializeField] SplashMenuHandler splashMenu;
 		[SerializeField] FeatureSwitchBoard switchBoard;
+		[SerializeField] MMFeedbacks devJuice, pubJuice;
 
 		private void Start()
 		{
@@ -23,10 +25,12 @@ namespace Qbism.General
 			logoGroup.alpha = 1;
 
 			yield return new WaitForSeconds(logoDelay);
+			pubJuice.PlayFeedbacks();
 			yield return FadeLogo(0, 1, pubLogoGroup);
 			yield return new WaitForSeconds(logoVisible);
 			yield return FadeLogo(1, 0, pubLogoGroup);
 			yield return new WaitForSeconds(logoInterval);
+			devJuice.PlayFeedbacks();
 			yield return FadeLogo(0, 1, devLogoGroup);
 			yield return new WaitForSeconds(logoVisible);
 			yield return FadeLogo(1, 0, devLogoGroup);
