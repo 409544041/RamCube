@@ -14,7 +14,7 @@ namespace Qbism.Saving
 			SettingsValueData settingsData)
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
-			string path = Application.persistentDataPath + "/progression.sav";
+			string path = Application.persistentDataPath + "/bbb_pubdemo_save.butt";
 			FileStream stream = new FileStream(path, FileMode.Create);
 
 			ProgData data = new ProgData(levelDataList, biomeDataList, currentPin, 
@@ -26,7 +26,7 @@ namespace Qbism.Saving
 
 		public static ProgData LoadProgData()
 		{
-			string path = Application.persistentDataPath + "/progression.sav";
+			string path = Application.persistentDataPath + "/bbb_pubdemo_save.butt";
 			if (File.Exists(path))
 			{
 				BinaryFormatter formatter = new BinaryFormatter();
