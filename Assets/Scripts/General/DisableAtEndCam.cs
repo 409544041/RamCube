@@ -8,11 +8,11 @@ namespace Qbism.General
 	{
 		public void DisableMeshes()
 		{
-			MeshRenderer[] mRenders = GetComponentsInChildren<MeshRenderer>();
+			Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
-			if (mRenders.Length > 0)
+			if (renderers.Length > 0)
 			{
-				foreach (var mRender in mRenders)
+				foreach (var mRender in renderers)
 				{
 					if (mRender.enabled == true) mRender.enabled = false;
 				}
