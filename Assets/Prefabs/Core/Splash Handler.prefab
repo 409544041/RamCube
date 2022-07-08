@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 820532969429121772}
   - component: {fileID: 5119285745316217213}
   - component: {fileID: 4796203069895510348}
+  - component: {fileID: 4545967289916980478}
   m_Layer: 0
   m_Name: Splash Handler
   m_TagString: Untagged
@@ -28,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -66,3 +68,26 @@ MonoBehaviour:
   selectedTextColor: {r: 1, g: 1, b: 1, a: 1}
   selectedButtonSize: 1.5
   screenStateMngr: {fileID: 0}
+--- !u!114 &4545967289916980478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2767828732573150583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3339cc6a48a1b7949af2f05e188ba096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logoGroup: {fileID: 0}
+  devLogoGroup: {fileID: 0}
+  pubLogoGroup: {fileID: 0}
+  logoDelay: 1
+  logoVisible: 1.5
+  logoInterval: 0.5
+  logoFadeTime: 0.5
+  splashMenu: {fileID: 4796203069895510348}
+  switchBoard: {fileID: 0}
+  devJuice: {fileID: 0}
+  pubJuice: {fileID: 0}
