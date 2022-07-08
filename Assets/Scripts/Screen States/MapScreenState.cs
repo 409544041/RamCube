@@ -99,6 +99,12 @@ namespace Qbism.ScreenStateMachine
 			}
 		}
 
+		public void HandleResetInput()
+		{
+			if (!persRef.switchBoard.allowDebugMapReload) return;
+			mlRef.mapLoader.StartLoadingWorldMap(false);
+		}
+
 		public void HandleDebugToggleHudInput()
 		{
 			if (!persRef.switchBoard.allowHudToggle) return;
@@ -126,9 +132,6 @@ namespace Qbism.ScreenStateMachine
 		{
 		}
 		public void HandleRewindInput()
-		{
-		}
-		public void HandleResetInput()
 		{
 		}
 	}
