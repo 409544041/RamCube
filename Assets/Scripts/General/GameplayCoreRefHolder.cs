@@ -14,6 +14,7 @@ using Qbism.Rewind;
 using Qbism.PlayerCube;
 using Qbism.Serpent;
 using Febucci.UI;
+using UnityEngine.SceneManagement;
 
 [ExecuteAlways]
 public class GameplayCoreRefHolder : MonoBehaviour
@@ -104,6 +105,8 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		floorCubes = floorCubeList.ToArray();
 		floorCompAdders = floorCompList.ToArray();
 		timeBodies = timeBodyList.ToArray();
+
+		persRef.debugHUD.NewScene(SceneManager.GetActiveScene().name.ToString());
 	}
 
 	private void GetSetSegments()

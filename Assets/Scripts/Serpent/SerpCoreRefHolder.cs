@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using Qbism.Saving;
 using Qbism.General;
 using Febucci.UI;
+using UnityEngine.SceneManagement;
 
 namespace Qbism.Serpent
 {
@@ -62,6 +63,8 @@ namespace Qbism.Serpent
 				segRef.scRef = this;
 				segRef.cam = cam;
 			}
+
+			persRef.debugHUD.NewScene(SceneManager.GetActiveScene().name.ToString());
 		}
 	}
 }

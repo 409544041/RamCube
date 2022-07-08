@@ -7,6 +7,7 @@ using Qbism.Serpent;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Qbism.WorldMap
 {
@@ -70,6 +71,8 @@ namespace Qbism.WorldMap
 				segRef.mcRef = this;
 				segRef.cam = cam;
 			}
+
+			persRef.debugHUD.NewScene(SceneManager.GetActiveScene().name.ToString());
 		}
 	}
 }

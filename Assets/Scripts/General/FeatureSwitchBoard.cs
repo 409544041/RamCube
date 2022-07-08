@@ -22,6 +22,7 @@ namespace Qbism.General
 		public bool allowDebugDeleteProgress;
 		[Header("Demo")]
 		public bool demoSplashConnected;
+		public bool showDebugTextInfo;
 		public bool isPublicDemo;
 		[Header("Serpent Screen")]
 		public bool serpentScreenConnected;
@@ -32,5 +33,12 @@ namespace Qbism.General
 		public bool allowCubeUIToggle;
 		[Header("Splash")]
 		public bool showLogos;
+		[Header("Build")]
+		[Tooltip("in format major.minor.revision.buildnumber")]
+		public string currentBuild;
+		//major is usually many new features, changes in UI, release state
+		//minor is perhaps some new features on a previous major release
+		//revision is usually fixes on a previous minor release.
+		//buildnumber is incremented for each latest build of a revision
 	}
 }

@@ -1,3 +1,4 @@
+using Qbism.Demo;
 using Qbism.General;
 using Qbism.SceneTransition;
 using Qbism.Serpent;
@@ -14,6 +15,7 @@ namespace Qbism.Saving
 		//Config parameters
 		public FeatureSwitchBoard switchBoard;
 		public Timer sessionTimer;
+		public DebugHUDHandler debugHUD;
 		[Header("Progress")]
 		public ProgressHandler progHandler;
 		public SerpentProgress serpProg;
