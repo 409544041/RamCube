@@ -9,12 +9,15 @@ namespace Qbism.Saving
 	// save location = C:\Users\js_ba\AppData\LocalLow\Frambosa\Billy Bumbum
 	public static class SavingSystem
 	{
+		//States
+		public static string saveName;
+
 		public static void SaveProgData(List<LevelStatusData> levelDataList, List<bool> biomeDataList,
 			string currentPin, List<SerpentStatusData> serpentDataList, List<ObjectStatusData> objectsDataList,
 			SettingsValueData settingsData)
 		{
 			BinaryFormatter formatter = new BinaryFormatter();
-			string path = Application.persistentDataPath + "/bbb_pubdemo_save.butt";
+			string path = Application.persistentDataPath + saveName;
 			FileStream stream = new FileStream(path, FileMode.Create);
 
 			ProgData data = new ProgData(levelDataList, biomeDataList, currentPin, 
@@ -26,7 +29,7 @@ namespace Qbism.Saving
 
 		public static ProgData LoadProgData()
 		{
-			string path = Application.persistentDataPath + "/bbb_pubdemo_save.butt";
+			string path = Application.persistentDataPath + saveName;
 			if (File.Exists(path))
 			{
 				BinaryFormatter formatter = new BinaryFormatter();

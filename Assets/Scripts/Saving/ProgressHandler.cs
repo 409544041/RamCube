@@ -12,6 +12,7 @@ namespace Qbism.Saving
 	{
 		//Config parameters
 		[SerializeField] PersistentRefHolder persRef;
+		[SerializeField] string saveName;
 
 		//Cache
 		SerpentProgress serpProg;
@@ -37,6 +38,7 @@ namespace Qbism.Saving
 
 		private void Awake() 
 		{
+			SavingSystem.saveName = saveName;
 			serpProg = persRef.serpProg;
 			objProg = persRef.objProg;
 			currentPin = E_LevelData.GetEntity(0).f_Pin;
