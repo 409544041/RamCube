@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8158543601900108104}
   - component: {fileID: 8158543601900108105}
   - component: {fileID: 8158543601900108102}
+  - component: {fileID: 4008027897286073553}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -68,7 +69,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <wiggle a=.1 f=.25>Demo
+  m_text: Demo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 52f313c6bd7f4f5499150fb7f303c2cd, type: 2}
   m_sharedMaterial: {fileID: -7661024421758505525, guid: 52f313c6bd7f4f5499150fb7f303c2cd,
@@ -257,6 +258,20 @@ MonoBehaviour:
   useTypewriterWaitForDisappearances: 1
   disappearanceWaitTime: 0.015
   disappearanceSpeedMultiplier: 1
+--- !u!114 &4008027897286073553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8158543601900108100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2464e5b43f80cba4ebc084d9aec6a327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmProText: {fileID: 8158543601900108104}
+  actualText: <wiggle a=.1 f=.25>Demo
 --- !u!1 &8158543602779083179
 GameObject:
   m_ObjectHideFlags: 0

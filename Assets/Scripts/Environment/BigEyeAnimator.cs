@@ -10,6 +10,7 @@ namespace Qbism.Environment
 		[SerializeField] Vector2 minMaxClosed, minMaxAction, minMaxBlink;
 		[SerializeField] Renderer[] halfLidMeshes;
 		[SerializeField] Renderer fullLidMesh;
+		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		//Cache
 		Animator animator;
@@ -39,6 +40,10 @@ namespace Qbism.Environment
 
 		private void Update()
 		{
+			if (gcRef != null &&
+				gcRef.glRef.screenStateMngr.currentStateEnum == ScreenStates.levelEndSeqState)
+				return;
+
 			if (counting) timeCounter += Time.deltaTime;
 			if (blinkCounting) blinkCounter += Time.deltaTime;
 
