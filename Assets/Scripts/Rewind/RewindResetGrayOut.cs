@@ -11,7 +11,7 @@ namespace Qbism.Rewind
 		//Config parameters
 		[SerializeField] float brightnessDelta = .3f, saturationDelta = .2f, alphaDelta = .5f;
 		[SerializeField] Image[] elementImages;
-		[SerializeField] TextMeshProUGUI tm;
+		[SerializeField] TextMeshProUGUI[] texts;
 		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		//States
@@ -26,7 +26,11 @@ namespace Qbism.Rewind
 				originalColors.Add(elementImages[i].color);
 			}
 
-			originalColors.Add(tm.color);
+			for (int i = 0; i < texts.Length; i++)
+			{
+				originalColors.Add(texts[i].color);
+
+			}
 
 			for (int i = 0; i < elementImages.Length; i++)
 			{
@@ -34,8 +38,11 @@ namespace Qbism.Rewind
 				grayedOutColors.Add(grayed);
 			}
 
-			var tmGrayed = SetGrayedOutColors(tm.color);
-			grayedOutColors.Add(tmGrayed);
+			for (int i = 0; i < texts.Length; i++)
+			{
+				var tmGrayed = SetGrayedOutColors(texts[i].color);
+				grayedOutColors.Add(tmGrayed);
+			}
 		}
 
 		private Color SetGrayedOutColors(Color color)
@@ -67,7 +74,10 @@ namespace Qbism.Rewind
 				elementImages[i].color = grayedOutColors[i];
 			}
 
-			tm.color = grayedOutColors[grayedOutColors.Count - 1];
+			for (int i = 0; i < texts.Length; i++)
+			{
+				texts[i].color = grayedOutColors[grayedOutColors.Count - 1];
+			}
 		}
 
 		private void ReturnToOriginalColors()
@@ -77,7 +87,10 @@ namespace Qbism.Rewind
 				elementImages[i].color = originalColors[i];
 			}
 
-			tm.color = originalColors[originalColors.Count - 1];
+			for (int i = 0; i < texts.Length; i++)
+			{
+				texts[i].color = originalColors[originalColors.Count - 1];
+			}
 		}
 	}
 }

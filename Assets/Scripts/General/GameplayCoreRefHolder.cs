@@ -15,6 +15,7 @@ using Qbism.PlayerCube;
 using Qbism.Serpent;
 using Febucci.UI;
 using UnityEngine.SceneManagement;
+using Qbism.Control;
 
 [ExecuteAlways]
 public class GameplayCoreRefHolder : MonoBehaviour
@@ -35,6 +36,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	public CanvasGroup gameplayCanvasGroup;
 	public ImageFader gameplayCanvasFader;
 	public InterfacePulser rewindPulser;
+	public UIElementInputSwapper[] uiSwappers;
 	[Header("Dialogue Canvas")]
 	public Canvas dialogueCanvas;
 	public CanvasGroup dialogueCanvasGroup;
@@ -107,6 +109,11 @@ public class GameplayCoreRefHolder : MonoBehaviour
 		timeBodies = timeBodyList.ToArray();
 
 		persRef.debugHUD.NewScene(SceneManager.GetActiveScene().name.ToString());
+
+		foreach (var uiSwapper in uiSwappers)
+		{
+			uiSwapper.pInput = persRef.playerInput;
+		}
 	}
 
 	private void GetSetSegments()

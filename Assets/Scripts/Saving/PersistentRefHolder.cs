@@ -7,6 +7,7 @@ using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Qbism.Saving
 {
@@ -33,6 +34,7 @@ namespace Qbism.Saving
 		[Header("Settings")]
 		public SettingsSaveLoad settingsSaveLoad;
 		public ToggleHud hudToggler;
+		public PlayerInput playerInput;
 
 		//States
 		public Camera cam { get; set; }

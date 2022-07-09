@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2849500681837630937}
   m_RootOrder: 0
@@ -166,6 +167,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2849500681837630937}
   m_Father: {fileID: 0}
@@ -277,6 +279,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2849500681837630937}
   m_RootOrder: 3
@@ -410,6 +413,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6263990186509892273}
   m_Father: {fileID: 762018679950122289}
@@ -446,6 +450,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3489781939401298112}
   m_Father: {fileID: 6061767158492771293}
@@ -484,6 +489,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1906923097737657562}
   - {fileID: 762018679950122289}
@@ -912,10 +918,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2849500681837630937}
     m_Modifications:
+    - target: {fileID: 272599013416580485, guid: d64022ae2f6e08e49b9645e4675f3380,
+        type: 3}
+      propertyPath: greenButton
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 317402214001848943, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
       propertyPath: m_Name
       value: Next Element
+      objectReference: {fileID: 0}
+    - target: {fileID: 458725534764341199, guid: d64022ae2f6e08e49b9645e4675f3380,
+        type: 3}
+      propertyPath: m_text
+      value: a
       objectReference: {fileID: 0}
     - target: {fileID: 890872582164843056, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
@@ -923,6 +939,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 22ed3ffecb83cf548b62bc36371ded33,
         type: 3}
+    - target: {fileID: 2803161920191691489, guid: d64022ae2f6e08e49b9645e4675f3380,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3790637192840681483, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
       propertyPath: m_SizeDelta.x

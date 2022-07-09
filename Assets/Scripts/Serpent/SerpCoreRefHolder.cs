@@ -9,6 +9,7 @@ using Qbism.Saving;
 using Qbism.General;
 using Febucci.UI;
 using UnityEngine.SceneManagement;
+using Qbism.Control;
 
 namespace Qbism.Serpent
 {
@@ -26,6 +27,7 @@ namespace Qbism.Serpent
 		public Canvas bgSerpCanvas;
 		public Image[] objSlotElements;
 		public TextMeshProUGUI namePlateText;
+		public UIElementInputSwapper[] uiSwappers;
 		[Header("Dialogue Canvas")]
 		public Canvas dialogueCanvas;
 		public CanvasGroup dialogueCanvasGroup;
@@ -65,6 +67,11 @@ namespace Qbism.Serpent
 			}
 
 			persRef.debugHUD.NewScene(SceneManager.GetActiveScene().name.ToString());
+
+			foreach (var uiSwapper in uiSwappers)
+			{
+				uiSwapper.pInput = persRef.playerInput;
+			}
 		}
 	}
 }

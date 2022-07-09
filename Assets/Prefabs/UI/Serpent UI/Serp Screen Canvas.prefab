@@ -31,6 +31,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4459390056412038180}
   - {fileID: 7191548598609625696}
@@ -138,6 +139,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4617135329762604651}
     m_Modifications:
+    - target: {fileID: 272599013416580485, guid: d64022ae2f6e08e49b9645e4675f3380,
+        type: 3}
+      propertyPath: blueButton
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 317402214001848943, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
       propertyPath: m_Name
@@ -146,7 +152,7 @@ PrefabInstance:
     - target: {fileID: 458725534764341199, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
       propertyPath: m_text
-      value: b
+      value: x
       objectReference: {fileID: 0}
     - target: {fileID: 458725534764341199, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
@@ -319,10 +325,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4617135329762604651}
     m_Modifications:
+    - target: {fileID: 272599013416580485, guid: d64022ae2f6e08e49b9645e4675f3380,
+        type: 3}
+      propertyPath: greenButton
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 317402214001848943, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}
       propertyPath: m_Name
       value: Interact UI Element
+      objectReference: {fileID: 0}
+    - target: {fileID: 458725534764341199, guid: d64022ae2f6e08e49b9645e4675f3380,
+        type: 3}
+      propertyPath: m_text
+      value: a
       objectReference: {fileID: 0}
     - target: {fileID: 890872582164843056, guid: d64022ae2f6e08e49b9645e4675f3380,
         type: 3}

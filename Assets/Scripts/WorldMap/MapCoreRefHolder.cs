@@ -1,5 +1,6 @@
 using Cinemachine;
 using Dreamteck.Splines;
+using Qbism.Control;
 using Qbism.Environment;
 using Qbism.General;
 using Qbism.Saving;
@@ -30,6 +31,7 @@ namespace Qbism.WorldMap
 		public Canvas worldMapCanvas;
 		public CanvasGroup mapCanvasGroup;
 		public SerpScreenButtonToggler serpButtonToggler;
+		public UIElementInputSwapper[] uiSwappers;
 		[Header("Pause Canvas")]
 		public OverlayMenuHandler pauseOverlayHandler;
 		[Header("Settings Canvas")]
@@ -73,6 +75,11 @@ namespace Qbism.WorldMap
 			}
 
 			persRef.debugHUD.NewScene(SceneManager.GetActiveScene().name.ToString());
+
+			foreach (var uiSwapper in uiSwappers)
+			{
+				uiSwapper.pInput = persRef.playerInput;
+			}
 		}
 	}
 }

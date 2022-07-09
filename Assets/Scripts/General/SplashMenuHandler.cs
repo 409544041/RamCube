@@ -30,7 +30,7 @@ namespace Qbism.General
 				normalCanvasGroup.alpha = 0;
 				demoCanvasGroup.alpha = 1;
 				if (!switchBoard.showLogos) ActivateMenu();
-				SetButtonsInteractable(false);
+				else SetButtonsInteractable(false);
 			}
 			else
 			{
