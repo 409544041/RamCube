@@ -4,44 +4,48 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Qbism.Rewind
+namespace Qbism.General
 {
-	public class RewindResetGrayOut : MonoBehaviour
+	public class GreyOutButtons : MonoBehaviour
 	{
 		//Config parameters
 		[SerializeField] float brightnessDelta = .3f, saturationDelta = .2f, alphaDelta = .5f;
 		[SerializeField] Image[] elementImages;
 		[SerializeField] TextMeshProUGUI[] texts;
-		[SerializeField] GameplayCoreRefHolder gcRef;
 
 		//States
-		List<Color> grayedOutColors = new List<Color>();
-		List<Color> originalColors = new List<Color>();
-		bool rewindAllowed, prevFrameRewindAllowed;
+		List<Color> grayedButtonColors = new List<Color>();
+		List<Color> grayedTextColors = new List<Color>();
+		List<Color> originalButtonColors = new List<Color>();
+		List<Color> originalTextColors = new List<Color>();
 
-		private void Awake()
+		private void Start()
+		{
+			AddColorsToLists();
+		}
+
+		private void AddColorsToLists()
 		{
 			for (int i = 0; i < elementImages.Length; i++)
 			{
-				originalColors.Add(elementImages[i].color);
+				originalButtonColors.Add(elementImages[i].color);
 			}
 
 			for (int i = 0; i < texts.Length; i++)
 			{
-				originalColors.Add(texts[i].color);
-
+				originalTextColors.Add(texts[i].color);
 			}
 
 			for (int i = 0; i < elementImages.Length; i++)
 			{
 				var grayed = SetGrayedOutColors(elementImages[i].color);
-				grayedOutColors.Add(grayed);
+				grayedButtonColors.Add(grayed);
 			}
 
 			for (int i = 0; i < texts.Length; i++)
 			{
 				var tmGrayed = SetGrayedOutColors(texts[i].color);
-				grayedOutColors.Add(tmGrayed);
+				grayedTextColors.Add(tmGrayed);
 			}
 		}
 
@@ -56,40 +60,29 @@ namespace Qbism.Rewind
 			return newColor;
 		}
 
-		private void Update()
-		{
-			prevFrameRewindAllowed = rewindAllowed;
-			rewindAllowed = gcRef.pRef.playerMover.allowRewind;
-
-			if (!rewindAllowed && rewindAllowed != prevFrameRewindAllowed)
-				GrayOutButtons();
-			if (rewindAllowed && rewindAllowed != prevFrameRewindAllowed)
-				ReturnToOriginalColors();
-		}
-
-		private void GrayOutButtons()
+		public void GrayOutButton()
 		{
 			for (int i = 0; i < elementImages.Length; i++)
 			{
-				elementImages[i].color = grayedOutColors[i];
+				elementImages[i].color = grayedButtonColors[i];
 			}
 
 			for (int i = 0; i < texts.Length; i++)
 			{
-				texts[i].color = grayedOutColors[grayedOutColors.Count - 1];
+				texts[i].color = grayedTextColors[i];
 			}
 		}
 
-		private void ReturnToOriginalColors()
+		public void ReturnToOriginalColors()
 		{
 			for (int i = 0; i < elementImages.Length; i++)
 			{
-				elementImages[i].color = originalColors[i];
+				elementImages[i].color = originalButtonColors[i];
 			}
 
 			for (int i = 0; i < texts.Length; i++)
 			{
-				texts[i].color = originalColors[originalColors.Count - 1];
+				texts[i].color = originalTextColors[i];
 			}
 		}
 	}

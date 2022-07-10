@@ -28,6 +28,7 @@ namespace Qbism.Serpent
 		public Image[] objSlotElements;
 		public TextMeshProUGUI namePlateText;
 		public UIElementInputSwapper[] uiSwappers;
+		public GreyOutButtons interactButtonGreyOut;
 		[Header("Dialogue Canvas")]
 		public Canvas dialogueCanvas;
 		public CanvasGroup dialogueCanvasGroup;

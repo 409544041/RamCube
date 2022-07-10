@@ -77,14 +77,12 @@ namespace Qbism.Objects
 
 		public void FadeOutSpeechElement()
 		{
-			speechElement.color = elementFaded;
-			speechIcon.color = iconFaded;
+			slRef.scRef.interactButtonGreyOut.GrayOutButton();
 		}
 
 		public void ResetSpeechElementColor()
 		{
-			speechElement.color = elementOriginalColor;
-			speechIcon.color = iconOriginalColor;
+			slRef.scRef.interactButtonGreyOut.ReturnToOriginalColors();
 		}
 	}
 }
