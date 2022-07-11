@@ -32,10 +32,11 @@ namespace Qbism.SceneTransition
 		public void SetCirclePos(Vector3 worldPos)
 		{
 			var screenpoint = persRef.cam.WorldToScreenPoint(worldPos);
-
+			Debug.Log("Screenpoint = " + screenpoint + " & worldPos = " + worldPos);
+			Debug.Break();
 			circle.rectTransform.anchoredPosition =
-				new Vector3(screenpoint.x - persRef.circCanvas.transform.position.x,
-				screenpoint.y - persRef.circCanvas.transform.position.y, 0);
+				new Vector3(screenpoint.x /*- persRef.circCanvas.transform.position.x*/,
+				screenpoint.y /*- persRef.circCanvas.transform.position.y*/, 0);
 		}
 
 		private Coroutine Transition(int target)
