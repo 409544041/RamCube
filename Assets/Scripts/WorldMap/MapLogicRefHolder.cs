@@ -1,3 +1,4 @@
+using Qbism.Dialogue;
 using Qbism.Environment;
 using Qbism.SceneTransition;
 using Qbism.ScreenStateMachine;
@@ -26,5 +27,7 @@ namespace Qbism.WorldMap
 		public SerpentScreenLoading serpentLoader;
 		[Header("Biome")]
 		public BiomeOverwriter bOverwriter;
+		[Header("Dialogue")]
+		public InGameDialogueManager inGameDialogueManager;
 	}
 }

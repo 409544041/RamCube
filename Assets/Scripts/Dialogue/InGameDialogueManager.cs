@@ -1,20 +1,29 @@
+using Febucci.UI;
+using MoreMountains.Feedbacks;
+using Qbism.ScreenStateMachine;
 using Qbism.Serpent;
 using Qbism.SpriteAnimations;
+using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace Qbism.Dialogue
 {
 	public class InGameDialogueManager : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] GameLogicRefHolder glRef;
 		[SerializeField] Vector3 floatingHeadPos;
 		[SerializeField] float floatingHeadScale = 2.5f, firstTextDelay = .25f;
+		[SerializeField] CanvasGroup dialogueCanvasGroup;
+		[SerializeField] MMFeedbacks nextButtonJuice, textAppearJuice;
+		[SerializeField] TextMeshProUGUI dialogueText, characterText;
+		[SerializeField] TextAnimatorPlayer textAnimator;
+		[SerializeField] GameLogicRefHolder glRef;
+		[SerializeField] MapLogicRefHolder mlRef;
 
 		//Cache
-		GameplayCoreRefHolder gcRef;
 		InGameDialogueScripOb dialogueSO;
 		ExpressionHandler exprHandler;
 
@@ -25,25 +34,35 @@ namespace Qbism.Dialogue
 		Camera cam;
 		bool isTyping = false;
 		List<Renderer> mRenders = new List<Renderer>();
+		ScreenStateManager screenStateMngr;
 
 		private void Awake()
 		{
-			gcRef = glRef.gcRef;
-			cam = gcRef.cam;
+			if (glRef != null)
+			{
+				cam = glRef.gcRef.cam;
+				screenStateMngr = glRef.screenStateMngr;
+			}
+			else if (mlRef != null)
+			{
+				cam = mlRef.mcRef.cam;
+				screenStateMngr = mlRef.screenStateMngr;
+			}
 		}
 
 		public void StartInGameDialogue(InGameDialogueScripOb incDialogueSO)
 		{
-			glRef.screenStateMngr.SwitchState(glRef.screenStateMngr.dialogueOverlayState, 
+			screenStateMngr.SwitchState(screenStateMngr.dialogueOverlayState, 
 				ScreenStates.dialogueOverlayState);
 
 			dialogueSO = incDialogueSO;
-			gcRef.inGameDialogueNextButtonJuice.Initialization();
-			gcRef.inGameTextAppearJuice.Initialization();
+			nextButtonJuice.Initialization();
+			textAppearJuice.Initialization();
 			dialogueIndex = 0;
-			gcRef.inGameTextAppearJuice.PlayFeedbacks();
-			gcRef.inGameDialogueCanvasGroup.alpha = 1;
-			gcRef.gameplayCanvasGroup.alpha = 0;
+			textAppearJuice.PlayFeedbacks();
+			dialogueCanvasGroup.alpha = 1;
+			if (glRef != null) glRef.gcRef.gameplayCanvasGroup.alpha = 0;
+			if (mlRef != null) mlRef.mcRef.mapCanvasGroup.alpha = 0;
 
 			var entity = E_Segments.FindEntity(entity =>
 				entity.f_name == dialogueSO.character.ToString());
@@ -72,7 +91,7 @@ namespace Qbism.Dialogue
 					}
 				}
 
-				gcRef.inGameCharacterNameText.text = segRef.mSegments.f_SegmentName;
+				characterText.text = segRef.mSegments.f_SegmentName;
 				if (segRef.dragonAnim != null) segRef.dragonAnim.DragonSmile();
 			}
 
@@ -81,24 +100,24 @@ namespace Qbism.Dialogue
 
 		private IEnumerator Dialogue()
 		{
-			gcRef.inGameDialogueNextButtonJuice.StopFeedbacks();
-			gcRef.inGameTextAppearJuice.PlayFeedbacks();
+			nextButtonJuice.StopFeedbacks();
+			textAppearJuice.PlayFeedbacks();
 
 			if (exprHandler != null)
 				exprHandler.SetFace(dialogueSO.dialogues[dialogueIndex].expression, -1);
 
 			if (dialogueIndex == 0)
 			{
-				gcRef.inGameDialogueText.text = " ";
+				dialogueText.text = " ";
 				yield return new WaitForSeconds(firstTextDelay);
 			}
 
-			gcRef.inGameDialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
+			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
 		}
 
 		public void NextDialogueText()
 		{
-			if (isTyping) gcRef.inGameTypeWriter.SkipTypewriter();
+			if (isTyping) textAnimator.SkipTypewriter();
 			else
 			{
 				dialogueIndex++;
@@ -109,14 +128,17 @@ namespace Qbism.Dialogue
 
 		private void ExitDialogue()
 		{
-			gcRef.inGameDialogueNextButtonJuice.StopFeedbacks();
+			nextButtonJuice.StopFeedbacks();
 			GameObject.Destroy(floatingHead);
-			gcRef.inGameDialogueCanvasGroup.alpha = 0;
-			gcRef.gameplayCanvasGroup.alpha = 1;
-			gcRef.inGameDialogueText.text = " ";
+			dialogueCanvasGroup.alpha = 0;
+			if (glRef != null) glRef.gcRef.gameplayCanvasGroup.alpha = 1;
+			if (mlRef != null) mlRef.mcRef.mapCanvasGroup.alpha = 1;
+			dialogueText.text = " ";
 
-			glRef.screenStateMngr.SwitchState(glRef.screenStateMngr.levelScreenState,
+			if (glRef != null) screenStateMngr.SwitchState(screenStateMngr.levelScreenState,
 				ScreenStates.levelScreenState);
+			else if (mlRef != null) screenStateMngr.SwitchState(screenStateMngr.mapScreenState,
+				ScreenStates.mapScreenState);
 		}
 
 		private void OverrideLightDir(Material mat, M_Segments segEntity)
@@ -149,7 +171,7 @@ namespace Qbism.Dialogue
 
 		public void PulseNextButton() //Called from TextAnimatorPlayer events
 		{
-			gcRef.inGameDialogueNextButtonJuice.PlayFeedbacks();
+			nextButtonJuice.PlayFeedbacks();
 		}
 	}
 }

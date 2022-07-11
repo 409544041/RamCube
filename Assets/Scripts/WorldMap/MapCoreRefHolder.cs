@@ -32,6 +32,8 @@ namespace Qbism.WorldMap
 		public CanvasGroup mapCanvasGroup;
 		public SerpScreenButtonToggler serpButtonToggler;
 		public UIElementInputSwapper[] uiSwappers;
+		[Header("Dialogue Canvas")]
+		public CanvasGroup inGameDialogueCanvasGroup;
 		[Header("Pause Canvas")]
 		public OverlayMenuHandler pauseOverlayHandler;
 		[Header("Settings Canvas")]

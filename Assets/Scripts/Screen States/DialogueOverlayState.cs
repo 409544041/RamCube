@@ -12,7 +12,6 @@ namespace Qbism.ScreenStateMachine
 		//Cache
 		ScreenStateManager stateMngr;
 		DialogueManager dialogueMngr;
-		CanvasGroup dialogueCanvasGroup;
 		InGameDialogueManager inGameDialogueMngr;
 		CanvasGroup inGameDialogueCanvasGroup;
 
@@ -25,7 +24,6 @@ namespace Qbism.ScreenStateMachine
 				if (stateMngr.gcRef != null)
 				{
 					dialogueMngr = stateMngr.gcRef.glRef.dialogueManager;
-					dialogueCanvasGroup = stateMngr.gcRef.dialogueCanvasGroup;
 					inGameDialogueMngr = stateMngr.gcRef.glRef.inGameDialogueManager;
 					inGameDialogueCanvasGroup = stateMngr.gcRef.inGameDialogueCanvasGroup;
 				}
@@ -33,7 +31,12 @@ namespace Qbism.ScreenStateMachine
 				if (stateMngr.scRef != null)
 				{
 					dialogueMngr = stateMngr.scRef.slRef.dialogueManager;
-					dialogueCanvasGroup = stateMngr.scRef.dialogueCanvasGroup;
+				}
+
+				if (stateMngr.mcRef != null)
+				{
+					inGameDialogueMngr = stateMngr.mcRef.mlRef.inGameDialogueManager;
+					inGameDialogueCanvasGroup = stateMngr.mcRef.inGameDialogueCanvasGroup;
 				}
 			}
 
