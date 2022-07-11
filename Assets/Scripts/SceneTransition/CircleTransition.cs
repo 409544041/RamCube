@@ -14,6 +14,8 @@ namespace Qbism.SceneTransition
 		public Image circle;
 		[SerializeField] float circleStartSize = 2500;
 		[SerializeField] float transDur = 1;
+		[SerializeField] RectTransform canvasRect;
+		[SerializeField] CanvasGroup canvasGroup;
 		[SerializeField] PersistentRefHolder persRef;
 
 		//Cache
@@ -22,21 +24,24 @@ namespace Qbism.SceneTransition
 		public Coroutine TransIn()
 		{
 			return Transition(1);
+			canvasGroup.alpha = 0;
 		}
 
 		public Coroutine TransOut()
 		{
+			canvasGroup.alpha = 1;
 			return Transition(0);
 		}
 
 		public void SetCirclePos(Vector3 worldPos)
 		{
-			var screenpoint = persRef.cam.WorldToScreenPoint(worldPos);
-			Debug.Log("Screenpoint = " + screenpoint + " & worldPos = " + worldPos);
-			Debug.Break();
+			var viewPortPoint = persRef.cam.WorldToViewportPoint(worldPos);
+
+			var canvasWidth = canvasRect.rect.width;
+			var canvasHeight = canvasRect.rect.height;
+
 			circle.rectTransform.anchoredPosition =
-				new Vector3(screenpoint.x /*- persRef.circCanvas.transform.position.x*/,
-				screenpoint.y /*- persRef.circCanvas.transform.position.y*/, 0);
+				new Vector3(viewPortPoint.x * canvasWidth, viewPortPoint.y * canvasHeight, 0);
 		}
 
 		private Coroutine Transition(int target)
