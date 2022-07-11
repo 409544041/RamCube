@@ -37,10 +37,10 @@ namespace Qbism.PlayerCube
 
 		private void Awake()
 		{
+			completed = E_LevelGameplayData.GetEntity(0).f_Completed;
 			if (completed || !glRef.gcRef.persRef.switchBoard.showFirstLevelIntroRoll) return;
 
 			mover = pRef.playerMover;
-			completed = E_LevelGameplayData.GetEntity(0).f_Completed;
 			camOriginalSize = glRef.gcRef.gameCam.m_Lens.OrthographicSize;
 			MMFlipVoice = playerFlipJuice.GetComponent<MMFeedbackSound>();
 			MMFlipThud = playerPostFlipJuice.GetComponent<MMFeedbackSound>();
