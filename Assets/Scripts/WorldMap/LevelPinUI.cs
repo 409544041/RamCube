@@ -18,7 +18,7 @@ namespace Qbism.WorldMap
 		public Color unCompText,  compText;
 		[ColorUsage(true, true)]
 		public Color unCompTextOutline, compTextOutline;
-		[SerializeField] LevelPinRefHolder refs;
+		public LevelPinRefHolder refs;
 
 		//Actions, events, delegates etc
 		public event Action<E_Pin, bool, bool, E_Biome> onSetCurrentData;

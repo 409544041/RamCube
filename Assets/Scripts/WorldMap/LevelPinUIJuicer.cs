@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
@@ -12,6 +13,10 @@ namespace Qbism.WorldMap
 		[SerializeField] LevelPinUI pinUI;
 		public float compJuiceDelay, unCompJuiceDelay;
 		public float selectedSize = 1.35f;
+
+		//Actions, events, delegates etc
+
+		public event Action<string> onPinCompCheckForScreenTriggers;
 
 		private void Awake() 
 		{
@@ -74,6 +79,9 @@ namespace Qbism.WorldMap
 
 			pinUI.compDiamond.enabled = true;
 			pinUI.uiText.enabled = true;
+
+			yield return new WaitForSeconds(.25f);
+			onPinCompCheckForScreenTriggers(pinUI.refs.m_pin.f_name);
 		}
 
 		public void SelectionEnlargen(float curveZero, float curveOne)
