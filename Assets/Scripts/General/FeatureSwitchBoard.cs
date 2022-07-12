@@ -20,6 +20,8 @@ namespace Qbism.General
 		public bool allowDebugCompleteAll;
 		public bool allowDebugUnlockAll;
 		public bool allowDebugDeleteProgress;
+		[Header("Dialogue")]
+		public bool triggerMapDialogue;
 		[Header("Demo")]
 		public bool demoSplashConnected;
 		public bool showDebugTextInfo;

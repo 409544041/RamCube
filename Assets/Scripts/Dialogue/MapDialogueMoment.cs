@@ -29,7 +29,8 @@ namespace Qbism.Dialogue
 
 		private void TriggerDialogue(string incPin)
 		{
-			if (incPin != mPin.f_name || !onLevelReturn || triggered) return;
+			if (incPin != mPin.f_name || !onLevelReturn || triggered ||
+				!mlRef.mcRef.persRef.switchBoard.triggerMapDialogue) return;
 			triggered = true;
 			selectedPinUI = mlRef.pinTracker.selectedPin.pinUI;
 			mlRef.pinTracker.SetLevelPinButtonsInteractable(false);
