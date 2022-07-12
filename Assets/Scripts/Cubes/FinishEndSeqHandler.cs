@@ -268,10 +268,7 @@ namespace Qbism.Cubes
 			var entity = E_LevelData.FindEntity(entity =>
 				entity.f_Pin == refs.gcRef.persRef.progHandler.currentPin);
 
-			bool isLastLevel = entity.f_UnlocksPins[0].f_name == "_EMPTY";
-
-			if (switchBoard.isPublicDemo && isLastLevel) loader.LoadEndOfDemo();
-			else if (switchBoard.worldMapConnected) refs.gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
+			if (switchBoard.worldMapConnected) refs.gcRef.glRef.mapLoader.StartLoadingWorldMap(true);
 			else loader.NextLevel();
 		}
 
