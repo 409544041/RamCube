@@ -67,6 +67,7 @@ namespace Qbism.Cubes
 				{
 					wrongOnFinish = true;
 					refs.gcRef.rewindPulser.InitiatePulse();
+					refs.gcRef.glRef.wrongFinishChecker.AddToCount();
 				} 
 			}
 			else if (wrongOnFinish)

@@ -138,6 +138,7 @@ namespace Qbism.Dialogue
 		{
 			nextButtonJuice.StopFeedbacks();
 			GameObject.Destroy(floatingHead);
+			mRenders.Clear();
 			dialogueCanvasGroup.alpha = 0;
 			if (glRef != null) glRef.gcRef.gameplayCanvasGroup.alpha = 1;
 			if (mlRef != null) mlRef.mcRef.mapCanvasGroup.alpha = 1;

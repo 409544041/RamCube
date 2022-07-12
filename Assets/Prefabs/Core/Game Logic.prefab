@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8092735947843859375}
   m_Father: {fileID: 8573582724643509015}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -106,10 +107,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3b173427bc5d9419922e7bc24b9026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glRef: {fileID: 7286304185802157844}
   floatingHeadPos: {x: 0.15, y: 0.2, z: 5}
   floatingHeadScale: 4.5
   firstTextDelay: 0.25
+  dialogueCanvasGroup: {fileID: 0}
+  nextButtonJuice: {fileID: 0}
+  textAppearJuice: {fileID: 0}
+  dialogueText: {fileID: 0}
+  characterText: {fileID: 0}
+  textAnimator: {fileID: 0}
+  glRef: {fileID: 7286304185802157844}
+  mlRef: {fileID: 0}
+--- !u!1 &2639431295772669339
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8092735947843859375}
+  - component: {fileID: 3626432336328427601}
+  - component: {fileID: 1907349313829354472}
+  m_Layer: 0
+  m_Name: Wrong Finish Hint Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8092735947843859375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639431295772669339}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7085678595277738791}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3626432336328427601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639431295772669339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c30f64c9522d04fb4a9c1f2a4b2e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wrongLimit: 2
+  addToLimit: 1
+  validPins:
+  - a01
+  - a02
+  - a03
+  - a04
+  dialogueTrigger: {fileID: 1907349313829354472}
+  glRef: {fileID: 7286304185802157844}
+--- !u!114 &1907349313829354472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639431295772669339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb69f9d0ffa53984a935955b6f139fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scripOb: {fileID: 11400000, guid: 4f0ed406fc5daaa468cabcd5837c4b58, type: 2}
+  inGameDialogueMngr: {fileID: 613446600291284439}
 --- !u!1 &3319944025908594892
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,6 +599,7 @@ MonoBehaviour:
   dialogueManager: {fileID: 4300353220786692159}
   dialogueFocuser: {fileID: 3046887159190210964}
   inGameDialogueManager: {fileID: 613446600291284439}
+  wrongFinishChecker: {fileID: 3626432336328427601}
   objColManager: {fileID: 2856112992625200457}
   navManager: {fileID: 4173270567251923710}
   pathFinder: {fileID: 5754706651169593126}

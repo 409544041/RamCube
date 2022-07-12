@@ -14,6 +14,7 @@ namespace Qbism.General
 		public bool allowDebugFinish;
 		public bool showLevelName;
 		public bool showFirstLevelIntroRoll;
+		public bool showInGameHints;
 		[Header("World Map")]
 		public bool worldMapConnected;
 		public bool allowDebugMapReload;
