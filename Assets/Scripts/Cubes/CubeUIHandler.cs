@@ -10,6 +10,7 @@ namespace Qbism.Cubes
 	public class CubeUIHandler : MonoBehaviour
 	{
 		//Config parameters
+		[SerializeField] bool cubeUIActive = false;
 		[SerializeField] LayerMask lineLayers;
 		[SerializeField] float triggerDis = 0.3f;
 		[SerializeField] LayerMask lineRayLayers;
@@ -33,6 +34,7 @@ namespace Qbism.Cubes
 
 		private void Awake() 
 		{
+			if (!cubeUIActive) return;
 			pRef = refs.gcRef.pRef;
 			mover = pRef.playerMover;
 			finishCube = refs.gcRef.finishRef.finishCube;
@@ -43,12 +45,14 @@ namespace Qbism.Cubes
 
 		private void Start()
 		{
+			if (!cubeUIActive) return;
 			CheckForMirror();
 			refs.uiLineRender.SetPosition(1, lineTopPos);
 		}
 
 		private void Update()
 		{
+			if (!cubeUIActive) return;
 			if (showCubeUI && debugShowCubeUI) ShowUICheck();
 			if (finishCube.FetchFinishStatus() && !hiddenForFinish)	
 				HideUIForFinish();
@@ -126,6 +130,7 @@ namespace Qbism.Cubes
 
 		public void ShowOrHideUI(bool value)
 		{
+			if (!cubeUIActive) return;
 			refs.uiElement.SetActive(value);
 			refs.uiLineRender.enabled = value;
 		}
