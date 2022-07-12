@@ -75,6 +75,19 @@ namespace Qbism.WorldMap
 			} 
 		}
 
+		public void SelectPin(LevelPinUI pinToSelect)
+		{
+			pinToSelect.SelectPinUI();
+		}
+
+		public void SetLevelPinButtonsInteractable(bool value)
+		{
+			foreach (var pin in mlRef.levelPins)
+			{
+				pin.pinUI.button.interactable = value;
+			}
+		}
+
 		private void SetPinSelectionLoc()
 		{
 			mlRef.pinSelShape.transform.position = new Vector3 (selectedPin.transform.position.x, 

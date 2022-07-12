@@ -189,6 +189,7 @@ MonoBehaviour:
   onDragonScreenReturn: 0
   trigger: {fileID: 6234324957996972440}
   mPin: {fileID: 9040709941465991581}
+  circleTrigger: {fileID: 9117262447040763836}
   mlRef: {fileID: 5051852831082783110}
 --- !u!114 &9040709941465991581
 MonoBehaviour:
@@ -353,6 +354,108 @@ MonoBehaviour:
   textAnimator: {fileID: 0}
   glRef: {fileID: 0}
   mlRef: {fileID: 5051852831082783110}
+--- !u!1 &6364661145936690318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6715494896239160401}
+  - component: {fileID: 6551145292137002028}
+  m_Layer: 0
+  m_Name: Focus Canvas Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6715494896239160401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6364661145936690318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7401218304841560171}
+  m_Father: {fileID: 9222558206552936700}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6551145292137002028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6364661145936690318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb48f2429d3be9043bb219bd730ea391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circle: {fileID: 0}
+  circleStartSize: 5000
+  transDur: 0.5
+  canvasRect: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  persRef: {fileID: 0}
+  mcRef: {fileID: 0}
+--- !u!1 &8860349975416569411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7401218304841560171}
+  - component: {fileID: 9117262447040763836}
+  m_Layer: 0
+  m_Name: Friend Screen Focus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7401218304841560171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8860349975416569411}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6715494896239160401}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9117262447040763836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8860349975416569411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac45b71201fb9346b27bb143fedd9ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objToFocusOn: {fileID: 0}
+  isUIObj: 1
+  circleSize: 0.1
+  focusDur: 1
+  focusCircle: {fileID: 6551145292137002028}
+  mcRef: {fileID: 0}
 --- !u!1 &9222558206552936691
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +492,7 @@ Transform:
   - {fileID: 7336059095062030453}
   - {fileID: 1930331695011083473}
   - {fileID: 7981569800003871077}
+  - {fileID: 6715494896239160401}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -444,6 +548,7 @@ MonoBehaviour:
   serpentLoader: {fileID: 3927803264483804855}
   bOverwriter: {fileID: 6236094234441967739}
   inGameDialogueManager: {fileID: 4559963072235337666}
+  focusCircle: {fileID: 6551145292137002028}
 --- !u!1001 &5311684666016331016
 PrefabInstance:
   m_ObjectHideFlags: 0

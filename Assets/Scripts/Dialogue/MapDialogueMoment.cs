@@ -1,3 +1,4 @@
+using Qbism.General;
 using Qbism.WorldMap;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace Qbism.Dialogue
 		[SerializeField] bool onLevelReturn, onDragonScreenReturn;
 		[SerializeField] InGameDialogueTrigger trigger;
 		[SerializeField] M_Pin mPin;
+		[SerializeField] FocusCircleTrigger circleTrigger;
 		[SerializeField] MapLogicRefHolder mlRef;
 
 		//States
 		bool triggered = false;
+		LevelPinUI selectedPinUI;
 
 		private void OnEnable()
 		{
@@ -28,7 +31,19 @@ namespace Qbism.Dialogue
 		{
 			if (incPin != mPin.f_name || !onLevelReturn || triggered) return;
 			triggered = true;
-			trigger.TriggerInGameDialogue();
+			selectedPinUI = mlRef.pinTracker.selectedPin.pinUI;
+			mlRef.pinTracker.SetLevelPinButtonsInteractable(false);
+			trigger.TriggerInGameDialogue(this, selectedPinUI);
+		}
+
+		public void PostDialogue()
+		{
+			if (circleTrigger != null) circleTrigger.TriggerFocus(selectedPinUI);
+			else
+			{
+				mlRef.pinTracker.SetLevelPinButtonsInteractable(true);
+				mlRef.pinTracker.SelectPin(selectedPinUI);
+			}
 		}
 
 		private void OnDisble()

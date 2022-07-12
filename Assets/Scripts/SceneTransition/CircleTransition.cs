@@ -14,17 +14,20 @@ namespace Qbism.SceneTransition
 		public Image circle;
 		[SerializeField] float circleStartSize = 2500;
 		[SerializeField] float transDur = 1;
-		[SerializeField] RectTransform canvasRect;
+		public RectTransform canvasRect;
 		[SerializeField] CanvasGroup canvasGroup;
 		[SerializeField] PersistentRefHolder persRef;
+		[SerializeField] MapCoreRefHolder mcRef;
 
 		//Cache
 		Coroutine activeCoroutine = null;
 
+		//States
+		Camera cam;
+
 		public Coroutine TransIn()
 		{
 			return Transition(1);
-			canvasGroup.alpha = 0;
 		}
 
 		public Coroutine TransOut()
@@ -33,9 +36,20 @@ namespace Qbism.SceneTransition
 			return Transition(0);
 		}
 
-		public void SetCirclePos(Vector3 worldPos)
+		public Coroutine TransToFocus(float target)
 		{
-			var viewPortPoint = persRef.cam.WorldToViewportPoint(worldPos);
+			canvasGroup.alpha = 1;
+			return Transition(target);
+		}
+
+		public void SetCirclePos(Vector3 pos, bool isWorldPos)
+		{
+			if (persRef != null) cam = persRef.cam;
+			else if (mcRef != null) cam = mcRef.cam;
+
+			Vector3 viewPortPoint;
+			if (isWorldPos) viewPortPoint = cam.WorldToViewportPoint(pos);
+			else viewPortPoint = cam.ScreenToViewportPoint(pos);
 
 			var canvasWidth = canvasRect.rect.width;
 			var canvasHeight = canvasRect.rect.height;
@@ -44,14 +58,14 @@ namespace Qbism.SceneTransition
 				new Vector3(viewPortPoint.x * canvasWidth, viewPortPoint.y * canvasHeight, 0);
 		}
 
-		private Coroutine Transition(int target)
+		private Coroutine Transition(float target)
 		{
 			if (activeCoroutine != null) StopCoroutine(activeCoroutine);
 			activeCoroutine = StartCoroutine(AnimateTransition(target));
 			return activeCoroutine;
 		}
 
-		private IEnumerator AnimateTransition(int target)
+		private IEnumerator AnimateTransition(float target)
 		{
 			var startSize = circle.rectTransform.sizeDelta;
 			var scaleTarget = circleStartSize * target;

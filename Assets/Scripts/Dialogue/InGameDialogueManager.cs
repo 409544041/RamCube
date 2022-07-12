@@ -35,6 +35,8 @@ namespace Qbism.Dialogue
 		bool isTyping = false;
 		List<Renderer> mRenders = new List<Renderer>();
 		ScreenStateManager screenStateMngr;
+		MapDialogueMoment mapDialMoment;
+		LevelPinUI selectedPinUI;
 
 		private void Awake()
 		{
@@ -50,10 +52,16 @@ namespace Qbism.Dialogue
 			}
 		}
 
-		public void StartInGameDialogue(InGameDialogueScripOb incDialogueSO)
+		public void StartInGameDialogue(InGameDialogueScripOb incDialogueSO, 
+			MapDialogueMoment dialMoment, LevelPinUI selPinUI)
 		{
 			screenStateMngr.SwitchState(screenStateMngr.dialogueOverlayState, 
 				ScreenStates.dialogueOverlayState);
+
+			if (dialMoment != null) mapDialMoment = dialMoment;
+			else mapDialMoment = null;
+			if (selPinUI != null) selectedPinUI = selPinUI;
+			else selectedPinUI = null;
 
 			dialogueSO = incDialogueSO;
 			nextButtonJuice.Initialization();
@@ -135,10 +143,22 @@ namespace Qbism.Dialogue
 			if (mlRef != null) mlRef.mcRef.mapCanvasGroup.alpha = 1;
 			dialogueText.text = " ";
 
+			HandlePostDialogueActions();
+
 			if (glRef != null) screenStateMngr.SwitchState(screenStateMngr.levelScreenState,
 				ScreenStates.levelScreenState);
 			else if (mlRef != null) screenStateMngr.SwitchState(screenStateMngr.mapScreenState,
 				ScreenStates.mapScreenState);
+		}
+
+		private void HandlePostDialogueActions()
+		{
+			if (mapDialMoment != null) mapDialMoment.PostDialogue();
+			else if (selectedPinUI != null)
+			{
+				mlRef.pinTracker.SetLevelPinButtonsInteractable(true);
+				mlRef.pinTracker.SelectPin(selectedPinUI);
+			}
 		}
 
 		private void OverrideLightDir(Material mat, M_Segments segEntity)

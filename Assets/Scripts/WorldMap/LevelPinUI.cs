@@ -12,7 +12,7 @@ namespace Qbism.WorldMap
 	public class LevelPinUI : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] Button button = null;
+		public Button button = null;
 		public Image compIcon, compDiamond, unCompIcon;
 		public TextMeshProUGUI uiText;
 		public Color unCompText,  compText;

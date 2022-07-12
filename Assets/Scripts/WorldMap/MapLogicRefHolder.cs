@@ -29,5 +29,7 @@ namespace Qbism.WorldMap
 		public BiomeOverwriter bOverwriter;
 		[Header("Dialogue")]
 		public InGameDialogueManager inGameDialogueManager;
+		[Header("Focus Circle")]
+		public CircleTransition focusCircle;
 	}
 }

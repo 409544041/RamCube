@@ -97,7 +97,7 @@ namespace Qbism.PlayerCube
 			pRef.timeBody.rewindList.Clear();
 			yield return new WaitForSeconds(delayAtStartPos);
 
-			dialogueTrigger.TriggerInGameDialogue();
+			dialogueTrigger.TriggerInGameDialogue(null, null);
 			camCenter.enabled = true;
 		}
 

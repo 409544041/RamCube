@@ -45,7 +45,7 @@ namespace Qbism.SceneTransition
 
 			yield return new WaitForSeconds(delay);
 
-			persRef.circTransition.SetCirclePos(selectedPin.pinUI.transform.position);
+			persRef.circTransition.SetCirclePos(selectedPin.pinUI.transform.position, true);
 			persRef.circTransition.SetCircleStartState(0);
 			persRef.circTransition.DebugFixCircleMask();
 
@@ -59,7 +59,7 @@ namespace Qbism.SceneTransition
 			yield return null;
 			var finish = FindObjectOfType<FinishCube>();
 
-			persRef.circTransition.SetCirclePos(finish.transform.position);
+			persRef.circTransition.SetCirclePos(finish.transform.position, true);
 			persRef.circTransition.SetCircleStartState(1);
 			persRef.circTransition.DebugFixCircleMask();
 			persRef.fader.FadeImmediate(0);

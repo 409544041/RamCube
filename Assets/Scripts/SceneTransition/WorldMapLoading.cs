@@ -85,7 +85,7 @@ namespace Qbism.SceneTransition
 
 			if (fromLevel)
 			{
-				persRef.circTransition.SetCirclePos(selectedPinUI.transform.position);
+				persRef.circTransition.SetCirclePos(selectedPinUI.transform.position, true);
 				persRef.circTransition.SetCircleStartState(1);
 				persRef.circTransition.DebugFixCircleMask();
 				persRef.fader.FadeImmediate(0);
