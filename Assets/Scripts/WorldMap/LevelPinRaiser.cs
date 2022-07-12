@@ -122,7 +122,7 @@ namespace Qbism.WorldMap
 					refs.pinPather.DrawNewPath(LineTypes.full, unlockPins[i].pathPoint);
 			}
 
-			if (justCompletedPin.m_pin.Entity == E_Pin.GetEntity(0))
+			if (justCompletedPin != null && justCompletedPin.m_pin.Entity == E_Pin.GetEntity(0))
 				refs.mcRef.serpButtonToggler.PopInButtonForFirstTime();
 
 			onRaisedCheckForDialogueTriggers(justCompletedPin.m_pin.f_name);
