@@ -12,7 +12,8 @@ namespace Qbism.Demo
 	public class DemoEndScreenLoading : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] M_Pin mPin;
+		[SerializeField] M_Pin mPin; //create a child to object with an mPin with correct pin and link here
+		[SerializeField] float fadeTime = 1;
 		[SerializeField] MapLogicRefHolder mlRef;
 
 		//States
@@ -48,7 +49,7 @@ namespace Qbism.Demo
 
 			if (musicFader != null) musicFader.FadeMusicOut();
 
-			yield return fader.FadeOut(fader.sceneTransTime);
+			yield return fader.FadeOut(fadeTime);
 
 			if (musicFader != null) musicFader.TurnMusicOff();
 
