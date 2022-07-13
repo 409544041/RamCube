@@ -47,7 +47,7 @@ namespace Qbism.SpriteAnimations
 		private void Update()
 		{
 			if (wRef != null) return;
-			
+
 			GetCurrentScreenState();
 
 			if ((pRef != null && !hasFinished) || sRef != null ||
@@ -84,7 +84,7 @@ namespace Qbism.SpriteAnimations
 		}
 
 		public void SetFace(Expressions incExpression, float incTime)
-		{			
+		{
 			foreach (var expressionFace in expressionsSO.expressionFaces)
 			{
 				if (expressionFace.expression != incExpression) continue;
@@ -95,8 +95,8 @@ namespace Qbism.SpriteAnimations
 				eyesAnim.SetEyes(expressionFace.face.eyes);
 				if (hasMouth) mouthAnim.SetMouth(expressionFace.face.mouth);
 			}
-			
-			if (pRef != null || sRef != null ||(inSerpScreen &&
+
+			if (pRef != null || sRef != null || (inSerpScreen &&
 				currentScreenState != ScreenStates.dialogueOverlayState))
 			{
 				timeToExpress = incTime;
@@ -161,7 +161,7 @@ namespace Qbism.SpriteAnimations
 					SetSituationFace(ExpressionSituations.play, GetRandomTime());
 				else SetSituationFace(ExpressionSituations.laserHit, GetRandomTime());
 			}
-			
+
 			if (sRef == null && inSerpScreen && currentScreenState != ScreenStates.dialogueOverlayState)
 				SetSituationFace(ExpressionSituations.idle, GetRandomTime());
 		}
@@ -181,64 +181,71 @@ namespace Qbism.SpriteAnimations
 			else currentScreenState = pRef.gcRef.glRef.screenStateMngr.currentStateEnum;
 		}
 
-		private void SetNeutralFace()
+		private void SetNeutralFace() //Called from animation
 		{
 			SetFace(Expressions.neutral, GetRandomTime());
 		}
 
-		private void SetGleefulFace()
+		private void SetGleefulFace() //Called from animation
 		{
 			SetFace(Expressions.gleeful, GetRandomTime());
 		}
 
-		private void SetOuchFace()
+		private void SetOuchFace() //Called from animation
 		{
 			SetFace(Expressions.ouch, GetRandomTime());
 		}
 
-		private void SetSmileFace()
+		private void SetSmileFace() //Called from animation
 		{
 			SetFace(Expressions.smiling, GetRandomTime());
 		}
 
-		private void SetToothyLaughFace()
+		private void SetToothyLaughFace() //Called from animation
 		{
 			SetFace(Expressions.toothyLaugh, GetRandomTime());
 		}
 
-		private void SetVeryHappyFace()
+		private void SetVeryHappyFace() //Called from animation
 		{
 			SetFace(Expressions.veryHappy, GetRandomTime());
 		}
 
-		private void SetShockedFace()
+		private void SetShockedFace() //Called from animation
 		{
 			SetFace(Expressions.shocked, GetRandomTime());
 		}
 
-		private void SetAnnoyedFace()
+		private void SetAnnoyedFace() //Called from animation
 		{
 			SetFace(Expressions.annoyed, GetRandomTime());
 		}
 
-		private void SetLookingFace()
+		private void SetLookingFace() //Called from animation
 		{
 			SetFace(Expressions.looking, GetRandomTime());
 		}
 
-		private void SetCalmFace()
+		private void SetCalmFace() //Called from animation
 		{
 			SetFace(Expressions.calm, GetRandomTime());
 		}
 
-		public void SetLaughingFace()
-        {
-			SetFace(Expressions.laughing, GetRandomTime());
-        }
-
-		private void StartLaughingWiggle()
+		public void SetLaughingFace() //Called from animation
 		{
-			faceJuice.WiggleFace();
+			SetFace(Expressions.laughing, GetRandomTime());
+		}
+
+		public void StartLaughingWiggle() //Called from animation
+		{
+			SetFace(Expressions.gleeful, GetRandomTime());
+			faceJuice.WiggleFace(2);
+		}
+
+		public void StartSerpentLaughWiggle()
+		{
+			SetFace(Expressions.gleeful, GetRandomTime());
+			faceJuice.WiggleFace(1);
 		}
 	}
 }

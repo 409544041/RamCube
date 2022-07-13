@@ -94,7 +94,7 @@ namespace Qbism.Serpent
 
 		private void SetPlayerLaughingFace() //Called from animation event
         {
-			gcRef.pRef.exprHandler.SetLaughingFace();
+			gcRef.pRef.exprHandler.StartSerpentLaughWiggle();
         }
 	}
 }

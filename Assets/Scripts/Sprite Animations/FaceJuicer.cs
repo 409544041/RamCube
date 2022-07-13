@@ -10,8 +10,11 @@ namespace Qbism.SpriteAnimations
 		//Config parameters
 		[SerializeField] MMFeedbacks faceJuice;
 
-		public void WiggleFace()
+		public void WiggleFace(int repeats)
 		{
+			var mmPos = faceJuice.GetComponent<MMFeedbackPosition>();
+			mmPos.Timing.NumberOfRepeats = repeats;
+		
 			faceJuice.Initialization();
 			faceJuice.PlayFeedbacks();
 		}
