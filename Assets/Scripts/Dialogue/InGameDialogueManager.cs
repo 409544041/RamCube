@@ -158,6 +158,7 @@ namespace Qbism.Dialogue
 			else if (selectedPinUI != null)
 			{
 				mlRef.pinTracker.SetLevelPinButtonsInteractable(true);
+				mlRef.screenStateMngr.mapScreenState.allowInput = true;
 				mlRef.pinTracker.SelectPin(selectedPinUI);
 			}
 		}

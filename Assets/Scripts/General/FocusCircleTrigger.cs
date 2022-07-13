@@ -43,6 +43,7 @@ namespace Qbism.General
 
 			if (selectedPinUI == null) yield break;
 			mcRef.mlRef.pinTracker.SetLevelPinButtonsInteractable(true);
+			mcRef.mlRef.screenStateMngr.mapScreenState.allowInput = true;
 			mcRef.mlRef.pinTracker.SelectPin(selectedPinUI);
 		}
 	}

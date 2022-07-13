@@ -34,6 +34,7 @@ namespace Qbism.Dialogue
 			triggered = true;
 			selectedPinUI = mlRef.pinTracker.selectedPin.pinUI;
 			mlRef.pinTracker.SetLevelPinButtonsInteractable(false);
+			mlRef.screenStateMngr.mapScreenState.allowInput = false;
 			trigger.TriggerInGameDialogue(this, selectedPinUI);
 		}
 
@@ -43,6 +44,7 @@ namespace Qbism.Dialogue
 			else
 			{
 				mlRef.pinTracker.SetLevelPinButtonsInteractable(true);
+				mlRef.screenStateMngr.mapScreenState.allowInput = true;
 				mlRef.pinTracker.SelectPin(selectedPinUI);
 			}
 		}
