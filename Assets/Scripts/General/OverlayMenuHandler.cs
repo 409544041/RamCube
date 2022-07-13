@@ -23,10 +23,12 @@ namespace Qbism.General
 		public GameplayCoreRefHolder gcRef;
 		public MapCoreRefHolder mcRef;
 		public SerpCoreRefHolder scRef;
+		public SplashRefHolder splashRef;
+		
 
 		//Cache
-		public ScreenStateManager screenStateMngr;
-		PersistentRefHolder persRef;
+		public PersistentRefHolder persRef { get; private set; }
+		public ScreenStateManager screenStateMngr { get; private set;}
 
 		//States
 		public bool overlayActive { get; private set; }
@@ -42,15 +44,20 @@ namespace Qbism.General
 				screenStateMngr = gcRef.glRef.screenStateMngr;
 				persRef = gcRef.persRef; gausCanvas = gcRef.gausCanvas;
 			}
-			if (mcRef != null)
+			else if (mcRef != null)
 			{
 				screenStateMngr = mcRef.mlRef.screenStateMngr;
 				persRef = mcRef.persRef; gausCanvas = mcRef.gausCanvas;
 			}
-			if (scRef != null)
+			else if (scRef != null)
 			{
 				screenStateMngr = scRef.slRef.screenStateMngr;
 				persRef = scRef.persRef; gausCanvas = scRef.gausCanvas;
+			}
+			else if (splashRef != null)
+			{
+				screenStateMngr = splashRef.screenStateMngr;
+				persRef = splashRef?.persRef; gausCanvas = splashRef.gausCanvas;
 			}
 
 			LoadSettingsData();
@@ -116,7 +123,7 @@ namespace Qbism.General
 
 		public void ShowOverlay()
 		{
-			gausCanvas.SetUpGaussianCanvas();
+			if (gausCanvas != null) gausCanvas.SetUpGaussianCanvas();
 			canvasGroup.alpha = 1;
 			popInJuice.PlayFeedbacks();
 
@@ -169,7 +176,7 @@ namespace Qbism.General
 			var dur = mmScale.FeedbackDuration;
 
 			SetButtonsInteractable(false);
-			gausCanvas.TurnOffGaussianCanvas();
+			if (gausCanvas != null) gausCanvas.TurnOffGaussianCanvas();
 			popOutJuice.PlayFeedbacks();
 			yield return new WaitForSeconds(dur);
 			canvasGroup.alpha = 0;

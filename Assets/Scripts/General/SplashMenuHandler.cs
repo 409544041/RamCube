@@ -10,13 +10,15 @@ namespace Qbism.General
 	public class SplashMenuHandler : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] FeatureSwitchBoard switchBoard;
-		public SplashSceneLoading splashLoader;
 		[SerializeField] CanvasGroup normalCanvasGroup, demoCanvasGroup; 	
 		[SerializeField] OverlayButtonHandler[] demoCanvasButtons;
 		[SerializeField] Color textColor, selectedTextColor;
 		[SerializeField] float selectedButtonSize = 1.5f;
-		[SerializeField] ScreenStateManager screenStateMngr;
+		[SerializeField] SplashRefHolder splashRef;
+
+		//Cache
+		ScreenStateManager screenStateMngr;
+		FeatureSwitchBoard switchBoard;
 
 		//States
 		public OverlayButtonHandler selectedButtonHandler { get; private set; }
@@ -24,6 +26,17 @@ namespace Qbism.General
 		bool isVisible = false;
 
 		private void Awake()
+		{
+			screenStateMngr = splashRef.screenStateMngr;
+			switchBoard = splashRef.persRef.switchBoard;
+
+			foreach (var button in demoCanvasButtons)
+			{
+				button.splashLoader = splashRef.splashSceneLoading;
+			}
+		}
+
+		private void Start()
 		{
 			if (switchBoard.isPublicDemo)
 			{
@@ -37,22 +50,6 @@ namespace Qbism.General
 				normalCanvasGroup.alpha = 1;
 				demoCanvasGroup.alpha = 0;
 			}
-
-			foreach (var button in demoCanvasButtons)
-			{
-				button.splashLoader = splashLoader;
-			}
-		}
-
-		public void ActivateMenu()
-		{
-			if (switchBoard.isPublicDemo)
-			{
-				SetButtonsInteractable(true);
-				demoCanvasButtons[0].SelectButton(selectedTextColor, selectedButtonSize,
-					screenStateMngr);
-			}
-			isVisible = true;
 		}
 
 		private void Update()
@@ -78,6 +75,22 @@ namespace Qbism.General
 
 				if (prevButtonHandler != null) prevButtonHandler.DeselectButton(textColor);
 			}
+		}
+
+		public void ReselectSelectedButton()
+		{
+			if (selectedButtonHandler != null) selectedButtonHandler.button.Select();
+		}
+
+		public void ActivateMenu()
+		{
+			if (switchBoard.isPublicDemo)
+			{
+				SetButtonsInteractable(true);
+				demoCanvasButtons[0].SelectButton(selectedTextColor, selectedButtonSize,
+					screenStateMngr);
+			}
+			isVisible = true;
 		}
 
 		private void SetButtonsInteractable(bool value)

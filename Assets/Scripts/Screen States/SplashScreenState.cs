@@ -11,10 +11,6 @@ namespace Qbism.ScreenStateMachine
 {
 	public class SplashScreenState : MonoBehaviour, IScreenBaseState
 	{
-		//Config parameters
-		[SerializeField] SplashSceneLoading loader;
-		[SerializeField] FeatureSwitchBoard switchBoard;
-
 		//Cache
 		ScreenStateManager stateMngr;
 
@@ -27,13 +23,15 @@ namespace Qbism.ScreenStateMachine
 			{
 				stateMngr = ssm;
 			}
+
+			stateMngr.splashRef.menuHandler.ReselectSelectedButton();
 		}
 
 		public void HandleAnyInput()
 		{
-			if (!switchBoard.isPublicDemo && !anyKeyPressed)
+			if (!stateMngr.splashRef.persRef.switchBoard.isPublicDemo && !anyKeyPressed)
 			{
-				loader.StartSceneTransition();
+				stateMngr.splashRef.splashSceneLoading.StartSceneTransition();
 				anyKeyPressed = true;
 			}
 		}
@@ -53,6 +51,7 @@ namespace Qbism.ScreenStateMachine
 		}
 		public void HandleEscapeInput()
 		{
+			stateMngr.SwitchState(stateMngr.settingsOverlayState, ScreenStates.settingsOverlayState);
 		}
 		public void HandleDebugCompleteInput()
 		{

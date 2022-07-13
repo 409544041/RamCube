@@ -1,4 +1,5 @@
 using Qbism.Control;
+using Qbism.General;
 using Qbism.PlayerCube;
 using Qbism.Saving;
 using Qbism.Serpent;
@@ -27,7 +28,8 @@ namespace Qbism.ScreenStateMachine
 		public GameplayCoreRefHolder gcRef;
 		public MapCoreRefHolder mcRef;
 		public SerpCoreRefHolder scRef;
-		[SerializeField] bool isSplash = false, isDemoIntro = false, isDemoEnd = false;
+		public SplashRefHolder splashRef;
+		[SerializeField] bool isDemoIntro = false, isDemoEnd = false;
 
 		//Cache
 		public PersistentRefHolder persRef { get; private set; }
@@ -46,25 +48,23 @@ namespace Qbism.ScreenStateMachine
 				currentStateEnum = ScreenStates.levelIntroState;
 				persRef = gcRef.persRef;
 			}
-
-			if (mcRef != null)
+			else if (mcRef != null)
 			{
 				currentScreenState = mapScreenState;
 				currentStateEnum = ScreenStates.mapScreenState;
 				persRef = mcRef.persRef;
 			}
-
-			if (scRef != null)
+			else if (scRef != null)
 			{
 				currentScreenState = serpentScreenState;
 				currentStateEnum = ScreenStates.serpentScreenState;
 				persRef = scRef.persRef;
 			}
-
-			if (isSplash)
+			else if (splashRef != null)
 			{
 				currentScreenState = splashScreenState;
 				currentStateEnum = ScreenStates.splashScreenState;
+				persRef = splashRef.persRef;
 			}
 
 			if (isDemoIntro)

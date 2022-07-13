@@ -10,13 +10,12 @@ namespace Qbism.General
 		//Config parameters
 		[SerializeField] CanvasGroup logoGroup, devLogoGroup, pubLogoGroup;
 		[SerializeField] float logoDelay, logoVisible, logoInterval, logoFadeTime;
-		[SerializeField] SplashMenuHandler splashMenu;
-		[SerializeField] FeatureSwitchBoard switchBoard;
 		[SerializeField] MMFeedbacks devJuice, pubJuice;
+		[SerializeField] SplashRefHolder splashRef;
 
 		private void Start()
 		{
-			if (!switchBoard.showLogos) return;
+			if (!splashRef.persRef.switchBoard.showLogos) return;
 			StartCoroutine(ShowLogos());
 		}
 
@@ -35,7 +34,7 @@ namespace Qbism.General
 			yield return new WaitForSeconds(logoVisible);
 			yield return FadeLogo(1, 0, devLogoGroup);
 			yield return FadeLogo(1, 0, logoGroup);
-			splashMenu.ActivateMenu();
+			splashRef.menuHandler.ActivateMenu();
 		}
 
 		private IEnumerator FadeLogo(float start, float target, CanvasGroup group)

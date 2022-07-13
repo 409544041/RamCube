@@ -15,6 +15,7 @@ namespace Qbism.General
 		[SerializeField] GameplayCoreRefHolder gcRef;
 		[SerializeField] SerpCoreRefHolder scRef;
 		[SerializeField] MapCoreRefHolder mcRef;
+		[SerializeField] SplashRefHolder splashRef;
 
 		//States
 		Camera cam;
@@ -24,6 +25,7 @@ namespace Qbism.General
 			if (gcRef != null) cam = gcRef.cam;
 			else if (scRef != null) cam = scRef.cam;
 			else if (mcRef != null) cam = mcRef.cam;
+			else if (splashRef != null) cam = splashRef.cam;
 		}
 
 		public void SetUpGaussianCanvas()
@@ -31,6 +33,7 @@ namespace Qbism.General
 			if (group.alpha == 1) return;
 
 			if (scRef != null) scRef.bgSerpCanvas.worldCamera = gaussianCam;
+			if (splashRef != null) splashRef.splashCanvas.worldCamera = gaussianCam;
 			gaussianCam.orthographicSize = cam.orthographicSize;
 			canvas.transform.parent = cam.transform;
 			canvas.transform.rotation = cam.transform.rotation;
@@ -41,6 +44,7 @@ namespace Qbism.General
 		public void TurnOffGaussianCanvas()
 		{
 			if (scRef != null) scRef.bgSerpCanvas.worldCamera = cam;
+			if (splashRef != null) splashRef.splashCanvas.worldCamera = cam;
 			group.alpha = 0;
 		}
 	}

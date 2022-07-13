@@ -19,8 +19,9 @@ namespace Qbism.ScreenStateMachine
 			{
 				stateMngr = ssm;
 				if (stateMngr.gcRef != null) menuHandler = stateMngr.gcRef.settingsOverlayHandler;
-				if (stateMngr.mcRef != null) menuHandler = stateMngr.mcRef.settingsOverlayHandler;
-				if (stateMngr.scRef != null) menuHandler = stateMngr.scRef.settingsOverlayHandler;
+				else if (stateMngr.mcRef != null) menuHandler = stateMngr.mcRef.settingsOverlayHandler;
+				else if (stateMngr.scRef != null) menuHandler = stateMngr.scRef.settingsOverlayHandler;
+				else if (stateMngr.splashRef != null) menuHandler = stateMngr.splashRef.settingsMenu;
 			}
 
 			menuHandler.SelectButton(0);

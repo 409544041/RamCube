@@ -46,6 +46,7 @@ namespace Qbism.Saving
 
 		private void Awake()
 		{
+			transform.parent = null;
 			DontDestroyOnLoad(this.gameObject);
 		}
 	}
