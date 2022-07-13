@@ -14,6 +14,7 @@ namespace Qbism.Cubes
 		[SerializeField] int turnStep = 6;
 		[SerializeField] float timeStep = 0.01f;
 		public bool isLeftTurning = false;
+		[SerializeField] MMFeedbacks faceRotatingJuice;
 		public CubeRefHolder refs;
 
 		//Cache
@@ -27,6 +28,11 @@ namespace Qbism.Cubes
 		{
 			player = refs.gcRef.pRef;
 			mover = player.playerMover;
+		}
+
+		private void Start()
+		{
+			TriggerFaceRotation();
 		}
 
 		public void PrepareAction(GameObject cube)
@@ -143,6 +149,17 @@ namespace Qbism.Cubes
 				var moveHandler = refs.gcRef.glRef.movCubeHandler;
 				moveHandler.StopMovingMoveables(cubePos, movCube, false);
 			}
+		}
+
+		private void TriggerFaceRotation()
+		{
+			if (isLeftTurning)
+			{
+				var mmRot = faceRotatingJuice.GetComponent<MMFeedbackRotation>();
+				mmRot.RemapCurveOne *= -1;
+			}
+
+			faceRotatingJuice.PlayFeedbacks();
 		}
 
 		private void CalculateSide(ref Transform side, ref Vector3 movingTurnAxis, ref Vector2Int posAhead, MoveableCube moveable, Vector2Int cubePos)
