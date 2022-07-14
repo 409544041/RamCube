@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Qbism.Cubes;
+using Qbism.General;
 using Qbism.MoveableCubes;
 using Qbism.PlayerCube;
 using Qbism.SpriteAnimations;
@@ -277,13 +278,24 @@ namespace Qbism.Rewind
 				if (cubeRef.movEffector != null)
 				{
 					if (cubeRef.movEffector.effectorType == CubeTypes.Boosting)
+					{
 						Destroy(cubeRef.boostCube);
+						cubeRef.boostCube = null;
+						Destroy(cubeRef.texScroller);
+						cubeRef.texScroller = null;
+					}
 
 					else if (cubeRef.movEffector.effectorType == CubeTypes.Turning)
+					{
 						Destroy(cubeRef.turnCube);
+						cubeRef.turnCube = null;
+					}
 
 					else if (cubeRef.movEffector.effectorType == CubeTypes.Static)
+					{
 						Destroy(cubeRef.staticCube);
+						cubeRef.staticCube = null;
+					}
 				}
 			}
 

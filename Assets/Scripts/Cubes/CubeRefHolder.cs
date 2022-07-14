@@ -30,6 +30,7 @@ namespace Qbism.Cubes
 		public StaticCube staticCube;
 		public Renderer effectorFace;
 		public Renderer effectorShrinkingFace;
+		public TextureScroller texScroller;
 		[Header("Moveables")]
 		public MoveableCube movCube;
 		public MoveableEffector movEffector;

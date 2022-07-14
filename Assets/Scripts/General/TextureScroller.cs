@@ -9,11 +9,11 @@ namespace Qbism.General
 	public class TextureScroller : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] Renderer rendererToScroll;
-		[SerializeField] float scrollSpeedX, scrollSpeedY;
-		[SerializeField] bool intervalScroll = false;
-		[SerializeField] float maxOffsetX, maxOffsetY;
-		[SerializeField] float interval;
+		public Renderer rendererToScroll;
+		public float scrollSpeedX, scrollSpeedY;
+		public bool intervalScroll = false;
+		public float maxOffsetX, maxOffsetY;
+		public float interval;
 
 		//States
 		Vector2 offSet;
@@ -32,8 +32,6 @@ namespace Qbism.General
 
 			if (intervalScroll && active)
 			{
-				Debug.Log("Offset.x = " + matOffsetX + " and MaxOffsetX = " + maxOffsetX);
-
 				if ((scrollSpeedX != 0 && Mathf.Abs(matOffsetX) >= maxOffsetX) || 
 					(scrollSpeedY != 0 && Mathf.Abs(matOffsetY) >= maxOffsetY))
 				{
@@ -47,7 +45,6 @@ namespace Qbism.General
 
 		private IEnumerator Interval()
 		{
-			Debug.Log("In Interval");
 			yield return new WaitForSeconds(interval);
 			active = true;
 		}
