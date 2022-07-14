@@ -16,13 +16,7 @@ namespace Qbism.General
 		[SerializeField] MapCoreRefHolder mcRef;
 
 		//States
-		Camera cam;
 		LevelPinUI selectedPinUI;
-
-		private void Awake()
-		{
-			if (mcRef != null) cam = mcRef.cam;
-		}
 
 		public void TriggerFocus(LevelPinUI selPinUI)
 		{
@@ -41,10 +35,10 @@ namespace Qbism.General
 			yield return new WaitForSeconds(focusDur);
 			yield return focusCircle.TransIn();
 
-			if (selectedPinUI == null) yield break;
-			mcRef.mlRef.pinTracker.SetLevelPinButtonsInteractable(true);
-			mcRef.mlRef.screenStateMngr.mapScreenState.allowInput = true;
+			if (selectedPinUI == null) yield break; //means we're not in map
 			mcRef.mlRef.pinTracker.SelectPin(selectedPinUI);
+			mcRef.mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(-1);
+
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace Qbism.WorldMap
 		public float selectedSize = 1.35f;
 
 		//Actions, events, delegates etc
-
+		public event Action<string> onRaisedCheckForDialogueTriggers;
 		public event Action<string> onPinCompCheckForScreenTriggers;
 
 		private void Awake() 
@@ -34,7 +34,7 @@ namespace Qbism.WorldMap
 
 			unCompJuice.Initialization();
 			unCompJuice.PlayFeedbacks();
-			pinUI.SetUIState(false, false, true, true, true);
+			pinUI.SetUIState(false, false, true, true, true, true, true);
 		}
 
 		public void StartPlayingCompJuice()
@@ -44,6 +44,8 @@ namespace Qbism.WorldMap
 
 		private IEnumerator PlayCompJuice()
 		{
+			pinUI.refs.mcRef.mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(1);
+
 			MMFeedbackScale scaleUnComp = null;
 			MMFeedbackScale scaleComp = null;
 
@@ -55,7 +57,7 @@ namespace Qbism.WorldMap
 				if (scalers[i].Label == "ScaleComp") scaleComp = scalers[i];
 			}
 
-			pinUI.SetUIState(false, false, true, true, false);
+			pinUI.SetUIState(false, false, true, true, false, true, false);
 
 			yield return new WaitForSeconds(compJuiceDelay);
 
@@ -64,7 +66,7 @@ namespace Qbism.WorldMap
 
 			yield return new WaitForSeconds(scaleUnComp.AnimateScaleDuration + .05f);
 
-			pinUI.SetUIState(true, false, false, false, true);
+			pinUI.SetUIState(true, false, false, false, true, true, true);
 
 			var compJuiceDur = compJuice.GetComponent<MMFeedbackScale>().
 				AnimateScaleDuration;
@@ -82,6 +84,9 @@ namespace Qbism.WorldMap
 
 			yield return new WaitForSeconds(.25f);
 			onPinCompCheckForScreenTriggers(pinUI.refs.m_pin.f_name);
+			onRaisedCheckForDialogueTriggers(pinUI.refs.m_pin.f_name);
+
+			pinUI.refs.mcRef.mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(-1);
 		}
 
 		public void SelectionEnlargen(float curveZero, float curveOne)

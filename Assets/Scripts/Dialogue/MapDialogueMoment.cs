@@ -23,7 +23,7 @@ namespace Qbism.Dialogue
 		{
 			foreach (var pin in mlRef.levelPins)
 			{
-				pin.pinRaiser.onRaisedCheckForDialogueTriggers += TriggerDialogue;
+				pin.pinUIJuicer.onRaisedCheckForDialogueTriggers += TriggerDialogue;
 			}
 		}
 
@@ -31,10 +31,10 @@ namespace Qbism.Dialogue
 		{
 			if (incPin != mPin.f_name || !onLevelReturn || triggered ||
 				!mlRef.mcRef.persRef.switchBoard.triggerMapDialogue) return;
+
 			triggered = true;
+			mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(1);
 			selectedPinUI = mlRef.pinTracker.selectedPin.pinUI;
-			mlRef.pinTracker.SetLevelPinButtonsInteractable(false);
-			mlRef.screenStateMngr.mapScreenState.allowInput = false;
 			trigger.TriggerInGameDialogue(this, selectedPinUI);
 		}
 
@@ -43,8 +43,7 @@ namespace Qbism.Dialogue
 			if (circleTrigger != null) circleTrigger.TriggerFocus(selectedPinUI);
 			else
 			{
-				mlRef.pinTracker.SetLevelPinButtonsInteractable(true);
-				mlRef.screenStateMngr.mapScreenState.allowInput = true;
+				mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(-1);
 				mlRef.pinTracker.SelectPin(selectedPinUI);
 			}
 		}
@@ -53,7 +52,7 @@ namespace Qbism.Dialogue
 		{
 			foreach (var pin in mlRef.levelPins)
 			{
-				pin.pinRaiser.onRaisedCheckForDialogueTriggers -= TriggerDialogue;
+				pin.pinUIJuicer.onRaisedCheckForDialogueTriggers -= TriggerDialogue;
 			}
 		}
 	}

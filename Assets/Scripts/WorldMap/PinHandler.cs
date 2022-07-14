@@ -11,17 +11,28 @@ namespace Qbism.WorldMap
 
 		//States
 		MapLogicRefHolder mlRef;
+		int pinsHandled = 0;
+		int totalPins;
 
 		private void Awake() 
 		{
 			mlRef = mcRef.mlRef;
+			totalPins = mlRef.levelPins.Length;
 		}
 
-		public void SetPinUI(LevelPinRefHolder pin, bool unlockAnimPlayed, bool completed, bool justCompleted)
+		public void AddToAllPinsHandled()
 		{
-			if (!unlockAnimPlayed) pin.pinUI.SetUIState(false, false, false, false, false);
-			else if (unlockAnimPlayed && !completed) pin.pinUI.SetUIState(false, false, true, true, true);
-			else if (completed && !justCompleted) pin.pinUI.SetUIState(true, true, false, true, true);
+			pinsHandled++;
+			if (pinsHandled == totalPins) 
+				mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(-1);
+		}
+
+		public void SetPinUI(LevelPinRefHolder pin, bool unlockAnimPlayed, bool completed, 
+			bool justCompleted, bool unlocked)
+		{
+			if (!unlockAnimPlayed) pin.pinUI.SetUIState(false, false, false, false, false, unlocked, true);
+			else if (unlockAnimPlayed && !completed) pin.pinUI.SetUIState(false, false, true, true, true, unlocked, true);
+			else if (completed && !justCompleted) pin.pinUI.SetUIState(true, true, false, true, true, unlocked, true);
 			else if (completed && justCompleted) pin.pinUIJuicer.StartPlayingCompJuice();
 		}
 

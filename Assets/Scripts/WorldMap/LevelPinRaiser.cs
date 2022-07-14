@@ -18,9 +18,6 @@ namespace Qbism.WorldMap
 		//States
 		bool raising = false;
 
-		//Actions, events, delegates etc
-		public event Action<string> onRaisedCheckForDialogueTriggers;
-
 		public void CheckRaiseStatus(bool unlocked, bool unlockAnimPlayed, bool biomeUnlocked)
 		{
 			if (!biomeUnlocked) SetVisualValues(false, biomeLockedYPos);
@@ -124,8 +121,6 @@ namespace Qbism.WorldMap
 
 			if (justCompletedPin != null && justCompletedPin.m_pin.Entity == E_Pin.GetEntity(0))
 				refs.mcRef.serpButtonToggler.PopInButtonForFirstTime();
-
-			onRaisedCheckForDialogueTriggers(justCompletedPin.m_pin.f_name);
 		}
 	}
 }
