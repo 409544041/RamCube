@@ -15,7 +15,7 @@ namespace Qbism.WorldMap
 		public float selectedSize = 1.35f;
 
 		//Actions, events, delegates etc
-
+		public event Action<string> onRaisedCheckForDialogueTriggers;
 		public event Action<string> onPinCompCheckForScreenTriggers;
 
 		private void Awake() 
@@ -44,6 +44,8 @@ namespace Qbism.WorldMap
 
 		private IEnumerator PlayCompJuice()
 		{
+			pinUI.refs.mcRef.mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(1);
+
 			MMFeedbackScale scaleUnComp = null;
 			MMFeedbackScale scaleComp = null;
 
@@ -82,6 +84,9 @@ namespace Qbism.WorldMap
 
 			yield return new WaitForSeconds(.25f);
 			onPinCompCheckForScreenTriggers(pinUI.refs.m_pin.f_name);
+			onRaisedCheckForDialogueTriggers(pinUI.refs.m_pin.f_name);
+
+			pinUI.refs.mcRef.mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(-1);
 		}
 
 		public void SelectionEnlargen(float curveZero, float curveOne)

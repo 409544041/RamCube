@@ -17,6 +17,7 @@ namespace Qbism.ScreenStateMachine
 
 		//States
 		public bool allowInput { get; set; } = true;
+		int stuffNotAllowingInput = 0;
 
 		public void StateEnter(ScreenStateManager ssm)
 		{
@@ -26,6 +27,23 @@ namespace Qbism.ScreenStateMachine
 				mcRef = stateMngr.mcRef;
 				mlRef = mcRef.mlRef;
 				persRef = mcRef.persRef;
+			}
+		}
+
+		public void AddRemoveNotAllowingInput(int i)
+		{
+			Debug.Log("Not Allowing Input Amount = " + stuffNotAllowingInput +
+				" & AllowInput = " + allowInput);
+			stuffNotAllowingInput += i;
+			if (stuffNotAllowingInput == 0)
+			{
+				allowInput = true;
+				mlRef.pinTracker.SetLevelPinButtonsInteractable(true);
+			}
+			else
+			{
+				allowInput = false;
+				mlRef.pinTracker.SetLevelPinButtonsInteractable(false);
 			}
 		}
 

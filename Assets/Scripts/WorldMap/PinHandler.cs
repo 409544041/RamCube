@@ -11,10 +11,21 @@ namespace Qbism.WorldMap
 
 		//States
 		MapLogicRefHolder mlRef;
+		int pinsHandled = 0;
+		int totalPins;
 
 		private void Awake() 
 		{
 			mlRef = mcRef.mlRef;
+			totalPins = mlRef.levelPins.Length;
+		}
+
+		public void AddToAllPinsHandled()
+		{
+			pinsHandled++;
+			if (pinsHandled == totalPins) 
+				mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(-1);
+			Debug.Log("Pins Handled = " + pinsHandled + " / " + totalPins);
 		}
 
 		public void SetPinUI(LevelPinRefHolder pin, bool unlockAnimPlayed, bool completed, bool justCompleted)
@@ -130,6 +141,8 @@ namespace Qbism.WorldMap
 						}
 					}
 				}
+
+				else AddToAllPinsHandled();
 			}
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;

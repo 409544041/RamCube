@@ -20,13 +20,7 @@ namespace Qbism.WorldMap
 			persRef = mcRef.persRef;
 		}
 
-		private void Start() 
-		{
-			mlRef.debugCompleter.CheckDebugStatuses();
-			CheckLevelPins();
-		}
-
-		private void CheckLevelPins()
+		public void CheckLevelPins()
 		{
 			for (int i = 0; i < mlRef.levelPins.Length; i++)
 			{

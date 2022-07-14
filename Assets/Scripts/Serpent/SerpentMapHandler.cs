@@ -21,7 +21,7 @@ namespace Qbism.Serpent
 		public void ActivateSerpent(LevelPinRefHolder pin)
 		{
 			if (E_SegmentsGameplayData.GetEntity(0).f_Rescued == false) return;
-			mcRef.mlRef.screenStateMngr.mapScreenState.allowInput = false;
+			mcRef.mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(1);
 			foreach (var levelPin in mcRef.mlRef.levelPins)
 			{
 				levelPin.button.enabled = false;
