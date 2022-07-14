@@ -73,14 +73,17 @@ namespace Qbism.Cubes
 
 			if (hitDist < distance)
 			{
-				if (playerHit && !mover.isResetting) HandleHittingPlayer(true);
-				else GoIdle();
-				CastDottedLines(dist, distance);
+				if (playerHit && !mover.isResetting) HandleHittingPlayer(true, dist);
+				else
+				{
+					GoIdle();
+					CastDottedLines(dist, distance);
+				}
 			}
 			else
 			{
-				CastDottedLines(distance, distance);
 				GoIdle();
+				CastDottedLines(distance, distance);
 			}
 		}
 
@@ -120,10 +123,10 @@ namespace Qbism.Cubes
 		public void HandleHittingPlayerInBoost(Vector3 crossPoint, bool bulletFart)
 		{
 			fartLauncher.SetBulletFartToPos(crossPoint);
-			HandleHittingPlayer(bulletFart);
+			HandleHittingPlayer(bulletFart, distance);
 		}
 
-		private void HandleHittingPlayer(bool bulletFart)
+		private void HandleHittingPlayer(bool bulletFart, float hitDist)
 		{
 			if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1)
 				&& isClosed == false)
@@ -153,6 +156,7 @@ namespace Qbism.Cubes
 				refs.gcRef.rewindPulser.InitiatePulse();
 				refs.gcRef.pRef.stunJuicer.PlayStunVFX();
 				mover.isStunned = true;
+				CastDottedLines(hitDist, distance);
 			}
 		}
 
