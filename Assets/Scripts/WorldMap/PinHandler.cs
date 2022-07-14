@@ -25,14 +25,14 @@ namespace Qbism.WorldMap
 			pinsHandled++;
 			if (pinsHandled == totalPins) 
 				mlRef.screenStateMngr.mapScreenState.AddRemoveNotAllowingInput(-1);
-			Debug.Log("Pins Handled = " + pinsHandled + " / " + totalPins);
 		}
 
-		public void SetPinUI(LevelPinRefHolder pin, bool unlockAnimPlayed, bool completed, bool justCompleted)
+		public void SetPinUI(LevelPinRefHolder pin, bool unlockAnimPlayed, bool completed, 
+			bool justCompleted, bool unlocked)
 		{
-			if (!unlockAnimPlayed) pin.pinUI.SetUIState(false, false, false, false, false);
-			else if (unlockAnimPlayed && !completed) pin.pinUI.SetUIState(false, false, true, true, true);
-			else if (completed && !justCompleted) pin.pinUI.SetUIState(true, true, false, true, true);
+			if (!unlockAnimPlayed) pin.pinUI.SetUIState(false, false, false, false, false, unlocked, true);
+			else if (unlockAnimPlayed && !completed) pin.pinUI.SetUIState(false, false, true, true, true, unlocked, true);
+			else if (completed && !justCompleted) pin.pinUI.SetUIState(true, true, false, true, true, unlocked, true);
 			else if (completed && justCompleted) pin.pinUIJuicer.StartPlayingCompJuice();
 		}
 
@@ -141,8 +141,6 @@ namespace Qbism.WorldMap
 						}
 					}
 				}
-
-				else AddToAllPinsHandled();
 			}
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;

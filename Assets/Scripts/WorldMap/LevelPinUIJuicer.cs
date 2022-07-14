@@ -34,7 +34,7 @@ namespace Qbism.WorldMap
 
 			unCompJuice.Initialization();
 			unCompJuice.PlayFeedbacks();
-			pinUI.SetUIState(false, false, true, true, true);
+			pinUI.SetUIState(false, false, true, true, true, true, true);
 		}
 
 		public void StartPlayingCompJuice()
@@ -57,7 +57,7 @@ namespace Qbism.WorldMap
 				if (scalers[i].Label == "ScaleComp") scaleComp = scalers[i];
 			}
 
-			pinUI.SetUIState(false, false, true, true, false);
+			pinUI.SetUIState(false, false, true, true, false, true, false);
 
 			yield return new WaitForSeconds(compJuiceDelay);
 
@@ -66,7 +66,7 @@ namespace Qbism.WorldMap
 
 			yield return new WaitForSeconds(scaleUnComp.AnimateScaleDuration + .05f);
 
-			pinUI.SetUIState(true, false, false, false, true);
+			pinUI.SetUIState(true, false, false, false, true, true, true);
 
 			var compJuiceDur = compJuice.GetComponent<MMFeedbackScale>().
 				AnimateScaleDuration;

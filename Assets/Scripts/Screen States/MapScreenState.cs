@@ -27,18 +27,21 @@ namespace Qbism.ScreenStateMachine
 				mcRef = stateMngr.mcRef;
 				mlRef = mcRef.mlRef;
 				persRef = mcRef.persRef;
+
+				AddRemoveNotAllowingInput(1);
+				mlRef.debugCompleter.CheckDebugStatuses();
+				mlRef.pinChecker.CheckLevelPins();
 			}
 		}
 
 		public void AddRemoveNotAllowingInput(int i)
 		{
-			Debug.Log("Not Allowing Input Amount = " + stuffNotAllowingInput +
-				" & AllowInput = " + allowInput);
 			stuffNotAllowingInput += i;
 			if (stuffNotAllowingInput == 0)
 			{
 				allowInput = true;
 				mlRef.pinTracker.SetLevelPinButtonsInteractable(true);
+				mlRef.pinTracker.SelectPin(mlRef.pinTracker.selectedPin.pinUI);
 			}
 			else
 			{

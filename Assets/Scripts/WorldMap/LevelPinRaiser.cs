@@ -121,8 +121,6 @@ namespace Qbism.WorldMap
 
 			if (justCompletedPin != null && justCompletedPin.m_pin.Entity == E_Pin.GetEntity(0))
 				refs.mcRef.serpButtonToggler.PopInButtonForFirstTime();
-
-			refs.mcRef.mlRef.pinHandler.AddToAllPinsHandled();
 		}
 	}
 }

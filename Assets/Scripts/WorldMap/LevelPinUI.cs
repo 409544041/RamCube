@@ -35,7 +35,7 @@ namespace Qbism.WorldMap
 		}
 
 		public void SetUIState(bool compValue, bool diamondValue, bool unCompValue, 
-			bool textValue, bool buttonValue)
+			bool textValue, bool buttonValue, bool unlocked, bool countHandled)
 		{
 			if (compValue == true)
 			{
@@ -54,6 +54,9 @@ namespace Qbism.WorldMap
 			unCompIcon.enabled = unCompValue;
 			uiText.enabled = textValue;
 			button.enabled = buttonValue;
+
+			if ((!compValue && !unCompValue && unlocked) || !countHandled) return;
+			refs.mcRef.mlRef.pinHandler.AddToAllPinsHandled();
 		}
 
 		public void SelectPinUI()
