@@ -194,5 +194,10 @@ namespace Qbism.Dialogue
 		{
 			nextButtonJuice.PlayFeedbacks();
 		}
+
+		public void SetTyping(bool value) //Called from TextAnimatorPlayer events
+		{
+			isTyping = value;
+		}
 	}
 }
