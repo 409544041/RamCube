@@ -28,6 +28,7 @@ public partial class M_Dialogues : BGEntityGo
 	public UnityEngine.ScriptableObject f_RescueDialogue => _f_RescueDialogue[Entity.Index];
 	public List<E_ReturnDialogues> f_ReturnDialogues => BGCodeGenUtils.GetNested<E_ReturnDialogues>(_f_ReturnDialogues, Entity.Index);
 	public List<E_FluffDialogues> f_FluffDialogues => BGCodeGenUtils.GetNested<E_FluffDialogues>(_f_FluffDialogues, Entity.Index);
+	public List<E_ShortDialogues> f_ShortDialogues => BGCodeGenUtils.GetNested<E_ShortDialogues>(_f_ShortDialogues, Entity.Index);
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5300970025127205706UL, 3063305633938667929UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Segment;
@@ -38,5 +39,7 @@ public partial class M_Dialogues : BGEntityGo
 	public static BansheeGz.BGDatabase.BGFieldNested _f_ReturnDialogues => _ufle12jhs77_f_ReturnDialogues ?? (_ufle12jhs77_f_ReturnDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5510717961828634056UL, 9806892908304910006UL), () => _ufle12jhs77_f_ReturnDialogues = null));
 	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogues;
 	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogues => _ufle12jhs77_f_FluffDialogues ?? (_ufle12jhs77_f_FluffDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5478707207032614291UL, 13273353822579157894UL), () => _ufle12jhs77_f_FluffDialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_ShortDialogues;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_ShortDialogues => _ufle12jhs77_f_ShortDialogues ?? (_ufle12jhs77_f_ShortDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5124572410662557455UL, 6331992675011935619UL), () => _ufle12jhs77_f_ShortDialogues = null));
 	public List<Alias_rifegrt_Segments> RelatedSegmentsListUsingDialoguesRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Segments>(Alias_rifegrt_Segments._f_Dialogues, Entity.Id);
 }
