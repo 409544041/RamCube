@@ -15,8 +15,8 @@ namespace Qbism.Dialogue
 
 		public void StartRescueDialogue(SegmentAnimator segAnim)
 		{
-			var dialogueToPlay = (DialogueScripOb)refs.mSegments.f_Dialogues.f_RescueDialogue;
-			StartDialogue(dialogueToPlay, segAnim);
+			//var dialogueToPlay = (DialogueScripOb)refs.mSegments.f_Dialogues.f_RescueDialogue;
+			//StartDialogue(dialogueToPlay, segAnim);
 		}
 
 		public void StartDialogue(DialogueScripOb dialogueToPlay, SegmentAnimator segAnim)
