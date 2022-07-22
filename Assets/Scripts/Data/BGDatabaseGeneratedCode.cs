@@ -12,7 +12,6 @@ using Alias_rifegrt_SegmentsGameplayData = E_SegmentsGameplayData;
 using Alias_rifegrt_Objects = E_Objects;
 using Alias_rifegrt_ReturnDialogues = E_ReturnDialogues;
 using Alias_rifegrt_ObjectsGameplayData = E_ObjectsGameplayData;
-using Alias_rifegrt_FluffDialogues = E_FluffDialogues;
 using Alias_rifegrt_Localization = E_Localization;
 
 //=============================================================
@@ -1395,26 +1394,12 @@ public partial class E_FluffDialogues : BGEntity
 		set => _f_Dialogues[Index] = value;
 	}
 	public UnityEngine.ScriptableObject f_FluffDialogue => _f_FluffDialogue[Index];
-	public E_FluffDialogueGameplayData f_GameplayData
-	{
-		get => (E_FluffDialogueGameplayData) _f_GameplayData[Index];
-		set => _f_GameplayData[Index] = value;
-	}
-	public System.Boolean f_Played
-	{
-		get => _f_Played[Index];
-		set => _f_Played[Index] = value;
-	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4678961077541721324UL, 18130792169655123106UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
 	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues => _ufle12jhs77_f_Dialogues ?? (_ufle12jhs77_f_Dialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5025612804227916872UL, 6154068310714723463UL), () => _ufle12jhs77_f_Dialogues = null));
 	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _ufle12jhs77_f_FluffDialogue;
 	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_FluffDialogue => _ufle12jhs77_f_FluffDialogue ?? (_ufle12jhs77_f_FluffDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldUnityScriptableObject>(MetaDefault, new BGId(5022444791640245293UL, 3339558332882937501UL), () => _ufle12jhs77_f_FluffDialogue = null));
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_GameplayData;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData => _ufle12jhs77_f_GameplayData ?? (_ufle12jhs77_f_GameplayData = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5366881371379425601UL, 3453028088459494838UL), () => _ufle12jhs77_f_GameplayData = null));
-	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_Played;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_Played => _ufle12jhs77_f_Played ?? (_ufle12jhs77_f_Played = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(5547494182720534484UL, 12540949173131056551UL), () => _ufle12jhs77_f_Played = null));
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
 	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
@@ -1498,7 +1483,6 @@ public partial class E_FluffDialogueGameplayData : BGEntity
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5084205847461478916UL, 6488143047621156767UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_SegmentsGameplayData;
 	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_SegmentsGameplayData => _ufle12jhs77_f_SegmentsGameplayData ?? (_ufle12jhs77_f_SegmentsGameplayData = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5633271626414292479UL, 9592474805348906911UL), () => _ufle12jhs77_f_SegmentsGameplayData = null));
-	public List<Alias_rifegrt_FluffDialogues> RelatedFluffDialoguesListUsingGameplayDataRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_FluffDialogues>(Alias_rifegrt_FluffDialogues._f_GameplayData, Id);
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
 	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
@@ -1588,16 +1572,6 @@ public partial class E_RescueDialogue : BGEntity
 		get => (Expressions) _f_Expression[Index];
 		set => _f_Expression[Index] = value;
 	}
-	public System.String f_TextToShow
-	{
-		get => _f_TextToShow[Index];
-		set => _f_TextToShow[Index] = value;
-	}
-	public System.String f_Text_EN
-	{
-		get => _f_Text_EN[Index];
-		set => _f_Text_EN[Index] = value;
-	}
 	public System.String f_LocalizedText
 	{
 		get => _f_LocalizedText[Index];
@@ -1611,10 +1585,6 @@ public partial class E_RescueDialogue : BGEntity
 	public static BansheeGz.BGDatabase.BGFieldInt _f_CharIndex => _ufle12jhs77_f_CharIndex ?? (_ufle12jhs77_f_CharIndex = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldInt>(MetaDefault, new BGId(4832168870635062285UL, 15721790278602446992UL), () => _ufle12jhs77_f_CharIndex = null));
 	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Expression;
 	public static BansheeGz.BGDatabase.BGFieldEnum _f_Expression => _ufle12jhs77_f_Expression ?? (_ufle12jhs77_f_Expression = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5479015785285896991UL, 10945428836319599027UL), () => _ufle12jhs77_f_Expression = null));
-	private static BansheeGz.BGDatabase.BGFieldText _ufle12jhs77_f_TextToShow;
-	public static BansheeGz.BGDatabase.BGFieldText _f_TextToShow => _ufle12jhs77_f_TextToShow ?? (_ufle12jhs77_f_TextToShow = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldText>(MetaDefault, new BGId(5688058067082658590UL, 14961500119230167216UL), () => _ufle12jhs77_f_TextToShow = null));
-	private static BansheeGz.BGDatabase.BGFieldText _ufle12jhs77_f_Text_EN;
-	public static BansheeGz.BGDatabase.BGFieldText _f_Text_EN => _ufle12jhs77_f_Text_EN ?? (_ufle12jhs77_f_Text_EN = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldText>(MetaDefault, new BGId(5305419005970323073UL, 962775130838560951UL), () => _ufle12jhs77_f_Text_EN = null));
 	private static BansheeGz.BGDatabase.BGFieldLocalizedText _ufle12jhs77_f_LocalizedText;
 	public static BansheeGz.BGDatabase.BGFieldLocalizedText _f_LocalizedText => _ufle12jhs77_f_LocalizedText ?? (_ufle12jhs77_f_LocalizedText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocalizedText>(MetaDefault, new BGId(5066147721414224775UL, 6275739206087796916UL), () => _ufle12jhs77_f_LocalizedText = null));
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
