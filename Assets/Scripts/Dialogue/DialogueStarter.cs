@@ -1,3 +1,4 @@
+using BansheeGz.BGDatabase;
 using Qbism.Serpent;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,17 +16,27 @@ namespace Qbism.Dialogue
 
 		public void StartRescueDialogue(SegmentAnimator segAnim)
 		{
-			//var dialogueToPlay = (DialogueScripOb)refs.mSegments.f_Dialogues.f_RescueDialogue;
-			//StartDialogue(dialogueToPlay, segAnim);
+			var dialogueEntity = refs.mSegments.f_Dialogues;
+			var dialogueData = new DialogueData();
+
+			dialogueData.firstExpr = dialogueEntity.f_RescueFirstExpr;
+
+			for (int i = 0; i < dialogueEntity.f_RescueDialogue.Count; i++)
+			{
+				dialogueData.charIndexes[i] = dialogueEntity.f_RescueDialogue[i].f_CharIndex;
+				dialogueData.expressions[i] = dialogueEntity.f_RescueDialogue[i].f_Expression;
+				dialogueData.dialogues[i] = dialogueEntity.f_RescueDialogue[i].f_Text_EN;
+			}
+
+			StartDialogue(dialogueData, segAnim);
 		}
 
-		public void StartDialogue(DialogueScripOb dialogueToPlay, SegmentAnimator segAnim)
+		public void StartDialogue(DialogueData dialogueData, SegmentAnimator segAnim)
 		{
 			GameObject[] objs = new GameObject[2];
 			Vector3[] rots = new Vector3[2];
 
-			var leftEntity = E_Segments.FindEntity(entity =>
-				entity.f_name == dialogueToPlay.characters[0].ToString());
+			var leftEntity = E_Segments.GetEntity(11);
 			objs[0] = (GameObject)leftEntity.f_Prefab;
 			rots[0] = leftEntity.f_DialogueRotation;
 
@@ -36,7 +47,7 @@ namespace Qbism.Dialogue
 			if (refs.gcRef != null) dialogueManager = refs.gcRef.glRef.dialogueManager;
 			if (refs.scRef != null) dialogueManager = refs.scRef.slRef.dialogueManager;
 
-			dialogueManager.StartDialogue(dialogueToPlay, objs, rots, segAnim);
+			dialogueManager.StartDialogue(dialogueData, objs, rots, segAnim);
 		}
 	}
 }

@@ -8,6 +8,7 @@ using TMPro;
 using Febucci.UI;
 using Qbism.ScreenStateMachine;
 using Qbism.General;
+using BansheeGz.BGDatabase;
 
 namespace Qbism.Dialogue
 {
@@ -27,7 +28,7 @@ namespace Qbism.Dialogue
 		MMFeedbacks textAppearJuice; ScreenStateManager screenStateMngr; GaussianCanvas gCanvas;
 
 		//States
-		DialogueScripOb dialogueSO;
+		DialogueData dialogueData;
 		int dialogueIndex;
 		GameObject[] heads = new GameObject[2];
 		string[] names = new string[2];
@@ -56,11 +57,11 @@ namespace Qbism.Dialogue
 			}
 		}
 
-		public void StartDialogue(DialogueScripOb incDialogueSO, GameObject[] objs, Vector3[] rots,
+		public void StartDialogue(DialogueData incDialogue, GameObject[] objs, Vector3[] rots,
 			SegmentAnimator segAnimator)
 		{
 			screenStateMngr.SwitchState(screenStateMngr.dialogueOverlayState, ScreenStates.dialogueOverlayState);
-			dialogueSO = incDialogueSO;
+			dialogueData = incDialogue;
 			partnerAnimator = segAnimator;
 			nextButtonJuice.Initialization();
 			textAppearJuice.Initialization();
@@ -88,16 +89,16 @@ namespace Qbism.Dialogue
 					if (segRef.dragonAnim != null) segRef.dragonAnim.DragonSmile();
 				}
 			}
-			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
+			var charIndex = dialogueData.charIndexes[dialogueIndex];
 			if (charIndex == 0)
 			{
 				if (expressionHandlers[1] != null)
-					expressionHandlers[1].SetFace(dialogueSO.partnerFirstExpression, -1);
+					expressionHandlers[1].SetFace(dialogueData.firstExpr, -1);
 			}
 			else
 			{
 				if (expressionHandlers[0] != null)
-					expressionHandlers[0].SetFace(dialogueSO.partnerFirstExpression, -1);
+					expressionHandlers[0].SetFace(dialogueData.firstExpr, -1);
 			}
 
 			StartCoroutine(Dialogue());
@@ -107,7 +108,7 @@ namespace Qbism.Dialogue
 		{
 			nextButtonJuice.StopFeedbacks();
 			textAppearJuice.PlayFeedbacks();
-			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
+			var charIndex = dialogueData.charIndexes[dialogueIndex];
 
 			charName.text = names[charIndex];
 
@@ -120,14 +121,14 @@ namespace Qbism.Dialogue
 				yield return new WaitForSeconds(firstTextDelay);
 			}
 
-			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
+			dialogueText.text = dialogueData.dialogues[dialogueIndex];
 		}
 
 		private void SetDialogueExpression()
 		{
-			var charIndex = dialogueSO.dialogues[dialogueIndex].characterSpeaking;
+			var charIndex = dialogueData.charIndexes[dialogueIndex];
 			if (expressionHandlers[charIndex] != null) expressionHandlers[charIndex].
-					SetFace(dialogueSO.dialogues[dialogueIndex].expression, -1);
+					SetFace(dialogueData.expressions[dialogueIndex], -1);
 		}
 
 		public void NextDialogueText()
@@ -136,7 +137,7 @@ namespace Qbism.Dialogue
 			else
 			{
 				dialogueIndex++;
-				if (dialogueIndex >= dialogueSO.dialogues.Length) StartCoroutine(ExitDialogue());
+				if (dialogueIndex >= dialogueData.dialogues.Count) StartCoroutine(ExitDialogue());
 				else StartCoroutine(Dialogue());
 			}
 		}

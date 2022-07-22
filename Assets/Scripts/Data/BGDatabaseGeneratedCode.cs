@@ -684,6 +684,11 @@ public partial class E_Dialogues : BGEntity
 		set => _f_Segment[Index] = value;
 	}
 	public List<E_RescueDialogue> f_RescueDialogue => BGCodeGenUtils.GetNested<E_RescueDialogue>(_f_RescueDialogue, Index);
+	public Expressions f_RescueFirstExpr
+	{
+		get => (Expressions) _f_RescueFirstExpr[Index];
+		set => _f_RescueFirstExpr[Index] = value;
+	}
 	public List<E_ReturnDialogues> f_ReturnDialogues => BGCodeGenUtils.GetNested<E_ReturnDialogues>(_f_ReturnDialogues, Index);
 	public List<E_FluffDialogues> f_FluffDialogues => BGCodeGenUtils.GetNested<E_FluffDialogues>(_f_FluffDialogues, Index);
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
@@ -692,6 +697,8 @@ public partial class E_Dialogues : BGEntity
 	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Segment => _ufle12jhs77_f_Segment ?? (_ufle12jhs77_f_Segment = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5362655967193847021UL, 8794766217772961702UL), () => _ufle12jhs77_f_Segment = null));
 	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_RescueDialogue;
 	public static BansheeGz.BGDatabase.BGFieldNested _f_RescueDialogue => _ufle12jhs77_f_RescueDialogue ?? (_ufle12jhs77_f_RescueDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(4937358930840071385UL, 9845999951275025036UL), () => _ufle12jhs77_f_RescueDialogue = null));
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_RescueFirstExpr;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_RescueFirstExpr => _ufle12jhs77_f_RescueFirstExpr ?? (_ufle12jhs77_f_RescueFirstExpr = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5759095852089809794UL, 11736689280358837178UL), () => _ufle12jhs77_f_RescueFirstExpr = null));
 	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_ReturnDialogues;
 	public static BansheeGz.BGDatabase.BGFieldNested _f_ReturnDialogues => _ufle12jhs77_f_ReturnDialogues ?? (_ufle12jhs77_f_ReturnDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5510717961828634056UL, 9806892908304910006UL), () => _ufle12jhs77_f_ReturnDialogues = null));
 	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogues;
@@ -1525,10 +1532,31 @@ public partial class E_RescueDialogue : BGEntity
 		get => (E_Dialogues) _f_Dialogues[Index];
 		set => _f_Dialogues[Index] = value;
 	}
+	public System.Int32 f_CharIndex
+	{
+		get => _f_CharIndex[Index];
+		set => _f_CharIndex[Index] = value;
+	}
+	public Expressions f_Expression
+	{
+		get => (Expressions) _f_Expression[Index];
+		set => _f_Expression[Index] = value;
+	}
+	public System.String f_Text_EN
+	{
+		get => _f_Text_EN[Index];
+		set => _f_Text_EN[Index] = value;
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4968214803591424266UL, 18107775160503960727UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
 	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues => _ufle12jhs77_f_Dialogues ?? (_ufle12jhs77_f_Dialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5190596544028834247UL, 13169390689467508888UL), () => _ufle12jhs77_f_Dialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldInt _ufle12jhs77_f_CharIndex;
+	public static BansheeGz.BGDatabase.BGFieldInt _f_CharIndex => _ufle12jhs77_f_CharIndex ?? (_ufle12jhs77_f_CharIndex = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldInt>(MetaDefault, new BGId(4832168870635062285UL, 15721790278602446992UL), () => _ufle12jhs77_f_CharIndex = null));
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Expression;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_Expression => _ufle12jhs77_f_Expression ?? (_ufle12jhs77_f_Expression = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5479015785285896991UL, 10945428836319599027UL), () => _ufle12jhs77_f_Expression = null));
+	private static BansheeGz.BGDatabase.BGFieldText _ufle12jhs77_f_Text_EN;
+	public static BansheeGz.BGDatabase.BGFieldText _f_Text_EN => _ufle12jhs77_f_Text_EN ?? (_ufle12jhs77_f_Text_EN = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldText>(MetaDefault, new BGId(5305419005970323073UL, 962775130838560951UL), () => _ufle12jhs77_f_Text_EN = null));
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
 	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
