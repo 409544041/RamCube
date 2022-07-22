@@ -46,8 +46,8 @@ namespace Qbism.Objects
 			}
 
 			//TO DO: switch this up to a robuster system allowing for multiple fluff texts?
-			else if (eSegment.Entity == E_Segments.GetEntity(0))
-				dialogueToPlay = (DialogueScripOb)eSegment.f_Dialogues.f_FluffDialogues[0].f_FluffDialogue;
+			//else if (eSegment.Entity == E_Segments.GetEntity(0))
+			//	dialogueToPlay = (DialogueScripOb)eSegment.f_Dialogues.f_FluffDialogues[0].f_FluffDialogue;
 
 			//TO DO: change up fluff dialogue options based on progression
 		}
@@ -56,7 +56,7 @@ namespace Qbism.Objects
 		{
 			if (dialogueToPlay != null)
 			{
-				segInFocus.dialogueStarter.StartDialogue(dialogueToPlay, null);
+				//segInFocus.dialogueStarter.StartDialogue(dialogueToPlay, null);
 
 				if (checkObjectReturned)
 				{
@@ -74,28 +74,29 @@ namespace Qbism.Objects
 			var dialEntity = E_Dialogues.FindEntity(entity =>
 				entity.f_Segment == eSegment.Entity);
 
-			if (!found1)
-				return (DialogueScripOb)dialEntity.f_FluffDialogues[0].f_FluffDialogue;
+			//if (!found1)
+			//	return (DialogueScripOb)dialEntity.f_FluffDialogues[0].f_FluffDialogue;
 
-			else if (found1 && !returned1)
-			{
-				objToCheck = eObj1;
-				checkObjectReturned = true;
-				return (DialogueScripOb)dialEntity.f_ReturnDialogues[0].f_ReturnDialogue;
-			}
+			//else if (found1 && !returned1)
+			//{
+			//	objToCheck = eObj1;
+			//	checkObjectReturned = true;
+			//	return (DialogueScripOb)dialEntity.f_ReturnDialogues[0].f_ReturnDialogue;
+			//}
 
-			else if (!found2)
-				return (DialogueScripOb)dialEntity.f_FluffDialogues[1].f_FluffDialogue;
+			//else if (!found2)
+			//	return (DialogueScripOb)dialEntity.f_FluffDialogues[1].f_FluffDialogue;
 
-			else if (found2 && !returned2)
-			{
-				objToCheck = eObj2;
-				checkObjectReturned = true;
-				return (DialogueScripOb)dialEntity.f_ReturnDialogues[1].f_ReturnDialogue;
+			//else if (found2 && !returned2)
+			//{
+			//	objToCheck = eObj2;
+			//	checkObjectReturned = true;
+			//	return (DialogueScripOb)dialEntity.f_ReturnDialogues[1].f_ReturnDialogue;
 
-			}
+			//}
 
-			else return (DialogueScripOb)dialEntity.f_FluffDialogues[2].f_FluffDialogue;
+			//else return (DialogueScripOb)dialEntity.f_FluffDialogues[2].f_FluffDialogue;
+			return null;
 		}
 
 		private void FetchObjValues(E_ObjectsGameplayData obj, out bool objFound, out bool objReturned)

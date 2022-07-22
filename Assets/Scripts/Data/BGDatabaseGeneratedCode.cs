@@ -130,11 +130,10 @@ public partial class E_LevelData : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_LevelData() : base(MetaDefault)
 	{
 	}
@@ -229,11 +228,10 @@ public partial class E_Biome : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_Biome() : base(MetaDefault)
 	{
 	}
@@ -325,11 +323,10 @@ public partial class E_Pin : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_Pin() : base(MetaDefault)
 	{
 	}
@@ -472,11 +469,10 @@ public partial class E_LevelGameplayData : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_LevelGameplayData() : base(MetaDefault)
 	{
 	}
@@ -558,11 +554,10 @@ public partial class E_MapWalls : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_MapWalls() : base(MetaDefault)
 	{
 	}
@@ -642,11 +637,10 @@ public partial class E_BiomeGameplayData : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_BiomeGameplayData() : base(MetaDefault)
 	{
 	}
@@ -736,11 +730,10 @@ public partial class E_Dialogues : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_Dialogues() : base(MetaDefault)
 	{
 	}
@@ -871,11 +864,10 @@ public partial class E_Segments : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_Segments() : base(MetaDefault)
 	{
 	}
@@ -960,11 +952,10 @@ public partial class E_ReturnDialogues : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_ReturnDialogues() : base(MetaDefault)
 	{
 	}
@@ -1035,7 +1026,6 @@ public partial class E_SegmentsGameplayData : BGEntity
 		get => _f_AddedToSerpScreen[Index];
 		set => _f_AddedToSerpScreen[Index] = value;
 	}
-	public List<E_FluffDialogueGameplayData> f_FluffDialogueGameplayData => BGCodeGenUtils.GetNested<E_FluffDialogueGameplayData>(_f_FluffDialogueGameplayData, Index);
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5330384241163026195UL, 12595475573590950033UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Segment;
@@ -1044,8 +1034,6 @@ public partial class E_SegmentsGameplayData : BGEntity
 	public static BansheeGz.BGDatabase.BGFieldBool _f_Rescued => _ufle12jhs77_f_Rescued ?? (_ufle12jhs77_f_Rescued = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(4897271965161504167UL, 2768130027215449236UL), () => _ufle12jhs77_f_Rescued = null));
 	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_AddedToSerpScreen;
 	public static BansheeGz.BGDatabase.BGFieldBool _f_AddedToSerpScreen => _ufle12jhs77_f_AddedToSerpScreen ?? (_ufle12jhs77_f_AddedToSerpScreen = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(5472508438153550995UL, 3271020857625076629UL), () => _ufle12jhs77_f_AddedToSerpScreen = null));
-	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogueGameplayData;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogueGameplayData => _ufle12jhs77_f_FluffDialogueGameplayData ?? (_ufle12jhs77_f_FluffDialogueGameplayData = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5289789315245825160UL, 11581812223873279893UL), () => _ufle12jhs77_f_FluffDialogueGameplayData = null));
 	public List<Alias_rifegrt_Segments> RelatedSegmentsListUsingGameplayDataRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Segments>(Alias_rifegrt_Segments._f_GameplayData, Id);
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
@@ -1061,11 +1049,10 @@ public partial class E_SegmentsGameplayData : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_SegmentsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1166,11 +1153,10 @@ public partial class E_Objects : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_Objects() : base(MetaDefault)
 	{
 	}
@@ -1258,11 +1244,10 @@ public partial class E_ObjectsGameplayData : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_ObjectsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1334,11 +1319,10 @@ public partial class E_BiomeMaterials : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_BiomeMaterials() : base(MetaDefault)
 	{
 	}
@@ -1393,13 +1377,10 @@ public partial class E_FluffDialogues : BGEntity
 		get => (E_Dialogues) _f_Dialogues[Index];
 		set => _f_Dialogues[Index] = value;
 	}
-	public UnityEngine.ScriptableObject f_FluffDialogue => _f_FluffDialogue[Index];
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4678961077541721324UL, 18130792169655123106UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
 	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues => _ufle12jhs77_f_Dialogues ?? (_ufle12jhs77_f_Dialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5025612804227916872UL, 6154068310714723463UL), () => _ufle12jhs77_f_Dialogues = null));
-	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _ufle12jhs77_f_FluffDialogue;
-	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_FluffDialogue => _ufle12jhs77_f_FluffDialogue ?? (_ufle12jhs77_f_FluffDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldUnityScriptableObject>(MetaDefault, new BGId(5022444791640245293UL, 3339558332882937501UL), () => _ufle12jhs77_f_FluffDialogue = null));
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
 	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
@@ -1414,11 +1395,10 @@ public partial class E_FluffDialogues : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_FluffDialogues() : base(MetaDefault)
 	{
 	}
@@ -1454,89 +1434,6 @@ public partial class E_FluffDialogues : BGEntity
 	public static E_FluffDialogues NewEntity(E_Dialogues owner, Action<E_FluffDialogues> callback)
 	{
 		return (E_FluffDialogues) MetaDefault.NewEntity(owner, new BGMetaEntity.NewEntityContext(entity => callback((E_FluffDialogues)entity)));
-	}
-}
-
-public partial class E_FluffDialogueGameplayData : BGEntity
-{
-
-	public class Factory : BGEntity.EntityFactory
-	{
-		public BGEntity NewEntity(BGMetaEntity meta) => new E_FluffDialogueGameplayData(meta);
-		public BGEntity NewEntity(BGMetaEntity meta, BGId id) => new E_FluffDialogueGameplayData(meta, id);
-	}
-	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5635743854043088856UL,17727459658554333612UL), () => _metaDefault = null));
-	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
-	public static int CountEntities => MetaDefault.CountEntities;
-	public System.String f_name
-	{
-		get => _f_name[Index];
-		set => _f_name[Index] = value;
-	}
-	public E_SegmentsGameplayData f_SegmentsGameplayData
-	{
-		get => (E_SegmentsGameplayData) _f_SegmentsGameplayData[Index];
-		set => _f_SegmentsGameplayData[Index] = value;
-	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5084205847461478916UL, 6488143047621156767UL), () => _ufle12jhs77_f_name = null));
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_SegmentsGameplayData;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_SegmentsGameplayData => _ufle12jhs77_f_SegmentsGameplayData ?? (_ufle12jhs77_f_SegmentsGameplayData = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5633271626414292479UL, 9592474805348906911UL), () => _ufle12jhs77_f_SegmentsGameplayData = null));
-	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
-	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
-	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
-	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
-	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
-	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
-	private E_FluffDialogueGameplayData() : base(MetaDefault)
-	{
-	}
-	private E_FluffDialogueGameplayData(BGId id) : base(MetaDefault, id)
-	{
-	}
-	private E_FluffDialogueGameplayData(BGMetaEntity meta) : base(meta)
-	{
-	}
-	private E_FluffDialogueGameplayData(BGMetaEntity meta, BGId id) : base(meta, id)
-	{
-	}
-	public static E_FluffDialogueGameplayData FindEntity(Predicate<E_FluffDialogueGameplayData> filter)
-	{
-		return MetaDefault.FindEntity(entity => filter==null || filter((E_FluffDialogueGameplayData) entity)) as E_FluffDialogueGameplayData;
-	}
-	public static List<E_FluffDialogueGameplayData> FindEntities(Predicate<E_FluffDialogueGameplayData> filter, List<E_FluffDialogueGameplayData> result=null, Comparison<E_FluffDialogueGameplayData> sort=null) => BGCodeGenUtils.FindEntities(MetaDefault, filter, result, sort);
-	public static void ForEachEntity(Action<E_FluffDialogueGameplayData> action, Predicate<E_FluffDialogueGameplayData> filter=null, Comparison<E_FluffDialogueGameplayData> sort=null)
-	{
-		MetaDefault.ForEachEntity(entity => action((E_FluffDialogueGameplayData) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_FluffDialogueGameplayData) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_FluffDialogueGameplayData)e1,(E_FluffDialogueGameplayData)e2));
-	}
-	public static E_FluffDialogueGameplayData GetEntity(BGId entityId) => (E_FluffDialogueGameplayData) MetaDefault.GetEntity(entityId);
-	public static E_FluffDialogueGameplayData GetEntity(int index) => (E_FluffDialogueGameplayData) MetaDefault[index];
-	public static E_FluffDialogueGameplayData GetEntity(string entityName) => (E_FluffDialogueGameplayData) MetaDefault.GetEntity(entityName);
-	public static E_FluffDialogueGameplayData NewEntity() => (E_FluffDialogueGameplayData) MetaDefault.NewEntity();
-	public static E_FluffDialogueGameplayData NewEntity(BGId entityId) => (E_FluffDialogueGameplayData) MetaDefault.NewEntity(entityId);
-	public static E_FluffDialogueGameplayData NewEntity(Action<E_FluffDialogueGameplayData> callback)
-	{
-		return (E_FluffDialogueGameplayData) MetaDefault.NewEntity(new BGMetaEntity.NewEntityContext(entity => callback((E_FluffDialogueGameplayData)entity)));
-	}
-	public static E_FluffDialogueGameplayData NewEntity(E_SegmentsGameplayData owner) => (E_FluffDialogueGameplayData) MetaDefault.NewEntity(owner);
-	public static E_FluffDialogueGameplayData NewEntity(E_SegmentsGameplayData owner, BGId entityId) => (E_FluffDialogueGameplayData) MetaDefault.NewEntity(owner, entityId);
-	public static E_FluffDialogueGameplayData NewEntity(E_SegmentsGameplayData owner, Action<E_FluffDialogueGameplayData> callback)
-	{
-		return (E_FluffDialogueGameplayData) MetaDefault.NewEntity(owner, new BGMetaEntity.NewEntityContext(entity => callback((E_FluffDialogueGameplayData)entity)));
 	}
 }
 
@@ -1601,11 +1498,10 @@ public partial class E_RescueDialogue : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_RescueDialogue() : base(MetaDefault)
 	{
 	}
@@ -1687,11 +1583,10 @@ public partial class E_Localization : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_Localization() : base(MetaDefault)
 	{
 	}
@@ -1765,11 +1660,10 @@ public partial class E_Locale : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_Locale() : base(MetaDefault)
 	{
 	}
@@ -1860,11 +1754,10 @@ public partial class E_TextLocalized : BGEntity
 	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
 	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
 	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_FluffDialogueGameplayData.Factory _factory14_PFS = new E_FluffDialogueGameplayData.Factory();
-	private static readonly E_RescueDialogue.Factory _factory15_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory16_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory17_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory18_PFS = new E_TextLocalized.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
 	private E_TextLocalized() : base(MetaDefault)
 	{
 	}

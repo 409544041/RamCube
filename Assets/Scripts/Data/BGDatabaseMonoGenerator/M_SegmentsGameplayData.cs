@@ -35,7 +35,6 @@ public partial class M_SegmentsGameplayData : BGEntityGo
 		get => _f_AddedToSerpScreen[Entity.Index];
 		set => _f_AddedToSerpScreen[Entity.Index] = value;
 	}
-	public List<E_FluffDialogueGameplayData> f_FluffDialogueGameplayData => BGCodeGenUtils.GetNested<E_FluffDialogueGameplayData>(_f_FluffDialogueGameplayData, Entity.Index);
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5330384241163026195UL, 12595475573590950033UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Segment;
@@ -44,7 +43,5 @@ public partial class M_SegmentsGameplayData : BGEntityGo
 	public static BansheeGz.BGDatabase.BGFieldBool _f_Rescued => _ufle12jhs77_f_Rescued ?? (_ufle12jhs77_f_Rescued = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(4897271965161504167UL, 2768130027215449236UL), () => _ufle12jhs77_f_Rescued = null));
 	private static BansheeGz.BGDatabase.BGFieldBool _ufle12jhs77_f_AddedToSerpScreen;
 	public static BansheeGz.BGDatabase.BGFieldBool _f_AddedToSerpScreen => _ufle12jhs77_f_AddedToSerpScreen ?? (_ufle12jhs77_f_AddedToSerpScreen = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldBool>(MetaDefault, new BGId(5472508438153550995UL, 3271020857625076629UL), () => _ufle12jhs77_f_AddedToSerpScreen = null));
-	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogueGameplayData;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogueGameplayData => _ufle12jhs77_f_FluffDialogueGameplayData ?? (_ufle12jhs77_f_FluffDialogueGameplayData = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5289789315245825160UL, 11581812223873279893UL), () => _ufle12jhs77_f_FluffDialogueGameplayData = null));
 	public List<Alias_rifegrt_Segments> RelatedSegmentsListUsingGameplayDataRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Segments>(Alias_rifegrt_Segments._f_GameplayData, Entity.Id);
 }

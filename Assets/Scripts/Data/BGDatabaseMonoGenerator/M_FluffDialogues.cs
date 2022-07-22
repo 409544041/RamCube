@@ -62,17 +62,6 @@ public partial class M_FluffDialogues : BGEntityGo
 			return _f_FluffDialogue[Entity.Index];
 		}
 	}
-	public E_FluffDialogueGameplayData f_GameplayData
-	{
-		get
-		{
-			return (E_FluffDialogueGameplayData) _f_GameplayData[Entity.Index];
-		}
-		set
-		{
-			_f_GameplayData[Entity.Index] = value;
-		}
-	}
 	public System.Boolean f_Played
 	{
 		get

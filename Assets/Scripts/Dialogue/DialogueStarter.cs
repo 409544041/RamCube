@@ -29,7 +29,7 @@ namespace Qbism.Dialogue
 				print("rescue dialogue i = " + i);
 				dialogueData.charIndexes.Add(dialogueEntity.f_RescueDialogue[i].f_CharIndex);
 				dialogueData.expressions.Add(dialogueEntity.f_RescueDialogue[i].f_Expression);
-				dialogueData.dialogues.Add(dialogueEntity.f_RescueDialogue[i].f_Text_EN);
+				//dialogueData.dialogues.Add(dialogueEntity.f_RescueDialogue[i].f_Text_EN);
 			}
 
 			StartDialogue(dialogueData, segAnim);
