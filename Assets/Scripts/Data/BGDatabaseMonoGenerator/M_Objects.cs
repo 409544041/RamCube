@@ -4,7 +4,6 @@ using UnityEngine;
 using BansheeGz.BGDatabase;
 using Alias_rifegrt_LevelData = E_LevelData;
 using Alias_rifegrt_Segments = E_Segments;
-using Alias_rifegrt_ReturnDialogues = E_ReturnDialogues;
 using Alias_rifegrt_ObjectsGameplayData = E_ObjectsGameplayData;
 
 //=============================================================
@@ -58,6 +57,5 @@ public partial class M_Objects : BGEntityGo
 	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData => _ufle12jhs77_f_GameplayData ?? (_ufle12jhs77_f_GameplayData = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5680102043031229158UL, 4949064207623274920UL), () => _ufle12jhs77_f_GameplayData = null));
 	public List<Alias_rifegrt_LevelData> RelatedLevelDataListUsingForceObjectRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_LevelData>(Alias_rifegrt_LevelData._f_ForceObject, Entity.Id);
 	public List<Alias_rifegrt_Segments> RelatedSegmentsListUsingObjectsRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Segments>(Alias_rifegrt_Segments._f_Objects, Entity.Id);
-	public List<Alias_rifegrt_ReturnDialogues> RelatedReturnDialoguesListUsingForObjectRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_ReturnDialogues>(Alias_rifegrt_ReturnDialogues._f_ForObject, Entity.Id);
 	public List<Alias_rifegrt_ObjectsGameplayData> RelatedObjectsGameplayDataListUsingObjectRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_ObjectsGameplayData>(Alias_rifegrt_ObjectsGameplayData._f_Object, Entity.Id);
 }

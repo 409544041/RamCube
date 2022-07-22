@@ -10,103 +10,42 @@ using BansheeGz.BGDatabase;
 [AddComponentMenu("BansheeGz/Generated/M_ReturnDialogues")]
 public partial class M_ReturnDialogues : BGEntityGo
 {
-	public override BGMetaEntity MetaConstraint
-	{
-		get
-		{
-			return MetaDefault;
-		}
-	}
+	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(4870647987258873166UL,7601789944337567620UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
+	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(4870647987258873166UL,7601789944337567620UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
-		get
-		{
-			return _f_name[Entity.Index];
-		}
-		set
-		{
-			_f_name[Entity.Index] = value;
-		}
+		get => _f_name[Entity.Index];
+		set => _f_name[Entity.Index] = value;
 	}
 	public E_Dialogues f_Dialogues
 	{
-		get
-		{
-			return (E_Dialogues) _f_Dialogues[Entity.Index];
-		}
-		set
-		{
-			_f_Dialogues[Entity.Index] = value;
-		}
+		get => (E_Dialogues) _f_Dialogues[Entity.Index];
+		set => _f_Dialogues[Entity.Index] = value;
 	}
-	public UnityEngine.ScriptableObject f_ReturnDialogue
+	public List<E_Obj1ReturnDialogue> f_Obj1ReturnDialogue => BGCodeGenUtils.GetNested<E_Obj1ReturnDialogue>(_f_Obj1ReturnDialogue, Entity.Index);
+	public Expressions f_Obj1FirstExpr
 	{
-		get
-		{
-			return _f_ReturnDialogue[Entity.Index];
-		}
+		get => (Expressions) _f_Obj1FirstExpr[Entity.Index];
+		set => _f_Obj1FirstExpr[Entity.Index] = value;
 	}
-	public E_Objects f_ForObject
+	public List<E_Obj2ReturnDialogue> f_Obj2ReturnDialogue => BGCodeGenUtils.GetNested<E_Obj2ReturnDialogue>(_f_Obj2ReturnDialogue, Entity.Index);
+	public Expressions f_Obj2FirstExpr
 	{
-		get
-		{
-			return (E_Objects) _f_ForObject[Entity.Index];
-		}
-		set
-		{
-			_f_ForObject[Entity.Index] = value;
-		}
+		get => (Expressions) _f_Obj2FirstExpr[Entity.Index];
+		set => _f_Obj2FirstExpr[Entity.Index] = value;
 	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(5266760306252603425UL,5886380830954584228UL));
-			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_Dialogues;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues
-	{
-		get
-		{
-			if(__f_Dialogues==null || __f_Dialogues.IsDeleted) __f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5616062900662357611UL,16901702900459328912UL));
-			return __f_Dialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject __f_ReturnDialogue;
-	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_ReturnDialogue
-	{
-		get
-		{
-			if(__f_ReturnDialogue==null || __f_ReturnDialogue.IsDeleted) __f_ReturnDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5561073307789242631UL,2750474124636255876UL));
-			return __f_ReturnDialogue;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_ForObject;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_ForObject
-	{
-		get
-		{
-			if(__f_ForObject==null || __f_ForObject.IsDeleted) __f_ForObject=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5205356440346579593UL,8967285530539706020UL));
-			return __f_ForObject;
-		}
-	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5266760306252603425UL, 5886380830954584228UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues => _ufle12jhs77_f_Dialogues ?? (_ufle12jhs77_f_Dialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5616062900662357611UL, 16901702900459328912UL), () => _ufle12jhs77_f_Dialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_Obj1ReturnDialogue;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_Obj1ReturnDialogue => _ufle12jhs77_f_Obj1ReturnDialogue ?? (_ufle12jhs77_f_Obj1ReturnDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5299062298408668823UL, 6443079321062290579UL), () => _ufle12jhs77_f_Obj1ReturnDialogue = null));
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Obj1FirstExpr;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_Obj1FirstExpr => _ufle12jhs77_f_Obj1FirstExpr ?? (_ufle12jhs77_f_Obj1FirstExpr = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(4872690787509739014UL, 593235189085055640UL), () => _ufle12jhs77_f_Obj1FirstExpr = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_Obj2ReturnDialogue;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_Obj2ReturnDialogue => _ufle12jhs77_f_Obj2ReturnDialogue ?? (_ufle12jhs77_f_Obj2ReturnDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(4657164120513213312UL, 7225686395930940826UL), () => _ufle12jhs77_f_Obj2ReturnDialogue = null));
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Obj2FirstExpr;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_Obj2FirstExpr => _ufle12jhs77_f_Obj2FirstExpr ?? (_ufle12jhs77_f_Obj2FirstExpr = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5356533804343704534UL, 14134635955381507716UL), () => _ufle12jhs77_f_Obj2FirstExpr = null));
 }
