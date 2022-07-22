@@ -34,10 +34,20 @@ public partial class M_RescueDialogue : BGEntityGo
 		get => (Expressions) _f_Expression[Entity.Index];
 		set => _f_Expression[Entity.Index] = value;
 	}
+	public System.String f_TextToShow
+	{
+		get => _f_TextToShow[Entity.Index];
+		set => _f_TextToShow[Entity.Index] = value;
+	}
 	public System.String f_Text_EN
 	{
 		get => _f_Text_EN[Entity.Index];
 		set => _f_Text_EN[Entity.Index] = value;
+	}
+	public System.String f_LocalizedText
+	{
+		get => _f_LocalizedText[Entity.Index];
+		set => _f_LocalizedText[Entity.Index] = value;
 	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4968214803591424266UL, 18107775160503960727UL), () => _ufle12jhs77_f_name = null));
@@ -47,6 +57,10 @@ public partial class M_RescueDialogue : BGEntityGo
 	public static BansheeGz.BGDatabase.BGFieldInt _f_CharIndex => _ufle12jhs77_f_CharIndex ?? (_ufle12jhs77_f_CharIndex = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldInt>(MetaDefault, new BGId(4832168870635062285UL, 15721790278602446992UL), () => _ufle12jhs77_f_CharIndex = null));
 	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Expression;
 	public static BansheeGz.BGDatabase.BGFieldEnum _f_Expression => _ufle12jhs77_f_Expression ?? (_ufle12jhs77_f_Expression = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5479015785285896991UL, 10945428836319599027UL), () => _ufle12jhs77_f_Expression = null));
+	private static BansheeGz.BGDatabase.BGFieldText _ufle12jhs77_f_TextToShow;
+	public static BansheeGz.BGDatabase.BGFieldText _f_TextToShow => _ufle12jhs77_f_TextToShow ?? (_ufle12jhs77_f_TextToShow = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldText>(MetaDefault, new BGId(5688058067082658590UL, 14961500119230167216UL), () => _ufle12jhs77_f_TextToShow = null));
 	private static BansheeGz.BGDatabase.BGFieldText _ufle12jhs77_f_Text_EN;
 	public static BansheeGz.BGDatabase.BGFieldText _f_Text_EN => _ufle12jhs77_f_Text_EN ?? (_ufle12jhs77_f_Text_EN = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldText>(MetaDefault, new BGId(5305419005970323073UL, 962775130838560951UL), () => _ufle12jhs77_f_Text_EN = null));
+	private static BansheeGz.BGDatabase.BGFieldLocalizedText _ufle12jhs77_f_LocalizedText;
+	public static BansheeGz.BGDatabase.BGFieldLocalizedText _f_LocalizedText => _ufle12jhs77_f_LocalizedText ?? (_ufle12jhs77_f_LocalizedText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocalizedText>(MetaDefault, new BGId(5066147721414224775UL, 6275739206087796916UL), () => _ufle12jhs77_f_LocalizedText = null));
 }
