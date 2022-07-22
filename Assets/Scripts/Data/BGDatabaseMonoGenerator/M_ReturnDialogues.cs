@@ -24,28 +24,18 @@ public partial class M_ReturnDialogues : BGEntityGo
 		get => (E_Dialogues) _f_Dialogues[Entity.Index];
 		set => _f_Dialogues[Entity.Index] = value;
 	}
-	public List<E_Obj1ReturnDialogue> f_Obj1ReturnDialogue => BGCodeGenUtils.GetNested<E_Obj1ReturnDialogue>(_f_Obj1ReturnDialogue, Entity.Index);
-	public Expressions f_Obj1FirstExpr
+	public List<E_ReturnDialogue> f_ReturnDialogue => BGCodeGenUtils.GetNested<E_ReturnDialogue>(_f_ReturnDialogue, Entity.Index);
+	public Expressions f_FirstExpr
 	{
-		get => (Expressions) _f_Obj1FirstExpr[Entity.Index];
-		set => _f_Obj1FirstExpr[Entity.Index] = value;
-	}
-	public List<E_Obj2ReturnDialogue> f_Obj2ReturnDialogue => BGCodeGenUtils.GetNested<E_Obj2ReturnDialogue>(_f_Obj2ReturnDialogue, Entity.Index);
-	public Expressions f_Obj2FirstExpr
-	{
-		get => (Expressions) _f_Obj2FirstExpr[Entity.Index];
-		set => _f_Obj2FirstExpr[Entity.Index] = value;
+		get => (Expressions) _f_FirstExpr[Entity.Index];
+		set => _f_FirstExpr[Entity.Index] = value;
 	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5266760306252603425UL, 5886380830954584228UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
 	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues => _ufle12jhs77_f_Dialogues ?? (_ufle12jhs77_f_Dialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5616062900662357611UL, 16901702900459328912UL), () => _ufle12jhs77_f_Dialogues = null));
-	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_Obj1ReturnDialogue;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_Obj1ReturnDialogue => _ufle12jhs77_f_Obj1ReturnDialogue ?? (_ufle12jhs77_f_Obj1ReturnDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5299062298408668823UL, 6443079321062290579UL), () => _ufle12jhs77_f_Obj1ReturnDialogue = null));
-	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Obj1FirstExpr;
-	public static BansheeGz.BGDatabase.BGFieldEnum _f_Obj1FirstExpr => _ufle12jhs77_f_Obj1FirstExpr ?? (_ufle12jhs77_f_Obj1FirstExpr = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(4872690787509739014UL, 593235189085055640UL), () => _ufle12jhs77_f_Obj1FirstExpr = null));
-	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_Obj2ReturnDialogue;
-	public static BansheeGz.BGDatabase.BGFieldNested _f_Obj2ReturnDialogue => _ufle12jhs77_f_Obj2ReturnDialogue ?? (_ufle12jhs77_f_Obj2ReturnDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(4657164120513213312UL, 7225686395930940826UL), () => _ufle12jhs77_f_Obj2ReturnDialogue = null));
-	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Obj2FirstExpr;
-	public static BansheeGz.BGDatabase.BGFieldEnum _f_Obj2FirstExpr => _ufle12jhs77_f_Obj2FirstExpr ?? (_ufle12jhs77_f_Obj2FirstExpr = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5356533804343704534UL, 14134635955381507716UL), () => _ufle12jhs77_f_Obj2FirstExpr = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_ReturnDialogue;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_ReturnDialogue => _ufle12jhs77_f_ReturnDialogue ?? (_ufle12jhs77_f_ReturnDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5007311056094085472UL, 12783879240225579182UL), () => _ufle12jhs77_f_ReturnDialogue = null));
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_FirstExpr;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_FirstExpr => _ufle12jhs77_f_FirstExpr ?? (_ufle12jhs77_f_FirstExpr = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(4945211625033104206UL, 12376233100031496112UL), () => _ufle12jhs77_f_FirstExpr = null));
 }
