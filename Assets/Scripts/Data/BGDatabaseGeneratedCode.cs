@@ -132,8 +132,11 @@ public partial class E_LevelData : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_LevelData() : base(MetaDefault)
 	{
 	}
@@ -231,8 +234,11 @@ public partial class E_Biome : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_Biome() : base(MetaDefault)
 	{
 	}
@@ -327,8 +333,11 @@ public partial class E_Pin : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_Pin() : base(MetaDefault)
 	{
 	}
@@ -474,8 +483,11 @@ public partial class E_LevelGameplayData : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_LevelGameplayData() : base(MetaDefault)
 	{
 	}
@@ -560,8 +572,11 @@ public partial class E_MapWalls : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_MapWalls() : base(MetaDefault)
 	{
 	}
@@ -644,8 +659,11 @@ public partial class E_BiomeGameplayData : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_BiomeGameplayData() : base(MetaDefault)
 	{
 	}
@@ -738,8 +756,11 @@ public partial class E_Dialogues : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_Dialogues() : base(MetaDefault)
 	{
 	}
@@ -873,8 +894,11 @@ public partial class E_Segments : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_Segments() : base(MetaDefault)
 	{
 	}
@@ -962,8 +986,11 @@ public partial class E_ReturnDialogues : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_ReturnDialogues() : base(MetaDefault)
 	{
 	}
@@ -1060,8 +1087,11 @@ public partial class E_SegmentsGameplayData : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_SegmentsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1164,8 +1194,11 @@ public partial class E_Objects : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_Objects() : base(MetaDefault)
 	{
 	}
@@ -1256,8 +1289,11 @@ public partial class E_ObjectsGameplayData : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_ObjectsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1332,8 +1368,11 @@ public partial class E_BiomeMaterials : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_BiomeMaterials() : base(MetaDefault)
 	{
 	}
@@ -1388,10 +1427,20 @@ public partial class E_FluffDialogues : BGEntity
 		get => (E_Dialogues) _f_Dialogues[Index];
 		set => _f_Dialogues[Index] = value;
 	}
+	public List<E_FluffDialogue> f_FluffDialogue => BGCodeGenUtils.GetNested<E_FluffDialogue>(_f_FluffDialogue, Index);
+	public Expressions f_FirstExpr
+	{
+		get => (Expressions) _f_FirstExpr[Index];
+		set => _f_FirstExpr[Index] = value;
+	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4678961077541721324UL, 18130792169655123106UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
 	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues => _ufle12jhs77_f_Dialogues ?? (_ufle12jhs77_f_Dialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5025612804227916872UL, 6154068310714723463UL), () => _ufle12jhs77_f_Dialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogue;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogue => _ufle12jhs77_f_FluffDialogue ?? (_ufle12jhs77_f_FluffDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(4775354329778896602UL, 16768454864714612388UL), () => _ufle12jhs77_f_FluffDialogue = null));
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_FirstExpr;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_FirstExpr => _ufle12jhs77_f_FirstExpr ?? (_ufle12jhs77_f_FirstExpr = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5103615930760954296UL, 5167882006648240777UL), () => _ufle12jhs77_f_FirstExpr = null));
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
 	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
@@ -1409,8 +1458,11 @@ public partial class E_FluffDialogues : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_FluffDialogues() : base(MetaDefault)
 	{
 	}
@@ -1495,7 +1547,7 @@ public partial class E_RescueDialogue : BGEntity
 	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Expression;
 	public static BansheeGz.BGDatabase.BGFieldEnum _f_Expression => _ufle12jhs77_f_Expression ?? (_ufle12jhs77_f_Expression = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5479015785285896991UL, 10945428836319599027UL), () => _ufle12jhs77_f_Expression = null));
 	private static BansheeGz.BGDatabase.BGFieldLocalizedText _ufle12jhs77_f_LocalizedText;
-	public static BansheeGz.BGDatabase.BGFieldLocalizedText _f_LocalizedText => _ufle12jhs77_f_LocalizedText ?? (_ufle12jhs77_f_LocalizedText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocalizedText>(MetaDefault, new BGId(5066147721414224775UL, 6275739206087796916UL), () => _ufle12jhs77_f_LocalizedText = null));
+	public static BansheeGz.BGDatabase.BGFieldLocalizedText _f_LocalizedText => _ufle12jhs77_f_LocalizedText ?? (_ufle12jhs77_f_LocalizedText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocalizedText>(MetaDefault, new BGId(4778405189964875768UL, 9495579626410129804UL), () => _ufle12jhs77_f_LocalizedText = null));
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
 	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
@@ -1513,8 +1565,11 @@ public partial class E_RescueDialogue : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_RescueDialogue() : base(MetaDefault)
 	{
 	}
@@ -1599,8 +1654,11 @@ public partial class E_Localization : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_Localization() : base(MetaDefault)
 	{
 	}
@@ -1677,8 +1735,11 @@ public partial class E_Locale : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_Locale() : base(MetaDefault)
 	{
 	}
@@ -1714,95 +1775,6 @@ public partial class E_Locale : BGEntity
 	public static E_Locale NewEntity(E_Localization owner, Action<E_Locale> callback)
 	{
 		return (E_Locale) MetaDefault.NewEntity(owner, new BGMetaEntity.NewEntityContext(entity => callback((E_Locale)entity)));
-	}
-}
-
-public partial class E_TextLocalized : BGEntity
-{
-
-	public class Factory : BGEntity.EntityFactory
-	{
-		public BGEntity NewEntity(BGMetaEntity meta) => new E_TextLocalized(meta);
-		public BGEntity NewEntity(BGMetaEntity meta, BGId id) => new E_TextLocalized(meta, id);
-	}
-	private static BansheeGz.BGDatabase.BGMetaLocalization _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaLocalization MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaLocalization>(new BGId(5671638420825913144UL,5089491791854254506UL), () => _metaDefault = null));
-	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
-	public static int CountEntities => MetaDefault.CountEntities;
-	public System.String f_name
-	{
-		get => _f_name[Index];
-		set => _f_name[Index] = value;
-	}
-	public System.String f_English
-	{
-		get => _f_English[Index];
-		set => _f_English[Index] = value;
-	}
-	public System.String f_Spanish
-	{
-		get => _f_Spanish[Index];
-		set => _f_Spanish[Index] = value;
-	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5207611577399108931UL, 15222306899155833265UL), () => _ufle12jhs77_f_name = null));
-	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_English;
-	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_English => _ufle12jhs77_f_English ?? (_ufle12jhs77_f_English = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(5356094776266290471UL, 4130310283924767361UL), () => _ufle12jhs77_f_English = null));
-	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_Spanish;
-	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_Spanish => _ufle12jhs77_f_Spanish ?? (_ufle12jhs77_f_Spanish = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(5144247154420399047UL, 1077929118059661442UL), () => _ufle12jhs77_f_Spanish = null));
-	public System.String LocalizedValue
-	{
-		get => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Index];
-		set => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Index] = value;
-	}
-	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
-	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
-	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
-	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
-	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
-	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
-	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
-	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
-	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
-	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
-	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
-	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
-	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
-	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
-	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
-	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
-	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
-	private E_TextLocalized() : base(MetaDefault)
-	{
-	}
-	private E_TextLocalized(BGId id) : base(MetaDefault, id)
-	{
-	}
-	private E_TextLocalized(BGMetaEntity meta) : base(meta)
-	{
-	}
-	private E_TextLocalized(BGMetaEntity meta, BGId id) : base(meta, id)
-	{
-	}
-	public static E_TextLocalized FindEntity(Predicate<E_TextLocalized> filter)
-	{
-		return MetaDefault.FindEntity(entity => filter==null || filter((E_TextLocalized) entity)) as E_TextLocalized;
-	}
-	public static List<E_TextLocalized> FindEntities(Predicate<E_TextLocalized> filter, List<E_TextLocalized> result=null, Comparison<E_TextLocalized> sort=null) => BGCodeGenUtils.FindEntities(MetaDefault, filter, result, sort);
-	public static void ForEachEntity(Action<E_TextLocalized> action, Predicate<E_TextLocalized> filter=null, Comparison<E_TextLocalized> sort=null)
-	{
-		MetaDefault.ForEachEntity(entity => action((E_TextLocalized) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_TextLocalized) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_TextLocalized)e1,(E_TextLocalized)e2));
-	}
-	public static E_TextLocalized GetEntity(BGId entityId) => (E_TextLocalized) MetaDefault.GetEntity(entityId);
-	public static E_TextLocalized GetEntity(int index) => (E_TextLocalized) MetaDefault[index];
-	public static E_TextLocalized GetEntity(string entityName) => (E_TextLocalized) MetaDefault.GetEntity(entityName);
-	public static E_TextLocalized NewEntity() => (E_TextLocalized) MetaDefault.NewEntity();
-	public static E_TextLocalized NewEntity(BGId entityId) => (E_TextLocalized) MetaDefault.NewEntity(entityId);
-	public static E_TextLocalized NewEntity(Action<E_TextLocalized> callback)
-	{
-		return (E_TextLocalized) MetaDefault.NewEntity(new BGMetaEntity.NewEntityContext(entity => callback((E_TextLocalized)entity)));
 	}
 }
 
@@ -1852,7 +1824,7 @@ public partial class E_ReturnDialogue : BGEntity
 	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Expression;
 	public static BansheeGz.BGDatabase.BGFieldEnum _f_Expression => _ufle12jhs77_f_Expression ?? (_ufle12jhs77_f_Expression = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5746012011362350841UL, 3492853875616092845UL), () => _ufle12jhs77_f_Expression = null));
 	private static BansheeGz.BGDatabase.BGFieldLocalizedText _ufle12jhs77_f_LocalizedText;
-	public static BansheeGz.BGDatabase.BGFieldLocalizedText _f_LocalizedText => _ufle12jhs77_f_LocalizedText ?? (_ufle12jhs77_f_LocalizedText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocalizedText>(MetaDefault, new BGId(4907086337651809380UL, 12201250583575064248UL), () => _ufle12jhs77_f_LocalizedText = null));
+	public static BansheeGz.BGDatabase.BGFieldLocalizedText _f_LocalizedText => _ufle12jhs77_f_LocalizedText ?? (_ufle12jhs77_f_LocalizedText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocalizedText>(MetaDefault, new BGId(5200427099638310607UL, 9693664035043124625UL), () => _ufle12jhs77_f_LocalizedText = null));
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
 	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
@@ -1870,8 +1842,11 @@ public partial class E_ReturnDialogue : BGEntity
 	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
 	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
 	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
-	private static readonly E_TextLocalized.Factory _factory17_PFS = new E_TextLocalized.Factory();
-	private static readonly E_ReturnDialogue.Factory _factory18_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
 	private E_ReturnDialogue() : base(MetaDefault)
 	{
 	}
@@ -1907,6 +1882,389 @@ public partial class E_ReturnDialogue : BGEntity
 	public static E_ReturnDialogue NewEntity(E_ReturnDialogues owner, Action<E_ReturnDialogue> callback)
 	{
 		return (E_ReturnDialogue) MetaDefault.NewEntity(owner, new BGMetaEntity.NewEntityContext(entity => callback((E_ReturnDialogue)entity)));
+	}
+}
+
+public partial class E_FluffDialogue : BGEntity
+{
+
+	public class Factory : BGEntity.EntityFactory
+	{
+		public BGEntity NewEntity(BGMetaEntity meta) => new E_FluffDialogue(meta);
+		public BGEntity NewEntity(BGMetaEntity meta, BGId id) => new E_FluffDialogue(meta, id);
+	}
+	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
+	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5761198108724242759UL,15962685899360488851UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
+	public static int CountEntities => MetaDefault.CountEntities;
+	public System.String f_name
+	{
+		get => _f_name[Index];
+		set => _f_name[Index] = value;
+	}
+	public E_FluffDialogues f_FluffDialogues
+	{
+		get => (E_FluffDialogues) _f_FluffDialogues[Index];
+		set => _f_FluffDialogues[Index] = value;
+	}
+	public System.Int32 f_CharIndex
+	{
+		get => _f_CharIndex[Index];
+		set => _f_CharIndex[Index] = value;
+	}
+	public Expressions f_Expression
+	{
+		get => (Expressions) _f_Expression[Index];
+		set => _f_Expression[Index] = value;
+	}
+	public System.String f_LocalizedText
+	{
+		get => _f_LocalizedText[Index];
+		set => _f_LocalizedText[Index] = value;
+	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5567906099477920680UL, 17953357142608853403UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_FluffDialogues;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_FluffDialogues => _ufle12jhs77_f_FluffDialogues ?? (_ufle12jhs77_f_FluffDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(4635260982999077520UL, 17823775534033834893UL), () => _ufle12jhs77_f_FluffDialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldInt _ufle12jhs77_f_CharIndex;
+	public static BansheeGz.BGDatabase.BGFieldInt _f_CharIndex => _ufle12jhs77_f_CharIndex ?? (_ufle12jhs77_f_CharIndex = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldInt>(MetaDefault, new BGId(5219876258038993031UL, 13349531508774759827UL), () => _ufle12jhs77_f_CharIndex = null));
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Expression;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_Expression => _ufle12jhs77_f_Expression ?? (_ufle12jhs77_f_Expression = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5102869862866527441UL, 6610166580539208118UL), () => _ufle12jhs77_f_Expression = null));
+	private static BansheeGz.BGDatabase.BGFieldLocalizedText _ufle12jhs77_f_LocalizedText;
+	public static BansheeGz.BGDatabase.BGFieldLocalizedText _f_LocalizedText => _ufle12jhs77_f_LocalizedText ?? (_ufle12jhs77_f_LocalizedText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocalizedText>(MetaDefault, new BGId(5655427299389013229UL, 10875540640639273911UL), () => _ufle12jhs77_f_LocalizedText = null));
+	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
+	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
+	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
+	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
+	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
+	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private E_FluffDialogue() : base(MetaDefault)
+	{
+	}
+	private E_FluffDialogue(BGId id) : base(MetaDefault, id)
+	{
+	}
+	private E_FluffDialogue(BGMetaEntity meta) : base(meta)
+	{
+	}
+	private E_FluffDialogue(BGMetaEntity meta, BGId id) : base(meta, id)
+	{
+	}
+	public static E_FluffDialogue FindEntity(Predicate<E_FluffDialogue> filter)
+	{
+		return MetaDefault.FindEntity(entity => filter==null || filter((E_FluffDialogue) entity)) as E_FluffDialogue;
+	}
+	public static List<E_FluffDialogue> FindEntities(Predicate<E_FluffDialogue> filter, List<E_FluffDialogue> result=null, Comparison<E_FluffDialogue> sort=null) => BGCodeGenUtils.FindEntities(MetaDefault, filter, result, sort);
+	public static void ForEachEntity(Action<E_FluffDialogue> action, Predicate<E_FluffDialogue> filter=null, Comparison<E_FluffDialogue> sort=null)
+	{
+		MetaDefault.ForEachEntity(entity => action((E_FluffDialogue) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_FluffDialogue) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_FluffDialogue)e1,(E_FluffDialogue)e2));
+	}
+	public static E_FluffDialogue GetEntity(BGId entityId) => (E_FluffDialogue) MetaDefault.GetEntity(entityId);
+	public static E_FluffDialogue GetEntity(int index) => (E_FluffDialogue) MetaDefault[index];
+	public static E_FluffDialogue GetEntity(string entityName) => (E_FluffDialogue) MetaDefault.GetEntity(entityName);
+	public static E_FluffDialogue NewEntity() => (E_FluffDialogue) MetaDefault.NewEntity();
+	public static E_FluffDialogue NewEntity(BGId entityId) => (E_FluffDialogue) MetaDefault.NewEntity(entityId);
+	public static E_FluffDialogue NewEntity(Action<E_FluffDialogue> callback)
+	{
+		return (E_FluffDialogue) MetaDefault.NewEntity(new BGMetaEntity.NewEntityContext(entity => callback((E_FluffDialogue)entity)));
+	}
+	public static E_FluffDialogue NewEntity(E_FluffDialogues owner) => (E_FluffDialogue) MetaDefault.NewEntity(owner);
+	public static E_FluffDialogue NewEntity(E_FluffDialogues owner, BGId entityId) => (E_FluffDialogue) MetaDefault.NewEntity(owner, entityId);
+	public static E_FluffDialogue NewEntity(E_FluffDialogues owner, Action<E_FluffDialogue> callback)
+	{
+		return (E_FluffDialogue) MetaDefault.NewEntity(owner, new BGMetaEntity.NewEntityContext(entity => callback((E_FluffDialogue)entity)));
+	}
+}
+
+public partial class E_Loca_RescueDialogues : BGEntity
+{
+
+	public class Factory : BGEntity.EntityFactory
+	{
+		public BGEntity NewEntity(BGMetaEntity meta) => new E_Loca_RescueDialogues(meta);
+		public BGEntity NewEntity(BGMetaEntity meta, BGId id) => new E_Loca_RescueDialogues(meta, id);
+	}
+	private static BansheeGz.BGDatabase.BGMetaLocalization _metaDefault;
+	public static BansheeGz.BGDatabase.BGMetaLocalization MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaLocalization>(new BGId(5652931388399506633UL,11243701109762522813UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
+	public static int CountEntities => MetaDefault.CountEntities;
+	public System.String f_name
+	{
+		get => _f_name[Index];
+		set => _f_name[Index] = value;
+	}
+	public System.String f_English
+	{
+		get => _f_English[Index];
+		set => _f_English[Index] = value;
+	}
+	public System.String f_Spanish
+	{
+		get => _f_Spanish[Index];
+		set => _f_Spanish[Index] = value;
+	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4989681108202867340UL, 10920017278130798760UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_English;
+	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_English => _ufle12jhs77_f_English ?? (_ufle12jhs77_f_English = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(5344285259600792911UL, 5859820982475046335UL), () => _ufle12jhs77_f_English = null));
+	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_Spanish;
+	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_Spanish => _ufle12jhs77_f_Spanish ?? (_ufle12jhs77_f_Spanish = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(4771790323150926614UL, 368802303325791896UL), () => _ufle12jhs77_f_Spanish = null));
+	public System.String LocalizedValue
+	{
+		get => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Index];
+		set => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Index] = value;
+	}
+	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
+	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
+	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
+	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
+	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
+	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private E_Loca_RescueDialogues() : base(MetaDefault)
+	{
+	}
+	private E_Loca_RescueDialogues(BGId id) : base(MetaDefault, id)
+	{
+	}
+	private E_Loca_RescueDialogues(BGMetaEntity meta) : base(meta)
+	{
+	}
+	private E_Loca_RescueDialogues(BGMetaEntity meta, BGId id) : base(meta, id)
+	{
+	}
+	public static E_Loca_RescueDialogues FindEntity(Predicate<E_Loca_RescueDialogues> filter)
+	{
+		return MetaDefault.FindEntity(entity => filter==null || filter((E_Loca_RescueDialogues) entity)) as E_Loca_RescueDialogues;
+	}
+	public static List<E_Loca_RescueDialogues> FindEntities(Predicate<E_Loca_RescueDialogues> filter, List<E_Loca_RescueDialogues> result=null, Comparison<E_Loca_RescueDialogues> sort=null) => BGCodeGenUtils.FindEntities(MetaDefault, filter, result, sort);
+	public static void ForEachEntity(Action<E_Loca_RescueDialogues> action, Predicate<E_Loca_RescueDialogues> filter=null, Comparison<E_Loca_RescueDialogues> sort=null)
+	{
+		MetaDefault.ForEachEntity(entity => action((E_Loca_RescueDialogues) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_Loca_RescueDialogues) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_Loca_RescueDialogues)e1,(E_Loca_RescueDialogues)e2));
+	}
+	public static E_Loca_RescueDialogues GetEntity(BGId entityId) => (E_Loca_RescueDialogues) MetaDefault.GetEntity(entityId);
+	public static E_Loca_RescueDialogues GetEntity(int index) => (E_Loca_RescueDialogues) MetaDefault[index];
+	public static E_Loca_RescueDialogues GetEntity(string entityName) => (E_Loca_RescueDialogues) MetaDefault.GetEntity(entityName);
+	public static E_Loca_RescueDialogues NewEntity() => (E_Loca_RescueDialogues) MetaDefault.NewEntity();
+	public static E_Loca_RescueDialogues NewEntity(BGId entityId) => (E_Loca_RescueDialogues) MetaDefault.NewEntity(entityId);
+	public static E_Loca_RescueDialogues NewEntity(Action<E_Loca_RescueDialogues> callback)
+	{
+		return (E_Loca_RescueDialogues) MetaDefault.NewEntity(new BGMetaEntity.NewEntityContext(entity => callback((E_Loca_RescueDialogues)entity)));
+	}
+}
+
+public partial class E_Loca_ReturnDialogues : BGEntity
+{
+
+	public class Factory : BGEntity.EntityFactory
+	{
+		public BGEntity NewEntity(BGMetaEntity meta) => new E_Loca_ReturnDialogues(meta);
+		public BGEntity NewEntity(BGMetaEntity meta, BGId id) => new E_Loca_ReturnDialogues(meta, id);
+	}
+	private static BansheeGz.BGDatabase.BGMetaLocalization _metaDefault;
+	public static BansheeGz.BGDatabase.BGMetaLocalization MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaLocalization>(new BGId(5176751877220807342UL,7531992378373811884UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
+	public static int CountEntities => MetaDefault.CountEntities;
+	public System.String f_name
+	{
+		get => _f_name[Index];
+		set => _f_name[Index] = value;
+	}
+	public System.String f_English
+	{
+		get => _f_English[Index];
+		set => _f_English[Index] = value;
+	}
+	public System.String f_Spanish
+	{
+		get => _f_Spanish[Index];
+		set => _f_Spanish[Index] = value;
+	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5190627662475483092UL, 14790807011160082827UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_English;
+	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_English => _ufle12jhs77_f_English ?? (_ufle12jhs77_f_English = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(4793910002518806795UL, 17015621422092107416UL), () => _ufle12jhs77_f_English = null));
+	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_Spanish;
+	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_Spanish => _ufle12jhs77_f_Spanish ?? (_ufle12jhs77_f_Spanish = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(4942591586809596762UL, 16226444070095516579UL), () => _ufle12jhs77_f_Spanish = null));
+	public System.String LocalizedValue
+	{
+		get => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Index];
+		set => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Index] = value;
+	}
+	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
+	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
+	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
+	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
+	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
+	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private E_Loca_ReturnDialogues() : base(MetaDefault)
+	{
+	}
+	private E_Loca_ReturnDialogues(BGId id) : base(MetaDefault, id)
+	{
+	}
+	private E_Loca_ReturnDialogues(BGMetaEntity meta) : base(meta)
+	{
+	}
+	private E_Loca_ReturnDialogues(BGMetaEntity meta, BGId id) : base(meta, id)
+	{
+	}
+	public static E_Loca_ReturnDialogues FindEntity(Predicate<E_Loca_ReturnDialogues> filter)
+	{
+		return MetaDefault.FindEntity(entity => filter==null || filter((E_Loca_ReturnDialogues) entity)) as E_Loca_ReturnDialogues;
+	}
+	public static List<E_Loca_ReturnDialogues> FindEntities(Predicate<E_Loca_ReturnDialogues> filter, List<E_Loca_ReturnDialogues> result=null, Comparison<E_Loca_ReturnDialogues> sort=null) => BGCodeGenUtils.FindEntities(MetaDefault, filter, result, sort);
+	public static void ForEachEntity(Action<E_Loca_ReturnDialogues> action, Predicate<E_Loca_ReturnDialogues> filter=null, Comparison<E_Loca_ReturnDialogues> sort=null)
+	{
+		MetaDefault.ForEachEntity(entity => action((E_Loca_ReturnDialogues) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_Loca_ReturnDialogues) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_Loca_ReturnDialogues)e1,(E_Loca_ReturnDialogues)e2));
+	}
+	public static E_Loca_ReturnDialogues GetEntity(BGId entityId) => (E_Loca_ReturnDialogues) MetaDefault.GetEntity(entityId);
+	public static E_Loca_ReturnDialogues GetEntity(int index) => (E_Loca_ReturnDialogues) MetaDefault[index];
+	public static E_Loca_ReturnDialogues GetEntity(string entityName) => (E_Loca_ReturnDialogues) MetaDefault.GetEntity(entityName);
+	public static E_Loca_ReturnDialogues NewEntity() => (E_Loca_ReturnDialogues) MetaDefault.NewEntity();
+	public static E_Loca_ReturnDialogues NewEntity(BGId entityId) => (E_Loca_ReturnDialogues) MetaDefault.NewEntity(entityId);
+	public static E_Loca_ReturnDialogues NewEntity(Action<E_Loca_ReturnDialogues> callback)
+	{
+		return (E_Loca_ReturnDialogues) MetaDefault.NewEntity(new BGMetaEntity.NewEntityContext(entity => callback((E_Loca_ReturnDialogues)entity)));
+	}
+}
+
+public partial class E_Loca_FluffDialogues : BGEntity
+{
+
+	public class Factory : BGEntity.EntityFactory
+	{
+		public BGEntity NewEntity(BGMetaEntity meta) => new E_Loca_FluffDialogues(meta);
+		public BGEntity NewEntity(BGMetaEntity meta, BGId id) => new E_Loca_FluffDialogues(meta, id);
+	}
+	private static BansheeGz.BGDatabase.BGMetaLocalization _metaDefault;
+	public static BansheeGz.BGDatabase.BGMetaLocalization MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaLocalization>(new BGId(5266309774970735512UL,5236877721713236123UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
+	public static int CountEntities => MetaDefault.CountEntities;
+	public System.String f_name
+	{
+		get => _f_name[Index];
+		set => _f_name[Index] = value;
+	}
+	public System.String f_English
+	{
+		get => _f_English[Index];
+		set => _f_English[Index] = value;
+	}
+	public System.String f_Spanish
+	{
+		get => _f_Spanish[Index];
+		set => _f_Spanish[Index] = value;
+	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5375344553696327129UL, 3973723381280174987UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_English;
+	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_English => _ufle12jhs77_f_English ?? (_ufle12jhs77_f_English = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(5450045096084879104UL, 6723487372222397114UL), () => _ufle12jhs77_f_English = null));
+	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_Spanish;
+	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_Spanish => _ufle12jhs77_f_Spanish ?? (_ufle12jhs77_f_Spanish = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(5473008574107740060UL, 12252578915120106897UL), () => _ufle12jhs77_f_Spanish = null));
+	public System.String LocalizedValue
+	{
+		get => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Index];
+		set => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Index] = value;
+	}
+	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
+	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
+	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
+	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
+	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
+	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private E_Loca_FluffDialogues() : base(MetaDefault)
+	{
+	}
+	private E_Loca_FluffDialogues(BGId id) : base(MetaDefault, id)
+	{
+	}
+	private E_Loca_FluffDialogues(BGMetaEntity meta) : base(meta)
+	{
+	}
+	private E_Loca_FluffDialogues(BGMetaEntity meta, BGId id) : base(meta, id)
+	{
+	}
+	public static E_Loca_FluffDialogues FindEntity(Predicate<E_Loca_FluffDialogues> filter)
+	{
+		return MetaDefault.FindEntity(entity => filter==null || filter((E_Loca_FluffDialogues) entity)) as E_Loca_FluffDialogues;
+	}
+	public static List<E_Loca_FluffDialogues> FindEntities(Predicate<E_Loca_FluffDialogues> filter, List<E_Loca_FluffDialogues> result=null, Comparison<E_Loca_FluffDialogues> sort=null) => BGCodeGenUtils.FindEntities(MetaDefault, filter, result, sort);
+	public static void ForEachEntity(Action<E_Loca_FluffDialogues> action, Predicate<E_Loca_FluffDialogues> filter=null, Comparison<E_Loca_FluffDialogues> sort=null)
+	{
+		MetaDefault.ForEachEntity(entity => action((E_Loca_FluffDialogues) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_Loca_FluffDialogues) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_Loca_FluffDialogues)e1,(E_Loca_FluffDialogues)e2));
+	}
+	public static E_Loca_FluffDialogues GetEntity(BGId entityId) => (E_Loca_FluffDialogues) MetaDefault.GetEntity(entityId);
+	public static E_Loca_FluffDialogues GetEntity(int index) => (E_Loca_FluffDialogues) MetaDefault[index];
+	public static E_Loca_FluffDialogues GetEntity(string entityName) => (E_Loca_FluffDialogues) MetaDefault.GetEntity(entityName);
+	public static E_Loca_FluffDialogues NewEntity() => (E_Loca_FluffDialogues) MetaDefault.NewEntity();
+	public static E_Loca_FluffDialogues NewEntity(BGId entityId) => (E_Loca_FluffDialogues) MetaDefault.NewEntity(entityId);
+	public static E_Loca_FluffDialogues NewEntity(Action<E_Loca_FluffDialogues> callback)
+	{
+		return (E_Loca_FluffDialogues) MetaDefault.NewEntity(new BGMetaEntity.NewEntityContext(entity => callback((E_Loca_FluffDialogues)entity)));
 	}
 }
 #pragma warning restore 414
