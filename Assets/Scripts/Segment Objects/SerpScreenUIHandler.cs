@@ -10,14 +10,12 @@ namespace Qbism.Objects
 	{
 		//Config parameters
 		[SerializeField] Color elementFaded, iconFaded;
-		[SerializeField] Image speechElement, speechIcon;
 		[SerializeField] SerpLogicRefHolder slRef;
 
 		//Cache
 		SerpCoreRefHolder scRef;
 
 		//States
-		Color elementOriginalColor, iconOriginalColor;
 		Vector3[] elementOriginalPos;
 
 		private void Awake()
@@ -27,9 +25,6 @@ namespace Qbism.Objects
 		}
 		private void Start()
 		{
-			elementOriginalColor = speechElement.color;
-			iconOriginalColor = speechIcon.color;
-
 			for (int i = 0; i < scRef.objSlotElements.Length; i++)
 			{
 				var slotElement = scRef.objSlotElements[i];
