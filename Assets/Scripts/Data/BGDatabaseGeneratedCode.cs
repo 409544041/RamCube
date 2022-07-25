@@ -137,6 +137,8 @@ public partial class E_LevelData : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_LevelData() : base(MetaDefault)
 	{
 	}
@@ -239,6 +241,8 @@ public partial class E_Biome : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_Biome() : base(MetaDefault)
 	{
 	}
@@ -338,6 +342,8 @@ public partial class E_Pin : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_Pin() : base(MetaDefault)
 	{
 	}
@@ -488,6 +494,8 @@ public partial class E_LevelGameplayData : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_LevelGameplayData() : base(MetaDefault)
 	{
 	}
@@ -577,6 +585,8 @@ public partial class E_MapWalls : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_MapWalls() : base(MetaDefault)
 	{
 	}
@@ -664,6 +674,8 @@ public partial class E_BiomeGameplayData : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_BiomeGameplayData() : base(MetaDefault)
 	{
 	}
@@ -726,6 +738,7 @@ public partial class E_Dialogues : BGEntity
 	}
 	public List<E_ReturnDialogues> f_ReturnDialogues => BGCodeGenUtils.GetNested<E_ReturnDialogues>(_f_ReturnDialogues, Index);
 	public List<E_FluffDialogues> f_FluffDialogues => BGCodeGenUtils.GetNested<E_FluffDialogues>(_f_FluffDialogues, Index);
+	public List<E_InGameDialogue> f_InGameDialogue => BGCodeGenUtils.GetNested<E_InGameDialogue>(_f_InGameDialogue, Index);
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5300970025127205706UL, 3063305633938667929UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Segment;
@@ -738,6 +751,8 @@ public partial class E_Dialogues : BGEntity
 	public static BansheeGz.BGDatabase.BGFieldNested _f_ReturnDialogues => _ufle12jhs77_f_ReturnDialogues ?? (_ufle12jhs77_f_ReturnDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5510717961828634056UL, 9806892908304910006UL), () => _ufle12jhs77_f_ReturnDialogues = null));
 	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogues;
 	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogues => _ufle12jhs77_f_FluffDialogues ?? (_ufle12jhs77_f_FluffDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5478707207032614291UL, 13273353822579157894UL), () => _ufle12jhs77_f_FluffDialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_InGameDialogue;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_InGameDialogue => _ufle12jhs77_f_InGameDialogue ?? (_ufle12jhs77_f_InGameDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(4857408486491594585UL, 1189732717837754039UL), () => _ufle12jhs77_f_InGameDialogue = null));
 	public List<Alias_rifegrt_Segments> RelatedSegmentsListUsingDialoguesRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Segments>(Alias_rifegrt_Segments._f_Dialogues, Id);
 	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
 	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
@@ -761,6 +776,8 @@ public partial class E_Dialogues : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_Dialogues() : base(MetaDefault)
 	{
 	}
@@ -899,6 +916,8 @@ public partial class E_Segments : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_Segments() : base(MetaDefault)
 	{
 	}
@@ -991,6 +1010,8 @@ public partial class E_ReturnDialogues : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_ReturnDialogues() : base(MetaDefault)
 	{
 	}
@@ -1092,6 +1113,8 @@ public partial class E_SegmentsGameplayData : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_SegmentsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1199,6 +1222,8 @@ public partial class E_Objects : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_Objects() : base(MetaDefault)
 	{
 	}
@@ -1294,6 +1319,8 @@ public partial class E_ObjectsGameplayData : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_ObjectsGameplayData() : base(MetaDefault)
 	{
 	}
@@ -1373,6 +1400,8 @@ public partial class E_BiomeMaterials : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_BiomeMaterials() : base(MetaDefault)
 	{
 	}
@@ -1463,6 +1492,8 @@ public partial class E_FluffDialogues : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_FluffDialogues() : base(MetaDefault)
 	{
 	}
@@ -1570,6 +1601,8 @@ public partial class E_RescueDialogue : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_RescueDialogue() : base(MetaDefault)
 	{
 	}
@@ -1659,6 +1692,8 @@ public partial class E_Localization : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_Localization() : base(MetaDefault)
 	{
 	}
@@ -1740,6 +1775,8 @@ public partial class E_Locale : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_Locale() : base(MetaDefault)
 	{
 	}
@@ -1847,6 +1884,8 @@ public partial class E_ReturnDialogue : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_ReturnDialogue() : base(MetaDefault)
 	{
 	}
@@ -1954,6 +1993,8 @@ public partial class E_FluffDialogue : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_FluffDialogue() : base(MetaDefault)
 	{
 	}
@@ -2052,6 +2093,8 @@ public partial class E_Loca_RescueDialogues : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_Loca_RescueDialogues() : base(MetaDefault)
 	{
 	}
@@ -2144,6 +2187,8 @@ public partial class E_Loca_ReturnDialogues : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_Loca_ReturnDialogues() : base(MetaDefault)
 	{
 	}
@@ -2236,6 +2281,8 @@ public partial class E_Loca_FluffDialogues : BGEntity
 	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
 	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
 	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
 	private E_Loca_FluffDialogues() : base(MetaDefault)
 	{
 	}
@@ -2265,6 +2312,202 @@ public partial class E_Loca_FluffDialogues : BGEntity
 	public static E_Loca_FluffDialogues NewEntity(Action<E_Loca_FluffDialogues> callback)
 	{
 		return (E_Loca_FluffDialogues) MetaDefault.NewEntity(new BGMetaEntity.NewEntityContext(entity => callback((E_Loca_FluffDialogues)entity)));
+	}
+}
+
+public partial class E_InGameDialogue : BGEntity
+{
+
+	public class Factory : BGEntity.EntityFactory
+	{
+		public BGEntity NewEntity(BGMetaEntity meta) => new E_InGameDialogue(meta);
+		public BGEntity NewEntity(BGMetaEntity meta, BGId id) => new E_InGameDialogue(meta, id);
+	}
+	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
+	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(4636529681621534545UL,16025329696711459003UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
+	public static int CountEntities => MetaDefault.CountEntities;
+	public System.String f_name
+	{
+		get => _f_name[Index];
+		set => _f_name[Index] = value;
+	}
+	public E_Dialogues f_Dialogues
+	{
+		get => (E_Dialogues) _f_Dialogues[Index];
+		set => _f_Dialogues[Index] = value;
+	}
+	public Expressions f_Expression
+	{
+		get => (Expressions) _f_Expression[Index];
+		set => _f_Expression[Index] = value;
+	}
+	public System.String f_LocalizedText
+	{
+		get => _f_LocalizedText[Index];
+		set => _f_LocalizedText[Index] = value;
+	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5413169047081171291UL, 17064268456195223940UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues => _ufle12jhs77_f_Dialogues ?? (_ufle12jhs77_f_Dialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5298282123490954524UL, 3704697595018899599UL), () => _ufle12jhs77_f_Dialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Expression;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_Expression => _ufle12jhs77_f_Expression ?? (_ufle12jhs77_f_Expression = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(4996225192276967308UL, 12888520840906151835UL), () => _ufle12jhs77_f_Expression = null));
+	private static BansheeGz.BGDatabase.BGFieldLocalizedText _ufle12jhs77_f_LocalizedText;
+	public static BansheeGz.BGDatabase.BGFieldLocalizedText _f_LocalizedText => _ufle12jhs77_f_LocalizedText ?? (_ufle12jhs77_f_LocalizedText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocalizedText>(MetaDefault, new BGId(4619488496884970532UL, 7512087173433997454UL), () => _ufle12jhs77_f_LocalizedText = null));
+	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
+	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
+	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
+	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
+	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
+	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
+	private E_InGameDialogue() : base(MetaDefault)
+	{
+	}
+	private E_InGameDialogue(BGId id) : base(MetaDefault, id)
+	{
+	}
+	private E_InGameDialogue(BGMetaEntity meta) : base(meta)
+	{
+	}
+	private E_InGameDialogue(BGMetaEntity meta, BGId id) : base(meta, id)
+	{
+	}
+	public static E_InGameDialogue FindEntity(Predicate<E_InGameDialogue> filter)
+	{
+		return MetaDefault.FindEntity(entity => filter==null || filter((E_InGameDialogue) entity)) as E_InGameDialogue;
+	}
+	public static List<E_InGameDialogue> FindEntities(Predicate<E_InGameDialogue> filter, List<E_InGameDialogue> result=null, Comparison<E_InGameDialogue> sort=null) => BGCodeGenUtils.FindEntities(MetaDefault, filter, result, sort);
+	public static void ForEachEntity(Action<E_InGameDialogue> action, Predicate<E_InGameDialogue> filter=null, Comparison<E_InGameDialogue> sort=null)
+	{
+		MetaDefault.ForEachEntity(entity => action((E_InGameDialogue) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_InGameDialogue) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_InGameDialogue)e1,(E_InGameDialogue)e2));
+	}
+	public static E_InGameDialogue GetEntity(BGId entityId) => (E_InGameDialogue) MetaDefault.GetEntity(entityId);
+	public static E_InGameDialogue GetEntity(int index) => (E_InGameDialogue) MetaDefault[index];
+	public static E_InGameDialogue GetEntity(string entityName) => (E_InGameDialogue) MetaDefault.GetEntity(entityName);
+	public static E_InGameDialogue NewEntity() => (E_InGameDialogue) MetaDefault.NewEntity();
+	public static E_InGameDialogue NewEntity(BGId entityId) => (E_InGameDialogue) MetaDefault.NewEntity(entityId);
+	public static E_InGameDialogue NewEntity(Action<E_InGameDialogue> callback)
+	{
+		return (E_InGameDialogue) MetaDefault.NewEntity(new BGMetaEntity.NewEntityContext(entity => callback((E_InGameDialogue)entity)));
+	}
+	public static E_InGameDialogue NewEntity(E_Dialogues owner) => (E_InGameDialogue) MetaDefault.NewEntity(owner);
+	public static E_InGameDialogue NewEntity(E_Dialogues owner, BGId entityId) => (E_InGameDialogue) MetaDefault.NewEntity(owner, entityId);
+	public static E_InGameDialogue NewEntity(E_Dialogues owner, Action<E_InGameDialogue> callback)
+	{
+		return (E_InGameDialogue) MetaDefault.NewEntity(owner, new BGMetaEntity.NewEntityContext(entity => callback((E_InGameDialogue)entity)));
+	}
+}
+
+public partial class E_Loca_InGameDialogue : BGEntity
+{
+
+	public class Factory : BGEntity.EntityFactory
+	{
+		public BGEntity NewEntity(BGMetaEntity meta) => new E_Loca_InGameDialogue(meta);
+		public BGEntity NewEntity(BGMetaEntity meta, BGId id) => new E_Loca_InGameDialogue(meta, id);
+	}
+	private static BansheeGz.BGDatabase.BGMetaLocalization _metaDefault;
+	public static BansheeGz.BGDatabase.BGMetaLocalization MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaLocalization>(new BGId(5682398989620032364UL,1339760119320202677UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
+	public static int CountEntities => MetaDefault.CountEntities;
+	public System.String f_name
+	{
+		get => _f_name[Index];
+		set => _f_name[Index] = value;
+	}
+	public System.String f_english
+	{
+		get => _f_english[Index];
+		set => _f_english[Index] = value;
+	}
+	public System.String f_spanish
+	{
+		get => _f_spanish[Index];
+		set => _f_spanish[Index] = value;
+	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4909345426842346038UL, 16569541639165942939UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_english;
+	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_english => _ufle12jhs77_f_english ?? (_ufle12jhs77_f_english = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(5557832927087833749UL, 4994364790227243400UL), () => _ufle12jhs77_f_english = null));
+	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_spanish;
+	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_spanish => _ufle12jhs77_f_spanish ?? (_ufle12jhs77_f_spanish = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(5427861261852927151UL, 10783830716513093762UL), () => _ufle12jhs77_f_spanish = null));
+	public System.String LocalizedValue
+	{
+		get => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Index];
+		set => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Index] = value;
+	}
+	private static readonly E_LevelData.Factory _factory0_PFS = new E_LevelData.Factory();
+	private static readonly E_Biome.Factory _factory1_PFS = new E_Biome.Factory();
+	private static readonly E_Pin.Factory _factory2_PFS = new E_Pin.Factory();
+	private static readonly E_LevelGameplayData.Factory _factory3_PFS = new E_LevelGameplayData.Factory();
+	private static readonly E_MapWalls.Factory _factory4_PFS = new E_MapWalls.Factory();
+	private static readonly E_BiomeGameplayData.Factory _factory5_PFS = new E_BiomeGameplayData.Factory();
+	private static readonly E_Dialogues.Factory _factory6_PFS = new E_Dialogues.Factory();
+	private static readonly E_Segments.Factory _factory7_PFS = new E_Segments.Factory();
+	private static readonly E_ReturnDialogues.Factory _factory8_PFS = new E_ReturnDialogues.Factory();
+	private static readonly E_SegmentsGameplayData.Factory _factory9_PFS = new E_SegmentsGameplayData.Factory();
+	private static readonly E_Objects.Factory _factory10_PFS = new E_Objects.Factory();
+	private static readonly E_ObjectsGameplayData.Factory _factory11_PFS = new E_ObjectsGameplayData.Factory();
+	private static readonly E_BiomeMaterials.Factory _factory12_PFS = new E_BiomeMaterials.Factory();
+	private static readonly E_FluffDialogues.Factory _factory13_PFS = new E_FluffDialogues.Factory();
+	private static readonly E_RescueDialogue.Factory _factory14_PFS = new E_RescueDialogue.Factory();
+	private static readonly E_Localization.Factory _factory15_PFS = new E_Localization.Factory();
+	private static readonly E_Locale.Factory _factory16_PFS = new E_Locale.Factory();
+	private static readonly E_ReturnDialogue.Factory _factory17_PFS = new E_ReturnDialogue.Factory();
+	private static readonly E_FluffDialogue.Factory _factory18_PFS = new E_FluffDialogue.Factory();
+	private static readonly E_Loca_RescueDialogues.Factory _factory19_PFS = new E_Loca_RescueDialogues.Factory();
+	private static readonly E_Loca_ReturnDialogues.Factory _factory20_PFS = new E_Loca_ReturnDialogues.Factory();
+	private static readonly E_Loca_FluffDialogues.Factory _factory21_PFS = new E_Loca_FluffDialogues.Factory();
+	private static readonly E_InGameDialogue.Factory _factory22_PFS = new E_InGameDialogue.Factory();
+	private static readonly E_Loca_InGameDialogue.Factory _factory23_PFS = new E_Loca_InGameDialogue.Factory();
+	private E_Loca_InGameDialogue() : base(MetaDefault)
+	{
+	}
+	private E_Loca_InGameDialogue(BGId id) : base(MetaDefault, id)
+	{
+	}
+	private E_Loca_InGameDialogue(BGMetaEntity meta) : base(meta)
+	{
+	}
+	private E_Loca_InGameDialogue(BGMetaEntity meta, BGId id) : base(meta, id)
+	{
+	}
+	public static E_Loca_InGameDialogue FindEntity(Predicate<E_Loca_InGameDialogue> filter)
+	{
+		return MetaDefault.FindEntity(entity => filter==null || filter((E_Loca_InGameDialogue) entity)) as E_Loca_InGameDialogue;
+	}
+	public static List<E_Loca_InGameDialogue> FindEntities(Predicate<E_Loca_InGameDialogue> filter, List<E_Loca_InGameDialogue> result=null, Comparison<E_Loca_InGameDialogue> sort=null) => BGCodeGenUtils.FindEntities(MetaDefault, filter, result, sort);
+	public static void ForEachEntity(Action<E_Loca_InGameDialogue> action, Predicate<E_Loca_InGameDialogue> filter=null, Comparison<E_Loca_InGameDialogue> sort=null)
+	{
+		MetaDefault.ForEachEntity(entity => action((E_Loca_InGameDialogue) entity), filter == null ? null : (Predicate<BGEntity>) (entity => filter((E_Loca_InGameDialogue) entity)), sort==null?(Comparison<BGEntity>) null:(e1,e2) => sort((E_Loca_InGameDialogue)e1,(E_Loca_InGameDialogue)e2));
+	}
+	public static E_Loca_InGameDialogue GetEntity(BGId entityId) => (E_Loca_InGameDialogue) MetaDefault.GetEntity(entityId);
+	public static E_Loca_InGameDialogue GetEntity(int index) => (E_Loca_InGameDialogue) MetaDefault[index];
+	public static E_Loca_InGameDialogue GetEntity(string entityName) => (E_Loca_InGameDialogue) MetaDefault.GetEntity(entityName);
+	public static E_Loca_InGameDialogue NewEntity() => (E_Loca_InGameDialogue) MetaDefault.NewEntity();
+	public static E_Loca_InGameDialogue NewEntity(BGId entityId) => (E_Loca_InGameDialogue) MetaDefault.NewEntity(entityId);
+	public static E_Loca_InGameDialogue NewEntity(Action<E_Loca_InGameDialogue> callback)
+	{
+		return (E_Loca_InGameDialogue) MetaDefault.NewEntity(new BGMetaEntity.NewEntityContext(entity => callback((E_Loca_InGameDialogue)entity)));
 	}
 }
 #pragma warning restore 414

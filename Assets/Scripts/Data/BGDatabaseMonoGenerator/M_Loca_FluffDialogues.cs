@@ -19,22 +19,22 @@ public partial class M_Loca_FluffDialogues : BGEntityGo
 		get => _f_name[Entity.Index];
 		set => _f_name[Entity.Index] = value;
 	}
-	public System.String f_English
+	public System.String f_english
 	{
-		get => _f_English[Entity.Index];
-		set => _f_English[Entity.Index] = value;
+		get => _f_english[Entity.Index];
+		set => _f_english[Entity.Index] = value;
 	}
-	public System.String f_Spanish
+	public System.String f_spanish
 	{
-		get => _f_Spanish[Entity.Index];
-		set => _f_Spanish[Entity.Index] = value;
+		get => _f_spanish[Entity.Index];
+		set => _f_spanish[Entity.Index] = value;
 	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5375344553696327129UL, 3973723381280174987UL), () => _ufle12jhs77_f_name = null));
-	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_English;
-	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_English => _ufle12jhs77_f_English ?? (_ufle12jhs77_f_English = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(5450045096084879104UL, 6723487372222397114UL), () => _ufle12jhs77_f_English = null));
-	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_Spanish;
-	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_Spanish => _ufle12jhs77_f_Spanish ?? (_ufle12jhs77_f_Spanish = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(5473008574107740060UL, 12252578915120106897UL), () => _ufle12jhs77_f_Spanish = null));
+	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_english;
+	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_english => _ufle12jhs77_f_english ?? (_ufle12jhs77_f_english = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(4947680407060572254UL, 3913900100380631212UL), () => _ufle12jhs77_f_english = null));
+	private static BansheeGz.BGDatabase.BGFieldLocaleText _ufle12jhs77_f_spanish;
+	public static BansheeGz.BGDatabase.BGFieldLocaleText _f_spanish => _ufle12jhs77_f_spanish ?? (_ufle12jhs77_f_spanish = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocaleText>(MetaDefault, new BGId(5078086742450937428UL, 7744203128723875473UL), () => _ufle12jhs77_f_spanish = null));
 	public System.String LocalizedValue
 	{
 		get => MetaDefault.GetField<System.String>(BGAddonLocalization.DefaultRepoCurrentLocale)[Entity.Index];
