@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 8092735947843859375}
   - component: {fileID: 3626432336328427601}
   - component: {fileID: 1907349313829354472}
+  - component: {fileID: 7481145092878979871}
   m_Layer: 0
   m_Name: Wrong Finish Hint Trigger
   m_TagString: Untagged
@@ -184,8 +185,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb69f9d0ffa53984a935955b6f139fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scripOb: {fileID: 11400000, guid: 4f0ed406fc5daaa468cabcd5837c4b58, type: 2}
+  mInGameDialogue: {fileID: 7481145092878979871}
   inGameDialogueMngr: {fileID: 613446600291284439}
+--- !u!114 &7481145092878979871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639431295772669339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ade97679b2e0a47a4420ca77edf334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEntityChange:
+    m_PersistentCalls:
+      m_Calls: []
+  entityIdString: O6yRobuUbkGo2gMgberGZw
+  metaIdString: 
+  initWithFirst: 0
 --- !u!1 &3319944025908594892
 GameObject:
   m_ObjectHideFlags: 0

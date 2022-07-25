@@ -24,7 +24,7 @@ namespace Qbism.Dialogue
 		[SerializeField] MapLogicRefHolder mlRef;
 
 		//Cache
-		InGameDialogueScripOb dialogueSO;
+		DialogueData dialogueData;
 		ExpressionHandler exprHandler;
 
 		//States
@@ -52,7 +52,7 @@ namespace Qbism.Dialogue
 			}
 		}
 
-		public void StartInGameDialogue(InGameDialogueScripOb incDialogueSO, 
+		public void StartInGameDialogue(DialogueData incDialogueData, E_Segments segmentEntity,
 			MapDialogueMoment dialMoment, LevelPinUI selPinUI)
 		{
 			screenStateMngr.SwitchState(screenStateMngr.dialogueOverlayState, 
@@ -63,7 +63,7 @@ namespace Qbism.Dialogue
 			if (selPinUI != null) selectedPinUI = selPinUI;
 			else selectedPinUI = null;
 
-			dialogueSO = incDialogueSO;
+			dialogueData = incDialogueData;
 			nextButtonJuice.Initialization();
 			textAppearJuice.Initialization();
 			dialogueIndex = 0;
@@ -72,10 +72,8 @@ namespace Qbism.Dialogue
 			if (glRef != null) glRef.gcRef.gameplayCanvasGroup.alpha = 0;
 			if (mlRef != null) mlRef.mcRef.mapCanvasGroup.alpha = 0;
 
-			var entity = E_Segments.FindEntity(entity =>
-				entity.f_name == dialogueSO.character.ToString());
-			var headPrefab = (GameObject)entity.f_Prefab;
-			headRot = entity.f_InGameDialogueRotation;
+			var headPrefab = (GameObject)segmentEntity.f_Prefab;
+			headRot = segmentEntity.f_InGameDialogueRotation;
 
 			SpawnHead(headPrefab);
 			var segRef = floatingHead.GetComponent<SegmentRefHolder>();
@@ -112,7 +110,7 @@ namespace Qbism.Dialogue
 			textAppearJuice.PlayFeedbacks();
 
 			if (exprHandler != null)
-				exprHandler.SetFace(dialogueSO.dialogues[dialogueIndex].expression, -1);
+				exprHandler.SetFace(dialogueData.expressions[dialogueIndex], -1);
 
 			if (dialogueIndex == 0)
 			{
@@ -120,7 +118,7 @@ namespace Qbism.Dialogue
 				yield return new WaitForSeconds(firstTextDelay);
 			}
 
-			dialogueText.text = dialogueSO.dialogues[dialogueIndex].dialogueText;
+			dialogueText.text = dialogueData.dialogues[dialogueIndex];
 		}
 
 		public void NextDialogueText()
@@ -129,7 +127,7 @@ namespace Qbism.Dialogue
 			else
 			{
 				dialogueIndex++;
-				if (dialogueIndex >= dialogueSO.dialogues.Length) ExitDialogue();
+				if (dialogueIndex >= dialogueData.dialogues.Count) ExitDialogue();
 				else StartCoroutine(Dialogue());
 			}
 		}
