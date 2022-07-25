@@ -87,7 +87,8 @@ namespace Qbism.Cubes
 			if (switchBoard.showEndLevelSeq)
 			{
 				refs.closeUpCam.Priority = 11;
-				StartCoroutine(FadeCanvasses());
+				refs.gcRef.rewindFader.StartFade(0);
+				refs.gcRef.resetFader.StartFade(0);
 
 				if (FetchHasSegment())
 				{
@@ -103,13 +104,6 @@ namespace Qbism.Cubes
 				}
 			}
 			else StartCoroutine(SerpentSequence());
-		}
-
-		private IEnumerator FadeCanvasses()
-		{
-			refs.gcRef.rewindFader.StartFade(0);
-			yield return refs.gcRef.resetFader.Fade(0);
-			refs.gcRef.skipFader.StartFade(1);
 		}
 
 		private IEnumerator ShrinkAllFloorCubes()

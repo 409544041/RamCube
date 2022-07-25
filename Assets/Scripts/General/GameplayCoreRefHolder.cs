@@ -34,7 +34,7 @@ public class GameplayCoreRefHolder : MonoBehaviour
 	[Header("Gameplay Canvas")]
 	public Canvas gameplayCanvas;
 	public CanvasGroup gameplayCanvasGroup;
-	public ImageFader rewindFader, resetFader, skipFader;
+	public ImageFader rewindFader, resetFader;
 	public InterfacePulser rewindPulser;
 	public UIElementInputSwapper[] uiSwappers;
 	[Header("Dialogue Canvas")]
