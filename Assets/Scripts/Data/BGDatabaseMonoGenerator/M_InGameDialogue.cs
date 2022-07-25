@@ -12,17 +12,17 @@ public partial class M_InGameDialogue : BGEntityGo
 {
 	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(4636529681621534545UL,16025329696711459003UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5643745451162196947UL,13920282399988847515UL), () => _metaDefault = null));
 	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
 		get => _f_name[Entity.Index];
 		set => _f_name[Entity.Index] = value;
 	}
-	public E_Dialogues f_Dialogues
+	public E_InGameDialogues f_InGameDialogues
 	{
-		get => (E_Dialogues) _f_Dialogues[Entity.Index];
-		set => _f_Dialogues[Entity.Index] = value;
+		get => (E_InGameDialogues) _f_InGameDialogues[Entity.Index];
+		set => _f_InGameDialogues[Entity.Index] = value;
 	}
 	public Expressions f_Expression
 	{
@@ -35,11 +35,11 @@ public partial class M_InGameDialogue : BGEntityGo
 		set => _f_LocalizedText[Entity.Index] = value;
 	}
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5413169047081171291UL, 17064268456195223940UL), () => _ufle12jhs77_f_name = null));
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues => _ufle12jhs77_f_Dialogues ?? (_ufle12jhs77_f_Dialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5298282123490954524UL, 3704697595018899599UL), () => _ufle12jhs77_f_Dialogues = null));
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4894426744659196790UL, 18013493551907285656UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_InGameDialogues;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_InGameDialogues => _ufle12jhs77_f_InGameDialogues ?? (_ufle12jhs77_f_InGameDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5057580692058144049UL, 14186343624407140277UL), () => _ufle12jhs77_f_InGameDialogues = null));
 	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_Expression;
-	public static BansheeGz.BGDatabase.BGFieldEnum _f_Expression => _ufle12jhs77_f_Expression ?? (_ufle12jhs77_f_Expression = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(4996225192276967308UL, 12888520840906151835UL), () => _ufle12jhs77_f_Expression = null));
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_Expression => _ufle12jhs77_f_Expression ?? (_ufle12jhs77_f_Expression = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5346416093139221045UL, 14852607355323933348UL), () => _ufle12jhs77_f_Expression = null));
 	private static BansheeGz.BGDatabase.BGFieldLocalizedText _ufle12jhs77_f_LocalizedText;
-	public static BansheeGz.BGDatabase.BGFieldLocalizedText _f_LocalizedText => _ufle12jhs77_f_LocalizedText ?? (_ufle12jhs77_f_LocalizedText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocalizedText>(MetaDefault, new BGId(4619488496884970532UL, 7512087173433997454UL), () => _ufle12jhs77_f_LocalizedText = null));
+	public static BansheeGz.BGDatabase.BGFieldLocalizedText _f_LocalizedText => _ufle12jhs77_f_LocalizedText ?? (_ufle12jhs77_f_LocalizedText = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldLocalizedText>(MetaDefault, new BGId(5112307064703955890UL, 2192105288789931158UL), () => _ufle12jhs77_f_LocalizedText = null));
 }
