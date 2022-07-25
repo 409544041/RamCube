@@ -10,123 +10,32 @@ using BansheeGz.BGDatabase;
 [AddComponentMenu("BansheeGz/Generated/M_FluffDialogues")]
 public partial class M_FluffDialogues : BGEntityGo
 {
-	public override BGMetaEntity MetaConstraint
-	{
-		get
-		{
-			return MetaDefault;
-		}
-	}
+	public override BGMetaEntity MetaConstraint => MetaDefault;
 	private static BansheeGz.BGDatabase.BGMetaNested _metaDefault;
-	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault
-	{
-		get
-		{
-			if(_metaDefault==null || _metaDefault.IsDeleted) _metaDefault=BGRepo.I.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5501167370060631032UL,10787851089245723537UL));
-			return _metaDefault;
-		}
-	}
-	public static BansheeGz.BGDatabase.BGRepoEvents Events
-	{
-		get
-		{
-			return BGRepo.I.Events;
-		}
-	}
+	public static BansheeGz.BGDatabase.BGMetaNested MetaDefault => _metaDefault ?? (_metaDefault = BGCodeGenUtils.GetMeta<BansheeGz.BGDatabase.BGMetaNested>(new BGId(5501167370060631032UL,10787851089245723537UL), () => _metaDefault = null));
+	public static BansheeGz.BGDatabase.BGRepoEvents Events => BGRepo.I.Events;
 	public System.String f_name
 	{
-		get
-		{
-			return _f_name[Entity.Index];
-		}
-		set
-		{
-			_f_name[Entity.Index] = value;
-		}
+		get => _f_name[Entity.Index];
+		set => _f_name[Entity.Index] = value;
 	}
 	public E_Dialogues f_Dialogues
 	{
-		get
-		{
-			return (E_Dialogues) _f_Dialogues[Entity.Index];
-		}
-		set
-		{
-			_f_Dialogues[Entity.Index] = value;
-		}
+		get => (E_Dialogues) _f_Dialogues[Entity.Index];
+		set => _f_Dialogues[Entity.Index] = value;
 	}
-	public UnityEngine.ScriptableObject f_FluffDialogue
+	public List<E_FluffDialogue> f_FluffDialogue => BGCodeGenUtils.GetNested<E_FluffDialogue>(_f_FluffDialogue, Entity.Index);
+	public Expressions f_FirstExpr
 	{
-		get
-		{
-			return _f_FluffDialogue[Entity.Index];
-		}
+		get => (Expressions) _f_FirstExpr[Entity.Index];
+		set => _f_FirstExpr[Entity.Index] = value;
 	}
-	public E_FluffDialogueGameplayData f_GameplayData
-	{
-		get
-		{
-			return (E_FluffDialogueGameplayData) _f_GameplayData[Entity.Index];
-		}
-		set
-		{
-			_f_GameplayData[Entity.Index] = value;
-		}
-	}
-	public System.Boolean f_Played
-	{
-		get
-		{
-			return _f_Played[Entity.Index];
-		}
-		set
-		{
-			_f_Played[Entity.Index] = value;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldEntityName __f_name;
-	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name
-	{
-		get
-		{
-			if(__f_name==null || __f_name.IsDeleted) __f_name=(BansheeGz.BGDatabase.BGFieldEntityName) MetaDefault.GetField(new BGId(4678961077541721324UL,18130792169655123106UL));
-			return __f_name;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_Dialogues;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues
-	{
-		get
-		{
-			if(__f_Dialogues==null || __f_Dialogues.IsDeleted) __f_Dialogues=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5025612804227916872UL,6154068310714723463UL));
-			return __f_Dialogues;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldUnityScriptableObject __f_FluffDialogue;
-	public static BansheeGz.BGDatabase.BGFieldUnityScriptableObject _f_FluffDialogue
-	{
-		get
-		{
-			if(__f_FluffDialogue==null || __f_FluffDialogue.IsDeleted) __f_FluffDialogue=(BansheeGz.BGDatabase.BGFieldUnityScriptableObject) MetaDefault.GetField(new BGId(5022444791640245293UL,3339558332882937501UL));
-			return __f_FluffDialogue;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldRelationSingle __f_GameplayData;
-	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_GameplayData
-	{
-		get
-		{
-			if(__f_GameplayData==null || __f_GameplayData.IsDeleted) __f_GameplayData=(BansheeGz.BGDatabase.BGFieldRelationSingle) MetaDefault.GetField(new BGId(5366881371379425601UL,3453028088459494838UL));
-			return __f_GameplayData;
-		}
-	}
-	private static BansheeGz.BGDatabase.BGFieldBool __f_Played;
-	public static BansheeGz.BGDatabase.BGFieldBool _f_Played
-	{
-		get
-		{
-			if(__f_Played==null || __f_Played.IsDeleted) __f_Played=(BansheeGz.BGDatabase.BGFieldBool) MetaDefault.GetField(new BGId(5547494182720534484UL,12540949173131056551UL));
-			return __f_Played;
-		}
-	}
+	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
+	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(4678961077541721324UL, 18130792169655123106UL), () => _ufle12jhs77_f_name = null));
+	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Dialogues;
+	public static BansheeGz.BGDatabase.BGFieldRelationSingle _f_Dialogues => _ufle12jhs77_f_Dialogues ?? (_ufle12jhs77_f_Dialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldRelationSingle>(MetaDefault, new BGId(5025612804227916872UL, 6154068310714723463UL), () => _ufle12jhs77_f_Dialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogue;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogue => _ufle12jhs77_f_FluffDialogue ?? (_ufle12jhs77_f_FluffDialogue = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(4775354329778896602UL, 16768454864714612388UL), () => _ufle12jhs77_f_FluffDialogue = null));
+	private static BansheeGz.BGDatabase.BGFieldEnum _ufle12jhs77_f_FirstExpr;
+	public static BansheeGz.BGDatabase.BGFieldEnum _f_FirstExpr => _ufle12jhs77_f_FirstExpr ?? (_ufle12jhs77_f_FirstExpr = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEnum>(MetaDefault, new BGId(5103615930760954296UL, 5167882006648240777UL), () => _ufle12jhs77_f_FirstExpr = null));
 }

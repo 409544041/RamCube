@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 6234324957996972440}
   - component: {fileID: 4470665340363822751}
   - component: {fileID: 9040709941465991581}
+  - component: {fileID: 7955991858852239500}
   m_Layer: 0
   m_Name: Friend Screen Dialogue Trigger
   m_TagString: Untagged
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb69f9d0ffa53984a935955b6f139fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scripOb: {fileID: 11400000, guid: cf1e0416ec90de64086760cc4ebf6a01, type: 2}
+  mInGameDialogue: {fileID: 7955991858852239500}
   inGameDialogueMngr: {fileID: 4559963072235337666}
 --- !u!114 &4470665340363822751
 MonoBehaviour:
@@ -223,6 +224,24 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   entityIdString: heYiiuI7YEOtNDKzp0g74A
+  metaIdString: 
+  initWithFirst: 0
+--- !u!114 &7955991858852239500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3854707080633537022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ade97679b2e0a47a4420ca77edf334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEntityChange:
+    m_PersistentCalls:
+      m_Calls: []
+  entityIdString: LMVSBGdwwkK8DSTx/qMt+w
   metaIdString: 
   initWithFirst: 0
 --- !u!1 &4453347168743874800

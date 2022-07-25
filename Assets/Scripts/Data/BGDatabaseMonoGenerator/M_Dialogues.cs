@@ -33,6 +33,7 @@ public partial class M_Dialogues : BGEntityGo
 	}
 	public List<E_ReturnDialogues> f_ReturnDialogues => BGCodeGenUtils.GetNested<E_ReturnDialogues>(_f_ReturnDialogues, Entity.Index);
 	public List<E_FluffDialogues> f_FluffDialogues => BGCodeGenUtils.GetNested<E_FluffDialogues>(_f_FluffDialogues, Entity.Index);
+	public List<E_InGameDialogues> f_InGameDialogues => BGCodeGenUtils.GetNested<E_InGameDialogues>(_f_InGameDialogues, Entity.Index);
 	private static BansheeGz.BGDatabase.BGFieldEntityName _ufle12jhs77_f_name;
 	public static BansheeGz.BGDatabase.BGFieldEntityName _f_name => _ufle12jhs77_f_name ?? (_ufle12jhs77_f_name = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldEntityName>(MetaDefault, new BGId(5300970025127205706UL, 3063305633938667929UL), () => _ufle12jhs77_f_name = null));
 	private static BansheeGz.BGDatabase.BGFieldRelationSingle _ufle12jhs77_f_Segment;
@@ -45,5 +46,7 @@ public partial class M_Dialogues : BGEntityGo
 	public static BansheeGz.BGDatabase.BGFieldNested _f_ReturnDialogues => _ufle12jhs77_f_ReturnDialogues ?? (_ufle12jhs77_f_ReturnDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5510717961828634056UL, 9806892908304910006UL), () => _ufle12jhs77_f_ReturnDialogues = null));
 	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_FluffDialogues;
 	public static BansheeGz.BGDatabase.BGFieldNested _f_FluffDialogues => _ufle12jhs77_f_FluffDialogues ?? (_ufle12jhs77_f_FluffDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5478707207032614291UL, 13273353822579157894UL), () => _ufle12jhs77_f_FluffDialogues = null));
+	private static BansheeGz.BGDatabase.BGFieldNested _ufle12jhs77_f_InGameDialogues;
+	public static BansheeGz.BGDatabase.BGFieldNested _f_InGameDialogues => _ufle12jhs77_f_InGameDialogues ?? (_ufle12jhs77_f_InGameDialogues = BGCodeGenUtils.GetField<BansheeGz.BGDatabase.BGFieldNested>(MetaDefault, new BGId(5231527194092281493UL, 16170737531903298487UL), () => _ufle12jhs77_f_InGameDialogues = null));
 	public List<Alias_rifegrt_Segments> RelatedSegmentsListUsingDialoguesRelation => BGCodeGenUtils.GetRelatedInbound<Alias_rifegrt_Segments>(Alias_rifegrt_Segments._f_Dialogues, Entity.Id);
 }

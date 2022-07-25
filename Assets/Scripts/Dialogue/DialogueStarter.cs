@@ -23,13 +23,12 @@ namespace Qbism.Dialogue
 			dialogueData.dialogues = new List<string>();
 
 			dialogueData.firstExpr = dialogueEntity.f_RescueFirstExpr;
-			print("rescueDialogue count = " + dialogueEntity.f_RescueDialogue.Count);
+
 			for (int i = 0; i < dialogueEntity.f_RescueDialogue.Count; i++)
 			{
-				print("rescue dialogue i = " + i);
 				dialogueData.charIndexes.Add(dialogueEntity.f_RescueDialogue[i].f_CharIndex);
 				dialogueData.expressions.Add(dialogueEntity.f_RescueDialogue[i].f_Expression);
-				dialogueData.dialogues.Add(dialogueEntity.f_RescueDialogue[i].f_Text_EN);
+				dialogueData.dialogues.Add(dialogueEntity.f_RescueDialogue[i].f_LocalizedText);
 			}
 
 			StartDialogue(dialogueData, segAnim);
