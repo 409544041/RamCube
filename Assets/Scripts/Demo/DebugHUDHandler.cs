@@ -13,6 +13,7 @@ namespace Qbism.Demo
 	{
 		//Config parameters
 		[SerializeField] PersistentRefHolder persRef;
+		[SerializeField] bool showBuild, showScene, showTime;
 		[SerializeField] TextMeshProUGUI buildText, sceneText, timeText;
 		[SerializeField] CanvasGroup debugCanvasGroup;
 
@@ -22,20 +23,22 @@ namespace Qbism.Demo
 
 		private void Start()
 		{
-			buildText.text = persRef.switchBoard.currentBuild;
-			sceneText.text = SceneManager.GetActiveScene().name.ToString();
+			if (showBuild) buildText.text = persRef.switchBoard.currentBuild;
+			if (showScene) sceneText.text = SceneManager.GetActiveScene().name.ToString();
 		}
 
 		private void Update()
 		{
 			ShowOrHideUI();
+
+			if (!showTime) return;
 			timeInScene += Time.deltaTime;
 			timeText.text = Mathf.Round(timeInScene).ToString();
 		}
 
 		public void NewScene(string currentScene)
 		{
-			sceneText.text = currentScene;
+			if (showScene) sceneText.text = currentScene;
 			timeInScene = 0;
 		}
 
