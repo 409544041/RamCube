@@ -35,7 +35,7 @@ namespace Qbism.Cubes
 		public void HandleHittingPlayer(bool bulletFart, float hitDist)
 		{
 			if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1)
-				&& detector.isClosed == false)
+				&& !detector.isClosed)
 			{
 				if (bulletFart)
 				{
@@ -50,6 +50,7 @@ namespace Qbism.Cubes
 					refs.gcRef.rewindPulser.StopPulse();
 					detector.rewindPulseViaLaser = false;
 				}
+
 				detector.Close();
 			}
 

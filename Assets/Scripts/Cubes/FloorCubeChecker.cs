@@ -77,13 +77,18 @@ namespace Qbism.Cubes
 				currentCube = handler.FetchCube(cubePos, true);
 				bool differentCubes = currentCube != previousCube;
 
+				//works for laser but not for magnet. else another flip will start regardless of what
+				//cube it landed on, making for weird movements.
 				foreach (var lRef in lasers)
 				{
 					lRef.detector.HandleLaser();
 				}
 
 				if (currentCube.FetchType() == CubeTypes.Boosting && differentCubes)
+				{
 					currentCube.refs.boostCube.PrepareAction(cube);
+					if (mover.isBeingPulled) mover.isBeingPulled = false;
+				}
 
 				else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
 					StartCoroutine(HandleTurning(cube, previousCube));

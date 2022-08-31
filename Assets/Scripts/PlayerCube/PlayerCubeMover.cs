@@ -46,6 +46,7 @@ namespace Qbism.PlayerCube
 		public bool isMoving { get; set; } = false;
 		private Vector3 startScale = new Vector3(1, 1, 1);
 		public bool isStunned { get; set; }	= false;
+		public bool isBeingPulled { get; set; } = false;
 		public bool isOutOfBounds { get; set; } = false;
 		public bool isInIntroSeq { get; set; } = false;
 		public bool isLowered { get; set; } = false;
@@ -108,6 +109,12 @@ namespace Qbism.PlayerCube
 			Vector2Int posAhead)
 		{
 			SetSide(cube, ref side, ref posAhead);
+			initiatedByPlayer = false;
+			StartCoroutine(Move(side, turnAxis, posAhead));
+		}
+
+		public void InitiateFromMagnet(Transform side, Vector3 turnAxis, Vector2Int posAhead)
+		{
 			initiatedByPlayer = false;
 			StartCoroutine(Move(side, turnAxis, posAhead));
 		}
