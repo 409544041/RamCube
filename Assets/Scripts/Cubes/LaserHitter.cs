@@ -17,10 +17,6 @@ namespace Qbism.Cubes
 		LaserJuicer juicer;
 		DetectionLaser detector;
 
-		//States
-		public bool isClosed { get; set; } = false;
-		bool rewindPulseViaLaser = false;
-
 		private void Awake()
 		{
 			fartLauncher = refs.gcRef.pRef.fartLauncher;
@@ -39,7 +35,7 @@ namespace Qbism.Cubes
 		public void HandleHittingPlayer(bool bulletFart, float hitDist)
 		{
 			if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1)
-				&& isClosed == false)
+				&& detector.isClosed == false)
 			{
 				if (bulletFart)
 				{
@@ -49,51 +45,25 @@ namespace Qbism.Cubes
 
 				refs.gcRef.pRef.stunJuicer.StopStunVFX();
 
-				if (rewindPulseViaLaser)
+				if (detector.rewindPulseViaLaser)
 				{
 					refs.gcRef.rewindPulser.StopPulse();
-					rewindPulseViaLaser = false;
+					detector.rewindPulseViaLaser = false;
 				}
-				Close();
+				detector.Close();
 			}
 
 			else if (!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward),
 				-1) && !juicer.isDenying)
 			{
-				if (isClosed) isClosed = false;
+				if (detector.isClosed) detector.isClosed = false;
 				juicer.TriggerDenyJuice(detector.currentDist);
-				rewindPulseViaLaser = true;
+				detector.rewindPulseViaLaser = true;
 				refs.gcRef.rewindPulser.InitiatePulse();
 				refs.gcRef.pRef.stunJuicer.PlayStunVFX();
 				mover.isStunned = true;
 				detector.CastDottedLines(hitDist, detector.distance);
 			}
-		}
-
-		public void GoIdle()
-		{
-			if (isClosed) isClosed = false;
-
-			if (rewindPulseViaLaser)
-			{
-				refs.gcRef.rewindPulser.StopPulse();
-				rewindPulseViaLaser = false;
-			}
-
-			juicer.TriggerIdleJuice();
-		}
-
-		public void Close()
-		{
-			isClosed = true;
-			juicer.TriggerPassJuice();
-			detector.CheckForCubes(transform.forward, 1, 
-				(int)(Math.Floor(detector.distance)), false);
-		}
-
-		public bool GetClosedStatus()
-		{
-			return isClosed;
 		}
 	}
 }

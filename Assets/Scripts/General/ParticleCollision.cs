@@ -16,7 +16,7 @@ namespace Qbism.General
 			onParticleCollision.Invoke();
 
 			var detector = other.GetComponentInParent<DetectionLaser>();
-			if (detector) detector.effector.Close();
+			if (detector) detector.Close();
 		}
 	}
 }

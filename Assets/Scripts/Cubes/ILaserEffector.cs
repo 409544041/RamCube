@@ -8,8 +8,5 @@ namespace Qbism.Cubes
 	{
 		void HandleHittingPlayer(bool bulletFart, float hitDist);
 		void HandleHittingPlayerInBoost(Vector3 crossPoint, bool bulletFart);
-		void GoIdle();
-		void Close();
-		bool GetClosedStatus();
 	}
 }

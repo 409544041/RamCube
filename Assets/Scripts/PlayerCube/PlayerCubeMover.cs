@@ -252,7 +252,7 @@ namespace Qbism.PlayerCube
 
 			foreach (var lRef in refs.gcRef.laserRefs)
 			{
-				lRef.detector.effector.GoIdle();
+				lRef.detector.GoIdle();
 			}
 		}
 

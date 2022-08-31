@@ -23,9 +23,11 @@ namespace Qbism.Cubes
 		public ILaserEffector effector { get; private set; }
 
 		//States
+		public bool isClosed { get; set; } = false;
 		public float currentDist { get; set; } = 0f;
 		bool eyeClosedForFinish = false;
 		public List<Vector2Int> posInLaserPath { get; set; } = new List<Vector2Int>();
+		public bool rewindPulseViaLaser { get; set; } = false;
 
 		private void Awake()
 		{
@@ -72,13 +74,13 @@ namespace Qbism.Cubes
 					effector.HandleHittingPlayer(true, dist);
 				else
 				{
-					effector.GoIdle();
+					GoIdle();
 					CastDottedLines(dist, distance);
 				}
 			}
 			else
 			{
-				effector.GoIdle();
+				GoIdle();
 				CastDottedLines(distance, distance);
 			}
 		}
@@ -141,11 +143,32 @@ namespace Qbism.Cubes
 			if (hits.Length == 0) dist = distance + radius + .2f;
 			else dist = hits[0].distance + radius + .2f;
 
-			if (dist != currentDist && !effector.GetClosedStatus())
+			if (dist != currentDist && !isClosed)
 			{
 				juicer.AdjustBeamVisualLength(dist);
 				currentDist = dist;
 			}
+		}
+
+		public void GoIdle()
+		{
+			if (isClosed) isClosed = false;
+
+			if (rewindPulseViaLaser)
+			{
+				refs.gcRef.rewindPulser.StopPulse();
+				rewindPulseViaLaser = false;
+			}
+
+			juicer.TriggerIdleJuice();
+		}
+
+		public void Close()
+		{
+			isClosed = true;
+			juicer.TriggerPassJuice();
+			CheckForCubes(transform.forward, 1,
+				(int)(Math.Floor(distance)), false);
 		}
 
 		public void CastDottedLines(float dist, float startDist)
