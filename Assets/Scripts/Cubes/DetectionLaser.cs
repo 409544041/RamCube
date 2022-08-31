@@ -6,14 +6,13 @@ using UnityEngine;
 
 namespace Qbism.Cubes
 {
-	public class LaserCube : MonoBehaviour
+	public class DetectionLaser : MonoBehaviour
 	{
 		//Config parameters
 		public float distance = 1;
 		[SerializeField] Transform laserOrigin;
 		[SerializeField] float radius = .3f;
 		[SerializeField] LayerMask chosenLayers;
-		[SerializeField] float idleLaserDelay = .5f;
 		[SerializeField] LaserRefHolder refs;
 		
 		//Cache
@@ -21,16 +20,12 @@ namespace Qbism.Cubes
 		LaserJuicer juicer;
 		CubeHandler cubeHandler;
 		FinishCube finish;
-		PlayerFartLauncher fartLauncher;
-
+		public ILaserEffector effector { get; private set; }
 
 		//States
-		float currentDist = 0f;
-		bool isClosed = false;
-		public bool laserPause { get; set; } = false;
+		public float currentDist { get; set; } = 0f;
 		bool eyeClosedForFinish = false;
 		public List<Vector2Int> posInLaserPath { get; set; } = new List<Vector2Int>();
-		bool rewindPulseViaLaser = false;
 
 		private void Awake()
 		{
@@ -38,7 +33,7 @@ namespace Qbism.Cubes
 			juicer = refs.juicer;
 			cubeHandler = refs.gcRef.glRef.cubeHandler;
 			finish = refs.gcRef.finishRef.finishCube;
-			fartLauncher = refs.gcRef.pRef.fartLauncher;
+			effector = GetComponent<ILaserEffector>();
 		}
 
 		private void Start()
@@ -73,16 +68,17 @@ namespace Qbism.Cubes
 
 			if (hitDist < distance)
 			{
-				if (playerHit && !mover.isResetting) HandleHittingPlayer(true, dist);
+				if (playerHit && !mover.isResetting) 
+					effector.HandleHittingPlayer(true, dist);
 				else
 				{
-					GoIdle();
+					effector.GoIdle();
 					CastDottedLines(dist, distance);
 				}
 			}
 			else
 			{
-				GoIdle();
+				effector.GoIdle();
 				CastDottedLines(distance, distance);
 			}
 		}
@@ -120,67 +116,6 @@ namespace Qbism.Cubes
 			return distance;
 		}
 
-		public void HandleHittingPlayerInBoost(Vector3 crossPoint, bool bulletFart)
-		{
-			if (refs.gcRef.pRef.playerMover.isStunned) return;
-			fartLauncher.SetBulletFartToPos(crossPoint);
-			HandleHittingPlayer(bulletFart, distance);
-		}
-
-		private void HandleHittingPlayer(bool bulletFart, float hitDist)
-		{
-			if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1)
-				&& isClosed == false)
-			{
-				if (bulletFart)
-				{
-					fartLauncher.SetBulletFartBackToParent();
-					fartLauncher.FireBulletFart();
-				}
-
-				refs.gcRef.pRef.stunJuicer.StopStunVFX();
-
-				if (rewindPulseViaLaser)
-				{
-					refs.gcRef.rewindPulser.StopPulse();
-					rewindPulseViaLaser = false;
-				}
-				CloseEye();
-			}
-
-			else if (!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward),
-				-1) && !juicer.isDenying)
-			{
-				if (isClosed) isClosed = false;
-				juicer.TriggerDenyJuice(currentDist);
-				rewindPulseViaLaser = true;
-				refs.gcRef.rewindPulser.InitiatePulse();
-				refs.gcRef.pRef.stunJuicer.PlayStunVFX();
-				mover.isStunned = true;
-				CastDottedLines(hitDist, distance);
-			}
-		}
-
-		public void GoIdle()
-		{
-			if (isClosed) isClosed = false;
-
-			if (rewindPulseViaLaser)
-			{
-				refs.gcRef.rewindPulser.StopPulse();
-				rewindPulseViaLaser = false;
-			}
-
-			juicer.TriggerIdleJuice();
-		}
-
-		public void CloseEye()
-		{
-			isClosed = true;
-			juicer.TriggerPassJuice();
-			CheckForCubes(transform.forward, 1, (int)(Math.Floor(distance)), false);
-		}
-
 		private RaycastHit[] SortedSphereCasts()
 		{
 			RaycastHit[] hits = Physics.SphereCastAll(laserOrigin.position, radius,
@@ -206,7 +141,7 @@ namespace Qbism.Cubes
 			if (hits.Length == 0) dist = distance + radius + .2f;
 			else dist = hits[0].distance + radius + .2f;
 
-			if (dist != currentDist && !isClosed)
+			if (dist != currentDist && !effector.GetClosedStatus())
 			{
 				juicer.AdjustBeamVisualLength(dist);
 				currentDist = dist;
@@ -227,7 +162,7 @@ namespace Qbism.Cubes
 				CheckForCubes(laserDir, distRoundDown + 1, startDistRoundDown, false);
 		}
 
-		private void CheckForCubes(Vector3 laserDir, int iStart, 
+		public void CheckForCubes(Vector3 laserDir, int iStart, 
 			int iCondition, bool enable)
 		{
 			if (enable) posInLaserPath.Clear();

@@ -47,7 +47,7 @@ namespace Qbism.MoveableCubes
 
 			foreach (var lRef in lasers)
 			{
-				lRef.laser.HandleLaser();
+				lRef.detector.HandleLaser();
 			}
 		}
 	}

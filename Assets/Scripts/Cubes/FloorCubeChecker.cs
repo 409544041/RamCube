@@ -79,7 +79,7 @@ namespace Qbism.Cubes
 
 				foreach (var lRef in lasers)
 				{
-					lRef.laser.HandleLaser();
+					lRef.detector.HandleLaser();
 				}
 
 				if (currentCube.FetchType() == CubeTypes.Boosting && differentCubes)

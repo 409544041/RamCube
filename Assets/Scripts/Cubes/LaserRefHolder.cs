@@ -7,7 +7,7 @@ public class LaserRefHolder : MonoBehaviour
 {
 	//Config parameters
 	public BoxCollider wallCollider;
-	public LaserCube laser;
+	public DetectionLaser detector;
 	public LaserJuicer juicer;
 	public Rigidbody[] partsRB;
 	public BoxCollider[] partsColl;

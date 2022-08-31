@@ -131,7 +131,7 @@ namespace Qbism.Rewind
 			{
 				foreach (var laserRef in laserRefs)
 				{
-					laserRef.laser.HandleLaser();
+					laserRef.detector.HandleLaser();
 				}
 			}
 		}

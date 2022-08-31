@@ -18,8 +18,8 @@ namespace Qbism.Cubes
 
 		//States
 		List<Vector2Int> posInBoostPath = new List<Vector2Int>();
-		Dictionary<Vector3, Dictionary<LaserCube, bool>> laserCrossPointDic = 
-			new Dictionary<Vector3, Dictionary<LaserCube, bool>>();
+		Dictionary<Vector3, Dictionary<DetectionLaser, bool>> laserCrossPointDic = 
+			new Dictionary<Vector3, Dictionary<DetectionLaser, bool>>();
 
 		public void PrepareAction(GameObject cube)
 		{
@@ -92,23 +92,23 @@ namespace Qbism.Cubes
 
 		private IEnumerator HandleCrossingLasers(GameObject cube)
 		{
-			foreach (KeyValuePair<Vector3, Dictionary<LaserCube, bool>> pair in laserCrossPointDic)
+			foreach (KeyValuePair<Vector3, Dictionary<DetectionLaser, bool>> pair in laserCrossPointDic)
 			{
 				var crossPoint = pair.Key;
 				var nestedDic = pair.Value;
-				LaserCube laser = null;
+				DetectionLaser detector = null;
 				bool farted = false;
 
-				foreach (KeyValuePair<LaserCube, bool> nestedPair in nestedDic)
+				foreach (KeyValuePair<DetectionLaser, bool> nestedPair in nestedDic)
 				{
-					laser = nestedPair.Key;
+					detector = nestedPair.Key;
 					farted = nestedPair.Value;
 				}
 
 				if (Vector3.Distance(cube.transform.position, crossPoint) < 0.5f && !farted)
 				{
-					laser.HandleHittingPlayerInBoost(crossPoint, true);
-					nestedDic[laser] = true;
+					detector.effector.HandleHittingPlayerInBoost(crossPoint, true);
+					nestedDic[detector] = true;
 					yield return null;
 				}
 			}
@@ -116,16 +116,16 @@ namespace Qbism.Cubes
 
 		private IEnumerator HandleCrossingLasersForwarded()
 		{
-			foreach (KeyValuePair<Vector3, Dictionary<LaserCube, bool>> pair in laserCrossPointDic)
+			foreach (KeyValuePair<Vector3, Dictionary<DetectionLaser, bool>> pair in laserCrossPointDic)
 			{
 				var crossPoint = pair.Key;
 				var nestedDic = pair.Value;
 
-				foreach (KeyValuePair<LaserCube, bool> nestedPair in nestedDic)
+				foreach (KeyValuePair<DetectionLaser, bool> nestedPair in nestedDic)
 				{
 					if (nestedPair.Value == false)
 					{
-						nestedPair.Key.HandleHittingPlayerInBoost(crossPoint, false);
+						nestedPair.Key.effector.HandleHittingPlayerInBoost(crossPoint, false);
 						yield return null;
 					}
 				}
@@ -154,14 +154,14 @@ namespace Qbism.Cubes
 
 			foreach (var lRef in lRefs)
 			{
-				foreach (var lPos in lRef.laser.posInLaserPath)
+				foreach (var lPos in lRef.detector.posInLaserPath)
 				{
 					foreach (var bPos in posInBoostPath)
 					{
 						if (bPos != lPos) continue;
 
-						Dictionary<LaserCube, bool> laserDic = new Dictionary<LaserCube, bool>();
-						laserDic.Add(lRef.laser, false);
+						Dictionary<DetectionLaser, bool> laserDic = new Dictionary<DetectionLaser, bool>();
+						laserDic.Add(lRef.detector, false);
 
 						laserCrossPointDic.Add(new Vector3(bPos.x, 
 							cube.transform.position.y, bPos.y), laserDic);
