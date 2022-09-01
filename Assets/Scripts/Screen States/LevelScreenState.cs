@@ -59,7 +59,7 @@ namespace Qbism.ScreenStateMachine
 		public void HandleMoveInput(Transform turnSide, Vector2Int posAheadDir, Vector3 turnAxis,
 			InputDetector inputDetector)
 		{
-			if (mover.isOutOfBounds || !mover.initiatedByPlayer || !mover.allowMoveInput) return;
+			if (mover.isOutOfBounds || !mover.allowMoveInput) return;
 
 			inputDetector.inputting = true;
 			if (mover.isMoving && !mover.newInput && !mover.isLowered)

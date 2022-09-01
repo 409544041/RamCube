@@ -22,7 +22,7 @@ namespace Qbism.Cubes
 		PlayerCubeFlipJuicer playerFlipJuicer;
 		FeedForwardCube[] ffCubes;
 		PlayerRefHolder player;
-		LaserRefHolder[] lasers;
+		LaserRefHolder[] laserDetectors;
 
 		//States
 		public FloorCube currentCube { get; set; } = null;
@@ -40,7 +40,7 @@ namespace Qbism.Cubes
 			playerFlipJuicer = player.flipJuicer;
 			playerBoostJuicer = player.boostJuicer;
 			ffCubes = player.ffCubes;
-			lasers = glRef.gcRef.laserRefs;
+			laserDetectors = glRef.gcRef.laserRefs;
 		}
 
 		private void OnEnable() 
@@ -65,6 +65,7 @@ namespace Qbism.Cubes
 			Transform side, Vector3 turnAxis, Vector2Int posAhead)
 		{
 			FloorCube previousCube = currentCube;
+			bool actionDecided = false; 
 
 			if (previousCube.FetchType() == CubeTypes.Static)
 				previousCube.refs.staticCube.BecomeShrinkingCube();
@@ -77,23 +78,31 @@ namespace Qbism.Cubes
 				currentCube = handler.FetchCube(cubePos, true);
 				bool differentCubes = currentCube != previousCube;
 
-				//works for laser but not for magnet. else another flip will start regardless of what
-				//cube it landed on, making for weird movements.
-				foreach (var lRef in lasers)
+				foreach (var lRef in laserDetectors)
 				{
-					lRef.detector.HandleLaser();
+					if (lRef.detector.type == TotemTypes.laser) lRef.detector.HandleLaser();
 				}
 
 				if (currentCube.FetchType() == CubeTypes.Boosting && differentCubes)
 				{
 					currentCube.refs.boostCube.PrepareAction(cube);
 					if (mover.isBeingPulled) mover.isBeingPulled = false;
+					actionDecided = true;
 				}
 
 				else if ((currentCube.FetchType() == CubeTypes.Turning) && differentCubes)
+				{
 					StartCoroutine(HandleTurning(cube, previousCube));
+					actionDecided = true;
+				}
 
-				else
+				foreach (var lRef in laserDetectors)
+				{
+					if (actionDecided) break;
+					if (lRef.detector.type == TotemTypes.magnet) lRef.detector.HandleLaser();
+				}
+
+				if (!actionDecided && !mover.isBeingPulled)
 				{
 					if (differentCubes) HandleLandingOnFinalPos(previousCube);
 					else

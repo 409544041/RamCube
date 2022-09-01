@@ -70,12 +70,13 @@ namespace Qbism.Cubes
 				if (isNextToMagnet)
 				{
 					mover.isBeingPulled = false;
-					mover.allowMoveInput = true;
+					mover.allowRewind = true;
+
 					return;
 				}
 
 				if (!isNextToMagnet) mover.isBeingPulled = true;
-				mover.allowMoveInput = false;
+				mover.allowRewind = false;
 				mover.InitiateFromMagnet(side, turnAxis, posAhead);
 				
 				detector.CastDottedLines(hitDist, detector.distance); //different dotted lines
@@ -83,8 +84,7 @@ namespace Qbism.Cubes
 		}
 
 		private void GetPullDirection(out Transform side, out Vector3 turnAxis,
-			out Vector2Int posAhead
-			, out bool isNextToMagnet)
+			out Vector2Int posAhead, out bool isNextToMagnet)
 		{
 			var pos = FetchGridPos();
 			var playerPos = refs.gcRef.pRef.cubePos.FetchGridPos();

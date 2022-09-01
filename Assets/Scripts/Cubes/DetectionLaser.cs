@@ -13,6 +13,7 @@ namespace Qbism.Cubes
 		[SerializeField] Transform laserOrigin;
 		[SerializeField] float radius = .3f;
 		[SerializeField] LayerMask chosenLayers;
+		public TotemTypes type;
 		[SerializeField] LaserRefHolder refs;
 		
 		//Cache
