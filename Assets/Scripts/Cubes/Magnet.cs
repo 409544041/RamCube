@@ -26,7 +26,8 @@ namespace Qbism.Cubes
 
 		public void HandleHittingPlayerInBoost(Vector3 crossPoint, bool bulletFart)
 		{
-			
+			fartLauncher.SetBulletFartToPos(crossPoint);
+			HandleHittingPlayer(bulletFart, detector.distance);
 		}
 
 		public void HandleHittingPlayer(bool bulletFart, float hitDist)
@@ -79,7 +80,7 @@ namespace Qbism.Cubes
 
 				if (!isNextToMagnet) mover.isBeingPulled = true;
 				mover.allowRewind = false;
-				mover.InitiateFromMagnet(side, turnAxis, posAhead);
+				if (!mover.isBoosting) mover.InitiateFromMagnet(side, turnAxis, posAhead); 
 				
 				detector.CastDottedLines(hitDist, detector.distance); //TO DO: need different dotted lines
 			}

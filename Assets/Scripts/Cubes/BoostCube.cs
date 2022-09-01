@@ -47,6 +47,7 @@ namespace Qbism.Cubes
 			PopUpWall popWall = null;
 			GameObject wallObject = null;
 			bool remainOnBoost = false;
+			bool laserActionDone = false;
 			Vector3 boostTarget = GetBoostTarget(boostMaskPlayer, out wallObject, out remainOnBoost);
 			if (wallObject) popWall = wallObject.GetComponent<PopUpWall>();
 			GetPosInBoostPath(boostTarget);
@@ -67,7 +68,10 @@ namespace Qbism.Cubes
 					popWall.InitiatePopUp();
 
 				if (crossPoints.Count > 0)
-					StartCoroutine(HandleCrossingLasers(cube));
+				{
+					HandleCrossingLasers(cube);
+					laserActionDone = true;
+				}
 
 				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.5f)
 				{
@@ -98,8 +102,11 @@ namespace Qbism.Cubes
 				yield return null;
 			}
 
-			if (crossPoints.Count > 0)
-				StartCoroutine(HandleCrossingLasersForwarded());
+			if (crossPoints.Count > 0 && !laserActionDone)
+			{
+				HandleCrossingLasersForwarded();
+				laserActionDone = true;
+			}
 
 			if (!mover.isOutOfBounds)
 			{
@@ -139,22 +146,19 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private IEnumerator HandleCrossingLasers(GameObject cube)
+		private void HandleCrossingLasers(GameObject cube)
 		{
 			if (Vector3.Distance(cube.transform.position, nearestCrossPoint.crossPointPos) < 0.5f)
 			{
 				nearestCrossPoint.detector.effector.
 					HandleHittingPlayerInBoost(nearestCrossPoint.crossPointPos, true);
-				yield return null;
 			}
-
 		}
 
-		private IEnumerator HandleCrossingLasersForwarded()
+		private void HandleCrossingLasersForwarded()
 		{
 			nearestCrossPoint.detector.effector.
 				HandleHittingPlayerInBoost(nearestCrossPoint.crossPointPos, false);
-			yield return null;
 		}
 
 		private void GetPosInBoostPath(Vector3 boostTarget)
