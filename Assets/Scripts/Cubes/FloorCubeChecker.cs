@@ -134,6 +134,7 @@ namespace Qbism.Cubes
 				else mover.InitiateLowering(cubePos, false);
 
 				mover.justBoosted = false;
+				mover.isBeingPulled = false;
 			}
 		}
 

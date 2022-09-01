@@ -13,14 +13,14 @@ namespace Qbism.Cubes
 		//Cache
 		PlayerFartLauncher fartLauncher;
 		PlayerCubeMover mover;
-		//LaserJuicer juicer;
+		LaserJuicer juicer;
 		DetectionLaser detector;
 
 		private void Awake()
 		{
 			fartLauncher = refs.gcRef.pRef.fartLauncher;
 			mover = refs.gcRef.pRef.playerMover;
-			//juicer = refs.juicer;
+			juicer = refs.juicer;
 			detector = refs.detector;
 		}
 
@@ -49,13 +49,15 @@ namespace Qbism.Cubes
 				}
 
 				detector.Close();
+
+				if (mover.isBeingPulled) mover.isBeingPulled = false;
 			}
 
 			else if (!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward),
 				-1) /* && !juicer.isDenying*/) //pulljuicer.ispulling
 			{
 				if (detector.isClosed) detector.isClosed = false;
-				//juicer.TriggerDenyJuice(detector.currentDist);
+				juicer.TriggerDenyJuice(detector.currentDist); //TO DO: New juice
 				//detector.rewindPulseViaLaser = true;
 				//refs.gcRef.rewindPulser.InitiatePulse();
 				//refs.gcRef.pRef.stunJuicer.PlayStunVFX();
@@ -79,7 +81,7 @@ namespace Qbism.Cubes
 				mover.allowRewind = false;
 				mover.InitiateFromMagnet(side, turnAxis, posAhead);
 				
-				detector.CastDottedLines(hitDist, detector.distance); //different dotted lines
+				detector.CastDottedLines(hitDist, detector.distance); //TO DO: need different dotted lines
 			}
 		}
 
