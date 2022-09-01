@@ -27,7 +27,7 @@ namespace Qbism.Cubes
 
 		public void HandleHittingPlayerInBoost(Vector3 crossPoint, bool bulletFart)
 		{
-			if (refs.gcRef.pRef.playerMover.isStunned) return;
+			if (mover.isStunned) return;
 			fartLauncher.SetBulletFartToPos(crossPoint);
 			HandleHittingPlayer(bulletFart, detector.distance);
 		}

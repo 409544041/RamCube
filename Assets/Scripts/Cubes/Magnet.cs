@@ -26,7 +26,7 @@ namespace Qbism.Cubes
 
 		public void HandleHittingPlayerInBoost(Vector3 crossPoint, bool bulletFart)
 		{
-			throw new System.NotImplementedException();
+			
 		}
 
 		public void HandleHittingPlayer(bool bulletFart, float hitDist)

@@ -18,8 +18,15 @@ namespace Qbism.Cubes
 
 		//States
 		List<Vector2Int> posInBoostPath = new List<Vector2Int>();
-		Dictionary<Vector3, Dictionary<DetectionLaser, bool>> laserCrossPointDic = 
-			new Dictionary<Vector3, Dictionary<DetectionLaser, bool>>();
+		List<CrossPoint> crossPoints = new List<CrossPoint> ();
+		CrossPoint nearestCrossPoint;
+
+		public struct CrossPoint
+		{
+			public Vector3 crossPointPos;
+			public float distToCrossPoint;
+			public DetectionLaser detector;
+		}
 
 		public void PrepareAction(GameObject cube)
 		{
@@ -44,6 +51,7 @@ namespace Qbism.Cubes
 			if (wallObject) popWall = wallObject.GetComponent<PopUpWall>();
 			GetPosInBoostPath(boostTarget);
 			CheckForBoostLaserOverlap(cube);
+			GetNearestCrossPoint();
 
 			mover.isBoosting = true;
 			mover.justBoosted = true;
@@ -58,19 +66,39 @@ namespace Qbism.Cubes
 				if (popWall && Vector3.Distance(cube.transform.position, boostTarget) < 2f)
 					popWall.InitiatePopUp();
 
-				if (laserCrossPointDic.Count > 0)
+				if (crossPoints.Count > 0)
 					StartCoroutine(HandleCrossingLasers(cube));
 
-				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.5f || mover.newInput)
+				if (Vector3.Distance(cube.transform.position, boostTarget) < 0.5f)
 				{
 					mover.isBoosting = false;
 					cube.transform.position = boostTarget;
+				}
+
+				if (mover.newInput)
+				{
+					if (crossPoints.Count == 0)
+					{
+						mover.isBoosting = false;
+						cube.transform.position = boostTarget;
+					}
+					else
+					{
+						mover.isBoosting = false;
+						cube.transform.position = nearestCrossPoint.crossPointPos;
+					}
+				}
+
+				if (mover.isStunned || mover.isBeingPulled)
+				{
+					mover.isBoosting = false;
+					cube.transform.position = nearestCrossPoint.crossPointPos;
 				}
 			
 				yield return null;
 			}
 
-			if (laserCrossPointDic.Count > 0)
+			if (crossPoints.Count > 0)
 				StartCoroutine(HandleCrossingLasersForwarded());
 
 			if (!mover.isOutOfBounds)
@@ -90,50 +118,48 @@ namespace Qbism.Cubes
 			}
 		}
 
-		private IEnumerator HandleCrossingLasers(GameObject cube)
+		private void GetNearestCrossPoint()
 		{
-			foreach (KeyValuePair<Vector3, Dictionary<DetectionLaser, bool>> pair in laserCrossPointDic)
-			{
-				var crossPoint = pair.Key;
-				var nestedDic = pair.Value;
-				DetectionLaser detector = null;
-				bool farted = false;
+			float shortestDist = float.PositiveInfinity;
 
-				foreach (KeyValuePair<DetectionLaser, bool> nestedPair in nestedDic)
+			foreach (var crossPoint in crossPoints)
+			{
+				if (shortestDist == float.PositiveInfinity)
 				{
-					detector = nestedPair.Key;
-					farted = nestedPair.Value;
+					shortestDist = crossPoint.distToCrossPoint;
+					nearestCrossPoint = crossPoint;
+					continue;
 				}
 
-				if (Vector3.Distance(cube.transform.position, crossPoint) < 0.5f && !farted)
+				if (crossPoint.distToCrossPoint < shortestDist)
 				{
-					detector.effector.HandleHittingPlayerInBoost(crossPoint, true);
-					nestedDic[detector] = true;
-					yield return null;
+					shortestDist = crossPoint.distToCrossPoint;
+					nearestCrossPoint = crossPoint;
 				}
 			}
+		}
+
+		private IEnumerator HandleCrossingLasers(GameObject cube)
+		{
+			if (Vector3.Distance(cube.transform.position, nearestCrossPoint.crossPointPos) < 0.5f)
+			{
+				nearestCrossPoint.detector.effector.
+					HandleHittingPlayerInBoost(nearestCrossPoint.crossPointPos, true);
+				yield return null;
+			}
+
 		}
 
 		private IEnumerator HandleCrossingLasersForwarded()
 		{
-			foreach (KeyValuePair<Vector3, Dictionary<DetectionLaser, bool>> pair in laserCrossPointDic)
-			{
-				var crossPoint = pair.Key;
-				var nestedDic = pair.Value;
-
-				foreach (KeyValuePair<DetectionLaser, bool> nestedPair in nestedDic)
-				{
-					if (nestedPair.Value == false)
-					{
-						nestedPair.Key.effector.HandleHittingPlayerInBoost(crossPoint, false);
-						yield return null;
-					}
-				}
-			}
+			nearestCrossPoint.detector.effector.
+				HandleHittingPlayerInBoost(nearestCrossPoint.crossPointPos, false);
+			yield return null;
 		}
 
 		private void GetPosInBoostPath(Vector3 boostTarget)
 		{
+			posInBoostPath.Clear();
 			var dir = refs.boostDirTrans.transform.forward;
 			var dist = Vector3.Distance(boostTarget, transform.position) + 1;
 			int distRoundDown = (int)(Math.Floor(dist));
@@ -149,7 +175,7 @@ namespace Qbism.Cubes
 
 		private void CheckForBoostLaserOverlap(GameObject cube)
 		{
-			laserCrossPointDic.Clear();
+			crossPoints.Clear();
 			var lRefs = refs.gcRef.laserRefs;
 
 			foreach (var lRef in lRefs)
@@ -160,11 +186,14 @@ namespace Qbism.Cubes
 					{
 						if (bPos != lPos) continue;
 
-						Dictionary<DetectionLaser, bool> laserDic = new Dictionary<DetectionLaser, bool>();
-						laserDic.Add(lRef.detector, false);
+						var newCrossPoint = new CrossPoint();
+						newCrossPoint.crossPointPos = 
+							new Vector3(bPos.x, cube.transform.position.y, bPos.y);
+						newCrossPoint.distToCrossPoint = Vector3.Distance(transform.position, 
+							newCrossPoint.crossPointPos);
+						newCrossPoint.detector = lRef.detector;
 
-						laserCrossPointDic.Add(new Vector3(bPos.x, 
-							cube.transform.position.y, bPos.y), laserDic);
+						crossPoints.Add(newCrossPoint);
 					}
 				}
 			}
