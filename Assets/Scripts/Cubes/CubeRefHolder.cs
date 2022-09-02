@@ -20,7 +20,8 @@ namespace Qbism.Cubes
 		public TimeBody timeBody;
 		public Renderer mesh;
 		public Renderer shrinkMesh;
-		public LineRenderer lineRender;
+		public LineRenderer laserDottedLine;
+		public LineRenderer magnetDottedLine;
 		[Header("Effector")]
 		public BoostCube boostCube;
 		public Transform boostRayOrigin;

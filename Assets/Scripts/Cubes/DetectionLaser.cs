@@ -204,7 +204,7 @@ namespace Qbism.Cubes
 				if (cubeHandler.CheckFloorCubeDicKey(roundedCheckPos))
 				{
 					var cube = cubeHandler.FetchCube(roundedCheckPos, true);
-					cube.CastDottedLines(transform.position, enable);
+					cube.CastDottedLines(transform.position, enable, type);
 				}
 			}
 		}

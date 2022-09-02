@@ -241,8 +241,8 @@ namespace Qbism.MoveableCubes
 		public void UpdateCenterPosition()
 		{
 			center.position = transform.position;
-			refs.lineRender.transform.position = new Vector3 (transform.position.x, 
-				refs.lineRender.transform.position.y, transform.position.z);
+			refs.laserDottedLine.transform.position = new Vector3 (transform.position.x, 
+				refs.laserDottedLine.transform.position.y, transform.position.z);
 
 			if (refs.movEffector != null)
 			{

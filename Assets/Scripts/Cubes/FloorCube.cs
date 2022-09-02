@@ -11,7 +11,7 @@ namespace Qbism.Cubes
 		public CubeTypes type = CubeTypes.Shrinking;
 		public CubeRefHolder refs;
 
-		public void CastDottedLines(Vector3 laserPos, bool enableValue)
+		public void CastDottedLines(Vector3 laserPos, bool enableValue, TotemTypes type)
 		{
 			//Adjust to get a clean normalized direction
 			var adjustedPos = new Vector3 (laserPos.x, transform.position.y, laserPos.z);
@@ -23,9 +23,13 @@ namespace Qbism.Cubes
 			float endX = .4f * dir.x;
 			float endY = .4f * dir.z;
 
-			refs.lineRender.SetPosition(0, new Vector3(startX, startY, transform.position.y));
-			refs.lineRender.SetPosition(1, new Vector3(endX, endY, transform.position.y));
-			refs.lineRender.enabled = enableValue;
+			LineRenderer dottedLine;
+			if (type == TotemTypes.laser) dottedLine = refs.laserDottedLine;
+			else dottedLine = refs.magnetDottedLine;
+
+			dottedLine.SetPosition(0, new Vector3(startX, startY, transform.position.y));
+			dottedLine.SetPosition(1, new Vector3(endX, endY, transform.position.y));
+			dottedLine.enabled = enableValue;
 		}
 
 		public CubeTypes FetchType()

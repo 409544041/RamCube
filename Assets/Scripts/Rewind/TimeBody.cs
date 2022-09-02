@@ -270,7 +270,7 @@ namespace Qbism.Rewind
 				this.tag = "Moveable";
 				Destroy(cubeRef.floorCube);
 				cubeRef.floorCube = null;
-				cubeRef.lineRender.enabled = false;
+				cubeRef.laserDottedLine.enabled = false;
 				if (moveable.refs.cubeUI != null) moveable.refs.cubeUI.showCubeUI = false;
 				moveable.refs.floorCompAdder.markOnGround.enabled = false;
 				moveable.refs.cubeShrink.ResetTransform();
