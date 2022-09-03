@@ -10,6 +10,7 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		[SerializeField] MMFeedbacks unCompJuice, compJuice, compDiamondJuice, selectedJuice, enterLevelJuice;
+		[SerializeField] ParticleSystem selectVFX;
 		[SerializeField] LevelPinUI pinUI;
 		public float compJuiceDelay, unCompJuiceDelay;
 		public float selectedSize = 1.35f;
@@ -97,6 +98,8 @@ namespace Qbism.WorldMap
 			scaler.RemapCurveOne = curveOne;
 			
 			selectedJuice.PlayFeedbacks();
+			if (curveOne > 1) selectVFX.Play();
+			else selectVFX.Stop();
 		}
 
 		public void PlayEnterLevelJuice()
