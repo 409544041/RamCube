@@ -81,7 +81,8 @@ namespace Qbism.Cubes
 
 				if (mover.newInput)
 				{
-					if (crossPoints.Count == 0)
+					if (crossPoints.Count == 0 || 
+						nearestCrossPoint.detector.CheckIfFacingButtToSource())
 					{
 						mover.isBoosting = false;
 						cube.transform.position = boostTarget;

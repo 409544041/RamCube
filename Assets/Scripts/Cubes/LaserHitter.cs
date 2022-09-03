@@ -55,10 +55,10 @@ namespace Qbism.Cubes
 			}
 
 			else if (!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward),
-				-1) && !juicer.isDenying)
+				-1) && !juicer.isActivated)
 			{
 				if (detector.isClosed) detector.isClosed = false;
-				juicer.TriggerDenyJuice(detector.currentDist);
+				juicer.TriggerActivationJuice();
 				detector.rewindPulseViaLaser = true;
 				refs.gcRef.rewindPulser.InitiatePulse();
 				refs.gcRef.pRef.stunJuicer.PlayStunVFX();

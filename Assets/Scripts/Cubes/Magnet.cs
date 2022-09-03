@@ -54,14 +54,9 @@ namespace Qbism.Cubes
 				if (mover.isBeingPulled) mover.isBeingPulled = false;
 			}
 
-			else if (!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward),
-				-1) /* && !juicer.isDenying*/) //pulljuicer.ispulling
+			else if (!Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
 			{
 				if (detector.isClosed) detector.isClosed = false;
-				juicer.TriggerDenyJuice(detector.currentDist); //TO DO: New juice
-				//detector.rewindPulseViaLaser = true;
-				//refs.gcRef.rewindPulser.InitiatePulse();
-				//refs.gcRef.pRef.stunJuicer.PlayStunVFX();
 
 				Transform side;
 				Vector3 turnAxis;
@@ -74,15 +69,18 @@ namespace Qbism.Cubes
 				{
 					mover.isBeingPulled = false;
 					mover.allowRewind = true;
-
-					return;
+					detector.GoIdle();
 				}
 
-				if (!isNextToMagnet) mover.isBeingPulled = true;
-				mover.allowRewind = false;
-				if (!mover.isBoosting) mover.InitiateFromMagnet(side, turnAxis, posAhead); 
+				if (!isNextToMagnet)
+				{
+					mover.isBeingPulled = true;
+					juicer.TriggerActivationJuice();
+					mover.allowRewind = false;
+					if (!mover.isBoosting) mover.InitiateFromMagnet(side, turnAxis, posAhead);
+				} 
 				
-				detector.CastDottedLines(hitDist, detector.distance); //TO DO: need different dotted lines
+				detector.CastDottedLines(hitDist, detector.distance);
 			}
 		}
 

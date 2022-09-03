@@ -9,12 +9,13 @@ namespace Qbism.Cubes
 	public class LaserJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks denyJuiceWiggle, denyJuice, passJuice;
+		[SerializeField] MMFeedbacks activateJuiceWiggle, activateJuice, passJuice;
 		[Header ("Laser")]
 		[SerializeField] Light laserTipLight;
 		[Header ("Particles")]
 		[SerializeField] ParticleSystem laserBeam; 
-		[SerializeField] ParticleSystem denyBeam, denySunSpots, pinkEyeVFX;
+		[SerializeField] ParticleSystem activatedBeam, activatedSpots, pinkEyeVFX;
+		[SerializeField] int spotsEmissionMult = 25;
 
 		//Cache
 		LaserMouthAnimator mouthAnim;
@@ -22,16 +23,15 @@ namespace Qbism.Cubes
 		MMFeedbackWiggle denyMMWiggle;
 
 		//States
-		public bool isDenying { get; private set; } = false;
+		public bool isActivated { get; private set; } = false;
 		float shakeTimer = 0;
 		float shakeDur = 0;
-		float stunTimer = 0;
 
 		private void Awake() 
 		{
 			eyeAnim = GetComponentInChildren<LaserEyeAnimator>();
 			mouthAnim = GetComponentInChildren<LaserMouthAnimator>();
-			denyMMWiggle = denyJuiceWiggle.GetComponent<MMFeedbackWiggle>();
+			denyMMWiggle = activateJuiceWiggle.GetComponent<MMFeedbackWiggle>();
 			shakeDur = denyMMWiggle.WigglePositionDuration;
 		}
 
@@ -43,16 +43,17 @@ namespace Qbism.Cubes
 		public void AdjustBeamVisualLength(float dist)
 		{
 			var idleMain = laserBeam.main;
-			idleMain.startSizeZMultiplier = dist + .1f;
+			var activatedMain = activatedBeam.main;
+			var spotsShape = activatedSpots.shape;
+			var spotsMain = activatedSpots.main;
+			var spotsEmission = activatedSpots.emission;
+
 			//The .1f is to ensure that the laser visuals don't stop before hitting rounded objects
+			idleMain.startSizeZMultiplier = dist + .1f;
+			activatedMain.startSizeZMultiplier = dist + .1f;
+			spotsEmission.rateOverTime = dist * spotsEmissionMult;
 
-			var denyMain = denyBeam.main;
-			denyMain.startSizeZMultiplier = dist + .1f;
-
-			var spotsShape = denySunSpots.shape;
-			var spotsMain = denySunSpots.main;
-			
-			//Ensures that sunspots stop at player even with the extra length it gets from its speed
+			//Ensures that spots stop at player even with the extra length it gets from its speed
 			var extraLength = spotsMain.startSpeedMultiplier * spotsMain.startLifetimeMultiplier;
 			spotsShape.length = dist - extraLength;
 
@@ -61,38 +62,38 @@ namespace Qbism.Cubes
 
 		public void TriggerPassJuice()
 		{
-			isDenying = false;
+			isActivated = false;
+
 			laserBeam.Stop();
-			denyBeam.Stop();
+			activatedBeam.Stop();
 			pinkEyeVFX.Play();
 
 			passJuice.PlayFeedbacks();
 
 			eyeAnim.CloseEyes();
 			mouthAnim.SadMouth();
-
 		}
 
 		public void CloseEyeForFinish()
 		{
 			eyeAnim.CloseEyes();
 			mouthAnim.SadMouth();
-			denyBeam.Stop();
+			activatedBeam.Stop();
 			laserBeam.Stop();
 			pinkEyeVFX.Stop();
 			laserTipLight.enabled = false;
 		}
 
-		public void TriggerDenyJuice(float dist)
+		public void TriggerActivationJuice()
 		{
-			isDenying = true;
+			isActivated = true;
 
 			laserBeam.Stop();
 			pinkEyeVFX.Stop();
-			denyBeam.Play();
+			activatedBeam.Play();
 
 			Shake();
-			denyJuice.PlayFeedbacks();
+			activateJuice.PlayFeedbacks();
 
 			eyeAnim.ShootyEyes();
 			mouthAnim.SadMouth();
@@ -100,10 +101,10 @@ namespace Qbism.Cubes
 
 		public void TriggerIdleJuice()
 		{
-			isDenying = false;
+			isActivated = false;
 
 			pinkEyeVFX.Stop();
-			denyBeam.Stop();
+			activatedBeam.Stop();
 			laserBeam.Play();
 
 			eyeAnim.OpenEyes();
@@ -112,14 +113,14 @@ namespace Qbism.Cubes
 
 		private void Shake()
 		{
-			denyJuiceWiggle.PlayFeedbacks();
+			activateJuiceWiggle.PlayFeedbacks();
 		}
 
 		private void HandleShakeTimer()
 		{
 			//This repeats the shake feedback (which is .5s) over and over instead of
 			//using 'repeat forever' bc couldn't find way to stop that
-			if (isDenying)
+			if (isActivated)
 			{
 				shakeTimer += Time.deltaTime;
 

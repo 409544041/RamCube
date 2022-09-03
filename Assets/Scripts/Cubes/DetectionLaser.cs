@@ -15,7 +15,7 @@ namespace Qbism.Cubes
 		[SerializeField] LayerMask chosenLayers;
 		public TotemTypes type;
 		[SerializeField] LaserRefHolder refs;
-		
+
 		//Cache
 		PlayerCubeMover mover;
 		LaserJuicer juicer;
@@ -71,7 +71,7 @@ namespace Qbism.Cubes
 
 			if (hitDist < distance)
 			{
-				if (playerHit && !mover.isResetting) 
+				if (playerHit && !mover.isResetting)
 					effector.HandleHittingPlayer(true, dist);
 				else
 				{
@@ -186,7 +186,7 @@ namespace Qbism.Cubes
 				CheckForCubes(laserDir, distRoundDown + 1, startDistRoundDown, false);
 		}
 
-		public void CheckForCubes(Vector3 laserDir, int iStart, 
+		public void CheckForCubes(Vector3 laserDir, int iStart,
 			int iCondition, bool enable)
 		{
 			if (enable) posInLaserPath.Clear();
@@ -207,6 +207,13 @@ namespace Qbism.Cubes
 					cube.CastDottedLines(transform.position, enable, type);
 				}
 			}
+		}
+
+		public bool CheckIfFacingButtToSource()
+		{
+			if (Mathf.Approximately(Vector3.Dot(mover.transform.forward, transform.forward), -1))
+				return true;
+			else return false;
 		}
 	}
 }
