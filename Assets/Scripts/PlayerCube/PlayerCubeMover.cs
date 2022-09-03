@@ -142,7 +142,6 @@ namespace Qbism.PlayerCube
 				yield break;
 			}
 
-			refs.stunJuicer.StopStunVFX();
 			isMoving = true;
 			allowRewind = false;
 

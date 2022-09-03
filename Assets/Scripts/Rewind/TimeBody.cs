@@ -159,7 +159,7 @@ namespace Qbism.Rewind
 				{
 					mover.isStunned = false;
 					pRef.gcRef.rewindPulser.StopPulse();
-					pRef.stunJuicer.StopStunVFX();
+					pRef.stunJuicer.StopStunVFX(TotemTypes.laser);
 				}
 
 				if (!mover.isResetting) pRef.rewindJuicer.StartPostRewindJuice();

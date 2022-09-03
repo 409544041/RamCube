@@ -43,7 +43,7 @@ namespace Qbism.Cubes
 					fartLauncher.FireBulletFart();
 				}
 
-				refs.gcRef.pRef.stunJuicer.StopStunVFX();
+				refs.gcRef.pRef.stunJuicer.StopStunVFX(TotemTypes.laser);
 
 				if (detector.rewindPulseViaLaser)
 				{
@@ -61,7 +61,7 @@ namespace Qbism.Cubes
 				juicer.TriggerActivationJuice();
 				detector.rewindPulseViaLaser = true;
 				refs.gcRef.rewindPulser.InitiatePulse();
-				refs.gcRef.pRef.stunJuicer.PlayStunVFX();
+				refs.gcRef.pRef.stunJuicer.PlayStunVFX(TotemTypes.laser);
 				mover.isStunned = true;
 				detector.CastDottedLines(hitDist, detector.distance);
 			}

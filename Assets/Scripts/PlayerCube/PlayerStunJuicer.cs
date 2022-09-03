@@ -9,12 +9,13 @@ namespace Qbism.PlayerCube
 	public class PlayerStunJuicer : MonoBehaviour
 	{
 		//Config parameters
-		[SerializeField] MMFeedbacks stunWiggleJuice;
-		[SerializeField] ParticleSystem stunVFX;
-		[SerializeField] GameObject stunMesh;
-		[SerializeField] AudioClip[] stunClips;
-		[SerializeField] float stunSoundDelay = .2f;
-		[SerializeField] AudioSource stunSource;
+		[SerializeField] MMFeedbacks wiggleJuice;
+		[SerializeField] ParticleSystem stunVFX, magnetVFX;
+		[SerializeField] Material stunMaterial, magnetMaterial;
+		[SerializeField] GameObject glowMesh;
+		[SerializeField] AudioClip[] clips;
+		[SerializeField] float soundDelay = .2f;
+		[SerializeField] AudioSource source;
 		[SerializeField] PlayerRefHolder refs;
 
 		//Cache
@@ -28,10 +29,10 @@ namespace Qbism.PlayerCube
 
 		private void Awake()
 		{
-			stunMMWiggle = stunWiggleJuice.GetComponent<MMFeedbackWiggle>();
+			stunMMWiggle = wiggleJuice.GetComponent<MMFeedbackWiggle>();
 			shakeDur = stunMMWiggle.WigglePositionDuration;
-			stunTimer = stunSoundDelay;
-			originalVolume = stunSource.volume;
+			stunTimer = soundDelay;
+			originalVolume = source.volume;
 		}
 
 		private void Update()
@@ -43,20 +44,46 @@ namespace Qbism.PlayerCube
 			}
 		}
 
-			public void PlayStunVFX()
+		public void PlayStunVFX(TotemTypes totemType)
 		{
-			stunVFX.Play();
-			stunMesh.SetActive(true);
+			Material mat;
+			ParticleSystem vfx;
+
+			if (totemType == TotemTypes.laser)
+			{
+				mat = stunMaterial;
+				vfx = stunVFX;
+			}
+			else
+			{
+				mat = magnetMaterial;
+				vfx = magnetVFX;
+			}
+
+			var renderers = glowMesh.GetComponentsInChildren<Renderer>();
+
+			foreach (var renderer in renderers)
+			{
+				renderer.material = mat;
+			}
+
+			vfx.Play();
+			glowMesh.SetActive(true);
 
 			refs.exprHandler.SetSituationFace(ExpressionSituations.laserHit, 
 				refs.exprHandler.GetRandomTime());
 		}
 
-		public void StopStunVFX()
+		public void StopStunVFX(TotemTypes totemType)
 		{
-			stunVFX.Stop();
-			stunMesh.SetActive(false);
-			stunSource.volume = 0;
+			ParticleSystem vfx;
+
+			if (totemType == TotemTypes.laser)vfx = stunVFX;
+			else vfx = magnetVFX;
+		
+			vfx.Stop();
+			glowMesh.SetActive(false);
+			source.volume = 0;
 		}
 
 		private void HandleShakeTimer()
@@ -77,7 +104,7 @@ namespace Qbism.PlayerCube
 		{
 			stunTimer += Time.deltaTime;
 
-			if (stunTimer >= stunSoundDelay)
+			if (stunTimer >= soundDelay)
 			{
 				PlayDenySounds();
 				stunTimer = 0;
@@ -86,18 +113,18 @@ namespace Qbism.PlayerCube
 
 		private void PlayDenySounds()
 		{
-			if(stunSource.volume != originalVolume) stunSource.volume = originalVolume;
+			if(source.volume != originalVolume) source.volume = originalVolume;
 
 			float pitchValue = Random.Range(.3f, .5f);
-			stunSource.pitch = pitchValue;
+			source.pitch = pitchValue;
 
-			int i = Random.Range(0, stunClips.Length);
-			stunSource.PlayOneShot(stunClips[i], .75f);
+			int i = Random.Range(0, clips.Length);
+			source.PlayOneShot(clips[i], .75f);
 		}
 
 		private void Shake()
 		{
-			stunWiggleJuice.PlayFeedbacks();
+			wiggleJuice.PlayFeedbacks();
 		}
 	}
 }

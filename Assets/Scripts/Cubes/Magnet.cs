@@ -41,7 +41,7 @@ namespace Qbism.Cubes
 					fartLauncher.FireBulletFart();
 				}
 
-				refs.gcRef.pRef.stunJuicer.StopStunVFX();
+				refs.gcRef.pRef.stunJuicer.StopStunVFX(TotemTypes.magnet);
 
 				if (detector.rewindPulseViaLaser)
 				{
@@ -70,12 +70,14 @@ namespace Qbism.Cubes
 					mover.isBeingPulled = false;
 					mover.allowRewind = true;
 					detector.GoIdle();
+					refs.gcRef.pRef.stunJuicer.StopStunVFX(TotemTypes.magnet);
 				}
 
 				if (!isNextToMagnet)
 				{
 					mover.isBeingPulled = true;
 					juicer.TriggerActivationJuice();
+					refs.gcRef.pRef.stunJuicer.PlayStunVFX(TotemTypes.magnet);
 					mover.allowRewind = false;
 					if (!mover.isBoosting) mover.InitiateFromMagnet(side, turnAxis, posAhead);
 				} 
