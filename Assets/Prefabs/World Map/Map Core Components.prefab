@@ -7619,13 +7619,14 @@ MonoBehaviour:
   m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: 616a36ca20364bd4ead280262f811baa,
     type: 3}
-  m_PointAction: {fileID: 0}
+  m_PointAction: {fileID: 7906816600636835308, guid: 616a36ca20364bd4ead280262f811baa,
+    type: 3}
   m_MoveAction: {fileID: -7318099664200539417, guid: 616a36ca20364bd4ead280262f811baa,
     type: 3}
   m_SubmitAction: {fileID: 7504376141257602038, guid: 616a36ca20364bd4ead280262f811baa,
     type: 3}
   m_CancelAction: {fileID: 0}
-  m_LeftClickAction: {fileID: 7207354785907394337, guid: 616a36ca20364bd4ead280262f811baa,
+  m_LeftClickAction: {fileID: -3174738711052976176, guid: 616a36ca20364bd4ead280262f811baa,
     type: 3}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
@@ -8714,6 +8715,21 @@ PrefabInstance:
       propertyPath: mapCoreRef
       value: 
       objectReference: {fileID: 5619961312879922620}
+    - target: {fileID: 1846662704875526531, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: mcRef
+      value: 
+      objectReference: {fileID: 5619961312879922620}
+    - target: {fileID: 1846662704875526531, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: cursor
+      value: 
+      objectReference: {fileID: 1112041327295862048}
+    - target: {fileID: 1846662704875526531, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: canvasRectTrans
+      value: 
+      objectReference: {fileID: 6150523042017187415}
     - target: {fileID: 1950273819648840867, guid: 7ac05d340529008499b6282948e52683,
         type: 3}
       propertyPath: mcRef
@@ -8734,6 +8750,21 @@ PrefabInstance:
       propertyPath: mapCoreRef
       value: 
       objectReference: {fileID: 5619961312879922620}
+    - target: {fileID: 3694504831705599025, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: mcRef
+      value: 
+      objectReference: {fileID: 5619961312879922620}
+    - target: {fileID: 3694504831705599025, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: cursor
+      value: 
+      objectReference: {fileID: 1112041327295862048}
+    - target: {fileID: 3694504831705599025, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: canvasRectTrans
+      value: 
+      objectReference: {fileID: 6150523042017187415}
     - target: {fileID: 3722215608194475144, guid: 7ac05d340529008499b6282948e52683,
         type: 3}
       propertyPath: mcRef
@@ -8754,6 +8785,31 @@ PrefabInstance:
       propertyPath: mapCoreRef
       value: 
       objectReference: {fileID: 5619961312879922620}
+    - target: {fileID: 4139935537470451505, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: mcRef
+      value: 
+      objectReference: {fileID: 5619961312879922620}
+    - target: {fileID: 4139935537470451505, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 763949873635279229}
+    - target: {fileID: 4139935537470451505, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: cursorTrans
+      value: 
+      objectReference: {fileID: 1112041327295862048}
+    - target: {fileID: 4139935537470451505, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: playerInput
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139935537470451505, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: canvasRectTrans
+      value: 
+      objectReference: {fileID: 6150523042017187415}
     - target: {fileID: 4559963072235337666, guid: 7ac05d340529008499b6282948e52683,
         type: 3}
       propertyPath: dialogueText
@@ -8794,6 +8850,11 @@ PrefabInstance:
       propertyPath: mapCoreRef
       value: 
       objectReference: {fileID: 5619961312879922620}
+    - target: {fileID: 4859205134934415561, guid: 7ac05d340529008499b6282948e52683,
+        type: 3}
+      propertyPath: eventSystem
+      value: 
+      objectReference: {fileID: 2039000672746582545}
     - target: {fileID: 5051852831082783110, guid: 7ac05d340529008499b6282948e52683,
         type: 3}
       propertyPath: mcRef
@@ -19056,6 +19117,12 @@ Canvas:
     type: 3}
   m_PrefabInstance: {fileID: 7970840080854237857}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &1112041327295862048 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7057386221609506689, guid: 8ca3035eb415ce4418385a9e0723723e,
+    type: 3}
+  m_PrefabInstance: {fileID: 7970840080854237857}
+  m_PrefabAsset: {fileID: 0}
 --- !u!225 &1155811964318397566 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 9121011944845440735, guid: 8ca3035eb415ce4418385a9e0723723e,
@@ -19405,7 +19472,22 @@ PrefabInstance:
     - target: {fileID: 4005738705434287998, guid: 26405bde6929b4c45b7c220b7be02b56,
         type: 3}
       propertyPath: m_YDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005738705434287998, guid: 26405bde6929b4c45b7c220b7be02b56,
+        type: 3}
+      propertyPath: m_ZDamping
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005738705434287998, guid: 26405bde6929b4c45b7c220b7be02b56,
+        type: 3}
+      propertyPath: m_DeadZoneWidth
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005738705434287998, guid: 26405bde6929b4c45b7c220b7be02b56,
+        type: 3}
+      propertyPath: m_LookaheadTime
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4005738705434287998, guid: 26405bde6929b4c45b7c220b7be02b56,
         type: 3}
@@ -19414,8 +19496,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4005738705434287998, guid: 26405bde6929b4c45b7c220b7be02b56,
         type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005738705434287998, guid: 26405bde6929b4c45b7c220b7be02b56,
+        type: 3}
       propertyPath: m_UnlimitedSoftZone
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005738705434287998, guid: 26405bde6929b4c45b7c220b7be02b56,
+        type: 3}
+      propertyPath: m_LookaheadSmoothing
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4847400476356365735, guid: 26405bde6929b4c45b7c220b7be02b56,
         type: 3}
@@ -19516,6 +19608,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7755256810420413804, guid: 26405bde6929b4c45b7c220b7be02b56,
+        type: 3}
+      propertyPath: far clip plane
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7755256810420413804, guid: 26405bde6929b4c45b7c220b7be02b56,
         type: 3}

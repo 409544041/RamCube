@@ -77,7 +77,7 @@ namespace Qbism.SceneTransition
 				mlRef = mcRef.mlRef;
 			}
 
-			mlRef.centerPoint.PositionCenterPointOnMapLoad();
+			mlRef.pinTracker.SelectPinOnMapLoad(); ;
 
 			//need this yield return here to avoid race condition with selectedPinUI
 			yield return null;

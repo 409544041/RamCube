@@ -13,7 +13,7 @@ namespace Qbism.WorldMap
 		[SerializeField] ParticleSystem selectVFX;
 		[SerializeField] LevelPinUI pinUI;
 		public float compJuiceDelay, unCompJuiceDelay;
-		public float selectedSize = 1.35f;
+		public float selectedSize = 1.35f, normalSize = 1;
 
 		//Actions, events, delegates etc
 		public event Action<string> onRaisedCheckForDialogueTriggers;
@@ -96,10 +96,15 @@ namespace Qbism.WorldMap
 
 			scaler.RemapCurveZero = curveZero;
 			scaler.RemapCurveOne = curveOne;
-			
+
 			selectedJuice.PlayFeedbacks();
-			if (curveOne > 1) selectVFX.Play();
-			else selectVFX.Stop();
+
+			if (curveOne > normalSize && !selectVFX.isPlaying) selectVFX.Play();
+			else if (curveOne == normalSize)
+			{
+				selectVFX.Stop();
+				selectVFX.Clear();
+			}
 		}
 
 		public void PlayEnterLevelJuice()

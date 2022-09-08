@@ -18,7 +18,8 @@ namespace Qbism.WorldMap
 		public PinChecker pinChecker;
 		public PinHandler pinHandler;
 		public PinSelectionTracker pinTracker;
-		public Transform pinSelShape;
+		public Transform pinSelShapeTrans;
+		public Renderer pinSelShapeRend;
 		public PositionBiomeCenterpoint centerPoint;
 		public LevelPinRefHolder[] levelPins;
 		[Header("Scene Handling")]
@@ -31,5 +32,7 @@ namespace Qbism.WorldMap
 		public InGameDialogueManager inGameDialogueManager;
 		[Header("Focus Circle")]
 		public CircleTransition focusCircle;
+		[Header("Cursor")]
+		public MapCursor mapCursor;
 	}
 }

@@ -9,62 +9,55 @@ namespace Qbism.WorldMap
 {
 	public class PositionBiomeCenterpoint : MonoBehaviour
 	{
+		//Config parameters
 		[SerializeField] MapCoreRefHolder mcRef;
+
+		//States
+		MapLogicRefHolder mlRef;
+		Camera cam;
+		float distToCam;
+		public bool syncCenterToCursor { get; set; } = true;
+		bool checkMinMaxAtSync = false;
 
 		//Actions, events, delegates etc
 		public Func<LevelPinRefHolder> onSavedPinFetch;
 		public Func<E_Biome> onSavedBiomeFetch;
 
-		public void StartPositionCenterPoint(E_Biome biome, LevelPinRefHolder selPin, bool onMapLoad,
-			bool specificPos, bool checkMinMax, Vector2 pos)
+		private void Awake()
 		{
-			PositionCenterPoint(selPin, onMapLoad, specificPos, checkMinMax, pos);
+			mlRef = mcRef.mlRef;
+			cam = mcRef.cam;
 		}
 
-		public void PositionCenterPointOnMapLoad()
+		private void Start()
 		{
-			var selPin = onSavedPinFetch();
-			PositionCenterPoint(selPin, true, false, true, new Vector2(0, 0));
+			distToCam = mcRef.mapCam.
+				GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance;
 		}
 
-		private void PositionCenterPoint(LevelPinRefHolder selPin, bool onMapLoad, 
-			bool specificPos, bool checkMinMax, Vector2 pos)
+		private void Update()
 		{
-			Vector3 camToPointDiff = new Vector3(0, 0, 0);
+			if (syncCenterToCursor) PlaceCenterPointAtCursor();
+		}
 
-			if (onMapLoad)
-			{
-				mcRef.mapCam.enabled = false;
-				mcRef.camBrain.enabled = false;
-				camToPointDiff = mcRef.mapCam.transform.position - transform.position;
-			}
+		public void SetMinMaxCheckAtSync(bool value)
+		{
+			checkMinMaxAtSync = value;
+		}
 
-			float xPos = 0;
-			float zPos = 0;
+		public void PlaceCenterPointAtCursor()
+		{
+			var pos = cam.ScreenToWorldPoint(mlRef.mapCursor.cursor.transform.position);
+			transform.position = pos;
+			transform.position += cam.transform.forward * distToCam;
 
-			if (!specificPos) FindPos(selPin, out xPos, out zPos);
-
-			else if (specificPos && checkMinMax) 
-				ComparePosToMinMaxValues(out xPos, out zPos, pos.x, pos.y);
-				
-			else if (specificPos && !checkMinMax)
-			{
-				xPos = pos.x;
-				zPos = pos.y;
-			}
-
+			float xPos = transform.position.x, zPos = transform.position.z;
+			if (checkMinMaxAtSync) ComparePosToMinMaxValues(out xPos, out zPos,
+				transform.position.x, transform.position.z);
 			transform.position = new Vector3(xPos, 0, zPos);
-
-			if (onMapLoad)
-			{
-				mcRef.mapCam.transform.position = transform.position +
-					camToPointDiff;
-				mcRef.mapCam.enabled = true;
-				mcRef.camBrain.enabled = true;
-			}
 		}
 
-		private void FindPos(LevelPinRefHolder selPin, out float xPos, out float zPos)
+		public void FindPos(LevelPinRefHolder selPin, out float xPos, out float zPos)
 		{
 			Vector3 selPos = selPin.pathPoint.transform.position;
 
@@ -74,7 +67,7 @@ namespace Qbism.WorldMap
 			ComparePosToMinMaxValues(out xPos, out zPos, selPosX, selPosZ);
 		}
 
-		private void ComparePosToMinMaxValues(out float xPos, out float zPos, float currentPosX, float currentPosZ)
+		public void ComparePosToMinMaxValues(out float xPos, out float zPos, float currentPosX, float currentPosZ)
 		{
 			float minX, maxX, minZ, maxZ;
 			FetchMinMaxValues(out minX, out maxX, out minZ, out maxZ);

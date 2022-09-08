@@ -149,7 +149,7 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Thumbstick "",
                     ""id"": ""9fdda200-3453-4b63-875a-67f1973398b3"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

@@ -43,8 +43,8 @@ namespace Qbism.SceneTransition
 			{
 				yield return SceneManager.LoadSceneAsync("WorldMap");
 
-				var centerPoint = FindObjectOfType<PositionBiomeCenterpoint>();
-				centerPoint.PositionCenterPointOnMapLoad();
+				var pinSelTracker = FindObjectOfType<PinSelectionTracker>();
+				pinSelTracker.SelectPinOnMapLoad();
 			}
 
 			else if (!firstLevelCompleted && switchBoard.showFirstLevelIntroRoll)

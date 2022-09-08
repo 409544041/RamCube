@@ -13,6 +13,7 @@ namespace Qbism.WorldMap
 		MapLogicRefHolder mlRef;
 		int pinsHandled = 0;
 		int totalPins;
+		bool pinBeingRasedThisTime = false;
 
 		private void Awake() 
 		{
@@ -93,10 +94,10 @@ namespace Qbism.WorldMap
 
 				if (unlocked && !unlockAnimPlayed)
 				{
-					if (biomeUnlocked) mlRef.centerPoint.StartPositionCenterPoint
-						(null, null, false, true, true, pointBetweenPins);
-					else mlRef.centerPoint.StartPositionCenterPoint
-	 					(null, null, false, true, false, pointBetweenPins);
+					if (biomeUnlocked) mlRef.mapCursor.PlaceCursor
+						(null, false, true, true, pointBetweenPins);
+					else mlRef.mapCursor.PlaceCursor
+	 					(null, false, true, false, pointBetweenPins);
 
 					//for newly unlocked pins that need to be raised
 					if (locksLeft == 0)
@@ -113,6 +114,7 @@ namespace Qbism.WorldMap
 						{
 							pin.pinRaiser.InitiateRaising(originPins, locksLeft != 0, unlockPins);
 							entity.f_UnlockAnimPlayed = true;
+							pinBeingRasedThisTime = true;
 
 							//if unlocking new biome, raise all pins in that biome to correct pos
 							if (!biomeUnlocked)
@@ -144,6 +146,8 @@ namespace Qbism.WorldMap
 			}
 
 			if (completed && !pathDrawn) entity.f_PathDrawn = true;
+			if (!pinBeingRasedThisTime && pinsHandled == totalPins)
+				mlRef.centerPoint.SetMinMaxCheckAtSync(true);
 		}
 
 		private Vector2 CalculateCamMidPoint(LevelPinRefHolder pin, List<LevelPinRefHolder> originPins)

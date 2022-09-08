@@ -9,6 +9,7 @@ namespace Qbism.WorldMap
 	public class PinSelectionTracker : MonoBehaviour
 	{
 		//Config parameters
+		[SerializeField] EventSystem eventSystem;
 		[SerializeField] MapCoreRefHolder mcRef;
 
 		//Cache
@@ -19,12 +20,12 @@ namespace Qbism.WorldMap
 		public LevelPinRefHolder selectedPin { get; set; } = null;
 		public E_Biome currentBiome { get; set; }
 		LevelPinRefHolder prevPin;
-		
+
 		//Actions, events, delegates etc
 		public Func<LevelPinRefHolder> onSavedPinFetch;
 		public Func<E_Biome> onSavedBiomeFetch;
 
-		private void Awake() 
+		private void Awake()
 		{
 			mlRef = mcRef.mlRef;
 
@@ -39,45 +40,41 @@ namespace Qbism.WorldMap
 
 		private void Start()
 		{
-			//Sets pin and biome of saved 'currentLevelID' as selectedPin and currentBiome
 			selectedPin = onSavedPinFetch();
 			currentBiome = onSavedBiomeFetch();
-
-			selectedPin.pinUI.SelectPinUI();
-			SetPinSelectionLoc();
-			selectedPin.pinUIJuicer.SelectionEnlargen(1, selectedPin.pinUIJuicer.selectedSize);
 		}
 
-		private void Update() 
+		public void SelectPinOnMapLoad()
 		{
-			prevPin = selectedPin;
-
-			GameObject selected = EventSystem.current.currentSelectedGameObject;
-
-			for (int i = 0; i < pinUIs.Length; i++)
-			{
-				LevelPinRefHolder pin = pinUIs[i].FetchPin(selected); //Sets new selectedPin
-				if (pin == null) continue;
-				
-				selectedPin = pin;
-				break;
-			}
-
-			currentBiome = selectedPin.m_pin.f_Biome;
-
-			if (selectedPin != prevPin)
-			{
-				mlRef.centerPoint.StartPositionCenterPoint(currentBiome, selectedPin, false, 
-					false, true, new Vector2(0, 0));
-				SetPinSelectionLoc();
-				selectedPin.pinUIJuicer.SelectionEnlargen(1, selectedPin.pinUIJuicer.selectedSize);
-				prevPin.pinUIJuicer.SelectionEnlargen(selectedPin.pinUIJuicer.selectedSize, 1);
-			} 
+			selectedPin = onSavedPinFetch();
+			mlRef.mapCursor.PlaceCursor(selectedPin, true, false, true, new Vector2(0,0));
 		}
 
 		public void SelectPin(LevelPinUI pinToSelect)
 		{
+			prevPin = selectedPin;
+			selectedPin = pinToSelect.refs;
+
+			if (prevPin == selectedPin) return;
+			DeselectPin(false);
 			pinToSelect.SelectPinUI();
+			currentBiome = selectedPin.m_pin.f_Biome;
+			SetPinSelectionLoc();
+			selectedPin.pinUIJuicer.SelectionEnlargen(1, selectedPin.pinUIJuicer.selectedSize);
+		}
+
+		public void DeselectPin(bool cursorOverEmpty)
+		{
+			eventSystem.SetSelectedGameObject(null);
+			if (prevPin != null) prevPin.pinUIJuicer.SelectionEnlargen(selectedPin.pinUIJuicer.selectedSize, 1);
+			
+			if (cursorOverEmpty)
+			{
+				selectedPin = null;
+				mlRef.pinSelShapeRend.enabled = false;
+			}
+			
+			prevPin = null;
 		}
 
 		public void SetLevelPinButtonsInteractable(bool value)
@@ -90,8 +87,9 @@ namespace Qbism.WorldMap
 
 		private void SetPinSelectionLoc()
 		{
-			mlRef.pinSelShape.transform.position = new Vector3 (selectedPin.transform.position.x, 
-				mlRef.pinSelShape.transform.position.y, selectedPin.transform.position.z);
+			mlRef.pinSelShapeRend.enabled = true;
+			mlRef.pinSelShapeTrans.position = new Vector3 (selectedPin.transform.position.x, 
+				mlRef.pinSelShapeTrans.transform.position.y, selectedPin.transform.position.z);
 		}
 	}
 }

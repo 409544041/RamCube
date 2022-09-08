@@ -50,6 +50,11 @@ namespace Qbism.ScreenStateMachine
 			}
 		}
 
+		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
+		{
+			mlRef.mapCursor.HandleCursorMovement(stickValue);
+		}
+
 		public void HandleActionInput()
 		{
 			if (!allowInput) return;
@@ -149,9 +154,7 @@ namespace Qbism.ScreenStateMachine
 		public void HandleAnyInput()
 		{
 		}
-		public void HandleStickValues(Vector2 stickValue, InputDetector inputDetector)
-		{
-		}
+
 		public void HandleRewindInput()
 		{
 		}
