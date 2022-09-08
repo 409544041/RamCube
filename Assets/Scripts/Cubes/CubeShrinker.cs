@@ -85,6 +85,7 @@ namespace Qbism.Cubes
 			refs.mesh.enabled = false;
 			refs.shrinkMesh.enabled = true;
 			refs.laserDottedLine.enabled = false;
+			refs.magnetDottedLine.enabled = false;
 			hasShrunk = true;
 
 			if (refs.effectorFace != null)

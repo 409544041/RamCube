@@ -243,6 +243,8 @@ namespace Qbism.MoveableCubes
 			center.position = transform.position;
 			refs.laserDottedLine.transform.position = new Vector3 (transform.position.x, 
 				refs.laserDottedLine.transform.position.y, transform.position.z);
+			refs.magnetDottedLine.transform.position = new Vector3(transform.position.x,
+				refs.magnetDottedLine.transform.position.y, transform.position.z);
 
 			if (refs.movEffector != null)
 			{
