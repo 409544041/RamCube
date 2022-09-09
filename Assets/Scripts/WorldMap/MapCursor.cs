@@ -38,6 +38,7 @@ namespace Qbism.WorldMap
 			currentPos = cursor.anchoredPosition;
 			cursorTail.transform.forward = cam.transform.forward;
 			MoveTail();
+			cursorTail.Play();
 		}
 
 		private void FixedUpdate()
@@ -54,7 +55,6 @@ namespace Qbism.WorldMap
 				if (pinRef.button.enabled)
 				{
 					mlRef.pinTracker.SelectPin(pinRef.pinUI);
-					if (cursorTail.isEmitting) cursorTail.Stop();
 					deselected = false;
 				}
 			}
@@ -62,7 +62,6 @@ namespace Qbism.WorldMap
 			else if (!deselected)
 			{
 				mlRef.pinTracker.DeselectPin(true);
-				if (!cursorTail.isEmitting) cursorTail.Play();
 				deselected = true;
 			}
 		}
