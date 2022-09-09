@@ -9,11 +9,15 @@ namespace Qbism.WorldMap
 	{
 		//Config parameters
 		public RectTransform cursor;
+		[SerializeField] RectTransform transToRotate;
+		[SerializeField] RectTransform tailOrigin;
 		[SerializeField] ParticleSystem cursorTail;
+		[SerializeField] Transform cursorModel;
 		[SerializeField] float maxCursorSpeed = 1000, cursorAcceleration = 100;
 		[SerializeField] RectTransform canvasRectTrans;
 		[SerializeField] float padding = 35;
 		[SerializeField] LayerMask rayCastLayers;
+		[SerializeField] Animator eyeAnim, mouthAnim;
 		[SerializeField] MapCoreRefHolder mcRef;
 
 		Vector2 currentPos;
@@ -82,15 +86,41 @@ namespace Qbism.WorldMap
 			newPos.x = Mathf.Clamp(newPos.x, bottomLeft.x, topRight.x);
 			newPos.y = Mathf.Clamp(newPos.y, bottomLeft.y, topRight.y);
 
+			var dir = newPos - currentPos;
+
 			cursor.anchoredPosition = newPos;
 			currentPos = newPos;
 
+			var rot = Quaternion.LookRotation(Vector3.forward, dir);
+			var dirIsZero = V3Equal(dir, new Vector3(0, 0, 0));
+
+			if (!dirIsZero)
+			{
+				cursorModel.rotation = rot;
+				transToRotate.rotation = rot;
+			}
+
 			MoveTail();
+			AnimateCursor(dirIsZero);
+		}
+
+		private void AnimateCursor(bool dirIsZero)
+		{
+			if (dirIsZero)
+			{
+				eyeAnim.SetBool("isMoving", false);
+				mouthAnim.SetBool("isMoving", false);
+			}
+			else
+			{
+				eyeAnim.SetBool("isMoving", true);
+				mouthAnim.SetBool("isMoving", true);
+			}
 		}
 
 		private void MoveTail()
 		{
-			var tailPos = GetWorldPos(cursor.transform.position);
+			var tailPos = GetWorldPos(tailOrigin.transform.position);
 			cursorTail.transform.position = tailPos;
 
 			cursorTail.transform.position += cursorTail.transform.forward * 5;
@@ -161,6 +191,11 @@ namespace Qbism.WorldMap
 		private Vector3 GetWorldPos(Vector3 screenPoint)
 		{
 			return cam.ScreenToWorldPoint(screenPoint);
+		}
+
+		private bool V3Equal(Vector3 a, Vector3 b)
+		{
+			return Vector3.SqrMagnitude(a - b) < 0.001;
 		}
 	}
 }
